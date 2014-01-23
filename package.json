@@ -1,0 +1,17 @@
+{
+  "name": "pd360-html",
+  "preferGlobal": true,
+  "version": "0.1.0",
+  "author": "School Improvement Network",
+  "description": "HTML5 + Flash PD360",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/School-Improvement-Network/pd360-html.git"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "devDependencies": {
+    "request": "~2.33.0"
+  }
+}
