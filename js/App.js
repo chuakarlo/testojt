@@ -20,12 +20,13 @@ define( function ( require ) {
 	App.addInitializer( function ( options ) {
 
 		App.Controller = new Controller( {
-			'App'     : App,
+			'Vent' : Vent,
+			'App'  : App,
+
 			'regions' : {
 				'menu'    : App.menu,
 				'content' : App.content
-			},
-			'Vent'    : Vent
+			}
 		} );
 
 		App.Router = new Router( { 'controller' : App.Controller } );

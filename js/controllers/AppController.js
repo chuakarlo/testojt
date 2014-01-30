@@ -6,6 +6,10 @@ define( function ( require ) {
 	var Backbone   = require( 'backbone' );
 	var Marionette = require( 'marionette' );
 
+	var layouts = {
+		'Nav' : require( 'views/nav/NavView' )
+	};
+
 	var views = {
 		'LoginView' : require( 'views/users/LoginView' )
 	};
@@ -21,6 +25,8 @@ define( function ( require ) {
 			_.each( options, function ( value, key, list ) {
 				self[ key ] = value;
 			} );
+
+			this._setMenu();
 
 			return this;
 		},
@@ -38,6 +44,10 @@ define( function ( require ) {
 			this.regions.content.show( view );
 
 			return view;
+		},
+
+		'_setMenu' : function () {
+			this.regions.menu.show( new layouts.Nav() );
 		},
 
 		'showDefault' : function ( actions ) {

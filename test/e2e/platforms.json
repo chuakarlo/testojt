@@ -1,0 +1,82 @@
+{
+
+	"XP" : {
+		"browsers" : [
+			{
+				"name"    : "internet explorer",
+				"version" : 8
+			},
+			{
+				"name" : "firefox"
+			},
+			{
+				"name" : "chrome"
+			}
+		]
+	},
+
+	"WIN7 - 1" : {
+
+		"browsers" : [
+
+			{
+				"name"    : "internet explorer",
+				"version" : 8
+			}
+
+		]
+
+	},
+
+	"WIN7 - 2" : {
+
+		"browsers" : [
+
+			{
+				"name"    : "internet explorer",
+				"version" : 9
+			}
+
+		]
+
+	},
+
+	"WIN7 - 3" : {
+
+		"browsers" : [
+
+			{
+				"name"    : "internet explorer",
+				"version" : 10
+			},
+			{
+				"name"    : "firefox"
+			},
+			{
+				"name"    : "chrome"
+			}
+
+		]
+
+	},
+
+	"WIN8" : {
+
+		"browsers" : [
+
+			{
+				"name"    : "internet explorer",
+				"version" : 10
+			},
+			{
+				"name"    : "firefox"
+			},
+			{
+				"name"    : "chrome"
+			}
+
+		]
+
+	}
+
+}
