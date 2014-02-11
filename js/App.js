@@ -3,38 +3,40 @@ define( function ( require ) {
 
 	var Marionette = require( 'marionette' );
 	var Backbone   = require( 'backbone' );
+	var modularize = require( './modules' );
 
-	var Router     = require( 'routers/AppRouter' );
-	var Controller = require( 'controllers/AppController' );
-
-	// Event aggregator
-	var Vent = require( 'Vent' );
-
+	// main app
 	var App = new Marionette.Application();
 
+	// set the regions of the app
 	App.addRegions( {
 		'content' : '#main-content',
 		'menu'    : '#navbar'
 	} );
 
-	App.addInitializer( function ( options ) {
+	// load modules
+	modularize( App );
 
-		App.Controller = new Controller( {
-			'Vent' : Vent,
-			'App'  : App,
+	// Allow sub apps to update history fragment when using events
+	App.navigate = function ( route, options ) {
+		options = options || {};
+		Backbone.history.navigate( route, options );
+	};
 
-			'regions' : {
-				'menu'    : App.menu,
-				'content' : App.content
-			}
-		} );
+	App.getCurrentRoute = function () {
+		return Backbone.history.fragment;
+	};
 
-		App.Router = new Router( { 'controller' : App.Controller } );
-
-	} );
-
+	// start history after initialization.
 	App.on( 'initialize:after', function () {
-		Backbone.history.start( { 'pushState' : false } );
+		if ( Backbone.history ) {
+			Backbone.history.start();
+			
+			// If no fragment exists, load login
+			if ( this.getCurrentRoute() === '' ) {
+				App.trigger( 'login:show' );
+			}
+		}
 	} );
 
 	return App;
