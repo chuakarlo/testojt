@@ -9,7 +9,7 @@ define( function ( require ) {
 	var Session = Backbone.Model.extend( {
 
 		url : function () {
-			return '/pd360/dao/RespondService.cfc?method=rspndLogin&loginNm=' + this.username + '&passwrd=' + this.password + '&returnformat=json';
+			return '/com/schoolimprovement/pd360/dao/RespondService.cfc?method=rspndLogin&loginNm=' + this.username + '&passwrd=' + this.password + '&returnformat=json';
 		},
 
 		// `username` & `password` to login

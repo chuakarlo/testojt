@@ -29,7 +29,7 @@ app.use( '/public', express.static( files ) );
 
 // calls made from PD360 swf for ColdFusion
 app.use( '/', function ( request, response, next ) {
-	var url = 'http://staging.pd360.com' + request.path;
+	var url = 'http://cfapi.dev.pd360.com' + request.path;
 
 	proxy( url, request, response );
 } );
