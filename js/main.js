@@ -14,7 +14,7 @@
 			'backbone.wreqr'      : 'libs/backbone.wreqr/lib/amd/backbone.wreqr',
 			'bootstrap'           : 'libs/bootstrap/docs/assets/js/bootstrap',
 			'jquery'              : 'libs/jquery/jquery',
-			'jquery-cookie'       : 'libs/jquery.cookie/jquery.cookie',
+			'jquery-cookie'       : 'libs/jquery-cookie/jquery.cookie',
 			'jquery-placeholder'  : 'libs/jquery-placeholder/jquery.placeholder.min',
 			'marionette'          : 'libs/backbone.marionette/lib/core/amd/backbone.marionette',
 			'modernizr'           : 'libs/modernizr/modernizr',
@@ -31,8 +31,9 @@
 			'templates'   : '../templates',
 
 			// Base application level classes
-			'Vent' : 'Vent',
-			'App'  : 'App'
+			'Vent'    : 'Vent',
+			'App'     : 'App',
+			'Session' : 'models/users/SessionModel'
 
 		},
 
