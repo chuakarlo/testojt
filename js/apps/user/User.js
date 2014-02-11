@@ -24,6 +24,7 @@ define( function ( require ) {
 		var API = {
 
 			'showLogin' : function () {
+				Vent.trigger( 'flash:hide' );
 				User.Login.Controller.showLogin();
 			}
 

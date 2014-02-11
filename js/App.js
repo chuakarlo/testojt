@@ -10,8 +10,9 @@ define( function ( require ) {
 
 	// set the regions of the app
 	App.addRegions( {
-		'content' : '#main-content',
-		'menu'    : '#navbar'
+		'content'      : '#main-content',
+		'flashContent' : '#flash-content',
+		'menu'         : '#navbar'
 	} );
 
 	// load modules
