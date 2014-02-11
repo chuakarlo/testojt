@@ -3,7 +3,7 @@
 
 	require.config( {
 
-		'baseUrl' : '/js/',
+		'baseUrl' : '/public/js/',
 
 		'paths' : {
 
