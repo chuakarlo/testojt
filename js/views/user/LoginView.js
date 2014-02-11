@@ -7,7 +7,7 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var Vent       = require( 'Vent' );
 	var Session    = require( 'Session' );
-	var template   = require( 'text!templates/users/loginView.html' );
+	var template   = require( 'text!templates/user/loginView.html' );
 
 	return Marionette.ItemView.extend( {
 		'template' : _.template( template ),
