@@ -145,6 +145,20 @@ p {  font-size:15px; line-height:28px; font-weight:normal; }
 .second-nav-btn { float:right; border:1px solid #6f737d; background:#545965; border-radius:3px; color:white; padding:13px 30px; margin:10px 10px 0 0; display:block; }
 .second-nav-btn:hover { background:#5c616b; color:#fff; }
 
+/* COLUMNS */
+.clmn-4 { margin:0 -15px; width:110%; }
+.clmn-4>li { width:276px; margin:15px; min-height: 50px; border-radius: 3px; float:left; -webkit-box-shadow: 0 0px 2px rgba(32,37,35,.3); -moz-box-shadow: 0 0px 2px rgba(32,37,35,.3); box-shadow: 0 0px 2px rgba(32,37,35,.3); }
+/* Video Thumbnail Classes */
+.clmn-4 .thumb { width:100%; height:188px; overflow: hidden; border-top-left-radius: 3px; border-top-right-radius: 3px; cursor: pointer; position: relative; }
+.clmn-4 .thumb img { width:100%; }
+.clmn-4 .thumb .hover { width:100%; height:188px; position: absolute; top: 0px; left: 0px; }
+.clmn-4 .thumb .hover:hover { background-color:rgba(0,0,0,.5); background-image:url('http://builtbyhq.com/projects/school/CORE/v1/img/play-video-now.png'); background-repeat: no-repeat; background-position: center; }
+.clmn-4 .info { padding:20px; background:#f3f5f6; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; position: relative; }
+.clmn-4 .info p { line-height: 1em; margin-top: 10px; color:#b2b5b9; }
+.clmn-4 .info .later { position: absolute; width:105px; height:88px; background:url('http://builtbyhq.com/projects/school/CORE/v1/img/watch-later-icon.png') no-repeat; background-size: cover; top:-10px; right:-20px; cursor: pointer; }
+.clmn-4 .info .later:hover { background:url('http://builtbyhq.com/projects/school/CORE/v1/img/watch-later-hover.png'); }
+.clmn-4 .info .download { position: absolute; width:105px; height:88px; background:url('http://builtbyhq.com/projects/school/CORE/v1/img/download-icon.png') no-repeat; background-size: cover; top:-10px; right:-20px; cursor: pointer; }
+.clmn-4 .info .download:hover { background:url('http://builtbyhq.com/projects/school/CORE/v1/img/download-icon-hover.png'); }
 
 
 /************************************************************\
@@ -433,6 +447,7 @@ box-shadow:         0px 2px 3px rgba(50, 50, 50, 0.25);
 #search .overflow { height:335px; width:100%; overflow: scroll; }
 #search .resources { width:597px; margin:3px 3px 3px 0; float:left; }
 #search .groups { width:600px; margin:3px 0; float:left; }
+.search-form input[type=submit]:disabled, button:disabled { display:none; }
 
 
 /************************************************************\

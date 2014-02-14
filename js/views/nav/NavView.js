@@ -3,6 +3,8 @@ define( function ( require ) {
 
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
+	var Vent       = require( 'Vent' );
+
 	var template   = require( 'text!templates/nav/nav.html' );
 
 	return Marionette.ItemView.extend( {
@@ -21,7 +23,9 @@ define( function ( require ) {
 			'mouseleave @ui.resourcesDropdown' : 'hideResourcesDropdown',
 
 			'mouseenter @ui.menu'              : 'showMenu',
-			'mouseleave @ui.drawer'            : 'hideMenu'
+			'mouseleave @ui.drawer'            : 'hideMenu',
+
+			'submit form'                      : 'showSearchResults'
 		},
 
 		'showResourcesDropdown' : function ( event ) {
@@ -61,6 +65,12 @@ define( function ( require ) {
 					this.hide();
 				}.bind( this.ui.drawer ) );
 		},
+
+		'showSearchResults' : function ( event ) {
+
+			Vent.trigger( 'search:showSearchResults' );
+
+		}
 
 	} );
 
