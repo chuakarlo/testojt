@@ -4,6 +4,7 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var Backbone   = require( 'backbone' );
 	var modularize = require( './modules' );
+	var Vent       = require( 'Vent' );
 
 	// main app
 	var App = new Marionette.Application();
@@ -35,7 +36,7 @@ define( function ( require ) {
 			
 			// If no fragment exists, load login
 			if ( this.getCurrentRoute() === '' ) {
-				App.trigger( 'login:show' );
+				Vent.trigger( 'login:show' );
 			}
 		}
 	} );
