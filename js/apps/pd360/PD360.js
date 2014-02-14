@@ -1,48 +1,105 @@
 define( function ( require ) {
 	'use strict';
-
-	var $    = require( 'jquery' );
+	
 	var Vent = require( 'Vent' );
+	var Show = require( './controller/pd360Controller' );
 
-	return function ( pd360App, App ) {
+	return function ( PD360, App ) {
 
-		// initialize PD360 swf on creation
-		var PD360 = require( './views/PD360View' );
-		App.flashContent.show( new PD360() );
+		App.module( 'PD360.Show', Show );
 
-		var content = $( App.flashContent.el );
-		var pd360;
+		var API = {
 
-		Vent.on( 'flash:show', function () {
-			content.removeClass( 'hidden-flash' );
-		} );
+			'embed' : function () {
+				PD360.Show.Controller.embed();
+			},
 
-		Vent.on( 'flash:hide', function () {
-			content.addClass( 'hidden-flash' );
-		} );
+			'navigate' : function ( main, sub, options ) {
+				PD360.Show.Controller.navigate( main, sub, options );
+			},
 
-		Vent.on( 'flash:navigate', function ( main, sub, options ) {
-			if ( !pd360 ) {
-				pd360 = $( '#PD360' )[ 0 ];
+			'show' : function () {
+				PD360.Show.Controller.show();
+			},
+
+			'hide' : function () {
+				PD360.Show.Controller.hide();
+			},
+
+			'applicationComplete' : function () {
+				PD360.Show.Controller.applicationComplete();
+			},
+
+			'loginComplete' : function () {
+				PD360.Show.Controller.loginComplete();
+			},
+
+			'login' : function ( username, password ) {
+				PD360.Show.Controller.login( username, password );
+			},
+
+			'logout' : function () {
+				PD360.Show.Controller.logout();
 			}
 
-			sub = sub || '';
+		};
 
-			if ( options ) {
-				pd360.navigateFromContainer( main, sub, options );
-			} else {
-				pd360.navigateFromContainer( main, sub );
+		// initialize PD360 swf on creation if authenticated
+		PD360.on( 'start', function () {
+			if ( App.request( 'session:authenticated' ) ) {
+				API.embed();
 			}
-
 		} );
 
-		Vent.on( 'flash:login', function ( creds ) {
-			pd360.loginFromContainer( creds.ncesId, 'pd360', creds.email + '|' + creds.username, creds.md5 );
+		Vent.on( 'login:success', function () {
+			API.embed();
 		} );
 
-		Vent.on( 'flash:logout', function () {
-			pd360.logoutFromContainer();
+		// callback for pd360 load completion
+		window.applicationComplete = function () {
+			Vent.trigger( 'pd360:applicationComplete' );
+		};
+
+		// remove listener and global method once event is triggered
+		Vent.once( 'pd360:applicationComplete', function () {
+			window.applicationComplete = undefined;
+			API.applicationComplete();
 		} );
+
+		// callback for pd360 login completion
+		window.loginComplete = function () {
+			Vent.trigger( 'pd360:loginComplete' );
+		};
+
+		// remove listener and global method once event is triggered
+		Vent.once( 'pd360:loginComplete', function () {
+			window.loginComplete = undefined;
+			API.loginComplete();
+		} );
+
+		Vent.on( 'pd360:show', function () {
+			API.show();
+		} );
+
+		Vent.on( 'pd360:hide', function () {
+			API.hide();
+		} );
+
+		Vent.on( 'pd360:navigate', function ( main, sub, options ) {
+			API.navigate( main, sub, options );
+		} );
+
+		Vent.on( 'pd360:login', function ( username, password ) {
+			API.login( username, password );
+		} );
+
+		Vent.on( 'pd360:logout', function () {
+			API.logout();
+		} );
+
+		
+
+		
 
 	};
 } );

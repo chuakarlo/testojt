@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	var SearchShow = require( './show/showController' );
+	var SearchShow = require( './controllers/showController' );
 	var Vent       = require( 'Vent' );
 	var Marionette = require( 'marionette' );
 
@@ -23,7 +23,7 @@ define( function ( require ) {
 		var API = {
 
 			'showSearchResults' : function () {
-				Vent.trigger( 'flash:hide' );
+				Vent.trigger( 'pd360:hide' );
 				Search.Show.Controller.showSearchResults();
 			}
 

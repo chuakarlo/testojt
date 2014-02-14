@@ -2,7 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var Vent              = require( 'Vent' );
-	var SearchResultsView = require( 'views/search/searchResultsView' );
+	var SearchResultsView = require( '../views/searchResultsView' );
 
 	return function ( Show, App ) {
 

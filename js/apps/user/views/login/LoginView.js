@@ -7,7 +7,7 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var Vent       = require( 'Vent' );
 	var Session    = require( 'Session' );
-	var template   = require( 'text!templates/user/loginView.html' );
+	var template   = require( 'text!../../templates/login/loginView.html' );
 
 	return Marionette.ItemView.extend( {
 		'template' : _.template( template ),
@@ -18,8 +18,7 @@ define( function ( require ) {
 
 		'ui' : {
 			'username' : 'input[type=text]',
-			'password' : 'input[type=password]',
-			'loginBtn' : 'input[type=submit]'
+			'password' : 'input[type=password]'
 		},
 
 		'login' : function ( event ) {
@@ -42,7 +41,7 @@ define( function ( require ) {
 					'password' : password,
 					'success'  : function ( jqXHR, status, error ) {
 
-						Vent.trigger( 'AppController:showSessionInfo', {} );
+						Vent.trigger( 'login:success' );
 
 					}.bind( this ),
 

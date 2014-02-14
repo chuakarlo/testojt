@@ -5,7 +5,7 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var Vent       = require( 'Vent' );
 
-	var template   = require( 'text!templates/nav/nav.html' );
+	var template   = require( 'text!../templates/nav.html' );
 
 	return Marionette.ItemView.extend( {
 		'template'  : _.template( template ),
@@ -67,7 +67,7 @@ define( function ( require ) {
 		},
 
 		'showSearchResults' : function ( event ) {
-
+			event.preventDefault();
 			Vent.trigger( 'search:showSearchResults' );
 
 		}

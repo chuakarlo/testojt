@@ -22,18 +22,10 @@
 			'text'                : 'libs/requirejs-text/text',
 			'underscore'          : 'libs/lodash/lodash',
 
-			// root folders
-			'collections' : 'collections',
-			'controllers' : 'controllers',
-			'models'      : 'models',
-			'routers'     : 'routers',
-			'views'       : 'views',
-			'templates'   : '../templates',
-
 			// Base application level classes
 			'Vent'    : 'Vent',
 			'App'     : 'App',
-			'Session' : 'models/users/SessionModel'
+			'Session' : 'apps/user/models/SessionModel'
 
 		},
 

@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	var HeaderShow = require( './show/showController' );
+	var HeaderShow = require( './controllers/showController' );
 	var Vent       = require( 'Vent' );
 
 	return function ( Header, App ) {
