@@ -12,7 +12,7 @@
 			'backbone'            : 'libs/backbone-amd/backbone',
 			'backbone.babysitter' : 'libs/backbone.babysitter/lib/amd/backbone.babysitter',
 			'backbone.wreqr'      : 'libs/backbone.wreqr/lib/amd/backbone.wreqr',
-			'bootstrap'           : 'libs/bootstrap/docs/assets/js/bootstrap',
+			'bootstrap'           : 'libs/bootstrap/dist/js/bootstrap.min',
 			'jquery'              : 'libs/jquery/jquery',
 			'jquery-cookie'       : 'libs/jquery-cookie/jquery.cookie',
 			'jquery-placeholder'  : 'libs/jquery-placeholder/jquery.placeholder.min',
@@ -54,7 +54,7 @@
 
 		}
 
-	}, require( [ 'App', 'jquery-placeholder', 'modernizr' ], function ( App ) {
+	}, require( [ 'App', 'jquery-placeholder', 'modernizr', 'bootstrap' ], function ( App ) {
 		return App.start();
 	} ) );
 
