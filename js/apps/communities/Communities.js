@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	var CommunitiesShow = require( './show/showController' );
+	var CommunitiesShow = require( './controllers/showController' );
 	var Vent            = require( 'Vent' );
 	var Marionette      = require( 'marionette' );
 

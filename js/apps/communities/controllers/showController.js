@@ -11,9 +11,9 @@ define( function ( require ) {
 
 				App.content.close();
 
-				Vent.trigger( 'flash:navigate', 'communities', 'communitiesBrowse' );
+				Vent.trigger( 'pd360:navigate', 'communities', 'communitiesBrowse' );
 
-				Vent.trigger( 'flash:show' );
+				Vent.trigger( 'pd360:show' );
 
 			}
 
