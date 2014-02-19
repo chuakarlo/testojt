@@ -30,7 +30,8 @@ define( function ( require ) {
 		'flashvars'         : flashvars,
 		'menu'              : 'false',
 		'quality'           : 'high',
-		'scale'             : 'noscale'
+		'scale'             : 'noscale',
+		'wmode'             : 'opaque'
 	};
 
 	return Marionette.ItemView.extend( {
