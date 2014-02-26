@@ -61,6 +61,10 @@ define( function ( require ) {
 			return Session.authenticated();
 		} );
 
+		App.reqres.setHandler( 'session:username', function () {
+			return Session.username();
+		} );
+
 		App.addInitializer( function () {
 			new User.Router( {
 				'controller' : API

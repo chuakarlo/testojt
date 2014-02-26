@@ -7,20 +7,17 @@ define( function ( require ) {
 	return function ( Show, App ) {
 
 		var navigate = function ( sub ) {
-			Vent.trigger( 'pd360:navigate', 'observation', sub );
-			Vent.trigger( 'pd360:show' );
+			App.PD360.navigate( ObservationView, 'observation', sub );
 		};
 
 		Show.Controller = {
 
 			'showObservationsOfMe' : function () {
 				navigate( 'observationOfMe' );
-				App.content.show( new ObservationView() );
 			},
 
 			'showProcessesOfMe' : function () {
 				navigate( 'observationProcessesOfMe' );
-				App.content.show( new ObservationView() );
 			}
 
 		};

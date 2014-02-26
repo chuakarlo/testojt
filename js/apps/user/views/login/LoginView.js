@@ -39,12 +39,6 @@ define( function ( require ) {
 				Session.fetch( {
 					'username' : username,
 					'password' : password,
-					'success'  : function ( jqXHR, status, error ) {
-
-						Vent.trigger( 'login:success' );
-
-					}.bind( this ),
-
 					'error'    : function ( jqXHR, status, error ) {
 						// TODO: error handling
 					}.bind( this )

@@ -40,8 +40,32 @@ define( function ( require ) {
 
 			'logout' : function () {
 				PD360.Show.Controller.logout();
+			},
+
+			'embedComplete' : function ( success ) {
+				PD360.Show.Controller.embedComplete( success );
 			}
 
+		};
+
+		PD360.show = function () {
+			API.show();
+		};
+
+		PD360.hide = function () {
+			API.hide();
+		};
+
+		PD360.navigate = function ( View, main, sub, options ) {
+			API.navigate( View, main, sub, options );
+		};
+
+		PD360.login = function ( username, password ) {
+			API.login( username, password );
+		};
+
+		PD360.logout = function () {
+			API.logout();
 		};
 
 		// initialize PD360 swf on creation if authenticated
@@ -53,6 +77,14 @@ define( function ( require ) {
 
 		Vent.on( 'login:success', function () {
 			API.embed();
+		} );
+
+		Vent.on( 'pd360:login', function ( username, password ) {
+			API.login( username, password );
+		} );
+
+		Vent.on( 'embed:complete', function ( success ) {
+			API.embedComplete( success );
 		} );
 
 		// callback for pd360 load completion
@@ -77,29 +109,6 @@ define( function ( require ) {
 			API.loginComplete();
 		} );
 
-		Vent.on( 'pd360:show', function () {
-			API.show();
-		} );
-
-		Vent.on( 'pd360:hide', function () {
-			API.hide();
-		} );
-
-		Vent.on( 'pd360:navigate', function ( main, sub, options ) {
-			API.navigate( main, sub, options );
-		} );
-
-		Vent.on( 'pd360:login', function ( username, password ) {
-			API.login( username, password );
-		} );
-
-		Vent.on( 'pd360:logout', function () {
-			API.logout();
-		} );
-
-		
-
-		
-
 	};
+	
 } );

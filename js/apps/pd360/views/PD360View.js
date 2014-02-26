@@ -4,6 +4,7 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 	var $          = require( 'jquery' );
+	var Vent       = require( 'Vent' );
 
 	var template  = require( 'text!../templates/PD360.html' );
 
@@ -12,15 +13,18 @@ define( function ( require ) {
 	var base = 'js/apps/pd360/swf';
 	var swf  = base + '/PD360.swf';
 
-	var minVersion = '10.2.159';
 	var flashvars;
+	
+	var minVersion  = '10.2.159';
+	var flashWidth  = '960';
+	var flashHeight = '1100';
 
 	var flashAttributes = {
 		'id'     : 'PD360',
 		'name'   : 'PD360',
 		'data'   : swf,
-		'width'  : '960',
-		'height' : '1100'
+		'width'  : flashWidth,
+		'height' : flashHeight
 	};
 
 	var flashParams = {
@@ -40,15 +44,17 @@ define( function ( require ) {
 
 		'id' : 'wrapper',
 
-		'createSWF' : function () {
+		'embedSWF' : function () {
 			// if they have the minimum required flash version, create the swf
-			if ( swfobject.hasFlashPlayerVersion( minVersion ) ) {
-				swfobject.createSWF( flashAttributes, flashParams, this.id );
-			}
+			swfobject.embedSWF( swf, this.id, flashWidth, flashHeight, minVersion, null, null, flashParams, flashAttributes, this.embedComplete );
+		},
+
+		'embedComplete' : function ( event ) {
+			Vent.trigger( 'embed:complete', event.success );
 		},
 
 		'onDomRefresh' : function () {
-			this.createSWF();
+			this.embedSWF();
 		}
 
 	} );

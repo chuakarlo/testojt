@@ -5,6 +5,12 @@ define( function ( require ) {
 	var _        = require( 'underscore' );
 	var Backbone = require( 'backbone' );
 	var Cookie   = require( 'jquery-cookie' );
+	var Vent     = require( 'Vent' );
+
+	var usernameCookie = 'URESPOND';
+	var cfCookie       = 'CFAUTHORIZATION_PD360';
+
+	var cookieOptions = { 'path' : '/' };
 
 	var Session = Backbone.Model.extend( {
 
@@ -15,13 +21,24 @@ define( function ( require ) {
 		// `username` & `password` to login
 		// does not pass the username and password in the ajax call
 		'fetch' : function ( options ) {
-			var model = this;
-
 			// credentials provided
 			if ( ( options.username && options.password ) ) {
 
 				this.username = options.username;
 				this.password = options.password;
+
+				var done = options.success;
+
+				options.success = function ( jqXHR, status, error ) {
+					Vent.trigger( 'login:success' );
+					Vent.trigger( 'pd360:login', this.username, this.password );
+
+					this.setCookie( usernameCookie, this.username );
+
+					if ( done ) {
+						done( jqXHR, status, error );
+					}
+				}.bind( this );
 
 				// remove username and password so that jQuery doesn't make the URL http://user:pass@domain.com
 				delete options.username;
@@ -35,7 +52,23 @@ define( function ( require ) {
 
 		// check to see if the user is logged in
 		'authenticated' : function () {
-			return Boolean( $.cookie( 'CFAUTHORIZATION_PD360' ) );
+			return Boolean( $.cookie( cfCookie ) );
+		},
+
+		'username' : function () {
+			return $.cookie( usernameCookie );
+		},
+
+		// sets a cookie, defaults to path of `/`
+		'setCookie' : function ( name, value, options ) {
+			options = options || cookieOptions;
+			$.cookie( name, value, options );
+		},
+
+		// remove a cookie, defaults to path of `/`
+		'removeCookie' : function ( name, options ) {
+			options = options || cookieOptions;
+			$.removeCookie( name, options );
 		}
 
 	} );
