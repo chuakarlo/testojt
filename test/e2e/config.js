@@ -1,5 +1,5 @@
 module.exports = {
-	'src'           : 'test/**/*.js',
+	'src'           : 'test/e2e/**/*.js',
 	'localBrowsers' : [ 'chrome', 'firefox', 'safari' ],
 	'platforms'     : 'test/e2e/platforms.json',
 

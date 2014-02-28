@@ -21,6 +21,7 @@
 			'shim'                : 'libs/es5-shim/es5-shim.min',
 			'text'                : 'libs/requirejs-text/text',
 			'underscore'          : 'libs/lodash/lodash',
+			'MiddlewareRouter'    : 'libs/MiddlewareRouter',
 
 			// Base application level classes
 			'Vent'    : 'Vent',
@@ -50,11 +51,15 @@
 
 			'jquery-placeholder' : {
 				'deps' : [ 'jquery' ]
+			},
+
+			'MiddlewareRouter' : {
+				'deps' : [ 'marionette' ]
 			}
 
 		}
 
-	}, require( [ 'App', 'jquery-placeholder', 'modernizr', 'bootstrap' ], function ( App ) {
+	}, require( [ 'App', 'jquery-placeholder', 'modernizr', 'bootstrap', 'MiddlewareRouter' ], function ( App ) {
 		return App.start();
 	} ) );
 

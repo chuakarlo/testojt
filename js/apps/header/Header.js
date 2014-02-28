@@ -21,6 +21,10 @@ define( function ( require ) {
 			API.showHeader();
 		} );
 
+		Vent.on( 'session:destroy', function () {
+			API.showHeader();
+		} );
+
 		Vent.on( 'session:change', function () {
 			API.showHeader();
 		} );

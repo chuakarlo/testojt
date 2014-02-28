@@ -114,8 +114,12 @@ define( function ( require ) {
 			},
 
 			'logout' : function () {
-				pd360.logoutFromContainer();
+				if ( pd360 ) {
+					pd360.logoutFromContainer();
+					pd360 = null;
+				}
 				App.flashContent.close();
+
 				pd360         = null;
 				appLoaded     = false;
 				loginComplete = false;
@@ -158,6 +162,7 @@ define( function ( require ) {
 
 				// show flash player install
 				this.show();
+
 			}
 
 		};

@@ -9,8 +9,7 @@ define( function ( require ) {
 
 	var usernameCookie = 'URESPOND';
 	var cfCookie       = 'CFAUTHORIZATION_PD360';
-
-	var cookieOptions = { 'path' : '/' };
+	var cookieOptions  = { 'path' : '/' };
 
 	var Session = Backbone.Model.extend( {
 
@@ -48,6 +47,23 @@ define( function ( require ) {
 
 			// else no credentials provided, TODO: Error handling
 			}
+		},
+
+		// extra logout steps
+		// removes persistence
+		'destroy' : function ( options ) {
+
+			// remove Coldfusion cookies
+			$.removeCookie( 'CFAUTHORIZATION_PD360' );
+			$.removeCookie( 'CFID' );
+			$.removeCookie( 'CFTOKEN' );
+
+			// Log out of flash
+			Vent.trigger( 'pd360:logout' );
+
+			// trigger session change for menus, etc
+			Vent.trigger( 'session:destroy' );
+
 		},
 
 		// check to see if the user is logged in

@@ -11,21 +11,33 @@ define( function ( require ) {
 		// load communities
 		App.module( 'Communities.Show', CommunitiesShow );
 
+
 		// configure communities routes
-		Communities.Router = Marionette.AppRouter.extend( {
+		Communities.Router = Marionette.MiddlewareRouter.extend( {
 
 			'appRoutes' : {
-				'communities' : 'showCommunities'
+				'communities' : [
+					'checkSession',
+					'showCommunities'
+				]
 			}
 
 		} );
 
 		var API = {
 
-			'showCommunities' : function () {
-				Communities.Show.Controller.showCommunities();
-			}
+		// ## Middleware
+		'checkSession' : function ( args, callback ) {
 
+			App.request( 'session:checkSession', args, callback );
+
+		},
+
+		'showCommunities' : function ( error, results, args ) {
+
+				Communities.Show.Controller.showCommunities();
+
+			}
 		};
 
 		App.addInitializer( function () {

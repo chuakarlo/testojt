@@ -18,8 +18,9 @@ define( function ( require ) {
 		User.Router = Marionette.AppRouter.extend( {
 
 			'appRoutes' : {
-				'login' : 'showLogin',
-				'home'  : 'showHome'
+				'login'  : 'showLogin',
+				'logout' : 'showLogout',
+				'home'   : 'showHome'
 			}
 
 		} );
@@ -34,6 +35,12 @@ define( function ( require ) {
 			'showHome' : function () {
 				Vent.trigger( 'pd360:hide' );
 				User.Home.Controller.showHome();
+			},
+
+			'showLogout' : function () {
+				Vent.trigger( 'pd360:hide' );
+				Session.destroy();
+				User.Login.Controller.showLogin();
 			}
 
 		};
@@ -63,6 +70,27 @@ define( function ( require ) {
 
 		App.reqres.setHandler( 'session:username', function () {
 			return Session.username();
+		} );
+
+		// set handler when requesting if session is authenticated
+		App.reqres.setHandler( 'session:checkSession', function ( args, callback ) {
+
+			// Already logged in
+			if ( Session.authenticated() === true ) {
+
+				// Pass 'callback' the authenticated user
+				callback( null, Session );
+			}
+
+			// Not logged in
+			else {
+
+				App.navigate( 'login', { 'trigger' : true } );
+
+				return false;
+
+			}
+
 		} );
 
 		App.addInitializer( function () {
