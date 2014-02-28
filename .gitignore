@@ -5,7 +5,7 @@ node_modules/
 #########################################################
 ##### libraries
 js/libs/*
-
+!js/libs/MiddlewareRouter.js
 #########################################################
 ##### compiled files
 *.min.js
