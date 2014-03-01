@@ -37,6 +37,10 @@
 				'exports' : 'Backbone'
 			},
 
+			'marionette' : {
+				'deps' : [ 'backbone' ]
+			},
+
 			'bootstrap' : {
 				'deps' : [ 'jquery' ]
 			},
@@ -55,6 +59,10 @@
 
 			'MiddlewareRouter' : {
 				'deps' : [ 'marionette' ]
+			},
+
+			'App' : {
+				'deps' : [ 'MiddlewareRouter' ]
 			}
 
 		}
