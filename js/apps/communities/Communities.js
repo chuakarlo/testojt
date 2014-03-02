@@ -8,9 +8,8 @@ define( function ( require ) {
 	// ## Communities App
 	return function ( Communities, App ) {
 
-		// load communities
+		// load communities show module
 		App.module( 'Communities.Show', CommunitiesShow );
-
 
 		// configure communities routes
 		Communities.Router = Marionette.MiddlewareRouter.extend( {
@@ -26,18 +25,15 @@ define( function ( require ) {
 
 		var API = {
 
-		// ## Middleware
-		'checkSession' : function ( args, callback ) {
+			// ## Middleware
+			'checkSession' : function ( args, callback ) {
+				App.request( 'session:checkSession', args, callback );
+			},
 
-			App.request( 'session:checkSession', args, callback );
-
-		},
-
-		'showCommunities' : function ( error, results, args ) {
-
+			'showCommunities' : function ( error, results, args ) {
 				Communities.Show.Controller.showCommunities();
-
 			}
+
 		};
 
 		App.addInitializer( function () {

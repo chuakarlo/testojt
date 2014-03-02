@@ -1,0 +1,26 @@
+<!doctype html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Mocha Spec Runner</title>
+	<link rel="stylesheet" href="../../js/libs/mocha/mocha.css">
+</head>
+<body>
+	<div id="mocha"></div>
+	
+	<div id="modal" style="visibility:hidden;"></div>
+	<div id="menu" style="visibility:hidden;"></div>
+	<div id="content" style="visibility:hidden;"></div>
+
+	<script src="../../js/libs/mocha/mocha.js"></script>
+	<script src="../../js/libs/chai/chai.js"></script>
+	<script src="../../js/libs/sinonjs/sinon.js"></script>
+	<script>
+		mocha.setup( {
+			'ui'       : 'bdd',
+			'reporter' : 'html'
+		} );
+	</script>
+	<script src="../../js/libs/requirejs/require.js" data-main="SpecRunner"></script>
+</body>
+</html>

@@ -26,17 +26,17 @@ suite( function ( env ) {
       })
       .elementByTagName('html', function(err, el) {
         b.next('text', el, function(err, text) {
-          expect("" + text).to.contain("" + "{LumiBook}");
+          expect("" + text).to.contain("" + "LumiBook");
         });
       })
       .elementByTagName('html', function(err, el) {
         b.next('text', el, function(err, text) {
-          expect("" + text).to.contain("" + "{Observation}");
+          expect("" + text).to.contain("" + "Observation");
         });
       })
       .elementByTagName('html', function(err, el) {
         b.next('text', el, function(err, text) {
-          expect("" + text).to.contain("" + "{Communities}");
+          expect("" + text).to.contain("" + "Communities");
         });
       })
       .elementByTagName('html', function(err, el) {

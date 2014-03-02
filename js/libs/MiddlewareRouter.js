@@ -24,17 +24,19 @@ define( function( require ) {
       var err;
       var errMsg;
 
-      for(route in appRoutes){
-        if (appRoutes.hasOwnProperty(route)){
-          routes.unshift([route, appRoutes[route]]);
+      var _appRoutes = _.cloneDeep( appRoutes );
+      
+      for ( route in _appRoutes ){
+        if ( _appRoutes.hasOwnProperty( route ) ) {
+          routes.unshift( [ route, _appRoutes[ route ] ] );
         }
       }
 
       routesLength = routes.length;
-      for ( i = 0; i < routesLength; i++ ){
+      for ( i = 0; i < routesLength; i++ ) {
         route = routes[ i ][ 0 ];
         methodName = routes[ i ][ 1 ];
-        if( typeof methodName === 'string' ) {
+        if ( typeof methodName === 'string' ) {
           method = controller[ methodName ];
 
           if ( !method ){
