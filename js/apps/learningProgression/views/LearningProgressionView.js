@@ -2,7 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette = require( 'marionette' );
-	var template   = require( 'text!../templates/learningProgression.html' );
+	var template   = require( 'text!learningProgression/templates/learningProgression.html' );
 	var _          = require( 'underscore' );
 
 	return Marionette.ItemView.extend( {

@@ -3,7 +3,7 @@ define( function ( require ) {
 
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
-	var template   = require( 'text!../templates/searchResultsView.html' );
+	var template   = require( 'text!search/templates/searchResultsView.html' );
 
 	return Marionette.ItemView.extend( {
 		'template'  : _.template( template )

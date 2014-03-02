@@ -6,8 +6,8 @@ define( function ( require ) {
 	var Vent          = require( 'Vent' );
 
 	var templates = {
-		'loggedIn'  : require( 'text!../templates/nav.html' ),
-		'loggedOut' : require( 'text!../templates/navLoggedOut.html' )
+		'loggedIn'  : require( 'text!header/templates/nav.html' ),
+		'loggedOut' : require( 'text!header/templates/navLoggedOut.html' )
 	};
 
 	return Marionette.Layout.extend( {

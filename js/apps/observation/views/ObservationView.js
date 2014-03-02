@@ -2,7 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette = require( 'marionette' );
-	var template   = require( 'text!../templates/observation.html' );
+	var template   = require( 'text!observation/templates/observation.html' );
 	var _          = require( 'underscore' );
 	var $          = require( 'jquery' );
 

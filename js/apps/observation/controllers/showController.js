@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	var ObservationView = require( '../views/ObservationView' );
+	var ObservationView = require( 'observation/views/ObservationView' );
 	var Vent            = require( 'Vent' );
 
 	return function ( Show, App ) {

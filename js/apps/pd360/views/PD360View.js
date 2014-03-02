@@ -6,7 +6,7 @@ define( function ( require ) {
 	var $          = require( 'jquery' );
 	var Vent       = require( 'Vent' );
 
-	var template  = require( 'text!../templates/PD360.html' );
+	var template  = require( 'text!pd360/templates/PD360.html' );
 
 	var swfobject = window.swfobject;
 

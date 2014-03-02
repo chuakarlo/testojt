@@ -5,7 +5,7 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var Vent       = require( 'Vent' );
 
-	var template   = require( 'text!../templates/nav.html' );
+	var template   = require( 'text!header/templates/nav.html' );
 
 	return Marionette.ItemView.extend( {
 		'template'  : _.template( template ),

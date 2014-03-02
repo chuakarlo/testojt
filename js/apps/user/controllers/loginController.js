@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	var LoginView = require( '../views/login/LoginView' );
+	var LoginView = require( 'user/views/login/LoginView' );
 
 	return function ( Login, App ) {
 

@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	var HomeView = require( '../views/home/HomeView' );
+	var HomeView = require( 'user/views/home/HomeView' );
 
 	return function ( Home, App ) {
 

@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	var LearningProgressionView = require( '../views/LearningProgressionView' );
+	var LearningProgressionView = require( 'learningProgression/views/LearningProgressionView' );
 
 	return function ( Show, App ) {
 

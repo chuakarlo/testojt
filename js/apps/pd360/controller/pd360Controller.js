@@ -1,8 +1,8 @@
 define( function ( require ) {
 	'use strict';
 
-	var PD360View   = require( '../views/PD360View' );
-	var LoadingView = require( '../views/LoadingView' );
+	var PD360View   = require( 'pd360/views/PD360View' );
+	var LoadingView = require( 'pd360/views/LoadingView' );
 	var Vent        = require( 'Vent' );
 	var $           = require( 'jquery' );
 

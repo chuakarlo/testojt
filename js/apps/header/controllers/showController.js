@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	var Menu = require( '../views/NavLayout' );
+	var Menu = require( 'header/views/NavLayout' );
 
 	return function ( Show, App ) {
 

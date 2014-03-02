@@ -26,7 +26,17 @@
 			// Base application level classes
 			'Vent'    : 'Vent',
 			'App'     : 'App',
-			'Session' : 'apps/user/models/SessionModel'
+			'Session' : 'apps/user/models/SessionModel',
+
+			// app base folders
+			'communities'         : 'apps/communities',
+			'header'              : 'apps/header',
+			'learningProgression' : 'apps/learningProgression',
+			'lumibook'            : 'apps/lumibook',
+			'observation'         : 'apps/observation',
+			'pd360'               : 'apps/pd360',
+			'search'              : 'apps/search',
+			'user'                : 'apps/user'
 
 		},
 
