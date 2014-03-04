@@ -30,6 +30,7 @@ define( function ( require ) {
 
 				options.success = function ( jqXHR, status, error ) {
 					Vent.trigger( 'login:success' );
+					Vent.trigger( 'session:change' );
 					Vent.trigger( 'pd360:login', this.username, this.password );
 
 					this.setCookie( usernameCookie, this.username );
