@@ -28,17 +28,17 @@ define( function ( require ) {
 		var API = {
 
 			'showLogin' : function () {
-				Vent.trigger( 'pd360:hide' );
+				App.PD360.hide();
 				User.Login.Controller.showLogin();
 			},
 
 			'showHome' : function () {
-				Vent.trigger( 'pd360:hide' );
+				App.PD360.hide();
 				User.Home.Controller.showHome();
 			},
 
 			'showLogout' : function () {
-				Vent.trigger( 'pd360:hide' );
+				App.PD360.hide();
 				Session.destroy();
 				User.Login.Controller.showLogin();
 			}

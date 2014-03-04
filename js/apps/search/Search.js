@@ -23,7 +23,7 @@ define( function ( require ) {
 		var API = {
 
 			'showSearchResults' : function () {
-				Vent.trigger( 'pd360:hide' );
+				App.PD360.hide();
 				Search.Show.Controller.showSearchResults();
 			}
 
