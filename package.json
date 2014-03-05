@@ -4,6 +4,9 @@
   "version": "0.1.0",
   "author": "School Improvement Network",
   "description": "HTML5 + Flash PD360",
+  "scripts" : {
+      "test" : "grunt test"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/School-Improvement-Network/pd360-html.git"
@@ -13,6 +16,8 @@
   },
   "devDependencies": {
     "express": "3.4.x",
-    "request": "2.33.x"
+    "request": "2.33.x",
+    "grunt": "0.4.x",
+    "grunt-mocha-phantomjs": "0.4.x"
   }
 }

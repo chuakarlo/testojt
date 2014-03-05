@@ -4,9 +4,9 @@
   "dependencies": {
     "async": "0.2.5",
     "backbone-amd": "1.0.x",
-    "backbone.babysitter": "0.0.x",
+    "backbone.babysitter": "0.1.x",
     "backbone.marionette": "1.6.x",
-    "backbone.wreqr": "0.2.x",
+    "backbone.wreqr": "1.0.x",
     "bootstrap": "3.1.x",
     "es5-shim": "2.1.x",
     "jquery": "2.1.x",
@@ -30,5 +30,8 @@
     "sinon-chai": "2.5.x",
     "sinonjs": "1.7.x"
   },
-  "directory": "js/libs"
+  "directory": "js/libs",
+  "resolutions": {
+    "jquery": "2.1.x"
+  }
 }

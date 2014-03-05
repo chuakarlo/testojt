@@ -16,7 +16,7 @@
 			'backbone.wreqr'      : 'libs/backbone.wreqr/lib/amd/backbone.wreqr',
 			'bootstrap'           : 'libs/bootstrap/docs/assets/js/bootstrap',
 			'chai'                : 'libs/chai/chai',
-			'jquery'              : 'libs/jquery/jquery',
+			'jquery'              : 'libs/jquery/dist/jquery',
 			'jquery-cookie'       : 'libs/jquery-cookie/jquery.cookie',
 			'jquery-placeholder'  : 'libs/jquery-placeholder/jquery.placeholder.min',
 			'json'                : 'libs/requirejs-plugins/src/json',
@@ -48,7 +48,7 @@
 		},
 
 		'shim' : {
-			
+
 			'backbone' : {
 				'deps'    : [ 'underscore', 'jquery' ],
 				'exports' : 'Backbone'
@@ -93,13 +93,13 @@
 			// on dom ready require all specs and run
 			$( function () {
 				require( suite.specs, function () {
+					window.chai.should();
+					window.chai.use( sinon );
 
 					if ( window.mochaPhantomJS ) {
 						window.mochaPhantomJS.run();
 					} else {
 						window.mocha.run();
-						window.chai.should();
-						window.chai.use( sinon );
 					}
 
 				} );

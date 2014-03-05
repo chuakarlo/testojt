@@ -1,10 +1,22 @@
 language: node_js
 
+cache:
+  directories:
+    - node_modules
+
 node_js:
   - "0.10"
 
 install:
   - npm install -g git+https://AxS4AaP:836e170c40319c4a1f0ada346f644615fc6005d2@github.com/School-Improvement-Network/travis-scripts.git
+  - npm install -g bower
+  - npm install -g grunt-cli
+  - npm install
+  - bower install
+
+before_script:
+  - node server.js &
 
 script:
   - travis lint
+  - npm test

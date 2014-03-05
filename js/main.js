@@ -13,7 +13,7 @@
 			'backbone.babysitter' : 'libs/backbone.babysitter/lib/amd/backbone.babysitter',
 			'backbone.wreqr'      : 'libs/backbone.wreqr/lib/amd/backbone.wreqr',
 			'bootstrap'           : 'libs/bootstrap/dist/js/bootstrap.min',
-			'jquery'              : 'libs/jquery/jquery',
+			'jquery'              : 'libs/jquery/dist/jquery',
 			'jquery-cookie'       : 'libs/jquery-cookie/jquery.cookie',
 			'jquery-placeholder'  : 'libs/jquery-placeholder/jquery.placeholder.min',
 			'marionette'          : 'libs/backbone.marionette/lib/core/amd/backbone.marionette',
