@@ -1,5 +1,7 @@
 'use strict';
 
+var childProcess = require( 'child_process' );
+
 module.exports = function ( grunt ) {
 
 	grunt.loadNpmTasks( 'grunt-mocha-phantomjs' );
@@ -32,5 +34,23 @@ module.exports = function ( grunt ) {
 
 	} );
 
-	grunt.registerTask( 'test', 'run tests for public scripts', [ 'mocha_phantomjs:public-test' ] );
+	grunt.registerTask( 'test', 'run all tests', [ 'test:phantomjs', 'test:selenium' ] );
+
+	grunt.registerTask( 'test:phantomjs', 'run tests for public scripts', 'mocha_phantomjs:public-test' );
+
+	grunt.task.registerTask( 'test:selenium', 'run e2e (selenium tests)', function () {
+		var done = this.async();
+
+		childProcess.exec( 'e2e',  function ( error, stdout, stderror ) {
+			if ( error || stderror ) {
+				grunt.fail.fatal( error || stderror );
+			}
+
+			console.log( stdout );
+			console.log( stderror );
+
+			done();
+		} );
+	} );
+
 };

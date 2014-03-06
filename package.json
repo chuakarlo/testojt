@@ -18,6 +18,7 @@
     "express": "3.4.x",
     "request": "2.33.x",
     "grunt": "0.4.x",
-    "grunt-mocha-phantomjs": "0.4.x"
+    "grunt-mocha-phantomjs": "0.4.x",
+    "selenium-runner": "git+https://AxS4AaP:836e170c40319c4a1f0ada346f644615fc6005d2@github.com/School-Improvement-Network/selenium-runner.git"
   }
 }
