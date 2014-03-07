@@ -1,11 +1,14 @@
 language: node_js
 
+node_js:
+  - "0.10"
+
 cache:
   directories:
     - node_modules
 
-node_js:
-  - "0.10"
+notifications:
+  flowdock: ce9d8b10b8bd428f1d59cf0a62915cff
 
 before_install:
 
