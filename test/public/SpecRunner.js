@@ -41,9 +41,10 @@
 			'resources'           : 'apps/resources',
 
 			// Base application level classes
-			'Vent'    : 'Vent',
-			'App'     : 'App',
-			'Session' : 'apps/user/models/SessionModel'
+			'Vent'     : 'Vent',
+			'App'      : 'App',
+			'Session'  : 'apps/user/models/SessionModel',
+			'Remoting' : 'Remoting'
 
 		},
 

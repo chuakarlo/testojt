@@ -44,6 +44,14 @@ define( function ( require ) {
 
 			'embedComplete' : function ( success ) {
 				PD360.Show.Controller.embedComplete( success );
+			},
+
+			'available' : function () {
+				return PD360.Show.Controller.available();
+			},
+
+			'signature' : function ( method, args ) {
+				return PD360.Show.Controller.signature( method, args );
 			}
 
 		};
@@ -66,6 +74,14 @@ define( function ( require ) {
 
 		PD360.logout = function () {
 			API.logout();
+		};
+
+		PD360.available = function () {
+			return API.available();
+		};
+
+		PD360.signature = function ( method, args ) {
+			return API.signature( method, args );
 		};
 
 		// initialize PD360 swf on creation if authenticated

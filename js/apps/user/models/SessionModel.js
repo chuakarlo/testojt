@@ -7,9 +7,10 @@ define( function ( require ) {
 	var Cookie   = require( 'jquery-cookie' );
 	var Vent     = require( 'Vent' );
 
-	var usernameCookie = 'URESPOND';
-	var cfCookie       = 'CFAUTHORIZATION_PD360';
-	var cookieOptions  = { 'path' : '/' };
+	var usernameCookie  = 'URESPOND';
+	var personnelCookie = 'PID';
+	var cfCookie        = 'CFAUTHORIZATION_PD360';
+	var cookieOptions   = { 'path' : '/' };
 
 	var Session = Backbone.Model.extend( {
 
@@ -34,6 +35,7 @@ define( function ( require ) {
 					Vent.trigger( 'pd360:login', this.username, this.password );
 
 					this.setCookie( usernameCookie, this.username );
+					this.setCookie( personnelCookie, jqXHR[ 0 ].PersonnelId );
 
 					if ( done ) {
 						done( jqXHR, status, error );
@@ -55,9 +57,13 @@ define( function ( require ) {
 		'destroy' : function ( options ) {
 
 			// remove Coldfusion cookies
-			$.removeCookie( 'CFAUTHORIZATION_PD360' );
-			$.removeCookie( 'CFID' );
-			$.removeCookie( 'CFTOKEN' );
+			this.removeCookie( cfCookie );
+			this.removeCookie( 'CFID' );
+			this.removeCookie( 'CFTOKEN' );
+
+			// remove personnelId & username
+			this.removeCookie( personnelCookie );
+			this.removeCookie( usernameCookie );
 
 			// Log out of flash
 			Vent.trigger( 'pd360:logout' );
@@ -74,6 +80,14 @@ define( function ( require ) {
 
 		'username' : function () {
 			return $.cookie( usernameCookie );
+		},
+
+		'token' : function () {
+			return $.cookie( 'CFTOKEN' );
+		},
+
+		'personnelId' : function () {
+			return $.cookie( personnelCookie );
 		},
 
 		// sets a cookie, defaults to path of `/`

@@ -1,10 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	var PD360View   = require( 'pd360/views/PD360View' );
-	var LoadingView = require( 'pd360/views/LoadingView' );
-	var Vent        = require( 'Vent' );
-	var $           = require( 'jquery' );
+	var PD360View = require( 'pd360/views/PD360View' );
+	var Vent      = require( 'Vent' );
+	var $         = require( 'jquery' );
 
 	return function ( Show, App ) {
 
@@ -59,7 +58,7 @@ define( function ( require ) {
 
 					// store the requested view and show a loading view while PD360 loads
 					RequestedView = View;
-					App.content.show( new LoadingView() );
+					App.content.show( new App.Common.LoadingView() );
 				}
 
 			},
@@ -80,7 +79,7 @@ define( function ( require ) {
 				if ( pendingLogin ) {
 					this.login( pendingLogin.username, pendingLogin.password );
 					pendingLogin = null;
-				} else if ( App.request( 'session:authenticated' )  ){
+				} else if ( App.request( 'session:authenticated' ) ){
 					this.compare();
 				}
 			},
@@ -163,6 +162,14 @@ define( function ( require ) {
 				// show flash player install
 				this.show();
 
+			},
+
+			'available' : function () {
+				return appLoaded;
+			},
+
+			'signature' : function ( method, args ) {
+				return pd360.cfJsonAPIMethod1( method, args );
 			}
 
 		};

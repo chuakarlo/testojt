@@ -24,9 +24,10 @@
 			'MiddlewareRouter'    : 'libs/MiddlewareRouter',
 
 			// Base application level classes
-			'Vent'    : 'Vent',
-			'App'     : 'App',
-			'Session' : 'apps/user/models/SessionModel',
+			'Vent'     : 'Vent',
+			'App'      : 'App',
+			'Session'  : 'apps/user/models/SessionModel',
+			'Remoting' : 'Remoting',
 
 			// app base folders
 			'communities'         : 'apps/communities',
@@ -57,6 +58,11 @@
 
 			'jquery' : {
 				'exports': '$'
+			},
+
+			'underscore' : {
+				'deps' : [ 'jquery' ],
+				'exports' : '_'
 			},
 
 			'jquery-cookie' : {

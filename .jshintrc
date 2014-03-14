@@ -16,6 +16,9 @@
 	"browser"   : true,
 	"sub"       : true,
 	"smarttabs" : true,
+	"camelcase" : true,
+	"maxparams" : 5,
+	"unused"    : "vars",
 
 	"globals": {
 		"module"     : true,

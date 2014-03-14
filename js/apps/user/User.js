@@ -4,28 +4,35 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var Vent       = require( 'Vent' );
 
-	var Login   = require( './controllers/loginController' );
-	var Home    = require( './controllers/homeController' );
-	var Session = require( 'Session' );
+	var Login    = require( './controllers/loginController' );
+	var Home     = require( './controllers/homeController' );
+	var Settings = require( './controllers/settingsController' );
+	var Session  = require( 'Session' );
 
 	return function ( User, App ) {
 
 		// load sub apps
 		App.module( 'User.Login', Login );
 		App.module( 'User.Home', Home );
+		App.module( 'User.Settings', Settings );
 
 		// configure routes
-		User.Router = Marionette.AppRouter.extend( {
+		User.Router = Marionette.MiddlewareRouter.extend( {
 
 			'appRoutes' : {
-				'login'  : 'showLogin',
-				'logout' : 'showLogout',
-				'home'   : 'showHome'
+				'login'            : 'showLogin',
+				'logout'           : 'showLogout',
+				'home'             : 'showHome',
+				'settings(/:page)' : [ 'checkSession', 'showSettings' ]
 			}
 
 		} );
 
 		var API = {
+
+			'checkSession' : function ( args, callback ) {
+				App.request( 'session:checkSession', args, callback );
+			},
 
 			'showLogin' : function () {
 				App.PD360.hide();
@@ -41,7 +48,15 @@ define( function ( require ) {
 				App.PD360.hide();
 				Session.destroy();
 				User.Login.Controller.showLogin();
-			}
+			},
+
+			'showSettings' : function ( error, results, args ) {
+				// TODO: error handling
+				if ( !error ) {
+					App.PD360.hide();
+					User.Settings.Controller.showSettings( args[ 0 ] );
+				}
+			},
 
 		};
 
@@ -76,7 +91,7 @@ define( function ( require ) {
 		App.reqres.setHandler( 'session:checkSession', function ( args, callback ) {
 
 			// Already logged in
-			if ( Session.authenticated() === true ) {
+			if ( Session.authenticated() ) {
 
 				// Pass 'callback' the authenticated user
 				callback( null, Session );
@@ -84,13 +99,9 @@ define( function ( require ) {
 
 			// Not logged in
 			else {
-
 				App.navigate( 'login', { 'trigger' : true } );
-
-				return false;
-
+				callback( false );
 			}
-
 		} );
 
 		App.addInitializer( function () {

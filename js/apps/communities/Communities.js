@@ -2,7 +2,6 @@ define( function ( require ) {
 	'use strict';
 
 	var CommunitiesShow = require( './controllers/showController' );
-	var Vent            = require( 'Vent' );
 	var Marionette      = require( 'marionette' );
 
 	// ## Communities App
@@ -31,7 +30,10 @@ define( function ( require ) {
 			},
 
 			'showCommunities' : function ( error, results, args ) {
-				Communities.Show.Controller.showCommunities();
+				// TODO: error handling
+				if ( !error ) {
+					Communities.Show.Controller.showCommunities();
+				}
 			}
 
 		};

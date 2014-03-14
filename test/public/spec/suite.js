@@ -9,7 +9,9 @@ define( function ( require ) {
 			'spec/apps/communities/CommunitiesTest',
 			'spec/apps/communities/controllers/CommunitiesShowControllerTest',
 
-			'spec/apps/header/HeaderTest'
+			'spec/apps/header/HeaderTest',
+
+			'spec/RemotingTest'
 		]
 
 	};

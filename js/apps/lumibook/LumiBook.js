@@ -3,28 +3,30 @@ define( function ( require ) {
 
 	var Marionette = require( 'marionette' );
 	var Show       = require( './controllers/showController' );
-	var Vent       = require( 'Vent' );
 
 	return function ( LumiBook, App ) {
 
 		// load sub apps
 		App.module( 'LumiBook.Show', Show );
 
-		LumiBook.Router = Marionette.AppRouter.extend( {
+		LumiBook.Router = Marionette.MiddlewareRouter.extend( {
 
 			'appRoutes' : {
-				'lumibook' : 'showLumiBook'
+				'lumibook' : [ 'checkSession', 'showLumiBook' ]
 			}
 
 		} );
 
 		var API = {
 
-			'showLumiBook' : function () {
-				if ( App.request( 'session:authenticated' ) ) {
+			'checkSession' : function ( args, callback ) {
+				App.request( 'session:checkSession', args, callback );
+			},
+
+			'showLumiBook' : function ( error, results, args ) {
+				// TODO: error handling
+				if ( !error ) {
 					LumiBook.Show.Controller.showLumiBook();
-				} else {
-					Vent.trigger( 'login:show', 'lumibook' );
 				}
 			}
 

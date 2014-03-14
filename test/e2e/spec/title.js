@@ -5,7 +5,7 @@ var expect = require( 'selenium-runner' ).expect;
 
 suite( function ( env ) {
 
-  describe.only( 'Title', function() {
+  describe( 'Title', function() {
 
     it( 'should have correct title', function( done ) {
       var browser = env.browser;
