@@ -7,7 +7,6 @@ define( function ( require ) {
 	var _       = require( 'underscore' );
 	
 	var App;
-	var defer;
 
 	var Remoting = function () {
 
@@ -28,11 +27,11 @@ define( function ( require ) {
 			}
 
 			if ( !data.method && typeof data.method !== 'string' ) {
-				return defer.reject( 'Missing parameter: method' );
+				return callback( 'Missing parameter: method' );
 			}
 
 			if ( !data.args ) {
-				return defer.reject( 'Missing parameter: args' );
+				return callback( 'Missing parameter: args' );
 			}
 
 			// params to get a signature
@@ -110,10 +109,10 @@ define( function ( require ) {
 		};
 
 		// process the requests
-		var processRequests = function ( requests ) {
+		var processRequests = function ( requests, defer ) {
 
 			// add request to an array, if not already an Array
-			if ( !( requests instanceof Array ) ) {
+			if ( requests instanceof Array === false ) {
 				requests = [ requests ];
 			}
 
@@ -138,13 +137,13 @@ define( function ( require ) {
 		// public API, send requests to ColdFusion
 		// returns a promise that will resolve on success/failure
 		this.fetch = function ( requests ) {
-			defer = $.Deferred();
+			var defer = $.Deferred();
 
 			if ( !requests ) {
-				return defer.reject();
+				return defer.reject( 'No requests to process' );
 			}
 
-			processRequests( requests );
+			processRequests( requests, defer );
 
 			return defer.promise();
 		};

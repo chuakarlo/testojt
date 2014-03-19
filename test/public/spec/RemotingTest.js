@@ -25,6 +25,7 @@ define( function ( require ) {
 
 				$.when( fetching ).fail( function ( error ) {
 					spy.should.have.callCount( 0 );
+					error.should.equal( 'No requests to process' );
 					done();
 				} );
 			} );
