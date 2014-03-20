@@ -11,6 +11,8 @@ define( function ( require ) {
 
 			'spec/apps/header/HeaderTest',
 
+			'spec/apps/user/LicensesTest',
+
 			'spec/RemotingTest'
 		]
 

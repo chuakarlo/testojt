@@ -7,6 +7,7 @@ define( function ( require ) {
 	var Login    = require( './controllers/loginController' );
 	var Home     = require( './controllers/homeController' );
 	var Settings = require( './controllers/settingsController' );
+	var Licenses = require( './controllers/licensesController' );
 	var Session  = require( 'Session' );
 
 	return function ( User, App ) {
@@ -15,6 +16,7 @@ define( function ( require ) {
 		App.module( 'User.Login', Login );
 		App.module( 'User.Home', Home );
 		App.module( 'User.Settings', Settings );
+		App.module( 'User.Licenses', Licenses );
 
 		// configure routes
 		User.Router = Marionette.MiddlewareRouter.extend( {
@@ -46,6 +48,7 @@ define( function ( require ) {
 
 			'showLogout' : function () {
 				App.PD360.hide();
+				User.Licenses.clear();
 				Session.destroy();
 				User.Login.Controller.showLogin();
 			},

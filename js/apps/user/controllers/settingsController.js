@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	var SettingsView = require( '../views/settings/SettingsView' );
+	var SettingsView = require( 'user/views/settings/SettingsView' );
 	var $            = require( 'jquery' );
 	var Remoting     = require( 'Remoting' );
 	var Session      = require( 'Session' );

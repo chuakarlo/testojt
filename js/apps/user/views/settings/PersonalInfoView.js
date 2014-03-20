@@ -2,7 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette = require( 'marionette' );
-	var UserModel  = require( '../../models/UserModel' );
+	var UserModel  = require( 'user/models/UserModel' );
 	var Remoting   = require( 'Remoting' );
 	var template   = require( 'text!user/templates/settings/personalInfo.html' );
 	var Session    = require( 'Session' );

@@ -3,7 +3,7 @@ define( function ( require ) {
 
 	var Marionette = require( 'marionette' );
 	var Backbone   = require( 'backbone' );
-	var template   = require( 'text!../../templates/settings/settings.html' );
+	var template   = require( 'text!user/templates/settings/settings.html' );
 	var _          = require( 'underscore' );
 	var App;
 
