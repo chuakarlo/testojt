@@ -1,7 +1,6 @@
 'use strict';
 
 var suite  = require( 'selenium-runner' ).suite;
-var expect = require( 'selenium-runner' ).expect;
 
 suite( function ( env ) {
 

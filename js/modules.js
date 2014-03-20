@@ -6,6 +6,7 @@ define( function ( require ) {
 	var User        = require( 'apps/user/User' );
 	var PD360       = require( 'apps/pd360/PD360' );
 	var CommonViews = require( 'common/views' );
+	var Groups      = require( 'apps/groups/Groups' );
 
 	// apply the modules to the app
 	return function ( App ) {
@@ -16,6 +17,7 @@ define( function ( require ) {
 
 		// load common views
 		App.module( 'Common', CommonViews );
+		App.module( 'Groups', Groups );
 	};
-	
+
 } );

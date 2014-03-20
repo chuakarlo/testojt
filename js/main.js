@@ -37,7 +37,8 @@
 			'observation'         : 'apps/observation',
 			'pd360'               : 'apps/pd360',
 			'search'              : 'apps/search',
-			'user'                : 'apps/user'
+			'user'                : 'apps/user',
+			'groups'              : 'apps/groups'
 
 		},
 

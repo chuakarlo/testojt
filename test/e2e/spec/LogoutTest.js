@@ -15,21 +15,26 @@ suite( function ( env ) {
 			browser
 				.get( 'http://localhost:8080/#login' )
 
+				// Login
 				.elementById( 'login-input-email' ).clear().type( 'matthew.donaldson@schoolimprovement.com' )
 				.elementById( 'login-input-password' ).clear().type( 'pd360' )
 				.elementById( 'login-button' ).click()
 
+				// verify no nav present
 				.hasElementByXPath( '//div[@id=\'main-content\']//h1[.=\'Home\']' ).should.eventually.equal( true )
 				.hasElementByXPath( '//li[@id=\'resources-tab\']//span[.=\'Resources\']' ).should.eventually.equal( true )
-				.hasElementByXPath( '//li[@id=\'groups-tab\']//span[.=\'{Groups}\']' ).should.eventually.equal( true )
+				.hasElementByXPath( '//li[@id=\'groups-tab\']//span[.=\'Groups\']' ).should.eventually.equal( true )
 
+				// hover over side menu
 				.elementByCssSelector( 'div.nav-menu' ).moveTo( 0, 0 )
 
-				.elementByXPath('//a[@id=\'logout\']//li[.=\'Log Out\']' ).click()
+				// click logout
+				.elementByXPath( '//a[@id=\'logout\']//li[.=\'Log Out\']' ).click()
 
-				.hasElementByXPath('//div[@class=\'sub-page-header\']//h1[.=\'Login\']' ).should.eventually.equal( true )
-				.hasElementByXPath('//li[@id=\'resources-tab\']//span[.=\'Resources\']' ).should.eventually.equal( false )
-				.hasElementByXPath('//li[@id=\'groups-tab\']//span[.=\'{Groups}\']' ).should.eventually.equal( false )
+				// verify nav present
+				.hasElementByXPath( '//div[@class=\'sub-page-header\']//h1[.=\'Login\']' ).should.eventually.equal( true )
+				.hasElementByXPath( '//li[@id=\'resources-tab\']//span[.=\'Resources\']' ).should.eventually.equal( false )
+				.hasElementByXPath( '//li[@id=\'groups-tab\']//span[.=\'Groups\']' ).should.eventually.equal( false )
 
 				.nodeify( done );
 

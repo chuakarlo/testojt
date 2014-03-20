@@ -1,0 +1,58 @@
+'use strict';
+
+var suite  = require( 'selenium-runner' ).suite;
+
+suite( function ( env ) {
+
+  describe.skip( 'Group', function ( ) {
+
+    it( 'should display group', function ( done ) {
+
+      var browser = env.browser;
+
+      browser.maximize();
+
+      browser
+        .get( 'http://localhost:8080/' )
+
+        // login
+        .elementById( 'login-input-email' ).clear().type( 'matthew.donaldson@schoolimprovement.com' )
+        .elementById( 'login-input-password' ).clear().type( 'pd360' )
+        .elementById( 'login-button' ).click()
+
+        // wait for home page to display
+        .sleep( 500 )
+
+        // go to group page
+        .get( 'http://localhost:8080/#groups/84021' )
+
+        // the title should contain the correct group name
+        .elementByXPath( '//div[@class=\'title\']/h2' )
+        .text().should.eventually.become( 'Jim Knight - Instructional Coaching June 2012' )
+
+        // button should be a join button
+        .elementById( 'membership' )
+        .text().should.eventually.become( 'Join' )
+
+        // join the group
+        .elementById( 'membership' ).click()
+
+        // refresh group page
+        .refresh()
+
+        .sleep( 500 )
+
+        // button should be a leave button
+        .elementById( 'membership' )
+        .text().should.eventually.become( 'Leave' )
+
+        // leave the group
+        .elementById( 'membership' ).click()
+
+        .nodeify( done );
+
+    } );
+
+  } );
+
+} );

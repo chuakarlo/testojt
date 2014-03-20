@@ -100,7 +100,9 @@ define( function ( require ) {
 			// Not logged in
 			else {
 				App.navigate( 'login', { 'trigger' : true } );
+
 				callback( false );
+
 			}
 		} );
 
