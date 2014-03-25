@@ -1,6 +1,6 @@
 # PD360 HTML5 + Flash
 
-[![Build Status](https://magnum.travis-ci.com/School-Improvement-Network/pd360-html.png?token=3bGtp5fzpJFR5LXXN31c&branch=dev)](https://magnum.travis-ci.com/School-Improvement-Network/pd360-html)
+[![Build Status](https://magnum.travis-ci.com/School-Improvement-Network/pd360-html.svg?token=3bGtp5fzpJFR5LXXN31c&branch=dev)](https://magnum.travis-ci.com/School-Improvement-Network/pd360-html)
 
 ### Setup
 1. `git clone https://github.com/School-Improvement-Network/pd360-html.git`
