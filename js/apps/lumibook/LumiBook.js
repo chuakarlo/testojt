@@ -2,12 +2,12 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette = require( 'marionette' );
-	var Show       = require( './controllers/showController' );
+	var App        = require( 'App' );
 
-	return function ( LumiBook, App ) {
+	App.module( 'LumiBook', function ( LumiBook ) {
 
 		// load sub apps
-		App.module( 'LumiBook.Show', Show );
+		require( './controllers/showController' );
 
 		LumiBook.Router = Marionette.MiddlewareRouter.extend( {
 
@@ -38,6 +38,6 @@ define( function ( require ) {
 			} );
 		} );
 
-	};
+	} );
 
 } );

@@ -24,10 +24,7 @@
 			'MiddlewareRouter'    : 'libs/MiddlewareRouter',
 
 			// Base application level classes
-			'Vent'     : 'Vent',
-			'App'      : 'App',
 			'Session'  : 'apps/user/models/SessionModel',
-			'Remoting' : 'Remoting',
 
 			// app base folders
 			'communities'         : 'apps/communities',
@@ -84,9 +81,20 @@
 
 		}
 
-	}, require( [ 'App', 'jquery-placeholder', 'modernizr', 'bootstrap', 'MiddlewareRouter' ], function ( App ) {
-		return App.start();
-	} ) );
+	} );
+	
+	define( function ( require ) {
+		var App = require( 'App' );
 
+		require( 'jquery-cookie' );
+		require( 'jquery-placeholder' );
+		require( 'modernizr' );
+		require( 'bootstrap' );
+
+		require( 'modules' );
+
+		App.start();
+
+	} );
 
 } ).call( this );

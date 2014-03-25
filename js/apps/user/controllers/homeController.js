@@ -2,8 +2,9 @@ define( function ( require ) {
 	'use strict';
 
 	var HomeView = require( 'user/views/home/HomeView' );
+	var App      = require( 'App' );
 
-	return function ( Home, App ) {
+	App.module( 'User.Home', function ( Home ) {
 
 		Home.Controller = {
 
@@ -14,6 +15,6 @@ define( function ( require ) {
 
 		};
 
-	};
+	} );
 
 } );

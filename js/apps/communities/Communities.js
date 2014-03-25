@@ -1,14 +1,14 @@
 define( function ( require ) {
 	'use strict';
 
-	var CommunitiesShow = require( './controllers/showController' );
-	var Marionette      = require( 'marionette' );
+	var Marionette = require( 'marionette' );
+	var App        = require( 'App' );
 
 	// ## Communities App
-	return function ( Communities, App ) {
+	App.module( 'Communities', function ( Communities ) {
 
 		// load communities show module
-		App.module( 'Communities.Show', CommunitiesShow );
+		require( './controllers/showController' );
 
 		// configure communities routes
 		Communities.Router = Marionette.MiddlewareRouter.extend( {
@@ -44,6 +44,6 @@ define( function ( require ) {
 			} );
 		} );
 
-	};
+	} );
 
 } );

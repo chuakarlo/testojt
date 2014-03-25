@@ -2,8 +2,9 @@ define( function ( require ) {
 	'use strict';
 
 	var ObservationView = require( 'observation/views/ObservationView' );
+	var App             = require( 'App' );
 
-	return function ( Show, App ) {
+	App.module( 'Observation.Show', function ( Show ) {
 
 		var navigate = function ( sub ) {
 			App.PD360.navigate( ObservationView, 'observation', sub );
@@ -20,6 +21,6 @@ define( function ( require ) {
 			}
 
 		};
-	};
+	} );
 	
 } );

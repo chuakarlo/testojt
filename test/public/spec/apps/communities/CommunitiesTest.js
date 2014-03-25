@@ -1,69 +1,54 @@
 define( function ( require ) {
 	'use strict';
 
-	var communitiesModule = require( 'apps/communities/Communities' );
-	var sinon             = window.sinon;
+	var Marionette = require( 'marionette' );
+	var sinon      = window.sinon;
+	var App        = require( 'App' );
 
-	var Communities;
-	var App;
-	var API;
-
-	var stub;
-	var spy;
+	require( 'communities/Communities' );
 
 	describe( 'Communities Module', function () {
 
-		beforeEach( function () {
-			App = {
-				'addInitializer' : function () {},
-				'module'         : function () {}
-			};
-
-			Communities = {
-				'Router' : function () {}
-			};
-
-			API = {
-				'checkSession'    : function () {},
-				'showCommunities' : function () {}
-			};
+		after( function () {
+			App.module( 'Communities' ).stop();
 		} );
 
-		afterEach( function () {
-			Communities = null;
-			App     = null;
-			API     = null;
+		it( 'should create module Communities', function () {
 
-			stub = null;
-			spy  = null;
+			App.should.have.property( 'Communities' );
+			App.Communities.should.be.an.instanceof( Marionette.Module );
+			App.Communities.should.have.property( 'Router' );
+
 		} );
 
-		it( 'should create module `Communities.Show`', function () {
-			spy  = sinon.spy( App, 'module' );
+		describe( 'Show Submodule', function () {
+			
+			before( function () {
+				App.PD360 = {};
+			} );
 
-			communitiesModule( Communities, App );
+			after( function () {
+				App.PD360 = null;
+			} );
 
-			spy.should.have.callCount( 1 );
-			spy.should.have.been.calledWith( 'Communities.Show' );
-		} );
+			it( 'should create submodule `Show`', function () {
 
-		it( 'should call `addInitializer` on App', function () {
-			spy = sinon.spy( App, 'addInitializer' );
+				App.Communities.should.have.property( 'Show' );
+				App.Communities.Show.should.have.property( 'Controller' );
+				App.Communities.Show.Controller.should.have.property( 'showCommunities' );
 
-			communitiesModule( Communities, App );
+			} );
 
-			spy.should.have.callCount( 1 );
-		} );
+			it( '`showCommunities` should call PD360.navigate', function () {
+				var spy = sinon.spy();
+				App.PD360.navigate = spy;
 
-		it( 'should listen for app route `communities`', function () {
-			communitiesModule( Communities, App );
+				App.Communities.Show.Controller.showCommunities();
 
-			var Router = new Communities.Router( { 'controller' : API } );
+				spy.should.have.callCount( 1 );
+				spy.should.have.been.calledWithExactly( null, 'communities', 'communitiesBrowse' );
+			} );
 
-			Router.should.have.property( 'appRoutes' );
-			Router.appRoutes.should.have.property( 'communities' );
-			Router.appRoutes.communities.should.be.an.instanceOf( Array );
-			Router.appRoutes.communities.should.eql( [ 'checkSession', 'showCommunities' ] );
 		} );
 
 	} );

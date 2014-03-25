@@ -2,8 +2,9 @@ define( function ( require ) {
 	'use strict';
 
 	var LearningProgressionView = require( 'learningProgression/views/LearningProgressionView' );
+	var App                     = require( 'App' );
 
-	return function ( Show, App ) {
+	App.module( 'LearningProgression.Show', function ( Show ) {
 
 		Show.Controller = {
 
@@ -13,6 +14,6 @@ define( function ( require ) {
 
 		};
 
-	};
+	} );
 	
 } );

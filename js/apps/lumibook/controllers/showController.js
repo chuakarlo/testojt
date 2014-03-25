@@ -1,7 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	return function ( Show, App ) {
+	var App = require( 'App' );
+
+	App.module( 'LumiBook.Show', function ( Show ) {
 		
 		Show.Controller = {
 
@@ -11,6 +13,6 @@ define( function ( require ) {
 
 		};
 
-	};
+	} );
 
 } );

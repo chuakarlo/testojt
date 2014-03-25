@@ -3,18 +3,14 @@ define( function ( require ) {
 
 	var Session = require( 'Session' );
 	var async   = require( 'async' );
+	var App     = require( 'App' );
 	var $       = require( 'jquery' );
 	var _       = require( 'underscore' );
 	
-	var App;
-
 	var Remoting = function () {
 
 		// get a signature and call coldfusion with it
 		var getSignature = function ( data, callback ) {
-
-			// solves a race condition in which App is "not loaded before context _" when requiring at top of page
-			App = App || require( 'App' );
 
 			// if PD360 is available
 			if( App.PD360.available() ) {

@@ -3,9 +3,10 @@ define( function ( require ) {
 
 	var PD360View = require( 'pd360/views/PD360View' );
 	var Vent      = require( 'Vent' );
+	var App       = require( 'App' );
 	var $         = require( 'jquery' );
 
-	return function ( Show, App ) {
+	App.module( 'PD360.Show', function ( Show, App ) {
 
 		var container = $( App.flashContent.el );
 
@@ -174,6 +175,6 @@ define( function ( require ) {
 
 		};
 
-	};
+	} );
 
 } );

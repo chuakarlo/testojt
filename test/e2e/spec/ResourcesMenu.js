@@ -4,7 +4,7 @@ var suite = require( 'selenium-runner' ).suite;
 
 suite( function ( env ) {
 
-  describe.skip( 'Resource Menu', function() {
+  describe( 'Resource Menu', function() {
 
     it( 'should contain expected Resource Apps', function ( done ) {
       var browser = env.browser;

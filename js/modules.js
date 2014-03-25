@@ -1,23 +1,12 @@
 define( function ( require ) {
 	'use strict';
 
-	var Resources   = require( 'apps/resources' );
-	var Header      = require( 'apps/header/Header' );
-	var User        = require( 'apps/user/User' );
-	var PD360       = require( 'apps/pd360/PD360' );
-	var CommonViews = require( 'common/views' );
-	var Groups      = require( 'apps/groups/Groups' );
-
-	// apply the modules to the app
-	return function ( App ) {
-		App.module( 'Header', Header );
-		App.module( 'User', User );
-		App.module( 'Resources', Resources );
-		App.module( 'PD360', PD360 );
-
-		// load common views
-		App.module( 'Common', CommonViews );
-		App.module( 'Groups', Groups );
-	};
+	require( 'apps/resources' );
+	require( 'apps/header/Header' );
+	require( 'apps/user/User' );
+	require( 'apps/pd360/PD360' );
+	require( 'apps/groups/Groups' );
+	
+	require( 'common/views' );
 
 } );

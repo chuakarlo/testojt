@@ -2,9 +2,10 @@ define( function ( require ) {
 	'use strict';
 
 	var Remoting = require( 'Remoting' );
+	var App      = require( 'App' );
 	var $        = require( 'jquery' );
 
-	return function ( Edit, App ) {
+	App.module( 'Groups.Edit', function ( Edit ) {
 
 		Edit.Controller = {
 
@@ -15,7 +16,7 @@ define( function ( require ) {
 					'path'   : 'com.schoolimprovement.pd360.dao.AdminService',
 					'method' : 'returnASeatToLicense',
 					'args'   : {
-						'persId'    : $.cookie( 'PID' ),
+						'persId'    : $.cookie( 'PID' ) || null,
 						'licId'     : model.attributes.LicenseId,
 						'removerId' : model.attributes.Creator
 					}
@@ -41,7 +42,7 @@ define( function ( require ) {
 					'path'   : 'com.schoolimprovement.pd360.dao.AdminService',
 					'method' : 'takeASeatFromLicense',
 					'args'   : {
-						'persId'    : $.cookie( 'PID' ),
+						'persId'    : $.cookie( 'PID' ) || null,
 						'licId'     : model.attributes.LicenseId,
 						'creatorId' : model.attributes.Creator
 					}
@@ -62,6 +63,6 @@ define( function ( require ) {
 
 		};
 
-	};
+	} );
 
 } );

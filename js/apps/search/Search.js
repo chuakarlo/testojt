@@ -1,15 +1,15 @@
 define( function ( require ) {
 	'use strict';
 
-	var SearchShow = require( './controllers/showController' );
-	var Vent       = require( 'Vent' );
 	var Marionette = require( 'marionette' );
+	var Vent       = require( 'Vent' );
+	var App        = require( 'App' );
 
 	// ## Search App
-	return function ( Search, App ) {
+	App.module( 'Search', function ( Search ) {
 
 		// load search
-		App.module( 'Search.Show', SearchShow );
+		require( './controllers/showController' );
 
 		// configure search routes
 		Search.Router = Marionette.AppRouter.extend( {
@@ -39,6 +39,6 @@ define( function ( require ) {
 			} );
 		} );
 
-	};
+	} );
 
 } );

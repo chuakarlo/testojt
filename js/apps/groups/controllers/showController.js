@@ -1,16 +1,13 @@
 define( function ( require ) {
 	'use strict';
 
-	var Remoting          = require( 'Remoting' );
-	var MemberCollection  = require( '../collections/MemberCollection' );
-	var GroupModel        = require( '../models/GroupModel' );
-	var GroupBannerView   = require( '../views/GroupBannerView' );
-	var GroupHeaderView   = require( '../views/GroupHeaderView' );
-	var GroupCommentsView = require( '../views/GroupCommentsView' );
-	var GroupLayoutView   = require( '../views/GroupLayoutView' );
-	var $                 = require( 'jquery' );
+	var Remoting         = require( 'Remoting' );
+	var MemberCollection = require( '../collections/MemberCollection' );
+	var GroupModel       = require( '../models/GroupModel' );
+	var App              = require( 'App' );
+	var $                = require( 'jquery' );
 
-	return function ( Show, App ) {
+	App.module( 'Groups.Show', function ( Show ) {
 
 		Show.Controller = {
 
@@ -50,7 +47,7 @@ define( function ( require ) {
 					'path'   : 'com.schoolimprovement.pd360.dao.GroupService',
 					'method' : 'getValidGroupsByPersonnelIdOrderedByRecentActivity',
 					'args'   : {
-						'persId' : $.cookie( 'PID' )
+						'persId' : $.cookie( 'PID' ) || null
 					}
 				};
 
@@ -59,8 +56,8 @@ define( function ( require ) {
 
 				$.when( fetchingData ).done( function ( results ) {
 
-					this.layout = new GroupLayoutView();
-					App.content.show( this.layout );
+					var layout = new App.Groups.Views.Layout();
+					App.content.show( layout );
 
 					var group        = results [ 0 ];
 					var members      = results [ 1 ];
@@ -73,16 +70,16 @@ define( function ( require ) {
 					groupModel.groups      = groups;
 
 					// banner image and join button
-					var bannerView = new GroupBannerView( { 'model' : groupModel, 'groups' : groups } );
-					this.layout.bannerRegion.show( bannerView );
+					var bannerView = new App.Groups.Views.Banner( { 'model' : groupModel, 'groups' : groups } );
+					layout.bannerRegion.show( bannerView );
 
 					// members list and group name
-					var headerView = new GroupHeaderView( { 'model' : groupModel, 'collection' : memberCollection } );
-					this.layout.headerRegion.show( headerView );
+					var headerView = new App.Groups.Views.Header( { 'model' : groupModel, 'collection' : memberCollection } );
+					layout.headerRegion.show( headerView );
 
 					// wall
-					var commentsView = new GroupCommentsView( { 'model' : groupModel } );
-					this.layout.commentsRegion.show( commentsView );
+					var commentsView = new App.Groups.Views.Comments( { 'model' : groupModel } );
+					layout.commentsRegion.show( commentsView );
 
 				} ).fail( function ( error ) {
 					// TODO: error handling
@@ -91,6 +88,6 @@ define( function ( require ) {
 			}
 		};
 
-	};
+	} );
 
 } );

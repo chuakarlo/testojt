@@ -4,16 +4,15 @@ define( function ( require ) {
 	return {
 
 		specs : [
-			'spec/apps/ResourcesTest',
+
+			'spec/RemotingTest',
 
 			'spec/apps/communities/CommunitiesTest',
-			'spec/apps/communities/controllers/CommunitiesShowControllerTest',
-
+			'spec/apps/groups/GroupsTest',
 			'spec/apps/header/HeaderTest',
+			'spec/apps/learningProgression/LearningProgressionTest',
+			'spec/apps/user/UserTest'
 
-			'spec/apps/user/LicensesTest',
-
-			'spec/RemotingTest'
 		]
 
 	};

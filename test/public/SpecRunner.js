@@ -38,13 +38,10 @@
 			'pd360'               : 'apps/pd360',
 			'search'              : 'apps/search',
 			'user'                : 'apps/user/',
-			'resources'           : 'apps/resources',
+			'groups'              : 'apps/groups',
 
 			// Base application level classes
-			'Vent'     : 'Vent',
-			'App'      : 'App',
-			'Session'  : 'apps/user/models/SessionModel',
-			'Remoting' : 'Remoting'
+			'Session'  : 'apps/user/models/SessionModel'
 
 		},
 

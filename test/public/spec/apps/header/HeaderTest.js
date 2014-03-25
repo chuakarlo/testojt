@@ -1,58 +1,62 @@
 define( function ( require ) {
 	'use strict';
 
-	var headerModule = require( 'apps/header/Header' );
-	var Vent         = require( 'Vent' );
-	var sinon        = window.sinon;
+	var Marionette = require( 'marionette' );
+	var sinon      = window.sinon;
+	var Vent       = require( 'Vent' );
+	var App        = require( 'App' );
+
+	require( 'apps/header/Header' );
 
 	describe( 'Header Module', function () {
-		var App;
-		var Header;
 
-		beforeEach( function () {
-			App = {
-				'module' : function () {}
-			};
-
-			Header = {
-				'Show' : {
-					'Controller' : {
-						'showHeader' : function () {}
-					}
-				},
-				'on' : function () {}
-			};
+		after( function () {
+			App.module( 'Header' ).stop();
 		} );
 
-		it( 'should create module `Header.Show`', function () {
-			var spy = sinon.spy( App, 'module' );
-
-			headerModule( Header, App );
-
-			spy.should.have.been.calledWith( 'Header.Show' );
+		it( 'should create module `Header`', function () {
+			App.should.have.property( 'Header' );
+			App.Header.should.be.an.instanceof( Marionette.Module );
 		} );
 
-		it( 'should call `showHeader` on start', function () {
-			var stub = sinon.stub( Header, 'on' ).callsArg( 1 );
-			var spy  = sinon.spy( Header.Show.Controller, 'showHeader' );
+		describe( 'Show Submodule', function () {
+			
+			it( 'should create `Show` submodule', function () {
+				App.Header.should.have.property( 'Show' );
+				App.Header.Show.should.have.property( 'Controller' );
+				App.Header.Show.Controller.should.have.property( 'showHeader' );
+			} );
 
-			headerModule( Header, App );
+			it( 'should call controllers `showHeader` on start', function () {
+				var stub = sinon.stub( App.Header.Show.Controller, 'showHeader' );
 
-			stub.should.have.been.calledWith( 'start' );
-			stub.should.have.been.calledBefore( spy );
-			spy.should.have.callCount( 1 );
+				App.Header.trigger( 'start' );
+
+				stub.should.have.callCount( 1 );
+				App.Header.Show.Controller.showHeader.restore();
+			} );
+
+			it( 'should call controllers `showHeader` from Vent `session:destroy`', function () {
+				var stub = sinon.stub( App.Header.Show.Controller, 'showHeader' );
+
+				Vent.trigger( 'session:destroy' );
+
+				stub.should.have.callCount( 1 );
+				App.Header.Show.Controller.showHeader.restore();
+			} );
+
+			it( 'should call controllers `showHeader` from Vent `session:change`', function () {
+				var stub = sinon.stub( App.Header.Show.Controller, 'showHeader' );
+
+				Vent.trigger( 'session:change' );
+
+				stub.should.have.callCount( 1 );
+				App.Header.Show.Controller.showHeader.restore();
+			} );
+
 		} );
 
-		it( 'should call showHeader on Vent `session:change`', function () {
-			var spy = sinon.spy( Header.Show.Controller, 'showHeader' );
-
-			headerModule( Header, App );
-
-			Vent.trigger( 'session:change' );
-
-			spy.should.have.callCount( 1 );
-		} );
 
 	} );
-	
+
 } );

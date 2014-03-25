@@ -2,13 +2,13 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette = require( 'marionette' );
-	var Show       = require( './controllers/showController' );
 	var Vent       = require( 'Vent' );
+	var App        = require( 'App' );
 
-	return function ( Observation, App ) {
+	App.module( 'Observation', function ( Observation ) {
 
 		// load observation sub apps
-		App.module( 'Observation.Show', Show );
+		require( './controllers/showController' );
 
 		// configure routes
 		Observation.Router = Marionette.AppRouter.extend( {
@@ -47,6 +47,6 @@ define( function ( require ) {
 			} );
 		} );
 
-	};
+	} );
 
 } );

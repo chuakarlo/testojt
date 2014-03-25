@@ -1,12 +1,12 @@
 define( function ( require ) {
 	'use strict';
 
-	var Remoting        = require( 'Remoting' );
 	var GroupCollection = require( '../collections/GroupCollection' );
-	var GroupsView      = require( '../views/GroupsView' );
+	var Remoting        = require( 'Remoting' );
+	var App             = require( 'App' );
 	var $               = require( 'jquery' );
 
-	return function ( List, App ) {
+	App.module( 'Groups.List', function ( List ) {
 
 		List.Controller = {
 
@@ -17,7 +17,7 @@ define( function ( require ) {
 					'path'   : 'com.schoolimprovement.pd360.dao.GroupService',
 					'method' : 'getValidGroupsByPersonnelIdOrderedByRecentActivity',
 					'args'   : {
-						'persId' : $.cookie( 'PID' )
+						'persId' : $.cookie( 'PID' ) || null
 					}
 				};
 
@@ -28,7 +28,7 @@ define( function ( require ) {
 
 					var groups = new GroupCollection( results[ 0 ] );
 
-					var groupsView = new GroupsView( { collection : groups } );
+					var groupsView = new App.Groups.Views.List( { 'collection' : groups } );
 					App.content.show( groupsView );
 
 				} ).fail( function ( error ) {
@@ -39,6 +39,6 @@ define( function ( require ) {
 
 		};
 
-	};
+	} );
 
 } );

@@ -2,8 +2,9 @@ define( function ( require ) {
 	'use strict';
 
 	var LoginView = require( 'user/views/login/LoginView' );
+	var App       = require( 'App' );
 
-	return function ( Login, App ) {
+	App.module( 'User.Login', function ( Login, App ) {
 
 		Login.Controller = {
 
@@ -14,6 +15,6 @@ define( function ( require ) {
 
 		};
 
-	};
+	} );
 
 } );

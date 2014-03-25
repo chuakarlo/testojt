@@ -4,7 +4,7 @@ var suite  = require( 'selenium-runner' ).suite;
 
 suite( function ( env ) {
 	
-	describe.skip( 'Settings', function () {
+	describe( 'Settings', function () {
 
 		var browser;
 
@@ -34,7 +34,7 @@ suite( function ( env ) {
 		describe( 'Personal Info Section', function () {
 
 			// create new browser, necessary due to nesting
-			beforeEach( function ( done ) {
+			before( function ( done ) {
 				env.refresh( done );
 			} );
 			
@@ -65,12 +65,16 @@ suite( function ( env ) {
 					.elementById( 'save' )
 					.click()
 
+					.sleep( 1000 )
+
 					// verify user's displayed name
 					.elementByCssSelector( '#profile > div > div.text > h2' )
 					.text().should.eventually.become( 'Diaoo Chann\'s Profile' )
 
 					// refresh
 					.refresh()
+
+					.sleep( 1000 )
 
 					// verify displayed name
 					.elementByCssSelector( '#profile > div > div.text > h2' )

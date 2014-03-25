@@ -4,7 +4,7 @@ var suite  = require( 'selenium-runner' ).suite;
 
 suite( function ( env ) {
 
-  describe.skip( 'Groups', function ( ) {
+  describe( 'Groups', function ( ) {
 
     it( 'should display groups', function ( done ) {
 

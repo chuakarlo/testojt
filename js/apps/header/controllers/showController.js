@@ -2,8 +2,9 @@ define( function ( require ) {
 	'use strict';
 
 	var Menu = require( 'header/views/NavLayout' );
+	var App  = require( 'App' );
 
-	return function ( Show, App ) {
+	App.module( 'Header.Show', function ( Show ) {
 
 		Show.Controller = {
 
@@ -14,6 +15,6 @@ define( function ( require ) {
 
 		};
 
-	};
+	} );
 
 } );

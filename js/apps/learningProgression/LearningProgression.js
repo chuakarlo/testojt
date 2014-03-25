@@ -1,13 +1,13 @@
 define( function ( require ) {
 	'use strict';
 
-	var ShowController = require( './controllers/showController' );
 	var Marionette     = require( 'marionette' );
 	var Vent           = require( 'Vent' );
+	var App            = require( 'App' );
 
-	return function ( LearningProgression, App ) {
+	App.module( 'LearningProgression', function ( LearningProgression ) {
 
-		App.module( 'LearningProgression.Show', ShowController );
+		require( './controllers/showController' );
 
 		LearningProgression.Router = Marionette.AppRouter.extend( {
 
@@ -32,6 +32,6 @@ define( function ( require ) {
 			} );
 		} );
 
-	};
+	} );
 
 } );

@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	var Remoting = require( 'Remoting' );
 	var sinon    = window.sinon;
+	var App      = require( 'App' );
 	var $        = require( 'jquery' );
 
 	describe( 'Remoting Test', function () {
@@ -12,6 +13,19 @@ define( function ( require ) {
 		} );
 
 		describe( 'fetch', function ( done ) {
+
+			var stub;
+
+			before( function () {
+				stub = sinon.stub().returns( false );
+				App.PD360 = {};
+				App.PD360.available = stub;
+			} );
+
+			after( function () {
+				App.PD360 = null;
+				stub      = null;
+			} );
 
 			afterEach( function () {
 				$.ajax.restore();

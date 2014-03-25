@@ -1,19 +1,18 @@
 define( function ( require ) {
 	'use strict';
 
-	var GroupShow  = require( './controllers/showController' );
-	var GroupsList = require( './controllers/listController' );
-	var GroupsEdit = require( './controllers/editController' );
-	var Vent       = require( 'Vent' );
 	var Marionette = require( 'marionette' );
+	var Vent       = require( 'Vent' );
+	var App        = require( 'App' );
 
 	// ## Groups App
-	return function ( Groups, App ) {
+	App.module( 'Groups', function ( Groups ) {
 
 		// load group
-		App.module( 'Groups.List', GroupsList );
-		App.module( 'Groups.Edit', GroupsEdit );
-		App.module( 'Groups.Show', GroupShow );
+		require( './controllers/listController' );
+		require( './controllers/editController' );
+		require( './controllers/showController' );
+		require( './views/Views' );
 
 		// configure groups routes
 		Groups.Router = Marionette.MiddlewareRouter.extend( {
@@ -70,6 +69,6 @@ define( function ( require ) {
 			} );
 		} );
 
-	};
+	} );
 
 } );

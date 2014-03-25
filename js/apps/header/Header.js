@@ -1,13 +1,13 @@
 define( function ( require ) {
 	'use strict';
 
-	var HeaderShow = require( './controllers/showController' );
-	var Vent       = require( 'Vent' );
+	var Vent = require( 'Vent' );
+	var App = require( 'App' );
 
-	return function ( Header, App ) {
+	App.module( 'Header', function ( Header ) {
 
 		// load sub apps of header
-		App.module( 'Header.Show', HeaderShow );
+		require( './controllers/showController' );
 
 		var API = {
 
@@ -29,6 +29,6 @@ define( function ( require ) {
 			API.showHeader();
 		} );
 
-	};
+	} );
 
 } );

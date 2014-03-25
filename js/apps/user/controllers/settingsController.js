@@ -5,8 +5,9 @@ define( function ( require ) {
 	var $            = require( 'jquery' );
 	var Remoting     = require( 'Remoting' );
 	var Session      = require( 'Session' );
+	var App          = require( 'App' );
 
-	return function ( UserSettings, App ) {
+	App.module( 'User.Settings', function ( UserSettings ) {
 
 		UserSettings.Controller = {
 
@@ -61,6 +62,6 @@ define( function ( require ) {
 
 		};
 
-	};
+	} );
 
 } );

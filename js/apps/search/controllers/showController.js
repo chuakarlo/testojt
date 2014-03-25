@@ -1,10 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var Vent              = require( 'Vent' );
 	var SearchResultsView = require( 'search/views/SearchResultsView' );
+	var App               = require( 'App' );
 
-	return function ( Show, App ) {
+	App.module( 'Search.Show', function ( Show ) {
 
 		Show.Controller = {
 
@@ -17,6 +17,6 @@ define( function ( require ) {
 
 		};
 
-	};
+	} );
 
 } );

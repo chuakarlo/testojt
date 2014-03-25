@@ -3,7 +3,6 @@ define( function ( require ) {
 
 	var Marionette = require( 'marionette' );
 	var Backbone   = require( 'backbone' );
-	var modularize = require( './modules' );
 	var Vent       = require( 'Vent' );
 
 	// main app
@@ -15,9 +14,6 @@ define( function ( require ) {
 		'flashContent' : '#flash-content',
 		'menu'         : '#navbar'
 	} );
-
-	// load modules
-	modularize( App );
 
 	// Allow sub apps to update history fragment when using events
 	App.navigate = function ( route, options ) {

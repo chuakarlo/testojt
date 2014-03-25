@@ -2,21 +2,16 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette = require( 'marionette' );
+	var Session    = require( 'Session' );
 	var Vent       = require( 'Vent' );
+	var App        = require( 'App' );
 
-	var Login    = require( './controllers/loginController' );
-	var Home     = require( './controllers/homeController' );
-	var Settings = require( './controllers/settingsController' );
-	var Licenses = require( './controllers/licensesController' );
-	var Session  = require( 'Session' );
+	require( './controllers/loginController' );
+	require( './controllers/homeController' );
+	require( './controllers/settingsController' );
+	require( './entities/License' );
 
-	return function ( User, App ) {
-
-		// load sub apps
-		App.module( 'User.Login', Login );
-		App.module( 'User.Home', Home );
-		App.module( 'User.Settings', Settings );
-		App.module( 'User.Licenses', Licenses );
+	App.module( 'User', function ( User, App ) {
 
 		// configure routes
 		User.Router = Marionette.MiddlewareRouter.extend( {
@@ -48,7 +43,7 @@ define( function ( require ) {
 
 			'showLogout' : function () {
 				App.PD360.hide();
-				User.Licenses.clear();
+				App.request( 'user:licenses:reset' );
 				Session.destroy();
 				User.Login.Controller.showLogin();
 			},
@@ -115,6 +110,6 @@ define( function ( require ) {
 			} );
 		} );
 
-	};
+	} );
 
 } );

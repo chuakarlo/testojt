@@ -13,7 +13,11 @@ var server  = http.createServer( app );
 var files = path.join( cwd );
 
 var proxy = function ( url, request, response ) {
-	util.log( 'proxing request for ' + request.method + ' ' + url );
+	if ( process.env.TRAVIS === 'true' ) {
+		url = 'http://cebudev.pd360.com' + request.path;
+	} else {
+		util.log( 'proxing request for ' + request.method + ' ' + url );
+	}
 
 	request.pipe( fetch( {
 		'method' : request.method,

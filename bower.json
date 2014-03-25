@@ -26,9 +26,9 @@
     "chai": "1.8.x",
     "less": "1.4.x",
     "mocha": "1.17.x",
-    "sinon": "1.8.x",
+    "sinon": "1.9.x",
     "sinon-chai": "2.5.x",
-    "sinonjs": "1.7.x"
+    "sinonjs": "1.9.x"
   },
   "directory": "js/libs",
   "resolutions": {

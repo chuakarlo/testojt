@@ -4,7 +4,7 @@ var suite  = require( 'selenium-runner' ).suite;
 
 suite( function ( env ) {
 
-  describe.skip( 'Group', function ( ) {
+  describe( 'Group', function ( ) {
 
     it( 'should display group', function ( done ) {
 
@@ -13,7 +13,6 @@ suite( function ( env ) {
       browser.maximize();
 
       browser
-        .get( 'http://localhost:8080/' )
 
         // login
         .elementById( 'login-input-email' ).clear().type( 'matthew.donaldson@schoolimprovement.com' )
@@ -26,6 +25,8 @@ suite( function ( env ) {
         // go to group page
         .get( 'http://localhost:8080/#groups/84021' )
 
+        .sleep( 1000 )
+
         // the title should contain the correct group name
         .elementByXPath( '//div[@class=\'title\']/h2' )
         .text().should.eventually.become( 'Jim Knight - Instructional Coaching June 2012' )
@@ -37,10 +38,13 @@ suite( function ( env ) {
         // join the group
         .elementById( 'membership' ).click()
 
-        // refresh group page
-        .refresh()
+        .sleep( 2000 )
 
-        .sleep( 500 )
+        // joining a group should redirect back to groups list
+        .url().should.become( 'http://localhost:8080/#groups' )
+
+        // get the group again
+        .get( 'http://localhost:8080/#groups/84021' )
 
         // button should be a leave button
         .elementById( 'membership' )
