@@ -3,8 +3,7 @@ define( function ( require ) {
 
 	var Marionette        = require( 'marionette' );
 	var App               = require( 'App' );
-	var ContentNavigation = require( './main' );
-	var contentNavigation = new ContentNavigation( { 'init' : true } );
+	var ContentController = require( './main' );
 
 	App.module( 'ContentNavigation', function ( ContentNavigation ) {
 
@@ -25,8 +24,8 @@ define( function ( require ) {
 			// TODO: error handling
 			'showContentNavigation' : function ( error, results, args ) {
 				if ( !error ) {
+					var contentNavigation = new ContentController( { 'init' : true } );
 					App.content.show( contentNavigation.MainView );
-					// ContentNavigation.Show.Controller.showContentNavigation();
 				}
 			}
 		};
