@@ -13,6 +13,11 @@
 			'backbone.babysitter' : 'libs/backbone.babysitter/lib/amd/backbone.babysitter',
 			'backbone.wreqr'      : 'libs/backbone.wreqr/lib/amd/backbone.wreqr',
 			'bootstrap'           : 'libs/bootstrap/dist/js/bootstrap.min',
+			'jquery.bum-smack'    : 'libs/jquery.bum-smack/src/jquery.bum-smack',
+			'spin'                : 'libs/spin.js/spin',
+			'jquery.spin'         : 'libs/spin.js/jquery.spin',
+			'jquery.pscrollbar'   : 'libs/perfect-scrollbar/src/perfect-scrollbar',
+			'jquery.mousewheel'   : 'libs/perfect-scrollbar/src/jquery.mousewheel',
 			'jquery'              : 'libs/jquery/dist/jquery',
 			'jquery-cookie'       : 'libs/jquery-cookie/jquery.cookie',
 			'jquery-placeholder'  : 'libs/jquery-placeholder/jquery.placeholder.min',
@@ -46,8 +51,17 @@
 				'exports' : 'Backbone'
 			},
 
-			'marionette' : {
+			'backbone.babysitter' : {
+				'deps' : [ 'backbone' ],
+			},
+
+			'backbone.wreqr' : {
 				'deps' : [ 'backbone' ]
+			},
+
+			'marionette' : {
+				'deps'    : [ 'backbone', 'backbone.babysitter', 'backbone.wreqr' ],
+				'exports' : 'Backbone.Marionette'
 			},
 
 			'bootstrap' : {
@@ -77,12 +91,24 @@
 
 			'App' : {
 				'deps' : [ 'MiddlewareRouter' ]
+			},
+
+			'jquery.bum-smack' : {
+				'deps'	: [ 'jquery' ]
+			},
+
+			'jquery.spin' : {
+				'deps'	: [ 'jquery', 'spin' ]
+			},
+
+			'jquery.pscrollbar' : {
+				'deps'	: [ 'jquery' , 'jquery.mousewheel' ]
 			}
 
 		}
 
 	} );
-	
+
 	define( function ( require ) {
 		var App = require( 'App' );
 

@@ -1,0 +1,21 @@
+.cn-loading-view {
+	position   : fixed;
+	bottom     : 50px;
+	left       : 50%;
+	padding    : 0 @cn-base-padding;
+	color      : @cn-white;
+	background : @cn-black;
+	margin     : 0 0 0 ( @cn-base-margin * 6 );
+	display    : none;
+
+	.border-radius( @cn-base-radius / 3 );
+	.opacity( .85 );
+
+	.spinner {
+		position : relative;
+		width    : 50px;
+		padding  : @cn-padding-wide @cn-padding-wide 0 @cn-padding-wide;
+		margin   : ( @cn-base-margin * 2 ) auto @cn-base-margin auto;
+		left     : 0 !important;
+	}
+}

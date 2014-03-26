@@ -1,0 +1,52 @@
+.cn-watch-later {
+	display    : inline-block;
+	width      : 35px;
+	height     : 35px;
+	background : none !important;
+	margin     : 0 @cn-base-margin ( @cn-base-margin * 2 ) ( @cn-margin-wide );
+	padding    : ( @cn-base-padding / 2 );
+	float      : right;
+
+	.flag {
+		display : none;
+	}
+
+	.cn-watch-later-icon {
+		font-size : 25px;
+		color     : @cn-gray;
+		cursor    : pointer;
+	}
+
+	.cn-watch-later-icon:hover {
+		color : @cn-blue-light;
+	}
+
+	.remove {
+		display : none;
+	}
+
+	.flag:checked ~ .cn-watch-later-icon {
+		color :	@cn-blue-dark;
+
+		.add {
+			display : none;
+		}
+
+		.remove {
+			display : block;
+		}
+
+	}
+
+}
+
+.cn-watch-later:hover {
+	padding : ( ( @cn-base-padding / 5 ) * 2 );
+	border  : @border;
+
+	.border-radius( @cn-base-radius / 3 );
+
+	.cn-watch-later-icon {
+		color :	@cn-blue-light;
+	}
+}

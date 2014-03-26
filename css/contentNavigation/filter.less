@@ -1,0 +1,169 @@
+.cn-sidebar-content {
+	margin     : ( @cn-margin-wide / 2 ) 0 0 0;
+	background : @cn-white;
+
+	@media( min-width : 768px) {
+		padding : 0 ( @cn-base-padding / 10 ) 0 ( @cn-base-padding / 10 );
+		height  : ~"calc( 100% - 100px )";
+	}
+
+	padding    : 0 ( @cn-base-padding / 10 ) 0 ( @cn-base-padding / 10 );
+	width      : 290px;
+	position   : fixed;
+	z-index    : 2;
+	margin-top : 100px;
+
+	.cn-sidebar-container {
+		@media( min-width : 768px) {
+			margin-left : 0 !important;
+			position    : relative !important;
+			overflow    : hidden !important;
+		}
+
+		.cn-filter {
+
+			.cn-header-filter {
+
+				ul {
+					margin  : 0;
+					padding : 0;
+				}
+
+				li {
+					float          : left;
+					margin         : 0 0 0 ( @cn-base-margin / 10 );
+					text-align     : left;
+					vertical-align : top;
+					display        : inline-block;
+
+						&:nth-child( 3 ) {
+							float        : right;
+							margin-right : 15px;
+						}
+				}
+
+				.cn-collapse-btn {
+					margin : @cn-custom-margin2 @cn-base-margin 0 ( ( @cn-base-margin * 7 ) / 10 );
+					.border-radius( @cn-base-radius / 3 );
+
+					label {
+						margin  : 0;
+						padding : ( ( @cn-base-padding * 8 ) / 10 );
+					}
+
+
+				}
+
+				h2 {
+					margin : 23px 0 0 0;
+				}
+
+				.cn-clr-filter-btn {
+					margin  : @cn-custom-margin2 0 0 0;
+					padding : @cn-base-padding / 2;
+					color   : @cn-blue-link;
+
+					.border-radius( @cn-base-radius / 3 );
+				}
+
+			}
+
+			.cn-content-filter {
+				margin       : @cn-base-margin 0;
+				float        : left;
+				padding-left : 0;
+				width        : 100%;
+
+				.addHighlight{
+					label{
+						background-color : @cn-gray-light;
+						font-weight      : @cn-font-bold - 300;
+						color            : @cn-blue-dark;
+					}
+				}
+
+				li {
+					.disable-user-highlight;
+
+					label {
+						padding     : ( @cn-base-padding / 2 ) 0px ( @cn-base-padding / 2 ) @cn-base-padding;
+						cursor      : pointer;
+						width       : 100%;
+						font-weight : 300;
+					}
+
+				}
+
+			}
+
+		}
+
+		#cn-grades-filter .cn-content-filter{
+			li {
+				width : 50%;
+
+				&.right {
+					margin-left : 50%;
+				}
+
+				&:not(.right) {
+					border-right : 1px solid @cn-gray-dark;
+				}
+			}
+		}
+
+	}
+
+}
+
+.cn-header {
+	border-top : @border-top;
+	height     : 70px;
+	background : @cn-gray-light;
+}
+
+@media( min-width : 768px) {
+	.sidebar-toggle {
+		display : none;
+	}
+}
+
+.sidebar-close-btn {
+	position : fixed;
+	right    : 0;
+	z-index  : 1000;
+	border   : 1px solid @cn-white;
+	color    : @cn-white;
+	padding  : 10px;
+	margin   : 3px;
+	display  : none;
+}
+
+// fix hover for desktop , mobile and tablet
+
+.no-touch label:hover {
+	color            : @cn-blue-light;
+	background-color : transparent;
+}
+
+.no-touch label:focus {
+	background-color : transparent;
+}
+
+.no-touch {
+  .cn-content-filter {
+  	li label:hover {
+  		color            : @cn-blue-light;
+		background-color : @cn-gray-light;
+  	}
+  }
+}
+
+.touch {
+  .cn-content-filter {
+  	li label:hover {
+  		color :			none;
+		background-color :	transparent;
+  	}
+  }
+}

@@ -1,0 +1,50 @@
+.cn-tool-tip {
+    color            : @cn-black !important;
+    background-color : @cn-white !important;
+    font-size        : .45em;
+    font-family      : @cn-font-base;
+    visibility       : hidden;
+    text-align       : center;
+    z-index          : 999;
+    padding          : @cn-base-padding / 3;
+    position         : absolute !important;
+    cursor           : default;
+    border           : 1px solid @cn-gray-dark;
+
+    .box-shadow( 0px ( @cn-base-radius / 3 ) ( @cn-base-radius / 3 ) @cn-gray-dark );
+    .border-radius( @cn-base-radius / 3 );
+}
+
+.cn-tool-tip, .cn-tool-tip.top {
+    top    : auto;
+    bottom : 114%;
+    left   : 50%;
+}
+
+.cn-tool-tip.top:after, .cn-tool-tip:after {
+    position         : absolute;
+    bottom           : -20px;
+    left             : 40%;
+    content          : ' ';
+    height           : 0px;
+    width            : 0px;
+    border           : 10px solid transparent;
+    border-top-color : @cn-white;
+}
+
+/* default heights, width and margin w/o Javscript */
+.cn-tool-tip, .cn-tool-tip.top {
+    width       : 93px;
+    height      : 30px;
+    margin-left : -47px;
+}
+
+/* on hover of element containing tooltip default*/
+*:not(.on-focus):hover > .cn-tool-tip, .on-focus input:focus + .cn-tool-tip {
+    visibility : visible;
+    opacity    : 1;
+}
+
+*:not(.on-focus):hover > .cn-tool-tip.slideIn, *:not(.on-focus):hover > .cn-tool-tip.slideIn.top, .on-focus > input:focus + .cn-tool-tip.slideIn, .on-focus > input:focus + .cn-tool-tip.slideIn.top {
+    bottom : 150%;
+}

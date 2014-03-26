@@ -1,0 +1,39 @@
+/* Landscape for phones */
+@media( min-width: 480px ) and ( max-width : 767px ) {
+
+	.cn-main-content {
+
+		#grid-content {
+
+			ul {
+
+				li {
+					width: ~"calc( 50% - 10px)";
+
+					&:nth-child(odd) {
+						margin : 10px 10px 10px 0px;
+					}
+
+					&:nth-child(even) {
+						margin : 10px 0px 10px 10px;
+					}
+
+				}
+			}
+
+		}
+
+	}
+
+	.cn-header-content {
+		.resource-list {
+			.cn-sortby {
+				.sortby-container {
+					max-width : 72% !important;
+				}
+			}
+		}
+	}
+
+}
+
