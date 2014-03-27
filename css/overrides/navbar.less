@@ -1,0 +1,262 @@
+body  {
+	margin-top: @navbar-height;
+}
+
+.navbar {
+	border: 0px;
+}
+
+.navbar-brand {
+	padding: 0;
+}
+
+.navbar-nav {
+	color: #fff;
+
+	> li > a {
+		font-size: 18px;
+	}
+
+	> li.active > a {
+		background-color: red;
+	}
+}
+
+// force colors for navbar > @screen-sm e.g. anything larger than a phone
+@media ( min-width: @screen-sm ) {
+	.navbar-nav {
+		> li > a {
+			&:hover,
+			&:focus {
+				background-color: lighten( @pd360-green, 10% ) !important; // @navbar-default-link-hover-bg;
+			}
+		}
+		> .active > a {
+			&,
+			&:hover,
+			&:focus {
+				background-color: lighten( @pd360-green, 10% ) !important; // @navbar-default-link-active-bg;
+			}
+		}
+		> .disabled > a {
+			&,
+			&:hover,
+			&:focus {
+				background-color: lighten( @pd360-green, 10% ) !important; // @navbar-default-link-disabled-bg;
+			}
+		}
+
+		// Remove background color from open dropdown
+		> .open > a {
+			&,
+			&:hover,
+			&:focus {
+				background-color: lighten( @pd360-green, 10% ) !important;
+			}
+		}
+
+		// User Menu
+		> li.user-menu > a {
+			&:hover,
+			&:focus {
+				background-color: @pd360-green-dark !important;
+			}
+		}
+
+		> li.user-menu.open > a {
+			background-color: #000 !important;
+			&:hover,
+			&:focus {
+				background-color: #000 !important;
+			}
+		}
+
+		.user-menu {
+			background-color: @pd360-green-dark !important;
+			width: 70px;
+
+			&.open > a {
+				background-color: #000 !important;
+			}
+		}
+
+	}
+}
+
+
+// Color the navbar green instead of the black, which is used in the dropdowns
+@media ( max-width: @screen-sm ) {
+	.navbar-header {
+		background-color: @pd360-green;
+	}
+}
+
+// Color the navbar green instead of the black, which is used in the dropdowns
+@media ( min-width: @screen-sm ) {
+	.navbar-collapse,
+	.container-fluid.logged-out {
+		background-color: @pd360-green;
+	}
+}
+
+// Notification badge and icon
+.notification-icon {
+	margin: -10px -10px -10px 0;
+}
+
+.badge.badge-info {
+	&.notifications {
+		position: relative;
+		top: -10px;
+		left: -5px;
+	}
+
+	background-color: #40a5fc;
+	font-weight: normal;
+}
+
+// Resource Icons
+.icon.thumbnail {
+	border: 0px;
+	background: rgba( 0,0,0,.3 );
+	border-radius: 15px;
+	width: 125px;
+	height: 125px;
+	margin: 10px auto 50px;
+	color: #fff;
+
+	img {
+		margin-top: 40px;
+	}
+
+	&:hover,
+	&:focus {
+		text-decoration: none;
+		background-color: black;
+		color: @pd360-green;
+	}
+
+	p.icon.description {
+		text-align: center;
+		font-size: 18px;
+		margin: 50px -20px 0;
+	}
+}
+
+// Resource Icons (Phone)
+@media ( max-width: @screen-sm ) {
+	.yamm .yamm-content {
+		padding: 0;
+	}
+
+	.icon.thumbnail {
+		width: auto;
+		height: auto;
+		margin: 0;
+		padding: 0;
+		border-radius: 0;
+		background: none;
+
+		img {
+			display: none;
+		}
+
+		&:hover,
+		&:focus {
+			background-color: @navbar-default-link-hover-bg;
+			color: #fff;
+		}
+
+		p.icon.description {
+			text-align: left;
+			font-size: 14px;
+			margin: 0;
+			padding: 5px 15px 5px 25px;
+			line-height: 20px;
+		}
+
+	}
+
+}
+
+// Search input
+.navbar-form {
+	margin: 12px 0px;
+}
+
+.search.form-group {
+	input {
+		// .border-radius( 23px, 23px, 23px, 23px );
+		.border-left-radius( 23px );
+		.border-right-radius( 23px );
+		height: 46px;
+		border: 0px;
+	}
+
+	.form-control-feedback {
+		top: 4px;
+	}
+}
+
+div.phone-search {
+	width: 200px;
+	margin: 0 auto;
+
+	form {
+		margin: 0;
+		.form-group {
+			margin: 0;
+		}
+	}
+}
+
+// Navbar toggle
+.navbar-toggle {
+	margin-right: 0;
+	padding: 9px 25px;
+	background-color: #8dc73f;
+	border: 1px solid transparent;
+	border-radius: 0;
+	margin: 0;
+	height: @navbar-height;
+
+	// Bars
+	.icon-bar {
+		width: 18px;
+		margin: 9px 0;
+	}
+}
+
+.navbar-default .navbar-toggle {
+	border-color: transparent;
+}
+
+// MENU TO X Animation
+#bar1 { width:19px; height:2px; background:white; position: absolute; top:22px; left:24px; z-index: 4;
+	-webkit-transform: rotate( 00deg );
+	-webkit-transform-origin: 9.5px 0px;
+	-moz-transform: rotate( 0deg );
+	-moz-transform-origin: 9.5px 0px;
+	-ms-transform: rotate( 0deg );
+	-ms-transform-origin: 9.5px 0px;
+	transform: rotate( 0deg );
+	transform-origin: 9.5px 0px; }
+#bar2 { width:19px; height:2px; background:white; position: absolute; top:32px; left:24px;  z-index: 4;
+	-webkit-transform: rotate( 0deg );
+	-webkit-transform-origin: 9.5px 0px;
+	-moz-transform: rotate( 0deg );
+	-moz-transform-origin: 9.5px 0px;
+	-ms-transform: rotate( 0deg );
+	-ms-transform-origin: 9.5px 0px;
+	transform: rotate( 0deg );
+	transform-origin: 9.5px 0px; }
+#bar3 { width:19px; height:2px; background:white; position: absolute; top:42px; left:24px; z-index: 4;
+	-webkit-transform: rotate( 0deg );
+	-webkit-transform-origin: 9.5px 0px;
+	-moz-transform: rotate( 0deg );
+	-moz-transform-origin: 9.5px 0px;
+	-ms-transform: rotate( 0deg );
+	-ms-transform-origin: 9.5px 0px;
+	transform: rotate( 0deg );
+	transform-origin: 9.5px 0px;
+}

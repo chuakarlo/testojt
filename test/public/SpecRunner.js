@@ -21,7 +21,7 @@
 			'jquery-placeholder'  : 'libs/jquery-placeholder/jquery.placeholder.min',
 			'json'                : 'libs/requirejs-plugins/src/json',
 			'marionette'          : 'libs/backbone.marionette/lib/core/amd/backbone.marionette',
-			'MiddlewareRouter'    : 'libs/MiddlewareRouter',
+			'MiddlewareRouter'    : 'MiddlewareRouter',
 			'mocha'               : 'libs/mocha/mocha',
 			'modernizr'           : 'libs/modernizr/modernizr',
 			'sinon'               : 'libs/sinonjs/sinon',

@@ -3,7 +3,7 @@
 var suite  = require( 'selenium-runner' ).suite;
 
 suite( function ( env ) {
-	
+
 	describe( 'Settings', function () {
 
 		var browser;
@@ -26,7 +26,7 @@ suite( function ( env ) {
 			browser
 				.get( 'http://localhost:8080/#settings' )
 				.url().should.become( 'http://localhost:8080/#settings/personal-info' )
-				
+
 				.nodeify( done );
 
 		} );
@@ -37,13 +37,13 @@ suite( function ( env ) {
 			before( function ( done ) {
 				env.refresh( done );
 			} );
-			
+
 			it( 'should update user information and persist after page refresh', function ( done ) {
 
 				browser
 					// navigate to settings
-					.elementByCssSelector( '#navbar > nav > div > div.nav-bar-right > div' ).click()
-					.elementByCssSelector( '#menu > ul > a:nth-child(1)' ).click()
+					.elementByCssSelector( '#pd360-main-nav li.dropdown.user-menu > a > div.menu-container.hidden-xs' ).click()
+					.elementByCssSelector( 'li.dropdown.user-menu > ul > li:nth-child(1) > a' ).click()
 
 					// verify nav items
 					.elementByCssSelector( '#profile > div > div.nav' )
@@ -83,7 +83,7 @@ suite( function ( env ) {
 					// verify input values
 					.elementById( 'firstname' )
 					.getValue().should.eventually.equal( 'Diaoo' )
-					
+
 					.elementById( 'lastname' )
 					.getValue().should.eventually.equal( 'Chann' )
 

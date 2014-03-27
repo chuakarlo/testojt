@@ -64,103 +64,6 @@ p {  font-size:15px; line-height:28px; font-weight:normal; }
 
 .pictogram { font-family: 'modern_pictogramsnormal'; font-size: 22px; }
 
-/* Nav Bar */
-#navbar { height: 70px; }
-.nav-bar { width:100%; height:70px; background:#9fd753; }
-.nav-bar-left { position:absolute; left:0; width:400px; }
-.logo { width:70px; height:70px; float:left; }
-.top-nav ul { float:left; }
-.top-nav li { float:left; height:70px; padding:0 35px; list-style-type:none; }
-.top-nav li:hover { background:#b0e46a; }
-.top-nav a { color:white; }
-.top-nav span { font-size:18px; line-height:68px; font-weight:300; }
-.search-form { position:relative; width:270px; margin:0 auto; }
-.search-field { width:270px; padding:10px 20px; margin:12px auto; border-radius:30px; background:url('../img/icon-search-gray.png')no-repeat right white; border:0; color:white; }
-.search-field { -webkit-transition-duration: .5s; }
-.search-field:focus { background:url('../img/icon-search.png')no-repeat right #404040; }
-
-.nav-bar-right { position:absolute; right:0px; top:0px; width:140px; }
-.nav-bar-right .user-notifications { width:70px; height:70px; float:right; cursor: pointer; position: relative; z-index: 9; }
-.nav-bar-right .user-notifications img { position: relative; top: 9px; left: 11px; z-index: 4; }
-.nav-bar-right .nav-menu { background:#8dc73f; width:70px; height:70px; float:right; cursor: pointer; position: relative; }
-.nav-bar-right .nav-menu img { position: relative; top:2px; left:0px; }
-
-.nav-bar-right #menu { display: none; }
-.nav-bar-right #menu .black { position: absolute; top: 0px; left: 0px; width: 70px; height: 70px; background: black; opacity: .7; }
-.nav-bar-right #menu .black img { top: 23px; left: 26px; }
-.nav-bar-right #menu ul { position: absolute; top: 70px; right: 0px; width: 206px;  color: white; z-index: 4; }
-.nav-bar-right #menu li { padding:15px 30px; background: rgba(0,0,0,.85); }
-.nav-bar-right #menu li:hover { background:black; }
-.nav-bar-right #menu ul .border-top { border-top:1px solid rgba(255,255,255,.3); }
-.nav-bar-right #menu a { color:white; }
-
-.nav-bar-right #menu2 { display: none; }
-.nav-bar-right #menu2 .black { position: absolute; top: 0px; left: 0px; width: 70px; height: 70px; background: black; opacity: .7; }
-.nav-bar-right #menu2 .dd {  position: absolute; top: 70px; right: 0px; width: 476px;  color: white; z-index: 4; background: rgba(0,0,0,.85); padding-bottom: 19px;  }
-.nav-bar-right #menu2 ul { width:100%; }
-.nav-bar-right #menu2 li { padding:10px 30px; width:100%; height: 48px; position: relative; top:-5px; opacity: 0; }
-.nav-bar-right #menu2 li:hover { background:black; }
-.nav-bar-right #menu2 ul .border-top { border-top:1px solid rgba(255,255,255,.3); }
-.nav-bar-right #menu2 img { position:relative; top:10px; left:0px; float:left; margin-right: 18px; }
-.nav-bar-right #menu2 p { float:left; }
-.nav-bar-right #menu2 h3 { position: relative; top:20px; left:30px; font-size: 15px; }
-
-.help { position: absolute; top: 0px; right: 140px; }
-.help a, .help a:hover { color:inherit; text-decoration: none; font-size: 18px; color:white; }
-.help .dropdown-menu { right:0px; left: auto; margin:0; width:205px; z-index: 3; }
-.btn-group.open .dropdown-toggle { box-shadow: none; }
-.help .btn-group { padding: 22px 18px; }
-.help .open { background:#101b04; }
-.help ul { background: rgba(0,0,0,0.7); color: white; padding: 0; }
-.help li { padding:18px 24px; font-size: 16px; cursor: pointer; }
-.help li:hover { background:rgba(0,0,0,.8); }
-.help .border-top { border-top: 1px solid rgba(255,255,255,.2); }
-.help h4 { font-size: 14px; font-weight: normal; margin-bottom: 15px; }
-.help button { color:white; font-size: 16px; width:100%; height:45px; }
-
-/* Resources Tab */
-#resource-items { width:100%;  background:rgba(0,0,0,0.85); position: fixed; top:70px; overflow: hidden; height:0px; opacity: 0; z-index: 9; }
-#resource-items ul { padding:53px 0; width: 990px; margin: 0 auto; }
-#resource-items ul li { float:left; padding-right:45px; opacity: .9; -webkit-transition-duration: .3s; }
-#resource-items ul li:hover { opacity: 1; }
-#resource-items img {  }
-#resource-items p { text-align: center; color:white; font-size:18px; padding-top:15px;  }
-
-.notification-icon { float:right; width:70px; height:70px; }
-.notification-icon-mobile { float:right; width:70px; height:70px; display:none; }
-.nav-profile-pic { float:right; width:92px; height:70px; margin-right:10px; background:url('../img/nav-profile-pic.png') no-repeat; }
-.nav-profile-pic:hover { background:url('../img/nav-profile-pic-hover.png') no-repeat; }
-.menu-btn { display:none; float:right; }
-.notifications-heading { padding:10px 20px; font-weight:bold; margin-bottom:0; }
-.view-all-notifications { background:#ebebeb; }
-.new { background:#e6f3f8; }
-
-/* Second Bar */
-.second-bar { width:100%; height:70px; background:#545965; display: none; }
-.side-menu-btn { float:left; width:70px; height:70px; background:#4b505c; }
-.side-menu-btn:hover { background:#444955; }
-.bread-crumbs { float:left; margin:0 0 0 35px; padding:0; }
-.bread-crumbs li { float:left; list-style-type:none; margin-right:25px; }
-.bread-crumbs h3 { font-size:15px; margin-top:23px; font-weight:300; }
-.bread-crumbs a { color:#b7b8bc; }
-.bread-crumbs a.active, .bread-crumbs a:hover { color:#fff; }
-.second-nav-btn { float:right; border:1px solid #6f737d; background:#545965; border-radius:3px; color:white; padding:13px 30px; margin:10px 10px 0 0; display:block; }
-.second-nav-btn:hover { background:#5c616b; color:#fff; }
-
-/* COLUMNS */
-.clmn-4 { margin:0 -15px; width:110%; }
-.clmn-4>li { width:276px; margin:15px; min-height: 50px; border-radius: 3px; float:left; -webkit-box-shadow: 0 0px 2px rgba(32,37,35,.3); -moz-box-shadow: 0 0px 2px rgba(32,37,35,.3); box-shadow: 0 0px 2px rgba(32,37,35,.3); }
-/* Video Thumbnail Classes */
-.clmn-4 .thumb { width:100%; height:188px; overflow: hidden; border-top-left-radius: 3px; border-top-right-radius: 3px; cursor: pointer; position: relative; }
-.clmn-4 .thumb img { width:100%; }
-.clmn-4 .thumb .hover { width:100%; height:188px; position: absolute; top: 0px; left: 0px; }
-.clmn-4 .thumb .hover:hover { background-color:rgba(0,0,0,.5); background-image:url('http://builtbyhq.com/projects/school/CORE/v1/img/play-video-now.png'); background-repeat: no-repeat; background-position: center; }
-.clmn-4 .info { padding:20px; background:#f3f5f6; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; position: relative; }
-.clmn-4 .info p { line-height: 1em; margin-top: 10px; color:#b2b5b9; }
-.clmn-4 .info .later { position: absolute; width:105px; height:88px; background:url('http://builtbyhq.com/projects/school/CORE/v1/img/watch-later-icon.png') no-repeat; background-size: cover; top:-10px; right:-20px; cursor: pointer; }
-.clmn-4 .info .later:hover { background:url('http://builtbyhq.com/projects/school/CORE/v1/img/watch-later-hover.png'); }
-.clmn-4 .info .download { position: absolute; width:105px; height:88px; background:url('http://builtbyhq.com/projects/school/CORE/v1/img/download-icon.png') no-repeat; background-size: cover; top:-10px; right:-20px; cursor: pointer; }
-.clmn-4 .info .download:hover { background:url('http://builtbyhq.com/projects/school/CORE/v1/img/download-icon-hover.png'); }
 
 /************************************************************\
 					      RESOURCES
@@ -228,7 +131,7 @@ p {  font-size:15px; line-height:28px; font-weight:normal; }
 /************************************************************\
 						 LOGIN
 \************************************************************/
-.login-form { width:400px; margin:0 auto; }
+.login-form { max-width:400px; margin:0 auto; }
 .login-form input { width:100%; border:1px solid #ebebeb; padding:11px 15px 8px 15px; margin-bottom:10px; color:#4b505c; }
 .login-form button { width:100%; border:0; }
 .forgot-password-link { text-align:center; margin-top:30px; display:block; }
@@ -244,7 +147,6 @@ p {  font-size:15px; line-height:28px; font-weight:normal; }
 /************************************************************\
 						 ADMIN
 \************************************************************/
-nav { width:100%; height:70px; position: fixed; z-index: 9; }
 #banner { width:100%; height:469px; background:url('../img/admin-video.png') no-repeat; background-size: cover; background-position: center; }
 
 #admin .navigation { width:100%; border-bottom: 1px solid #ebebeb; padding-bottom: 10px; padding-top:63px; margin-bottom:73px; position: relative; }

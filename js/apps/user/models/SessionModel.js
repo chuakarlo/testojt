@@ -2,10 +2,10 @@ define( function ( require ) {
 	'use strict';
 
 	var $        = require( 'jquery' );
-	var _        = require( 'underscore' );
 	var Backbone = require( 'backbone' );
-	var Cookie   = require( 'jquery-cookie' );
 	var Vent     = require( 'Vent' );
+
+	require( 'jquery-cookie' );
 
 	var usernameCookie  = 'URESPOND';
 	var personnelCookie = 'PID';
@@ -14,7 +14,7 @@ define( function ( require ) {
 
 	var Session = Backbone.Model.extend( {
 
-		url : function () {
+		'url' : function () {
 			return '/com/schoolimprovement/pd360/dao/RespondService.cfc?method=rspndLogin&loginNm=' + this.username + '&passwrd=' + this.password + '&returnformat=json';
 		},
 
