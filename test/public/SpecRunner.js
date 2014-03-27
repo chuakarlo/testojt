@@ -28,6 +28,14 @@
 			'sinon-chai'          : 'libs/sinon-chai/lib/sinon-chai',
 			'text'                : 'libs/requirejs-text/text',
 			'underscore'          : 'libs/lodash/lodash',
+			// libs added by ContentNavigation
+            'jquery.bum-smack'    : 'libs/jquery.bum-smack/src/jquery.bum-smack',
+            'spin'                : 'libs/spin.js/spin',
+            'jquery.spin'         : 'libs/spin.js/jquery.spin',
+            'jquery.pscrollbar'   : 'libs/perfect-scrollbar/src/perfect-scrollbar',
+            'jquery.mousewheel'   : 'libs/perfect-scrollbar/src/jquery.mousewheel',
+            'chai-backbone'       : 'libs/chai-backbone/chai-backbone',
+            'chai-changes'        : 'libs/chai-changes/chai-changes',
 
 			// base app folders
 			'communities'         : 'apps/communities',
@@ -39,6 +47,7 @@
 			'search'              : 'apps/search',
 			'user'                : 'apps/user/',
 			'groups'              : 'apps/groups',
+			'contentNavigation'   : 'apps/contentNavigation/',
 
 			// Base application level classes
 			'Session'  : 'apps/user/models/SessionModel'
@@ -85,14 +94,16 @@
 	},
 
 	require(
-		[ 'App', 'jquery', 'jquery-cookie', 'jquery-placeholder', 'spec/suite', 'sinon-chai' ],
-		function ( App, $, cookie, placeholder, suite, sinon ) {
+		[ 'App', 'jquery', 'jquery-cookie', 'jquery-placeholder', 'spec/suite', 'sinon-chai', 'chai-backbone', 'chai-changes' ],
+		function ( App, $, cookie, placeholder, suite, sinon, chaiBackbone, chaiChanges) {
 
 			// on dom ready require all specs and run
 			$( function () {
 				require( suite.specs, function () {
 					window.chai.should();
 					window.chai.use( sinon );
+					window.chai.use( chaiBackbone );
+					window.chai.use( chaiChanges );
 
 					if ( window.mochaPhantomJS ) {
 						window.mochaPhantomJS.run();

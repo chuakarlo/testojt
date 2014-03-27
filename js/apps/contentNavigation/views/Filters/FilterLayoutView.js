@@ -4,7 +4,7 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 
-	var template   = require( 'text!templates/Filters/FilterLayoutViewTemplate.html' );
+	var template   = require( 'text!apps/contentNavigation/templates/Filters/FilterLayoutViewTemplate.html' );
 
 	return Marionette.ItemView.extend( {
 		'template' : _.template( template )

@@ -13,7 +13,7 @@ define( function ( require ) {
 		var getSignature = function ( data, callback ) {
 
 			// if PD360 is available
-			if( App.PD360.available() ) {
+			if( App.PD360 && App.PD360.available() ) {
 				// get the signature from PD360
 				var signature = App.PD360.signature( data.method, data.args );
 
