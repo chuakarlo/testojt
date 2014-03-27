@@ -79,11 +79,11 @@ ul, #ul, .ul {
 
 .enable-scroll-indicator {
 
-	@media( min-width : 768px ) {
+	@media( min-width : @screen-sm-min ) {
 		.box-shadow( 0 4px 2px -3px @cn-gray-darkest );
 	}
 
-	@media( max-width : 767px ) {
+	@media( max-width : @screen-xs-max ) {
 		&.li-sortby {
 			.box-shadow( 0 4px 2px -3px @cn-gray-darkest );
 		}

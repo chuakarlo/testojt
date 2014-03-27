@@ -6,14 +6,25 @@
 }
 
 ul.cn-segments-container {
-	padding : 0 0 0 ( @cn-base-padding * 2 );
+
+	.img-responsive {
+		width: 100%;
+	}
+
+	@media ( max-width: @screen-xs ) {
+		// set the width to one wide on small screens (<480px)
+		li.col-xs-6 {
+			width : 100%;
+		}
+	}
 
 	li {
 		.listOffset( 0 );
-		margin     : @cn-base-margin;
-		width      : 276px;
-		height     : 282px;
-		background : @cn-gray-light;
+		background    : @cn-gray-light;
+		border-top    : 0;
+		border-left   : 10px solid #fff;
+		border-right  : 10px solid #fff;
+		border-bottom : 20px solid #fff;
 
 		div {
 			position   : relative;

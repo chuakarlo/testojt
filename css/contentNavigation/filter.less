@@ -1,20 +1,12 @@
 .cn-sidebar-content {
-	margin     : ( @cn-margin-wide / 2 ) 0 0 0;
 	background : @cn-white;
 
-	@media( min-width : 768px) {
-		padding : 0 ( @cn-base-padding / 10 ) 0 ( @cn-base-padding / 10 );
+	@media( min-width : @screen-sm-min ) {
 		height  : ~"calc( 100% - 100px )";
 	}
 
-	padding    : 0 ( @cn-base-padding / 10 ) 0 ( @cn-base-padding / 10 );
-	width      : 290px;
-	position   : fixed;
-	z-index    : 2;
-	margin-top : 100px;
-
 	.cn-sidebar-container {
-		@media( min-width : 768px) {
+		@media( min-width : @screen-sm-min ) {
 			margin-left : 0 !important;
 			position    : relative !important;
 			overflow    : hidden !important;
@@ -23,11 +15,6 @@
 		.cn-filter {
 
 			.cn-header-filter {
-
-				ul {
-					margin  : 0;
-					padding : 0;
-				}
 
 				li {
 					float          : left;
@@ -55,7 +42,8 @@
 				}
 
 				h2 {
-					margin : 23px 0 0 0;
+					margin-top: 26px;
+					font-size: 18px;
 				}
 
 				.cn-clr-filter-btn {
@@ -122,7 +110,7 @@
 	background : @cn-gray-light;
 }
 
-@media( min-width : 768px) {
+@media( min-width : @screen-sm-min ) {
 	.sidebar-toggle {
 		display : none;
 	}

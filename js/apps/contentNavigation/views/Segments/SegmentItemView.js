@@ -7,7 +7,7 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 		'tagName'   : 'li',
-		'className' : 'col-xs-6 col-sm-8 col-md-3',
+		'className' : 'col-xs-6 col-sm-6 col-md-4',
 		'template'  : _.template( template ),
 
 		'ui' : {

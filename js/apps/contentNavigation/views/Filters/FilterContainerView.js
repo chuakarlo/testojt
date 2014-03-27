@@ -31,7 +31,7 @@ define( function ( require ) {
 				$( '.sidebar-close-btn' ).show();
 
 				$( '#cn-left-region' ).animate( {
-					marginLeft : '0'
+					marginLeft : '-15px'
 				}, 100, function (){
 					this._setFilterHeight( $(window).height());
 				}.bind( this ) );

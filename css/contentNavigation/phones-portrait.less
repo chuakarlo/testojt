@@ -1,5 +1,5 @@
 /* Portrait for phones */
-@media ( max-width : 767px ) {
+@media ( max-width : @screen-xs-max ) {
 	body {
 
 		#content {
@@ -135,7 +135,7 @@
 					right : 0;
 					width : 160px;
 
-					@media( max-width: 767px ) {
+					@media( max-width: @screen-xs-max ) {
 						top    : 37px;
 						margin : 0px;
 					}
@@ -159,7 +159,7 @@
 			overflow-y : hidden !important;
 			overflow-x : hidden !important;
 
-			@media( max-width : 767px ) {
+			@media( max-width : @screen-xs-max ) {
 				position    : fixed !important;
 				margin-left : -250px;
 			}
@@ -190,11 +190,11 @@
 		}
 
 		&~.sidebar-close-btn {
-			@media( max-width : 767px ) {
+			@media( max-width : @screen-xs-max ) {
 				display : block;
 			}
 
-			@media( min-width : 768px ) {
+			@media( min-width : @screen-sm-min ) {
 				display : none;
 			}
 		}
@@ -203,7 +203,7 @@
 
 	.cn-middle-content {
 		padding    : 0;
-		margin-top : 83px;
+		margin-top : 10px;
 
 		.cn-main-content {
 			width       : 100%;
@@ -222,7 +222,7 @@
 					li {
 						height : auto;
 
-						@media( max-width : 479px ) {
+						@media( max-width : ( @screen-xs-min - 1 ) ) {
 							width  : 100%;
 							margin : 10px 0px;
 						}

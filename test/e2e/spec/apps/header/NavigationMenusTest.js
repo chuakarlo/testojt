@@ -43,7 +43,7 @@ suite( function ( env ) {
 				.elementByCssSelector( '#resources-tab' ).click()
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
-					html.should.contain( '{Videos}' );
+					html.should.contain( 'Videos' );
 					html.should.contain( '{Learning Targets}' );
 					html.should.contain( 'Observation' );
 					html.should.contain( 'Communities' );
@@ -94,7 +94,7 @@ suite( function ( env ) {
 				.elementByCssSelector( '#resources-tab' ).click()
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
-					html.should.contain( '{Videos}' );
+					html.should.contain( 'Videos' );
 					html.should.contain( '{Learning Targets}' );
 					html.should.contain( 'Observation' );
 					html.should.contain( 'Communities' );
@@ -145,7 +145,7 @@ suite( function ( env ) {
 				.elementByCssSelector( '#resources-tab' ).click()
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
-					html.should.contain( '{Videos}' );
+					html.should.contain( 'Videos' );
 					html.should.contain( '{Learning Targets}' );
 					html.should.contain( 'Observation' );
 					html.should.contain( 'Communities' );
