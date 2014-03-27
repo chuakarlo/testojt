@@ -38,7 +38,7 @@ define( function ( require ) {
 
 		// when the template has been rendered, apply the active nav item
 		'onDomRefresh' : function () {
-			var link    = 'a[href=\'#settings/' + page + '\']';
+			var link    = '.js-settings a[href=\'#settings/' + page + '\']';
 			var current = $( link );
 
 			current.parent().addClass( 'active' );
@@ -70,7 +70,7 @@ define( function ( require ) {
 				'name' : function () {
 					return this.personnelModel.FirstName + ' ' + this.personnelModel.LastName;
 				}.bind( this )
-				
+
 			};
 		}
 

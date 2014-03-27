@@ -20,11 +20,12 @@
     "requirejs-text": "2.0.x",
     "respond": "1.4.x",
     "text": "2.0.10",
-    "swfobject": "*"
+    "swfobject": "*",
+    "rotate": "https://jqueryrotate.googlecode.com/files/jQueryRotate.js"
   },
   "devDependencies": {
     "chai": "1.8.x",
-    "less": "1.4.x",
+    "less": "1.7.x",
     "mocha": "1.17.x",
     "sinon": "1.9.x",
     "sinon-chai": "2.5.x",

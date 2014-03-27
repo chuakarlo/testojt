@@ -1,9 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette    = require( 'marionette' );
-	var _             = require( 'underscore' );
-	var Vent          = require( 'Vent' );
+	var Marionette = require( 'marionette' );
+	var _          = require( 'underscore' );
+	var Vent       = require( 'Vent' );
 
 	var templates = {
 		'loggedIn'  : require( 'text!header/templates/nav.html' ),
@@ -17,85 +17,106 @@ define( function ( require ) {
 			'loggedOut' : _.template( templates.loggedOut )
 		},
 
-		'tagName'   : 'nav',
+		'tagName' : 'nav',
+
+		'attributes' : {
+			'class' : 'navbar yamm navbar-default navbar-fixed-top',
+			'role'  : 'navigation'
+		},
 
 		'ui' : {
-			'resourcesTab'      : '#resources-tab',
-			'resourcesDropdown' : '#resource-items',
-			'menu'              : '.nav-menu',
-			'drawer'            : '#menu'
+			'userMenu' : '.user-menu',
+			'menuBar'  : '.menu-bar',
+			'drawer'   : '#menu',
+			'bar1'     : '#bar1',
+			'bar2'     : '#bar2',
+			'bar3'     : '#bar3'
 		},
 
 		'events' : {
-			'mouseenter @ui.resourcesTab'      : 'showResourcesDropdown',
-			'mouseleave @ui.resourcesDropdown' : 'hideResourcesDropdown',
-
-			'mouseenter @ui.menu'              : 'showMenu',
-			'mouseleave @ui.drawer'            : 'hideMenu',
-
-			'submit form'                      : 'showSearchResults'
+			'click @ui.userMenu'              : 'toggleUserMenu',
+			'submit form'                     : 'showSearchResults',
+			'hidden.bs.dropdown @ui.userMenu' : 'hideUserMenuAnimation',
 		},
 
 		'initialize' : function ( options ) {
-
-			_.bindAll( this );
-
-			var self = this;
-
 			this.authenticated = options.authenticated;
-
 		},
 
 		'getTemplate' : function ( options ) {
 			if ( this.authenticated === true ) {
 				return this.templates.loggedIn;
-			} else {
-				return this.templates.loggedOut;
 			}
+
+			return this.templates.loggedOut;
 		},
 
-		'showResourcesDropdown' : function ( event ) {
-			this.ui.resourcesDropdown
-				.show()
-				.stop()
-				.animate( {
-					'height'  : 270,
-					'opacity' : 1
-				}, 500 );
+		'toggleUserMenu' : function ( event ) {
+			if ( this.ui.drawer.is( ':visible' ) ) {
+				return this.hideUserMenuAnimation( event );
+			}
+
+			return this.showUserMenuAnimation( event );
 		},
 
-		'hideResourcesDropdown' : function ( event ) {
-			this.ui.resourcesDropdown
-				.stop()
-				.animate( {
-					'height'  : 0,
-					'opacity' : 0
-				}, 500, function () {
-					this.hide();
-				}.bind( this.ui.resourcesDropdown ) );
+		'hideUserMenuAnimation' : function ( event ) {
+			this.ui.bar1.stop().rotate( {
+				'animateTo' : 0,
+				'duration'  : 250
+			} );
+			this.ui.bar2.stop().rotate( {
+				'animateTo' : 0,
+				'duration'  : 250
+			} );
+			this.ui.bar3.stop().rotate( {
+				'animateTo' : 0,
+				'duration'  : 250
+			} );
+			this.ui.menuBar.stop().animate( {
+				'opacity' : 1
+			}, 251, function () {
+				this.ui.bar1.animate( {
+					'top' : 22
+				}, 250 );
+				this.ui.bar2.animate( {
+					'top' : 32
+				}, 250 );
+				this.ui.bar3.animate( {
+					'top' : 42
+				}, 250 );
+			}.bind( this ) );
 		},
 
-		'showMenu' : function ( event ) {
-			this.ui.drawer
-				.show()
-				.stop()
-				.animate( { 'opacity' : 1 }, 500 );
-		},
+		'showUserMenuAnimation' : function ( event ) {
+			this.ui.menuBar.stop().animate( {
+				'top'   : 32,
+				'width' : 23,
+				'left'  : 22,
+			}, 200, function () {
+				this.ui.menuBar.animate( {
+					'left'  : 24,
+					'width' : 19
+				}, 200, function () {
+					this.ui.bar1.rotate( {
+						'animateTo' : -132,
+						'duration'  : 250
+					} );
+					this.ui.bar2.rotate( {
+						'animateTo' : -48,
+						'duration'  : 250
+					} );
+					this.ui.bar3.rotate( {
+						'animateTo' : -48,
+						'duration'  : 250
+					} );
 
-		'hideMenu' : function ( event ) {
-			this.ui.drawer
-				.stop()
-				.animate( {
-					'opacity' : 0
-				}, 500, function () {
-					this.hide();
-				}.bind( this.ui.drawer ) );
+				}.bind( this ) );
+			}.bind( this ) );
 		},
 
 		'showSearchResults' : function ( event ) {
 			event.preventDefault();
 			Vent.trigger( 'search:showSearchResults' );
-
 		}
 
 	} );

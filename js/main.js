@@ -21,7 +21,8 @@
 			'shim'                : 'libs/es5-shim/es5-shim.min',
 			'text'                : 'libs/requirejs-text/text',
 			'underscore'          : 'libs/lodash/lodash',
-			'MiddlewareRouter'    : 'libs/MiddlewareRouter',
+			'MiddlewareRouter'    : 'MiddlewareRouter',
+			'rotate'              : 'libs/rotate/index',
 
 			// Base application level classes
 			'Session'  : 'apps/user/models/SessionModel',
@@ -75,6 +76,10 @@
 				'deps' : [ 'marionette' ]
 			},
 
+			'rotate' : {
+				'deps' : [ 'jquery' ]
+			},
+
 			'App' : {
 				'deps' : [ 'MiddlewareRouter' ]
 			}
@@ -82,7 +87,7 @@
 		}
 
 	} );
-	
+
 	define( function ( require ) {
 		var App = require( 'App' );
 
@@ -90,6 +95,7 @@
 		require( 'jquery-placeholder' );
 		require( 'modernizr' );
 		require( 'bootstrap' );
+		require( 'rotate' );
 
 		require( 'modules' );
 

@@ -4,58 +4,58 @@ var suite  = require( 'selenium-runner' ).suite;
 
 suite( function ( env ) {
 
-  describe( 'Group', function ( ) {
+  describe.skip( 'Group', function ( ) {
 
-    it( 'should display group', function ( done ) {
+	it( 'should display group', function ( done ) {
 
-      var browser = env.browser;
+		var browser = env.browser;
 
-      browser.maximize();
+		browser.maximize();
 
-      browser
+		browser
 
-        // login
-        .elementById( 'login-input-email' ).clear().type( 'matthew.donaldson@schoolimprovement.com' )
-        .elementById( 'login-input-password' ).clear().type( 'pd360' )
-        .elementById( 'login-button' ).click()
+		// login
+		.elementById( 'login-input-email' ).clear().type( 'matthew.donaldson@schoolimprovement.com' )
+		.elementById( 'login-input-password' ).clear().type( 'pd360' )
+		.elementById( 'login-button' ).click()
 
-        // wait for home page to display
-        .sleep( 500 )
+		// wait for home page to display
+		.sleep( 500 )
 
-        // go to group page
-        .get( 'http://localhost:8080/#groups/84021' )
+		// go to group page
+		.get( 'http://localhost:8080/#groups/84021' )
 
-        .sleep( 1000 )
+		.sleep( 1000 )
 
-        // the title should contain the correct group name
-        .elementByXPath( '//div[@class=\'title\']/h2' )
-        .text().should.eventually.become( 'Jim Knight - Instructional Coaching June 2012' )
+		// the title should contain the correct group name
+		.elementByXPath( '//div[@class=\'title\']/h2' )
+		.text().should.eventually.become( 'Jim Knight - Instructional Coaching June 2012' )
 
-        // button should be a join button
-        .elementById( 'membership' )
-        .text().should.eventually.become( 'Join' )
+		// button should be a join button
+		.elementById( 'membership' )
+		.text().should.eventually.become( 'Join' )
 
-        // join the group
-        .elementById( 'membership' ).click()
+		// join the group
+		.elementById( 'membership' ).click()
 
-        .sleep( 2000 )
+		.sleep( 2000 )
 
-        // joining a group should redirect back to groups list
-        .url().should.become( 'http://localhost:8080/#groups' )
+		// joining a group should redirect back to groups list
+		.url().should.become( 'http://localhost:8080/#groups' )
 
-        // get the group again
-        .get( 'http://localhost:8080/#groups/84021' )
+		// get the group again
+		.get( 'http://localhost:8080/#groups/84021' )
 
-        // button should be a leave button
-        .elementById( 'membership' )
-        .text().should.eventually.become( 'Leave' )
+		// button should be a leave button
+		.elementById( 'membership' )
+		.text().should.eventually.become( 'Leave' )
 
-        // leave the group
-        .elementById( 'membership' ).click()
+		// leave the group
+		.elementById( 'membership' ).click()
 
-        .nodeify( done );
+		.nodeify( done );
 
-    } );
+	} );
 
   } );
 

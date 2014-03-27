@@ -1,97 +1,117 @@
-<div class="nav-bar">
-
-	<div class="nav-bar-left">
-		<a href="#home">
-			<div class="logo">
-				<img src="img/logo.png" alt="School Improvement">
-			</div>
+<div class="container-fluid">
+	<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#pd360-main-nav">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a href="#home" class="navbar-brand">
+			<img class="logo" src="img/logo.png" alt="School Improvement">
 		</a>
-
-		<ul class="top-nav">
-			<a href="#"><li id="resources-tab"><span>Resources</span></li></a>
-			<a href="#groups"><li id="groups-tab"><span>Groups</span></li></a>
-		</ul>
-
-		<a href="#">
-			<div class="menu-btn">
-				<img src="img/menu-btn.png">
-			</div>
-		</a>
-		<a href="">
-			<div class="notification-icon-mobile">
-				<img src="img/notification-icon.png">
-			</div>
-		</a>
-	</div>
-
-	<div class="middle">
-		<form class="search-form">
-			<input placeholder="Search (e.g. video or group)" class="search-field" />
-			<input type="submit" disabled="disabled" />
-		</form>
-	</div>
-
-	<div class="nav-bar-right">
-
-		<div class="nav-menu">
-			<div class="menu-container">
-				<div id="bar1" class="menu-bar"></div>
-				<div id="bar2" class="menu-bar"></div>
-				<div id="bar3" class="menu-bar"></div>
-			</div>
-			<div id="menu" style="display: none;">
-				<div class="black"></div>
-				<ul>
-					<a href="#settings/personal-info"><li>User Settings</li></a>
-					<li>{Learning Targets}</li>
-					<a id="logout" href="#logout"><li class="border-top">Log Out</li></a>
-				</ul>
-			</div>
+		<div class="visible-xs phone-search">
+			<form class="navbar-form navbar-left" role="search">
+				<div class="form-group search has-feedback">
+					<input type="search" class="form-control" placeholder="Search">
+					<div class="form-control-feedback">
+						<img class="" src="img/icon-search-gray.png" alt="bell">
+					</div>
+				</div>
+			</form>
 		</div>
-
 	</div>
 
-</div>
-
-<section id="resource-items">
-	<div class="wide-container">
-		<ul>
-			<a href="#">
-				<li>
-					<img src="img/video-app.png">
-					<br>
-					<p>{Videos}</p>
-				</li>
-			</a>
-			<a href="#lumibook">
-				<li>
-					<img src="img/lumibooks-app.png">
-					<br>
-					<p>LumiBook</p>
-				</li>
-			</a>
-			<a href="#observation/me">
-				<li>
-					<img src="img/observation-app.png">
-					<br>
-					<p>Observation</p>
-				</li>
-			</a>
-			<a href="#communities">
-				<li>
-					<img src="img/communitites-app.png">
-					<br>
-					<p>Communities</p>
-				</li>
-			</a>
-			<a href="">
-				<li>
-					<img src="img/tasks-app.png">
-					<br>
-					<p>{Tasks}</p>
-				</li>
-			</a>
-			<br class="clear">
+	<!-- Collect the nav links, forms, and other content for toggling -->
+	<div class="collapse navbar-collapse" id="pd360-main-nav">
+		<ul class="nav navbar-nav">
+			<li class="dropdown yamm-fw">
+				<a href="#" id="resources-tab" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a>
+				<ul class="dropdown-menu">
+					<li>
+						<div class="yamm-content">
+							<div class="row">
+								<div class="col-xs-12 col-sm-4 col-md-2">
+									<a href="#" class="thumbnail icon">
+										<img alt="Videos" src="img/icon-videos.png">
+										<p class="icon description">{Videos}</p>
+									</a>
+								</div>
+								<div class="col-xs-12 col-sm-4 col-md-2">
+									<a href="#" class="thumbnail icon">
+										<img alt="Learning Targets" src="img/icon-learning-targets.png">
+										<p class="icon description">{Learning Targets}</p>
+									</a>
+								</div>
+								<div class="col-xs-12 col-sm-4 col-md-2">
+									<a href="#observation/me" class="thumbnail icon">
+										<img alt="Observation" src="img/icon-observation.png">
+										<p class="icon description">Observation</p>
+									</a>
+								</div>
+								<div class="col-xs-12 col-sm-4 col-md-2">
+									<a href="#communities" class="thumbnail icon">
+										<img alt="Communities" src="img/icon-communities.png">
+										<p class="icon description">Communities</p>
+									</a>
+								</div>
+								<div class="col-xs-12 col-sm-4 col-md-2">
+									<a href="#lumibook" class="thumbnail icon">
+										<img alt="Lumibook" src="img/icon-lumibook.png">
+										<p class="icon description">Lumibook</p>
+									</a>
+								</div>
+								<div class="col-xs-12 col-sm-4 col-md-2">
+									<a href="#" class="thumbnail icon">
+										<img alt="More Resources" src="img/icon-more-resources.png">
+										<p class="icon description">{More Resources}</p>
+									</a>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</li>
+			<li><a href="#groups" id="groups-tab">Groups</a></li>
 		</ul>
-	</div>
-</section>
+		<div class="hidden-xs">
+			<form class="navbar-form navbar-left" role="search">
+				<div class="form-group search has-feedback">
+					<input type="text" class="form-control" placeholder="Search">
+					<div class="form-control-feedback">
+						<img class="" src="img/icon-search-gray.png" alt="bell">
+					</div>
+				</div>
+			</form>
+		</div>
+		<ul class="nav navbar-nav navbar-right">
+			<li class="hidden-xs">
+				<a href="#">
+					<img class="js-notifications notification-icon" src="img/bell.png" alt="bell">
+					<span class="badge badge-info notifications">{8}</span>
+				</a>
+			</li>
+			<li class="dropdown user-menu">
+				<a href="#" id="user-tab" class="dropdown-toggle" data-toggle="dropdown">
+					<div class="visible-xs">
+						User <span class="caret"></span>
+					</div>
+					<div class="menu-container hidden-xs">
+						&nbsp;
+						<div id="bar1" class="menu-bar"></div>
+						<div id="bar2" class="menu-bar"></div>
+						<div id="bar3" class="menu-bar"></div>
+					</div>
+				</a>
+				<ul class="dropdown-menu">
+					<li><a href="#settings/personal-info">User Settings</a></li>
+					<li class="visible-xs"><a href="#">{Notifications} <span class="badge badge-info">{8}</span></a></li>
+					<li><a href="#">{Help}</a></li>
+					<li class="divider"></li>
+					<li><a href="#logout">Log Out</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div><!-- /.navbar-collapse -->
+
+</div><!-- /.container-fluid -->
