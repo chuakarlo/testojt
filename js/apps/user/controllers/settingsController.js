@@ -7,9 +7,9 @@ define( function ( require ) {
 	var Session      = require( 'Session' );
 	var App          = require( 'App' );
 
-	App.module( 'User.Settings', function ( UserSettings ) {
+	App.module( 'User.Settings', function ( Mod ) {
 
-		UserSettings.Controller = {
+		Mod.Controller = {
 
 			'showSettings' : function ( page ) {
 				// if navigating to `#settings`, redirect to `#settings/personal-info`

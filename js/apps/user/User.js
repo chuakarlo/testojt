@@ -1,10 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette = require( 'marionette' );
 	var Session    = require( 'Session' );
 	var Vent       = require( 'Vent' );
 	var App        = require( 'App' );
+	var AuthRouter = require( 'AuthRouter' );
 
 	require( 'user/controllers/loginController' );
 	require( 'user/controllers/homeController' );
@@ -14,22 +14,18 @@ define( function ( require ) {
 	App.module( 'User', function ( User, App ) {
 
 		// configure routes
-		User.Router = Marionette.MiddlewareRouter.extend( {
+		User.Router = AuthRouter.extend( {
 
 			'appRoutes' : {
-				'login'            : 'showLogin',
-				'logout'           : 'showLogout',
-				'home'             : 'showHome',
-				'settings(/:page)' : [ 'checkSession', 'showSettings' ]
+				'login'              : 'showLogin',
+				'logout'             : 'showLogout',
+				'home'               : 'showHome',
+				'settings(/:page)' : 'showSettings'
 			}
 
 		} );
 
 		var API = {
-
-			'checkSession' : function ( args, callback ) {
-				App.request( 'session:checkSession', args, callback );
-			},
 
 			'showLogin' : function () {
 				App.PD360.hide();
@@ -48,12 +44,9 @@ define( function ( require ) {
 				User.Login.Controller.showLogin();
 			},
 
-			'showSettings' : function ( error, results, args ) {
-				// TODO: error handling
-				if ( !error ) {
-					App.PD360.hide();
-					User.Settings.Controller.showSettings( args[ 0 ] );
-				}
+			'showSettings' : function (page) {
+				App.PD360.hide();
+				User.Settings.Controller.showSettings(page);
 			},
 
 		};
@@ -87,21 +80,10 @@ define( function ( require ) {
 
 		// set handler when requesting if session is authenticated
 		App.reqres.setHandler( 'session:checkSession', function ( args, callback ) {
-
-			// Already logged in
-			if ( Session.authenticated() ) {
-
-				// Pass 'callback' the authenticated user
-				callback( null, Session );
+			if ( !Session.authenticated() ) {
+				return false;
 			}
-
-			// Not logged in
-			else {
-				App.navigate( 'login', { 'trigger' : true } );
-
-				callback( false );
-
-			}
+			return true;
 		} );
 
 		App.addInitializer( function () {

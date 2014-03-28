@@ -3,7 +3,6 @@ define( function ( require ) {
 
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
-	var Vent       = require( 'Vent' );
 	var $          = require( 'jquery' );
 	var template   = require( 'text!../templates/groupsView.html' );
 
@@ -11,16 +10,6 @@ define( function ( require ) {
 
 		'template' : _.template( template ),
 		'tagName'  : 'li',
-		'events'   : {
-			'click a.groupDetails' : 'groupClicked'
-	    },
-
-	    groupClicked : function ( e ) {
-
-			e.preventDefault();
-			Vent.trigger( 'group:show', this.model );
-
-	    },
 
 	    'templateHelpers' : {
 

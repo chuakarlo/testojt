@@ -1,7 +1,6 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette = require( 'marionette' );
 	var Backbone   = require( 'backbone' );
 	var template   = require( 'text!user/templates/settings/settings.html' );
 	var _          = require( 'underscore' );

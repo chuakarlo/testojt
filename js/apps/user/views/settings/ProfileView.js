@@ -23,6 +23,7 @@ define( function ( require ) {
 		},
 
 		'initialize' : function ( options ) {
+
 			if ( options.page ) {
 				page = options.page;
 			}

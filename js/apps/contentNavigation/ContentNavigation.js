@@ -1,32 +1,26 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette        = require( 'marionette' );
 	var App               = require( 'App' );
 	var ContentController = require( './main' );
+	var AuthRouter        = require( 'AuthRouter');
 
 	App.module( 'ContentNavigation', function ( ContentNavigation ) {
 
 		// load sub apps
 		// require( './controllers/showController' );
 
-		ContentNavigation.Router = Marionette.MiddlewareRouter.extend( {
+		ContentNavigation.Router = AuthRouter.extend( {
 			'appRoutes' : {
-				'resources/videos' : [ 'checkSession', 'showContentNavigation' ]
+				'resources/videos' : 'showContentNavigation'
 			}
 		} );
 
 		var API = {
-			'checkSession' : function ( args, callback ) {
-				App.request( 'session:checkSession', args, callback );
-			},
-
 			// TODO: error handling
-			'showContentNavigation' : function ( error, results, args ) {
-				if ( !error ) {
-					var contentNavigation = new ContentController( { 'init' : true } );
-					App.content.show( contentNavigation.MainView );
-				}
+			'showContentNavigation' : function ( args ) {
+				var contentNavigation = new ContentController( { 'init' : true } );
+				App.content.show( contentNavigation.MainView );
 			}
 		};
 

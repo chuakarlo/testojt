@@ -16,6 +16,7 @@ suite( function ( env ) {
 				.elementById( 'login-input-email' ).clear().type( 'diao.chan' )
 				.elementById( 'login-input-password' ).clear().type( 'pd360' )
 				.elementById( 'login-button' ).click()
+				.elementByXPath( '//*[@id="main-content"]/div/h1' ).text().should.eventually.become( 'Home' )
 
 				.nodeify( done );
 

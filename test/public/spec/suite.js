@@ -7,6 +7,8 @@ define( function ( require ) {
 
 			'spec/RemotingTest',
 
+			'spec/FilteredRouterTest',
+
 			'spec/apps/communities/CommunitiesTest',
 			'spec/apps/groups/GroupsTest',
 			'spec/apps/header/HeaderTest',

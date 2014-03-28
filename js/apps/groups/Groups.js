@@ -1,13 +1,13 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette = require( 'marionette' );
-	var Vent       = require( 'Vent' );
-	var App        = require( 'App' );
+	var Vent = require( 'Vent' );
+	var App  = require( 'App' );
 
 	// ## Groups App
 	App.module( 'Groups', function ( Groups ) {
 
+		var AuthRouter = require( 'AuthRouter' );
 		// load group
 		require( 'groups/controllers/listController' );
 		require( 'groups/controllers/editController' );
@@ -15,11 +15,11 @@ define( function ( require ) {
 		require( 'groups/views/Views' );
 
 		// configure groups routes
-		Groups.Router = Marionette.MiddlewareRouter.extend( {
+		Groups.Router = AuthRouter.extend( {
 
 			'appRoutes' : {
-				'groups'          : [ 'checkSession', 'listGroups' ],
-				'groups/:groupId' : [ 'checkSession', 'showGroup' ]
+				'groups'          : 'listGroups',
+				'groups/:groupId' : 'showGroup'
 			}
 
 		} );
@@ -30,12 +30,12 @@ define( function ( require ) {
 				App.request( 'session:checkSession', args, callback );
 			},
 
-			'listGroups' : function ( error, results, args ) {
+			'listGroups' : function () {
 				Groups.List.Controller.listGroups();
 			},
 
-			'showGroup' : function ( error, results, args ) {
-				Groups.Show.Controller.showGroup( args[ 0 ] );
+			'showGroup' : function ( groupID ) {
+				Groups.Show.Controller.showGroup( groupID );
 			},
 
 			'leaveGroup' : function ( model ) {

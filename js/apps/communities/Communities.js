@@ -1,8 +1,8 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette = require( 'marionette' );
 	var App        = require( 'App' );
+	var AuthRouter = require( 'AuthRouter' );
 
 	// ## Communities App
 	App.module( 'Communities', function ( Communities ) {
@@ -11,31 +11,21 @@ define( function ( require ) {
 		require( './controllers/showController' );
 
 		// configure communities routes
-		Communities.Router = Marionette.MiddlewareRouter.extend( {
+		Communities.Router = AuthRouter.extend( {
 
 			'appRoutes' : {
-				'communities' : [
-					'checkSession',
-					'showCommunities'
-				]
+				'resources/communities' : 'showCommunities'
 			}
 
 		} );
 
 		var API = {
-
-			// ## Middleware
-			'checkSession' : function ( args, callback ) {
-				App.request( 'session:checkSession', args, callback );
-			},
-
 			'showCommunities' : function ( error, results, args ) {
 				// TODO: error handling
 				if ( !error ) {
 					Communities.Show.Controller.showCommunities();
 				}
 			}
-
 		};
 
 		App.addInitializer( function () {

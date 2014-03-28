@@ -1,12 +1,12 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette = require( 'marionette' );
-	var Backbone   = require( 'backbone' );
-	var Vent       = require( 'Vent' );
+	var Marionette   = require( 'marionette' );
+	var Backbone     = require( 'backbone' );
+	var Vent         = require( 'Vent' );
 
 	// main app
-	var App = new Marionette.Application();
+	var App          = new Marionette.Application();
 
 	// set the regions of the app
 	App.addRegions( {

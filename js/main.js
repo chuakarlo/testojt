@@ -26,7 +26,6 @@
 			'shim'                : 'libs/es5-shim/es5-shim.min',
 			'text'                : 'libs/requirejs-text/text',
 			'underscore'          : 'libs/lodash/lodash',
-			'MiddlewareRouter'    : 'MiddlewareRouter',
 			'rotate'              : 'libs/rotate/index',
 
 			// Base application level classes
@@ -84,10 +83,6 @@
 
 			'jquery-placeholder' : {
 				'deps' : [ 'jquery' ]
-			},
-
-			'MiddlewareRouter' : {
-				'deps' : [ 'marionette' ]
 			},
 
 			'rotate' : {

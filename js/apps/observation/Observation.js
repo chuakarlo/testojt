@@ -1,21 +1,20 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette = require( 'marionette' );
-	var Vent       = require( 'Vent' );
-	var App        = require( 'App' );
+	var App = require( 'App' );
 
 	App.module( 'Observation', function ( Observation ) {
 
+		var AuthRouter = require( 'AuthRouter' );
 		// load observation sub apps
 		require( 'observation/controllers/showController' );
 
 		// configure routes
-		Observation.Router = Marionette.AppRouter.extend( {
+		Observation.Router = AuthRouter.extend( {
 
 			'appRoutes' : {
-				'observation/me' : 'showObservationsOfMe',
-				'processes/me'   : 'showProcessesOfMe'
+				'resources/observation/me' : 'showObservationsOfMe',
+				'resources/processes/me'   : 'showProcessesOfMe'
 			}
 
 		} );
@@ -24,19 +23,11 @@ define( function ( require ) {
 		var API = {
 
 			'showObservationsOfMe' : function () {
-				if ( App.request( 'session:authenticated' ) ) {
-					Observation.Show.Controller.showObservationsOfMe();
-				} else {
-					Vent.trigger( 'login:show', 'observation/me' );
-				}
+				Observation.Show.Controller.showObservationsOfMe();
 			},
 
 			'showProcessesOfMe' : function () {
-				if ( App.request( 'session:authenticated' ) ) {
-					Observation.Show.Controller.showProcessesOfMe();
-				} else {
-					Vent.trigger( 'login:show', 'processes/me' );
-				}
+				Observation.Show.Controller.showProcessesOfMe();
 			}
 
 		};
