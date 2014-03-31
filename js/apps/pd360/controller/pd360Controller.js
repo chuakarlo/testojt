@@ -12,6 +12,7 @@ define( function ( require ) {
 
 		var loginComplete = false;
 		var appLoaded     = false;
+		var hasFlash      = true;
 
 		var pendingNavigation;
 		var pendingLogin;
@@ -47,7 +48,17 @@ define( function ( require ) {
 
 					// show flash content
 					this.show();
+
+				} else if ( !hasFlash ) {
+
+					// close existing view
+					App.content.close();
+
+					// show flash player install
+					this.show();
+
 				} else {
+
 					// ensure pd360 remains hidden
 					this.hide();
 
@@ -154,15 +165,9 @@ define( function ( require ) {
 			},
 
 			'noFlash' : function () {
+				hasFlash          = false;
 				pendingNavigation = null;
 				pendingLogin      = null;
-
-				// close loading
-				App.content.close();
-
-				// show flash player install
-				this.show();
-
 			},
 
 			'available' : function () {
