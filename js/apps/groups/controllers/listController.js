@@ -1,10 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var GroupCollection = require( '../collections/GroupCollection' );
+	var $               = require( 'jquery' );
 	var Remoting        = require( 'Remoting' );
 	var App             = require( 'App' );
-	var $               = require( 'jquery' );
+	var GroupCollection = require( 'groups/collections/GroupCollection' );
 
 	App.module( 'Groups.List', function ( List ) {
 

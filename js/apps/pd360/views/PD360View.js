@@ -3,7 +3,6 @@ define( function ( require ) {
 
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
-	var $          = require( 'jquery' );
 	var Vent       = require( 'Vent' );
 
 	var template  = require( 'text!pd360/templates/PD360.html' );
@@ -14,7 +13,7 @@ define( function ( require ) {
 	var swf  = base + '/PD360.swf';
 
 	var flashvars;
-	
+
 	var minVersion  = '10.2.159';
 	var flashWidth  = '960';
 	var flashHeight = '1100';
@@ -44,8 +43,8 @@ define( function ( require ) {
 
 		'id' : 'wrapper',
 
+		// if they have the minimum required flash version, create the swf
 		'embedSWF' : function () {
-			// if they have the minimum required flash version, create the swf
 			swfobject.embedSWF( swf, this.id, flashWidth, flashHeight, minVersion, null, null, flashParams, flashAttributes, this.embedComplete );
 		},
 

@@ -7,7 +7,7 @@ define( function ( require ) {
 	App.module( 'Header', function ( Header ) {
 
 		// load sub apps of header
-		require( './controllers/showController' );
+		require( 'header/controllers/showController' );
 
 		var API = {
 

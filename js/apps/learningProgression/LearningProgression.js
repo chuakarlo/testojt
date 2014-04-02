@@ -7,7 +7,7 @@ define( function ( require ) {
 
 	App.module( 'LearningProgression', function ( LearningProgression ) {
 
-		require( './controllers/showController' );
+		require( 'learningProgression/controllers/showController' );
 
 		LearningProgression.Router = Marionette.AppRouter.extend( {
 

@@ -30,7 +30,7 @@
 			'rotate'              : 'libs/rotate/index',
 
 			// Base application level classes
-			'Session'  : 'apps/user/models/SessionModel',
+			'Session' : 'apps/user/models/SessionModel',
 
 			// app base folders
 			'communities'         : 'apps/communities',

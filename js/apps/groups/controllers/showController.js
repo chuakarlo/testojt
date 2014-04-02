@@ -1,11 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var Remoting         = require( 'Remoting' );
-	var MemberCollection = require( '../collections/MemberCollection' );
-	var GroupModel       = require( '../models/GroupModel' );
-	var App              = require( 'App' );
 	var $                = require( 'jquery' );
+	var App              = require( 'App' );
+	var Remoting         = require( 'Remoting' );
+	var MemberCollection = require( 'groups/collections/MemberCollection' );
+	var GroupModel       = require( 'groups/models/GroupModel' );
 
 	App.module( 'Groups.Show', function ( Show ) {
 

@@ -1,13 +1,13 @@
 define( function ( require ) {
 	'use strict';
-	
+
 	var App  = require( 'App' );
 	var Vent = require( 'Vent' );
 
-	require( './controller/pd360Controller' );
+	require( 'pd360/controller/pd360Controller' );
 
 	App.module( 'PD360', function ( PD360, App ) {
-		
+
 		var API = {
 
 			'embed' : function () {
@@ -126,5 +126,5 @@ define( function ( require ) {
 		} );
 
 	} );
-	
+
 } );

@@ -7,7 +7,7 @@ define( function ( require ) {
 	App.module( 'LumiBook', function ( LumiBook ) {
 
 		// load sub apps
-		require( './controllers/showController' );
+		require( 'lumibook/controllers/showController' );
 
 		LumiBook.Router = Marionette.MiddlewareRouter.extend( {
 

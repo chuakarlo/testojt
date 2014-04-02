@@ -8,7 +8,7 @@ define( function ( require ) {
 	App.module( 'Observation', function ( Observation ) {
 
 		// load observation sub apps
-		require( './controllers/showController' );
+		require( 'observation/controllers/showController' );
 
 		// configure routes
 		Observation.Router = Marionette.AppRouter.extend( {

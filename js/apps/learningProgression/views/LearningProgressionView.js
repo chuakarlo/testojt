@@ -10,6 +10,6 @@ define( function ( require ) {
 		'template'  : _.template( template ),
 		'tagName'   : 'h1',
 		'className' : 'container sub-page-header'
-		
+
 	} );
 } );

@@ -2,7 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var Backbone   = require( 'backbone' );
-	var GroupModel = require( '../models/GroupModel' );
+	var GroupModel = require( 'groups/models/GroupModel' );
 
 	return Backbone.Collection.extend( {
 

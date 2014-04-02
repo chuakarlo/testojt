@@ -2,10 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette = require( 'marionette' );
-	var Backbone   = require( 'backbone' );
-	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
-	var Vent       = require( 'Vent' );
 	var Session    = require( 'Session' );
 	var template   = require( 'text!user/templates/login/loginView.html' );
 

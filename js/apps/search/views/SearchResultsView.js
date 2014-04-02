@@ -6,7 +6,7 @@ define( function ( require ) {
 	var template   = require( 'text!search/templates/searchResultsView.html' );
 
 	return Marionette.ItemView.extend( {
-		'template'  : _.template( template )
+		'template' : _.template( template )
 
 	} );
 

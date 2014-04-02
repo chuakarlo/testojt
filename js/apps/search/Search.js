@@ -9,7 +9,7 @@ define( function ( require ) {
 	App.module( 'Search', function ( Search ) {
 
 		// load search
-		require( './controllers/showController' );
+		require( 'search/controllers/showController' );
 
 		// configure search routes
 		Search.Router = Marionette.AppRouter.extend( {

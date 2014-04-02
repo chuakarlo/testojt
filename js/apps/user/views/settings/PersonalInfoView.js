@@ -2,10 +2,8 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette = require( 'marionette' );
-	var UserModel  = require( 'user/models/UserModel' );
 	var Remoting   = require( 'Remoting' );
 	var template   = require( 'text!user/templates/settings/personalInfo.html' );
-	var Session    = require( 'Session' );
 	var _          = require( 'underscore' );
 	var $          = require( 'jquery' );
 
@@ -59,7 +57,7 @@ define( function ( require ) {
 			}.bind( this ) ).fail( function ( error ) {
 
 				// TODO: error handling
-				
+
 			}.bind( this ) );
 		},
 

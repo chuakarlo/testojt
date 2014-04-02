@@ -6,10 +6,10 @@ define( function ( require ) {
 	var Vent       = require( 'Vent' );
 	var App        = require( 'App' );
 
-	require( './controllers/loginController' );
-	require( './controllers/homeController' );
-	require( './controllers/settingsController' );
-	require( './entities/License' );
+	require( 'user/controllers/loginController' );
+	require( 'user/controllers/homeController' );
+	require( 'user/controllers/settingsController' );
+	require( 'user/entities/License' );
 
 	App.module( 'User', function ( User, App ) {
 

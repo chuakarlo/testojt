@@ -9,10 +9,10 @@ define( function ( require ) {
 	App.module( 'Groups', function ( Groups ) {
 
 		// load group
-		require( './controllers/listController' );
-		require( './controllers/editController' );
-		require( './controllers/showController' );
-		require( './views/Views' );
+		require( 'groups/controllers/listController' );
+		require( 'groups/controllers/editController' );
+		require( 'groups/controllers/showController' );
+		require( 'groups/views/Views' );
 
 		// configure groups routes
 		Groups.Router = Marionette.MiddlewareRouter.extend( {
