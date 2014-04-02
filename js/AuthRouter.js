@@ -5,7 +5,7 @@ define( function ( require ) {
 	var FilteredRouter = require( 'FilteredRouter' );
 
 	var AuthRouter = FilteredRouter.extend( {
-		
+
 		'before' : {
 			'^groups' : function() {
 				return this.authCheck();
@@ -18,7 +18,7 @@ define( function ( require ) {
 			'^settings' : function() {
 				return this.authCheck();
 			},
-			
+
 			'^home' : function() {
 				return this.authCheck();
 			}

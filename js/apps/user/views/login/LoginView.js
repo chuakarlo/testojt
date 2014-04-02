@@ -1,8 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette = require( 'marionette' );
+	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
+	var Marionette = require( 'marionette' );
 	var Session    = require( 'Session' );
 	var template   = require( 'text!user/templates/login/loginView.html' );
 
@@ -10,12 +11,33 @@ define( function ( require ) {
 		'template' : _.template( template ),
 
 		'events' : {
-			'submit' : 'login'
+			'submit' : 'login',
+			'click @ui.remember' : 'rememberMe'
 		},
 
 		'ui' : {
 			'username' : 'input[type=text]',
-			'password' : 'input[type=password]'
+			'password' : 'input[type=password]',
+			'remember' : 'input[type="checkbox"]'
+		},
+
+		onRender : function() {
+			// If the user selected the remember me option,
+			// populate the username for them.
+			if ( $.cookie( 'remember' ) === 'true' ) {
+				this.ui.remember.prop( 'checked', 'checked' );
+				this.ui.username.val( $.cookie( 'UID' ) );
+			}
+		},
+
+		'rememberMe' : function( event ) {
+			// if the checkbox is checked, set the remember cookie,
+			// else remove it.
+			if ( this.ui.remember.is( ':checked' ) ) {
+				Session.setCookie( 'remember', true );
+			} else {
+				Session.removeCookie( 'remember' );
+			}
 		},
 
 		'login' : function ( event ) {

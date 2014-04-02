@@ -29,7 +29,7 @@ define( function ( require ) {
 	App.on( 'initialize:after', function () {
 		if ( Backbone.history ) {
 			Backbone.history.start();
-			
+
 			// If no fragment exists, load login
 			if ( this.getCurrentRoute() === '' ) {
 				Vent.trigger( 'login:show' );

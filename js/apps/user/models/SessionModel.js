@@ -2,12 +2,13 @@ define( function ( require ) {
 	'use strict';
 
 	var $        = require( 'jquery' );
+	var _        = require( 'underscore' );
 	var Backbone = require( 'backbone' );
 	var Vent     = require( 'Vent' );
 
 	require( 'jquery-cookie' );
 
-	var usernameCookie  = 'URESPOND';
+	var usernameCookie  = 'UID';
 	var personnelCookie = 'PID';
 	var cfCookie        = 'CFAUTHORIZATION_PD360';
 	var cookieOptions   = { 'path' : '/' };
@@ -30,12 +31,14 @@ define( function ( require ) {
 				var done = options.success;
 
 				options.success = function ( jqXHR, status, error ) {
+
+					// Set the cookies before we trigger success
+					this.setCookie( usernameCookie, this.username );
+					this.setCookie( personnelCookie, jqXHR[ 0 ].PersonnelId );
+
 					Vent.trigger( 'login:success' );
 					Vent.trigger( 'session:change' );
 					Vent.trigger( 'pd360:login', this.username, this.password );
-
-					this.setCookie( usernameCookie, this.username );
-					this.setCookie( personnelCookie, jqXHR[ 0 ].PersonnelId );
 
 					if ( done ) {
 						done( jqXHR, status, error );
@@ -62,8 +65,10 @@ define( function ( require ) {
 			this.removeCookie( 'CFTOKEN' );
 
 			// remove personnelId & username
+			if( !$.cookie( 'remember' ) ) {
+				this.removeCookie( usernameCookie );
+			}
 			this.removeCookie( personnelCookie );
-			this.removeCookie( usernameCookie );
 
 			// Log out of flash
 			Vent.trigger( 'pd360:logout' );
@@ -75,7 +80,17 @@ define( function ( require ) {
 
 		// check to see if the user is logged in
 		'authenticated' : function () {
-			return Boolean( $.cookie( cfCookie ) );
+			var cookies = [
+				'CFID',
+				'CFTOKEN',
+				cfCookie,
+				usernameCookie,
+				personnelCookie
+			];
+			// IE9 + supports array.every but why not use underscore
+			return _.every( cookies, function( cookie ) {
+				return Boolean( $.cookie( cookie ) );
+			} ) ;
 		},
 
 		'username' : function () {
