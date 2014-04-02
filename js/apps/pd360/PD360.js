@@ -84,6 +84,14 @@ define( function ( require ) {
 			return API.signature( method, args );
 		};
 
+		App.reqres.setHandler( 'pd360:available', function () {
+			return API.available();
+		} );
+
+		App.reqres.setHandler( 'pd360:signature', function ( method, args ) {
+			return API.signature( method, args );
+		} );
+
 		// initialize PD360 swf on creation if authenticated
 		PD360.on( 'start', function () {
 			if ( App.request( 'session:authenticated' ) ) {

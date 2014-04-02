@@ -1,10 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
+	var App        = require( 'App' );
 	var Backbone   = require( 'backbone' );
-	var template   = require( 'text!user/templates/settings/settings.html' );
 	var _          = require( 'underscore' );
-	var App;
+	var template   = require( 'text!user/templates/settings/settings.html' );
 
 	var PersonalInfoView = require( './PersonalInfoView' );
 	var LicensesView     = require( './LicensesView' );
@@ -66,7 +66,6 @@ define( function ( require ) {
 
 			this.settings.show( this.getPage() );
 
-			App = App || require( 'App' );
 			App.navigate( 'settings/' + page );
 		},
 
@@ -82,15 +81,12 @@ define( function ( require ) {
 			}
 
 			else {
-				sub = new PersonalInfoView();
+				sub = new PersonalInfoView( { 'model' : this.personnelModel } );
 
 				// listen for updates on the personal info page, update profile view
-				sub.on( 'model:change', function () {
+				this.listenTo( sub.model, 'sync', function () {
 					this.profile.currentView.render();
-				}.bind( this ) );
-
-				// set the personnel model
-				sub.setPersonnelModel( this.personnelModel );
+				} );
 			}
 
 			return sub;

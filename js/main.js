@@ -35,6 +35,8 @@
 			'underscore'            : 'libs/lodash/lodash',
 			'MiddlewareRouter'      : 'MiddlewareRouter',
 			'rotate'                : 'libs/rotate/index',
+			'ColdFusion'            : 'plugins/Backbone.CF',
+			'config'                : 'config/index',
 
 			// Base application level classes
 			'Session' : 'apps/user/models/SessionModel',
@@ -123,6 +125,14 @@
 
 			'videojs' : {
 				'exports' : 'videojs'
+			},
+
+			'ColdFusion' : {
+				'deps' : [ 'backbone', 'App' ]
+			},
+
+			'modules' : {
+				'deps' : [ 'ColdFusion' ]
 			}
 
 		}
@@ -130,6 +140,9 @@
 	} );
 
 	define( function ( require ) {
+
+		require( 'ColdFusion' );
+		
 		var App = require( 'App' );
 
 		require( 'jquery-cookie' );

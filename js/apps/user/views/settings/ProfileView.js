@@ -65,12 +65,12 @@ define( function ( require ) {
 			return {
 
 				'Avatar' : function () {
-					return '<img src="' + profilePath + this.profileModel.Avatar + '">';
-				}.bind( this ),
+					return '<img src="' + profilePath + this.Avatar + '">';
+				}.bind( this.profileModel.attributes ),
 
 				'name' : function () {
-					return this.personnelModel.FirstName + ' ' + this.personnelModel.LastName;
-				}.bind( this )
+					return this.FirstName + ' ' + this.LastName;
+				}.bind( this.personnelModel.attributes )
 
 			};
 		}

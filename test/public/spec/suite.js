@@ -13,7 +13,6 @@ define( function ( require ) {
 			'spec/apps/groups/GroupsTest',
 			'spec/apps/header/HeaderTest',
 			'spec/apps/learningProgression/LearningProgressionTest',
-			'spec/apps/user/UserTest',
 
 			//contentNavigation
 			//'spec/apps/contentNavigation/main.js',
@@ -41,6 +40,13 @@ define( function ( require ) {
 			//Component
 			'spec/apps/contentNavigation/components/FilterComponentTest',
 			//'spec/apps/contentNavigation/components/SegmentCollectionComponentTest',
+
+			'spec/apps/user/UserTest',
+			'spec/apps/user/entities/LicenseTest',
+			'spec/apps/user/entities/PersonnelTest',
+			'spec/apps/user/entities/ProfileTest',
+
+			'spec/plugins/Backbone.CFTest',
 
 			// VideoPlayer test specs
 			// models

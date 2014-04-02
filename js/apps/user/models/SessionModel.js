@@ -102,7 +102,7 @@ define( function ( require ) {
 		},
 
 		'personnelId' : function () {
-			return $.cookie( personnelCookie );
+			return $.cookie( personnelCookie ) || null;
 		},
 
 		// sets a cookie, defaults to path of `/`

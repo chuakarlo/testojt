@@ -2,13 +2,8 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette = require( 'marionette' );
-	var Remoting   = require( 'Remoting' );
 	var template   = require( 'text!user/templates/settings/personalInfo.html' );
 	var _          = require( 'underscore' );
-	var $          = require( 'jquery' );
-
-	var path       = 'com.schoolimprovement.pd360.dao.core.ClientPersonnelGateway';
-	var objectPath = 'com.schoolimprovement.pd360.dao.core.ClientPersonnel';
 
 	return Marionette.ItemView.extend( {
 
@@ -22,11 +17,6 @@ define( function ( require ) {
 			'firstname' : '#firstname',
 			'lastname'  : '#lastname',
 			'email'     : '#email',
-			'username'  : '#username',
-			'district'  : '#district',
-			'country'   : '#country',
-			'state'     : '#state',
-			'city'      : '#city',
 			'save'      : '#save'
 		},
 
@@ -35,30 +25,11 @@ define( function ( require ) {
 		},
 
 		'saveInfo' : function () {
-			var model = this.personnelModel;
+			this.model.set( 'FirstName', this.ui.firstname.val() );
+			this.model.set( 'LastName', this.ui.lastname.val() );
+			this.model.set( 'EmailAddress', this.ui.email.val() );
 
-			model.FirstName    = this.ui.firstname.val();
-			model.LastName     = this.ui.lastname.val();
-			model.EmailAddress = this.ui.email.val();
-
-			var request = {
-				'path'       : path,
-				'objectPath' : objectPath,
-				'method'     : 'update',
-				'args'       : model
-			};
-
-			var saving = Remoting.fetch( request );
-
-			$.when( saving ).done( function ( model ) {
-
-				this.trigger( 'model:change' );
-
-			}.bind( this ) ).fail( function ( error ) {
-
-				// TODO: error handling
-
-			}.bind( this ) );
+			this.model.save();
 		},
 
 		'setPersonnelModel' : function ( model ) {
@@ -70,14 +41,7 @@ define( function ( require ) {
 
 			return {
 
-				'EmailAddress' : this.personnelModel.EmailAddress,
-				'DistrictName' : this.personnelModel.DistrictName,
-				'LoginName'    : this.personnelModel.LoginName,
-				'FirstName'    : this.personnelModel.FirstName,
-				'LastName'     : this.personnelModel.LastName,
-				'Country'      : this.personnelModel.Country,
-				'State'        : this.personnelModel.State,
-				'City'         : ''
+				'City' : ''
 
 			};
 

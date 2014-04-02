@@ -6,6 +6,7 @@
 		'baseUrl' : '../../js',
 
 		'paths' : {
+			
 			// Test suites
 			'spec' : '../test/public/spec',
 
@@ -58,7 +59,9 @@
 			'videoPlayer'           : 'apps/videoPlayer',
 
 			// Base application level classes
-			'Session'  : 'apps/user/models/SessionModel'
+			'Session'    : 'apps/user/models/SessionModel',
+			'config'     : 'config/index',
+			'ColdFusion' : 'plugins/Backbone.CF'
 
 		},
 
@@ -82,6 +85,11 @@
 				'exports': '$'
 			},
 
+			'underscore' : {
+				'deps' : [ 'jquery' ],
+				'exports' : '_'
+			},
+
 			'jquery-cookie' : {
 				'deps' : [ 'jquery' ]
 			},
@@ -96,32 +104,48 @@
 
 			'App' : {
 				'deps' : [ 'MiddlewareRouter' ]
+			},
+
+			'ColdFusion' : {
+				'deps' : [ 'backbone', 'App' ]
 			}
 
 		}
-	},
+	} );
 
-	require(
-		[ 'App', 'jquery', 'jquery-cookie', 'jquery-placeholder', 'spec/suite', 'sinon-chai', 'chai-backbone', 'chai-changes' ],
-		function ( App, $, cookie, placeholder, suite, sinon, chaiBackbone, chaiChanges) {
+	define( function ( require ) {
+		
+		require( 'ColdFusion' );
+		require( 'App' );
+		require( 'jquery-cookie' );
+		require( 'jquery-placeholder' );
 
-			// on dom ready require all specs and run
-			$( function () {
-				require( suite.specs, function () {
-					window.chai.should();
-					window.chai.use( sinon );
-					window.chai.use( chaiBackbone );
-					window.chai.use( chaiChanges );
+		var $            = require( 'jquery' );
+		var sinon        = require( 'sinon-chai' );
+		var suite        = require( 'spec/suite' );
+		var chaiBackbone = require( 'chai-backbone' );
+		var chaiChanges  = require( 'chai-changes' );
 
-					if ( window.mochaPhantomJS ) {
-						window.mochaPhantomJS.run();
-					} else {
-						window.mocha.run();
-					}
+		// on dom ready require all specs and run
+		$( function () {
 
-				} );
+			require( suite.specs, function () {
+
+				window.chai.should();
+				window.chai.use( sinon );
+				window.chai.use( chaiBackbone );
+				window.chai.use( chaiChanges );
+
+				if ( window.mochaPhantomJS ) {
+					window.mochaPhantomJS.run();
+				} else {
+					window.mocha.run();
+				}
+
 			} );
-		} )
-	);
+
+		} );
+
+	} );
 
 } ).call( this );

@@ -1,11 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	var SettingsView = require( 'user/views/settings/SettingsView' );
-	var $            = require( 'jquery' );
-	var Remoting     = require( 'Remoting' );
-	var Session      = require( 'Session' );
 	var App          = require( 'App' );
+	var $            = require( 'jquery' );
+	var SettingsView = require( 'user/views/settings/SettingsView' );
 
 	App.module( 'User.Settings', function ( Mod ) {
 
@@ -22,38 +20,19 @@ define( function ( require ) {
 				var loadingView = new App.Common.LoadingView();
 				App.content.show( loadingView );
 
-				// to show the avatar picture, grab the ClientPersonnelProfile object
-				var profileRequest = {
-					'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelProfileGateway',
-					'method' : 'getById',
-					'args'   : {
-						'id' : Session.personnelId()
-					}
-				};
+				var profileRequest   = App.request( 'user:profile' );
+				var personnelRequest = App.request( 'user:personnel' );
 
-				// to show the user's personal info, grab the ClientPersonnel object
-				var personnelRequest = {
-					'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelGateway',
-					'method' : 'getById',
-					'args'   : {
-						'id' : Session.personnelId()
-					}
-				};
-
-				var requests       = [ profileRequest, personnelRequest ];
-				var fetchingModels = Remoting.fetch( requests );
-
-				$.when( fetchingModels ).done( function ( models ) {
+				$.when( profileRequest, personnelRequest ).done( function ( profile, personnel ) {
 					// new settings view with the desired sub page
 					var settings = new SettingsView( { 'page' : page } );
 
 					// set the models
-					settings.setProfileModel( models[ 0 ] );
-					settings.setPersonnelModel( models[ 1 ] );
+					settings.setProfileModel( profile );
+					settings.setPersonnelModel( personnel );
 
 					// show the view
 					App.content.show( settings );
-
 				} ).fail( function ( error ) {
 					// TODO: error handling
 				} );

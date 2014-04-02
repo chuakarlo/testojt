@@ -1,15 +1,14 @@
 define( function ( require ) {
 	'use strict';
 
-	var Remoting   = require( 'Remoting' );
-	var Backbone   = require( 'backbone' );
-	var Session    = require( 'Session' );
-	var App        = require( 'App' );
-	var $          = require( 'jquery' );
+	var Backbone = require( 'backbone' );
+	var Session  = require( 'Session' );
+	var App      = require( 'App' );
+	var $        = require( 'jquery' );
 
 	App.module( 'Entities', function ( Entities ) {
 
-		Entities.License = Backbone.Model.extend( {
+		Entities.License = Backbone.CFModel.extend( {
 
 			// override sync to do nothing
 			'sync' : function () {},
@@ -18,10 +17,18 @@ define( function ( require ) {
 
 		} );
 
-		Entities.LicenseCollection = Backbone.Collection.extend( {
+		Entities.LicenseCollection = Backbone.CFCollection.extend( {
 
-			// override sync to do nothing
-			'sync' : function () {},
+			'getReadOptions' : function () {
+				return {
+					'method' : 'getUsersLicenses',
+					'args' : {
+						'id' : Session.personnelId()
+					}
+				};
+			},
+
+			'path' : 'SessionService',
 
 			'model' : Entities.License
 
@@ -29,43 +36,39 @@ define( function ( require ) {
 
 		// the list of users licenses
 		var licenses;
-		var defer;
+		var fetching = false;
 
 		var API = {
 
-			'initializeLicenses' : function () {
-				// request to get the licenses
-				var request = {
-					'path'   : 'com.schoolimprovement.pd360.dao.SessionService',
-					'method' : 'getUsersLicenses',
-					'args'   : {
-						'id' : Session.personnelId()
-					}
-				};
+			'initializeLicenses' : function ( defer ) {
 
-				// promise that will resolve when getting the licenses has completed
-				var gettingLicenses = Remoting.fetch( request );
-
-				$.when( gettingLicenses )
-
-					.done( function ( results ) {
-						// store licenses
-						licenses = new Entities.LicenseCollection( results[ 0 ] );
-						defer.resolve( licenses );
-					} )
-
-					.fail( function ( error ) {
-						defer.reject( error );
-					} );
-			},
-
-			'getLicenses' : function () {
-				// check if we are in process of fetching licenses
-				if ( defer && defer.state() !== 'resolved' ) {
+				// if currently fetching licenses
+				if ( fetching ) {
 					return defer.promise();
 				}
 
-				defer = $.Deferred();
+				fetching = true;
+
+				licenses = new Entities.LicenseCollection();
+
+				licenses.fetch( {
+					
+					'success' : function () {
+						fetching = false;
+						defer.resolve( licenses );
+					},
+
+					'error' : function () {
+						fetching = false;
+						licenses = null;
+						defer.reject( new Error( 'Error fetching licenses' ) );
+					}
+				} );
+
+			},
+
+			'getLicenses' : function () {
+				var defer = $.Deferred();
 
 				// if licenses were already fetched, return stored licenses
 				if ( licenses ) {
@@ -73,7 +76,7 @@ define( function ( require ) {
 				}
 
 				// licenses haven't been set, fetch them
-				this.initializeLicenses();
+				this.initializeLicenses( defer );
 
 				return defer.promise();
 			},
