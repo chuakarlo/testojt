@@ -1,8 +1,7 @@
-.cn-main-content {
-	padding     : auto 0 !important;
-	width       : 77%;
-	margin-left : 280px;
-	margin-top  : 90px;
+.cn-middle-container {
+    .cn-main-content {
+		padding     : auto 0 !important;
+	}
 }
 
 ul.cn-segments-container {
@@ -11,14 +10,9 @@ ul.cn-segments-container {
 		width: 100%;
 	}
 
-	@media ( max-width: @screen-xs ) {
-		// set the width to one wide on small screens (<480px)
-		li.col-xs-6 {
-			width : 100%;
-		}
-	}
-
 	li {
+		min-height: 290px;
+		max-height: 290px;
 		.listOffset( 0 );
 		background    : @cn-gray-light;
 		border-top    : 0;

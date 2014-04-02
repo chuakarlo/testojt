@@ -8,7 +8,7 @@ define( function ( require ) {
 	return Marionette.ItemView.extend( {
 		'template' : _.template( template ),
 		'ui' : {
-			'selectSort' : 'span.cn-sortby-category'
+			'selectSort' : 'ul li.cn-sortby span.cn-sortby-category'
 		}
 	} );
 

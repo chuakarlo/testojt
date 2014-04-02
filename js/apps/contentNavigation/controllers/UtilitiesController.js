@@ -26,7 +26,7 @@ define( function( require ) {
 				this.onCreate( onCreate );
 
 				scrollingEl.on( 'scroll' , function() {
-					if ( $( this ).scrollTop() !== 0 ) {
+					if ( scrollingEl.scrollTop() !== 0 ) {
 						this.show( boxShadowEl );
 					} else {
 						this.hide( boxShadowEl );

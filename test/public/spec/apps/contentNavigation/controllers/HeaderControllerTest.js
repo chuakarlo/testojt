@@ -73,7 +73,6 @@ define( function( require ) {
             it( 'should get the sortby Value', function(){
                 var _sortByValue = headerController._getSortByValue();
                 var _sortOptions = [ 'Release Date', 'A-Z' ];
-
                 _sortOptions.should.contain( _sortByValue );
             } );
 

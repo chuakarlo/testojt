@@ -38,10 +38,9 @@ define( function( require ) {
 	        this.Remoting = Remoting;
 	        this.view     = this.component.getView();
 
-			this._addSegmentsTopShadow();
-
-			this.component.getVent().on( 'component:ready', function(){
+			this.component.getVent().on( 'component:ready', function () {
 				this._fetchCollection();
+				this._addSegmentsTopShadow();
 			}.bind( this ) );
 	    },
 

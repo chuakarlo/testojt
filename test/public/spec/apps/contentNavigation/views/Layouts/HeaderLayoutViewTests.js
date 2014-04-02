@@ -17,7 +17,7 @@ define( function ( require ) {
 		var _renderedContent = headerLayoutView.render().$el;
 
 		it( 'should render ".resource-list"', function () {
-			expect( _renderedContent.find( '.resource-list' ).length ).to.be.above( 0 );
+			expect( _renderedContent.find( '.cn-resource-list' ).length ).to.be.above( 0 );
 		} );
 
 		it( 'should render ".cn-sortby" combobox', function () {
@@ -35,7 +35,7 @@ define( function ( require ) {
 
 		describe( 'Dropdown menu categories', function () {
 			var _renderedContent = headerLayoutView.render().$el;
-			var _menu = _renderedContent.find( '.dropdown-menu.cn-sortby-menu' );
+			var _menu = _renderedContent.find( '.cn-sortby .dropdown-menu.cn-sortby-menu' );
 			it( 'should use li element', function () {
 				_menu[ 0 ].children[ 0 ].tagName.should.be.equal( 'LI' );
 			} );
