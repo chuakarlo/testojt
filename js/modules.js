@@ -8,6 +8,7 @@ define( function ( require ) {
 	require( 'apps/groups/Groups' );
 	require( 'apps/contentNavigation/ContentNavigation' );
 	require( 'apps/videoPlayer/VideoPlayer');
+	require( 'apps/homepage/Homepage' );
 
 	require( 'common/views' );
 

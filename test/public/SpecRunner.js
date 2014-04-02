@@ -6,7 +6,7 @@
 		'baseUrl' : '../../js',
 
 		'paths' : {
-			
+
 			// Test suites
 			'spec' : '../test/public/spec',
 
@@ -58,6 +58,13 @@
 			'contentNavigation'     : 'apps/contentNavigation/',
 			'videoPlayer'           : 'apps/videoPlayer',
 
+			'pc-linq'             : 'libs/nakautot.linq/linq.min',
+			'pc-nivo'             : 'libs/nivo-slider/jquery.nivo.slider',
+			'pc-progressCircle'   : 'libs/progress-circle/progress-circle',
+			'pc-mouseWheel'       : 'libs/perfect-scrollbar/jquery.mousewheel',
+			'pc-carouselSnap'     : 'libs/circular-snap-carousel/carousel-snap',
+			'pc-htmlconcat'       : 'libs/htmlConcat/htmlconcat',
+
 			// Base application level classes
 			'Session'    : 'apps/user/models/SessionModel',
 			'config'     : 'config/index',
@@ -108,13 +115,30 @@
 
 			'ColdFusion' : {
 				'deps' : [ 'backbone', 'App' ]
+			},
+
+			'pc-nivo' : {
+				'exports' : '$',
+				'deps'    : ['jquery']
+			},
+			'pc-progressCircle' : {
+				'exports' : '$',
+				'deps'    : ['jquery']
+			},
+			'pc-carouselSnap' : {
+				'exports' : '$',
+				'deps'    : ['jquery']
+			},
+			'pc-htmlconcat' : {
+				'exports' : '$',
+				'deps'    : ['jquery']
 			}
 
 		}
 	} );
 
 	define( function ( require ) {
-		
+
 		require( 'ColdFusion' );
 		require( 'App' );
 		require( 'jquery-cookie' );

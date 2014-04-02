@@ -12,6 +12,9 @@ suite( function ( env ) {
 			browser = env.browser;
 
 			browser
+
+				.sleep( 2000 )
+
 				.elementById( 'login-input-email' ).clear().type( 'diao.chan' )
 				.elementById( 'login-input-password' ).clear().type( 'pd360' )
 				.elementById( 'login-button' ).click()
@@ -23,9 +26,12 @@ suite( function ( env ) {
 			console.log( '\tPhone Views' );
 
 			browser
+
+				.sleep( 2000 )
+
 				.setWindowSize( resolutions.phone.portrait.width, resolutions.phone.portrait.height )
 				.elementByCssSelector( 'button.navbar-toggle' ).click()
-				.sleep( 250 )
+				.sleep( 2000 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Resources' );
@@ -40,7 +46,12 @@ suite( function ( env ) {
 		it( 'should contain expected Resource Apps `phone view`', function ( done ) {
 
 			browser
+
+				.sleep( 2000 )
+
 				.elementByCssSelector( '#resources-tab' ).click()
+
+				.sleep( 2000 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Videos' );
@@ -58,7 +69,12 @@ suite( function ( env ) {
 		it( 'should contain expected User Menu Items `phone view`', function ( done ) {
 
 			browser
+
+				.sleep( 2000 )
+
 				.elementByCssSelector( '#user-tab' ).click()
+
+				.sleep( 2000 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'User Settings' );
@@ -76,7 +92,12 @@ suite( function ( env ) {
 			console.log( '\tTablet Views' );
 
 			browser
+
+				.sleep( 2000 )
+
 				.setWindowSize( resolutions.tablet.portrait.width, resolutions.tablet.portrait.height )
+
+				.sleep( 2000 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Resources' );
@@ -91,7 +112,12 @@ suite( function ( env ) {
 		it( 'should contain expected Menu Items `tablet view`', function ( done ) {
 
 			browser
+
+				.sleep( 2000 )
+
 				.elementByCssSelector( '#resources-tab' ).click()
+
+				.sleep( 2000 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Videos' );
@@ -109,8 +135,13 @@ suite( function ( env ) {
 		it( 'should contain expected User Menu Items `tablet view`', function ( done ) {
 
 			browser
+
+				.sleep( 2000 )
+
 				.setWindowSize( resolutions.desktop.landscape.width, resolutions.desktop.landscape.height )
 				.elementByCssSelector( '#user-tab' ).click()
+
+				.sleep( 2000 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'User Settings' );
@@ -127,7 +158,12 @@ suite( function ( env ) {
 			console.log( '\tDesktop Views' );
 
 			browser
+
+				.sleep( 2000 )
+
 				.setWindowSize( resolutions.desktop.landscape.width, resolutions.desktop.landscape.height )
+
+				.sleep( 2000 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Resources' );
@@ -142,7 +178,12 @@ suite( function ( env ) {
 		it( 'should contain expected Resource Apps `desktop view`', function ( done ) {
 
 			browser
+
+				.sleep( 2000 )
+
 				.elementByCssSelector( '#resources-tab' ).click()
+
+				.sleep( 2000 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Videos' );
@@ -160,8 +201,16 @@ suite( function ( env ) {
 		it( 'should contain expected User Menu Items `desktop view`', function ( done ) {
 
 			browser
+
+				.sleep( 2000 )
+
 				.setWindowSize( resolutions.desktop.landscape.width, resolutions.desktop.landscape.height )
+
+				.sleep( 2000 )
+
 				.elementByCssSelector( '#user-tab' ).click()
+
+				.sleep( 2000 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'User Settings' );

@@ -19,9 +19,9 @@ define( function ( require ) {
 		User.Router = AuthRouter.extend( {
 
 			'appRoutes' : {
-				'login'              : 'showLogin',
-				'logout'             : 'showLogout',
-				'home'               : 'showHome',
+				'login'            : 'showLogin',
+				'logout'           : 'showLogout',
+				'home'             : 'showHome',
 				'settings(/:page)' : 'showSettings'
 			}
 

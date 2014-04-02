@@ -14,18 +14,20 @@ suite( function ( env ) {
 
 		browser
 
+		.sleep( 2000 )
+
 		// login
 		.elementById( 'login-input-email' ).clear().type( 'matthew.donaldson@schoolimprovement.com' )
 		.elementById( 'login-input-password' ).clear().type( 'pd360' )
 		.elementById( 'login-button' ).click()
 
 		// wait for home page to display
-		.sleep( 500 )
+		.sleep( 2000 )
 
 		// go to group page
 		.get( 'http://localhost:8080/#groups/84021' )
 
-		.sleep( 1000 )
+		.sleep( 2000 )
 
 		// the title should contain the correct group name
 		.elementByXPath( '//div[@class=\'title\']/h2' )
@@ -45,6 +47,8 @@ suite( function ( env ) {
 
 		// get the group again
 		.get( 'http://localhost:8080/#groups/84021' )
+
+		.sleep( 2000 )
 
 		// button should be a leave button
 		.elementById( 'membership' )
