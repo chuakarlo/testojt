@@ -82,22 +82,22 @@ define( function ( require ) {
 
 		_createView	: function () {
 
-			var _that  = this;
+			var self  = this;
 			this.view  = new views.SegmentsCollectionView( {
-				className       : defaults.className + ' ' + _that.getClassName(),
+				className       : defaults.className + ' ' + self.getClassName(),
 				itemViewOptions : {
 					events: {
 					    'click div.cn-watch-later input': function(clickEvent) {
-					        _that._clickWatchLater.call(_that, _that._watchLaterCollection, clickEvent, this.el, this.model);
+					        self._clickWatchLater.call(self, self._watchLaterCollection, clickEvent, this.el, this.model);
 					    },
-					    'click a': _that._clickPlaySegment
+					    'click a': self._clickPlaySegment
 					}
 				},
 				collection: this.getCollection()
 			} );
 			this.view.on('before:item:added', function (itemView) {
 				var model = itemView.model;
-				if(_that._findWatchLaterSegment(model.id)){
+				if(self._findWatchLaterSegment(model.id)){
 					model.set( 'inWatchLaterQueue', true );
 				}
 			});
@@ -136,8 +136,6 @@ define( function ( require ) {
 
 		_fetchWatchLaterSegments	: function () {
 
-			var _that = this;
-
 			var _watchLaterSegments	= {
 				'path'	: 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
 				'method': 'getContentAbbrevListByPersonnelId',
@@ -150,11 +148,11 @@ define( function ( require ) {
 
 	        $.when( this._fetchingWatchLaterSegments ).done( function ( models ) {
 
-				_that._setWatchLaterSegments( models[0] );
+				this._setWatchLaterSegments( models[0] );
 				
-			} ).fail( function ( error ) {
-				return _that._fetchWaterLaterSegmentFailed.call(_that, error);
-			} );
+			}.bind( this ) ).fail( function ( error ) {
+				return this._fetchWaterLaterSegmentFailed.call(this, error);
+			}.bind( this ) );
 
 		},
 

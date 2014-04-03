@@ -164,7 +164,6 @@ define( function ( require ) {
 
 			el.addClass( 'addHighlight' );
 			this.vent.mediator.trigger( 'filter:change' );
-			$( window ).scrollTop( 0 );
 		},
 
 		'_removeFilter' : function ( el, model ) {
@@ -183,7 +182,6 @@ define( function ( require ) {
 			}
 
 			this.vent.mediator.trigger( 'filter:change' );
-			$( window ).scrollTop( 0 );
 		},
 
 		'clearFilters' : function ( currentFilters ) {
@@ -202,7 +200,6 @@ define( function ( require ) {
 			} );
 
 			this.vent.mediator.trigger( 'filter:change' );
-			$( window ).scrollTop( 0 );
 		}
 	} );
 

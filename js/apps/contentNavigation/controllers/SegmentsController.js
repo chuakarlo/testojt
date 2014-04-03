@@ -33,12 +33,11 @@ define( function( require ) {
 		currentPage             : 0,
 
 	    initialize              : function( options ) {
-
-			var that              = this;
+			
 	        var SegmentCollection = options.collection ? options.collection : collections.SegmentCollection;
 			this.collection       = new SegmentCollection();
 	        this.component        = new components.SegmentCollectionComponent({
-				collection	: that.collection
+				collection	: this.collection
 			} );
 
 			this._createVents();
@@ -52,8 +51,8 @@ define( function( require ) {
 			this._addSegmentsTopShadow();
 
 			this.component.getVent().on( 'component:ready', function(){
-				that._fetchCollection();
-			});
+				this._fetchCollection();
+			}.bind( this ) );
 
 	    },
 
@@ -78,9 +77,7 @@ define( function( require ) {
 		},
 
 		_fetchCollection              : function ( options ) {
-			
-			var that = this;
-
+					
 			this._showLoadingIndicator();
 
 			var fetchSegment = {
@@ -99,16 +96,15 @@ define( function( require ) {
 	        this.fetchingSegments = this.Remoting.fetch( [fetchSegment] );
 	        
 			$.when( this.fetchingSegments ).done( function ( models ) {
-
-				var validModels = that._purgeSegmentModels( models[0] );
-
-				that._setFetchedSegments( validModels, options );
-
-			} ).fail( function (error) {
-				that._hideLoadingIndicators();
+				var validModels = this._purgeSegmentModels( models[0] );
+				
+				this._setFetchedSegments( validModels, options );
+			}.bind( this ) ).fail( function ( error ) {
+				this._hideLoadingIndicators();
 				$( window ).scrollTop( 0 );
-				return that._fetchSegmentFailed.call(that, error);
-			} );
+				
+				return this._fetchSegmentFailed.call(this, error);
+			}.bind( this ) );
 
 	    },
 
@@ -186,15 +182,11 @@ define( function( require ) {
 
 		fetchWhileScrolling          : function( ) {
 
-			var that = this;
-
 			$( window ).smack( {
 				threshold : '200px'
 			} ).done( function () {
-
-				that._fetchCollection();
-
-			} );
+				this._fetchCollection();
+			}.bind( this ) );
 	    },
 
 		_segmentFilter				: function ( filters ) {
