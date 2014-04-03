@@ -1,3 +1,4 @@
+//           ## Manages f/e logic for the application
 define( function ( require ) {
 	'use strict';
 
@@ -6,227 +7,258 @@ define( function ( require ) {
 	var Backbone   = require( 'backbone' );
 	var Marionette = require( 'marionette' );
 	var Remoting   = require( 'Remoting' );
+	var Session    = require( 'Session' );
+	var Utils      = require( '../controllers/UtilitiesController' );
 
 	var collections  = {
-	    'SegmentCollection'    : require( '../collections/SegmentCollection' ),
+	    'SegmentCollection' : require( '../collections/SegmentCollection' ),
 	    'WatchLaterCollection' : require( '../collections/WatchLaterCollection' )
 	};
-
-	var views = {
+	var views        = {
 	    'ErrorView'              : require( '../views/ErrorView' ),
 	    'SegmentsCollectionView' : require( '../views/Segments/SegmentCollectionView' )
 	};
-
 	var Communicator = _.extend( {}, Backbone.Events );
-
-	var defaults = {
-		'className' : 'row cn-segments-container'
+	var defaults     = {
+		className : 'row cn-segments-container'
 	};
 
 	function throwError ( message, name ) {
 		var _error  = new Error( message );
-
 		_error.name = name || 'Error';
-
 		throw _error;
 	}
 
-	return Marionette.Controller.extend( {
-		'initialize'   : function ( options ) {
-			var validOptions  = this._setOptions( options );
-			this.Remoting = Remoting;
+	var SegmentCollectionComponent = Marionette.Controller.extend( {
 
-			if ( validOptions ) {
+		initialize   : function ( options ) {
+			
+			var _validOptions;
+			_validOptions = this._setOptions( options );
+			if ( _validOptions ) {
+				// Event
 				this._setVent();
+
 				this._initWatchLaterCollection();
+				// Create the collection view
 				this._createView();
+				
 			}
+
 		},
 
-		'_setOptions' : function ( options ) {
-			var optCollection = options.collection;
-			var optUrl        = options.url;
-			var optClassName  = options.className;
-			var optSet        = true;
+		_setOptions : function ( options ) {
+			// collection
+			// url 
+			// renderTo
+			// vent
 
-			if ( !optCollection && !optUrl ) {
+			var _optCollection = options.collection;
+			var _optUrl        = options.url;
+			var _optClassName  = options.className;
+			var _optSet        = true;
+
+			if ( !_optCollection && !_optUrl ) {
 				throwError( 'SegmentCollectionComponent needs a Backbone.collection or URL', 'SegmentCollectionComponent' );
 
-				optSet = false;
+				_optSet = false;
 			}
 
 			// Collection for CollectionView
-			if ( optCollection ) {
-				this._setCollection( optCollection );
+			if ( _optCollection ) {
+				this._setCollection( _optCollection );
 			} else {
-				this._setCollection( new collections.SegmentCollection( {
-					'url' : optUrl
+				this._setCollection( new collections.SegmentCollection({
+					url	: _optUrl
 				} ) );
 			}
 
 			// Base CSS class
-			this._setClassName( optClassName );
+			this._setClassName( _optClassName );
 
-			return optSet;
+			return _optSet;
+
 		},
 
-		'_createView'	: function () {
-			var self  = this;
+		_createView	: function () {
 
+			var _that  = this;
 			this.view  = new views.SegmentsCollectionView( {
-				'className'  : defaults.className + ' ' + self.getClassName(),
-				'collection' : this.getCollection(),
-
-				'itemViewOptions' : {
-					'events' : {
-						'click div.cn-watch-later input' : self._clickWatchLater,
-						'click a'                        : self._clickPlaySegment
+				className       : defaults.className + ' ' + _that.getClassName(),
+				itemViewOptions : {
+					events: {
+					    'click div.cn-watch-later input': function(clickEvent) {
+					        _that._clickWatchLater.call(_that, _that._watchLaterCollection, clickEvent, this.el, this.model);
+					    },
+					    'click a': _that._clickPlaySegment
 					}
-				}
+				},
+				collection: this.getCollection()
 			} );
-
 			this.view.on('before:item:added', function (itemView) {
 				var model = itemView.model;
-
-				if (self._findWatchLaterSegment( model.id ) ) {
+				if(_that._findWatchLaterSegment(model.id)){
 					model.set( 'inWatchLaterQueue', true );
 				}
-			} );
+			});
 
 		},
 
 		// Returns the collection view
-		'getView' : function () {
+		getView	          : function () {
 			return this.view;
 		},
 
-		'_setCollection' : function ( collection ) {
+		_setCollection    : function ( collection ) {
 			this.collection = collection;
 		},
 
 		// Returns the Backbone collection used
-		'getCollection' : function () {
+		getCollection     : function () {
 			return this.collection;
 		},
 
-		'_initWatchLaterCollection' : function () {
+		_initWatchLaterCollection	: function () {
+
 			this._setWatchLaterCollection();
+
 			this._fetchWatchLaterSegments();
+
 		},
 
-		'_setWatchLaterCollection' : function () {
+		_setWatchLaterCollection	: function () {
 			this._watchLaterCollection = new collections.WatchLaterCollection();
 		},
 
-		'_getWatchLaterCollection' : function () {
+		_getWatchLaterCollection	: function () {
 			return this._watchLaterCollection;
 		},
 
-		'_fetchWatchLaterSegments' : function () {
-			var self = this;
+		_fetchWatchLaterSegments	: function () {
 
-			var watchLaterSegments	= {
-				'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
-				'method' : 'getContentAbbrevListByPersonnelId',
-				'args'   : { 'personnelId': 6969 }
+			var _that = this;
+
+			var _watchLaterSegments	= {
+				'path'	: 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
+				'method': 'getContentAbbrevListByPersonnelId',
+				'args': {
+					'personnelId': Session.personnelId()
+				}
 		    };
 
-		    this._fetchingWatchLaterSegments = this.Remoting.fetch( [ watchLaterSegments ] );
+		    this._fetchingWatchLaterSegments = Remoting.fetch( [_watchLaterSegments] );
 
 	        $.when( this._fetchingWatchLaterSegments ).done( function ( models ) {
-				self._setWatchLaterSegments( models[ 0 ] );
+
+				_that._setWatchLaterSegments( models[0] );
+				
 			} ).fail( function ( error ) {
-				return self._fetchWaterLaterSegmentFailed.call( self, error );
+				return _that._fetchWaterLaterSegmentFailed.call(_that, error);
 			} );
+
 		},
 
-		'_setWatchLaterSegments' : function ( models ) {
-			var collection = this._getWatchLaterCollection();
+		_setWatchLaterSegments	: function ( models ) {
+			var _collection = this._getWatchLaterCollection();
+			if (models instanceof Array) {
 
-			if ( models instanceof Array ) {
-				if ( models.length ) {
-					collection.add( models, { 'parse': true } );
+				if (models.length) {
+					_collection.add( models, {parse: true});
 				}
 
-				if ( !this._watchLaterCollectionReady ) {
+				if (!this._watchLaterCollectionReady) {
 					this._watchLaterCollectionReady = true;
-
 					Communicator.trigger('component:ready');
 				}
 			}
 		},
 
-		'_fetchWaterLaterSegmentFailed' : function ( error ) {
-
+		_fetchWaterLaterSegmentFailed	: function (error) {
+			
 		},
 
-		'_addWatchLaterSegment' : function ( contentId ) {
+		_addWatchLaterSegment	: function ( contentId ) {
 			// Add segment to watchLaterCollection if it doesn't exist
 			// Set true flag for model on segmentCollection
 		},
 
-		'_removeWatchLaterSegment'	: function ( contentId ) {
+		_removeWatchLaterSegment	: function ( contentId ) {
 			// remove segment on watchLaterCollection
 			// Set false flag for model on segmentCollection
 		},
 
-		'_findWatchLaterSegment' : function ( contentId ) {
-			var collection     = this._getWatchLaterCollection();
-			var watchLaterList = collection.models;
+		_findWatchLaterSegment	: function ( contentId ) {
+			var _collection = this._getWatchLaterCollection();
+			var matchedId = _collection.get(contentId);
 
-			var result;
-
-			_.each( watchLaterList, function( data ) {
-				if ( data.id === contentId ) {
-					// console.log('matched id: ' + data.id);
-					result = true;
-				}
-				else {
-					// console.log('no matched id: ' + data.id);
-					result = false;
-				}
-			} );
-
-			return result;
+			if(matchedId !== undefined){
+				return true;
+			}
 		},
 
-		'_setVent' : function () {
+		_setVent          : function () {
 			this.vent = Communicator;
-
 		},
 
 		// Returns the events for this component
-		'getVent' : function () {
+		getVent           : function () {
 			return this.vent;
 		},
 
-		'_setClassName' : function ( className ) {
+		_setClassName     : function ( className ) {
 			this.className = className ? className : '';
 		},
 
 		// Returns the base class for the collection view
-		'getClassName' : function () {
+		getClassName      : function () {
 			return this.className;
 		},
 
-		'_clickWatchLater' : function ( event ) {
-			var clicked = $( event.target ).is( ':checked' );
+		_clickWatchLater  : function ( watchLaterCollection, clickEvent, el, model ) {
+
+			var _clicked = $( clickEvent.target ).is( ':checked' );
+			var _method = ( _clicked ? 'create' : 'deleteByObj' );
+			var _queueParams = {
+			    method : _method,
+			    args : {
+			        personnelId : Session.personnelId(),
+			        contentId : model.id,
+			        created : ' '
+			    },
+			    path: 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
+			    objectPath : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmark'
+			};
+
+			this._queueParams = Remoting.fetch( [_queueParams] );
+			$.when( this._queueParams ).done( function () {
+				if ( _method === 'create' ) {
+					watchLaterCollection.add( model );
+
+				} else {
+					watchLaterCollection.remove( model );
+				}
+			}).fail( function ( error ) {
+				Utils.throwError( error, 'Click Watch Later' );
+			});
+			
 
 			// Triggers watch later click event
 			// Params passed
 			// clicked - Boolean value for the click state
 			// model - Backbone.Model for the clicked item
-			Communicator.trigger( 'click:watchLater', this.model, clicked );
+			Communicator.trigger( 'click:watchLater', this.model, _clicked );
 		},
 
-		'_clickPlaySegment' : function ( event ) {
+		_clickPlaySegment : function ( e ) {
 			// Triggers watch later click event
 			// Params passed
 			// clicked - Boolean value for the click state
-			// model - Backbone.Model for the clicked item
-			Communicator.trigger( 'click:playSegment', this.model, event );
-		}
+			// model - Backbone.Model for the clicked item			
+			Communicator.trigger( 'click:playSegment', this.model, e );
+
+		},
 
 	} );
 
+	return SegmentCollectionComponent;
 } );

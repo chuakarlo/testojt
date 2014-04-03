@@ -1,108 +1,137 @@
+// ## Manages f/e logic for the application
 define( function( require ) {
 	'use strict';
-
-	var Marionette = require( 'marionette' );
-	var $          = require( 'jquery' );
-	var _          = require( 'underscore' );
-	var Remoting   = require( 'Remoting' );
-
-	var Utils      = require( './UtilitiesController' );
-	var queryLimit = 24;
 
 	require( 'jquery.bum-smack' );
 	require( 'jquery.spin' );
 
-	var collections = {
+	var Marionette         = require( 'marionette' );
+	var $                  = require( 'jquery' );
+	var _                  = require( 'underscore' );
+	var Remoting	       = require( 'Remoting' );
+	var Session			   = require( 'Session' );
+	var collections        = {
 	    'SegmentCollection' : require( '../collections/SegmentCollection' )
 	};
 
-	var components = {
+	var components	       = {
 		'SegmentCollectionComponent' : require('../components/SegmentCollectionComponent')
 	};
 
-	return Marionette.Controller.extend( {
-		'collectionRequest' : null,
-		'filterParam'       : '',
-		'sortByParam'       : '',
-		'currentPage'       : 0,
+	var Utils              = require( './UtilitiesController' );
 
-	    'initialize' : function( options ) {
+	var queryLimit         = 24;
+
+	var SegmentsController = Marionette.Controller.extend( {
+
+		collectionRequest       : null,
+
+		filterParam             : '',
+
+		sortByParam             : '',
+
+		currentPage             : 0,
+
+	    initialize              : function( options ) {
+
+			var that              = this;
 	        var SegmentCollection = options.collection ? options.collection : collections.SegmentCollection;
-
-			this.collection = new SegmentCollection();
-	        this.component = new components.SegmentCollectionComponent( { 'collection' : this.collection } );
+			this.collection       = new SegmentCollection();
+	        this.component        = new components.SegmentCollectionComponent({
+				collection	: that.collection
+			} );
 
 			this._createVents();
 
-	        this.App      = options.App;
-	        this.Remoting = Remoting;
-	        this.view     = this.component.getView();
+	        this.App = options.App;
 
-			this.component.getVent().on( 'component:ready', function () {
-				this._fetchCollection();
-				this._addSegmentsTopShadow();
-			}.bind( this ) );
+	        this.Remoting = Remoting;
+
+	        this.view = this.component.getView();
+
+			this._addSegmentsTopShadow();
+
+			this.component.getVent().on( 'component:ready', function(){
+				that._fetchCollection();
+			});
+
 	    },
 
-	    '_addSegmentsTopShadow' : function () {
+	    _addSegmentsTopShadow   : function ( ) {
 			Utils.scrollIndicator.init( {
-				'scrollingEl' : $( window ),
-				'boxShadowEl' : $( '#cn-content-shadow' )
+				scrollingEl    : $( window ),
+				boxShadowEl    : $( '#cn-content-shadow' )
 			} );
 	    },
 
-	    '_createVents' : function () {
-			this.vent = this.options.vent;
+	    _createVents			: function () {
 
+			this.vent = this.options.vent;
 			// Request Response
 			this.vent.mediator.on( 'segment:filter', this._segmentFilter, this );
+
 			this.vent.mediator.on( 'segment:sort', this._segmentSort, this );
+
+			// Commands
+
+			// Mediator
 		},
 
-		'_fetchCollection' : function ( options ) {
+		_fetchCollection              : function ( options ) {
+			
+			var that = this;
+
 			this._showLoadingIndicator();
 
 			var fetchSegment = {
-				'path'	: 'com.schoolimprovement.pd360.dao.RespondService',
-				'method': 'RespondSearchContentData',
+				'path'	: 'com.schoolimprovement.pd360.dao.SearchService',
+				'method': 'RespondSearchAPI',
 				'args': {
-					'start'		: this._getStartingRow(),
-					'rows'		: queryLimit,
-					'sort'		: this._getSortParam(),
-					'searchData': this._getFiltersParam()
+			      'persId': Session.personnelId(),
+			      'start': this._getStartingRow(),
+			      'rows': queryLimit,
+			      'searchType': 'VideosAll',
+			      'searchData': this._getFiltersParam(),
+			      'sort': this.sortByParam
 				}
 	        };
 
 	        this.fetchingSegments = this.Remoting.fetch( [fetchSegment] );
-
+	        
 			$.when( this.fetchingSegments ).done( function ( models ) {
-				var validModels = this._purgeSegmentModels( models[0] );
 
-				this._setFetchedSegments( validModels, options );
-			}.bind( this ) ).fail( function ( error ) {
-				this._hideLoadingIndicators();
+				var validModels = that._purgeSegmentModels( models[0] );
 
-				return this._fetchSegmentFailed.call( this, error );
-			}.bind( this ) );
+				that._setFetchedSegments( validModels, options );
+
+			} ).fail( function (error) {
+				that._hideLoadingIndicators();
+				$( window ).scrollTop( 0 );
+				return that._fetchSegmentFailed.call(that, error);
+			} );
 
 	    },
 
-	    '_purgeSegmentModels' : function (models) {
+	    _purgeSegmentModels	: function (models) {
 			var purgedRawModels;
 
 			purgedRawModels = _.filter( models, function (model) {
 				return model.hasOwnProperty('ContentId');
-			} );
+			});
 
 			return purgedRawModels;
 	    },
 
-	    '_setFetchedSegments' : function ( models, options ) {
+	    _setFetchedSegments   : function ( models, options ) {
 
 			if ( models instanceof Array ) {
 
 				if (options && options.reset) {
 					this.collection.reset( models, { parse : true } );
+					if( !models.length ){
+						this._setNoFilterResult();
+					}
+					$( window ).scrollTop( 0 );
 				} else {
 					this.collection.add( models, { parse : true } );
 				}
@@ -112,51 +141,63 @@ define( function( require ) {
 				this._hideLoadingIndicators();
 
 				if ( models.length ) {
+
 					this.fetchWhileScrolling();
+
 				} else {
+
 					this._showNoMoreVideosIndicator();
+
 				}
 			}
 
 	    },
+	    _setNoFilterResult    : function ( ) {
+			$('.cn-no-results').html('There are no filter results.');
+	    },
 
-	    '_fetchSegmentFailed' : function ( error ) {
+	    _fetchSegmentFailed	         : function ( error ) {
 			Utils.throwError(error, 'Fetch Segments');
 	    },
 
-	    '_getStartingRow' : function () {
+	    _getStartingRow	      : function () {
+
 			var startingRow = 0;
 
 			if ( this.currentPage ) {
 				startingRow = queryLimit * this.currentPage;
 			}
-
 			return startingRow;
 	    },
 
-	    'getCollection' : function () {
+	    getCollection                : function () {
 			return this.collection;
 	    },
 
-	    'getView' : function () {
+	    getView                      : function () {
 	        return this.view;
 	    },
 
-	    'cancelPendingCollectionFetch' : function () {
+	    cancelPendingCollectionFetch : function () {
 			if ( this.collectionRequest !== null ) {
 				this.collectionRequest.abort();
 			}
 	    },
 
-		'fetchWhileScrolling' : function() {
+		fetchWhileScrolling          : function( ) {
+
+			var that = this;
+
 			$( window ).smack( {
 				threshold : '200px'
 			} ).done( function () {
-				this._fetchCollection();
-			}.bind( this ) );
+
+				that._fetchCollection();
+
+			} );
 	    },
 
-		'_segmentFilter' : function ( filters ) {
+		_segmentFilter				: function ( filters ) {
 			var filtersParam = '';
 
 			if ( filters instanceof Array && filters.length ) {
@@ -164,24 +205,30 @@ define( function( require ) {
 			}
 
 			this.filterParam = filtersParam;
+
 			this.currentPage = 0;
 
 			this._fetchCollection( {reset: true} );
 
 		},
 
-		'_getFiltersParam' : function () {
+		_getFiltersParam		     : function ( ) {
+
 			return this.filterParam;
 		},
 
-		'_segmentSort' : function ( sort ) {
+		_segmentSort				 : function ( sort ) {
+			
 			this.sortByParam = sort;
+
 			this.currentPage = 0;
 
-			this._fetchCollection( { 'reset' : true } );
+			this._fetchCollection( {reset: true} );
+
 		},
 
-		'_getSortParam' : function (){
+		_getSortParam				 : function ( ){
+
 			if ( !this.sortByParam ) {
 				this.sortByParam = this.vent.reqres.request( 'segment:getSortValueByValue' );
 			}
@@ -189,20 +236,21 @@ define( function( require ) {
 			return this.sortByParam;
 		},
 
-		'_showLoadingIndicator' : function (  ) {
+		_showLoadingIndicator		: function (  ) {
 			$( '#loading-indicator' ).show();
 			$( '#loading-spinner' ).spin();
 	    },
 
-	    '_showNoMoreVideosIndicator' : function () {
+	    _showNoMoreVideosIndicator	: function ( ) {
 			$( '#loading-stopper' ).show().delay( 2000 ).fadeOut( 'slow' );
 	    },
 
-	    '_hideLoadingIndicators' : function () {
+	    _hideLoadingIndicators		: function () {
 			$( '#loading-indicator' ).hide();
 			$( '#loading-stopper' ).hide();
 	    }
 
 	} );
 
+    return SegmentsController;
 } );

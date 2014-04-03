@@ -58,10 +58,10 @@ define( function ( require ) {
 			var sort = this._getSortByValue();
 
 			if( sort === 'Release Date' ) {
-				sort = 'Created';
+				sort = 'created desc';
 				this.vent.mediator.trigger( 'segment:sort', sort );
 			} else {
-				sort = 'AtoZ';
+				sort = 'title asc';
 				this.vent.mediator.trigger( 'segment:sort', sort );
 			}
 		}
