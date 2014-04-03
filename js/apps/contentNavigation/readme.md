@@ -122,7 +122,7 @@ Running a static connect server, livereload, watches for js and html changes, co
 
 ```grunt devbuild```
 
-Running connect, file watch, jshint, livereload on pulic tests
+Running connect, file watch, jshint, livereload on public tests
 
 ```grunt testpublic```
 
