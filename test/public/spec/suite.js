@@ -14,6 +14,11 @@ define( function ( require ) {
 			'spec/apps/header/HeaderTest',
 			'spec/apps/learningProgression/LearningProgressionTest',
 
+			// learningTargets
+			'spec/apps/learningTargets/LearningTargetsTest',
+
+			'spec/apps/user/UserTest',
+
 			//contentNavigation
 			//'spec/apps/contentNavigation/main.js',
 			//Models

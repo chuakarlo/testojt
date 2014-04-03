@@ -6,5 +6,6 @@ define( function ( require ) {
 	require( './observation/Observation' );
 	require( './lumibook/LumiBook' );
 	require( './learningProgression/LearningProgression' );
+	require( './learningTargets/LearningTargets' );
 
 } );

@@ -49,6 +49,7 @@
 			'communities'           : 'apps/communities',
 			'header'                : 'apps/header/',
 			'learningProgression'   : 'apps/learningProgression',
+			'learningTargets'       : 'apps/learningTargets',
 			'lumibook'              : 'apps/lumibook',
 			'observation'           : 'apps/observation',
 			'pd360'                 : 'apps/pd360',
