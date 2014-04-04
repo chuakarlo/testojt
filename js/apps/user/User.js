@@ -40,6 +40,7 @@ define( function ( require ) {
 			'showLogout' : function () {
 				App.PD360.hide();
 				App.request( 'user:licenses:reset' );
+				App.request( 'pd360:logout' );
 				Session.destroy();
 				User.Login.Controller.showLogin();
 			},

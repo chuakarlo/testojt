@@ -6,7 +6,7 @@ define( function ( require ) {
 	var App     = require( 'App' );
 	var $       = require( 'jquery' );
 	var _       = require( 'underscore' );
-	
+
 	var Remoting = function () {
 
 		// get a signature and call coldfusion with it

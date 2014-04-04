@@ -11,11 +11,16 @@
 #groups .group img { background-size: contain; background-color: white; }
 #groups li { cursor: pointer; }
 
+#group textarea#comment-create { width: 100%; }
+#group textarea.comment-reply { width: 100%; }
+#group div.post { width: 100%; }
+
+.accordion-heading a { color:#4b505c; }
 
 /************************************************************\
 						SELECTED GROUP
 \************************************************************/
-#group .banner { height:320px; width:100%;  background: url('http://builtbyhq.com/projects/school/CORE/v1/img/banner.jpg'); }
+#group .banner { height:320px; width:100%;  background: url('http://builtbyhq.com/projects/school/CORE/v1/img/banner.jpg'); background-size: cover; }
 #group .banner .container { position: relative; height: 100%; }
 #group .banner button { position: absolute; bottom: 20px; right:0px; width:140px; }
 
@@ -25,44 +30,42 @@
 #group .header .title { float:left; padding:20px; }
 #group .header h2 { font-weight: 500; font-size: 30px; color:#4b505c; }
 #group .header p { color:#8f9298; }
-#group .header .members { float:right; padding:2px; }
-#group .header .members p { float:right; padding:7px 6px; }
-#group .header .images { float:right; }
-#group .header .images ul { width:150px; }
-#group .header .images li { float:left; margin:2px; }
-#group .header .images li img { width: 33px; height:33px; }
+#group .members { float:left; padding:2px; }
+#group .members p { float:left; padding:7px 6px; }
+#group .members .images { float:right; }
+#group .members .images ul { width:150px; }
+#group .members .images li { float:left; margin:2px; }
+#group .members .images li img { width: 33px; height:33px; }
 
 #group .comments .blue-text { font-weight: 600; }
-#group .left-side { width:50%; float:left; padding-right:30px; }
-#group .left-side>ul>li { border-bottom: 1px solid #ebebeb; margin-bottom: 15px; }
-#group .right-side { width:50%; float:left; }
+#group ul.comments-list li { border-bottom: 1px solid #ebebeb; margin-bottom: 15px; }
 #group .right-side>ul>li { border-bottom: 1px solid #ebebeb; margin-bottom: 15px; }
 #group .comment { border:1px solid #ebebeb; border-radius: 3px; width:100%; margin-bottom: 25px; }
 #group .comment textarea { width:100%; border:none; resize: none; padding:12px; }
+#group .comment a { color: none; }
 #group .comment .post { padding:6px 12px; background:#f3f2f2; width:100%; }
 #group .comment .post li { border-bottom:1px solid #ebebeb; }
 #group .comment .post img { float:left; margin:10px 30px 0 0; cursor: pointer; }
 #group .comment .post button { float:right; height:32px; width:85px; }
 #group .wrapper { border-left:4px solid #ebebeb; width:95%; margin-left: 5%; padding:0 30px 30px; position: relative; }
-#group .wrapper .profile-main { position: absolute; top:0px; left:-41px; }
+#group .wrapper .profile-main { position: absolute; top:0px; left:-41px; width: 76px; height: 76px; }
 #group .wrapper .comment-main { margin:15px 0 15px 20px; padding-top: 15px; }
 #group .wrapper .comment-main p { line-height: 1.5em; }
 #group .reply { background:#f8f8f8; border-radius: 3px; }
 #group .reply li { padding:13px; border-bottom: 1px solid #ebebeb; }
 #group .reply li.message { border:none; background:#ebebeb; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; }
 #group .reply li.message input { width:100%; border:none; border-radius: 3px; padding:12px; }
-#group .reply .profile { float:left; }
-#group .reply .text { float:left; max-width:400px; padding-left: 13px; }
+#group .reply .profile { float:left; width: 33px; width: 33px; }
+#group .reply .text { float:left; max-width:90%; padding-left: 13px; }
 #group .reply .text p { line-height: 1.5em; }
 
 /* Group Classes */
-.clmn-4 .profile { width:100%; height:179px; background:#ddd; }
-.clmn-4 .profile img { width:150px; height: 150px; border:3px solid white; display: block; margin:0 auto; top:50px; position: relative; z-index: 5; -webkit-box-shadow: 0 0px 2px rgba(32,37,35,.3); -moz-box-shadow: 0 0px 2px rgba(32,37,35,.3); box-shadow: 0 0px 2px rgba(32,37,35,.3); background-color: white; }
-.clmn-4 .details { padding:45px 0 25px; background:#f3f5f6; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; position: relative; text-align: center; }
-.clmn-4 .details h2 { margin-bottom: 6px; }
-.clmn-4 .details p { color:#b2b5b9; }
-.clmn-4 .details button { width:140px; margin-top: 6px; }
-
+.groups-list .profile { width:100%; height:179px; background:#ddd; }
+.groups-list .profile img { width:150px; height: 150px; border:3px solid white; display: block; margin:0 auto; top:50px; position: relative; z-index: 5; -webkit-box-shadow: 0 0px 2px rgba(32,37,35,.3); -moz-box-shadow: 0 0px 2px rgba(32,37,35,.3); box-shadow: 0 0px 2px rgba(32,37,35,.3); background-color: white; }
+.groups-list .details { padding:45px 0 25px; background:#f3f5f6; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; position: relative; text-align: center; }
+.groups-list .details h2 { margin-bottom: 6px; }
+.groups-list .details p { color:#b2b5b9; }
+.groups-list .details button { width:140px; margin-top: 6px; }
 
 /* Buttons */
 .blue-btn { border-radius:3px; border:none; background:#3dadef; color:white; padding:13px 20px; transition: .3s; }
@@ -79,4 +82,7 @@ input { border-radius: 3px; }
 
 /* CSS3 Transition Duration */
 header li, #slider img.play, .clmn-3>li ul li, .later, button, .clmn-4 .profile img, #learning-targets .tab-content li, #learning-targets .nav ul li { -webkit-transition-duration: .3s; -moz-transition-duration: .3s; transition-duration: .3s; }
+
+
+
 

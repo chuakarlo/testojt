@@ -11,9 +11,12 @@ define( function ( require ) {
 
 		'regions' : {
 
-			'bannerRegion'   : '.banner',
-			'headerRegion'   : '.header',
-			'commentsRegion' : '.comments'
+			'bannerRegion'        : '.banner',
+			'headerRegion'        : '.header',
+			'groupInfoRegion'     : '.left-side',
+			'commentCreateRegion' : '.comment-create',
+			'commentsRegion'      : '.comments-list',
+			'membersRegion'       : '#members-list'
 
 		}
 

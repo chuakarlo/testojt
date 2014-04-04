@@ -103,6 +103,10 @@ define( function ( require ) {
 			API.embedComplete( success );
 		} );
 
+		App.reqres.setHandler( 'pd360:logout', function () {
+			API.logout();
+		} );
+
 		// callback for pd360 load completion
 		window.applicationComplete = function () {
 			Vent.trigger( 'pd360:applicationComplete' );

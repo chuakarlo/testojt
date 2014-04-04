@@ -5,12 +5,16 @@ define( function ( require ) {
 
 	App.module( 'Groups.Views', function ( Views ) {
 
-		Views.Layout   = require( './GroupLayoutView' );
-		Views.List     = require( './GroupsView' );
-		Views.Banner   = require( './GroupBannerView' );
-		Views.Header   = require( './GroupHeaderView' );
-		Views.Comments = require( './GroupCommentsView' );
+		Views.Layout             = require( './GroupLayoutView' );
+		Views.List               = require( './GroupsView' );
+		Views.Banner             = require( './GroupBannerView' );
+		Views.Header             = require( './GroupHeaderView' );
+		Views.Info               = require( './GroupInfoView' );
+		Views.Comments           = require( './GroupCommentsView' );
+		Views.CommentCreate      = require( './GroupCommentCreateView' );
+		Views.CommentsCollection = require( './GroupCommentsCollectionView' );
+		Views.Members            = require( './MembersView' );
 
 	} );
-	
+
 } );

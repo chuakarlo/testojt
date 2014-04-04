@@ -25,14 +25,13 @@ suite( function ( env ) {
 
 				// Open User Menu and Click Logout
 				.elementByCssSelector( '.user-menu a.dropdown-toggle' ).click()
-				.sleep( 250 )
+				.sleep( 750 )
 				.elementByCssSelector( '.user-menu.open a[href="#logout"]').click()
-				.sleep( 250 )
+				.sleep( 550 )
 
 				// Verify the nav menu no longer exists
-				.setImplicitWaitTimeout( 0 )
+				.setImplicitWaitTimeout( 500 )
 				.hasElementById( 'groups-tab' ).should.eventually.equal( false )
-				.setImplicitWaitTimeout( 5000 )
 
 				.nodeify( done );
 

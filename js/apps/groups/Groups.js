@@ -44,15 +44,15 @@ define( function ( require ) {
 
 			'joinGroup' : function ( model) {
 				Groups.Edit.Controller.joinGroup( model );
+			},
+
+			'replyComment' : function ( message ) {
+				Groups.Edit.Controller.replyComment( message );
 			}
 		};
 
 		Vent.on( 'group:show', function ( model ) {
 			App.navigate( 'groups/' + model.attributes.LicenseId, { 'trigger' : true } );
-		} );
-
-		Vent.on( 'group:getMembers', function ( licenseId ) {
-			return API.getMembers( licenseId );
 		} );
 
 		Vent.on( 'group:leaveGroup', function ( model ) {
@@ -61,6 +61,10 @@ define( function ( require ) {
 
 		Vent.on( 'group:joinGroup', function ( model ) {
 			return API.joinGroup( model );
+		} );
+
+		Vent.on( 'group:replyComment', function ( message ) {
+			return API.replyComment( message );
 		} );
 
 		App.addInitializer( function () {

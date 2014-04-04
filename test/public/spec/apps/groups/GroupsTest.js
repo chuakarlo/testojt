@@ -21,7 +21,7 @@ define( function ( require ) {
 		} );
 
 		describe( 'Show controller', function () {
-			
+
 			after( function () {
 				Remoting.fetch.restore();
 				App.content.show.restore();
@@ -52,9 +52,12 @@ define( function ( require ) {
 
 				var showSpy = sinon.spy();
 				var layout  = sinon.stub( App.Groups.Views, 'Layout' ).returns( {
-					'bannerRegion'   : { 'show' : showSpy },
-					'headerRegion'   : { 'show' : showSpy },
-					'commentsRegion' : { 'show' : showSpy },
+					'bannerRegion'        : { 'show' : showSpy },
+					'headerRegion'        : { 'show' : showSpy },
+					'groupInfoRegion'     : { 'show' : showSpy },
+					'commentCreateRegion' : { 'show' : showSpy },
+					'commentsRegion'      : { 'show' : showSpy },
+					'membersRegion'       : { 'show' : showSpy },
 				} );
 
 				// call controllers method
@@ -70,7 +73,7 @@ define( function ( require ) {
 				showStub.should.have.callCount( 1 );
 
 				// regions should have called show
-				showSpy.should.have.callCount( 3 );
+				showSpy.should.have.callCount( 6 );
 			} );
 
 		} );
@@ -101,7 +104,7 @@ define( function ( require ) {
 				App.Groups.Edit.Controller.should.have.property( 'joinGroup' );
 
 			} );
-				
+
 			it( '`leaveGroup` should call remoting and navigate to groups', function () {
 				var expectedLicenseId = 1;
 				var expectedCreatorId = 1234;
@@ -222,7 +225,7 @@ define( function ( require ) {
 				App.Groups.List.Controller.should.have.property( 'listGroups' );
 
 			} );
-				
+
 			it( '`listGroups` should call Remoting and show groups view', function () {
 				// call method
 				App.Groups.List.Controller.listGroups();
@@ -262,5 +265,5 @@ define( function ( require ) {
 		} );
 
 	} );
-	
+
 } );

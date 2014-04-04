@@ -38,11 +38,15 @@ define( function ( require ) {
 
 					var membership = _.find( this.model.groups, { 'LicenseId': this.model.attributes.LicenseId } );
 
-					if ( !membership ) {
-						return 'Join';
-					} else {
-						return 'Leave';
-					}
+						if ( !membership ) {
+							if( this.model.attributes.PrivateGroup !== 0 ) {
+								return 'Join';
+							} else {
+								return 'Request';
+							}
+						} else {
+							return 'Leave';
+						}
 
 				}.bind( this )
 

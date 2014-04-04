@@ -3,13 +3,12 @@ define( function ( require ) {
 
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
-	var template   = require( 'text!../templates/groupMemberView.html' );
+	var template   = require( 'text!../templates/groupInfoMemberView.html' );
 
 	return Marionette.ItemView.extend( {
 
 		'template' : _.template( template ),
-		'tagName'  : 'li',
-		'className' : 'col-md-3'
+		'tagName'  : 'li'
 
 	} );
 

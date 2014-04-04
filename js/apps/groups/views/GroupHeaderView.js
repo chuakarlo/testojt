@@ -3,16 +3,14 @@ define( function ( require ) {
 
 	var _              = require( 'underscore' );
 	var Marionette     = require( 'marionette' );
-	var MemberItemView = require( '../views/MemberItemView' );
+	var $              = require( 'jquery' );
 	var template       = require( 'text!../templates/groupHeaderView.html' );
 
-	return Marionette.CompositeView.extend( {
+	return Marionette.ItemView.extend( {
 
 		'template'          : _.template( template ),
 		'class'             : 'header',
-		'itemView'          : MemberItemView,
 		'tagName'           : 'div',
-		'itemViewContainer' : '.memberAvatars',
 
 		'templateHelpers' : function () {
 
@@ -20,9 +18,15 @@ define( function ( require ) {
 
 				'memberCount' : function () {
 					return this.collection.count;
-				}.bind( this )
+				}.bind( this ),
+
+				getAbbreviation: function ( text, num ) {
+					var abbreviation = $.trim( text ).substring( 0, num ) + '...';
+					return abbreviation;
+				}
 
 			};
+
 		}
 
 	} );
