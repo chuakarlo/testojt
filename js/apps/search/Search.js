@@ -1,9 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette = require( 'marionette' );
-	var Vent       = require( 'Vent' );
-	var App        = require( 'App' );
+	var Marionette          = require( 'marionette' );
+	var App                 = require( 'App' );
+	var SearchResultsLayout = require( 'search/views/SearchResultsLayout' );
 
 	// ## Search App
 	App.module( 'Search', function ( Search ) {
@@ -15,23 +15,63 @@ define( function ( require ) {
 		Search.Router = Marionette.AppRouter.extend( {
 
 			'appRoutes' : {
-				'search' : 'showSearchResults'
+				'search'                  : 'showSearchResults',
+				'search/:filter/:query' : 'showSearchResults',
 			}
 
 		} );
 
-		var API = {
+		var SearchController = Marionette.Controller.extend( {
 
-			'showSearchResults' : function () {
+			'destroyControllers' : function() {
+				// Clear the reference of these to be GC
+				this.navController = null;
+				this.resultController = null;
+				this.layout = null;
+			},
+
+			'showSearchResults' : function ( filter, query ) {
+				// Make sure to hide anything flash
 				App.PD360.hide();
-				Search.Show.Controller.showSearchResults();
+
+				if ( !this.layout ) {
+					this.layout = new SearchResultsLayout();
+					App.content.show(this.layout);
+
+					this.listenTo( this.layout, 'close', this.destroyControllers );
+				}
+
+				if ( !this.resultController ) {
+					this.resultController = new Search.Show.ResultController( {
+						'layout' : this.layout
+					} );
+
+					// The Nav needs to know how many results were in the
+					// query
+					this.listenTo(
+						this.resultController.queryModel,
+						'change:numFound',
+						this.updateResultCount
+					);
+				}
+
+				if ( !this.navController ) {
+					this.navController = new Search.Show.NavController( {
+						'layout' : this.layout
+					} );
+				}
+
+				this.navController.setFilter( filter );
+				this.resultController.showSearchResults( query, filter );
+			},
+
+			'updateResultCount' : function( model, val ) {
+				this.navController.updateResultCount( model, val );
 			}
 
-		};
-
-		Vent.on( 'search:showSearchResults', function () {
-			App.navigate( 'search', { 'trigger' : true } );
 		} );
+
+		var API = new SearchController();
 
 		App.addInitializer( function () {
 			new Search.Router( {

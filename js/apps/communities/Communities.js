@@ -14,7 +14,9 @@ define( function ( require ) {
 		Communities.Router = AuthRouter.extend( {
 
 			'appRoutes' : {
-				'resources/communities' : 'showCommunities'
+				'resources/communities' : 'showCommunities',
+				'resources/communities/:ltid/:lid/:ftid' : 'showFormThread',
+				'resources/communities/:ltid/:lid/:ftid/:fpid' : 'showFormPost'
 			}
 
 		} );
@@ -25,6 +27,24 @@ define( function ( require ) {
 				if ( !error ) {
 					Communities.Show.Controller.showCommunities();
 				}
+			},
+
+			'showFormThread' : function( LocationTypeId, LocationId, ForumThreadId ) {
+				Communities.Show.Controller.showCommunities();
+				App.PD360.navigate(null, 'communities', 'communitiesBrowse', {
+					'LocationTypeId' : LocationTypeId,
+					'LocationId'     : LocationId,
+					'ForumThreadId'  : ForumThreadId
+				});
+			},
+			'showFormPost' : function( LocationTypeId, LocationId, ForumThreadId, ForumPostId ) {
+				Communities.Show.Controller.showCommunities();
+				App.PD360.navigate(null, 'communities', 'communitiesBrowse', {
+					'LocationTypeId' : LocationTypeId,
+					'LocationId'     : LocationId,
+					'ForumThreadId'  : ForumThreadId,
+					'ForumPostId'    : ForumPostId
+				});
 			}
 		};
 

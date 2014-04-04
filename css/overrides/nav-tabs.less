@@ -1,0 +1,39 @@
+//----------------------------------------------
+// Blue Nav Tabs based on the rendering from HQ
+//----------------------------------------------
+.nav-tabs-right {
+	> li {
+		float : right;
+	}
+}
+.nav-tabs {
+
+	margin-bottom : 20px;
+	> li {
+  		@media (max-width: @screen-xs-max) {
+  			display : block;
+  			float   : none;
+  		}
+
+		> a {
+			&:hover,
+			&:focus {
+				background-color: @nav-tabs-hover-background-color !important;
+				border-bottom : 2px solid @gray-light;
+			}
+		}
+
+		&.active > a {
+
+			color         : @nav-tabs-active-color;
+			border-bottom : 2px solid @nav-tabs-active-border-bottom-color;
+			
+
+			&:hover,
+			&:focus {
+				color : @nav-tabs-active-color;
+				border-bottom: 2px solid @nav-tabs-active-border-bottom-color;
+			}
+		}
+	}
+}

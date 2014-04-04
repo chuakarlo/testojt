@@ -3,7 +3,7 @@ define( function ( require ) {
 
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
-	var Vent       = require( 'Vent' );
+	var App        = require ('App');
 
 	var templates = {
 		'loggedIn'  : require( 'text!header/templates/nav.html' ),
@@ -25,12 +25,14 @@ define( function ( require ) {
 		},
 
 		'ui' : {
-			'userMenu' : '.user-menu',
-			'menuBar'  : '.menu-bar',
-			'drawer'   : '#menu',
-			'bar1'     : '#bar1',
-			'bar2'     : '#bar2',
-			'bar3'     : '#bar3'
+			'userMenu'    : '.user-menu',
+			'menuBar'     : '.menu-bar',
+			'drawer'      : '#menu',
+			'bar1'        : '#bar1',
+			'bar2'        : '#bar2',
+			'bar3'        : '#bar3',
+			'search'      : '#nav-search',
+			'smallSearch' : '#nav-search-small'
 		},
 
 		'events' : {
@@ -116,7 +118,17 @@ define( function ( require ) {
 
 		'showSearchResults' : function ( event ) {
 			event.preventDefault();
-			Vent.trigger( 'search:showSearchResults' );
+			var val = this.ui.search.val();
+
+			if ( val === '' ) {
+				// Submitted the small forum.
+				val = this.ui.smallSearch.val();
+			}
+
+			if ( val !== '' ) {
+				var url = 'search/All/' + val;
+				App.navigate( url, { 'trigger' : true } );
+			}
 		}
 
 	} );

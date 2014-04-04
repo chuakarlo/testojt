@@ -14,8 +14,8 @@ define( function ( require ) {
 				PD360.Show.Controller.embed();
 			},
 
-			'navigate' : function ( main, sub, options ) {
-				PD360.Show.Controller.navigate( main, sub, options );
+			'navigate' : function ( view, main, sub, options ) {
+				PD360.Show.Controller.navigate( view, main, sub, options );
 			},
 
 			'show' : function () {
