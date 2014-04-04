@@ -1,0 +1,32 @@
+<div id="video-player-header">
+	<div id="header" class="form-horizontal">
+		<h1><%= ContentName %></h1>
+		<i id="info-video" class="glyphicon glyphicon-info-sign info"></i>
+	</div>
+	<p>Common Core: <a class="blue-text" href="#">ELA</a>, <a class="blue-text" href="#">Technology</a>, <a class="blue-text" href="#">Future Teaching</a></p>
+</div>
+<div id="video-container"></div>
+<div id="video-tabs"></div>
+<div id="app-modal" class="modal fade share-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+<div id="info-video-content" hidden>
+	<div class="well well-sm">
+			<div class="row">
+				<div class="col-xs-4 col-md-4 text-center">
+						<img src= '<%= ImageURL %>'class='thumbnail'/>
+						<ul>
+							<p id="tags">Tags:</p>
+							 <% _.each(Tags, function(tag) { %>
+								<li><%= tag %></li>
+							<% }); %>
+						</ul>
+				</div>
+			<div class="col-xs-8 col-md-8 section-box">
+				<p><%= ContentDescription %></p>
+				<hr />
+				<div class="col-md-12">
+					<p> <span id="tags">Duration:</span> <%= SegmentLengthInSeconds %></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

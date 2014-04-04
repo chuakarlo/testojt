@@ -7,6 +7,7 @@ define( function ( require ) {
 	require( 'apps/pd360/PD360' );
 	require( 'apps/groups/Groups' );
 	require( 'apps/contentNavigation/ContentNavigation' );
+	require( 'apps/videoPlayer/VideoPlayer');
 
 	require( 'common/views' );
 

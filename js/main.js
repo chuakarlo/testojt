@@ -8,25 +8,33 @@
 		'paths' : {
 
 			// Libraries
-			'async'               : 'libs/async/lib/async',
-			'backbone'            : 'libs/backbone-amd/backbone',
-			'backbone.babysitter' : 'libs/backbone.babysitter/lib/amd/backbone.babysitter',
-			'backbone.wreqr'      : 'libs/backbone.wreqr/lib/amd/backbone.wreqr',
-			'bootstrap'           : 'libs/bootstrap/dist/js/bootstrap.min',
-			'jquery.bum-smack'    : 'libs/jquery.bum-smack/src/jquery.bum-smack',
-			'spin'                : 'libs/spin.js/spin',
-			'jquery.spin'         : 'libs/spin.js/jquery.spin',
-			'jquery.pscrollbar'   : 'libs/perfect-scrollbar/src/perfect-scrollbar',
-			'jquery.mousewheel'   : 'libs/perfect-scrollbar/src/jquery.mousewheel',
-			'jquery'              : 'libs/jquery/dist/jquery',
-			'jquery-cookie'       : 'libs/jquery-cookie/jquery.cookie',
-			'jquery-placeholder'  : 'libs/jquery-placeholder/jquery.placeholder.min',
-			'marionette'          : 'libs/backbone.marionette/lib/core/amd/backbone.marionette',
-			'modernizr'           : 'libs/modernizr/modernizr',
-			'shim'                : 'libs/es5-shim/es5-shim.min',
-			'text'                : 'libs/requirejs-text/text',
-			'underscore'          : 'libs/lodash/lodash',
-			'rotate'              : 'libs/rotate/index',
+			'async'                 : 'libs/async/lib/async',
+			'backbone'              : 'libs/backbone-amd/backbone',
+			'backbone.babysitter'   : 'libs/backbone.babysitter/lib/amd/backbone.babysitter',
+			'backbone.wreqr'        : 'libs/backbone.wreqr/lib/amd/backbone.wreqr',
+			'bootstrap'             : 'libs/bootstrap/dist/js/bootstrap.min',
+			'carouselSnap'          : 'libs/carouselSnap/js/carousel-snap',
+			'filterable.collection' : 'libs/backbone.filterable-collection/src/backbone.filterable-collection',
+			'jquery.bum-smack'      : 'libs/jquery.bum-smack/src/jquery.bum-smack',
+			'spin'                  : 'libs/spin.js/spin',
+			'jquery.spin'           : 'libs/spin.js/jquery.spin',
+			'jquery.autogrow'       : 'libs/jquery.autogrow/jquery.autogrow',
+			'jquery.pscrollbar'     : 'libs/perfect-scrollbar/src/perfect-scrollbar',
+			'jquery.mousewheel'     : 'libs/perfect-scrollbar/src/jquery.mousewheel',
+			'jquery'                : 'libs/jquery/dist/jquery',
+			'jquery-cookie'         : 'libs/jquery-cookie/jquery.cookie',
+			'jquery-placeholder'    : 'libs/jquery-placeholder/jquery.placeholder.min',
+			'marionette'            : 'libs/backbone.marionette/lib/core/amd/backbone.marionette',
+			'moment'                : 'libs/momentjs/moment',
+			'moment-timezone'       : 'libs/moment-timezone/moment-timezone',
+			'modernizr'             : 'libs/modernizr/modernizr',
+			'shim'                  : 'libs/es5-shim/es5-shim.min',
+			'text'                  : 'libs/requirejs-text/text',
+			'timezone'              : 'common/Timezone',
+			'videojs'               : 'libs/videojs/video.dev',
+			'underscore'            : 'libs/lodash/lodash',
+			'MiddlewareRouter'      : 'MiddlewareRouter',
+			'rotate'                : 'libs/rotate/index',
 
 			// Base application level classes
 			'Session' : 'apps/user/models/SessionModel',
@@ -40,11 +48,15 @@
 			'pd360'               : 'apps/pd360',
 			'search'              : 'apps/search',
 			'user'                : 'apps/user',
-			'groups'              : 'apps/groups'
-
+			'groups'              : 'apps/groups',
+			'videoPlayer'         : 'apps/videoPlayer'
 		},
 
 		'shim' : {
+
+			'App' : {
+				'deps' : [ 'MiddlewareRouter' ]
+			},
 
 			'backbone' : {
 				'deps'    : [ 'underscore', 'jquery' ],
@@ -68,13 +80,12 @@
 				'deps' : [ 'jquery' ]
 			},
 
-			'jquery' : {
-				'exports': '$'
+			'carouselSnap' : {
+				'deps' : [ 'jquery' ]
 			},
 
-			'underscore' : {
-				'deps' : [ 'jquery' ],
-				'exports' : '_'
+			'jquery' : {
+				'exports': '$'
 			},
 
 			'jquery-cookie' : {
@@ -85,24 +96,33 @@
 				'deps' : [ 'jquery' ]
 			},
 
+			'jquery.bum-smack' : {
+				'deps' : [ 'jquery' ]
+			},
+
+			'jquery.spin' : {
+				'deps' : [ 'jquery', 'spin' ]
+			},
+
+			'jquery.pscrollbar' : {
+				'deps' : [ 'jquery' , 'jquery.mousewheel' ]
+			},
+
+			'MiddlewareRouter' : {
+				'deps' : [ 'marionette' ]
+			},
+
 			'rotate' : {
 				'deps' : [ 'jquery' ]
 			},
 
-			'App' : {
-				'deps' : [ 'MiddlewareRouter' ]
+			'underscore' : {
+				'deps' : [ 'jquery' ],
+				'exports' : '_'
 			},
 
-			'jquery.bum-smack' : {
-				'deps'	: [ 'jquery' ]
-			},
-
-			'jquery.spin' : {
-				'deps'	: [ 'jquery', 'spin' ]
-			},
-
-			'jquery.pscrollbar' : {
-				'deps'	: [ 'jquery' , 'jquery.mousewheel' ]
+			'videojs' : {
+				'exports' : 'videojs'
 			}
 
 		}
