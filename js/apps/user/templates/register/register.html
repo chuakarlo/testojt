@@ -1,0 +1,98 @@
+<h2 class="page-header">Create Account</h2>
+<div class="form-container">
+	<div class="alert alert-success js-complete js-process hidden">
+		Before registration is complete you need to validate your account by following the instructions emailed to <span id="verify-email"></span>. After validation you will be able to <a href="/#login">login</a>.
+	</div>
+	<div class="alert alert-danger js-fail js-process hidden">
+		There has been an error. Please try again.
+	</div>
+	<div class="alert alert-info js-submitting js-process hidden">
+		Your account is being created.
+	</div>
+	<form role="form" class="form-horizontal">
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="firstname">First Name</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="firstname" name="FirstName" maxlength="20">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="lastname">Last Name</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="lastname" name="LastName" maxlength="20">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="email">Email</label>
+			<div class="col-sm-10">
+				<div class="alert alert-danger js-email hidden">This e-mail is already in use. You're school / district may have already added it. Please try to reset your <a href="/#forgotpassword">{password}</a>.</div>
+				<div class="alert alert-warning js-email hidden">Checking for e-mail in use.</div>
+				<input type="email" class="form-control" id="email" name="EmailAddress" maxlength="128">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="password">Password</label>
+			<div class="col-sm-10">
+				<input type="password" class="form-control" id="password" name="Password" maxlength="12">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="password2">Re-type Password</label>
+			<div class="col-sm-10">
+				<input type="password" class="form-control" id="password2" name="Password2" maxlength="12">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="title">Title / Position</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="title" name="Title" maxlength="128">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="phoneNumber">Phone Number</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="phoneNumber" name="WorkPhone">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="country">Country</label>
+			<div class="col-sm-10">
+				<select id="country" name="Country" class="form-control"></select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="state">State / Province</label>
+			<div class="col-sm-10">
+				<select id="state" name="State" class="form-control" disabled></select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="district-name">District Name</label>
+			<div class="col-sm-10">
+				<select id="district-name" name="DistrictName" class="form-control" disabled></select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="school-name">School Name</label>
+			<div class="col-sm-10">
+				<select id="school-name" name="ClientId" class="form-control" disabled></select>
+			</div>
+		</div>
+		<div class="form-group">
+			<!-- <label class="control-label col-sm-2">Agreement</label> -->
+			<label class="control-label col-sm-2" for="eula">EULA</label>
+
+			<div class="col-sm-10">
+				<p class="help-block">By creating an account, you accept our license agreement.</p>
+				<textarea class="form-control eula" rows="4" readonly>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus lacus mi, condimentum ultricies molestie ac, hendrerit ac massa. Curabitur accumsan augue sed quam posuere vehicula. Proin eget auctor nisi, non hendrerit augue. Maecenas sit amet ipsum id nisi iaculis interdum. Integer faucibus sem sit amet ipsum molestie pharetra. Cras vehicula porttitor euismod. Cras diam nibh, blandit sit amet odio nec, pharetra dignissim massa. Sed feugiat elementum arcu, ac posuere felis facilisis sed. Aliquam lobortis feugiat feugiat. Sed in dictum leo.
+
+Fusce et nisl semper, elementum massa sit amet, interdum neque. Sed venenatis interdum tempor. Pellentesque justo nisi, varius eget quam nec, mollis hendrerit dolor. Proin bibendum tempus mauris, eu commodo lectus rutrum vel. Sed condimentum suscipit imperdiet.</textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-10 col-sm-offset-2">
+				<button type="submit" class="btn btn-primary" id="register-button">Create Account</button>
+			</div>
+		</div>
+	</form>
+</div>

@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
+	var $          = require( 'jquery' );
 	var App        = require ('App');
 
 	var templates = {
@@ -77,15 +78,22 @@ define( function ( require ) {
 			this.ui.menuBar.stop().animate( {
 				'opacity' : 1
 			}, 251, function () {
-				this.ui.bar1.animate( {
-					'top' : 22
-				}, 250 );
-				this.ui.bar2.animate( {
-					'top' : 32
-				}, 250 );
-				this.ui.bar3.animate( {
-					'top' : 42
-				}, 250 );
+
+				// Only try to close if the bars still exist
+				if ( $(this.ui.bar1.selector).length > 0 ) {
+
+					this.ui.bar1.animate( {
+						'top' : 22
+					}, 250 );
+					this.ui.bar2.animate( {
+						'top' : 32
+					}, 250 );
+					this.ui.bar3.animate( {
+						'top' : 42
+					}, 250 );
+
+				}
+
 			}.bind( this ) );
 		},
 

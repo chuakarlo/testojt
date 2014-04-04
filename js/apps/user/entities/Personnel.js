@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	var Backbone = require( 'backbone' );
 	var Session  = require( 'Session' );
+	var _        = require( 'underscore' );
 	var App      = require( 'App' );
 	var $        = require( 'jquery' );
 
@@ -29,6 +30,95 @@ define( function ( require ) {
 					'objectPath' : 'core.ClientPersonnel',
 					'args'       : this.toJSON()
 				};
+			},
+
+			'defaults' : {
+				'PersonnelId'        : 0,
+				'ClientId'           : 0,
+				'RoleTypeId'         : 0,
+				'EmailAddress'       : '',
+				'LoginName'          : '',
+				'Password'           : '',
+				'FirstName'          : '',
+				'LastName'           : '',
+				'Title'              : '',
+				'Organization'       : '',
+				'DistrictName'       : '',
+				'State'              : '',
+				'Country'            : '',
+				'TimeZone'           : '',
+				'WorkPhone'          : '',
+				'ReferralCode'       : '',
+				'SessionID'          : '',
+				'PasswordReset'      : 0,
+				'IsActivated'        : 0,
+				'Activated'          : '',
+				'Verified'           : '',
+				'LastLogin'          : '',
+				'LoginCount'         : 0,
+				'SendFollowUpEmails' : 1,
+				'UseWizards'         : 1,
+				'LicenseAccepted'    : '',
+				'LicenseInitials'    : '',
+				'Created'            : '',
+				'Creator'            : 0,
+				'Modified'           : '',
+				'Modifier'           : 0,
+				'Removed'            : '',
+				'Remover'            : 0,
+				'Archived'           : '',
+				'Archiver'           : 0,
+				'EmployeeId'         : ''
+			},
+
+			'validation' : {
+				'FirstName' : {
+					'required' : true,
+				},
+				'LastName' : {
+					'required' : true,
+				},
+				'EmailAddress' : [
+					{
+						'required' : true
+					},
+					{
+						'pattern' : 'email',
+						'msg'     : 'A valid email is required'
+					}
+				]
+			},
+
+			'setupRegistrationValidation' : function () {
+				_.extend( this.validation, {
+					'Password' : {
+						'required'  : true,
+						'minLength' : 4
+					},
+					'Password2' : [
+						{
+							'required' : true,
+							'msg'      : 'Re-typing password is required'
+						},
+						{
+							'equalTo' : 'Password',
+							'msg'     : 'Passwords are mismatched'
+						}
+					],
+					'Country' : {
+						'required' : true,
+					},
+					'State' : {
+						'required' : true
+					},
+					'DistrictName' : {
+						'required' : true
+					},
+					'ClientId' : {
+						'required' : true,
+						'msg' : 'School name is required'
+					}
+				} );
 			}
 
 		} );
@@ -53,12 +143,26 @@ define( function ( require ) {
 				} );
 
 				return defer.promise();
+			},
+
+
+			'getUsersByEmailorUsername' : function ( email ) {
+
+				var deferredRequest = $.ajax( {
+					'url' : '/com/schoolimprovement/pd360/dao/RespondService.cfc?method=RespondGetUsersByEmailAddressOrLoginName&email=' + email
+				} );
+
+				return deferredRequest;
 			}
 
 		};
 
 		App.reqres.setHandler( 'user:personnel', function () {
 			return API.getPersonnel();
+		} );
+
+		App.reqres.setHandler( 'user:byEmail', function ( emailOrUsername ) {
+			return API.getUsersByEmailorUsername( emailOrUsername );
 		} );
 
 	} );

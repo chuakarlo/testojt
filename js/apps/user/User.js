@@ -9,6 +9,7 @@ define( function ( require ) {
 
 	require( 'user/controllers/loginController' );
 	require( 'user/controllers/settingsController' );
+	require( 'user/controllers/registerController' );
 	require( 'user/entities/License' );
 	require( 'user/entities/Profile' );
 	require( 'user/entities/Personnel' );
@@ -21,6 +22,7 @@ define( function ( require ) {
 			'appRoutes' : {
 				'login'            : 'showLogin',
 				'logout'           : 'showLogout',
+				'register'         : 'showRegister',
 				'settings(/:page)' : 'showSettings'
 			}
 
@@ -36,6 +38,12 @@ define( function ( require ) {
 				}
 
 				User.Login.Controller.showLogin();
+			},
+
+			'showRegister' : function () {
+				App.request( 'pd360:hide' );
+
+				User.Register.Controller.showRegister();
 			},
 
 			'showLogout' : function () {

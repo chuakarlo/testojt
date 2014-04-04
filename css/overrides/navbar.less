@@ -22,8 +22,8 @@ body  {
 	}
 }
 
-// force colors for navbar > @screen-sm e.g. anything larger than a phone
-@media ( min-width: @screen-sm ) {
+// force colors for navbar > @screen-sm-min e.g. anything larger than a phone
+@media ( min-width: @screen-sm-min ) {
 	.navbar-nav {
 		> li > a {
 			&:hover,
@@ -85,14 +85,14 @@ body  {
 
 
 // Color the navbar green instead of the black, which is used in the dropdowns
-@media ( max-width: @screen-sm ) {
+@media ( max-width: @screen-xs-max ) {
 	.navbar-header {
 		background-color: @pd360-green;
 	}
 }
 
 // Color the navbar green instead of the black, which is used in the dropdowns
-@media ( min-width: @screen-sm ) {
+@media ( min-width: @screen-sm-min ) {
 	.navbar-collapse,
 	.container-fluid.logged-out {
 		background-color: @pd360-green;
@@ -109,6 +109,7 @@ body  {
 		position: relative;
 		top: -10px;
 		left: -5px;
+		margin-bottom: -10px;
 	}
 
 	background-color: #40a5fc;
@@ -146,7 +147,7 @@ body  {
 }
 
 // Resource Icons (Phone)
-@media ( max-width: @screen-sm ) {
+@media ( max-width: @screen-xs-max ) {
 	.yamm .yamm-content {
 		padding: 0;
 	}
@@ -188,7 +189,6 @@ body  {
 
 .search.form-group {
 	input {
-		// .border-radius( 23px, 23px, 23px, 23px );
 		.border-left-radius( 23px );
 		.border-right-radius( 23px );
 		height: 46px;

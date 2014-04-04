@@ -14,6 +14,8 @@
 			'async'                 : 'libs/async/lib/async',
 			'backbone'              : 'libs/backbone-amd/backbone',
 			'backbone.babysitter'   : 'libs/backbone.babysitter/lib/amd/backbone.babysitter',
+			'backbone.validation'   : 'libs/backbone.validation/dist/backbone-validation-amd',
+			'backbone.stickit'      : 'libs/backbone.stickit/backbone.stickit',
 			'backbone.wreqr'        : 'libs/backbone.wreqr/lib/amd/backbone.wreqr',
 			'bootstrap'             : 'libs/bootstrap/dist/js/bootstrap',
 			'chai'                  : 'libs/chai/chai',
@@ -36,6 +38,7 @@
 			'timezone'              : 'common/Timezone',
 			'videojs'               : 'libs/videojs/video.dev',
 			'underscore'            : 'libs/lodash/lodash',
+			'validation'            : 'plugins/validation',
 			//                      libs added by ContentNavigation
             'jquery.bum-smack'      : 'libs/jquery.bum-smack/src/jquery.bum-smack',
             'spin'                  : 'libs/spin.js/spin',
@@ -78,6 +81,14 @@
 			'backbone' : {
 				'deps'    : [ 'underscore', 'jquery' ],
 				'exports' : 'Backbone'
+			},
+
+			'backbone.stickit' : {
+				'deps' : [ 'backbone' ]
+			},
+
+			'backbone.validation' : {
+				'deps' : [ 'backbone' ]
 			},
 
 			'marionette' : {

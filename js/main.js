@@ -11,6 +11,8 @@
 			'async'                 : 'libs/async/lib/async',
 			'backbone'              : 'libs/backbone-amd/backbone',
 			'backbone.babysitter'   : 'libs/backbone.babysitter/lib/amd/backbone.babysitter',
+			'backbone.validation'   : 'libs/backbone.validation/dist/backbone-validation-amd',
+			'backbone.stickit'      : 'libs/backbone.stickit/backbone.stickit',
 			'backbone.wreqr'        : 'libs/backbone.wreqr/lib/amd/backbone.wreqr',
 			'bootstrap'             : 'libs/bootstrap/dist/js/bootstrap.min',
 			'carouselSnap'          : 'libs/carouselSnap/js/carousel-snap',
@@ -37,6 +39,7 @@
 			'rotate'                : 'libs/rotate/index',
 			'ColdFusion'            : 'plugins/Backbone.CF',
 			'config'                : 'config/index',
+			'validation'            : 'plugins/validation',
 
 			'pc-linq'             : 'libs/nakautot.linq/linq.min',
 			'pc-nivo'             : 'libs/nivo-slider/jquery.nivo.slider',
@@ -70,6 +73,18 @@
 
 			'backbone.babysitter' : {
 				'deps' : [ 'backbone' ],
+			},
+
+			'backbone.stickit' : {
+				'deps' : [ 'backbone' ]
+			},
+
+			'backbone.validation' : {
+				'deps' : [ 'backbone' ]
+			},
+
+			'validation' : {
+				'deps' : [ 'backbone', 'backbone.validation' ]
 			},
 
 			'backbone.wreqr' : {
