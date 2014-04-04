@@ -1,87 +1,9 @@
 /* Landscape for tablets	 */
 @media ( min-width: @screen-md-min ) and ( max-width: @screen-md-max ) {
-	.cn-content {
-	    max-width     : 100% !important;
-	    margin        : 0 auto;
-	    padding-right : 1px;
-	    padding-left  : 15px;
 
+    //sidebar
+	.cn-sidebar-content {
+		width: 21.888% !important; //work around for fixed container
 	}
 
-	.cn-header-content{
-		width : 100%;
-
-		.li-resources{
-			width : 25%
-		}
-
-		.li-sortby{
-			width       : 70%;
-			margin-left : 28%;
-			position    : fixed;
-		}
-
-		.cn-sortby {
-			position : relative;
-			float    : right;
-			left     : auto;
-			right    : 1%;
-		}
-
-		.cn-resources {
-			width : 100%;
-		}
-	}
-
-	.cn-main-content{
-		width         : 73%;
-		margin-left   : 25%;
-		padding-right : 1%;
-
-		ul li {
-				width  : 30%;
-				height : auto;
-
-				h4 {
-					font-size : 1.1em;
-				}
-
-				p {
-					font-size     : 1em;
-					margin-bottom : 0px;
-				}
-
-				div {
-					p {
-						top  : 50%;
-						left : ~"calc(50% - 54px)";
-					}
-
-					span {
-						top  : ~"calc(50% - 35px)";
-						left : ~"calc(50% - 17.5px)";
-					}
-				}
-		}
-		.cn-segment-info-tooltip, .cn-segment-info-tooltip.top {
-		    width : 100%;
-		}
-
-		.cn-watch-later {
-			margin-bottom : 0px;
-		}
-	}
-
-	.cn-sidebar-content{
-		width : 25%
-	}
-
-	.btn{
-		font-size : 1em;
-	}
-
-	.heading-2{
-		font-size : 1.2em;
-		margin    : 26px 0px 0px 0px !important;
-	}
 }

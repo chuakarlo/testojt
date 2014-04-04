@@ -1,40 +1,46 @@
-* {
-	font-family : @cn-font-base;
-}
+.cn-content {
+    margin    : 0 auto;
+    font-family : @cn-font-base;
 
-h1, #h1, .h1 {
-	font-size : 40px;
-}
+    h1 {
+    	font-size : 40px;
+    }
 
-h2, #h2, .h2 {
-	font-size : 24px;
-}
+    h2 {
+    	font-size : 24px;
+    }
 
-h3, #h3, .h3 {
-	font-size : 18px;
-}
+    h3 {
+    	font-size : 18px;
+    }
 
-p, #paragraph, .paragraph {
-	font-size   : 15px;
-	line-height : 28px;
-}
+    p {
+    	font-size   : 15px;
+		line-height : 28px;
+    }
 
-a {
-	font-color : @cn-blue-link;
-}
+    a {
+    	font-color : @cn-blue-link;
+    }
 
-a:hover {
-	font-color : @cn-blue-light;
+    a:hover {
+    	font-color : @cn-blue-light;
+    }
+
+    ul {
+    	text-align      : justify;
+		list-style-type : none;
+    }
+
+    [tabindex] {
+    	outline: none !important;
+    }
 }
 
 .light {
 	font-color : @font-color-light !important;
 }
 
-ul, #ul, .ul {
-	text-align      : justify;
-	list-style-type : none;
-}
 
 .listOffset( @offset : 0px ) {
 	padding    : @offset;
@@ -73,10 +79,6 @@ ul, #ul, .ul {
 	user-select         : none;
 }
 
-[tabindex] {
-   outline: none !important;
-}
-
 .enable-scroll-indicator {
 	.box-shadow( 0 4px 2px -3px @cn-gray-darkest );
 }
@@ -93,9 +95,6 @@ ul, #ul, .ul {
 	overflow : hidden;
 }
 
-.cn-content {
-    margin    : 0 auto;
-}
 
 
 
