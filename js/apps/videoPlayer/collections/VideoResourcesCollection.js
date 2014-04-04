@@ -51,15 +51,15 @@
 				{
 					'previewPath'  : previewUrl + 'gb/' + model[ 'GuidebookFileName' ],
 					'downloadPath' : '/gb/' + model[ 'GuidebookFileName' ],
-					'thumbnail'    : '/public/img/guidebook.jpg'
+					'thumbnail'    : '/img/guidebook.jpg'
 				}, {
 					'previewPath'  : previewUrl + 'mp3/' + model[ 'AudioFileName' ],
 					'downloadPath' : '/mp3/' + model[ 'AudioFileName' ],
-					'thumbnail'    : '/public/img/audio.jpg'
+					'thumbnail'    : '/img/audio.jpg'
 				}, {
 					'previewPath'  : previewUrl + 'transcripts/' + model[ 'TranscriptFileName' ],
 					'downloadPath' : '/transcripts/' + model[ 'TranscriptFileName' ],
-					'thumbnail'    : '/public/img/transcribe.jpg'
+					'thumbnail'    : '/img/transcribe.jpg'
 				}
 			];
 

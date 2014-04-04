@@ -13,15 +13,11 @@ define( function ( require ) {
 
 		VideoPlayer.Router = Marionette.MiddlewareRouter.extend( {
 			'appRoutes' : {
-				'resources/video-player' : [ 'checkSession', 'showVideoPlayer' ]
+				'resources/video-player' : 'showVideoPlayer'
 			}
 		} );
 
 		var API = {
-			'checkSession' : function ( args, callback ) {
-				App.request( 'session:checkSession', args, callback );
-			},
-
 			// TODO: error handling
 			'showVideoPlayer' : function ( error, results, args ) {
 				if ( !error ) {
