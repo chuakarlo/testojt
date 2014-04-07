@@ -7,7 +7,6 @@ define( function ( require ) {
 
 	require( 'jquery.pscrollbar' );
 
-	var Modernizr = window.Modernizr;
 	var Utils     = require( '../../controllers/UtilitiesController' );
 	var template  = require( 'text!../../templates/Filters/FilterContainerViewTemplate.html' );
 
@@ -54,19 +53,20 @@ define( function ( require ) {
 		'_setFilterHeight' : function ( height ) {
 			var newHeight = height;
 			var delay     = null ;
+			var el        = $( '#cn-left-region' );
 
-			$( '#cn-left-region' ).height( newHeight );
+			el.height( newHeight );
 
 			$( window ).on( 'resize' ,function () {
 				clearTimeout( delay );
 
 				delay = setTimeout( function () {
 					var filterHeight = this._getFilterHeight();
-					var resizeHeight = ( Modernizr.mq( '( max-width : 767px )' ) ) ?  $( this ).height() : filterHeight ;
+					var resizeHeight = filterHeight ;
 
-					$( '#cn-left-region' ).height( resizeHeight );
-					$( '#cn-left-region' ).scrollTop( 0 );
-					$( '#cn-left-region' ).perfectScrollbar( 'update' );
+					el.height( resizeHeight );
+					el.scrollTop( 0 );
+					el.perfectScrollbar( 'update' );
 
 				}.bind( this ), 0 );
 			}.bind( this ) );
@@ -74,7 +74,7 @@ define( function ( require ) {
 
 		'_getFilterHeight' : function () {
 			var windowHeight = $( window ).height();
-			var headerHeight = $( '#cn-header-content' ).height();
+			var headerHeight = $( '#cn-header-content' ).height() + $( '#navbar nav' ).height();
 
 			return parseInt( windowHeight - headerHeight );
 		},
@@ -84,7 +84,7 @@ define( function ( require ) {
 
 			$( '#cn-left-region' ).perfectScrollbar( {
 				minScrollbarLength: 20,
-				wheelPropagation: ( Modernizr.mq( '( max-width : 767px )' ) ) ?  false  : true
+				wheelPropagation: true
 	        } );
 
 		   this._toggleFilter();

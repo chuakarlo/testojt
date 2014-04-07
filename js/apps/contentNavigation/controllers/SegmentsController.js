@@ -48,10 +48,9 @@ define( function( require ) {
 
 	        this.view = this.component.getView();
 
-			this._addSegmentsTopShadow();
-
 			this.component.getVent().on( 'component:ready', function(){
 				this._fetchCollection();
+				this._addSegmentsTopShadow();
 			}.bind( this ) );
 
 	    },
