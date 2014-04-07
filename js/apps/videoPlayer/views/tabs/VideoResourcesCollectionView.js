@@ -5,21 +5,21 @@ define( function ( require ) {
 	var VideoResourceItemView = require( 'videoPlayer/views/tabs/VideoResourceItemView' );
 	var LoadingView           = require( 'videoPlayer/views/LoadingView' );
 
-	require('carouselSnap');
+	require('slick');
 
 	return Marionette.CollectionView.extend( {
 
 		'itemView'  : VideoResourceItemView,
 
-		'tagName'   : 'ul',
+		'tagName'   : 'div',
 
-		'className' : 'vid-tab',
+		'className' : 'slick',
 
 		'emptyView' : LoadingView,
 
 		'initialize' : function () {
 			this._initRequest();
-			this.listenTo( this, 'render', this._initView );
+			this.listenTo( this.collection, 'custom:sync', this._initView );
 		},
 
 		'_initRequest' : function () {
@@ -35,8 +35,9 @@ define( function ( require ) {
 		},
 
 		'_initView' : function () {
-			this.$el.carouselSnap( {
-				'time' : 2000
+			this.$el.slick({
+				slidesToShow: 4,
+				slidesToScroll: 4
 			} );
 		},
 

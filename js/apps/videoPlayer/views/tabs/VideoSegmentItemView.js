@@ -9,7 +9,7 @@ define( function ( require ) {
 
 		'template'  : _.template( template ),
 
-		'tagName'   : 'li'
+		'tagName'   : 'div'
 
 	} );
 

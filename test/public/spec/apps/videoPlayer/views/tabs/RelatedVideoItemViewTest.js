@@ -33,13 +33,13 @@ define ( function ( require ) {
 				relatedVideoView.should.have.property( 'template' );
 			} );
 
-			it( 'has a `tagName` property with value `LI`' , function () {
+			it( 'has a `tagName` property with value `DIV`' , function () {
 				relatedVideoView.should.have.property( 'tagName' );
-				relatedVideoView.tagName.should.equal( 'li' );
+				relatedVideoView.tagName.should.equal( 'div' );
 			} );
 
-			it( 'has a `LI` element' , function () {
-				relatedVideoView.el.nodeName.should.equal( 'LI' );
+			it( 'has a `DIV` element' , function () {
+				relatedVideoView.el.nodeName.should.equal( 'DIV' );
 			} );
 
 		} );

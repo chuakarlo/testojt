@@ -32,6 +32,7 @@
 			'moment-timezone'       : 'libs/moment-timezone/moment-timezone',
 			'sinon'                 : 'libs/sinonjs/sinon',
 			'sinon-chai'            : 'libs/sinon-chai/lib/sinon-chai',
+			'slick'                 : 'libs/slick-carousel/slick/slick',
 			'text'                  : 'libs/requirejs-text/text',
 			'timezone'              : 'common/Timezone',
 			'videojs'               : 'libs/videojs/video.dev',

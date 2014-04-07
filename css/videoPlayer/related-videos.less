@@ -1,0 +1,65 @@
+.related-videos-thumb {
+	width: 100%;
+	height: 188px;
+	overflow: hidden;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	cursor: pointer;
+	position: relative;
+	img {
+		width: 92%;
+	}
+	.hover {
+		width: 100%;
+		height: 188px;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		display: inline-block;
+
+	}
+	.hover:hover {
+		background-color: rgba(0,0,0,0.5);
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+}
+
+.related-videos-info {
+	padding: 1em;
+	background: @whitesmoke;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	display: inline-block;
+	h3 {
+        width: 236px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 1.5em;
+    }
+    p {
+            line-height: 1em;
+            margin-top: 10px;
+            font-size: 1em;
+            color:#b2b5b9;
+    }
+   .later {
+            position: absolute;
+            width:105px;
+            height:88px;
+            background:url('./../img/watch-later-icon.png') no-repeat;
+            background-size: cover;
+            top:170px;
+            right:-10px;
+            cursor: pointer;
+            display: inline-block;
+    }
+    .later:hover {
+            background:url('./../img/watch-later-hover.png');
+    }
+}
+.slick-prev , .slick-next {
+	background: @dimgray;
+	height: 35px;
+}

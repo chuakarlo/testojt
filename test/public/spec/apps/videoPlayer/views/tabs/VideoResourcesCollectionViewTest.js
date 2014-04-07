@@ -38,14 +38,14 @@ define( function ( require ) {
 				collectionView.should.have.property( 'itemView' );
 			} );
 
-			it( 'should have a `className` property with value `vid-tab`', function () {
+			it( 'should have a `className` property with value `slick`', function () {
 				collectionView.should.have.property( 'className' );
-				collectionView.className.should.be.equal( 'vid-tab' );
+				collectionView.className.should.be.equal( 'slick' );
 			} );
 
-			it( 'should have a `tagName` property with value `ul`', function () {
+			it( 'should have a `tagName` property with value `div`', function () {
 				collectionView.should.have.property( 'tagName' );
-				collectionView.tagName.should.be.equal( 'ul' );
+				collectionView.tagName.should.be.equal( 'div' );
 			} );
 
 			describe( 'When data are stored in the collection', function () {

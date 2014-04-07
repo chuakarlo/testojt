@@ -33,14 +33,14 @@ define ( function ( require ) {
 				relatedVideoCollectionView.should.have.property( 'itemView' );
 			} );
 
-			it( 'has a `className` property with value `vid-tab`', function () {
+			it( 'has a `className` property with value `slick`', function () {
 				relatedVideoCollectionView.should.have.property( 'className' );
-				relatedVideoCollectionView.className.should.be.equal( 'vid-tab' );
+				relatedVideoCollectionView.className.should.be.equal( 'slick' );
 			} );
 
-			it( 'has a `tagName` property with value `ul`', function () {
+			it( 'has a `tagName` property with value `div`', function () {
 				relatedVideoCollectionView.should.have.property( 'tagName' );
-				relatedVideoCollectionView.tagName.should.be.equal( 'ul' );
+				relatedVideoCollectionView.tagName.should.be.equal( 'div' );
 			} );
 		} );
 
@@ -77,10 +77,10 @@ define ( function ( require ) {
 		} );
 
 		describe( '.setCarousel', function() {
-			var carouselSnapSpy;
+			var carouselSlickSpy;
 
 			before( function () {
-				carouselSnapSpy = sinon.spy( $.fn , 'carouselSnap' );
+				carouselSlickSpy = sinon.spy( $.fn , 'slick' );
 				relatedVideoCollectionView = new RelatedVideoCollectionView( {
 					'ContentId' : 1234
 				} );
@@ -89,12 +89,12 @@ define ( function ( require ) {
 			} );
 
 			after( function () {
-				carouselSnapSpy.reset();
+				carouselSlickSpy.reset();
 				relatedVideoCollectionView.fetchVideos.restore();
 			} );
 
-			it( 'will call .carouselSnap' , function () {
-				carouselSnapSpy.should.have.callCount( 1 );
+			it( 'will call .slick' , function () {
+				carouselSlickSpy.should.have.callCount( 1 );
 			} );
 		} );
 
@@ -139,6 +139,81 @@ define ( function ( require ) {
 				relatedVideoCollectionView.collection.length.should.equal( 0 );
 			} );
 
+		} );
+
+		describe( '.hoverNext', function() {
+			var hoverSpy;
+			var SpiedObject;
+
+			before( function() {
+				hoverSpy    = sinon.spy();
+				SpiedObject = RelatedVideoCollectionView.extend( {
+					'hover': hoverSpy
+				} );
+
+				relatedVideoCollectionView = new SpiedObject( {
+					'ContentId': 1234
+				} );
+
+				relatedVideoCollectionView.render();
+				relatedVideoCollectionView.hoverNext( relatedVideoCollectionView.$el );
+			} );
+
+			after( function() {
+				hoverSpy.reset();
+			} );
+
+			it( 'will call .hover', function() {
+				hoverSpy.callCount.should.be.at.least( 1 );
+			} );
+
+		} );
+
+		describe( '.hoverPrev', function() {
+			var hoverSpy;
+			var SpiedObject;
+
+			before( function() {
+				hoverSpy    = sinon.spy();
+				SpiedObject = RelatedVideoCollectionView.extend( {
+					'hover': hoverSpy
+				} );
+
+				relatedVideoCollectionView = new SpiedObject( {
+					'ContentId': 1234
+				} );
+
+				relatedVideoCollectionView.render();
+				relatedVideoCollectionView.hoverPrev( relatedVideoCollectionView.$el );
+			} );
+
+			after( function() {
+				hoverSpy.reset();
+			} );
+
+			it( 'will call .hover', function() {
+				hoverSpy.callCount.should.be.at.least( 1 );
+			} );
+		} );
+
+		describe( '.clearTimeout', function() {
+			before( function() {
+				relatedVideoCollectionView = new RelatedVideoCollectionView( {
+					'ContentId': 1234
+				} );
+				sinon.stub( relatedVideoCollectionView, 'fetchVideos' );
+				relatedVideoCollectionView.render();
+			} );
+
+			after( function() {
+				relatedVideoCollectionView.fetchVideos.restore();
+			} );
+
+			it( 'will set the timeoutId to null', function() {
+				relatedVideoCollectionView.timeoutId = 123;
+				relatedVideoCollectionView.clearTimeout();
+				( relatedVideoCollectionView.timeoutId  === null ).should.equal( true );
+			} );
 		} );
 
 	} );

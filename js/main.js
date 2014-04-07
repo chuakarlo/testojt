@@ -29,6 +29,7 @@
 			'moment-timezone'       : 'libs/moment-timezone/moment-timezone',
 			'modernizr'             : 'libs/modernizr/modernizr',
 			'shim'                  : 'libs/es5-shim/es5-shim.min',
+			'slick'                 : 'libs/slick-carousel/slick/slick',
 			'text'                  : 'libs/requirejs-text/text',
 			'timezone'              : 'common/Timezone',
 			'videojs'               : 'libs/videojs/video.dev',
@@ -124,7 +125,9 @@
 			'rotate' : {
 				'deps' : [ 'jquery' ]
 			},
-
+			'slick' : {
+				'deps' : [ 'jquery' ]
+			},
 			'underscore' : {
 				'deps' : [ 'jquery' ],
 				'exports' : '_'

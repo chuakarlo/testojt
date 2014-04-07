@@ -63,17 +63,17 @@ define( function ( require ) {
 
 			} );
 
-			it( 'should have a `className` property with value `vid-tab`', function () {
+			it( 'should have a `className` property with value `slick`', function () {
 
 				videoSegmentCollectionView.should.have.property( 'className' );
-				videoSegmentCollectionView.className.should.be.equal( 'vid-tab' );
+				videoSegmentCollectionView.className.should.be.equal( 'slick' );
 
 			} );
 
-			it( 'should have a `tagName` property with value `ul`', function () {
+			it( 'should have a `tagName` property with value `div`', function () {
 
 				videoSegmentCollectionView.should.have.property( 'tagName' );
-				videoSegmentCollectionView.tagName.should.be.equal( 'ul' );
+				videoSegmentCollectionView.tagName.should.be.equal( 'div' );
 
 			} );
 

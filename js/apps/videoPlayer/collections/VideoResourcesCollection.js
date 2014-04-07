@@ -69,6 +69,7 @@
 		'resetCollection' : function ( collection ) {
 			var resources =  this.buildModels( _.first( collection ) );
 			this.reset( resources );
+			this.trigger( 'custom:sync' );
 		}
 
 	} );

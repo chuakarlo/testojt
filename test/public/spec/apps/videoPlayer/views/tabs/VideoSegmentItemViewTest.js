@@ -51,16 +51,16 @@ define( function ( require ) {
 			/**
 			 * assert that it has a property name tagName
 			 */
-			it( 'should have an `tagName` property with value `LI`', function () {
+			it( 'should have an `tagName` property with value `DIV`', function () {
 				videoSegmentItemView.should.have.property( 'tagName' );
-				videoSegmentItemView.tagName.should.equal( 'li' );
+				videoSegmentItemView.tagName.should.equal( 'div' );
 			} );
 
 			/**
 			 * assert that it will create a li node element
 			 */
-			it( 'should create a `LI` element', function () {
-				videoSegmentItemView.el.nodeName.should.equal( 'LI' );
+			it( 'should create a `DIV` element', function () {
+				videoSegmentItemView.el.nodeName.should.equal( 'DIV' );
 			} );
 		} );
 

@@ -45,6 +45,7 @@ define( function ( require ) {
 			it( 'does have  `ui` property', function () {
 				videoResourceItemView.should.have.property( 'ui' );
 			} );
+<<<<<<< HEAD
 
 			it( 'does have  `events` property', function () {
 				videoResourceItemView.should.have.property( 'events' );
@@ -52,6 +53,21 @@ define( function ( require ) {
 
 			it( 'does create a `LI` element', function () {
 				videoResourceItemView.el.nodeName.should.equal( 'LI' );
+=======
+			/**
+			 * assert that it has a property name tagName
+			 */
+			it( 'should have an `tagName` property with value `DIV`', function () {
+				videoResourceItemView.should.have.property( 'tagName' );
+				videoResourceItemView.tagName.should.equal( 'div' );
+			} );
+
+			/**
+			 * assert that it will create a div node element
+			 */
+			it( 'should create a `DIV` element', function () {
+				videoResourceItemView.el.nodeName.should.equal( 'DIV' );
+>>>>>>>  Change all carousel (related vid and additional resources) to slick.
 			} );
 
 		} );

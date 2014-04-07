@@ -56,7 +56,7 @@ define ( function ( require ) {
 			} );
 
 			this.reset( relatedVideos );
-			this.trigger( 'custom:sync', relatedVideos.length );
+			this.trigger( 'custom:sync' );
 		}
 	} );
 } );
