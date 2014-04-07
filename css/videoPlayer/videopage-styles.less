@@ -1,256 +1,450 @@
 @emailitembg: #3e3e3e;
 
-section #video {
-	width : 1200px;
-}
+#video-player-page {
 
-#video-player {
-	float            : left;
-	width            : 800px;
-	height           : 450px;
-	padding          : 0px;
-	background-color : #000;
-}
-
-#submit-answers.no-hover:hover {
-	background    : none;
-	color         : inherit;
-	border        : 1px solid #a5a7ad;
-	border-radius : 3px;
-}
-
-#video-reflection  {
-	position : relative;
-
-	#reflection-items {
-		width      : 100%;
-		height     : 300px;
-		padding    : 0px 2px;
-		box-sizing : border-box;
-		overflow-y : auto;
-		position   : relative;
-	}
-
-	.reflection-item textarea {
-		height     : 120px;
-		box-sizing : border-box;
-	}
-
-	.reflection-item .answer {
-		padding-bottom: 20px;
-	}
-
-	.reflection-item textarea.error {
-		border : 1px solid red;
-	}
-
-	#reflection-pagination {
-		width      : 100%;
-		text-align : center;
-		padding    : 17px;
-		position   : absolute;
-		bottom     : 0px;
-		left       : 0px;
-		background : #e7e9e9;
-		height     : 57px;
-
-		.control {
-			position            : absolute;
-			top                 : 0;
-			left                : 0;
-			bottom              : 0;
-			width               : 15%;
-			opacity             : 0.7;
-			filter              : alpha(opacity=70);
-			font-size           : 20px;
-			color               : #9fd753;
-			text-align          : center;
-			text-shadow         : 0 1px 1px rgba(88, 145, 38, 0.6);
-			cursor              : pointer;
-			-webkit-user-select : none; /* webkit (safari, chrome) browsers */
-			-moz-user-select    : none; /* mozilla browsers */
-			-khtml-user-select  : none; /* webkit (konqueror) browsers */
-			-ms-user-select     : none; /* IE10+ */
+	#header{
+		width   : 1200px;
+		display : table;
+		h1 {
+			width         : 1177px;
+			white-space   : nowrap;
+			overflow      : hidden;
+			text-overflow : ellipsis;
 		}
-
-		.control:active {
-			text-shadow : none;
-		}
-
-		.left-control, .right-control {
-			background : none;
-			top        : inherit;
-			bottom     : 15px;
-		}
-
-		.left-control {
-			right : auto;
-			left  : 0px;
-			float : left;
-		}
-
-		.right-control {
-			float : right;
-			left  : auto;
-			right : 0;
+		.info {
+			color          : #3dadef;
+			vertical-align : middle;
+			font-size      : 25px;
+			display        : table-cell;
 		}
 	}
-}
-//video information button
-.well {
-	margin-bottom : 1px;
-}
 
-.popover {
-	max-width : 725px;
-	p {
-		font-size   : 14px;
-		line-height : 18px;
+	#video {
+		position: relative;
+
+		#video-player {
+			float            : left;
+			height           : 450px;
+			padding          : 0px;
+			background-color : #000;
+		}
+
+		.footer {
+			width      : 100%;
+			text-align : center;
+			padding    : 17px;
+			position   : absolute;
+			bottom     : 0px;
+			left       : 0px;
+			background : #e7e9e9;
+			height     : 57px;
+		}
+
+		h3 {
+			font-weight : 600;
+		}
+
+		hr {
+			border-top : 1px solid #e0e2e3;
+		}
+
+		button {
+			width  : 138px;
+			height : 37px;
+			float  : right;
+			margin : 17px 0;
+		}
 	}
-	#tags {
-		font-weight : bold;
+
+	#video .carousel, #video .carousel .item {
+		height:450px;
 	}
-	ul {
-		padding-top : 18px;
-		text-align  : left;
-		margin-left : 4px;
+
+	#video-player-header {
+		padding:30px 0;
 	}
-}
 
-.popover-title {
-	font-size   : 16px;
-	font-weight : bold;
-}
-
-.loading-container {
-	height   : 200px;
-	position : relative;
-	display  : table;
-	left     : 45%;
-}
-
-.loading-container > .spinner {
-	position : absolute;
-	left     : 50%;
-	top      : 100px;
-}
-#header{
-	width   : 1200px;
-	display : table;
-	h1 {
-		width         : 1177px;
-		white-space   : nowrap;
-		overflow      : hidden;
-		text-overflow : ellipsis;
+	#submit-answers.no-hover:hover {
+		background    : none;
+		color         : inherit;
+		border        : 1px solid #a5a7ad;
+		border-radius : 3px;
 	}
-	.info {
-		color          : #3dadef;
-		vertical-align : middle;
-		font-size      : 25px;
-		display        : table-cell;
+
+	.tabs {
+		width:100%;
+		border-bottom: 1px solid #ebebeb;
+		padding-bottom: 10px;
+		height:63px;
+		margin-bottom:12.5px;
+		position: relative;
+		a {
+			color:inherit;
+		}
+		ul {
+			position: absolute;
+			bottom: 0px;
+		}
+		.btns {
+			float:right;
+		}
+		button {
+			float:left;
+			height:37px;
+			width:152px;
+			position: relative;
+			top:13px;
+		}
+		.blue-btn {
+			padding:0;
+			margin-left:20px;
+		}
+		.active {
+			border-bottom: 3px solid #8db62b;
+			color:#8db62b;
+		}
+		span {
+			position: relative;
+			top:1px;
+		}
 	}
-}
 
+	.overflow {
+		width:100%;
+		overflow: scroll;
+		display: none;
+		.active {
+			border-bottom: 3px solid #8db62b;
+			color:#8db62b;
+		}
+		ul {
+			width:500px;
+		}
+	}
 
-/* bootstrap override */
-.modal {
-	display: none;
-	overflow: auto;
-	overflow-y: scroll;
-	position: fixed;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	z-index: @zindex-modal-background;
+	/* bootstrap override */
+	.modal {
+		display: none;
+		overflow: auto;
+		overflow-y: scroll;
+		position: fixed;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: @zindex-modal-background;
+	}
 
 	// When fading in the modal, animate it to slide down
 	&.fade .modal-dialog {
 		.translate(0, 0);
 		.transition-transform(~"0s ease-out");
 	}
-	&.in .modal-dialog { .translate(0, 0)}
-}
+	&.in .modal-dialog { .translate(0, 0) }
 
-span.email-name {
-	display: block;
-	box-sizing: border-box;
-	float: left;
-	width: 167px;
-	margin: 3px;
-	div.remove-item {
-		border: none;
-		background: #545965;
-		color: #FFFFFF;
-		cursor: pointer;
-	}
-	span.email-item {
+	span.email-name {
+
 		display: block;
-		-webkit-box-sizing: border-box; /* Saf <5.1, */
-		-moz-box-sizing: border-box; /* Fx */
-		box-sizing: border-box; /* Ch, Saf 5.1+, IE 8+, Op 9+  */
-		border: none;
-		background: #4B505C;
-		color: #FFFFFF;
-		max-width: 127px;
-		width: 127px;
-		white-space: nowrap;
-		overflow: hidden;
-		-o-text-overflow: ellipsis; /* Op <11, Op Mini, Op Mob <12.1 */
-		text-overflow: ellipsis; /* IE, Fx, Ch, Saf */
+		box-sizing: border-box;
+		float: left;
+		width: 167px;
+		margin: 3px;
+
+		div.remove-item {
+			border: none;
+			background: #545965;
+			color: #FFFFFF;
+			cursor: pointer;
+		}
+
+		span.email-item {
+			display: block;
+			-webkit-box-sizing: border-box; /* Saf <5.1, */
+			-moz-box-sizing: border-box; /* Fx */
+			box-sizing: border-box; /* Ch, Saf 5.1+, IE 8+, Op 9+  */
+			border: none;
+			background: #4B505C;
+			color: #FFFFFF;
+			max-width: 127px;
+			width: 127px;
+			white-space: nowrap;
+			overflow: hidden;
+			-o-text-overflow: ellipsis; /* Op <11, Op Mini, Op Mob <12.1 */
+			text-overflow: ellipsis; /* IE, Fx, Ch, Saf */
+		}
 	}
-}
 
-.tooltip-inner {
-	white-space: pre-wrap;
-}
+	.tooltip-name{
+		font-weight: 500;
+		word-wrap: break-word;
+	}
 
-.tooltip-name{
-	font-weight: 500;
-	word-wrap: break-word;
-}
+	.tooltip-email{
+		font-size: 12px;
+		font-weight: 200;
+		word-wrap: break-word;
+	}
 
-.tooltip-email{
-	font-size: 12px;
-	font-weight: 200;
-	word-wrap: break-word;
-}
+	.vjs-default-skin .vjs-volume-level {
+		background: #9fd753;
+	}
+	.vjs-default-skin .vjs-play-progress {
+		background: #9fd753;
+	}
+	.vjs-default-skin .vjs-volume-bar .vjs-volume-handle {
+		width: 4px;
+		height: 13px;
+		top: -4px;
+		background: #cccccc;
+	}
+	.vjs-default-skin:hover .vjs-progress-control .vjs-seek-handle {
+		position: absolute;
+		width: 16px;
+		height: 16px;
+		background: #cccccc;
+		border: 5px solid #fff;
+		top: -0.5em;
+		-moz-border-radius: 0.9em;
+		-webkit-border-radius: 0.9em;
+		border-radius: 0.9em;
+	}
+	.vjs-default-skin .vjs-slider-handle:before {
+		content: '';
+	}
+	.vjs-default-skin .vjs-duration {
+		display: none;
+		float: left;
+	}
+	.vjs-default-skin .vjs-remaining-time {
+		float: left;
+		display: block;
+	}
+	.vjs-default-skin .vjs-menu-button ul li.vjs-selected {
+		background-color: #cfcfcf;
+		color: #000000;
+	}
 
-.vjs-default-skin .vjs-volume-level {
-  background: #9fd753;
-}
-.vjs-default-skin .vjs-play-progress {
-  background: #9fd753;
-}
-.vjs-default-skin .vjs-volume-bar .vjs-volume-handle {
-  width: 4px;
-  height: 13px;
-  top: -4px;
-  background: #cccccc;
-}
-.vjs-default-skin:hover .vjs-progress-control .vjs-seek-handle {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  background: #cccccc;
-  border: 5px solid #fff;
-  top: -0.5em;
-  -moz-border-radius: 0.9em;
-  -webkit-border-radius: 0.9em;
-  border-radius: 0.9em;
-}
-.vjs-default-skin .vjs-slider-handle:before {
-  content: '';
-}
-.vjs-default-skin .vjs-duration {
-  display: none;
-  float: left;
-}
-.vjs-default-skin .vjs-remaining-time {
-  float: left;
-  display: block;
-}
-.vjs-default-skin .vjs-menu-button ul li.vjs-selected {
-  background-color: #cfcfcf;
-  color: #000000;
+	.tabs ul li, .overflow ul li {
+		float:left;
+		margin-right: 45px;
+		padding: 0 10px 12px;
+	}
+
+	//video information button
+	.well {
+		margin-bottom : 1px;
+	}
+
+	.popover {
+		max-width : 725px;
+		p {
+			font-size   : 14px;
+			line-height : 18px;
+		}
+		#tags {
+			font-weight : bold;
+		}
+		ul {
+			padding-top : 18px;
+			text-align  : left;
+			margin-left : 4px;
+		}
+	}
+
+	.popover-title {
+		font-size   : 16px;
+		font-weight : bold;
+	}
+
+	.loading-container {
+		height   : 200px;
+		position : relative;
+		display  : table;
+		left     : 45%;
+	}
+
+	.loading-container > .spinner {
+		position : absolute;
+		left     : 50%;
+		top      : 100px;
+	}
+
+	.search-container {
+		width: 304px;
+	}
+	.search-form {
+		position: relative;
+		margin: 0 auto;
+		width: 300px;
+	}
+	#search-results{
+		overflow: hidden;
+	}
+	.search-ac {
+		position: absolute;
+		top: 40px;
+		left: 0;
+		right: 0;
+		z-index: 10;
+		background: #fdfdfd;
+		border: 1px solid;
+		border-color: #DBDBDB;
+		border-radius: 3px;
+		height: auto;
+		max-height: 220px;
+		overflow-x: hidden;
+		overflow-y: auto;
+	}
+	.search-ac:hover {
+		display: block;
+	}
+	.search-ac li {
+		display: block;
+		overflow: hidden;
+	}
+	.search-ac li:first-child {
+		margin-top: -1px;
+	}
+	.search-ac li:first-child:before, .search-ac li:first-child:after {
+		content: '';
+		display: block;
+		width: 0;
+		height: 0;
+		position: absolute;
+		left: 50%;
+		margin-left: -5px;
+		border: 5px outset transparent;
+	}
+	.search-ac li:first-child:before {
+		border-bottom: 5px solid #c4c7d7;
+		top: -11px;
+	}
+	.search-ac li:first-child:after {
+		border-bottom: 5px solid #fdfdfd;
+		top: -10px;
+	}
+	.search-ac li:first-child:hover:before, .search-ac li:first-child:hover:after {
+		display: none;
+	}
+	.search-ac li:last-child {
+		margin-bottom: -1px;
+	}
+	.search-ac a {
+		display: block;
+		position: relative;
+		margin: 0 -1px;
+		padding: 6px 40px 6px 10px;
+		color: #4b505c;
+		font-weight: 500;
+		text-decoration: none;
+		border: 1px solid transparent;
+		border-radius: 3px;
+	}
+	.search-ac a span {
+		font-weight: 200;
+	}
+	.search-ac a:before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		right: 10px;
+		margin-top: -9px;
+		width: 18px;
+		height: 18px;
+	}
+	.search-ac a:hover {
+		color: white;
+		background: #B0E46A;
+		border-color: #9FD753;
+	}
+
+	.share-modal {
+		.modal-dialog {
+			width : 720px;
+		}
+		.modal-content {
+			background : #EEEEEE;
+			border     : none;
+		}
+		.modal-header {
+			h2 {
+				float : left;
+			}
+		}
+		.modal-body {
+			position      : relative;
+			z-index       : 1;
+			border-top    : 1px solid #DBDBDB;
+			margin-bottom : 50px;
+			padding       : 15px 0;
+			background    : #f5f5f5;
+			.left-bar {
+				width        : 50%;
+				float        : left;
+				border-right : 1px solid #DBDBDB;
+				position     : relative;
+				padding      : 0 25px;
+				.video-info {
+					padding-bottom: 10px;
+					img {
+						width   : 155px;
+						float   : left;
+						padding : 15px 15px 15px 0;
+					}
+					.text {
+						padding : 42px 10px;
+					}
+					.video-url {
+						color : #5ABEF9;
+					}
+				}
+				.message {
+					border-top : 1px solid #DBDBDB;
+					padding    : 25px 0;
+				}
+				textarea {
+					width         : 100%;
+					border        : 1px solid #DBDBDB;
+					border-radius : 3px;
+					background    : white;
+					resize        : none;
+					margin-top    : 15px;
+					padding       : 10px;
+				}
+			}
+			.right-bar {
+				width    : 50%;
+				float    : left;
+				position : relative;
+				.search {
+					width         : 100%;
+					padding       : 22px;
+					border-bottom : 1px solid #DBDBDB;
+					input {
+						width         : 100%;
+						border        : 1px solid #DBDBDB;
+						border-radius : 20px;
+						padding       : 7px 15px;
+					}
+				}
+				img {
+					float  : left;
+					margin : 6px;
+				}
+			}
+		}
+		.modal-footer {
+			button {
+				width  : 145px;
+				height : 41px;
+			}
+			.white-btn {
+				position : relative;
+				top      : -1px;
+			}
+		}
+	}
+	.share-modal .modal-header, .share-modal .modal-footer {
+		border : none;
+	}
 }

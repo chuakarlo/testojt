@@ -63,7 +63,6 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/collections/SelectedItemsCollectionTest.js',
 			// views
 			'spec/apps/videoPlayer/views/ModalRegionTest.js',
-			'spec/apps/videoPlayer/views/NavLayoutTest.js',
 			'spec/apps/videoPlayer/views/PageLayoutTest.js',
 			'spec/apps/videoPlayer/views/VideoPlayerLayoutTest.js',
 			'spec/apps/videoPlayer/views/VideoTabsLayoutTest.js',

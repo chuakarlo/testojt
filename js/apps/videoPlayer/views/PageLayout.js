@@ -28,7 +28,7 @@ define( function ( require ) {
 			return this;
 		},
 
-		'className' : 'container',
+		'id' : 'video-player-page',
 
 		'template' : _.template( template ),
 
@@ -59,16 +59,18 @@ define( function ( require ) {
 		},
 
 		'showVideoInfo' : function ( event ) {
-			var that = this;
-			this.ui.infoVideo.popover({
+			var self = this;
+
+			this.ui.infoVideo.popover( {
 				'html'    : true,
 				'trigger' : 'manual',
 				'title'   : this.model.get( 'ContentName' ),
 				'content' : function () {
-					return  that.ui.infoVideoContent.html();
+					return  self.ui.infoVideoContent.html();
 				},
 				'placement' : 'bottom'
-			});
+			} );
+
 			this.ui.infoVideo.popover( 'show' );
 		},
 
