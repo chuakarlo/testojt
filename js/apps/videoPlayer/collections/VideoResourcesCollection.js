@@ -53,7 +53,7 @@
 					'downloadPath' : '/gb/' + model[ 'GuidebookFileName' ],
 					'thumbnail'    : '/img/guidebook.jpg'
 				}, {
-					'previewPath'  : previewUrl + 'mp3/' + model[ 'AudioFileName' ],
+					'previewPath'  : '',
 					'downloadPath' : '/mp3/' + model[ 'AudioFileName' ],
 					'thumbnail'    : '/img/audio.jpg'
 				}, {

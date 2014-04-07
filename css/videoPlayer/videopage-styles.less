@@ -1,8 +1,6 @@
-@emailitembg: #3e3e3e;
-
 #video-player-page {
-
-	#header{
+		width : 1200px;
+	#header {
 		width   : 1200px;
 		display : table;
 		h1 {
@@ -18,12 +16,12 @@
 			display        : table-cell;
 		}
 	}
-
 	#video {
 		position: relative;
 
 		#video-player {
 			float            : left;
+			width            : 800px;
 			height           : 450px;
 			padding          : 0px;
 			background-color : #000;
@@ -89,11 +87,10 @@
 			float:right;
 		}
 		button {
-			float:left;
-			height:37px;
 			width:152px;
-			position: relative;
-			top:13px;
+		}
+		button:disabled {
+			display : block;
 		}
 		.blue-btn {
 			padding:0;
@@ -120,19 +117,6 @@
 		ul {
 			width:500px;
 		}
-	}
-
-	/* bootstrap override */
-	.modal {
-		display: none;
-		overflow: auto;
-		overflow-y: scroll;
-		position: fixed;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		z-index: @zindex-modal-background;
 	}
 
 	// When fading in the modal, animate it to slide down
@@ -269,182 +253,19 @@
 		top      : 100px;
 	}
 
-	.search-container {
-		width: 304px;
-	}
-	.search-form {
-		position: relative;
-		margin: 0 auto;
-		width: 300px;
-	}
-	#search-results{
-		overflow: hidden;
-	}
-	.search-ac {
-		position: absolute;
-		top: 40px;
-		left: 0;
-		right: 0;
-		z-index: 10;
-		background: #fdfdfd;
-		border: 1px solid;
-		border-color: #DBDBDB;
-		border-radius: 3px;
-		height: auto;
-		max-height: 220px;
-		overflow-x: hidden;
-		overflow-y: auto;
-	}
-	.search-ac:hover {
-		display: block;
-	}
-	.search-ac li {
-		display: block;
-		overflow: hidden;
-	}
-	.search-ac li:first-child {
-		margin-top: -1px;
-	}
-	.search-ac li:first-child:before, .search-ac li:first-child:after {
-		content: '';
-		display: block;
-		width: 0;
-		height: 0;
-		position: absolute;
-		left: 50%;
-		margin-left: -5px;
-		border: 5px outset transparent;
-	}
-	.search-ac li:first-child:before {
-		border-bottom: 5px solid #c4c7d7;
-		top: -11px;
-	}
-	.search-ac li:first-child:after {
-		border-bottom: 5px solid #fdfdfd;
-		top: -10px;
-	}
-	.search-ac li:first-child:hover:before, .search-ac li:first-child:hover:after {
-		display: none;
-	}
-	.search-ac li:last-child {
-		margin-bottom: -1px;
-	}
-	.search-ac a {
-		display: block;
-		position: relative;
-		margin: 0 -1px;
-		padding: 6px 40px 6px 10px;
-		color: #4b505c;
-		font-weight: 500;
-		text-decoration: none;
-		border: 1px solid transparent;
-		border-radius: 3px;
-	}
-	.search-ac a span {
-		font-weight: 200;
-	}
-	.search-ac a:before {
-		content: '';
-		position: absolute;
-		top: 50%;
-		right: 10px;
-		margin-top: -9px;
-		width: 18px;
-		height: 18px;
-	}
-	.search-ac a:hover {
-		color: white;
-		background: #B0E46A;
-		border-color: #9FD753;
-	}
 
-	.share-modal {
-		.modal-dialog {
-			width : 720px;
-		}
-		.modal-content {
-			background : #EEEEEE;
-			border     : none;
-		}
-		.modal-header {
-			h2 {
-				float : left;
-			}
-		}
-		.modal-body {
-			position      : relative;
-			z-index       : 1;
-			border-top    : 1px solid #DBDBDB;
-			margin-bottom : 50px;
-			padding       : 15px 0;
-			background    : #f5f5f5;
-			.left-bar {
-				width        : 50%;
-				float        : left;
-				border-right : 1px solid #DBDBDB;
-				position     : relative;
-				padding      : 0 25px;
-				.video-info {
-					padding-bottom: 10px;
-					img {
-						width   : 155px;
-						float   : left;
-						padding : 15px 15px 15px 0;
-					}
-					.text {
-						padding : 42px 10px;
-					}
-					.video-url {
-						color : #5ABEF9;
-					}
-				}
-				.message {
-					border-top : 1px solid #DBDBDB;
-					padding    : 25px 0;
-				}
-				textarea {
-					width         : 100%;
-					border        : 1px solid #DBDBDB;
-					border-radius : 3px;
-					background    : white;
-					resize        : none;
-					margin-top    : 15px;
-					padding       : 10px;
-				}
-			}
-			.right-bar {
-				width    : 50%;
-				float    : left;
-				position : relative;
-				.search {
-					width         : 100%;
-					padding       : 22px;
-					border-bottom : 1px solid #DBDBDB;
-					input {
-						width         : 100%;
-						border        : 1px solid #DBDBDB;
-						border-radius : 20px;
-						padding       : 7px 15px;
-					}
-				}
-				img {
-					float  : left;
-					margin : 6px;
-				}
-			}
-		}
-		.modal-footer {
-			button {
-				width  : 145px;
-				height : 41px;
-			}
-			.white-btn {
-				position : relative;
-				top      : -1px;
-			}
-		}
-	}
-	.share-modal .modal-header, .share-modal .modal-footer {
-		border : none;
+	.info-thumbnail {
+		width              : 137px;
+		display            : block;
+		padding            : 4px;
+		margin-bottom      : 20px;
+		line-height        : 1.42857143;
+		background-color   : #ffffff;
+		border             : 1px solid #dddddd;
+		border-radius      : 4px;
+		-webkit-transition : all 0.2s ease-in-out;
+		-moz-transition    : all 0.2s ease-in-out;
+		-o-transition      : all 0.2s ease-in-out;
+		transition         : all 0.2s ease-in-out;
 	}
 }

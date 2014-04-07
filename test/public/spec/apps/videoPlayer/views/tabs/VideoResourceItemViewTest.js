@@ -1,6 +1,8 @@
 define( function ( require ) {
 	'use strict';
 
+	var sinon    = window.sinon;
+
 	var VideoResourceItemView = require( 'videoPlayer/views/tabs/VideoResourceItemView' );
 	var VideoResourceModel    = require( 'videoPlayer/models/VideoResourceModel' );
 
@@ -11,8 +13,8 @@ define( function ( require ) {
 		//set up and teardown test data - additional resources- video resource
 		before( function () {
 			videoResource = new VideoResourceModel( {
-				'downloadPath' : '',
-				'previewPath'  : '',
+				'downloadPath' : 'thisurl',
+				'previewPath'  : 'thisurl',
 				'thumbnail'    : ''
 			} );
 
@@ -28,48 +30,33 @@ define( function ( require ) {
 		 */
 		describe( 'Video Resource ItemView', function () {
 
-			it( 'should be an instance of VideoResourceItemView', function () {
+			it( 'does have  instance of VideoResourceItemView', function () {
 				videoResourceItemView.should.be.an.instanceof( VideoResourceItemView );
 			} );
 
-			it( 'should have an `template` property', function () {
+			it( 'does have  `template` property', function () {
 				videoResourceItemView.should.have.property( 'template' );
 			} );
 
-			it( 'should have an `tagName` property', function () {
+			it( 'does have  `tagName` property', function () {
 				videoResourceItemView.should.have.property( 'tagName' );
 			} );
 
-		} );
-
-		/**
-		 * Verify that the view creates an element based on the itemview
-		 */
-		describe( 'Instantiation', function () {
-			/**
-			 * assert that it should have a property template
-			 */
-			it( 'should have an `template` property', function () {
-				videoResourceItemView.should.have.property( 'template' );
-			} );
-			/**
-			 * assert that it has a property name tagName
-			 */
-			it( 'should have an `tagName` property with value `LI`', function () {
-				videoResourceItemView.should.have.property( 'tagName' );
-				videoResourceItemView.tagName.should.equal( 'li' );
+			it( 'does have  `ui` property', function () {
+				videoResourceItemView.should.have.property( 'ui' );
 			} );
 
-			/**
-			 * assert that it will create a li node element
-			 */
-			it( 'should create a `LI` element', function () {
+			it( 'does have  `events` property', function () {
+				videoResourceItemView.should.have.property( 'events' );
+			} );
+
+			it( 'does create a `LI` element', function () {
 				videoResourceItemView.el.nodeName.should.equal( 'LI' );
 			} );
 
 		} );
 
-		/**
+			/**
 		 * Verify that the model  in item view
 		 */
 		describe( 'Data Model stored in itemView', function () {
@@ -87,6 +74,157 @@ define( function ( require ) {
 			} );
 
 		} );
-	} );
 
+		describe( '.previewFile', function () {
+			var isPreviewStub;
+
+			before( function () {
+				videoResourceItemView.previewFile();
+			} );
+
+			describe( 'when isPreview is false', function () {
+
+				before( function () {
+						isPreviewStub = sinon.stub( videoResourceItemView, 'isPreview' ).returns( false );
+				});
+
+				after( function () {
+					videoResourceItemView.isPreview.restore();
+					isPreviewStub = null;
+				});
+
+				it( 'does return false', function () {
+					videoResourceItemView.previewFile().should.equal( false );
+				} );
+
+			} );
+
+			describe( 'when isPreview is true', function () {
+				var isIEStub;
+
+				before( function () {
+						isPreviewStub = sinon.stub( videoResourceItemView, 'isPreview' );
+						isIEStub      = sinon.stub( videoResourceItemView, 'isIE' );
+				});
+				after( function () {
+					videoResourceItemView.isPreview.restore();
+					isPreviewStub = null;
+					isIEStub      = null;
+				});
+
+				it( 'does call isIE', function () {
+					isPreviewStub.returns( true );
+					videoResourceItemView.previewFile();
+					isIEStub.should.have.callCount( 1 );
+				} );
+
+				describe( 'when isIE is true', function () {
+					var checkForPdfPluginStub;
+
+					before( function () {
+							checkForPdfPluginStub = sinon.stub( videoResourceItemView, 'checkForPdfPlugin' ).returns( true );
+					} );
+					after( function () {
+						videoResourceItemView.checkForPdfPlugin.restore();
+						isIEStub = null;
+					} );
+
+					it( 'does call checkForPdfPlugin', function () {
+						isIEStub.returns( true );
+						videoResourceItemView.previewFile();
+						checkForPdfPluginStub.should.have.callCount( 1 );
+					} );
+
+					describe( 'when checkForPdfPlugin is true', function () {
+					var showPdfModalSpy;
+
+					before( function () {
+							checkForPdfPluginStub.returns( true );
+							showPdfModalSpy = sinon.spy( videoResourceItemView, 'showPdfModal' );
+					} );
+					after( function () {
+						videoResourceItemView.showPdfModal.restore();
+						checkForPdfPluginStub = null;
+					} );
+
+					it( 'does call showPdfModal', function () {
+						videoResourceItemView.showPdfModal();
+						showPdfModalSpy.should.have.callCount( 1 );
+					} );
+
+					it( 'does show modal', function () {
+						videoResourceItemView.ui.pdfModal.modal( 'show' );
+						var $modal = videoResourceItemView.$el.find( '.modal' );
+						$modal.should.have.length( 1 );
+					} );
+
+				} );
+
+				} );
+
+			} );
+
+		} );
+
+		describe( '.showPdfModal', function () {
+
+			before(function () {
+				videoResourceItemView.showPdfModal();
+			});
+
+			it( 'should show a modal', function () {
+				videoResourceItemView.ui.pdfModal.modal( 'show' );
+				var $modal = videoResourceItemView.$el.find( '.modal' );
+				$modal.should.have.length( 1 );
+			} );
+
+		} );
+
+		describe( '.isPreview', function () {
+
+			before(function () {
+				videoResourceItemView.isPreview();
+			});
+
+			it( 'does get previewPath model', function () {
+				videoResourceItemView.model.get( 'previewPath' ).should.equal( 'thisurl');
+			} );
+
+			it( 'does return the previewPath if not empty', function () {
+				var previewPath = videoResourceItemView.model.get( 'previewPath' );
+				videoResourceItemView.isPreview().should.equal( previewPath );
+			} );
+
+			it( 'does return false if previewPath is empty', function () {
+				videoResourceItemView.model.set( 'previewPath', '' );
+				videoResourceItemView.isPreview().should.equal( false );
+			} );
+
+		} );
+
+		describe( '.checkForPdfPlugin', function () {
+			var getPDFPluginSpy;
+
+			before(function () {
+				getPDFPluginSpy = sinon.spy( videoResourceItemView, 'getPDFPlugin' );
+				videoResourceItemView.checkForPdfPlugin();
+			});
+				it( 'does call `.getPDFPlugin`', function () {
+				getPDFPluginSpy.should.have.callCount( 1 );
+			} );
+		} );
+
+		describe( '.getPDFPlugin', function () {
+			var getActiveXObjectSpy;
+			before(function () {
+				getActiveXObjectSpy = sinon.spy( videoResourceItemView, 'getActiveXObject' );
+				videoResourceItemView.getPDFPlugin();
+			});
+
+			it( 'does call `.getActiveXObject` twice', function () {
+				getActiveXObjectSpy.should.have.callCount( 2 );
+			} );
+
+		} );
+	} );
 } );
