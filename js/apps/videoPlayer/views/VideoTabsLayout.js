@@ -61,7 +61,7 @@ define( function ( require ) {
 		'relatedVideo' : function ( event ) {
 			event.preventDefault();
 			this.tabContentRegion.show( new RelatedVideoCollectionView( {
-				'ContentId'  : this.contentModel.id
+				'ContentId'  : this.model.id
 			} ) );
 			this.setUIRelatedVideo();
 		},
@@ -109,7 +109,7 @@ define( function ( require ) {
 
 		'addToUserQueue' : function () {
 			var options = {
-				'model'   : this.contentModel,
+				'model'   : this.model,
 				'method'  : 'create',
 				'success' : this.addToUserContents
 			};
@@ -119,7 +119,7 @@ define( function ( require ) {
 
 		'removeFromUserQueue' : function () {
 			var options = {
-				'model'  : this.contentModel,
+				'model'  : this.model,
 				'method' : 'deleteByObj',
 				'always' : this.removeItemFromContents
 			};
@@ -147,7 +147,7 @@ define( function ( require ) {
 			// remove the deleted content from user contents collection
 			var newContents = _.reject( this.contentsCollection.models,
 				function ( model ) {
-					return ( model.id === self.contentModel.id );
+					return ( model.id === self.model.id );
 				}
 			);
 
@@ -160,7 +160,7 @@ define( function ( require ) {
 				return false;
 			} else {
 				return this.contentsCollection.findWhere( {
-					'ContentId' : this.contentModel.id
+					'ContentId' : this.model.id
 				} );
 			}
 		}

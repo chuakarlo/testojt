@@ -56,7 +56,7 @@ define( function ( require ) {
 
 		} );
 
-			/**
+		/**
 		 * Verify that the model  in item view
 		 */
 		describe( 'Data Model stored in itemView', function () {
@@ -85,13 +85,13 @@ define( function ( require ) {
 			describe( 'when isPreview is false', function () {
 
 				before( function () {
-						isPreviewStub = sinon.stub( videoResourceItemView, 'isPreview' ).returns( false );
-				});
+					isPreviewStub = sinon.stub( videoResourceItemView, 'isPreview' ).returns( false );
+				} );
 
 				after( function () {
 					videoResourceItemView.isPreview.restore();
 					isPreviewStub = null;
-				});
+				} );
 
 				it( 'does return false', function () {
 					videoResourceItemView.previewFile().should.equal( false );
@@ -103,14 +103,15 @@ define( function ( require ) {
 				var isIEStub;
 
 				before( function () {
-						isPreviewStub = sinon.stub( videoResourceItemView, 'isPreview' );
-						isIEStub      = sinon.stub( videoResourceItemView, 'isIE' );
-				});
+					isPreviewStub = sinon.stub( videoResourceItemView, 'isPreview' );
+					isIEStub      = sinon.stub( videoResourceItemView, 'isIE' );
+				} );
+
 				after( function () {
 					videoResourceItemView.isPreview.restore();
 					isPreviewStub = null;
 					isIEStub      = null;
-				});
+				} );
 
 				it( 'does call isIE', function () {
 					isPreviewStub.returns( true );
@@ -122,8 +123,9 @@ define( function ( require ) {
 					var checkForPdfPluginStub;
 
 					before( function () {
-							checkForPdfPluginStub = sinon.stub( videoResourceItemView, 'checkForPdfPlugin' ).returns( true );
+						checkForPdfPluginStub = sinon.stub( videoResourceItemView, 'checkForPdfPlugin' ).returns( true );
 					} );
+
 					after( function () {
 						videoResourceItemView.checkForPdfPlugin.restore();
 						isIEStub = null;
@@ -136,41 +138,38 @@ define( function ( require ) {
 					} );
 
 					describe( 'when checkForPdfPlugin is true', function () {
-					var showPdfModalSpy;
+						var showPdfModalSpy;
 
-					before( function () {
+						before( function () {
 							checkForPdfPluginStub.returns( true );
 							showPdfModalSpy = sinon.spy( videoResourceItemView, 'showPdfModal' );
-					} );
-					after( function () {
-						videoResourceItemView.showPdfModal.restore();
-						checkForPdfPluginStub = null;
-					} );
+						} );
 
-					it( 'does call showPdfModal', function () {
-						videoResourceItemView.showPdfModal();
-						showPdfModalSpy.should.have.callCount( 1 );
-					} );
+						after( function () {
+							videoResourceItemView.showPdfModal.restore();
+							checkForPdfPluginStub = null;
+						} );
 
-					it( 'does show modal', function () {
-						videoResourceItemView.ui.pdfModal.modal( 'show' );
-						var $modal = videoResourceItemView.$el.find( '.modal' );
-						$modal.should.have.length( 1 );
-					} );
+						it( 'does call showPdfModal', function () {
+							videoResourceItemView.showPdfModal();
+							showPdfModalSpy.should.have.callCount( 1 );
+						} );
 
+						it( 'does show modal', function () {
+							videoResourceItemView.ui.pdfModal.modal( 'show' );
+							var $modal = videoResourceItemView.$el.find( '.modal' );
+							$modal.should.have.length( 1 );
+						} );
+					} );
 				} );
-
-				} );
-
 			} );
-
 		} );
 
 		describe( '.showPdfModal', function () {
 
-			before(function () {
+			before( function () {
 				videoResourceItemView.showPdfModal();
-			});
+			} );
 
 			it( 'should show a modal', function () {
 				videoResourceItemView.ui.pdfModal.modal( 'show' );
@@ -182,9 +181,9 @@ define( function ( require ) {
 
 		describe( '.isPreview', function () {
 
-			before(function () {
+			before( function () {
 				videoResourceItemView.isPreview();
-			});
+			} );
 
 			it( 'does get previewPath model', function () {
 				videoResourceItemView.model.get( 'previewPath' ).should.equal( 'thisurl');
@@ -205,26 +204,27 @@ define( function ( require ) {
 		describe( '.checkForPdfPlugin', function () {
 			var getPDFPluginSpy;
 
-			before(function () {
+			before( function () {
 				getPDFPluginSpy = sinon.spy( videoResourceItemView, 'getPDFPlugin' );
 				videoResourceItemView.checkForPdfPlugin();
-			});
-				it( 'does call `.getPDFPlugin`', function () {
+			} );
+
+			it( 'does call `.getPDFPlugin`', function () {
 				getPDFPluginSpy.should.have.callCount( 1 );
 			} );
 		} );
 
 		describe( '.getPDFPlugin', function () {
 			var getActiveXObjectSpy;
-			before(function () {
+
+			before( function () {
 				getActiveXObjectSpy = sinon.spy( videoResourceItemView, 'getActiveXObject' );
 				videoResourceItemView.getPDFPlugin();
-			});
+			} );
 
 			it( 'does call `.getActiveXObject` twice', function () {
 				getActiveXObjectSpy.should.have.callCount( 2 );
 			} );
-
 		} );
 	} );
 } );

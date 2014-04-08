@@ -48,9 +48,12 @@ define( function ( require ) {
 		},
 
 		'onShow' : function () {
-			this.videoPlayerRegion.show( new VideoPlayerLayout() );
+			this.videoPlayerRegion.show( new VideoPlayerLayout( {
+				'model' : this.model
+			} ) );
+
 			this.videoTabsRegion.show( new VideoTabsLayout( {
-				'contentModel' : this.model
+				'model' : this.model
 			} ) );
 		},
 

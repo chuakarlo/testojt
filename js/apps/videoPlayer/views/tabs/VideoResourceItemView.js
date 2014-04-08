@@ -59,18 +59,18 @@ define( function ( require ) {
 		},
 
 		'checkForPdfPlugin' : function () {
-			var isAdobe     = this.getPDFPlugin();
+			var isAdobe = this.getPDFPlugin();
 			return ( ( isAdobe !== null ) && ( isAdobe !== undefined ) ) ? true : false;
 		},
 		//get pdf plugin in ie
 		'getPDFPlugin' : function () {
-				// load the activeX control
-				// AcroPDF.PDF is used by version 7 and later
-				// PDF.PdfCtrl is used by version 6 and earlier
-				return this.getActiveXObject( 'AcroPDF.PDF' ) || this.getActiveXObject( 'PDF.PdfCtrl' );
+			// load the activeX control
+			// AcroPDF.PDF is used by version 7 and later
+			// PDF.PdfCtrl is used by version 6 and earlier
+			return this.getActiveXObject( 'AcroPDF.PDF' ) || this.getActiveXObject( 'PDF.PdfCtrl' );
 		},
 		//check if browser is ie
-		'isIE'  : function () {
+		'isIE' : function () {
 			var userAgent = navigator ? navigator.userAgent.toLowerCase() : 'other';
 			var msie      = userAgent.indexOf( 'msie' ); //for older version of ie
 			var trident   = userAgent.indexOf( 'trident/' ); //for newer version of ie

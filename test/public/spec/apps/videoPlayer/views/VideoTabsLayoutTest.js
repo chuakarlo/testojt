@@ -30,7 +30,7 @@ define( function ( require ) {
 
 	var initVideoTabsLayout = function () {
 		videoTabsLayout = new VideoTabsLayout( {
-			'contentModel' : contentModel
+			'model' : contentModel
 		} );
 	};
 
@@ -139,8 +139,8 @@ define( function ( require ) {
 				videoTabsLayout.contentsCollection.should.not.be.undefined;
 			} );
 
-			it( 'does have a `contentModel` property', function () {
-				videoTabsLayout.should.have.property( 'contentModel' );
+			it( 'does have a `model` property', function () {
+				videoTabsLayout.should.have.property( 'model' );
 			} );
 
 		} );

@@ -6,19 +6,23 @@ define( function ( require ) {
 
 	return Backbone.Model.extend( {
 
-		'url' : 'com.schoolimprovement.pd360.dao.ContentService',
-
+		'url' : {
+			'ContentService' : 'com.schoolimprovement.pd360.dao.ContentService',
+			'RespondService' : 'com.schoolimprovement.pd360.dao.RespondService'
+		},
+			
 		'idAttribute' : 'ContentId',
 
 		'initialize' : function () {},
 
-		'fetch' : function ( request, options ) {
-			options      = options || {};
-			request.path = this.url;
-
+		'fetch' : function ( request ) {
+			request.path = this.url.ContentService;
+			return Remoting.fetch( request );
+		},
+		
+		'update' : function ( request ) {
+			request.path = this.url.RespondService;
 			return Remoting.fetch( request );
 		}
-
 	} );
-
 } );
