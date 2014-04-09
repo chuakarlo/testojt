@@ -1,42 +1,57 @@
 define( function ( require ) {
 	'use strict';
 
+	var sinon = window.sinon;
+	var Backbone = require( 'backbone' );
+
 	var VideoSegmentCollectionView = require( 'videoPlayer/views/tabs/VideoSegmentCollectionView' );
 	var VideoSegmentCollection     = require( 'videoPlayer/collections/VideoSegmentCollection' );
 
-	var videoSegmentCollectionView;
-	var videoSegmentCollectionTheView;
-
 	describe( 'VideoSegmentCollectionView', function () {
+		var videoSegmentCollectionView;
+		var videoSegmentCollectionTheView;
+		var ResourcesModel;
+		var resourcesModel;
+		var dummyData;
 
 		before( function () {
 
-			this.dummyData = new VideoSegmentCollection();
+			dummyData = new VideoSegmentCollection();
 
-			this.dummyData.reset( [
-			{
-				'video'    : 'http://builtbyhq.com/projects/school/CORE/v1/img/vid-5.png',
-				'title'    : 'Assessment For Learning',
-				'duration' : '1 min'
-			},
-			{
-				'video'    : 'http://builtbyhq.com/projects/school/CORE/v1/img/vid-6.png',
-				'title'    : 'Differentiated Instruction...',
-				'duration' : '2 min'
-			},
-			{
-				'video'    : 'http://builtbyhq.com/projects/school/CORE/v1/img/vid-6.png',
-				'title'    : 'Differentiated Instruction...',
-				'duration' : '2 min'
-			},
-			{
-				'video'    : 'http://builtbyhq.com/projects/school/CORE/v1/img/vid-6.png',
-				'title'    : 'Differentiated Instruction...',
-				'duration' : '2 min'
-			} ] );
+			sinon.stub( dummyData, 'fetch', function () {
+				dummyData.reset( [
+					{
+						'url'         : '',
+						'ContentName' : '',
+						'duration'    : ''
+					},{
+						'url'         : '',
+						'ContentName' : '',
+						'duration'    : ''
+					},{
+						'url'         : '',
+						'ContentName' : '',
+						'duration'    : ''
+					},{
+						'url'         : '',
+						'ContentName' : '',
+						'duration'    : ''
+					}
+				] );
+			} );
+
+			ResourcesModel = Backbone.Collection.extend( {} );
+
+			resourcesModel = new ResourcesModel();
+			resourcesModel.reset( [
+				{
+					'ContentId' : '613'
+				}
+			] );
 
 			videoSegmentCollectionView = new VideoSegmentCollectionView( {
-				'collection' : this.dummyData
+				'Content' : resourcesModel,
+				'collection' : dummyData
 			} );
 
 			videoSegmentCollectionTheView = videoSegmentCollectionView.render();
@@ -99,7 +114,7 @@ define( function ( require ) {
 				 */
 				it( 'should be equal to the data being passed', function () {
 
-					videoSegmentCollectionView.collection.should.equal( this.dummyData );
+					videoSegmentCollectionView.collection.should.equal( dummyData );
 
 				} );
 

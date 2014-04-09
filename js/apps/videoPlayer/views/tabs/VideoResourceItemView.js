@@ -16,7 +16,7 @@ define( function ( require ) {
 		'tagName'  : 'li',
 
 		'ui'       : {
-			'thumbnail'   : '.thumb',
+			'thumbnail'   : '.video-resources-thumb',
 			'pdfModal'    : '#pdf-modal',
 			'modalIframe' : '#modal-iframe'
 		},

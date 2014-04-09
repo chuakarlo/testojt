@@ -2,6 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var sinon = window.sinon;
+	var Backbone = require( 'backbone' );
 
 	var VideoResourcesCollectionView = require( 'videoPlayer/views/tabs/VideoResourcesCollectionView' );
 	var VideoResourcesCollection     = require( 'videoPlayer/collections/VideoResourcesCollection' );
@@ -9,6 +10,8 @@ define( function ( require ) {
 	describe( 'VideoResourceCollectionView', function () {
 		var collectionView;
 		var resourcesCollection;
+		var ResourcesModel;
+		var resourcesModel;
 
 		before( function () {
 			resourcesCollection = new VideoResourcesCollection();
@@ -21,7 +24,17 @@ define( function ( require ) {
 				} ] );
 			} );
 
+			ResourcesModel = Backbone.Collection.extend( {} );
+
+			resourcesModel = new ResourcesModel();
+			resourcesModel.reset( [
+				{
+					'ContentId' : '613'
+				}
+			] );
+
 			collectionView = new VideoResourcesCollectionView( {
+				'Content' : resourcesModel,
 				'collection': resourcesCollection
 			} );
 
@@ -38,14 +51,14 @@ define( function ( require ) {
 				collectionView.should.have.property( 'itemView' );
 			} );
 
-			it( 'should have a `className` property with value `slick`', function () {
+			it( 'should have a `className` property with value `vid-tab`', function () {
 				collectionView.should.have.property( 'className' );
-				collectionView.className.should.be.equal( 'slick' );
+				collectionView.className.should.be.equal( 'vid-tab' );
 			} );
 
-			it( 'should have a `tagName` property with value `div`', function () {
+			it( 'should have a `tagName` property with value `ul`', function () {
 				collectionView.should.have.property( 'tagName' );
-				collectionView.tagName.should.be.equal( 'div' );
+				collectionView.tagName.should.be.equal( 'ul' );
 			} );
 
 			describe( 'When data are stored in the collection', function () {

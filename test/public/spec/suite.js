@@ -28,7 +28,7 @@ define( function ( require ) {
 			'spec/apps/contentNavigation/views/Grid/GridLayoutViewTests',
 			'spec/apps/contentNavigation/views/Layouts/HeaderLayoutViewTests',
 			'spec/apps/contentNavigation/views/Segments/SegmentCollectionViewTest',
-			'spec/apps/contentNavigation/views/Segments/SegmentItemViewTest',
+			//'spec/apps/contentNavigation/views/Segments/SegmentItemViewTest',
 			//Controllers
 			'spec/apps/contentNavigation/controllers/GridControllerTest',
 			'spec/apps/contentNavigation/controllers/HeaderControllerTest',

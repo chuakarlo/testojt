@@ -1,15 +1,15 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette           = require( 'marionette' );
-	var $                    = require( 'jquery' );
-	var VideoSegmentItemView = require( 'videoPlayer/views/tabs/VideoSegmentItemView' );
-
 	require( 'slick' );
+	var $          = require( 'jquery' );
+	var _          = require( 'underscore' );
+	var Marionette = require( 'marionette' );
+
+	var VideoSegmentItemView = require( 'videoPlayer/views/tabs/VideoSegmentItemView' );
+	var LoadingView          = require( 'videoPlayer/views/LoadingView' );
 
 	return Marionette.CollectionView.extend( {
-
-		'itemView'  : VideoSegmentItemView,
 
 		'tagName'   : 'div',
 
@@ -20,14 +20,32 @@ define( function ( require ) {
 			'prev' : 'button.slick-prev'
 		},
 
-		'onShow' : function () {
+		'itemView' : VideoSegmentItemView,
 
-			this.$el.slick({
-				slidesToShow: 4,
-				slidesToScroll: 4
-			} );
-			this.hoverNext( this.$el );
-			this.hoverPrev( this.$el );
+		'emptyView' : LoadingView,
+
+		'initialize' : function ( options ) {
+			_.bindAll( this );
+			_.extend( this, options );
+
+			this._initRequest();
+			this.listenTo( this.collection, 'custom:sync', this._initView );
+
+			return this;
+		},
+
+		'_initRequest' : function () {
+			if( !this.Content.get( 'Children') ) {
+				this.Content.set( 'Children', [] );
+			}
+
+			var request = {
+				'objectPath' : 'com.schoolimprovement.pd360.dao.core.Content',
+				'args' : this.Content.toJSON()
+			};
+
+			this.collection.fetch( request, { 'reset' : true } );
+
 		},
 
 		'hover': function( element, time, callback ) {
@@ -40,22 +58,39 @@ define( function ( require ) {
 				}
 			}, this.clearTimeout );
 		},
+
 		'hoverNext': function( element ) {
 			this.hover( this.ui.next, 1500, function() {
 				element.slickNext( 1 );
 			} );
 		},
+
 		'hoverPrev': function( element ) {
 			this.hover( this.ui.prev, 1500, function() {
 				element.slickPrev( 1 );
 			} );
 		},
+
 		'clearTimeout': function() {
 			//reset time
 			if ( this.timeoutId ) {
 				window.clearInterval( this.timeoutId );
 				this.timeoutId = null;
 			}
+
+		},
+
+		'_initView' : function () {
+			this.$el.slick( {
+				'slidesToShow'   : 4,
+				'slidesToScroll' : 4,
+				'autoplay'       : false,
+				'autoplaySpeed'  : 2000,
+			} );
+		},
+
+		'onClose' : function () {
+			this.collection.reset( [] );
 		}
 
 	} );

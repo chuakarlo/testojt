@@ -51,7 +51,9 @@ define( function ( require ) {
 			// fetch user queue contents
 			this.fetchUserQueue();
 
-			this.tabContentRegion.show( new AdditionalResourcesLayout() );
+			this.tabContentRegion.show( new AdditionalResourcesLayout( {
+				'Content' : this.model
+			} ) );
 		},
 
 		'shareVideo' : function ( event ) {
@@ -68,7 +70,9 @@ define( function ( require ) {
 
 		'additionalResources' : function ( event ) {
 			event.preventDefault();
-			this.tabContentRegion.show( new AdditionalResourcesLayout() );
+			this.tabContentRegion.show( new AdditionalResourcesLayout( {
+				'Content' : this.model
+			} ) );
 			this.setUIAdditionalResources();
 		},
 

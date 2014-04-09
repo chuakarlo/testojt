@@ -1,14 +1,14 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette                   = require( 'marionette' );
-	var _                            = require( 'underscore' );
+	var _          = require( 'underscore' );
+	var Marionette = require( 'marionette' );
 
-	var template                     = require( 'text!videoPlayer/templates/tabs/additionalResourcesLayout.html' );
 	var VideoResourcesCollectionView = require( 'videoPlayer/views/tabs/VideoResourcesCollectionView' );
 	var VideoSegmentCollectionView   = require( 'videoPlayer/views/tabs/VideoSegmentCollectionView' );
 	var VideoResourcesCollection     = require( 'videoPlayer/collections/VideoResourcesCollection' );
 	var VideoSegmentCollection       = require( 'videoPlayer/collections/VideoSegmentCollection' );
+	var template                     = require( 'text!videoPlayer/templates/tabs/additionalResourcesLayout.html' );
 
 	return Marionette.Layout.extend( {
 
@@ -21,12 +21,21 @@ define( function ( require ) {
 
 		'className' : 'additional-resources',
 
+		'initialize' : function ( options ) {
+			_.bindAll( this );
+			_.extend( this, options );
+
+			return this;
+		},
+
 		'onShow' : function () {
 			this.videoResourceRegion.show( new VideoResourcesCollectionView( {
+				'Content'    : this.Content,
 				'collection' : new VideoResourcesCollection()
 			} ) );
 
 			this.videoSegmentRegion.show( new VideoSegmentCollectionView( {
+				'Content'    : this.Content,
 				'collection' : new VideoSegmentCollection()
 			} ) );
 		}

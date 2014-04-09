@@ -1,19 +1,32 @@
 define( function ( require ) {
 	'use strict';
 
-	var $     = require( 'jquery' );
-	var sinon = window.sinon;
+	var $        = require( 'jquery' );
+	var Backbone = require( 'backbone' );
+	var sinon    = window.sinon;
 
 	var Remoting = require( 'Remoting' );
 	var AdditionalResourcesLayout = require( 'videoPlayer/views/tabs/AdditionalResourcesLayout' );
 
 	describe( 'AdditionalResourceLayout Layout', function () {
-
 		var additionalResourcesLayout;
+		var ResourcesModel;
+		var resourcesModel;
 
 		before( function () {
+			ResourcesModel = Backbone.Collection.extend( {} );
+
+			resourcesModel = new ResourcesModel();
+			resourcesModel.reset( [
+				{
+					'ContentId' : '613'
+				}
+			] );
+
 			sinon.stub( Remoting , 'fetch' ).returns( $.Deferred() );
-			additionalResourcesLayout = new AdditionalResourcesLayout();
+			additionalResourcesLayout = new AdditionalResourcesLayout( {
+				'Content' : resourcesModel
+			} );
 		} );
 
 		after( function () {
@@ -35,7 +48,7 @@ define( function ( require ) {
 		describe( '`onShow` method', function () {
 
 			before( function () {
-				additionalResourcesLayout.render().onShow();
+				additionalResourcesLayout.render();
 			} );
 
 			it( 'should display videoResourceRegion region', function () {

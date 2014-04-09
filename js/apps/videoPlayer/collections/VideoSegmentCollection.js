@@ -1,51 +1,62 @@
  define ( function ( require ) {
 	'use strict';
 
-	var Backbone  = require( 'backbone' );
+	var _        = require( 'underscore' );
+	var Backbone = require( 'backbone' );
 
+	var Remoting          = require( 'remoting' );
 	var VideoSegmentModel = require( 'videoPlayer/models/VideoSegmentModel' );
-
-	/**
-	 * Note:
-	 * Using dummy data until API from Respond Team is done.
-	 */
+	var hhmmssFormat      = require( 'videoPlayer/utils/toHHMMSSFormat' );
 
 	return Backbone.Collection.extend( {
 
-		'model'        : VideoSegmentModel,
+		'model' : VideoSegmentModel,
 
-		'initialize'   : function() {
-			// Dummy data, for testing purposes
-			var testData = [ {
-				'video'    : 'http://builtbyhq.com/projects/school/CORE/v1/img/vid-5.png',
-				'title'    : 'Assessment For Learning',
-				'duration' : '1 min'
-			},
-			{
-				'video'     : 'http://builtbyhq.com/projects/school/CORE/v1/img/vid-6.png',
-				'title'    : 'Differentiated Instruction...',
-				'duration' : '2 min'
-			},
-			{
-				'video'     : 'http://builtbyhq.com/projects/school/CORE/v1/img/vid-6.png',
-				'title'    : 'Differentiated Instruction...',
-				'duration' : '2 min'
-			},
-			{
-				'video'     : 'http://builtbyhq.com/projects/school/CORE/v1/img/vid-6.png',
-				'title'    : 'Differentiated Instruction...',
-				'duration' : '2 min'
-			},
-			{
-				'video'     : 'http://builtbyhq.com/projects/school/CORE/v1/img/vid-6.png',
-				'title'    : 'Differentiated Instruction...',
-				'duration' : '2 min'
-			}  ];
+		'url' : 'com.schoolimprovement.pd360.dao.ContentService',
 
-			this.set( testData );
+		'method' : 'getProgramFromSegment',
 
-			// Should fetch data in production
-			// this.fetch();
+		'initialize' : function() {},
+
+		'fetch' : function ( request, options ) {
+			options = options || {};
+
+			request.path = this.url;
+
+			request.method = this.method;
+
+			var fetchingRequest = Remoting.fetch( request );
+
+			if( options.success ) {
+				fetchingRequest.then( options.success );
+			}
+
+			if( options.error ) {
+				fetchingRequest.fail( options.error );
+			}
+
+			if( options.reset ) {
+				fetchingRequest.done( _.bind( this.resetCollection, this ) );
+			}
+
+			return fetchingRequest;
+		},
+
+		'buildModels' : function ( models ) {
+			var url = 'http://resources.pd360.com/PD360/media/thumb/';
+
+			_.each( models, function ( model ) {
+				model.url = url + model.ImageURL;
+				model.duration = hhmmssFormat( model.SegmentLengthInSeconds );
+			} );
+
+			return models;
+		},
+
+		'resetCollection' : function ( collection ) {
+			var resources = this.buildModels( _.first( collection ) );
+			this.reset( resources );
+			this.trigger( 'custom:sync' );
 		}
 	} );
 } );

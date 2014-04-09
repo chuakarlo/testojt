@@ -11,10 +11,9 @@ define( function ( require ) {
 		//set up and teardown test data - additional resources- video segment
 		before( function () {
 			videoSegment = new VideoSegmentModel( {
-				'video'    : '',
-				'title'    : 'Relationships and Support',
-				'duration' : '2 min',
-				'file'     : 'assets/bigBuckBunnyCaption.vtt'
+				'ContentName'    : '',
+				'duration' : '',
+				'url'     : ''
 			} );
 
 			videoSegmentItemView = new VideoSegmentItemView( {

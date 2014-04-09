@@ -13,18 +13,15 @@
 
 		'url'    : 'com.schoolimprovement.pd360.dao.ContentService',
 
-		'method' : {
-			'getResources' : 'getContentByContentIdAndLicenseTypes'
-		},
+		'method' : 'getContentByContentIdAndLicenseTypes',
 
 		'initialize' : function () {},
 
 		'fetch' : function ( request, options ) {
-
 			options = options || {};
 
 			request.path   = this.url;
-			request.method = this.method.getResources;
+			request.method = this.method;
 
 			var fetchingRequest = Remoting.fetch( request );
 
@@ -41,7 +38,6 @@
 			}
 
 			return fetchingRequest;
-
 		},
 
 		'buildModels' : function ( model ) {
