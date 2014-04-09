@@ -54,7 +54,7 @@ define( function ( require ) {
 
 		if ( syncOptions.objectPath ) {
 			syncOptions.objectPath = config.base + syncOptions.objectPath;
-			params.url             = config.objectPath;
+			params.url             = config.objectUrl;
 		}
 
 		var path = _.result( model, 'path' ) || pathError();
@@ -91,7 +91,9 @@ define( function ( require ) {
 		var success = options.success;
 
 		var done = function ( data, status, jqXHR ) {
-			success( data, status, jqXHR );
+			if ( success ) {
+				success( data, status, jqXHR );
+			}
 		};
 
 		options.success = function ( sig ) {

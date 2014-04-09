@@ -4,7 +4,7 @@ var suite  = require( 'selenium-runner' ).suite;
 
 suite( function ( env ) {
 
-	describe.only( 'Logout', function() {
+	describe( 'Logout', function() {
 
 		it( 'should change nav and title after logging user out', function(done) {
 
