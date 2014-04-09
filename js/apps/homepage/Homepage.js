@@ -13,7 +13,7 @@ define( function ( require ) {
 		// configure groups routes
 		Homepage.Router = AuthRouter.extend( {
 			'appRoutes' : {
-				'home_new'          : 'showHomepage'
+				'home' : 'showHomepage'
 			}
 		} );
 

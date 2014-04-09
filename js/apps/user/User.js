@@ -7,7 +7,6 @@ define( function ( require ) {
 	var AuthRouter = require( 'AuthRouter' );
 
 	require( 'user/controllers/loginController' );
-	require( 'user/controllers/homeController' );
 	require( 'user/controllers/settingsController' );
 	require( 'user/entities/License' );
 	require( 'user/entities/Profile' );
@@ -21,7 +20,6 @@ define( function ( require ) {
 			'appRoutes' : {
 				'login'            : 'showLogin',
 				'logout'           : 'showLogout',
-				'home'             : 'showHome',
 				'settings(/:page)' : 'showSettings'
 			}
 
@@ -32,11 +30,6 @@ define( function ( require ) {
 			'showLogin' : function () {
 				App.PD360.hide();
 				User.Login.Controller.showLogin();
-			},
-
-			'showHome' : function () {
-				App.PD360.hide();
-				User.Home.Controller.showHome();
 			},
 
 			'showLogout' : function () {

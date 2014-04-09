@@ -26,7 +26,7 @@ define( function ( require ) {
 		Show.Controller = {
 			'showHomepage' : function () {
 
-				if( Session.personnelId() && Session.personnelId() in userTags) {
+				if ( Session.personnelId() && Session.personnelId() in userTags) {
 
 					var fetchingModels = Remoting.fetch( [ clientProfileParams( Session.personnelId() ) ] );
 
@@ -38,7 +38,9 @@ define( function ( require ) {
 						App.reqres.setHandler( 'homepage:userTags', function () {
 							return userTags[Session.personnelId()];
 						} );
-					App.content.show( new HomeView() );
+
+						App.content.show( new HomeView() );
+
 					} ).fail( function ( error ) {
 						App.content.show( new NullView() );
 					} );
@@ -47,6 +49,9 @@ define( function ( require ) {
 					App.content.show( new NullView() );
 				}
 			}
+
 		};
+
 	} );
+
 } );

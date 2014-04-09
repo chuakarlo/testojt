@@ -4,7 +4,7 @@ var suite  = require( 'selenium-runner' ).suite;
 
 suite( function ( env ) {
 
-	describe( 'Logout', function() {
+	describe.only( 'Logout', function() {
 
 		it( 'should change nav and title after logging user out', function(done) {
 
@@ -25,7 +25,7 @@ suite( function ( env ) {
 				.elementById( 'login-input-password' ).clear().type( 'pd360' )
 				.elementById( 'login-button' ).click()
 
-				.sleep( 2000 )
+				.sleep( 5000 )
 
 				// Verify that the nav menu exist by looking for an item that comes with the nav menu
 				.hasElementById( 'groups-tab' ).should.eventually.equal( true )
