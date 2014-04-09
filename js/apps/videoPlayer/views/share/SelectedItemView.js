@@ -16,11 +16,11 @@ define( function ( require ) {
 
 		'tagName' : 'span',
 
-		'className' : 'email-name',
+		'className' : 'selected-name',
 
 		'ui' : {
-			'removeItem' : '.remove-item',
-			'emailItem'  : '.email-item',
+			'removeItem'   : '.remove-item',
+			'selectedItem' : '.selected-item',
 		},
 
 		'triggers' : {
@@ -30,10 +30,10 @@ define( function ( require ) {
 		'onShow' : function () {
 			var content = _.template( tooltipTmpl, this.model.attributes );
 
-			this.ui.emailItem.tooltip( {
+			this.ui.selectedItem.tooltip( {
 				'animation' : false,
 				'title'     : content,
-				'container' : this.ui.emailItem,
+				'container' : this.ui.selectedItem,
 				'html'      : true
 			} );
 		}

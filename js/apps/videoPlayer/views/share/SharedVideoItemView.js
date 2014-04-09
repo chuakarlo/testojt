@@ -2,14 +2,13 @@ define( function ( require ) {
 	'use strict';
 
 	// libraries
-	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 
 	require( 'videoPlayer/utils/selectText' );
 
 	// template
-	var template = require( 'text!videoPlayer/templates/share/sharedVideoItemView.html' );
+	var template   = require( 'text!videoPlayer/templates/share/sharedVideoItemView.html' );
 
 	return Marionette.ItemView.extend( {
 
@@ -22,12 +21,11 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'click @ui.videoUrl' : 'selectText'
+			'click @ui.videoUrl' : 'selectVideoUrl'
 		},
 
-		'selectText' : function ( event ) {
-			event.preventDefault();
-			$( event.target ).selectText();
+		'selectVideoUrl' : function ( event ) {
+			this.ui.videoUrl.selectText();
 		}
 
 	} );

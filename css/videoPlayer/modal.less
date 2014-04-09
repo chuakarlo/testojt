@@ -1,5 +1,4 @@
 #video-player-page {
-
 	.share-modal {
 		.modal-dialog {
 			width : 720px;
@@ -10,7 +9,7 @@
 		}
 		.modal-header {
 			padding       : 15px;
-			border-bottom : 1px solid #e5e5e5;
+			border-bottom : 1px solid #E5E5E5;
 			min-height    : 16.428571429px;
 			h2 {
 				float       : left;
@@ -86,6 +85,13 @@
 					width         : 100%;
 					padding       : 22px;
 					border-bottom : 1px solid #DBDBDB;
+					.search-form {
+						width      : 300px;
+						position   : relative;
+						margin     : 0 auto;
+						border     : none;
+						background : none;
+					}
 					input {
 						width         : 100%;
 						border        : 1px solid #DBDBDB;
@@ -103,9 +109,9 @@
 			margin-top : 15px;
 			padding    : 19px 20px 20px;
 			text-align : right;
-			border-top : 1px solid #e5e5e5;
+			border-top : 1px solid #E5E5E5;
 			button {
-				width   : 145px;
+				width   : 148px;
 				height  : 41px;
 				cursor  : default;
 				display : inline;
@@ -114,8 +120,56 @@
 				position : relative;
 				top      : -3px;
 			}
+			.blue-btn:disabled {
+				background : #5ABEF9;
+			}
+		}
+		.transition-mixin;
+		span.selected-name {
+			display: block;
+			box-sizing: border-box;
+			float: left;
+			width: 167px;
+			margin: 3px;
+			div.remove-item {
+				border: none;
+				background: #545965;
+				color: #FFFFFF;
+				cursor: pointer;
+			}
+			span.selected-item {
+				display: block;
+				-webkit-box-sizing: border-box; /* Saf <5.1, */
+				-moz-box-sizing: border-box; /* Fx */
+				box-sizing: border-box; /* Ch, Saf 5.1+, IE 8+, Op 9+  */
+				border: none;
+				background: #4B505C;
+				color: #FFFFFF;
+				max-width: 127px;
+				width: 127px;
+				white-space: nowrap;
+				overflow: hidden;
+				-o-text-overflow: ellipsis; /* Op <11, Op Mini, Op Mob <12.1 */
+				text-overflow: ellipsis; /* IE, Fx, Ch, Saf */
+			}
+		}
+		.tooltip {
+			position : fixed;
+		}
+		.tooltip-inner {
+			white-space: pre-wrap;
+		}
+		.tooltip-name {
+			font-weight: 500;
+			word-wrap: break-word;
+		}
+		.tooltip-location {
+			font-size: 12px;
+			font-weight: 200;
+			word-wrap: break-word;
 		}
 	}
+
 	.share-modal .modal-header, .share-modal .modal-footer {
 		border : none;
 	}
@@ -133,5 +187,22 @@
 		.modal-content {
 			height: 720px;
 		}
+		.transition-mixin;
 	}
+	// When fading in the modal, animate it to slide down
+	.transition-mixin {
+		&.fade .modal-dialog {
+				.translate(0, 0);
+				.transition-transform(~"0s ease-out");
+		}
+
+		&.in .modal-dialog {
+			.translate(0, 0)
+		}
+	}
+}
+/* partial fix for bootstrap modal shifting to the left(https://github.com/twbs/bootstrap/issues/8768) */
+body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
+	margin-right : 0 !important;
+	width        : 99% !important;
 }

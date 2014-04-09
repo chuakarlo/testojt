@@ -9,8 +9,6 @@ define( function ( require ) {
 
 		'template'   : _.template( template ),
 
-		'tagName'    : 'p',
-
 		'className'  : 'empty-view'
 
 	} );

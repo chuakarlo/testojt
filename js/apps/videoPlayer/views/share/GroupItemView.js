@@ -1,23 +1,22 @@
 define( function ( require ) {
 	'use strict';
 
-	// libraries
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
-
-	// template
-	var template = require( 'text!videoPlayer/templates/share/searchResultItemView.html' );
+	var template   = require( 'text!videoPlayer/templates/share/groupItemView.html' );
 
 	return Marionette.ItemView.extend( {
-
-		'initialize' : function () {},
 
 		'template' : _.template( template ),
 
 		'tagName' : 'li',
 
+		'ui' : {
+			'groupsResultItem' : '.groups-result-item'
+		},
+
 		'triggers' : {
-			'mousedown .result-item' : 'item:selected'
+			'mousedown @ui.groupsResultItem' : 'group:selected'
 		}
 
 	} );

@@ -1,59 +1,65 @@
 define( function ( require ) {
 	'use strict';
 
-	// view
-	var SelectedItemView = require( 'videoPlayer/views/share/SelectedItemView' );
+	// test libraries
+	var sinon = window.sinon;
 
-	// model
-	var SelectedItemModel = require( 'videoPlayer/models/SelectedItemModel' );
-
-	// local variables
-	var emailItemView;
+	// dependency modules
+	var SelectedItemView  = require( 'videoPlayer/views/share/SelectedItemView' );
+	var PersonModel       = require( 'videoPlayer/models/PersonModel' );
 
 	describe( 'SelectedItemView', function () {
+		var selectedItemView;
+
 		before( function () {
-			emailItemView = new SelectedItemView( {
-				'model' : new SelectedItemModel( {
-					'name'  : 'John Doe',
-					'email' : 'john@example.com'
+
+			selectedItemView = new SelectedItemView( {
+				'model' : new PersonModel( {
+					'FirstName'    : 'John',
+					'LastName'     : 'Doe',
+					'DistrictName' : 'Salt Lake City',
+					'State'        : 'UT'
 				} )
 			} );
+
 		} );
 
-		it( 'should be an instance of `SelectedItemView`', function () {
-			emailItemView.should.be.an.instanceof( SelectedItemView );
+		it( 'does be an instance of `SelectedItemView`', function () {
+			selectedItemView.should.be.an.instanceof( SelectedItemView );
 		} );
 
-		it( 'should have a `template` property', function () {
-			emailItemView.should.have.property( 'template' );
+		it( 'does have a `template` property', function () {
+			selectedItemView.should.have.property( 'template' );
 		} );
 
-		it( 'should have a `tagName` property', function () {
-			emailItemView.should.have.property( 'tagName' );
+		it( 'does have a `tagName` property', function () {
+			selectedItemView.should.have.property( 'tagName' );
 		} );
 
-		it( 'should have a `className` property', function () {
-			emailItemView.should.have.property( 'className' );
+		it( 'does have a `className` property', function () {
+			selectedItemView.should.have.property( 'className' );
 		} );
 
-		it( 'should have a `ui` property', function () {
-			emailItemView.should.have.property( 'ui' );
+		it( 'does have a `ui` property', function () {
+			selectedItemView.should.have.property( 'ui' );
 		} );
 
-		it( 'should have a `triggers` property', function () {
-			emailItemView.should.have.property( 'triggers' );
+		it( 'does have a `triggers` property', function () {
+			selectedItemView.should.have.property( 'triggers' );
 		} );
 
-		describe( 'SelectedItemView `onShow` method', function () {
+		describe( '`.onShow`', function () {
+
 			before( function () {
-				emailItemView.render().onShow();
+				selectedItemView.render().onShow();
 			} );
 
-			it( 'should show a tooltip with the name or email', function () {
-				emailItemView.ui.emailItem.tooltip( 'show' );
-				var $tooltip = emailItemView.$el.find( '.tooltip' );
+			it( 'does show a tooltip', function () {
+				selectedItemView.ui.selectedItem.tooltip( 'show' );
+				var $tooltip = selectedItemView.$el.find( '.tooltip' );
 				$tooltip.should.have.length( 1 );
 			} );
+
 		} );
 
 	} );

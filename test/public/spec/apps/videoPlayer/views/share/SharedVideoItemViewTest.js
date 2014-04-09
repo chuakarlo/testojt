@@ -1,31 +1,48 @@
 define( function ( require ) {
 	'use strict';
 
+	// test libraries
+	var sinon = window.sinon;
+
+	// dependency modules
+	var $     = require( 'jquery' );
 	var SharedVideoItemView = require( 'videoPlayer/views/share/SharedVideoItemView' );
+	var ContentModel        = require( 'videoPlayer/models/ContentModel' );
+
+	require( 'videoPlayer/utils/selectText' );
 
 	describe( 'SharedVideoItemView', function () {
-		//set up and teardown test data - test video to share
+		var sharedVideoItemView;
+
 		before( function () {
-			this.view = new SharedVideoItemView();
+			sharedVideoItemView = new SharedVideoItemView( {
+				'model' : new ContentModel( {
+					'ImageURL'               : '',
+					'ContentName'            : '',
+					'SegmentLengthInSeconds' : '',
+					'ContentId'              : ''
+				} )
+			} );
 		} );
 
 		after( function () {
-			this.view = null;
+			sharedVideoItemView = undefined;
 		} );
 
-		/**
-		 * Verify that the view creates an element based on the template
-		 */
-		describe( 'SharedVideoItemView', function () {
+		it( 'does have `.template`', function () {
+			sharedVideoItemView.should.have.property( 'template' );
+		} );
 
-			it( 'should be an instance of SharedVideoItemView', function () {
-				this.view.should.be.an.instanceof( SharedVideoItemView );
-			} );
+		it( 'does have `.className`', function () {
+			sharedVideoItemView.should.have.property( 'className' );
+		} );
 
-			it( 'should have a `template` property', function () {
-				this.view.should.have.property( 'template' );
-			} );
+		it( 'does have `.ui`', function () {
+			sharedVideoItemView.should.have.property( 'ui' );
+		} );
 
+		it( 'does have `.events`', function () {
+			sharedVideoItemView.should.have.property( 'events' );
 		} );
 
 	} );

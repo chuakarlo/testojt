@@ -5,7 +5,7 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 
 	// views
-	var ItemView   = require( 'videoPlayer/views/share/SelectedItemView' );
+	var ItemView = require( 'videoPlayer/views/share/SelectedItemView' );
 
 	return Marionette.CollectionView.extend( {
 
@@ -17,8 +17,8 @@ define( function ( require ) {
 
 		'itemView' : ItemView,
 
-		'itemViewRemove' : function ( selectedEmailItemView ) {
-			this.collection.remove( selectedEmailItemView.model );
+		'itemViewRemove' : function ( selectedItemView ) {
+			this.collection.remove( selectedItemView.model );
 		}
 
 	} );

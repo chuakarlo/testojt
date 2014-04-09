@@ -50,17 +50,20 @@ define( function ( require ) {
 
 			// VideoPlayer test specs
 			// models
-			'spec/apps/videoPlayer/models/SelectedItemModelTest.js',
 			'spec/apps/videoPlayer/models/ContentModelTest.js',
 			'spec/apps/videoPlayer/models/QuestionModelTest.js',
 			'spec/apps/videoPlayer/models/RelatedVideoModelTest.js',
 			'spec/apps/videoPlayer/models/VideoResourceModelTest.js',
+			'spec/apps/videoPlayer/models/PersonModelTest.js',
+			'spec/apps/videoPlayer/models/GroupModelTest.js',
 			// collection
 			'spec/apps/videoPlayer/collections/QuestionsCollectionTest.js',
 			'spec/apps/videoPlayer/collections/VideoResourcesCollectionTest.js',
 			'spec/apps/videoPlayer/collections/RelatedVideoCollectionTest.js',
 			'spec/apps/videoPlayer/collections/ContentsCollectionTest.js',
 			'spec/apps/videoPlayer/collections/SelectedItemsCollectionTest.js',
+			'spec/apps/videoPlayer/collections/PeopleCollectionTest.js',
+			'spec/apps/videoPlayer/collections/GroupsCollectionTest.js',
 			// views
 			'spec/apps/videoPlayer/views/ModalRegionTest.js',
 			'spec/apps/videoPlayer/views/PageLayoutTest.js',
@@ -73,12 +76,11 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/views/reflection/ReflectionLayoutTest.js',
 			'spec/apps/videoPlayer/views/reflection/ReflectionItemViewTest.js',
 			// views/share
-			'spec/apps/videoPlayer/views/share/SearchResultItemViewTest.js',
-			'spec/apps/videoPlayer/views/share/SearchResultsCollectionViewTest.js',
 			'spec/apps/videoPlayer/views/share/ShareVideoLayoutTest.js',
 			'spec/apps/videoPlayer/views/share/SharedVideoItemViewTest.js',
 			'spec/apps/videoPlayer/views/share/SelectedItemsCollectionViewTest.js',
 			'spec/apps/videoPlayer/views/share/SelectedItemViewTest.js',
+			'spec/apps/videoPlayer/views/share/SearchResultsLayoutTest.js',
 			// views/tabs
 			'spec/apps/videoPlayer/views/tabs/RelatedVideoCollectionViewTest.js',
 			'spec/apps/videoPlayer/views/tabs/RelatedVideoItemViewTest.js',
