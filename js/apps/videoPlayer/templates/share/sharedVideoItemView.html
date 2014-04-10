@@ -1,10 +1,10 @@
 <h3>Video being shared</h3>
 <img id="video-thumbnail" src="<%= ImageURL %>"></img>
 <span class="text">
-	<h3 id="video-thumbnail-title"><%= ContentName %></h3>
-	<p id="video-thumbnail-duration"><%= SegmentLengthInSeconds %></p>
+	<h3 id="video-thumbnail-title"><%- ContentName %></h3>
+	<p id="video-thumbnail-duration"><%- SegmentLengthInSeconds %></p>
 </span>
 <span>
 	<p>Video URL:</p>
-	<p class="video-url">http://www.pd360.com/index.cfm?ContentId=<%= ContentId %></p>
+	<p class="video-url">http://www.pd360.com/index.cfm?ContentId=<%- ContentId %></p>
 </span>
