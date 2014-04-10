@@ -1,0 +1,9 @@
+{
+	"exclude"   : "js/libs",
+	"recursive" : "true",
+	"title"     : "pd360-html",
+
+	"directories" : [
+		"js/**/*.js"
+	]
+}
