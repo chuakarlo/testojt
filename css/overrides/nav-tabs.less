@@ -8,31 +8,54 @@
 }
 .nav-tabs {
 
+	border-bottom : none;
+	border-top    : 1px solid @page-header-border-color;
+
 	margin-bottom : 20px;
+
 	> li {
   		@media (max-width: @screen-xs-max) {
-  			display : block;
-  			float   : none;
+  			display     : block;
+			float       : none;
+			border-left : 2px solid #fff;
   		}
 
 		> a {
+
+			border-radius : 0px;
+
 			&:hover,
 			&:focus {
-				background-color: @nav-tabs-hover-background-color !important;
-				border-bottom : 2px solid @gray-light;
+				background-color : @nav-tabs-hover-background-color !important;
+				border-top       : 2px solid @gray-light;
+				border-bottom    : 0px;
+
+				@media (max-width : @screen-xs-max) {
+					border-top :  2px solid #fff;
+					border-left : 2px solid @gray-light;
+				}
 			}
 		}
 
 		&.active > a {
 
 			color         : @nav-tabs-active-color;
-			border-bottom : 2px solid @nav-tabs-active-border-bottom-color;
+			border-top : 2px solid @nav-tabs-active-border-bottom-color;
 			
+			@media (max-width : @screen-xs-max) {
+				border-top  : 0;
+				border-left : 2px solid @nav-tabs-active-border-bottom-color;
+			}
 
 			&:hover,
 			&:focus {
 				color : @nav-tabs-active-color;
-				border-bottom: 2px solid @nav-tabs-active-border-bottom-color;
+				border-top: 2px solid @nav-tabs-active-border-bottom-color;
+
+				@media (max-width : @screen-xs-max) {
+					border-top  : 0;
+					border-left : 2px solid @nav-tabs-active-border-bottom-color;
+				}
 			}
 		}
 	}
