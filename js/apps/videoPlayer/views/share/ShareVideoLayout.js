@@ -6,7 +6,7 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 	var Vent       = require( 'Vent' );
-	var async      = require( 'async' );
+	var Remoting   = require( 'Remoting' );
 	var Session    = require( 'Session' );
 
 	// view template
@@ -42,7 +42,6 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'focus @ui.searchInput' : 'showSearchResults',
 			'keyup @ui.searchInput' : 'search',
 			'click @ui.searchInput' : 'selectText',
 			'click @ui.shareButton' : 'shareVideo'
@@ -105,97 +104,64 @@ define( function ( require ) {
 		},
 
 		'search' : function ( event ) {
-			event.preventDefault();
-			event.stopPropagation();
-
-			var self = this;
+			var filter   = this.ui.searchInput.val().trim();
+			var requests = [
+				{
+					'path'   : 'com.schoolimprovement.pd360.dao.SearchService',
+					'method' : 'RespondSearchAPI',
+					'args'   : {
+						'persId'     : Session.personnelId(),
+						'start'      : 0,
+						'rows'       : 24,
+						'searchType' : 'People',
+						'searchData' : filter,
+						'sort'       : 'created desc'
+					}
+				},
+				{
+					'path'   : 'com.schoolimprovement.pd360.dao.SearchService',
+					'method' : 'RespondSearchAPI',
+					'args'   : {
+						'persId'     : Session.personnelId(),
+						'start'      : 0,
+						'rows'       : 24,
+						'searchType' : 'Groups',
+						'searchData' : filter,
+						'sort'       : 'created desc'
+					}
+				}
+			];
 
 			if ( this.ui.searchInput.val().trim() !== '' ) {
-				this._debounceSearch = _.debounce( function () {
-					return async.parallel( [
-						self.searchPeople,
-						self.searchGroups
-					], function ( error, results ) {
-						if ( !error ) {
-							self.peopleCollection.reset( _.rest( results[ 0 ] ) );
-							self.groupsCollection.reset( _.rest( results[ 1 ] ) );
-						}
-					} );
-				}, 200 ) || this._debounceSearch;
 
-				return this._debounceSearch();
+				this._debouncedSearch = _.debounce( function () {
+
+					var fetchingData = Remoting.fetch( requests );
+
+					$.when( fetchingData ).done( function ( results ) {
+
+						this.searchResultsRegion.show( this.searchResultsLayout );
+
+						var people = _.rest( results[ 0 ] );
+						var groups = _.rest( results[ 1 ] );
+
+						this.showSearchResults( people, groups );
+
+					}.bind( this ) ).fail( function () {
+						// TODO: error handling
+					} );
+
+				}, 200 ) || this._debouncedSearch;
+
+				return this._debouncedSearch();
 			} else {
-				return false;
+				return;
 			}
 		},
 
-		'parallelSearch' : function () {
-
-		},
-
-		'searchPeople' : function ( callback ) {
-			var request = {
-				'method' : 'RespondSearchAPI',
-				'args'   : {
-					'persId'     : Session.personnelId(),
-					'start'      : 0,
-					'rows'       : 24,
-					'searchType' : 'People',
-					'searchData' : this.ui.searchInput.val().trim(),
-					'sort'       : 'created desc'
-				}
-			};
-
-			var options = {
-				'success' : function ( response ) {
-					if ( response[ 0 ].length > 1 ) {
-						return callback( null, response[ 0 ] );
-					} else {
-						return callback( null, [] );
-					}
-				},
-				'error' : function ( error ) {
-					return callback( error );
-				}
-			};
-
-			return this.peopleCollection.fetch( request, options );
-		},
-
-		'searchGroups' : function ( callback ) {
-			var request = {
-				'method' : 'RespondSearchAPI',
-				'args'   : {
-					'persId'     : Session.personnelId(),
-					'start'      : 0,
-					'rows'       : 24,
-					'searchType' : 'Groups',
-					'searchData' : this.ui.searchInput.val().trim(),
-					'sort'       : 'created desc'
-				}
-			};
-
-			var options = {
-				'success' : function ( response ) {
-					if ( response[ 0 ].length > 1 ) {
-						return callback( null, response[ 0 ] );
-					} else {
-						return callback( null, [] );
-					}
-				},
-				'error' : function ( error ) {
-					return callback( error );
-				}
-			};
-
-			return this.groupsCollection.fetch( request, options );
-		},
-
-		'showSearchResults' : function ( event ) {
-			this.peopleCollection.reset();
-			this.groupsCollection.reset();
-
-			this.searchResultsRegion.show( this.searchResultsLayout );
+		'showSearchResults' : function ( people, groups ) {
+			this.peopleCollection.reset( people );
+			this.groupsCollection.reset( groups );
 		},
 
 		'selectItem' : function ( itemView ) {
@@ -223,7 +189,9 @@ define( function ( require ) {
 			} );
 		},
 
-		'shareVideo' : function () {}
+		'shareVideo' : function () {
+			//TODO: implement video sharing
+		}
 
 	} );
 

@@ -134,135 +134,30 @@ define( function ( require ) {
 
 		describe( '`.search`', function () {
 
-			var searchPeopleStub;
-			var searchGroupsStub;
-			var dummyEvent = {
-				'preventDefault'  : function () {},
-				'stopPropagation' : function () {}
-			};
-
-			beforeEach(function () {
-				searchPeopleStub = sinon.stub( shareVideoLayout, 'searchPeople' );
-				searchGroupsStub = sinon.stub( shareVideoLayout, 'searchGroups' );
-			} );
-
-			afterEach( function () {
-				shareVideoLayout.searchPeople.restore();
-				shareVideoLayout.searchGroups.restore();
-			} );
-
-			describe( 'when search input is not empty', function () {
-
-				it( 'does search people and groups', function () {
-					shareVideoLayout.ui.searchInput.val( 'test' );
-					shareVideoLayout.search( dummyEvent );
-				} );
-
-			} );
-
-		} );
-
-		describe( '`.searchPeople`', function () {
-
-			var callback;
 			var remotingFetchStub;
+			var fakeData = [ [], [] ];
 
-			beforeEach( function () {
-				callback = sinon.spy();
-				remotingFetchStub = sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
+			before( function () {
+				remotingFetchStub = sinon.stub( Remoting, 'fetch' ).returns( fakeData );
 			} );
 
-			afterEach( function () {
+			after( function () {
 				Remoting.fetch.restore();
 			} );
 
-			describe( 'when no match is found', function () {
-
-				it( 'does not return results', function () {
-					shareVideoLayout.searchPeople( callback ).resolve( [ [ {} ] ] );
-					callback.should.have.callCount( 1 );
-				} );
-
-			} );
-
-			describe( 'when match is found', function () {
-
-				it( 'does return results', function () {
-					shareVideoLayout.searchPeople( callback ).resolve( [ [ {}, {} ] ] );
-					callback.should.have.callCount( 1 );
-				} );
-
-			} );
-
-			describe( 'on error', function () {
-
-				it( 'does execute error callback', function () {
-					shareVideoLayout.searchPeople( callback ).reject( 'Error' );
-					callback.should.have.callCount( 1 );
-				} );
-
-			} );
-
-		} );
-
-		describe( '`.searchGroups`', function () {
-
-			var callback;
-			var remotingFetchStub;
-
-			beforeEach( function () {
-				callback = sinon.spy();
-				remotingFetchStub = sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
-			} );
-
-			afterEach( function () {
-				Remoting.fetch.restore();
-			} );
-
-			describe( 'when no match is found', function () {
-
-				it( 'does not return results', function () {
-					shareVideoLayout.searchGroups( callback ).resolve( [ [ {} ] ] );
-					callback.should.have.callCount( 1 );
-				} );
-
-			} );
-
-			describe( 'when match is found', function () {
-
-				it( 'does return results', function () {
-					shareVideoLayout.searchGroups( callback ).resolve( [ [ {}, {} ] ] );
-					callback.should.have.callCount( 1 );
-				} );
-
-			} );
-
-			describe( 'on error', function () {
-
-				it( 'does execute error callback', function () {
-					shareVideoLayout.searchGroups( callback ).reject( 'Error' );
-					callback.should.have.callCount( 1 );
-				} );
-
+			it( 'does reset people and groups collection', function () {
+				shareVideoLayout.ui.searchInput.val( 'test' );
+				shareVideoLayout.search();
 			} );
 
 		} );
 
 		describe( '`.showSearchResults`', function () {
 
-			var searchResultsRegionShowSpy;
-
-			before( function () {
-				searchResultsRegionShowSpy = sinon.spy( shareVideoLayout.searchResultsRegion, 'show' );
-			} );
-
-			after( function () {
-				shareVideoLayout.searchResultsRegion.show.restore();
-			} );
-
 			it( 'does show search results', function () {
-				shareVideoLayout.showSearchResults();
-				searchResultsRegionShowSpy.should.have.callCount( 1 );
+				shareVideoLayout.showSearchResults( [], [] );
+				shareVideoLayout.peopleCollection.length.should.eql( 0 );
+				shareVideoLayout.groupsCollection.length.should.eql( 0 );
 			} );
 
 		} );
@@ -348,7 +243,7 @@ define( function ( require ) {
 				shareVideoLayout.render();
 			} );
 
-			describe( 'when no selected items', function () {
+			describe( 'when no item selected', function () {
 
 				before( function () {
 					shareVideoLayout.selectedItems.reset();

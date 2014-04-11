@@ -11,7 +11,13 @@ define( function( require ) {
 
 	describe( 'VideoPlayer Module', function () {
 
+		before( function () {
+			var stub = sinon.stub().returns( false );
+			App.reqres.setHandler( 'pd360:available', stub );
+		} );
+
 		after( function () {
+			App.reqres.removeHandler( 'pd360:available' );
 			App.module( 'VideoPlayer' ).stop();
 		} );
 
