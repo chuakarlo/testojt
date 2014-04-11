@@ -44,8 +44,11 @@ define( function ( require ) {
 		'id' : 'wrapper',
 
 		// if they have the minimum required flash version, create the swf
+		// `flash` parameter represents the id of the div element on the template
+		// first null is for the express install swf
+		// second null is for flashvars but we are including them within the `flashParams`
 		'embedSWF' : function () {
-			swfobject.embedSWF( swf, this.id, flashWidth, flashHeight, minVersion, null, null, flashParams, flashAttributes, this.embedComplete );
+			swfobject.embedSWF( swf, 'flash', flashWidth, flashHeight, minVersion, null, null, flashParams, flashAttributes, this.embedComplete );
 		},
 
 		'embedComplete' : function ( event ) {

@@ -18,13 +18,13 @@ define( function ( require ) {
 
 			before( function () {
 				stub = sinon.stub().returns( false );
-				App.PD360 = {};
-				App.PD360.available = stub;
+
+				App.reqres.setHandler( 'pd360:available', stub );
 			} );
 
 			after( function () {
-				App.PD360 = null;
-				stub      = null;
+				App.reqres.removeHandler( 'pd360:available' );
+				stub = null;
 			} );
 
 			afterEach( function () {

@@ -3,14 +3,22 @@ define ( function ( require ) {
 
 	var $     = require( 'jquery' );
 	var sinon = window.sinon;
+	var App   = require( 'App' );
 
 	var ContentModel = require( 'videoPlayer/models/ContentModel' );
 
 	describe( 'ContentModel', function () {
-		var contentModel;
+
+		var contentModel, stub;
 
 		before( function () {
+			stub = sinon.stub().returns( false );
+			App.reqres.setHandler( 'pd360:available', stub );
 			contentModel = new ContentModel();
+		} );
+
+		after( function () {
+			App.reqres.removeHandler( 'pd360:available' );
 		} );
 
 		it( 'should be an instance of ContentModel' , function () {

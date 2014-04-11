@@ -32,7 +32,7 @@ define( function ( require ) {
 
 			'showSearchResults' : function ( filter, query ) {
 				// Make sure to hide anything flash
-				App.PD360.hide();
+				App.request( 'pd360:hide' );
 
 				if ( !this.layout ) {
 					this.layout = new SearchResultsLayout();

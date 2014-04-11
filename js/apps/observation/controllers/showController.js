@@ -7,7 +7,7 @@ define( function ( require ) {
 	App.module( 'Observation.Show', function ( Show ) {
 
 		var navigate = function ( sub ) {
-			App.PD360.navigate( ObservationView, 'observation', sub );
+			App.request( 'pd360:navigate', ObservationView, 'observation', sub );
 		};
 
 		Show.Controller = {

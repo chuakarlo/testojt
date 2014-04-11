@@ -19,7 +19,7 @@ define( function ( require ) {
 
 		var API = {
 			'showHomepage' : function ( error, results, args ) {
-				App.PD360.hide();
+				App.request( 'pd360:hide' );
 				Homepage.Show.Controller.showHomepage();
 			}
 		};

@@ -5,6 +5,7 @@ define( function ( require ) {
 	var Vent       = require( 'Vent' );
 	var App        = require( 'App' );
 	var AuthRouter = require( 'AuthRouter' );
+	var Marionette = require( 'marionette' );
 
 	require( 'user/controllers/loginController' );
 	require( 'user/controllers/settingsController' );
@@ -25,27 +26,35 @@ define( function ( require ) {
 
 		} );
 
-		var API = {
+		var UserController = Marionette.Controller.extend( {
 
 			'showLogin' : function () {
-				App.PD360.hide();
+				App.request( 'pd360:hide' );
+
+				if ( App.request( 'session:authenticated' ) ) {
+					return App.navigate( 'home', { 'trigger' : true } );
+				}
+
 				User.Login.Controller.showLogin();
 			},
 
 			'showLogout' : function () {
-				App.PD360.hide();
+				this.listenTo( App.flashContent, 'close', function () {
+					Session.destroy();
+					App.navigate( 'login', { 'trigger' : true } );
+				} );
+
+				App.request( 'pd360:hide' );
 				App.request( 'user:licenses:reset' );
 				App.request( 'pd360:logout' );
-				Session.destroy();
-				User.Login.Controller.showLogin();
 			},
 
 			'showSettings' : function (page) {
-				App.PD360.hide();
+				App.request( 'pd360:hide' );
 				User.Settings.Controller.showSettings(page);
 			},
 
-		};
+		} );
 
 		// the route requested before login was triggered
 		var requestedRoute;
@@ -84,7 +93,7 @@ define( function ( require ) {
 
 		App.addInitializer( function () {
 			new User.Router( {
-				'controller' : API
+				'controller' : new UserController()
 			} );
 		} );
 

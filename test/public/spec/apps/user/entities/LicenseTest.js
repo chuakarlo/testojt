@@ -1,7 +1,6 @@
 define( function ( require ) {
 	'use strict';
 
-	var Remoting = require( 'Remoting' );
 	var Backbone = require( 'backbone' );
 	var sinon    = window.sinon;
 	var App      = require( 'App' );
@@ -11,6 +10,17 @@ define( function ( require ) {
 
 	describe( 'User License Collection Test', function () {
 		
+		var stub;
+
+		before( function () {
+			stub = sinon.stub().returns( false );
+			App.reqres.setHandler( 'pd360:available', stub );
+		} );
+
+		after( function () {
+			App.reqres.removeHandler( 'pd360:available' );
+		} );
+
 		it( 'should exist on App.Entities', function () {
 			App.should.have.property( 'Entities' );
 			App.Entities.should.have.property( 'LicenseCollection' );

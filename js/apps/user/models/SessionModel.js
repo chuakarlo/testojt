@@ -5,6 +5,7 @@ define( function ( require ) {
 	var _        = require( 'underscore' );
 	var Backbone = require( 'backbone' );
 	var Vent     = require( 'Vent' );
+	var App      = require( 'App' );
 
 	require( 'jquery-cookie' );
 
@@ -38,7 +39,7 @@ define( function ( require ) {
 
 					Vent.trigger( 'login:success' );
 					Vent.trigger( 'session:change' );
-					Vent.trigger( 'pd360:login', this.username, this.password );
+					App.request( 'pd360:login', this.username, this.password );
 
 					if ( done ) {
 						done( jqXHR, status, error );

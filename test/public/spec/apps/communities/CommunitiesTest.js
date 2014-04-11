@@ -9,7 +9,15 @@ define( function ( require ) {
 
 	describe( 'Communities Module', function () {
 
+		var spy;
+
+		before( function () {
+			spy = sinon.spy();
+			App.reqres.setHandler( 'pd360:navigate', spy );
+		} );
+
 		after( function () {
+			App.reqres.removeHandler( 'pd360:navigate' );
 			App.module( 'Communities' ).stop();
 		} );
 
@@ -22,14 +30,6 @@ define( function ( require ) {
 		} );
 
 		describe( 'Show Submodule', function () {
-			
-			before( function () {
-				App.PD360 = {};
-			} );
-
-			after( function () {
-				App.PD360 = null;
-			} );
 
 			it( 'should create submodule `Show`', function () {
 
@@ -40,9 +40,6 @@ define( function ( require ) {
 			} );
 
 			it( '`showCommunities` should call PD360.navigate', function () {
-				var spy = sinon.spy();
-				App.PD360.navigate = spy;
-
 				App.Communities.Show.Controller.showCommunities();
 
 				spy.should.have.callCount( 1 );

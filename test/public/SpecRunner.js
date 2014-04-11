@@ -25,7 +25,6 @@
 			'jquery-placeholder'    : 'libs/jquery-placeholder/jquery.placeholder.min',
 			'json'                  : 'libs/requirejs-plugins/src/json',
 			'marionette'            : 'libs/backbone.marionette/lib/core/amd/backbone.marionette',
-			'MiddlewareRouter'      : 'MiddlewareRouter',
 			'mocha'                 : 'libs/mocha/mocha',
 			'modernizr'             : 'libs/modernizr/modernizr',
 			'moment'                : 'libs/momentjs/moment',
@@ -104,14 +103,6 @@
 
 			'jquery-placeholder' : {
 				'deps' : [ 'jquery' ]
-			},
-
-			'MiddlewareRouter' : {
-				'deps' : [ 'marionette' ]
-			},
-
-			'App' : {
-				'deps' : [ 'MiddlewareRouter' ]
 			},
 
 			'ColdFusion' : {

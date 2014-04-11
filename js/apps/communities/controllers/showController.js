@@ -8,7 +8,7 @@ define( function ( require ) {
 		Show.Controller = {
 
 			'showCommunities' : function () {
-				App.PD360.navigate( null, 'communities', 'communitiesBrowse' );
+				App.request( 'pd360:navigate', null, 'communities', 'communitiesBrowse' );
 			}
 
 		};

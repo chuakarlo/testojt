@@ -56,85 +56,29 @@ define( function ( require ) {
 
 		};
 
-		PD360.show = function () {
-			API.show();
-		};
+		App.reqres.setHandler( 'pd360:available', API.available );
 
-		PD360.hide = function () {
-			API.hide();
-		};
+		App.reqres.setHandler( 'pd360:signature', API.signature );
 
-		PD360.navigate = function ( View, main, sub, options ) {
-			API.navigate( View, main, sub, options );
-		};
+		App.reqres.setHandler( 'pd360:navigate', API.navigate );
 
-		PD360.login = function ( username, password ) {
-			API.login( username, password );
-		};
+		App.reqres.setHandler( 'pd360:logout', API.logout );
 
-		PD360.logout = function () {
-			API.logout();
-		};
+		App.reqres.setHandler( 'pd360:login', API.login );
 
-		PD360.available = function () {
-			return API.available();
-		};
+		App.reqres.setHandler( 'pd360:show', API.show );
 
-		PD360.signature = function ( method, args ) {
-			return API.signature( method, args );
-		};
+		App.reqres.setHandler( 'pd360:hide', API.hide );
 
-		App.reqres.setHandler( 'pd360:available', function () {
-			return API.available();
-		} );
+		Vent.on( 'embed:complete', API.embedComplete );
 
-		App.reqres.setHandler( 'pd360:signature', function ( method, args ) {
-			return API.signature( method, args );
-		} );
+		Vent.on( 'login:success', API.embed );
 
 		// initialize PD360 swf on creation if authenticated
-		PD360.on( 'start', function () {
+		PD360.once( 'start', function () {
 			if ( App.request( 'session:authenticated' ) ) {
 				API.embed();
 			}
-		} );
-
-		Vent.on( 'login:success', function () {
-			API.embed();
-		} );
-
-		Vent.on( 'pd360:login', function ( username, password ) {
-			API.login( username, password );
-		} );
-
-		Vent.on( 'embed:complete', function ( success ) {
-			API.embedComplete( success );
-		} );
-
-		App.reqres.setHandler( 'pd360:logout', function () {
-			API.logout();
-		} );
-
-		// callback for pd360 load completion
-		window.applicationComplete = function () {
-			Vent.trigger( 'pd360:applicationComplete' );
-		};
-
-		// remove listener and global method once event is triggered
-		Vent.once( 'pd360:applicationComplete', function () {
-			window.applicationComplete = undefined;
-			API.applicationComplete();
-		} );
-
-		// callback for pd360 login completion
-		window.loginComplete = function () {
-			Vent.trigger( 'pd360:loginComplete' );
-		};
-
-		// remove listener and global method once event is triggered
-		Vent.once( 'pd360:loginComplete', function () {
-			window.loginComplete = undefined;
-			API.loginComplete();
 		} );
 
 	} );

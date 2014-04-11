@@ -8,7 +8,7 @@ define( function ( require ) {
 		Show.Controller = {
 
 			'showLumiBook' : function () {
-				App.PD360.navigate( null, 'liveBook' );
+				App.request( 'pd360:navigate', null, 'liveBook' );
 			}
 
 		};

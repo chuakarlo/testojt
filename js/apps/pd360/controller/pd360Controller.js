@@ -23,6 +23,29 @@ define( function ( require ) {
 		Show.Controller = {
 
 			'embed' : function () {
+
+				// callback for pd360 load completion
+				window.applicationComplete = function () {
+					Vent.trigger( 'pd360:applicationComplete' );
+				};
+				
+				// callback for pd360 login completion
+				window.loginComplete = function () {
+					Vent.trigger( 'pd360:loginComplete' );
+				};
+
+				// remove listener and global method once event is triggered
+				Vent.once( 'pd360:applicationComplete', function () {
+					window.applicationComplete = undefined;
+					this.applicationComplete();
+				}.bind( this ) );
+
+				// remove listener and global method once event is triggered
+				Vent.once( 'pd360:loginComplete', function () {
+					window.loginComplete = undefined;
+					this.loginComplete();
+				}.bind( this ) );
+
 				if ( !pd360 ) {
 					App.flashContent.show( new PD360View() );
 
@@ -126,9 +149,15 @@ define( function ( require ) {
 
 			'logout' : function () {
 				if ( pd360 ) {
-					pd360.logoutFromContainer();
+					// attempt to logout, if in the process of logging in,
+					// the method won't be available and will throw an error
+					try {
+						pd360.logoutFromContainer();
+					} catch ( error ) {}
+
 					pd360 = null;
 				}
+
 				App.flashContent.close();
 
 				pd360         = null;

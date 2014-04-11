@@ -34,7 +34,6 @@
 			'timezone'              : 'common/Timezone',
 			'videojs'               : 'libs/videojs/video.dev',
 			'underscore'            : 'libs/lodash/lodash',
-			'MiddlewareRouter'      : 'MiddlewareRouter',
 			'rotate'                : 'libs/rotate/index',
 			'ColdFusion'            : 'plugins/Backbone.CF',
 			'config'                : 'config/index',
@@ -63,10 +62,6 @@
 		},
 
 		'shim' : {
-
-			'App' : {
-				'deps' : [ 'MiddlewareRouter' ]
-			},
 
 			'backbone' : {
 				'deps'    : [ 'underscore', 'jquery' ],
@@ -116,10 +111,6 @@
 
 			'jquery.pscrollbar' : {
 				'deps' : [ 'jquery' , 'jquery.mousewheel' ]
-			},
-
-			'MiddlewareRouter' : {
-				'deps' : [ 'marionette' ]
 			},
 
 			'rotate' : {

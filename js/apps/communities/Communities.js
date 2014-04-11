@@ -31,15 +31,16 @@ define( function ( require ) {
 
 			'showFormThread' : function( LocationTypeId, LocationId, ForumThreadId ) {
 				Communities.Show.Controller.showCommunities();
-				App.PD360.navigate(null, 'communities', 'communitiesBrowse', {
+				App.request( 'pd360:navigate', null, 'communities', 'communitiesBrowse', {
 					'LocationTypeId' : LocationTypeId,
 					'LocationId'     : LocationId,
 					'ForumThreadId'  : ForumThreadId
 				});
 			},
+			
 			'showFormPost' : function( LocationTypeId, LocationId, ForumThreadId, ForumPostId ) {
 				Communities.Show.Controller.showCommunities();
-				App.PD360.navigate(null, 'communities', 'communitiesBrowse', {
+				App.request( 'pd360:navigate', null, 'communities', 'communitiesBrowse', {
 					'LocationTypeId' : LocationTypeId,
 					'LocationId'     : LocationId,
 					'ForumThreadId'  : ForumThreadId,

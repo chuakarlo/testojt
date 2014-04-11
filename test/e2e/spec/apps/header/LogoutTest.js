@@ -14,35 +14,27 @@ suite( function ( env ) {
 
 			browser
 
-				.sleep( 2000 )
-
-				.get( 'http://localhost:8080/#login' )
-
-				.sleep( 2000 )
-
 				// Login
 				.elementById( 'login-input-email' ).clear().type( 'matthew.donaldson@schoolimprovement.com' )
 				.elementById( 'login-input-password' ).clear().type( 'pd360' )
 				.elementById( 'login-button' ).click()
-
-				.sleep( 5000 )
 
 				// Verify that the nav menu exist by looking for an item that comes with the nav menu
 				.hasElementById( 'groups-tab' ).should.eventually.equal( true )
 
 				// Open User Menu and Click Logout
 				.elementByCssSelector( '.user-menu a.dropdown-toggle' ).click()
-				.sleep( 2000 )
-				.elementByCssSelector( '.user-menu.open a[href="#logout"]').click()
-				.sleep( 2000 )
+				.elementByLinkText( 'Log Out' ).click()
+
+				.url().should.become( 'http://localhost:8080/#login' )
 
 				// Verify the nav menu no longer exists
-				//.setImplicitWaitTimeout( 2000 )
 				.hasElementById( 'groups-tab' ).should.eventually.equal( false )
 
 				.nodeify( done );
 
 		} );
+
 	} );
 
 } );
