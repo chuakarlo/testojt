@@ -1,14 +1,16 @@
 define( function ( require ) {
 	'use strict';
 
-	var _             = require( 'underscore' );
-	var Marionette    = require( 'marionette' );
-	var $             = require( 'jquery' );
-	var Remoting      = require( 'Remoting' );
-	var Session       = require( 'Session' );
-	var Vent          = require( 'Vent' );
-	var template      = require( 'text!../templates/groupCommentView.html' );
-	var usersTemplate = require( 'text!../templates/usersGroupCommentView.html' );
+	var _                  = require( 'underscore' );
+	var Marionette         = require( 'marionette' );
+	var $                  = require( 'jquery' );
+	var Remoting           = require( 'Remoting' );
+	var Session            = require( 'Session' );
+	var Vent               = require( 'Vent' );
+	var template           = require( 'text!../templates/groupCommentView.html' );
+	var usersTemplate      = require( 'text!../templates/usersGroupCommentView.html' );
+	var MiniPersonnelModel = require('../../common/entities/MiniPersonnel');
+	var MiniPersonnelView  = require('../../common/views/MiniPersonnel');
 
 	var path       = 'com.schoolimprovement.pd360.dao.groups.GroupMessagesGateway';
 	var objectPath = 'com.schoolimprovement.pd360.dao.groups.GroupMessages';
@@ -17,8 +19,14 @@ define( function ( require ) {
 
 		'tagName' : 'li',
 
+		'ui' : {
+			'creator' : '.child-creator-name'
+		},
+
 		'events' : {
-			'click button.remove-btn' : 'removeComment'
+			'click button.remove-btn' : 'removeComment',
+			'click @ui.creator'         : 'showMiniPersonnel'
+
 	    },
 
 	    getTemplate : function(){
@@ -30,6 +38,54 @@ define( function ( require ) {
 				return _.template( template );
 			}
 
+	    },
+
+		showMiniPersonnel : function( event ) {
+			// We disabled the event that just captured the click
+			// and let the popover library handle the click so we
+			// don't have to fetch the model or create the view every
+			// time.
+			$(this.el).off( 'click', '.child-creator-name' );
+
+			var model = new MiniPersonnelModel({
+				'persId' : this.model.get('Creator')
+			});
+
+			var view = new MiniPersonnelView( {
+				'model' : model
+			} );
+
+			// setup the popover
+			this.ui.creator.popover( {
+				'html'      : true,
+				'placement' : 'top',
+				'trigger'   : 'click',
+				'content'   : function() {
+					return view.render().el;
+				},
+			} );
+
+			// Since spin.js requires element to be in the dom, wait until
+			// the popover has been shown to add the spin icon.
+			this.ui.creator.on( 'shown.bs.popover', function() {
+				$(view.ui.spinner).spin();
+			} );
+
+			// Show the popover before we fetch the model, it should show a
+			// loading view
+			this.ui.creator.popover( 'show' );
+
+			model.fetch( {
+				'success': _.bind( function( model, res, options ) {
+					// Render again once we have attributes
+					view.render();
+				}, this )
+			} );
+		},
+
+	    onBeforeClose : function() {
+			// Make sure to destroy the popover events
+			this.ui.creator.popover('destroy');
 	    },
 
 	    removeComment : function () {
