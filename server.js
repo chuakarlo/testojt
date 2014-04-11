@@ -21,7 +21,6 @@ console.log( 'root URL for proxy server is', root );
 
 // this project's files
 app.use( express.static( files ) );
-
 // proxy to staging for all other files
 app.use( '/', function ( request, response, next ) {
 	var url = root + request.path;

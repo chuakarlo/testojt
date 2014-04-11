@@ -8,7 +8,6 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var videojs    = require( 'videojs' );
 
-	var Vent     = require( 'Vent' );
 	var Session  = require( 'Session' );
 
 	var PlayerItemView      = require( 'videoPlayer/views/player/PlayerItemView' );
@@ -32,7 +31,8 @@ define( function ( require ) {
 			this.playerItemView = new PlayerItemView( );
 
 			this.listenTo( this.playerItemView, 'show', this.initializePlayer );
-			Vent.on( 'videoPlayer:videojsInit', this.trackProgress.bind( this ) );
+			this.listenTo( this, 'player_init', this.trackProgress.bind( this ) );
+			this.listenTo( this, 'player_init', this.playerCleanup.bind( this ) );
 		},
 
 		'onShow' : function () {
@@ -49,7 +49,7 @@ define( function ( require ) {
 				'nativeControlsForTouch' : false
 			} );
 
-			Vent.trigger( 'videoPlayer:videojsInit', player );
+			this.trigger( 'player_init', player );
 		},
 
 		'trackProgress' : function ( player ) {
@@ -60,6 +60,13 @@ define( function ( require ) {
 			player.on( 'ended', function () {
 				this.updateProgress( player.currentTime() );
 			}.bind( this ) );
+		},
+
+		'playerCleanup' : function( player ) {
+			$( window ).on( 'hashchange', function dispose() {
+				player.dispose();
+				$( window ).off( 'hashchange', dispose );
+			} );
 		},
 
 		'updateProgress' : function ( secondsCompleted ) {

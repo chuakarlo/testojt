@@ -4,7 +4,7 @@
 	var _        = require( 'underscore' );
 	var Backbone = require( 'backbone' );
 
-	var Remoting          = require( 'remoting' );
+	var Remoting          = require( 'Remoting' );
 	var VideoSegmentModel = require( 'videoPlayer/models/VideoSegmentModel' );
 	var hhmmssFormat      = require( 'videoPlayer/utils/toHHMMSSFormat' );
 

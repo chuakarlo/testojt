@@ -66,8 +66,8 @@ define( function ( require ) {
 
 		describe( '.trackingProgress', function () {
 
-			it( 'called on videoPlayer:videojsInit event', function () {
-				Vent.trigger( 'videoPlayer:videojsInit', Vent );
+			it( 'called on `player_init` event', function () {
+				videoPlayerLayout.trigger( 'player_init', Vent );
 
 				videoPlayerLayout.trackProgress.should.have.callCount( 1 );
 				videoPlayerLayout.trackProgress.should.have.calledWith( Vent );
@@ -110,12 +110,12 @@ define( function ( require ) {
 			} );
 
 			it( 'called on player `ended` event', function () {
-				
+
 				var player = $.extend( { 'currentTime' : function () { return 100; } }, Vent );
 
 				layout.trackProgress( player );
 				Vent.trigger( 'ended' );
-				
+
 				layout.updateProgress.should.have.callCount( 1 );
 				layout.updateProgress.should.have.been.calledWith( player.currentTime() );
 			} );
