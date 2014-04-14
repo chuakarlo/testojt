@@ -1,6 +1,8 @@
 define( function ( require ) {
 	'use strict';
 
+	var App      = require( 'App' );
+
 	var QueueModel = require( 'apps/homepage/external/content/external/your-queue/models/QueueModel' );
 	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
@@ -24,9 +26,6 @@ define( function ( require ) {
 
 	function switchClass ( e , from, to) {
 		var contentBtn = $( e.currentTarget );
-		console.log( contentBtn );
-		console.log( from );
-		console.log( to );
 		contentBtn.switchClass( from, to );
 		return contentBtn;
 	}
@@ -173,6 +172,10 @@ define( function ( require ) {
 					'content'   : data.replace( /,/g, ', ' )
 				} );
 			}
+		},
+
+		'doVideoLink' : function ( e ) {
+			App.navigate( 'resources/videos/' + $(e.currentTarget).attr('data-id'), { 'trigger' : true } );
 		}
 	};
 });

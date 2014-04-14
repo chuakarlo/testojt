@@ -14,7 +14,8 @@ define( function ( require ) {
 			'click .add-to-queue'                  : 'addToMyQueue',
 			'click .recommended-remove-from-queue' : 'removeQueueByRecommended',
 			'changeRecommendedIcon'                : 'changeRecommendedIcon',
-			'mouseenter .vid-thumb-overlay'        : 'viewTags'
+			'mouseenter .vid-thumb-overlay'        : 'viewTags',
+			'click a.vid-thumb-overlay'            : 'videoLink'
 		},
 		'template'        : _.template( template ),
 		'tagName'         : 'li',
@@ -50,6 +51,11 @@ define( function ( require ) {
 
 		'viewTags' : function ( e ) {
 			controller.doViewTags( this, e );
+		},
+
+		'videoLink' : function ( e ) {
+			controller.doVideoLink( e );
+			return false;
 		}
 
 	} );

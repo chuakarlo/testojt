@@ -21,7 +21,7 @@ define( function ( require ) {
 
 			return {
 				'collection' : CollectionPar,
-				'count'      : CollectionPar.length
+				'count'      : collectionRaw.get('RESULTS').SCORING.numFound
 			};
 		},
 
