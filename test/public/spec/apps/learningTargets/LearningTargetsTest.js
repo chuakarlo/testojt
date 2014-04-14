@@ -1,4 +1,4 @@
-define( function ( require ) {
+ define( function ( require ) {
 	'use strict';
 
 	var Marionette = require( 'marionette' );
@@ -7,6 +7,7 @@ define( function ( require ) {
 
 	require( 'learningTargets/LearningTargets' );
 
+	var CoursesView = require( 'apps/learningTargets/views/courses/CoursesView' );
 
 	describe( 'Learning Targets Module', function () {
 
@@ -37,19 +38,39 @@ define( function ( require ) {
 			App.LearningTargets.should.be.an.instanceof( Marionette.Module );
 		} );
 
+
 		// Test Main submodule
 		describe( 'Main controller', function () {
+			var setContent, showView, request, courseView;
+
+			var helper = App.LearningTargets.Main.helper;
+
+			before( function () {
+				courseView = new CoursesView();
+				setContent = sinon.stub( helper, '_setContent' );
+				showView   = sinon.stub( helper, '_showView' );
+				request    = sinon.stub( helper, '_apiRequest' );
+			} );
 
 			after( function () {
+				setContent.restore();
+				showView.restore();
+				request.restore();
+
+				helper     = undefined;
+				setContent = undefined;
+				showView   = undefined;
+				request    = undefined;
+
 				App.module( 'LearningTargets.Main' ).stop();
 			} );
 
 			it( 'should create a submodule called `Main` with a property called `Controller`', function () {
 				App.LearningTargets.should.have.property( 'Main' );
 				App.LearningTargets.Main.should.have.property( 'controller' );
-
 				App.LearningTargets.Main.should.be.an.instanceof( Marionette.Module );
 			} );
+
 
 			// Test Controller methods
 			describe( 'method `showMain`', function () {
@@ -87,30 +108,11 @@ define( function ( require ) {
 			} );
 
 			describe( 'method `showCourses`', function () {
-				var setContent, showView, request;
-
-				var helper = App.LearningTargets.Main.helper;
-
 				before( function () {
-					setContent = sinon.stub( helper, '_setContent' );
-					showView   = sinon.stub( helper, '_showView' );
-					request    = sinon.stub( helper, '_apiRequest' );
-
 					App.LearningTargets.Main.controller.showCourses();
 				} );
-				
-				after( function () {
-					setContent.restore();
-					showView.restore();
-					request.restore();
 
-					helper     = undefined;
-					setContent = undefined;
-					showView   = undefined;
-					request    = undefined;
-				} );
-
-				it( 'should setup content', function () {
+				it( 'should setup content for `courses`', function () {
 					setContent.should.have.been.calledWith( 'courses' );
 				} );
 
@@ -125,9 +127,48 @@ define( function ( require ) {
 			} );
 
 			describe( 'method `showProcesses`', function () {
+
+				before( function () {
+					App.LearningTargets.Main.controller.showProcesses();
+				} );
+
+				it( 'should setup content for `processes`', function () {
+					setContent.should.have.been.calledWith( 'processes' );
+				} );
+
+			} );
+
+			describe( 'method `showPortfolio`', function () {
+				before( function () {
+					App.LearningTargets.Main.controller.showPortfolio();
+				} );
+
+				it( 'should setup content for `portfolio`', function () {
+					setContent.should.have.been.calledWith( 'portfolio' );
+				} );
+
 			} );
 
 			describe( 'method `showObservations`', function () {
+				before( function () {
+					App.LearningTargets.Main.controller.showObservations();
+				} );
+
+				it( 'should setup content for `observations`', function () {
+					setContent.should.have.been.calledWith( 'observations' );
+				} );
+
+			} );
+
+			describe( 'method `showQuestions`', function () {
+				before( function () {
+					App.LearningTargets.Main.controller.showQuestions();
+				} );
+
+				it( 'should setup content for `questions`', function () {
+					setContent.should.have.been.calledWith( 'questions' );
+				} );
+
 			} );
 
 		} );
