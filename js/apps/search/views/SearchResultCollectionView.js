@@ -21,12 +21,12 @@ define( function( require ) {
 	return Marionette.CollectionView.extend( {
 
 		'tagName'   : 'ul',
-		'className' : 'row sr-container',
+		'className' : 'row sr-container media-list',
 		'itemView'  : searchResultItemView,
 		'emptyView' : EmptyResultView,
 
 		'getItemView' : function( item ) {
-			
+
 			// Check which type of model needs to be displayed
 			// and return the proper view.
 			if (item instanceof App.Entities.ColleagueModel) {

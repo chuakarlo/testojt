@@ -9,7 +9,7 @@ define( function ( require ) {
 	return Marionette.ItemView.extend( {
 
 		'template'  : _.template( template ),
-		'className' : 'container',
+		'className' : 'container-smooth',
 
 		'events'   : {
 			'click button.Leave' : 'leaveGroup',

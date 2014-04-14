@@ -5,7 +5,6 @@
 #groups .header h1 { font-size: 38px; font-weight: 500; color:#4b505c; }
 #groups .header p { color:#898b8f; margin-top: 15px; line-height: 1em; }
 #groups hr { margin:0; }
-#groups h2 { margin:55px 0 25px; }
 #groups .group h3 { color:black; }
 #groups .group { background:url('http://builtbyhq.com/projects/sinet/img/group-bg.png'); background-size: cover; }
 #groups .group img { background-size: contain; background-color: white; }
@@ -20,16 +19,54 @@
 /************************************************************\
 						SELECTED GROUP
 \************************************************************/
-#group .banner { height:320px; width:100%;  background: url('http://builtbyhq.com/projects/school/CORE/v1/img/banner.jpg'); background-size: cover; }
-#group .banner .container { position: relative; height: 100%; }
-#group .banner button { position: absolute; bottom: 20px; right:0px; width:140px; }
+#group {
 
-#group .header { width:100%; height:120px; }
-#group .header .container { border-bottom: 1px solid #ebebeb; height:120px; }
-#group .header .avatar { position: relative; top:-75px; float:left; -webkit-box-shadow: 0 0px 2px rgba(32,37,35,.3); -moz-box-shadow: 0 0px 2px rgba(32,37,35,.3); box-shadow: 0 0px 2px rgba(32,37,35,.3); }
-#group .header .title { float:left; padding:20px; }
-#group .header h2 { font-weight: 500; font-size: 30px; color:#4b505c; }
-#group .header p { color:#8f9298; }
+	.banner {
+
+		height          : 320px;
+		width           : 100%;
+		background      : url('http://builtbyhq.com/projects/school/CORE/v1/img/banner.jpg');
+		background-size : cover;
+
+		@media (max-width: @screen-xs-max) {
+			height: 160px;
+		}
+
+		.container-smooth {
+			position : relative;
+			height   : 100%;
+		 }
+
+		button {
+			position : absolute;
+			bottom   : 20px;
+			right    : 20px;
+			width    : 140px;
+		}
+
+	 }
+
+	.header {
+
+		.avatar {
+			position         : relative;
+			top              : -60px;
+			left             : 20px;
+			float            : left;
+			margin-bottom    : -35px;
+			min-width        : 100px;
+			min-height       : 75px;
+			background-color : #fff;
+			.box-shadow(0 0px 2px rgba(32,37,35,.3));
+		 }
+
+		 .page-header-nav {
+			clear : left;
+		 }
+	}
+
+}
+
 #group .members { float:left; padding:2px; }
 #group .members p { float:left; padding:7px 6px; }
 #group .members .images { float:right; }

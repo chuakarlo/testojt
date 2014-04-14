@@ -25,33 +25,18 @@ body  {
 // force colors for navbar > @screen-sm-min e.g. anything larger than a phone
 @media ( min-width: @screen-sm-min ) {
 	.navbar-nav {
-		> li > a {
+		> li > a,
+		> .active > a,
+		> .disabled > a,
+		> .open > a, {
+			& {
+				color: #fff !important;
+				background-color: @pd360-green !important;
+			}
+
 			&:hover,
 			&:focus {
 				background-color: lighten( @pd360-green, 10% ) !important; // @navbar-default-link-hover-bg;
-			}
-		}
-		> .active > a {
-			&,
-			&:hover,
-			&:focus {
-				background-color: lighten( @pd360-green, 10% ) !important; // @navbar-default-link-active-bg;
-			}
-		}
-		> .disabled > a {
-			&,
-			&:hover,
-			&:focus {
-				background-color: lighten( @pd360-green, 10% ) !important; // @navbar-default-link-disabled-bg;
-			}
-		}
-
-		// Remove background color from open dropdown
-		> .open > a {
-			&,
-			&:hover,
-			&:focus {
-				background-color: lighten( @pd360-green, 10% ) !important;
 			}
 		}
 
@@ -112,7 +97,7 @@ body  {
 		margin-bottom: -10px;
 	}
 
-	background-color: #40a5fc;
+	background-color: @brand-primary;
 	font-weight: normal;
 }
 
@@ -167,7 +152,7 @@ body  {
 		&:hover,
 		&:focus {
 			background-color: @navbar-default-link-hover-bg;
-			color: #fff;
+			color: @navbar-default-link-hover-color;
 		}
 
 		p.icon.description {

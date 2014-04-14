@@ -55,7 +55,7 @@ suite( function ( env ) {
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Videos' );
-					html.should.contain( '{Learning Targets}' );
+					html.should.contain( 'Learning Targets' );
 					html.should.contain( 'Observation' );
 					html.should.contain( 'Communities' );
 					html.should.contain( 'Lumibook' );
@@ -121,7 +121,7 @@ suite( function ( env ) {
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Videos' );
-					html.should.contain( '{Learning Targets}' );
+					html.should.contain( 'Learning Targets' );
 					html.should.contain( 'Observation' );
 					html.should.contain( 'Communities' );
 					html.should.contain( 'Lumibook' );
@@ -187,7 +187,7 @@ suite( function ( env ) {
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Videos' );
-					html.should.contain( '{Learning Targets}' );
+					html.should.contain( 'Learning Targets' );
 					html.should.contain( 'Observation' );
 					html.should.contain( 'Communities' );
 					html.should.contain( 'Lumibook' );

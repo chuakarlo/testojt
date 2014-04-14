@@ -4,6 +4,8 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var sinon      = window.sinon;
 	var App        = require( 'App' );
+	var View       = require( 'communities/views/CommunitiesView' );
+
 
 	require( 'communities/Communities' );
 
@@ -43,7 +45,7 @@ define( function ( require ) {
 				App.Communities.Show.Controller.showCommunities();
 
 				spy.should.have.callCount( 1 );
-				spy.should.have.been.calledWithExactly( null, 'communities', 'communitiesBrowse' );
+				spy.should.have.been.calledWithExactly( View, 'communities', 'communitiesBrowse' );
 			} );
 
 		} );
