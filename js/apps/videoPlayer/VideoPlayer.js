@@ -4,26 +4,44 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var AuthRouter = require( 'AuthRouter' );
 
-	var VideoPlayerController = require( 'videoPlayer/controllers/AppController' );
+	var Vent = require( 'Vent' );
 
 	App.module( 'VideoPlayer', function ( VideoPlayer ) {
+		// load sub apps
+		// require( './controllers/showController' );
+		require( 'videoPlayer/views/Views' );
+		require( 'videoPlayer/controllers/AppController' );
 
 		VideoPlayer.Router = AuthRouter.extend( {
 			'appRoutes' : {
-				'resources/video-player' : 'showVideoPlayer'
+				'resources/videos/:id' : 'showVideoPlayer'
 			}
 		} );
 
 		var API = {
-			// TODO: error handling
-			'showVideoPlayer' : function () {
+
+			'showVideoPlayer' : function ( videoId ) {
 				App.request( 'pd360:hide' );
-				var controller = new VideoPlayerController( {
-					'App' : App
-				} );
-				controller.showDefault();
+				VideoPlayer.Controller.Show.videoAndResources( videoId );
+			},
+
+			'showRelatedVideos' : function () {
+
+			},
+
+			'showAdditionalResources' : function () {
+
 			}
+
 		};
+
+		Vent.on( 'videoPlayer:showRelated', function () {
+			API.showRelatedVideos();
+		} );
+
+		Vent.on( 'videoPlayer:showResources', function () {
+			API.showAdditionalResources();
+		} );
 
 		App.addInitializer( function () {
 			new VideoPlayer.Router( {

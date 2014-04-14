@@ -2,70 +2,76 @@
 define( function ( require ) {
 	'use strict';
 
-	var $          = require( 'jquery' );
-	var _          = require( 'underscore' );
-	var Marionette = require( 'marionette' );
+	var $ = require( 'jquery' );
+	var _ = require( 'underscore' );
 
-	var layouts = {
-		'PageLayout' : require( '../views/PageLayout' )
-	};
-
-	var views  = {
-		'ErrorView'   : require( 'videoPlayer/views/ErrorView' ),
-		'LoadingView' : require( 'videoPlayer/views/LoadingView' )
-	};
+	var App      = require( 'App' );
+	var Session  = require( 'Session' );
+	var Remoting = require( 'Remoting' );
 
 	var ContentModel = require( 'videoPlayer/models/ContentModel' );
-	var formatTime   = require( 'videoPlayer/utils/toHHMMSSFormat' );
 
-	return Marionette.Controller.extend( {
+	App.module( 'VideoPlayer.Controller', function ( Controller ) {
 
-		'initialize' : function ( options ) {
-			_.bindAll( this );
-			_.extend( this, options );
+		Controller.Show = {
 
-			return this;
-		},
+			'videoAndResources' : function ( videoId ) {
+				var licenseType = [ 0, 1, 200, 300 ];
 
-		'showDefault' : function ( id ) {
-			// We're sticking with self = this since blanket.js
-			// does not support .bind yet
-			var self = this;
+				var videoContentRequests = {
+					'path' : 'com.schoolimprovement.pd360.dao.ContentService',
+					'method' : 'getContentByContentIdAndLicenseTypes',
+					'args' : {
+						'contId' : videoId,
+						'licTypes' : licenseType
+					}
+				};
 
-			var request = {
-				'method' : 'getContentByContentIdAndLicenseTypes',
-				'args' : {
-					'contId' : 7652, // should be replaced with id when routing is fixed
-					'licTypes' : [ 0, 147 ] // get licType from Session
-				}
-			};
+				var getVideoInfo = Remoting.fetch( videoContentRequests );
 
-			this.App.content.show( new views.LoadingView() );
+				$.when( getVideoInfo ).done( function ( response ) {
 
-			// TODO:
-			// Refactor fetching of model
-			// Probably reset the `fetchModel` instead of instantiating a new one ( contentModel )
-			//   after fetch
-			var fetchModel = new ContentModel();
+					var videoModel = new ContentModel( _.first( response ) );
 
-			$.when( fetchModel.fetch( request ) ).then( function ( response ) {
-				var contentModel = new ContentModel( _.first( response ) );
-				var model        = self._prepareModel( contentModel );
+					var relatedVideosRequest = {
+						'path' : 'com.schoolimprovement.pd360.dao.RespondService',
+						'method' : 'relatedVideos',
+						'args' : {
+							'ContentId' : videoModel.id
+						}
+					};
 
-				self.App.content.show( new layouts.PageLayout( { 'model' : model } ) );
-			} );
-		},
+					var questionsRequest = {
+						'path' : 'com.schoolimprovement.pd360.dao.ContentService',
+						'method' : 'getQuestionsWithAnswers',
+						'args' : {
+							'persId' : Session.personnelId(),
+							'ContentId' : videoModel.id
+						}
+					};
 
-		'_prepareModel' : function ( model ) {
-			var urlRoot  = 'http://resources.pd360.com/PD360/media/thumb/';
-			var imageURL = model.get( 'ImageURL' );
-			var duration = model.get( 'SegmentLengthInSeconds' );
+					var requests = [ relatedVideosRequest, questionsRequest ];
+					var fetchingData = Remoting.fetch( requests );
 
-			model.set( 'ImageURL', urlRoot + imageURL );
-			model.set( 'SegmentLengthInSeconds', formatTime( duration ) );
+					$.when( fetchingData ).done( function ( response ) {
 
-			return model;
-		}
+						var layout = new App.VideoPlayer.Views.PageLayout( { 'model' : videoModel } );
+						App.content.show( layout );
+
+						var relatedVideos = response[ 0 ].slice( 1 );
+						var questions     = response[ 1 ];
+
+						// Videojs player view
+						var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( { 'model' : videoModel } );
+						layout.playerRegion.show( videoPlayerView );
+
+					} );
+
+				} );
+
+			},
+
+		};
 
 	} );
 

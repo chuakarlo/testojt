@@ -1,12 +1,12 @@
 define( function ( require ) {
 	'use strict';
 
-	var PlayerItemView = require( 'videoPlayer/views/player/PlayerItemView' );
+	var PlayerItemView = require( 'videoPlayer/views/player/VideoPlayerView' );
 
-	describe( 'PlayerItemView Item', function () {
+	describe( 'VideoPlayerView', function () {
 		var playerItemView = new PlayerItemView();
 
-		it( 'should be an instance of PlayerItemView', function () {
+		it( 'is an instance', function () {
 			playerItemView.should.be.an.instanceof( PlayerItemView );
 		} );
 
