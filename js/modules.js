@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	require( 'apps/resources' );
 	require( 'apps/header/Header' );
+	require( 'apps/footer/Footer' );
 	require( 'apps/user/User' );
 	require( 'apps/pd360/PD360' );
 	require( 'apps/groups/Groups' );

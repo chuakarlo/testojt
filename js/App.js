@@ -16,7 +16,8 @@ define( function ( require ) {
 		'content'      : '#main-content',
 		'flashContent' : '#flash-content',
 		'menu'         : '#navbar',
-		'modalRegion'  : '#modal-content'
+		'modalRegion'  : '#modal-content',
+		'footerRegion' : '#footer'
 	} );
 
 	// Allow sub apps to update history fragment when using events

@@ -172,7 +172,7 @@ define( function ( require ) {
 					'remove'  : false,
 					'success' : _.bind( function( collection, res, options ) {
 
-						// Update the count first so inifite scroll knows if it 
+						// Update the count first so inifite scroll knows if it
 						// needs to setup
 						this.searchCollection.queryModel.updateStart();
 						
