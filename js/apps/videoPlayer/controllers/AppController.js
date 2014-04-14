@@ -15,7 +15,7 @@ define( function ( require ) {
 
 		Controller.Show = {
 
-			'videoAndResources' : function ( videoId ) {
+			'showVideo' : function( videoId ) {
 				var licenseType = [ 0, 1, 200, 300 ];
 
 				var videoContentRequests = {
@@ -30,46 +30,49 @@ define( function ( require ) {
 				var getVideoInfo = Remoting.fetch( videoContentRequests );
 
 				$.when( getVideoInfo ).done( function ( response ) {
+					this.showVideoResources( _.first( response ) );
+				}.bind( this ) );
+			},
 
-					var videoModel = new ContentModel( _.first( response ) );
+			'showVideoResources' : function ( videoInfo ) {
 
-					var relatedVideosRequest = {
-						'path' : 'com.schoolimprovement.pd360.dao.RespondService',
-						'method' : 'relatedVideos',
-						'args' : {
-							'ContentId' : videoModel.id
-						}
-					};
+				var videoModel = new ContentModel( videoInfo );
 
-					var questionsRequest = {
-						'path' : 'com.schoolimprovement.pd360.dao.ContentService',
-						'method' : 'getQuestionsWithAnswers',
-						'args' : {
-							'persId' : Session.personnelId(),
-							'ContentId' : videoModel.id
-						}
-					};
+				var relatedVideosRequest = {
+					'path' : 'com.schoolimprovement.pd360.dao.RespondService',
+					'method' : 'relatedVideos',
+					'args' : {
+						'ContentId' : videoModel.id
+					}
+				};
 
-					var requests = [ relatedVideosRequest, questionsRequest ];
-					var fetchingData = Remoting.fetch( requests );
+				var questionsRequest = {
+					'path' : 'com.schoolimprovement.pd360.dao.ContentService',
+					'method' : 'getQuestionsWithAnswers',
+					'args' : {
+						'persId' : Session.personnelId(),
+						'ContentId' : videoModel.id
+					}
+				};
 
-					$.when( fetchingData ).done( function ( response ) {
+				var requests = [ relatedVideosRequest, questionsRequest ];
+				var fetchingData = Remoting.fetch( requests );
 
-						var layout = new App.VideoPlayer.Views.PageLayout( { 'model' : videoModel } );
-						App.content.show( layout );
+				$.when( fetchingData ).done( function ( response ) {
 
-						var relatedVideos = response[ 0 ].slice( 1 );
-						var questions     = response[ 1 ];
+					var layout = new App.VideoPlayer.Views.PageLayout( { 'model' : videoModel } );
+					App.content.show( layout );
 
-						// Videojs player view
-						var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( { 'model' : videoModel } );
-						layout.playerRegion.show( videoPlayerView );
+					var relatedVideos = response[ 0 ].slice( 1 );
+					var questions     = response[ 1 ];
 
-					} );
+					// Videojs player view
+					var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( { 'model' : videoModel } );
+					layout.playerRegion.show( videoPlayerView );
 
 				} );
 
-			},
+			}
 
 		};
 

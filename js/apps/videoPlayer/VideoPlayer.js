@@ -22,7 +22,7 @@ define( function ( require ) {
 
 			'showVideoPlayer' : function ( videoId ) {
 				App.request( 'pd360:hide' );
-				VideoPlayer.Controller.Show.videoAndResources( videoId );
+				VideoPlayer.Controller.Show.showVideo( videoId );
 			},
 
 			'showRelatedVideos' : function () {
