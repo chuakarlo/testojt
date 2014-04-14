@@ -30,8 +30,8 @@ define( function ( require ) {
 		},
 
 		route : function(route, name, callback) {
-			// This is overloading the default Backbone.Router.route and 
-			// contains about 90% of the original code. 
+			// This is overloading the default Backbone.Router.route and
+			// contains about 90% of the original code.
 			if ( !_.isRegExp( route ) ) {
 				route = this._routeToRegExp( route );
 			}
@@ -46,7 +46,7 @@ define( function ( require ) {
 			Backbone.history.route( route, function( fragment ) {
 				var args = router._extractParameters( route, fragment );
 				if ( router.runFilters( router.before, fragment, args ) ) {
-					// Backbone v1.1.2 uses the following to execute the 
+					// Backbone v1.1.2 uses the following to execute the
 					// function call instead of callback.apply
 					// router.execute( callback, args );
 					if (callback) {

@@ -5,10 +5,10 @@ define( function( require ) {
 	var template   = require( 'text!../templates/ColleagueItemView.html' );
 
 	var SearchResultItemView = require( './SearchResultItemView' );
-	
+
 	return SearchResultItemView.extend( {
 		
-		'template'  : _.template( template )
-		
+		'template'  : _.template( template ),
+
 	} );
 } );
