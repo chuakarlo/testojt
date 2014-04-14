@@ -5,7 +5,7 @@
 	var App        = require( 'App' );
 	var sinon      = window.sinon;
 
-	require( 'learningTargets/LearningTargets' );
+	require( 'apps/learningTargets/LearningTargets' );
 
 	var CoursesView = require( 'apps/learningTargets/views/courses/CoursesView' );
 

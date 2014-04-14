@@ -5,21 +5,21 @@ define( function ( require ) {
 	var $           = require( 'jquery' );
 	var _			= require( 'underscore' );
 	var Marionette  = require( 'marionette' );
-	var config      = require( '../config/config' );
+	var config      = require( 'contentNavigation/config/config' );
 
 	require( 'jquery.pscrollbar' );
 
 	var views = {
-		'ErrorView'           : require( '../views/ErrorView' ),
-		'FilterContainerView' : require( '../views/Filters/FilterContainerView' )
+		'ErrorView'           : require( 'contentNavigation/views/ErrorView' ),
+		'FilterContainerView' : require( 'contentNavigation/views/Filters/FilterContainerView' )
 	};
 
 	var components  = {
-		'FilterComponent' : require( '../components/FilterComponent' )
+		'FilterComponent' : require( 'contentNavigation/components/FilterComponent' )
 	};
 
 	var collections = {
-		'FilterCollection' : require('../collections/FilterCollection')
+		'FilterCollection' : require('contentNavigation/collections/FilterCollection')
 	};
 
 	return Marionette.Controller.extend( {

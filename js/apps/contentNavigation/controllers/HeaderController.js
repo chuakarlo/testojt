@@ -5,8 +5,8 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 
 	var views = {
-		'ErrorView'    : require( '../views/ErrorView' ),
-		'HeaderLayout' : require( '../views/Layouts/HeaderLayoutView' )
+		'ErrorView'    : require( 'contentNavigation/views/ErrorView' ),
+		'HeaderLayout' : require( 'contentNavigation/views/Layouts/HeaderLayoutView' )
 	};
 
 	return Marionette.Controller.extend( {

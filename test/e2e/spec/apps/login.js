@@ -107,7 +107,7 @@ suite( function( env ) {
 
 				// Open User Menu and Click Logout
 				.elementByCssSelector( '.user-menu a.dropdown-toggle' ).click()
-				.sleep( 2000 )
+				.sleep( 4000 )
 				.elementByCssSelector( '.user-menu.open a[href="#logout"]').click()
 				.sleep( 10000 )
 

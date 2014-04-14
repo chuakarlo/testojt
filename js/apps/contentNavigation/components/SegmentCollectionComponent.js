@@ -8,15 +8,15 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var Remoting   = require( 'Remoting' );
 	var Session    = require( 'Session' );
-	var Utils      = require( '../controllers/UtilitiesController' );
+	var Utils      = require( 'contentNavigation/controllers/UtilitiesController' );
 
 	var collections  = {
-	    'SegmentCollection' : require( '../collections/SegmentCollection' ),
-	    'WatchLaterCollection' : require( '../collections/WatchLaterCollection' )
+	    'SegmentCollection' : require( 'contentNavigation/collections/SegmentCollection' ),
+	    'WatchLaterCollection' : require( 'contentNavigation/collections/WatchLaterCollection' )
 	};
 	var views        = {
-	    'ErrorView'              : require( '../views/ErrorView' ),
-	    'SegmentsCollectionView' : require( '../views/Segments/SegmentCollectionView' )
+	    'ErrorView'              : require( 'contentNavigation/views/ErrorView' ),
+	    'SegmentsCollectionView' : require( 'contentNavigation/views/Segments/SegmentCollectionView' )
 	};
 	var Communicator = _.extend( {}, Backbone.Events );
 	var defaults     = {
@@ -32,7 +32,7 @@ define( function ( require ) {
 	var SegmentCollectionComponent = Marionette.Controller.extend( {
 
 		initialize   : function ( options ) {
-			
+
 			var _validOptions;
 			_validOptions = this._setOptions( options );
 			if ( _validOptions ) {
@@ -42,14 +42,14 @@ define( function ( require ) {
 				this._initWatchLaterCollection();
 				// Create the collection view
 				this._createView();
-				
+
 			}
 
 		},
 
 		_setOptions : function ( options ) {
 			// collection
-			// url 
+			// url
 			// renderTo
 			// vent
 
@@ -149,7 +149,7 @@ define( function ( require ) {
 	        $.when( this._fetchingWatchLaterSegments ).done( function ( models ) {
 
 				this._setWatchLaterSegments( models[0] );
-				
+
 			}.bind( this ) ).fail( function ( error ) {
 				return this._fetchWaterLaterSegmentFailed.call(this, error);
 			}.bind( this ) );
@@ -172,7 +172,7 @@ define( function ( require ) {
 		},
 
 		_fetchWaterLaterSegmentFailed	: function (error) {
-			
+
 		},
 
 		_addWatchLaterSegment	: function ( contentId ) {
@@ -238,7 +238,7 @@ define( function ( require ) {
 			}).fail( function ( error ) {
 				Utils.throwError( error, 'Click Watch Later' );
 			});
-			
+
 
 			// Triggers watch later click event
 			// Params passed
@@ -251,7 +251,7 @@ define( function ( require ) {
 			// Triggers watch later click event
 			// Params passed
 			// clicked - Boolean value for the click state
-			// model - Backbone.Model for the clicked item			
+			// model - Backbone.Model for the clicked item
 			Communicator.trigger( 'click:playSegment', this.model, e );
 
 		},

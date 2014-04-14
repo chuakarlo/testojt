@@ -1,9 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette     = require( 'marionette' );
-	var Vent           = require( 'Vent' );
-	var App            = require( 'App' );
+	var Marionette = require( 'marionette' );
+	var Vent       = require( 'Vent' );
+	var App        = require( 'App' );
 
 	App.module( 'LearningProgression', function ( LearningProgression ) {
 

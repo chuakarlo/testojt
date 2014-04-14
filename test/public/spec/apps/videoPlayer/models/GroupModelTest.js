@@ -1,13 +1,6 @@
 define( function ( require ) {
 	'use strict';
 
-	var sinon     = require( 'sinon' );
-	var chai      = require( 'chai' );
-	var sinonChai = require( 'sinon-chai' );
-	var expect    = chai.expect;
-
-	chai.use( sinonChai );
-
 	var PersonModel = require( 'videoPlayer/models/GroupModel' );
 
 	describe( 'PersonModel', function () {

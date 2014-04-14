@@ -1,11 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	require( './communities/Communities' );
-	require( './search/Search' );
-	require( './observation/Observation' );
-	require( './lumibook/LumiBook' );
-	require( './learningProgression/LearningProgression' );
-	require( './learningTargets/LearningTargets' );
+	require( 'communities/Communities' );
+	require( 'search/Search' );
+	require( 'observation/Observation' );
+	require( 'lumibook/LumiBook' );
+	require( 'learningProgression/LearningProgression' );
+	require( 'learningTargets/LearningTargets' );
 
 } );

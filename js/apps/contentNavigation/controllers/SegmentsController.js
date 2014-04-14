@@ -11,11 +11,11 @@ define( function( require ) {
 	var Remoting	       = require( 'Remoting' );
 	var Session			   = require( 'Session' );
 	var collections        = {
-	    'SegmentCollection' : require( '../collections/SegmentCollection' )
+	    'SegmentCollection' : require( 'contentNavigation/collections/SegmentCollection' )
 	};
 
 	var components	       = {
-		'SegmentCollectionComponent' : require('../components/SegmentCollectionComponent')
+		'SegmentCollectionComponent' : require('contentNavigation/components/SegmentCollectionComponent')
 	};
 
 	var Utils              = require( './UtilitiesController' );
@@ -33,7 +33,7 @@ define( function( require ) {
 		currentPage             : 0,
 
 	    initialize              : function( options ) {
-			
+
 	        var SegmentCollection = options.collection ? options.collection : collections.SegmentCollection;
 			this.collection       = new SegmentCollection();
 	        this.component        = new components.SegmentCollectionComponent({
@@ -76,7 +76,7 @@ define( function( require ) {
 		},
 
 		_fetchCollection              : function ( options ) {
-					
+
 			this._showLoadingIndicator();
 
 			var fetchSegment = {
@@ -93,15 +93,15 @@ define( function( require ) {
 	        };
 
 	        this.fetchingSegments = this.Remoting.fetch( [fetchSegment] );
-	        
+
 			$.when( this.fetchingSegments ).done( function ( models ) {
 				var validModels = this._purgeSegmentModels( models[0] );
-				
+
 				this._setFetchedSegments( validModels, options );
 			}.bind( this ) ).fail( function ( error ) {
 				this._hideLoadingIndicators();
 				$( window ).scrollTop( 0 );
-				
+
 				return this._fetchSegmentFailed.call(this, error);
 			}.bind( this ) );
 
@@ -209,7 +209,7 @@ define( function( require ) {
 		},
 
 		_segmentSort				 : function ( sort ) {
-			
+
 			this.sortByParam = sort;
 
 			this.currentPage = 0;

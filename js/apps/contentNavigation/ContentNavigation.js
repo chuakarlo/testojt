@@ -2,7 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var App               = require( 'App' );
-	var ContentController = require( './main' );
+	var ContentController = require( 'contentNavigation/main' );
 	var AuthRouter        = require( 'AuthRouter');
 
 	App.module( 'ContentNavigation', function ( ContentNavigation ) {

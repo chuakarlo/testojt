@@ -2,7 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var Backbone    = require( 'backbone' );
-	var FilterModel = require( '../models/FilterModel' );
+	var FilterModel = require( 'contentNavigation/models/FilterModel' );
 
 	return Backbone.Collection.extend( {
 		'url'   : '/',

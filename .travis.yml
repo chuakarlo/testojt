@@ -30,8 +30,10 @@ install:
   - npm install -g grunt-cli
   - npm install
   - bower install
+  - grunt compile
 
 before_script:
+  - grunt compile
 
   # start node to serve public files
   - node server.js &

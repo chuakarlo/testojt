@@ -6,8 +6,8 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 
 	var views = {
-		'ErrorView'           : require( '../views/ErrorView' ),
-		'FilterCompositeView' : require( '../views/Filters/FilterCompositeView' )
+		'ErrorView'           : require( 'contentNavigation/views/ErrorView' ),
+		'FilterCompositeView' : require( 'contentNavigation/views/Filters/FilterCompositeView' )
 	};
 
 	var defaultConfig = {

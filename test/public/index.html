@@ -8,7 +8,7 @@
 <body>
 	<div id="fixtures" style="display: none; visibility: hidden;"></div>
 	<div id="mocha"></div>
-	
+
 	<div id="modal" style="visibility:hidden;"></div>
 	<div id="menu" style="visibility:hidden;"></div>
 	<div id="content" style="visibility:hidden;"></div>
@@ -22,7 +22,8 @@
 			'reporter' : 'html'
 		} );
 	</script>
-	<script src="../../js/libs/requirejs/require.js" data-main="SpecRunner"></script>
+	<script src="../../js/libs/requirejs/require.js" data-main="../../test/public/SpecRunner"></script>
+	<script src="../../js/require-config.js"></script>
 	<script src="/js/libs/blanket/dist/qunit/blanket.js" data-cover-only="js" data-cover-never="['js/libs, js/routers, test']"></script>
     <script type="text/javascript" src="/js/libs/grunt-blanket-mocha/support/mocha-blanket.js"></script>
 
