@@ -4,13 +4,25 @@ define( function ( require ) {
 	require( 'marionette' );
 	require( 'moment-timezone' );
 
-	var moment    = require( 'moment' );
-	var Backbone  = require( 'backbone' );
-	var sinon     = window.sinon;
+	var moment   = require( 'moment' );
+	var Backbone = require( 'backbone' );
+	var sinon    = window.sinon;
+	var App      = require( 'App' );
 
 	var ReflectionLayout = require( 'videoPlayer/views/reflection/ReflectionLayout' );
 
 	describe( 'ReflectionLayout', function () {
+		var stub;
+
+		before( function () {
+			stub = sinon.stub().returns( false );
+			App.reqres.setHandler( 'pd360:available', stub );
+		} );
+
+		after( function() {
+			stub = null;
+			App.reqres.removeHandler( 'pd360:available' );
+		} );
 
 		describe( '.initialView', function () {
 			var reflection;
