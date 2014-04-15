@@ -22,33 +22,6 @@ define ( function ( require ) {
 		},
 
 		/**
-		 * Perform operations in adding a model to the collection
-		 * @params {Model} model Model of the widget to be added in the collection
-		 * @params {Collection} collection Collection where the model is added
-		 * @params {Boolean} bSave Indication whether to save the widget to the API or not
-		 *                   If false, data will not be saved to the API otherwise it will be saved
-		 */
-		'widgetCollectionAdd' : function ( model, collection, bSave, callback ) {
-
-			if( !model || !collection ) {
-				return;
-			}
-
-			collection.add( model );
-
-			//reset so that newly added model will be rendered
-			if ( bSave  !== false ) {
-
-				ApiCollection.saveUserWidgets( model.attributes.id, true, function () {
-					//no tracking of errors yet
-					if( callback ) {
-						callback ( );
-					}
-				} );
-			}
-		},
-
-		/**
 		 * Perform operations in adding a model to the collection and fetch changes from the API.
 		 * @params {Model} model Model of the widget to be added in the collection
 		 * @params {Collection} collection Collection where the model is added
@@ -67,32 +40,6 @@ define ( function ( require ) {
 					callback ( active, inactive );
 				}
 			} );
-
-		},
-
-		/**
-		 * Perform operations in adding a model to the collection
-		 * @params {Model} model Model of the widget to be added in the collection
-		 * @params {Collection} collection Collection where the model is added
-		 * @params {Boolena} bSave Indication whether to save the widget to the API or not
-		 *                   If false, data will not be saved to the API otherwise it will be saved
-		 */
-		'widgetCollectionRemove' : function ( model, collection, bSave, callback ) {
-
-			if( !model || !collection ) {
-				return;
-			}
-
-			collection.remove( model );
-			if ( bSave  !== false ) {
-
-				ApiCollection.saveUserWidgets ( model.attributes.id, false, function ( ) {
-					//no tracking of errors yet
-					if ( callback ) {
-						callback ( );
-					}
-				} );
-			}
 
 		},
 

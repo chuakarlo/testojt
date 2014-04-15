@@ -1,13 +1,7 @@
 //Progress circle
 
 #Home-page-view{
-	.borderRadius () {
-		-webkit-border-radius : 50%;
-		-moz-border-radius    : 50%;
-		-ms-border-radius     : 50%;
-		-o-border-radius      : 50%;
-		border-radius         : 50%;
-	}
+
 	.prog-circle {
 		position              : relative;
 		font-size             : 120px;
@@ -15,8 +9,10 @@
 		height                : @padd;
 		float                 : left;
 		margin                : 0 0.1em 0.1em 0;
-		background-color      : @yellow-light;
-		.borderRadius;
+		background-color      : @pc-yellow-light;
+
+		.pc-border-radius( 50% );
+
 		.slice {
 			position : absolute;
 			width    : @padd;
@@ -28,7 +24,7 @@
 		}
 		.fill, .bar {
 			position              : absolute;
-			border                : 0.08em solid @green;
+			border                : 0.08em solid @pc-green;
 			width                 : 0.84em;
 			height                : 0.84em;
 			clip                  : rect(0em, .5em, @padd, 0em);
@@ -37,7 +33,7 @@
 			-ms-transform         : rotate(20deg);
 			-o-transform          : rotate(20deg);
 			transform             : rotate(20deg);
-			.borderRadius;
+			.pc-border-radius( 50% );
 		}
 		.percenttext {
 			position                           : absolute;
@@ -50,7 +46,7 @@
 			right                              : 0;
 			bottom                             : 0;
 			font-size                          : 0.3em;
-			color                              : @green;
+			color                              : @pc-green;
 			display                            : block;
 			text-align                         : center;
 			white-space                        : nowrap;
@@ -69,10 +65,10 @@
 			top                   : 0.08em;
 			left                  : 0.08em;
 			display               : block;
-			background-color      : @white;
+			background-color      : @pc-white;
 			width                 : 0.84em;
 			height                : 0.84em;
-			.borderRadius;
+			.pc-border-radius( 50% );
 		}
 	}
 }

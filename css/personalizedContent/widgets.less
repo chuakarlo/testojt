@@ -4,19 +4,17 @@
 	//  Widgets
 	// *
 
-	.widget-wrapper {
-		width                 : 92%;
-		margin                : @min @mar-side-widget;
-		border                : 1px solid @light-gray;
-		-webkit-border-radius : 5px;
-		-moz-border-radius    : 5px;
-		border-radius         : 5px;
-		height                : inherit;
-	}
-
 	.three-box-container( @height ) {
 		position    : relative;
 		height      : @height;
+	}
+
+	.widget-wrapper {
+		width                 : 92%;
+		margin                : @pc-min @mar-side-widget;
+		border                : 1px solid @pc-gray-lighter;
+		height                : inherit;
+		.pc-border-radius ( 5px );
 	}
 
 	#active-holder {
@@ -29,11 +27,8 @@
 
 	#inactive-holder {
 		margin-top            : -15px;
-		margin                : @min auto;
+		margin                : @pc-min auto;
 		border                : 1px solid rgba(0,0,0,.1);
-		-webkit-border-radius : 12px;
-		-moz-border-radius    : 12px;
-		border-radius         : 12px;
 		-moz-box-shadow       : 0px 0px 5px rgba(0,0,0,.2);
 		-webkit-box-shadow    : 0px 0px 5px rgba(0,0,0,.2);
 		box-shadow            : 0px 0px 5px rgba(0,0,0,.2);
@@ -43,6 +38,7 @@
 		display               : none;
 		overflow              : hidden;
 
+		.pc-border-radius( 12px );
 		.three-box-container {
 			.three-box-container( 300px );
 		}
@@ -66,7 +62,7 @@
 
 		//widget header
 		.header {
-			background : @lighter-gray;
+			background : @pc-gray-lightest;
 			padding    : 23px 0;
 			text-align : center;
 			font-size  : 18px;
@@ -84,7 +80,7 @@
 			overflow: hidden;
 
 			> div {
-				border-top : 1px solid @light-gray;
+				border-top : 1px solid @pc-gray-lighter;
 				padding : 14px 0;
 
 				//Todo much better that image to be scaled should have a class
@@ -97,7 +93,7 @@
 
 		//widget footer
 		.footer {
-			border-top : 1px solid @light-gray;
+			border-top : 1px solid @pc-gray-lighter;
 			padding    : 14px 0 14px 14px;
 		}
 	}
@@ -127,7 +123,7 @@
 	}
 
 	#inactive-widgets {
-		margin   : @min auto;
+		margin   : @pc-min auto;
 		position : relative;
 	}
 

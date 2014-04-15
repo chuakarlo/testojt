@@ -124,13 +124,6 @@ define ( function ( require ) {
 				// } );
 		},
 
-		/**
-		 *
-		 */
-		'showXScrollBar' : function ( eJquery ) {
-			eJquery.css( { 'display' : ''} );
-		},
-
 		'applyCircularScroll' : function ( container, appendToID ) {
 			require( [ 'pc-carouselSnap' ], function( $ ) {
 				$( container ).carouselSnap( {
