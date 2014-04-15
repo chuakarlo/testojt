@@ -11,7 +11,7 @@ define( function ( require ) {
 		'className' : 'learning-targets',
 
 		'ui' : {
-			'nav' : '.lt-nav',
+			'nav'           : '.lt-nav',
 			'closeTrackBtn' : '.close-track'
 		},
 
@@ -21,7 +21,6 @@ define( function ( require ) {
 
 		'hideTrackSection' : function ( e ) {
 			e.preventDefault();
-
 			var self = this;
 			var trackSection = self.el.querySelector( '.lt-track' );
 

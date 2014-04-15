@@ -16,6 +16,7 @@ define( function ( require ) {
 
 			// learningTargets
 			'spec/apps/learningTargets/LearningTargetsTest',
+			'spec/apps/learningTargets/views/MainViewTest',
 
 			'spec/apps/user/UserTest',
 
