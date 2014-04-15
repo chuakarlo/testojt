@@ -1,11 +1,11 @@
 <div class="content-wrapper col-md-12 no-padding">
-	<a class="vid-thumb-overlay" title="" href=""  data-id=<%= contentId %> >
-			<div class="pc-vid-thumb-bg pc-vid-thumb-bg5">
-					<img src=<%= imageUrl %> style="opacity: 1;" class="img-responsive">
-			</div>
-			<div class="video-hover">
-				<div class="fa fa-play"></div>
-			</div>
+	<a class="vid-thumb-overlay" title="" href=""  data-id=<%= ContentId %> >
+		<div class="pc-vid-thumb-bg pc-vid-thumb-bg5">
+			<img src=<%= imageUrl %> style="opacity: 1;" class="img-responsive">
+		</div>
+		<div class="video-hover">
+			<div class="fa fa-play"></div>
+		</div>
 	</a>
 	<h4><%= topic %></h4>
 	<p class="paragraph-light" >
@@ -13,7 +13,7 @@
 	</p>
 
 	<div class="pc-watch-later">
-		<div class="content-button  <%=watchToggle %> watch-later-icon fa fa-clock-o">
+		<div id="content-button-<%= ContentId %>" class="content-button <%= watchToggle %> watch-later-icon fa fa-clock-o" title="<%= contentStatus %>">
 		</div>
 	</div>
 </div>

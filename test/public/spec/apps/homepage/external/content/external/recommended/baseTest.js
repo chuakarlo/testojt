@@ -1,28 +1,51 @@
 define( function ( require ) {
 	'use strict';
 
+	var baseObj  = require( 'apps/homepage/BaseObject' );
 	var base     = require( 'apps/homepage/external/content/external/recommended/base' );
-	var expect   = require( 'chai' ).expect;
 
-	describe ( 'Base Test for Recommended', function () {
+	describe ( 'baseTest for Recommended', function () {
+		var collectionParam;
 
-		it ( 'should be an instance of BaseObject', function () {
-			var BaseObj  = require( 'apps/homepage/BaseObject' );
-			expect( base ).to.be.an.instanceof( BaseObj );
+		before( function () {
+			collectionParam = base.Collection;
+			console.log( base );
 		} );
 
-		it ( 'id should be equal to recommended ', function () {
-			expect( base._id ).to.be.equal( 'recommended' );
+		it( 'should be an instance of `BaseObject`', function () {
+			base.should.be.an.instanceof( baseObj );
 		} );
 
-		it ( 'header should contain Recommended ', function () {
-			expect( base._header ).to.contain( 'Recommended' );
+		it( 'should have `id` property', function () {
+			base.should.have.property( '_id' );
 		} );
 
-		it ( 'collection should be equal to RecommendedCollection ', function () {
-			var collection = require( 'apps/homepage/external/content/external/recommended/collections/RecommendedCollection' );
-			expect( base._items ).to.be.equal( collection );
+		it( 'should have `id` property with value of `recommended`', function () {
+			base._id.should.be.equal( 'recommended' );
 		} );
+
+		it( 'should have `_header` property', function () {
+			base.should.have.property( '_header' );
+		} );
+
+		it( 'should have `.getCollection` property', function () {
+			base.should.have.property( 'getCollection' );
+		} );
+
+		describe ( '`.getPreFetchLogic`', function () {
+			it( 'should have `getPreFetchLogic` property', function () {
+
+			} );
+		} );
+
+		it( 'should have `.getPreFetchLogic` property', function () {
+			base.should.have.property( 'getPreFetchLogic' );
+		} );
+
+		// it( 'collection should be equal to RecommendedCollection ', function () {
+		// 	var collection = require( 'apps/homepage/external/content/external/recommended/collections/RecommendedCollection' );
+		// 	expect( base._items ).to.be.equal( collection );
+		// } );
 
 	} );
 

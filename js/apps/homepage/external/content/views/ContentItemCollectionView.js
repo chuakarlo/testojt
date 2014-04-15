@@ -18,12 +18,12 @@ define( function ( require ) {
 		'emptyView'       : EmptyContentView,
 		'itemView'        : ContentItemView,
 
-		'initialize' : function ( options ) {
+		'initialize' : function () {
 			controller.doInitialize( this );
 		},
 
 		'changeRecommendedIcons' : function ( event, queueCollection ) {
-			controller.doChangeRecommendedIcons( this, queueCollection);
+			controller.doChangeRecommendedIcons( this, queueCollection );
 		},
 
 		'addToMyQueue' : function ( event, model ) {
@@ -36,6 +36,10 @@ define( function ( require ) {
 
 		'reRenderView' : function () {
 			controller.doReRenderView( this );
+		},
+
+		'onRender' : function () {
+			this.$el.find( '.content-button' ).tooltip();
 		}
 
 	} );

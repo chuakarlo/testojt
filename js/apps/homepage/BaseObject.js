@@ -1,4 +1,4 @@
-define( function ( require ) {
+define( function () {
 	'use strict';
 
 	var BaseObject = function () {
@@ -26,19 +26,18 @@ define( function ( require ) {
 			this.getFetchLogic           = _proto.getFetchLogic;
 			this.renderToggle            = _proto.renderToggle ?
 				_proto.renderToggle :
-				function ( ) {
+				function () {
 					return 'add-to-queue';
 				};
 
 			this.getPreFetchLogic        = _proto.getPreFetchLogic ?
 				_proto.getPreFetchLogic :
-				function ( ) {
-					//data, collection
-					return [];
+				function ( data, callback ) {
+					callback( data );
 				};
 			this.getCarouselCustomAction = _proto.getCarouselCustomAction ?
 				_proto.getCarouselCustomAction :
-				function ( collection, view, element, id) {
+				function () {
 				};
 
 			return this;

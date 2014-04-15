@@ -93,27 +93,19 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/utils/toHHMMSSFormatTest.js',
 
 			//Homepage
-			'spec/apps/homepage/controllers/HomeControllerTest.js',
-			'spec/apps/homepage/external/billboard/views/BillboardItemViewTest.js',
-			'spec/apps/homepage/BaseObjectTest.js',
 			'spec/apps/homepage/external/content/controllers/contentCompositeControllerTest.js',
 			'spec/apps/homepage/external/content/views/ContentCompositeViewTest.js',
 
-			//Homepage - Content
-
 			//Homepage
 			'spec/apps/homepage/external/billboard/views/BillboardItemViewTest.js',
-			'spec/apps/homepage/external/billboard/configuration/nivoSettingsTest.js',
 			'spec/apps/homepage/external/content/views/ContentItemViewTest.js',
 
-			// //HomePage - Recommended
+			//HomePage - Recommended
 
 			//Homepage - Your Queue
-			'spec/apps/homepage/external/content/external/your-queue/baseTest.js',
-			'spec/apps/homepage/external/content/external/your-queue/collections/QueueCollectionTest.js',
-			'spec/apps/homepage/external/content/external/your-queue/controllers/baseControllerTest.js',
-			'spec/apps/homepage/external/content/external/your-queue/controllers/queueControllerTest.js',
-			'spec/apps/homepage/external/content/external/your-queue/models/QueueModelTest.js'
+			'spec/apps/homepage/external/content/external/your-queue/baseTest.js'
+
+
 		]
 
 	};

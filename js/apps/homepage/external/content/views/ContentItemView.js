@@ -42,7 +42,7 @@ define( function ( require ) {
 		},
 
 		'addToMyQueue' : function ( e ) {
-			controller.doAddtoMyQueue ( this, e );
+			controller.doAddtoMyQueue( this, e );
 		},
 
 		'removeQueueByRecommended' : function ( e ) {

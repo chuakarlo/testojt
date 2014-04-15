@@ -5,12 +5,12 @@ define( function ( require ) {
 	var $                          = require( 'jquery' );
 	var EmptyContentCollectionView = require( 'apps/homepage/external/content/views/EmptyContentCollectionView' );
 
-	var UIManager                  = require( 'apps/homepage/external/content/external/agents/UIManager' );
-	var contentWidth               = 500;
+	var UIManager          = require( 'apps/homepage/external/content/external/agents/UIManager' );
 
 	var queueSelector      = '#your-queue-wrapper';
-	var queueClasses       = 'remove-from-queue';
+	var queueClass         = 'remove-from-queue';
 	var queueCountSelector = '#your-queue-count';
+	var toggleText         = [ 'Watch Later', 'Remove from Queue' ];
 
 	var queueError = 'Something went wrong. Please try again later.';
 	var queueInfo  = 'The content is already removed.';
@@ -120,12 +120,12 @@ define( function ( require ) {
 
 		'doAddToMyQueue' : function ( view, model ) {
 			model.renderToggle = function () {
-				return queueClasses;
+				return queueClass;
 			};
+			$( '#content-button-' + model.ContentId ).attr( 'data-original-title', toggleText[ 1 ] );
 
 			view.collection.add( model );
 			view.$el.empty();
-			view.$el.width( view.$el.width() + contentWidth );
 			view.reRenderView();
 
 			UIManager.applyCircularScroll( queueSelector + ' ul' );

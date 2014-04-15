@@ -10,7 +10,7 @@ define( function ( require ) {
 	var UIManager       = require( 'apps/homepage/external/content/external/agents/UIManager' );
 	var templateTooltip = require( 'text!apps/homepage/external/content/templates/contentTooltipView.html' );
 
-	var queueClasses = [ 'add-to-queue', 'recommended-remove-from-queue' ];
+	var queueClasses = [ 'add-to-queue', 'recommended-remove-from-queue', 'remove-from-queue' ];
 	var defaultImage = 'http://builtbyhq.com/projects/school/CORE/v1/img/vid-9.png';
 
 	var imageBaseURL = 'http://resources.pd360.com/PD360/media/thumb/';
@@ -21,21 +21,21 @@ define( function ( require ) {
 	var queueWrapperSelector       = '#your-queue-wrapper';
 	var toggleText                 = [ 'Watch Later', 'Remove from Queue' ];
 
-	var queueInfo  = 'This content is already added to your queue.';
 	var queueError = 'Something went wrong. Please try again later.';
 
 	function switchClass ( e , from, to) {
 		var contentBtn = $( e.currentTarget );
-		contentBtn.switchClass( from, to );
+		contentBtn.removeClass( from );
+		contentBtn.addClass( to );
 		return contentBtn;
 	}
 
 	function switchRemove( e ) {
-		switchClass( e, queueClasses[0], queueClasses[1] );
+		switchClass( e, queueClasses[ 0 ], queueClasses[ 1 ] );
 	}
 
 	function switchAdd( e ) {
-		switchClass( e, queueClasses[1], queueClasses[0] );
+		switchClass( e, queueClasses[ 1 ], queueClasses[ 0 ] );
 	}
 
 	function getDuration ( model ) {
@@ -54,12 +54,7 @@ define( function ( require ) {
 	}
 
 	function addError ( e ) {
-		switchAdd( e ).tooltip( {
-			'content' : _.template( templateTooltip, {
-				'type'    : 'info',
-				'message' : queueInfo
-			} )
-		} ).tooltip( 'open' );
+		switchAdd( e ).tooltip( 'open' );
 	}
 
 	function removeSuccess ( _this, contentBtn, totalCount ) {
@@ -79,6 +74,13 @@ define( function ( require ) {
 			'type'    : 'warning',
 			'message' : queueError
 		} ) ).tooltip( 'open' );
+	}
+
+	function queueCheck ( watchToggle, model ) {
+		if ( model.get( 'contentType' ) === 'recommended' && watchToggle !== queueClasses[ 0 ] ) {
+			watchToggle = queueClasses[ 1 ];
+		}
+		return watchToggle;
 	}
 
 	return {
@@ -103,17 +105,17 @@ define( function ( require ) {
 			var watchToggle = ( model.get( 'renderToggle' ) )( view.model.collection, view.model );
 
 			return {
-				'contentId'   : model.get( 'ContentId' ),
-				'imageUrl'    : getImageUrl( model ),
-				'topic'       : view.limitCharacter( contentName, 43 ),
-				'duration'    : getDuration( model ),
-				'watchToggle' : watchToggle
+				'imageUrl'      : getImageUrl( model ),
+				'topic'         : view.limitCharacter( contentName, 35 ),
+				'duration'      : getDuration( model ),
+				'watchToggle'   : queueCheck( watchToggle, model ),
+				'contentStatus' : watchToggle === queueClasses[ 0 ] ? toggleText[ 0 ] : toggleText[ 1 ]
 			};
 		},
 
 		'doEnableTooltip' : function ( e ) {
 			var contentBtn = $( e.currentTarget );
-			var content    = toggleText[ contentBtn.hasClass( queueClasses[0] ) ? 0 : 1 ];
+			var content    = toggleText[ contentBtn.hasClass( queueClasses[ 0 ] ) ? 0 : 1 ];
 
 			contentBtn.tooltip( {
 				'placement' : 'top',
@@ -144,10 +146,10 @@ define( function ( require ) {
 
 				var recommendedUL = $( recommendedWrapperSelector + ' ul' );
 				var contentBtn    = recommendedUL.find( '#content-button-'+ _that.model.get( 'ContentId' ) );
-				contentBtn.switchClass( queueClasses[ 1 ], queueClasses[ 0 ] );
+				switchClass( contentBtn, queueClasses[ 0 ], queueClasses[ 1 ] );
 
 				_that.model.attributes.renderToggle = function () {
-					return queueClasses[0];
+					return queueClasses[ 0 ];
 				};
 				_that.render();
 			}
@@ -157,7 +159,8 @@ define( function ( require ) {
 			var contentBtn = $( e.currentTarget );
 
 			$( queueSelector + ' ul' ).trigger( 'removeQueueByRecommended', _that );
-			contentBtn.switchClass( queueClasses[1], queueClasses[0] );
+			switchClass( e, queueClasses[ 1 ], queueClasses[ 0 ] );
+			contentBtn.attr( 'data-original-title', toggleText[ 0 ] );
 		},
 
 		'doViewTags' : function ( _this, e ) {

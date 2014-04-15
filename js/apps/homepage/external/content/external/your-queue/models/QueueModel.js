@@ -5,8 +5,11 @@ define( function ( require ) {
 	var controller = require( 'apps/homepage/external/content/external/your-queue/controllers/queueController' );
 
 	return Backbone.Model.extend( {
+		'initialize' : function ( options ) {
+			this.set( 'contentType', 'queue' );
+		},
 		'idAttribute' : 'ContentId',
-		'sync' : function ( method, model, options ) {
+		'sync'        : function ( method, model, options ) {
 
 			if ( method === 'delete' ) {
 				controller.doFetch( model, options, 'deleteByObj');
