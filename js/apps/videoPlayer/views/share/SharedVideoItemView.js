@@ -4,6 +4,7 @@ define( function ( require ) {
 	// libraries
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
+	var formatTime = require( 'videoPlayer/utils/toHHMMSSFormat' );
 
 	require( 'videoPlayer/utils/selectText' );
 
@@ -24,8 +25,23 @@ define( function ( require ) {
 			'click @ui.videoUrl' : 'selectVideoUrl'
 		},
 
-		'selectVideoUrl' : function ( event ) {
+		'selectVideoUrl' : function () {
 			this.ui.videoUrl.selectText();
+		},
+
+		'templateHelpers' : {
+
+			'showImageUrl' : function () {
+				return 'http://resources.pd360.com/PD360/media/thumb/' + this.ImageURL;
+			},
+
+			'showSegmentLength' : function () {
+				return formatTime( this.SegmentLengthInSeconds );
+			},
+
+			'showVideoUrl' : function () {
+				return 'http://www.pd360.com/index.cfm?ContentId=' + this.ContentId;
+			}
 		}
 
 	} );

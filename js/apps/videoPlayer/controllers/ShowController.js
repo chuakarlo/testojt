@@ -9,8 +9,7 @@ define( function ( require ) {
 	var Session  = require( 'Session' );
 	var Remoting = require( 'Remoting' );
 
-	var ContentModel = require( 'videoPlayer/models/ContentModel' );
-
+	var ContentModel        = require( 'videoPlayer/models/ContentModel' );
 	var QuestionsCollection = require( 'videoPlayer/collections/QuestionsCollection' );
 
 	App.module( 'VideoPlayer.Controller', function ( Controller ) {
@@ -21,10 +20,10 @@ define( function ( require ) {
 				var licenseType = [ 0, 1, 200, 300 ];
 
 				var videoContentRequests = {
-					'path' : 'com.schoolimprovement.pd360.dao.ContentService',
+					'path'   : 'com.schoolimprovement.pd360.dao.ContentService',
 					'method' : 'getContentByContentIdAndLicenseTypes',
-					'args' : {
-						'contId' : videoId,
+					'args'   : {
+						'contId'   : videoId,
 						'licTypes' : licenseType
 					}
 				};
@@ -41,9 +40,9 @@ define( function ( require ) {
 				var videoModel = new ContentModel( videoInfo );
 
 				var relatedVideosRequest = {
-					'path' : 'com.schoolimprovement.pd360.dao.RespondService',
+					'path'   : 'com.schoolimprovement.pd360.dao.RespondService',
 					'method' : 'relatedVideos',
-					'args' : {
+					'args'   : {
 						'ContentId' : videoModel.id
 					}
 				};
@@ -52,12 +51,20 @@ define( function ( require ) {
 					'path' : 'com.schoolimprovement.pd360.dao.ContentService',
 					'method' : 'getQuestionsWithAnswers',
 					'args' : {
-						'persId' : Session.personnelId(),
+						'persId'    : Session.personnelId(),
 						'ContentId' : videoModel.id
 					}
 				};
 
-				var requests = [ questionsRequest ];
+				var queueContentsRequest = {
+					'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
+					'method' : 'getContentAbbrevListByPersonnelId',
+					'args'   : {
+						'personnelId' : Session.personnelId()
+					}
+				};
+
+				var requests = [ questionsRequest, relatedVideosRequest, queueContentsRequest ];
 				var fetchingData = Remoting.fetch( requests );
 
 				$.when( fetchingData ).done( function ( response ) {
@@ -67,6 +74,7 @@ define( function ( require ) {
 
 					var questions     = App.VideoPlayer.Controller.Filter.filterQuestions( response[ 0 ] );
 					// var relatedVideos = response[ 1 ].slice( 1 );
+					var queueContents = response[ 2 ];
 
 					// Videojs player view
 					var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( { 'model' : videoModel } );
@@ -77,8 +85,31 @@ define( function ( require ) {
 					var questionsView = new App.VideoPlayer.Views.QuestionsView( { collection : questionsCollection } );
 					layout.questionsRegion.show( questionsView );
 
+					// set video model queued flag
+					videoModel.set( 'queued', _.contains( _.pluck( queueContents, 'ContentId' ), videoModel.id ) );
+
+					// show video buttons view
+					var videoButtonsView = new App.VideoPlayer.Views.VideoButtonsView( {
+						'model'      : videoModel
+					} );
+					layout.videoButtonsRegion.show( videoButtonsView );
+
+					// show video tabs view
+					var videoTabsView = new App.VideoPlayer.Views.VideoTabsView();
+					layout.videoTabsRegion.show( videoTabsView );
+
 				} );
 
+			},
+
+			'showShareVideoDialog' : function ( model ) {
+				var shareVideoLayout = new App.VideoPlayer.Views.ShareVideoLayout( {
+					'model' : model
+				} );
+
+				// show share video dialog
+				var modalView = new App.VideoPlayer.Views.ModalView();
+				modalView.show( shareVideoLayout );
 			}
 
 		};

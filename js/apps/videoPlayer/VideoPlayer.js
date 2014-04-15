@@ -11,6 +11,7 @@ define( function ( require ) {
 		require( 'videoPlayer/views/Views' );
 		require( 'videoPlayer/controllers/FilterController' );
 		require( 'videoPlayer/controllers/ShowController' );
+		require( 'videoPlayer/controllers/QueueController' );
 
 		VideoPlayer.Router = AuthRouter.extend( {
 			'appRoutes' : {
@@ -25,12 +26,16 @@ define( function ( require ) {
 				VideoPlayer.Controller.Show.showVideo( videoId );
 			},
 
-			'showRelatedVideos' : function () {
-
+			'addContentToQueue' : function ( model ) {
+				VideoPlayer.Controller.Queue.addContentToQueue( model );
 			},
 
-			'showAdditionalResources' : function () {
+			'removeContentFromQueue' : function ( model ) {
+				VideoPlayer.Controller.Queue.removeContentFromQueue( model );
+			},
 
+			'showShareDialog' : function ( model ) {
+				VideoPlayer.Controller.Show.showShareVideoDialog( model );
 			}
 
 		};
@@ -41,6 +46,18 @@ define( function ( require ) {
 
 		Vent.on( 'videoPlayer:showResources', function () {
 			API.showAdditionalResources();
+		} );
+
+		Vent.on( 'videoPlayer:showShareDialog', function ( model ) {
+			API.showShareDialog( model );
+		} );
+
+		Vent.on( 'videoPlayer:addContentToQueue', function ( model ) {
+			API.addContentToQueue( model );
+		} );
+
+		Vent.on( 'videoPlayer:removeContentFromQueue', function ( model ) {
+			API.removeContentFromQueue( model );
 		} );
 
 		App.addInitializer( function () {

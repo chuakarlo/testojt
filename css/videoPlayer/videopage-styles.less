@@ -1,7 +1,5 @@
 #video-player-page {
-		width : 1200px;
 	#header {
-		width   : 1200px;
 		h1 {
 			width         : 1177px;
 			white-space   : nowrap;
@@ -64,53 +62,61 @@
 		border-radius : 3px;
 	}
 
-	.tabs {
-		width:100%;
-		border-bottom: 1px solid #ebebeb;
-		padding-bottom: 10px;
-		height:63px;
-		margin-bottom:12.5px;
-		position: relative;
+	#tab-container {
+		width         : 100%;
+		border-bottom : 1px solid #EBEBEB;
+		position      : relative;
+		margin-top    : 20px;
+		margin-left   : 0px;
 		a {
-			color:inherit;
+			color : inherit;
 		}
-		ul {
-			position: absolute;
-			bottom: 0px;
+		#video-tabs {
+			padding-left : 0px;
+			.nav-tabs {
+				border-top    : none;
+				margin-bottom : 0px;
+				li, li.active {
+					a:hover, a:focus {
+						border-top : none;
+					}
+				}
+				li.active {
+					a {
+						border-top    : none;
+						border-bottom : 3px solid #8DB62B;
+						color         : #8DB62B;
+					}
+				}
+			}
 		}
-		.btns {
-			float:right;
-		}
-		button {
-			width:152px;
-		}
-		button:disabled {
-			display : block;
-		}
-		.blue-btn {
-			padding:0;
-			margin-left:20px;
-		}
-		.active {
-			border-bottom: 3px solid #8db62b;
-			color:#8db62b;
-		}
-		span {
-			position: relative;
-			top:1px;
-		}
-	}
-
-	.overflow {
-		width:100%;
-		overflow: scroll;
-		display: none;
-		.active {
-			border-bottom: 3px solid #8db62b;
-			color:#8db62b;
-		}
-		ul {
-			width:500px;
+		#video-buttons {
+			padding-right  : 0px;
+			button {
+				height   : 37px;
+				width    : 138px;
+				position : relative;
+				top      : -7px;
+				.white-btn {
+					background    : none;
+					border        : 1px solid #A5A7AD;
+					border-radius : 3px;
+					:hover {
+						opacity : .7;
+					}
+				}
+				.blue-btn {
+					margin-left : 20px;
+					background  : #3DADEF;
+					color       : white;
+					padding     : 0 !important;
+					transition  : .3s;
+					:hover {
+						background : #5ABEF9;
+						color      : white;
+					}
+				}
+			}
 		}
 	}
 
@@ -247,7 +253,6 @@
 		left     : 50%;
 		top      : 100px;
 	}
-
 
 	.info-thumbnail {
 		width              : 137px;

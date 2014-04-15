@@ -13,8 +13,15 @@ define( function ( require ) {
 		'template' : _.template( template ),
 
 		'regions' : {
-			'playerRegion'    : '#video-player',
-			'questionsRegion' : '#video-reflection'
+			'playerRegion'         : '#video-player',
+			'questionsRegion'      : '#video-reflection',
+			'videoButtonsRegion'   : '#video-buttons',
+			'videoTabsRegion'      : '#video-tabs',
+			'videoResourcesRegion' : '',
+			'videoSegmentsRegion'  : '',
+			'relatedVideosRegion'  : ''
 		}
+
 	} );
+
 } );

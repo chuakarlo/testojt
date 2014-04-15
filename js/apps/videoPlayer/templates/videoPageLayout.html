@@ -1,3 +1,4 @@
+<!-- video player header -->
 <div id="video-player-header">
 	<div id="header" class="form-horizontal">
 		<h1><%= ContentName %></h1>
@@ -8,6 +9,7 @@
 		<a class="blue-text" href="#">Future Teaching</a>
 	</p>
 </div>
+<!-- video player and questions -->
 <div id="video-container">
 	<section id="video">
 		<div id="video-player"></div>
@@ -15,9 +17,25 @@
 		<br class="clear">
 	</section>
 </div>
-<div id="video-tabs">
+<div class="row clearfix column" id="tab-container">
+	<!-- video tabs -->
+	<div class="col-lg-6" id="video-tabs"></div>
+	<!-- buttons -->
+	<div class="col-lg-6" id="video-buttons"></div>
 </div>
-<div id="app-modal" class="modal fade share-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+<!-- tab contents -->
+<div class="tab-content">
+	<div class="tab-pane active" id="video-resources">
+		<div class="additional-resources">
+			<div class="video-resource">Addtional Resources</div>
+			<div class="video-segment">Other Segments</div>
+		</div>
+	</div>
+	<div class="tab-pane" id="related-videos">Related Videos</div>
+</div>
+<!-- modal region -->
+<div class="modal fade share-modal" id="app-modal"></div>
+<!-- video info pop up -->
 <div id="info-video-content" hidden>
 	<div class="well well-sm">
 			<div class="row">
