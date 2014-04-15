@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-var _                    = require( 'underscore' );
+  var _                    = require( 'underscore' );
 	var footerTemplate       = require( 'text!apps/homepage/external/what-to-do-next/templates/widgetFooterTemplate.html' );
 	var WidgetItemCollection = require( 'apps/homepage/external/what-to-do-next/collections/WidgetItemCollection' );
 

@@ -16,9 +16,9 @@ define( function ( require ) {
 			'changeRecommendedIcon'                : 'changeRecommendedIcon',
 			'mouseenter .vid-thumb-overlay'        : 'viewTags'
 		},
-		'template'  : _.template( template ),
-		'tagName'   : 'li',
-		'className' : 'grid-box vid-thumb',
+		'template'        : _.template( template ),
+		'tagName'         : 'li',
+		'className'       : 'grid-box col-md-3 vid-thumb no-padding',
 
 		'templateHelpers' : function () {
 			return controller.doSetTemplateHelper( this );

@@ -21,7 +21,7 @@ define( function ( require ) {
 				this.collection['sharedData'] = newOptions;
 			}
 		},
-		'className' : 'section-container',
+		'className' : 'col-md-12 no-padding',
 		'events'    : {
 			'click #widget-settings' : 'toggleInactiveWidgets'
 		},

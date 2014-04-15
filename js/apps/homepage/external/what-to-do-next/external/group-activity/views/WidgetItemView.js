@@ -8,7 +8,7 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 		'template'        : _.template( template ),
-		'className'       : 'item groupactivity',
+		'className'       : 'col-md-12 no-padding groupactivity',
 		'templateHelpers' : function () {
 			return {
 				'content' : this.model.get( 'content' ),
@@ -21,7 +21,7 @@ define( function ( require ) {
 			var that = this;
 			require( ['pc-htmlconcat'], function ( $ ) {
 				$(that.$el).find( 'p' ).htmlconcat( {
-					'length'       : 40,
+					'length'       : 32,
 					'stringAppend' : '...'
 				} );
 			} );

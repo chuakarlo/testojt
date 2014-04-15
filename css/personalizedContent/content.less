@@ -1,0 +1,198 @@
+// *
+// Content CSS (Your Queue and Recommended)
+//*
+
+
+#Home-page-view {
+
+	#your-queue-wrapper .watch-later .content-button{
+		color: @blue-light;
+	}
+
+	#your-queue-wrapper, #recommended-wrapper {
+		position : relative;
+		overflow : hidden;
+
+		.img-responsive {
+			width: 100%;
+			max-height: 158px;
+		}
+
+		ul {
+			height          : inherit;
+			margin-bottom   : @fifty-px;
+			min-height      : 300px;
+			list-style-type : none;
+			margin          : @min;
+			padding         : @min;
+		}
+
+		li {
+			min-height: 290px;
+			max-height: 290px;
+			h4 {
+				font-size: 18px;
+				margin: 20px 25px 0px 25px;
+				color: #000000;
+				text-align: left;
+				height: 36px;
+			}
+		}
+
+		.prevNext {
+			cursor      : pointer;
+			width       : 30px;
+			height      : 30px;
+			background  : url(../img/arrows-grey.png) no-repeat;
+			text-indent : -9999px;
+			border      : 0;
+			z-index     : 10000;
+			position    : absolute;
+			display     : inline-block;
+			bottom      : 150px;
+			left        : 0;
+		}
+		#next-slide {
+			background-position :-30px 0;
+			right               : 0;
+			left                : auto;
+		}
+
+		.watch-later {
+			width      : 35px;
+			height     : 35px;
+			background : none !important;
+			margin     : 5px 15px;
+			padding    : 5px;
+			float      : right;
+
+			.content-button {
+				margin     : auto 0;
+				text-align : center;
+			}
+		}
+
+
+		.watch-later-icon {
+			font-size: 25px;
+			color: #e1e1e1;
+			cursor: pointer;
+		}
+		.content-wrapper {
+			padding: 0;
+			margin: 0;
+			list-style: none;
+			background: #f3f5f6;
+			border-top: 0;
+			border-left: 15px solid #fff;
+			border-right: 15px solid #fff;
+			border-bottom: 20px solid #fff;
+		}
+	}
+
+	.resource-list-heading {
+		height        : 30px;
+		margin-bottom : @res-heading;
+		position : relative;
+		h2 {
+			color: #b9bcc1;
+			#queue-header, #recommended-header {
+				color: #333333;
+			}
+		}
+	}
+
+	h2 {
+		font-weight : @font-common;
+		margin      : @min;
+		padding     : @min;
+		font-size   : 24px;
+		line-height : 30px;
+	}
+	.view-more {
+		float : right;
+	}
+	.vid-thumb {
+		position : relative;
+		h3 {
+			margin : @vid-thumb-top-mar @min @min @vid-thumb-left;
+		}
+		p {
+			line-height: 30px;
+			font-size: 15px;
+			margin: 10px 25px 20px 25px;
+			display: inline-block;
+			color: #8a8d94;
+		}
+	}
+	a {
+		color           : @blue-light;
+		text-decoration : none;
+	}
+
+
+	// *
+	// Play Now Section
+	// *
+	.video-hover
+	{
+			 display:none;
+
+			> div {
+				font-size : 35px;
+				position  : absolute;
+				top       : 25%;
+				left      : calc( 50% - 10px );
+				color: @white;
+			}
+
+		.play-now {
+			left     : 25%;
+			top      : 35%;
+			position : absolute;
+			color    : @white;
+		}
+	}
+
+	.vid-thumb-overlay{
+		color      : @white;
+		background : @black;
+		display    : inline-block;
+	}
+
+	//*
+	// On Hover
+	// *
+
+	#your-queue-wrapper .watch-later:hover {
+		padding : 3px;
+		border  : 1px solid rgba(0,0,0,.1);
+	.border-radius( @cn-base-radius / 3 );
+	}
+
+	#recommended-wrapper .watch-later:hover {
+		padding : 3px;
+		border  : 1px solid rgba(0,0,0,.1);
+		.border-radius( @cn-base-radius / 3 );
+		.content-button {
+				color :	@blue-light;
+			}
+	}
+
+ .vid-thumb-overlay:hover .vid-thumb-bg {
+		opacity             : .5;
+		transition-duration : .5s;
+	}
+
+	.vid-thumb-overlay:hover  .video-hover {
+		z-index : 1;
+		display: inline;
+	}
+
+	//display if hovered
+	#your-queue-wrapper:hover .prevNext,
+	#recommended-wrapper:hover .prevNext {
+		display : inline-block;
+	}
+
+}

@@ -1,0 +1,78 @@
+//Progress circle
+
+#Home-page-view{
+	.borderRadius () {
+		-webkit-border-radius : 50%;
+		-moz-border-radius    : 50%;
+		-ms-border-radius     : 50%;
+		-o-border-radius      : 50%;
+		border-radius         : 50%;
+	}
+	.prog-circle {
+		position              : relative;
+		font-size             : 120px;
+		width                 : @padd;
+		height                : @padd;
+		float                 : left;
+		margin                : 0 0.1em 0.1em 0;
+		background-color      : @yellow-light;
+		.borderRadius;
+		.slice {
+			position : absolute;
+			width    : @padd;
+			height   : @padd;
+			clip     : rect(0em, @padd, @padd, 0.5em);
+		}
+		.slice.clipauto {
+			clip : rect(auto, auto, auto, auto);
+		}
+		.fill, .bar {
+			position              : absolute;
+			border                : 0.08em solid @green;
+			width                 : 0.84em;
+			height                : 0.84em;
+			clip                  : rect(0em, .5em, @padd, 0em);
+			-webkit-transform     : rotate(20deg);
+			-moz-transform        : rotate(20deg);
+			-ms-transform         : rotate(20deg);
+			-o-transform          : rotate(20deg);
+			transform             : rotate(20deg);
+			.borderRadius;
+		}
+		.percenttext {
+			position                           : absolute;
+			width                              : 100%;
+			height                             : @padd;
+			z-index                            : 1;
+			margin                             : auto;
+			top                                : 0;
+			left                               : 0;
+			right                              : 0;
+			bottom                             : 0;
+			font-size                          : 0.3em;
+			color                              : @green;
+			display                            : block;
+			text-align                         : center;
+			white-space                        : nowrap;
+			line-height                        : 100%;
+			-webkit-transition-duration        : 0.2s;
+			-moz-transition-duration           : 0.2s;
+			-o-transition-duration             : 0.2s;
+			transition-duration                : 0.2s;
+			-webkit-transition-timing-function : ease-out;
+			-moz-transition-timing-function    : ease-out;
+			-o-transition-timing-function      : ease-out;
+			transition-timing-function         : ease-out;
+		}
+		.after {
+			position              : absolute;
+			top                   : 0.08em;
+			left                  : 0.08em;
+			display               : block;
+			background-color      : @white;
+			width                 : 0.84em;
+			height                : 0.84em;
+			.borderRadius;
+		}
+	}
+}

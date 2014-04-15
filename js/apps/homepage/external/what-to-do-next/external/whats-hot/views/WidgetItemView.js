@@ -7,16 +7,24 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 		'template'        : _.template( template ),
-		'className'       : 'item whatshot',
+		'className'       : 'col-md-12 no-padding whatshot',
 		'templateHelpers' : function () {
 			return {
-				'content' : this.limitCharacter( this.model.get( 'title' ) ),
+				'content' : this.model.get( 'title' ),
 				'url'     : this.model.get( 'url' ),
 				'imgUrl'  : this.model.get( 'imgUrl' )
 			};
 		},
-		'limitCharacter' : function ( text ) {
-			return ( text.length > 40 ) ? text.substr( 0, 40 ) + '...' : text;
-		},
+
+		'onShow'          : function ( parent ) {
+			var that = this;
+			require( ['pc-htmlconcat'], function ( $ ) {
+				$(that.$el).find( 'p' ).htmlconcat( {
+					'length'       : 32,
+					'stringAppend' : '...'
+				} );
+			} );
+
+		}
 	} );
 } );

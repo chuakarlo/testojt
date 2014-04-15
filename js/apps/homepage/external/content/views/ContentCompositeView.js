@@ -10,7 +10,7 @@ define( function ( require ) {
 	return Marionette.CompositeView.extend( {
 		'template'  : _.template( template ),
 		'itemView'  : ContentItemCollectionView,
-		'className' : 'clear',
+		'className' : 'clear container',
 
 		'initialize' : function ( options ) {
 			controller.doInitialize( this );

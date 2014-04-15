@@ -2,7 +2,6 @@ define( function ( require ) {
 	'use strict';
 
 	var _                   = require( 'underscore' );
-
 	var imageTemplate       = require( 'text!apps/homepage/external/billboard/templates/billboardImageView.html' );
 	var linkTemplate        = require( 'text!apps/homepage/external/billboard/templates/billBoardLinkView.html' );
 	var captionTemplate     = require( 'text!apps/homepage/external/billboard/templates/billboardCaptionView.html' );

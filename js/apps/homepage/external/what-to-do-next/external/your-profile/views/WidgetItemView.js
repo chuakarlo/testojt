@@ -7,7 +7,7 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 		'template'        : _.template( template ),
-		'className'       : 'item your-profile',
+		'className'       : 'col-md-12 no-padding your-profile',
 		'templateHelpers' : function () {
 			return {
 				'description' : this.model.get( 'description' ),

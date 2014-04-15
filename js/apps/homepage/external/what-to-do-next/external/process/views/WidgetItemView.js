@@ -7,7 +7,7 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 		'template'        : _.template( processTemplate ),
-		'className'       : 'item learningTarget',
+		'className'       : 'col-md-12 no-padding learningTarget',
 		'templateHelpers' : function () {
 			var date = this.formatDate(this.model.get( 'date' ));
 			return {
@@ -38,7 +38,7 @@ define( function ( require ) {
 
 			require( ['pc-htmlconcat'], function ( $ ) {
 				$(that.$el).find( 'p' ).htmlconcat( {
-					'length'       : 40,
+					'length'       : 32,
 					'stringAppend' : '...'
 				} );
 			} );

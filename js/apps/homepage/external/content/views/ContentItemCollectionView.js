@@ -14,6 +14,7 @@ define( function ( require ) {
 			'changeRecommendedIcons'   : 'changeRecommendedIcons'
 		},
 		'tagName'         : 'ul',
+		'className'       : 'row',
 		'emptyView'       : EmptyContentView,
 		'itemView'        : ContentItemView,
 

@@ -17,6 +17,7 @@ define( function ( require ) {
 		},
 		'tagName'   : 'div',
 		'id'        : 'content-display',
+		'className' : 'col-md-12 no-padding',
 		'itemView'  : Contentcompositeview
 	} );
 } );

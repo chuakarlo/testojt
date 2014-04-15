@@ -24,6 +24,9 @@ define( function ( require ) {
 
 	function switchClass ( e , from, to) {
 		var contentBtn = $( e.currentTarget );
+		console.log( contentBtn );
+		console.log( from );
+		console.log( to );
 		contentBtn.switchClass( from, to );
 		return contentBtn;
 	}
@@ -103,7 +106,7 @@ define( function ( require ) {
 			return {
 				'contentId'   : model.get( 'ContentId' ),
 				'imageUrl'    : getImageUrl( model ),
-				'topic'       : view.limitCharacter( contentName, 23 ),
+				'topic'       : view.limitCharacter( contentName, 43 ),
 				'duration'    : getDuration( model ),
 				'watchToggle' : watchToggle
 			};

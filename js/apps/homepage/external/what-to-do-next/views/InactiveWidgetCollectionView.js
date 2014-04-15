@@ -10,6 +10,7 @@ define( function ( require ) {
 	var WidgetUtility       = require( 'apps/homepage/external/what-to-do-next/agents/WidgetUtility' );
 	var ApiCollection       = require( 'apps/homepage/external/what-to-do-next/agents/WidgetAPI' );
 
+
 	var parentCollection    = null;
 
 	return Marionette.CollectionView.extend( {
@@ -53,7 +54,7 @@ define( function ( require ) {
 
 		},
 		'tagName'         : 'ul',
-		'className'       : 'three-box',
+		'className'       : 'container',
 
 		/**
 		 * We create another CollectionView we call ItemCollectionView

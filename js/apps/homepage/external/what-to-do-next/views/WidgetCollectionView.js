@@ -128,7 +128,7 @@ define( function ( require ) {
 
 		},
 		'tagName'      : 'ul',
-		'className'    : 'three-box',
+		'className'    : 'row',
 		'itemView'     : WidgetCompositeView,
 		'onRender'     : function ( parent ) {
 

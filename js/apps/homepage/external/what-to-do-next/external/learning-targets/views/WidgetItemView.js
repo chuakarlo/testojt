@@ -19,7 +19,7 @@ define( function ( require ) {
 				this.template = _.template( inProgress ? progressTemplate : videoTemplate );
 			}
 		},
-		'className' : 'item learningTarget',
+		'className' : 'col-md-12 no-padding learningTarget',
 		'templateHelpers' : function () {
 			return {
 				'content'    : this.model ? this.limitCharacter( this.model.get( 'content' ) ) : '',

@@ -12,8 +12,8 @@ define( function ( require ) {
 			this.itemView  = this.baseObj.getTemplate;
 			this.oItemIvew = new this.itemView();
 		},
-		'itemViewContainer' : '.item-view-inactive',
 		'tagName'           : 'li',
+		'className'         : 'col-md-4 no-padding',
 		'onRender'          : function ( parent ) {
 			//assignment of this.id in initialize fxn doesn't work
 			parent.$el.attr( {'id' : this.baseObj._id } );
