@@ -7,10 +7,10 @@ define( function ( require ) {
 	var Vent = require( 'Vent' );
 
 	App.module( 'VideoPlayer', function ( VideoPlayer ) {
-		// load sub apps
-		// require( './controllers/showController' );
+
 		require( 'videoPlayer/views/Views' );
-		require( 'videoPlayer/controllers/AppController' );
+		require( 'videoPlayer/controllers/FilterController' );
+		require( 'videoPlayer/controllers/ShowController' );
 
 		VideoPlayer.Router = AuthRouter.extend( {
 			'appRoutes' : {

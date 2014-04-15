@@ -1,6 +1,7 @@
 define( function( require ) {
 	'use strict';
-	
+
+	var moment     = require( 'moment' );
 	var Marionette = require( 'marionette' );
 	var Remoting   = require( 'Remoting' );
 	var sinon      = window.sinon;
@@ -20,9 +21,9 @@ define( function( require ) {
 			App.VideoPlayer.should.have.property( 'Router' );
 		} );
 
-		describe( 'Controller', function () {
+		describe( 'Show Controller', function () {
 			
-			it( 'creates controller `Show`', function () {
+			it( 'is attached to `App`', function () {
 				App.VideoPlayer.should.have.property( 'Controller' );
 				App.VideoPlayer.Controller.should.have.property( 'Show' );
 				App.VideoPlayer.Controller.Show.should.have.property( 'showVideo' );
@@ -87,6 +88,42 @@ define( function( require ) {
 				Remoting.fetch.restore();
 				App.content.show.restore();
 				App.VideoPlayer.Views.PageLayout.restore();
+			} );
+
+		} );
+
+		describe( 'Filter Controller', function () {
+
+			it( 'is attached to `App`', function () {
+				App.VideoPlayer.should.have.property( 'Controller' );
+				App.VideoPlayer.Controller.should.have.property( 'Filter' );
+				App.VideoPlayer.Controller.Filter.should.have.property( 'filterQuestions' );
+			 } );
+
+			 describe( '.filterQuestions', function () {
+
+				 it( 'should return followup questions after a specified time', function ( done ) {
+					 var options = {
+						'timezone': 'MST7MDT',
+						'duration': 'seconds',
+						'timeDuration': 1
+					 };
+
+					 var fakeData = [ {
+						 'Created' : moment().tz( options.timezone ).format( 'MMMM, D YYYY h:mm:ss' ),
+						 'QuestionTypeId' : 1
+					 }, {
+						 'QuestionTypeId' : 2
+					 } ];
+					 
+					 setTimeout( function () {
+						 var questions = App.VideoPlayer.Controller.Filter.filterQuestions( fakeData, options );
+						 questions[0].QuestionTypeId.should.equal( 2 );
+						 done();
+					 }, 1000 );
+					 
+				} );
+
 			} );
 
 		} );

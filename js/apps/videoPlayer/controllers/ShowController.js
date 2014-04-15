@@ -55,7 +55,7 @@ define( function ( require ) {
 					}
 				};
 
-				var requests = [ relatedVideosRequest, questionsRequest ];
+				var requests = [ questionsRequest, relatedVideosRequest ];
 				var fetchingData = Remoting.fetch( requests );
 
 				$.when( fetchingData ).done( function ( response ) {
@@ -63,8 +63,8 @@ define( function ( require ) {
 					var layout = new App.VideoPlayer.Views.PageLayout( { 'model' : videoModel } );
 					App.content.show( layout );
 
-					var relatedVideos = response[ 0 ].slice( 1 );
-					var questions     = response[ 1 ];
+					var questions     = App.VideoPlayer.Controller.Filter.filterQuestions( response[ 0 ] );
+					var relatedVideos = response[ 1 ].slice( 1 );
 
 					// Videojs player view
 					var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( { 'model' : videoModel } );

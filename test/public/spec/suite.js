@@ -55,7 +55,7 @@ define( function ( require ) {
 			'spec/plugins/Backbone.CFTest',
 
 			// VideoPlayer test specs
-			'spec/apps/videoPlayer/controllers/AppControllerTest.js',
+			'spec/apps/videoPlayer/VideoPlayerTest.js',
 			// models
 			'spec/apps/videoPlayer/models/ContentModelTest.js',
 			'spec/apps/videoPlayer/models/QuestionModelTest.js',
