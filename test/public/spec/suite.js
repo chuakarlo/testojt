@@ -100,7 +100,8 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/utils/toHHMMSSFormatTest.js',
 
 			'spec/apps/homepage/external/external/content/controllers/contentCompositeControllerTest.js',
-			'spec/apps/homepage/external/external/content/views/ContentCompositeViewTest.js'
+			'spec/apps/homepage/external/external/content/views/ContentCompositeViewTest.js',
+			'spec/apps/billboard/BillboardTest'
 		]
 
 	};
