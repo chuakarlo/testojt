@@ -7,9 +7,9 @@ define( function ( require ) {
 	var $          = require( 'jquery' );
 
 	return Marionette.ItemView.extend( {
-		'template'  : _.template( template ),
-		'tagName' : 'li',
-		'ui'        : {
+		'template' : _.template( template ),
+		'tagName'  : 'li',
+		'ui'       : {
 			'drawerToggleButton'  : '.lt-toggle-btn'
 		},
 
