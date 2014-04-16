@@ -8,6 +8,8 @@ define( function ( require ) {
 
 	return Marionette.Layout.extend( {
 
+		'id' : 'video-player-page',
+
 		'template' : _.template( template ),
 
 		'regions' : {

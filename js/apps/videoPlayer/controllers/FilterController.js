@@ -10,9 +10,9 @@ define( function ( require ) {
 	var App = require( 'App' );
 
 	var settings = {
-		'timeDuration' : 3,
+		'timeDuration' : 10,
 		'timezone' : 'MST7MDT',
-		'duration' : 'seconds'
+		'duration' : 'minutes'
 	};
 
 	var type = {

@@ -3,6 +3,10 @@
 	#video-reflection  {
 		position : relative;
 
+		.slick-slider {
+			margin-bottom: 0px;
+		}
+
 		#reflection-title {
 			margin-top: 0px;
 		}
@@ -14,6 +18,16 @@
 			box-sizing : border-box;
 			overflow-y : auto;
 			position   : relative;
+		}
+
+    #reflection-items.disabled {
+        opacity: 0.5;
+    }
+
+		.reflection-item {
+			.item-container {
+				padding : 0px 5px;
+			}
 		}
 
 		.reflection-item textarea {
@@ -103,6 +117,11 @@
 			margin-top            : 15px;
 			resize                : none;
 			padding               : 10px;
+		}
+
+		#submit-answers {
+			display: none;
+			margin-top: 0px;
 		}
 	}
 }

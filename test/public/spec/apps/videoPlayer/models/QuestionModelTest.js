@@ -3,36 +3,42 @@ define( function ( require ) {
 
 	var QuestionModel = require( 'videoPlayer/models/QuestionModel' );
 
-	describe( 'QuestionQuestionModel', function () {
-		var reflection;
+	describe( 'QuestionModel', function () {
+		var question;
 		var testData;
 
 		before( function () {
-			reflection = new QuestionModel();
 			testData = {
 				'QuestionId'   : 1,
-				'QuestionText' : 'What visual or real-world examples have you effectively used in helping students understand geometry?'
+				'QuestionText' : 'Test question',
+				'AnswerText'   : ''
 			};
+			question = new QuestionModel( testData );
 		} );
 
-		it( 'should be an instance of QuestionModel', function () {
-			reflection.should.be.an.instanceof( QuestionModel );
-		} );
-
-		it( 'should save data when calling .save', function () {
-			reflection.set( testData );
-			reflection.id.should.equal( testData.QuestionId );
-			reflection.get( 'QuestionText' ).should.equal( testData.QuestionText );
+		it( 'is an instance', function () {
+			question.should.be.an.instanceof( QuestionModel );
 		} );
 
 		it( 'should initialize with given data', function () {
-			testData = {
-				'QuestionId'   : 2,
-				'QuestionText' : 'What visual or real-world examples have you effectively used in helping students understand geometry?'
-			};
-			var newQuestion = new QuestionModel( testData );
-			newQuestion.id.should.equal( testData.QuestionId );
-			newQuestion.get( 'QuestionText' ).should.equal( testData.QuestionText );
+			question.id.should.equal( testData.QuestionId );
+			question.get( 'QuestionText' ).should.equal( testData.QuestionText );
 		} );
+
+		describe( '.getSanitizedAnswer', function () {
+
+			it( 'should protect from script tag inputs', function () {
+				question.set( 'AnswerText', '<script></script>' );
+				question.getSanitizedAnswer().should.equal( '&lt;script&gt;&lt;\\/script&gt;' );
+			} );
+
+			it( 'should escape html tags', function () {
+				question.set( 'AnswerText', '<p></p>' );
+				question.getSanitizedAnswer().should.equal( '&lt;p&gt;&lt;/p&gt;' );
+			} );
+
+		} );
+
 	} );
+
 } );

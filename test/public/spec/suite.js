@@ -73,15 +73,12 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/collections/GroupsCollectionTest.js',
 			// views
 			'spec/apps/videoPlayer/views/ModalRegionTest.js',
-			'spec/apps/videoPlayer/views/PageLayoutTest.js',
-			'spec/apps/videoPlayer/views/VideoPlayerLayoutTest.js',
-			'spec/apps/videoPlayer/views/VideoTabsLayoutTest.js',
 			'spec/apps/videoPlayer/views/LoadingViewTest.js',
 			// views/player
 			'spec/apps/videoPlayer/views/player/PlayerItemViewTest.js',
 			// views/questions
-			'spec/apps/videoPlayer/views/reflection/ReflectionLayoutTest.js',
-			'spec/apps/videoPlayer/views/reflection/ReflectionItemViewTest.js',
+			'spec/apps/videoPlayer/views/QuestionsCompositeViewTest.js',
+			'spec/apps/videoPlayer/views/QuestionItemViewTest.js',
 			// views/share
 			'spec/apps/videoPlayer/views/share/ShareVideoLayoutTest.js',
 			'spec/apps/videoPlayer/views/share/SharedVideoItemViewTest.js',

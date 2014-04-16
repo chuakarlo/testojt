@@ -1,10 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var $         = require( 'jquery' );
-	var sinon     = window.sinon;
+	var sinon               = window.sinon;
 
-	var Remoting = require( 'Remoting' );
+	var App                 = require( 'App' );
+	var Remoting            = require( 'Remoting' );
 	var QuestionsCollection = require( 'videoPlayer/collections/QuestionsCollection' );
 
 	describe( 'QuestionsCollection', function () {
@@ -38,45 +38,6 @@ define( function ( require ) {
 			questions.length.should.equal( testData.length );
 		} );
 
-		describe( 'fetch method', function () {
-
-			before( function () {
-				this.success = sinon.spy();
-				this.error = sinon.spy();
-
-				sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
-			} );
-
-			after( function () {
-				Remoting.fetch.restore();
-			} );
-
-			it( 'should call success callback once on success', function () {
-				Remoting.fetch.should.have.callCount( 0 );
-
-				var request = {
-					'args' : {}
-				};
-
-				questions.fetch( request, {
-					'success' : this.success,
-					'error'   : this.error
-				} ).resolve();
-
-				Remoting.fetch.should.have.callCount( 1 );
-				this.success.should.have.callCount( 1 );
-				this.error.should.have.callCount( 0 );
-			} );
-
-		} );
-
-		describe( 'resetCollection method', function () {
-			it( 'should reset collection and contain the correct length', function() {
-				questions.resetCollection( [ testData ] );
-				questions.length.should.equal( 3 );
-			} );
-		} );
-
 		describe( 'buildRequests method', function () {
 
 			it( 'should return an array of objects', function () {
@@ -98,11 +59,20 @@ define( function ( require ) {
 
 		describe( 'sync method', function () {
 
-			after( function () {
+			var stub;
+
+			before( function () {
+				stub = sinon.stub().returns( false );
+				App.reqres.setHandler( 'pd360:available', stub );
+			} );
+
+			after( function() {
+				stub = null;
+				App.reqres.removeHandler( 'pd360:available' );
 				Remoting.fetch.restore();
 			} );
 
-			it( 'should call ajax on sync', function () {
+			it( 'should call ajax on save', function () {
 				sinon.stub( Remoting, 'fetch' );
 
 				Remoting.fetch.should.have.callCount( 0 );

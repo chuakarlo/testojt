@@ -11,6 +11,8 @@ define( function ( require ) {
 
 	var ContentModel = require( 'videoPlayer/models/ContentModel' );
 
+	var QuestionsCollection = require( 'videoPlayer/collections/QuestionsCollection' );
+
 	App.module( 'VideoPlayer.Controller', function ( Controller ) {
 
 		Controller.Show = {
@@ -55,7 +57,7 @@ define( function ( require ) {
 					}
 				};
 
-				var requests = [ questionsRequest, relatedVideosRequest ];
+				var requests = [ questionsRequest ];
 				var fetchingData = Remoting.fetch( requests );
 
 				$.when( fetchingData ).done( function ( response ) {
@@ -64,11 +66,16 @@ define( function ( require ) {
 					App.content.show( layout );
 
 					var questions     = App.VideoPlayer.Controller.Filter.filterQuestions( response[ 0 ] );
-					var relatedVideos = response[ 1 ].slice( 1 );
+					// var relatedVideos = response[ 1 ].slice( 1 );
 
 					// Videojs player view
 					var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( { 'model' : videoModel } );
 					layout.playerRegion.show( videoPlayerView );
+
+					// Questions view
+					var questionsCollection = new QuestionsCollection( questions );
+					var questionsView = new App.VideoPlayer.Views.QuestionsView( { collection : questionsCollection } );
+					layout.questionsRegion.show( questionsView );
 
 				} );
 

@@ -2,9 +2,11 @@ define( function ( require ) {
 	'use strict';
 
 	// test libraries
+	var $     = require( 'jquery' );
 	var sinon = window.sinon;
 
 	// dependency modules
+	var App              = require( 'App' );
 	var Remoting         = require( 'Remoting' );
 	var PeopleCollection = require( 'videoPlayer/collections/PeopleCollection' );
 
@@ -34,8 +36,12 @@ define( function ( require ) {
 			var request;
 			var options;
 			var remotingStub;
+			var stub;
 
 			before( function () {
+				stub = sinon.stub().returns( false );
+				App.reqres.setHandler( 'pd360:available', stub );
+
 				remotingStub = sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
 				request      = {};
 				options      = {
@@ -47,6 +53,9 @@ define( function ( require ) {
 			} );
 
 			after( function () {
+				stub = null;
+				App.reqres.removeHandler( 'pd360:available' );
+
 				Remoting.fetch.restore();
 			} );
 

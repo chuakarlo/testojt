@@ -1,12 +1,12 @@
 define( function ( require ) {
 	'use strict';
 
-	var _                       = require( 'underscore' );
-	var Backbone                = require( 'backbone' );
+	var Backbone = require( 'backbone' );
 
-	var ReflectionQuestionModel = require( 'videoPlayer/models/QuestionModel' );
-	var Remoting                = require( 'Remoting' );
-	var Session                 = require( 'Session' );
+	var Remoting = require( 'Remoting' );
+	var Session  = require( 'Session' );
+
+	var QuestionModel = require( 'videoPlayer/models/QuestionModel' );
 
 	return Backbone.Collection.extend( {
 
@@ -19,55 +19,26 @@ define( function ( require ) {
 
 		'method'     : 'getQuestionsWithAnswers',
 
-		'model'      : ReflectionQuestionModel,
+		'model'      : QuestionModel,
 
 		'initialize' : function () {},
 
-		'fetch' : function ( request, options ) {
-			options = options || {};
-
-			request.path   = this.url.fetch;
-			request.method = this.method;
-
-			var fetchingRequest = Remoting.fetch( request );
-
-			if ( options.success ) {
-				fetchingRequest.then( options.success );
-			}
-
-			if ( options.error ) {
-				fetchingRequest.fail( options.error );
-			}
-
-			if ( options.reset ) {
-				fetchingRequest.done( _.bind( this.resetCollection, this ) );
-			}
-
-			return fetchingRequest;
-		},
-
-		'resetCollection' : function ( response ) {
-			this.reset( _.first( response ) );
-		},
-
 		'buildRequests' : function () {
-			var self = this;
-
 			return this.map( function ( question ) {
 				var request = {
-					'path'       : self.url.save,
-					'objectPath' : self.objectPath,
+					'path'       : this.url.save,
+					'objectPath' : this.objectPath,
 					'method'     : 'update',
 					'args'       : {
 						'PersonnelId' : Session.personnelId(),
 						'QuestionId'  : question.get( 'QuestionId' ),
-						'AnswerText'  : question.get( 'AnswerText' ),
+						'AnswerText'  : question.getSanitizedAnswer(),
 						'Created'     : '',
-						'Modified'    : 'now'
+						'Modified'    : ''
 					}
 				};
 				return request;
-			} );
+			}.bind( this ) );
 		},
 
 		'sync' : function ( options ) {
@@ -75,7 +46,7 @@ define( function ( require ) {
 
 			var requests    = this.buildRequests();
 			var saveRequest = Remoting.fetch( requests );
-
+			
 			if ( options.success ) {
 				saveRequest.then( options.success );
 			}
@@ -86,5 +57,7 @@ define( function ( require ) {
 
 			return saveRequest;
 		}
+
 	} );
+
 } );

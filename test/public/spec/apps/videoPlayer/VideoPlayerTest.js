@@ -10,7 +10,7 @@ define( function( require ) {
 	require( 'videoPlayer/VideoPlayer' );
 
 	describe( 'VideoPlayer Module', function () {
-		
+
 		after( function () {
 			App.module( 'VideoPlayer' ).stop();
 		} );
@@ -22,7 +22,7 @@ define( function( require ) {
 		} );
 
 		describe( 'Show Controller', function () {
-			
+
 			it( 'is attached to `App`', function () {
 				App.VideoPlayer.should.have.property( 'Controller' );
 				App.VideoPlayer.Controller.should.have.property( 'Show' );
@@ -34,15 +34,15 @@ define( function( require ) {
 				var fakeVideoInfo = [ { 'ContentId' : 123 } ];
 				var showVideoResources = sinon.stub( App.VideoPlayer.Controller.Show, 'showVideoResources' );
 				var remotingStub = sinon.stub( Remoting, 'fetch' ).returns( fakeVideoInfo );
-				
+
 				App.VideoPlayer.Controller.Show.showVideo( 123 );
-				
+
 				// data have been fetched
 				remotingStub.should.have.callCount( 1 );
-				
+
 				// showVideoResources have been called
 				showVideoResources.should.have.callCount( 1 );
-				
+
 				// showVideoResources have been called with data
 				showVideoResources.should.have.been.calledWith( fakeVideoInfo[ 0 ] );
 
@@ -82,7 +82,7 @@ define( function( require ) {
 				showStub.should.have.callCount( 1 );
 
 				// regions should have called show
-				showSpy.should.have.callCount( 1 );
+				showSpy.should.have.callCount( 2 );
 
 				// Restoring stubs
 				Remoting.fetch.restore();
@@ -115,13 +115,13 @@ define( function( require ) {
 					 }, {
 						 'QuestionTypeId' : 2
 					 } ];
-					 
+
 					 setTimeout( function () {
 						 var questions = App.VideoPlayer.Controller.Filter.filterQuestions( fakeData, options );
 						 questions[0].QuestionTypeId.should.equal( 2 );
 						 done();
 					 }, 1000 );
-					 
+
 				} );
 
 			} );
