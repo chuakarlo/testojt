@@ -1,0 +1,297 @@
+#video-player-page {
+
+	#tab-container {
+		width         : 100%;
+		border-bottom : 1px solid #EBEBEB;
+		position      : relative;
+		margin-top    : 20px;
+		margin-left   : 0px;
+		a {
+			color : inherit;
+		}
+		#video-tabs {
+			.nav-tabs {
+				border-top    : none;
+				margin-bottom : 0;
+				li {
+					a {
+						border : none;
+					}
+					a:hover, a:focus {
+						border-top : none;
+						cursor:pointer;
+						margin-bottom : 0;
+					}
+				}
+				li.active {
+					a {
+						border-top: none;
+						border-bottom : 3px solid #8DB62B;
+						color         : #8DB62B;
+					}
+				}
+			}
+		}
+		#video-buttons {
+			padding-right  : 0px;
+			button {
+				height   : 37px;
+				width    : 138px;
+				position : relative;
+				top      : -7px;
+				padding: 0 !important;
+				.white-btn {
+					background    : none;
+					border        : 1px solid #A5A7AD;
+					border-radius : 3px;
+					:hover {
+						opacity : .7;
+					}
+				}
+				.blue-btn {
+					margin-left : 20px;
+					background  : #3DADEF;
+					color       : white;
+					transition  : .3s;
+					:hover {
+						background : #5ABEF9;
+						color      : white;
+					}
+				}
+			}
+		}
+	}
+	//override less for slick carousel
+	.slick {
+
+		.slick-list {
+			height : 280px;
+		}
+		.slick-slide {
+			box-sizing: border-box;
+			padding: 0px 10px;
+			width : 285px !important;
+			}
+
+		.slick-prev, .slick-next {
+			border      : 0 none;
+			cursor      : pointer;
+			height      : 50px;
+			position    : absolute;
+			text-indent : -9999px;
+			width       : 50px;
+			z-index     : 10000;
+			display     : none;
+		}
+
+		.slick-prev {
+			background : url("./../img/left-arrow.png") no-repeat scroll center center rgba(0, 0, 0, 0.1);
+			left       : -10px;
+		}
+
+		.slick-next {
+			background : url("./../img/left-arrow-right.png") no-repeat scroll center center rgba(0, 0, 0, 0.1);
+			right      : -10px;
+		}
+
+	}
+
+	.videos-thumb {
+		width      : 100%;
+		cursor     : pointer;
+		position   : relative;
+		display    : block;
+		background : @vp-black;
+		color      : @vp-white;
+
+		#icon-play {
+				position  : absolute;
+				display   : none;
+				top       : 35%;
+				left      : ~"calc(50% - 17.5px)";
+				font-size : 35px;
+			}
+
+			#word-play {
+				display  : none;
+				top      : 53%;
+				left     : 37%;
+				position : absolute;
+			}
+
+		:hover {
+			#image {
+					color               : @vp-white;
+					opacity             : .5;
+					transition-duration : .5s;
+				}
+			#icon-play, #word-play {
+					display : inline-block;
+					z-index : 1;
+					color   : @vp-white;
+				}
+		}
+
+	}
+
+	.videos-info {
+		width                      : 100%;
+		padding                    : 20px;
+		background                 : @whitesmoke;
+		border-bottom-left-radius  : 3px;
+		border-bottom-right-radius : 3px;
+		display                    : block;
+		height                     : 132px;
+
+		h3.video-name {
+			width         : 236px;
+			white-space   : nowrap;
+			overflow      : hidden;
+			text-overflow : ellipsis;
+			font-size     : 18px;
+			margin-top    : 2%;
+		}
+
+		p {
+				line-height : 30px;
+				font-size   : 15px;
+				display     : inline-block;
+				color       : #8a8d94;
+				margin-top  : 10px;
+		}
+
+		.watch-later {
+			display      : inline-block;
+			width        : 35px;
+			height       : 35px;
+			background   : none !important;
+			margin       : 0 10px 20px 25px;
+			padding      : 5px;
+			margin-right : -33px;
+			top          : 220px;
+
+		.flag {
+			display : none;
+		}
+
+		.watch-later-icon {
+			font-size : 25px;
+			color     : @vp-gray;
+			cursor    : pointer;
+		}
+
+		.watch-later-icon:hover {
+			color : @vp-blue-light;
+		}
+
+		.remove {
+			display : none;
+		}
+
+		.flag:checked ~ .watch-later-icon {
+			color :	@vp-blue-dark;
+
+			.add {
+				display : none;
+			}
+
+			.remove {
+				display : block;
+			}
+
+		}
+
+	}
+
+	.watch-later:hover {
+		padding : ( ( @vp-base-padding / 5 ) * 2 );
+		border  : @border;
+
+		.border-radius( @cn-base-radius / 3 );
+
+		.watch-later-icon {
+			color :	@vp-blue-light;
+		}
+	}
+
+	}
+
+	//video-resources
+
+		.video-resources-thumb {
+			overflow                : hidden;
+			border-top-left-radius  : 3px;
+			border-top-right-radius : 3px;
+			cursor                  : pointer;
+			position                : relative;
+
+			img {
+				width : 97%;
+			}
+			.hover {
+				width    : 100%;
+				height   : 188px;
+				position : absolute;
+				top      : 0px;
+				left     : 0px;
+				display  : inline-block;
+
+			}
+			.hover:hover {
+				background-color    : rgba(0,0,0,0.5);
+				background-repeat   : no-repeat;
+				background-position : center;
+			}
+		}
+
+		.video-resources-info {
+			padding                    : 25px;
+			background                 : @whitesmoke;
+			border-bottom-left-radius  : 3px;
+			border-bottom-right-radius : 3px;
+			display                    : inline-block;
+			width                      : 97%;
+
+			h3 {
+			width         : 236px;
+			white-space   : nowrap;
+			overflow      : hidden;
+			text-overflow : ellipsis;
+			font-size     : 18px;
+				}
+				p {
+					line-height : 1em;
+					margin-top  : 10px;
+					color       : #b2b5b9;
+				}
+			.download {
+				// position        : absolute;
+				// width           : 105px;
+				// height          : 88px;
+				// background      : url('/./../img/download-icon.png') no-repeat;
+				// background-size : cover;
+				// top             : 150px;
+				// right           : 93px;
+				// cursor          : pointer;
+				position           : absolute;
+				font-size          : 35px;
+				top                : 201px;
+				right              : 127px;
+				cursor             : pointer;
+				color              : gray;
+			}
+
+			.download:hover {
+				color : @vp-blue-light;
+				.add {
+				display : block;
+				}
+			}
+		}
+		//divider of video resource and video segments
+		.additional-resources {
+			hr {
+				clear:both;
+			}
+		}
+}

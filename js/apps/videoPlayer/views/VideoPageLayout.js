@@ -17,9 +17,9 @@ define( function ( require ) {
 			'questionsRegion'      : '#video-reflection',
 			'videoButtonsRegion'   : '#video-buttons',
 			'videoTabsRegion'      : '#video-tabs',
-			'videoResourcesRegion' : 'video-resource',
+			'videoResourcesRegion' : '.video-resource',
 			'videoSegmentsRegion'  : '.video-segment',
-			'relatedVideosRegion'  : ''
+			'relatedVideosRegion'  : '#related-videos'
 		}
 
 	} );

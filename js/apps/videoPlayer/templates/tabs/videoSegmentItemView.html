@@ -1,8 +1,19 @@
-<span class="other-segments-thumb">
-	<a href="/videos/video-player"><span class="hover"></span></a>
-	<img src=<%= "'"+url+"'" %>>
+<span class="videos-thumb">
+    <a id="url" href="">
+	<img id="image"src=<%= "'" + url + "'" %> class="img-responsive">
+	<span id="icon-play"class="glyphicon glyphicon-play"></span>
+	<p id="word-play">Play Now</p>
+    </a>
 </span>
-<span class="other-segments-info">
-	<h3 class="truncate"><%= ContentName %></h3>
-	<p><%= duration %></p>
+<span class="videos-info">
+    <h3 class="video-name"><%= ContentName %></h3>
+		<p><%= duration %></p>
+		<div class="watch-later">
+	<input class="flag" id="<%= ContentId  %>" type="checkbox">
+	<label class="watch-later-icon glyphicon glyphicon-time" data-tooltip="Watch Later" for="<%= ContentId  %>" onClick>
+	    <div class="cn-tool-tip slideIn top add">Add to Watch Later list</div>
+	    <div class="cn-tool-tip slideIn top remove">Remove from Watch Later list</div>
+	</label>
+    </div>
+<div class="cn-segment-info-tooltip slideIn top"><%= ContentDescription %></div>
 </span>

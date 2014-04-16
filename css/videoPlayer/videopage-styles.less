@@ -1,7 +1,13 @@
 #video-player-page {
+		.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+			position: relative;
+			min-height: 1px;
+			padding-left: 0;
+			padding-right: 0;
+		}
 	#header {
 		h1 {
-			width         : 1177px;
+			width         : auto;
 			white-space   : nowrap;
 			overflow      : hidden;
 			text-overflow : ellipsis;
@@ -11,6 +17,7 @@
 			vertical-align : middle;
 			font-size      : 25px;
 			float          : right;
+			margin-bottom  : -38px;
 		}
 	}
 	#video {
@@ -18,41 +25,39 @@
 
 		#video-player {
 			float            : left;
-			width            : 800px;
-			height           : 450px;
 			padding          : 0px;
 			background-color : #000;
 		}
 
-		.footer {
-			width      : 100%;
-			text-align : center;
-			padding    : 17px;
-			position   : absolute;
-			bottom     : 0px;
-			left       : 0px;
-			background : #e7e9e9;
-			height     : 57px;
-		}
+		// .footer {
+		// 	width      : 100%;
+		// 	text-align : center;
+		// 	padding    : 17px;
+		// 	position   : absolute;
+		// 	bottom     : 0px;
+		// 	left       : 0px;
+		// 	background : #e7e9e9;
+		// 	height     : 57px;
+		// }
 
-		h3 {
-			font-weight : 600;
-		}
+		// h3 {
+		// 	font-weight : 600;
+		// }
 
-		hr {
-			border-top : 1px solid #e0e2e3;
-		}
+		// hr {
+		// 	border-top : 1px solid #e0e2e3;
+		// }
 
-		button {
-			width  : 138px;
-			height : 37px;
-			float  : right;
-			margin : 17px 0;
-		}
+		// button {
+		// 	width  : 138px;
+		// 	height : 37px;
+		// 	float  : right;
+		// 	margin : 17px 0;
+		// }
 	}
 
 	#video .carousel, #video .carousel .item {
-		height:450px;
+		height : 450px;
 	}
 
 	#submit-answers.no-hover:hover {
@@ -60,64 +65,6 @@
 		color         : inherit;
 		border        : 1px solid #a5a7ad;
 		border-radius : 3px;
-	}
-
-	#tab-container {
-		width         : 100%;
-		border-bottom : 1px solid #EBEBEB;
-		position      : relative;
-		margin-top    : 20px;
-		margin-left   : 0px;
-		a {
-			color : inherit;
-		}
-		#video-tabs {
-			padding-left : 0px;
-			.nav-tabs {
-				border-top    : none;
-				margin-bottom : 0px;
-				li, li.active {
-					a:hover, a:focus {
-						border-top : none;
-					}
-				}
-				li.active {
-					a {
-						border-top    : none;
-						border-bottom : 3px solid #8DB62B;
-						color         : #8DB62B;
-					}
-				}
-			}
-		}
-		#video-buttons {
-			padding-right  : 0px;
-			button {
-				height   : 37px;
-				width    : 138px;
-				position : relative;
-				top      : -7px;
-				.white-btn {
-					background    : none;
-					border        : 1px solid #A5A7AD;
-					border-radius : 3px;
-					:hover {
-						opacity : .7;
-					}
-				}
-				.blue-btn {
-					margin-left : 20px;
-					background  : #3DADEF;
-					color       : white;
-					padding     : 0 !important;
-					transition  : .3s;
-					:hover {
-						background : #5ABEF9;
-						color      : white;
-					}
-				}
-			}
-		}
 	}
 
 	// When fading in the modal, animate it to slide down
@@ -253,6 +200,7 @@
 		left     : 50%;
 		top      : 100px;
 	}
+
 
 	.info-thumbnail {
 		width              : 137px;

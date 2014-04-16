@@ -9,9 +9,9 @@ define( function ( require ) {
 	var Session  = require( 'Session' );
 	var Remoting = require( 'Remoting' );
 
-	var ContentModel       = require( 'videoPlayer/models/ContentModel' );
+	var ContentModel        = require( 'videoPlayer/models/ContentModel' );
 	var QuestionsCollection = require( 'videoPlayer/collections/QuestionsCollection' );
-	var SegmentCollection  = require( 'videoPlayer/collections/VideoSegmentCollection' );
+	var SegmentCollection   = require( 'videoPlayer/collections/VideoSegmentCollection' );
 
 	App.module( 'VideoPlayer.Controller', function ( Controller ) {
 
@@ -65,6 +65,16 @@ define( function ( require ) {
 					}
 				};
 
+				var resourcesRequest = {
+					'path'   : 'com.schoolimprovement.pd360.dao.ContentService',
+					'method' : 'getContentByContentIdAndLicenseTypes',
+					'args'   : {
+						'contId'   : videoModel.id,
+						'licTypes' : [ 0, 147, 1 ]
+					}
+				};
+
+
 				// There are some responsed data that has no `Children` object
 				// this will emit an error on invoking getProgramSegment in CF
 				// so we have to check if `Children` is exist, if not will make one.
@@ -76,10 +86,10 @@ define( function ( require ) {
 					'path'       : 'com.schoolimprovement.pd360.dao.ContentService',
 					'objectPath' : 'com.schoolimprovement.pd360.dao.core.Content',
 					'method'     : 'getProgramFromSegment',
-					'args'       : videoModel
+					'args'       : videoModel.toJSON()
 				};
 
-				var requests = [ questionsRequest, relatedVideosRequest, queueContentsRequest, segmentsRequest ];
+				var requests = [ questionsRequest, relatedVideosRequest, queueContentsRequest, segmentsRequest, resourcesRequest ];
 
 				var fetchingData = Remoting.fetch( requests );
 
@@ -89,9 +99,10 @@ define( function ( require ) {
 					App.content.show( layout );
 
 					var questions     = App.VideoPlayer.Controller.Filter.filterQuestions( response[ 0 ] );
-					// var relatedVideos = response[ 1 ].slice( 1 );
+					//var relatedVideos = response[ 1 ].slice( 1 );
 					var queueContents = response[ 2 ];
 					var segments      = response[ 3 ];
+					//var resources     = response[ 4 ];
 
 					// Videojs player view
 					var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( { 'model' : videoModel } );
@@ -113,6 +124,7 @@ define( function ( require ) {
 					var videoTabsView = new App.VideoPlayer.Views.VideoTabsView();
 					layout.videoTabsRegion.show( videoTabsView );
 
+					//show video resources
 					var segmentsView = new App.VideoPlayer.Views.SegmentsView( {
 						'collection' : new SegmentCollection( segments ) }
 					);
