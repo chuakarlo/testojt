@@ -6,6 +6,8 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var Vent       = require( 'Vent' );
 
+	var App        = require( 'App' );
+
 	// template
 	var template   = require( 'text!videoPlayer/templates/pageLayout.html' );
 
@@ -13,15 +15,12 @@ define( function ( require ) {
 	var VideoPlayerLayout = require( 'videoPlayer/views/VideoPlayerLayout' );
 	var ShareVideoLayout  = require( 'videoPlayer/views/share/ShareVideoLayout' );
 	var VideoTabsLayout   = require( 'videoPlayer/views/VideoTabsLayout' );
-	var ModalRegion       = require( 'videoPlayer/views/ModalRegion' );
 
 	return Marionette.Layout.extend( {
 
 		'initialize': function ( options ) {
 			_.bindAll( this );
 			_.extend( this, options );
-
-			this.modal = new ModalRegion();
 
 			Vent.on( 'video:show_share_modal', _.bind( this.showShareModal, this ) );
 
@@ -58,7 +57,13 @@ define( function ( require ) {
 		},
 
 		'showShareModal' : function () {
-			this.modal.show( new ShareVideoLayout( { 'model' : this.model } ) );
+			var shareLayout = new ShareVideoLayout( {
+				'model' : this.model
+			} );
+
+			App.modalRegion.show( shareLayout, {
+				'className' : 'share-modal'
+			} );
 		},
 
 		'showVideoInfo' : function ( event ) {

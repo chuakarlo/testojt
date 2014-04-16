@@ -1,175 +1,16 @@
-#video-player-page {
-	.share-modal {
-		.modal-dialog {
-			width : 720px;
-		}
-		.modal-content {
-			background : #EEEEEE;
-			border     : none;
-		}
-		.modal-header {
-			padding       : 15px;
-			border-bottom : 1px solid #E5E5E5;
-			min-height    : 16.428571429px;
-			h2 {
-				float       : left;
-				font-size   : 24px;
-				font-weight : 300;
-			}
-			.modal-title {
-				margin      : 0;
-				line-height : 1.428571429;
-			}
-		}
-		.modal-body {
-			position      : relative;
-			z-index       : 1;
-			border-top    : 1px solid #DBDBDB;
-			margin-bottom : 0px;
-			padding       : 15px 0;
-			background    : #f5f5f5;
-			.left-bar {
-				width        : 50%;
-				float        : left;
-				border-right : 1px solid #DBDBDB;
-				position     : relative;
-				padding      : 0 25px;
-				.video-info {
-					padding-bottom : 10px;
-					p {
-						margin : 0 0 -4px;
-					}
-					h3 {
-						font-size     : 18px;
-						line-height   : 24px;
-						font-weight   : 300;
-						margin-top    : -8px;
-						margin-bottom : 0px;
-					}
-					#video-thumbnail-duration {
-						font-size    : 15px;
-						line-height  : 28px;
-						font-weight  : normal;
-						margin-right : 99px;
-					}
-					img {
-						width   : 155px;
-						float   : left;
-						padding : 15px 15px 15px 0;
-					}
-					.text {
-						padding : 42px 10px;
-					}
-					.video-url {
-						color : #5ABEF9;
-					}
-				}
-				.message {
-					border-top : 1px solid #DBDBDB;
-				}
-				textarea {
-					width         : 100%;
-					border        : 1px solid #DBDBDB;
-					border-radius : 3px;
-					background    : white;
-					resize        : none;
-					margin-top    : 15px;
-					padding       : 10px;
-				}
-			}
-			.right-bar {
-				width    : 50%;
-				float    : left;
-				position : relative;
-				.search {
-					width         : 100%;
-					padding       : 22px;
-					border-bottom : 1px solid #DBDBDB;
-					.search-form {
-						width      : 300px;
-						position   : relative;
-						margin     : 0 auto;
-						border     : none;
-						background : none;
-					}
-					input {
-						width         : 100%;
-						border        : 1px solid #DBDBDB;
-						border-radius : 20px;
-						padding       : 7px 15px;
-					}
-				}
-				img {
-					float  : left;
-					margin : 6px;
-				}
-			}
-		}
-		.modal-footer {
-			margin-top : 15px;
-			padding    : 19px 20px 20px;
-			text-align : right;
-			border-top : 1px solid #E5E5E5;
-			button {
-				width   : 148px;
-				height  : 41px;
-				cursor  : default;
-				display : inline;
-			}
-			.blue-btn:disabled {
-				background : #5ABEF9;
-				padding: 0px;
-			}
-		}
-		.transition-mixin;
-		span.selected-name {
-			display: block;
-			box-sizing: border-box;
-			float: left;
-			width: 167px;
-			margin: 3px;
-			div.remove-item {
-				border: none;
-				background: #545965;
-				color: #FFFFFF;
-				cursor: pointer;
-			}
-			span.selected-item {
-				display: block;
-				-webkit-box-sizing: border-box; /* Saf <5.1, */
-				-moz-box-sizing: border-box; /* Fx */
-				box-sizing: border-box; /* Ch, Saf 5.1+, IE 8+, Op 9+  */
-				border: none;
-				background: #4B505C;
-				color: #FFFFFF;
-				max-width: 127px;
-				width: 127px;
-				white-space: nowrap;
-				overflow: hidden;
-				-o-text-overflow: ellipsis; /* Op <11, Op Mini, Op Mob <12.1 */
-				text-overflow: ellipsis; /* IE, Fx, Ch, Saf */
-			}
-		}
-		.tooltip {
-			position : fixed;
-		}
-		.tooltip-inner {
-			white-space: pre-wrap;
-		}
-		.tooltip-name {
-			font-weight: 500;
-			word-wrap: break-word;
-		}
-		.tooltip-location {
-			font-size: 12px;
-			font-weight: 200;
-			word-wrap: break-word;
-		}
+// When fading in the modal, animate it to slide down
+.transition-mixin {
+	&.fade .modal-dialog {
+			.translate(0, 0);
+			.transition-transform(~"0s ease-out");
 	}
 
-	.share-modal .modal-header, .share-modal .modal-footer {
-		border : none;
+	&.in .modal-dialog {
+		.translate(0, 0);
 	}
+}
+
+.share-modal {
 	.modal-open {
 		overflow : auto;
 	}
@@ -186,18 +27,173 @@
 		}
 		.transition-mixin;
 	}
-	// When fading in the modal, animate it to slide down
-	.transition-mixin {
-		&.fade .modal-dialog {
-				.translate(0, 0);
-				.transition-transform(~"0s ease-out");
+	.modal-dialog {
+		width : 720px;
+	}
+	.modal-content {
+		background : #EEEEEE;
+		border     : none;
+	}
+	.modal-header {
+		padding       : 15px;
+		border        : none;
+		border-bottom : 1px solid #E5E5E5;
+		min-height    : 16.428571429px;
+		h2 {
+			float       : left;
+			font-size   : 24px;
+			font-weight : 300;
 		}
-
-		&.in .modal-dialog {
-			.translate(0, 0)
+		.modal-title {
+			margin      : 0;
+			line-height : 1.428571429;
 		}
 	}
+	.modal-body {
+		position      : relative;
+		z-index       : 1;
+		margin-bottom : 0px;
+		padding       : 15px 0;
+		background    : #f5f5f5;
+		.left-bar {
+			width        : 50%;
+			float        : left;
+			border-right : 1px solid #DBDBDB;
+			position     : relative;
+			padding      : 0 25px;
+			.video-info {
+				padding-bottom : 10px;
+				p {
+					margin : 0 0 -4px;
+				}
+				h3 {
+					font-size     : 18px;
+					line-height   : 24px;
+					font-weight   : 300;
+					margin-top    : -8px;
+					margin-bottom : 0px;
+				}
+				#video-thumbnail-duration {
+					font-size    : 15px;
+					line-height  : 28px;
+					font-weight  : normal;
+					margin-right : 99px;
+				}
+				img {
+					width   : 155px;
+					float   : left;
+					padding : 15px 15px 15px 0;
+				}
+				.text {
+					padding : 42px 10px;
+				}
+				.video-url {
+					color : #5ABEF9;
+				}
+			}
+			.message {
+				border-top : 1px solid #DBDBDB;
+			}
+			textarea {
+				width         : 100%;
+				border        : 1px solid #DBDBDB;
+				border-radius : 3px;
+				background    : white;
+				resize        : none;
+				margin-top    : 15px;
+				padding       : 10px;
+			}
+		}
+		.right-bar {
+			width    : 50%;
+			float    : left;
+			position : relative;
+			.search {
+				width         : 100%;
+				padding       : 22px;
+				border-bottom : 1px solid #DBDBDB;
+				.search-form {
+					width      : 300px;
+					position   : relative;
+					margin     : 0 auto;
+					border     : none;
+					background : none;
+				}
+				input {
+					width         : 100%;
+					border        : 1px solid #DBDBDB;
+					border-radius : 20px;
+					padding       : 7px 15px;
+				}
+			}
+			img {
+				float  : left;
+				margin : 6px;
+			}
+		}
+	}
+	.modal-footer {
+		padding    : 19px 20px 20px;
+		text-align : right;
+		border     : none;
+		border-top : 1px solid #E5E5E5;
+		button {
+			width   : 148px;
+			height  : 41px;
+			cursor  : default;
+			display : inline;
+		}
+		.blue-btn:disabled {
+			background : #5ABEF9;
+			padding: 0px;
+		}
+	}
+	.transition-mixin;
+	span.selected-name {
+		display: block;
+		box-sizing: border-box;
+		float: left;
+		width: 167px;
+		margin: 3px;
+		div.remove-item {
+			border: none;
+			background: #545965;
+			color: #FFFFFF;
+			cursor: pointer;
+		}
+		span.selected-item {
+			display: block;
+			-webkit-box-sizing: border-box; /* Saf <5.1, */
+			-moz-box-sizing: border-box; /* Fx */
+			box-sizing: border-box; /* Ch, Saf 5.1+, IE 8+, Op 9+  */
+			border: none;
+			background: #4B505C;
+			color: #FFFFFF;
+			max-width: 127px;
+			width: 127px;
+			white-space: nowrap;
+			overflow: hidden;
+			-o-text-overflow: ellipsis; /* Op <11, Op Mini, Op Mob <12.1 */
+			text-overflow: ellipsis; /* IE, Fx, Ch, Saf */
+		}
+	}
+	.tooltip {
+		position : fixed;
+	}
+	.tooltip-inner {
+		white-space: pre-wrap;
+	}
+	.tooltip-name {
+		font-weight: 500;
+		word-wrap: break-word;
+	}
+	.tooltip-location {
+		font-size: 12px;
+		font-weight: 200;
+		word-wrap: break-word;
+	}
 }
+
 /* partial fix for bootstrap modal shifting to the left(https://github.com/twbs/bootstrap/issues/8768) */
 body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
 	margin-right : 0 !important;
