@@ -1,8 +1,8 @@
 define( function ( require ) {
 	'use strict';
 
-	var base     = require( 'apps/homepage/external/content/base' );
-	var expect   = require( 'chai' ).expect;
+	var base   = require( 'apps/homepage/external/content/base' );
+	var expect = require( 'chai' ).expect;
 
 	describe ( 'Base Test for Content', function () {
 
@@ -15,6 +15,7 @@ define( function ( require ) {
 			var itemView = require( 'apps/homepage/external/content/views/ContentCollectionView' );
 			expect( base.getExternalView ).to.be.equal( itemView );
 		} );
+
 	} );
 
 } );

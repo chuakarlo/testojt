@@ -7,16 +7,18 @@ define( function ( require ) {
 
 	describe( 'WidgetItemCollection Collection', function () {
 
+		var collection;
+
 		before ( function () {
-			this.collection = new Collection();
+			collection = new Collection();
 		} );
 
 		it( 'should be an instance of WidgetItemCollection Collection', function () {
-			expect( this.collection ).to.be.an.instanceof( Collection );
+			expect( collection ).to.be.an.instanceof( Collection );
 		} );
 
 		it( 'should have a model of WidgetItemModel instance', function () {
-			var model = new this.collection.model();
+			var model = new collection.model();
 			expect ( model ).to.be.an.instanceof( WidgetItemModel );
 		} );
 

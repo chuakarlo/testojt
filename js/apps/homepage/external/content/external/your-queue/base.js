@@ -15,7 +15,7 @@ define( function ( require ) {
 		'getFetchLogic' : function ( collectionParam ) {
 			return controller.doFetchLogic( collectionParam );
 		},
-		'renderToggle' : function( collection, model ) {
+		'renderToggle' : function( ) {
 			return 'remove-from-queue';
 		},
 		'getCarouselCustomAction' : function ( collection, view, element, id ) {

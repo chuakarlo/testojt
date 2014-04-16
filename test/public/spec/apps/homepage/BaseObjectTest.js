@@ -8,47 +8,88 @@ define ( function ( require ) {
 
 	describe ( 'Base Object Test', function ( ) {
 
-		before ( function ( ) {
-			this.baseObj         = new BaseObject();
-			this._id             = 'widget';
-			this.header          = 'Header';
-			this.footer          = 'Footer';
-			this.mainUrl         = 'localhost:8000';
-			this.items           = new Backbone.Collection.extend( {} );
-			this.getTemplate     = new Marionette.ItemView.extend( {} );
-			this.getExternalView = new Marionette.CompositeView.extend( {} );
-		} );
+		var proto;
 
-		it( 'Test external() ', function () {
-			var proto = {
-				'getExternalView' : this.getExternalView,
-				'_id'             : this._id,
-				'_header'         : this.header,
-				'_footer'         : this.footer,
-				'_mainUrl'        : this.mainUrl,
-				'getCollection'          : this.items,
-				'getTemplate'     : this.getTemplate
+
+		var baseObj         = new BaseObject();
+		var _id             = 'widget';
+		var header          = 'Header';
+		var footer          = 'Footer';
+		var mainUrl         = 'localhost:8000';
+		var items           = new Backbone.Collection.extend( {} );
+		var getTemplate     = new Marionette.ItemView.extend( {} );
+		var getExternalView = new Marionette.CompositeView.extend( {} );
+
+		before ( function ( ) {
+
+			proto = {
+				'getExternalView' : getExternalView,
+				'_id'             : _id,
+				'_header'         : header,
+				'_footer'         : footer,
+				'_mainUrl'        : mainUrl,
+				'getCollection'   : items,
+				'getTemplate'     : getTemplate,
+
 			};
 
-			this.baseObj.extend( proto );
-			expect( this.baseObj[ '_id' ] ).to.be.equal( this._id );
-			expect( this.baseObj[ '_header' ] ).to.be.equal ( this.header );
-			expect( this.baseObj[ '_footer' ] ).to.be.equal ( this.footer );
-			expect( this.baseObj[ '_mainUrl' ] ).to.be.equal ( this.mainUrl );
-			expect( this.baseObj[ '_items' ] ).to.be.equal ( this.items );
-			expect( this.baseObj[ 'getTemplate' ] ).to.be.equal ( this.getTemplate );
-			expect( this.baseObj[ 'getExternalView' ] ).to.be.equal ( this.getExternalView );
-
+			baseObj.extend( proto );
 		} );
 
-		it ( 'Test register()', function () {
+		describe( 'extend() ', function () {
+			it( 'should set BaseObject keys', function () {
+				var sFakeId = 'fake';
+				baseObj.id( sFakeId );
+				expect( baseObj[ '_id' ] ).to.be.equal( sFakeId );
+				//restore
+				baseObj.id( _id );
+
+				var id = baseObj.id( );
+				expect( id ).to.be.equal( _id );
+
+				expect( baseObj[ '_id' ] ).to.be.equal( _id );
+				expect( baseObj[ '_header' ] ).to.be.equal ( header );
+				expect( baseObj[ '_footer' ] ).to.be.equal ( footer );
+				expect( baseObj[ '_mainUrl' ] ).to.be.equal ( mainUrl );
+				expect( baseObj[ '_items' ] ).to.be.equal ( items );
+				expect( baseObj[ 'getTemplate' ] ).to.be.equal ( getTemplate );
+				expect( baseObj[ 'getExternalView' ] ).to.be.equal ( getExternalView );
+			} );
+
+			it( 'renderToggle should return a string', function () {
+				var sToggle = baseObj[ 'renderToggle']();
+				expect( sToggle ).to.be.a( 'string' );
+				expect( sToggle ).to.be.equal( 'add-to-queue' );
+
+				baseObj.renderToggle = function () {
+					return 'recommended';
+				};
+
+				sToggle = baseObj[ 'renderToggle']();
+				expect( sToggle ).to.be.a( 'string' );
+				expect( sToggle ).to.be.equal( 'recommended' );
+
+			} );
+
+			it( 'getPreFetchLogic should return a function', function () {
+				var preFetch = baseObj[ 'getPreFetchLogic' ];
+				expect( preFetch ).to.be.a( 'function' );
+
+				baseObj.getPreFetchLogic = function () {};
+
+				preFetch = baseObj[ 'getPreFetchLogic' ];
+				expect( preFetch ).to.be.a( 'function' );
+			} );
+		} );
+
+		it ( 'register()', function () {
 			var parent     = [];
 			var sharedData = [];
 
-			this.baseObj.register( parent, sharedData );
+			baseObj.register( parent, sharedData );
 
-		  expect ( parent[0].baseObject ).to.be.equal ( this.baseObj );
-		  expect ( parent[0].id ).to.be.equal( this._id );
+		  expect ( parent[0].baseObject ).to.be.equal ( baseObj );
+		  expect ( parent[0].id ).to.be.equal( _id );
 
 		} );
 

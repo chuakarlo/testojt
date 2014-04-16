@@ -21,7 +21,6 @@ define( function ( require ) {
 
 	return Backbone.Collection.extend( {
 		'fetch' : function ( options ) {
-
 			var fetchingModels = Remoting.fetch( [ queueRequest ] );
 
 			$.when( fetchingModels ).done( function ( models ) {

@@ -7,16 +7,18 @@ define ( function ( require ) {
 
 	describe( 'BaseItemView ItemView', function () {
 
+		var baseItemView;
+
 		before( function () {
-			this.baseItemView = new BaseItemView();
+			baseItemView = new BaseItemView();
 		} );
 
 		it( 'should be an instance of Itemview', function () {
-			expect( this.baseItemView ).to.be.an.instanceOf( Marionette.ItemView );
+			expect( baseItemView ).to.be.an.instanceOf( Marionette.ItemView );
 		} );
 
 		it ( 'should have a template', function () {
-			expect( this.baseItemView.template ).to.not.be.equal( undefined );
+			expect( baseItemView.template ).to.not.be.equal( undefined );
 		} );
 
 	} );

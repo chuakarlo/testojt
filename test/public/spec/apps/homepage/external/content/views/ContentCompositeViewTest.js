@@ -2,7 +2,6 @@ define( function ( require ) {
 	'use strict';
 
 	var Backbone = require( 'backbone' );
-	var expect   = require( 'chai' ).expect;
 
 	var QueueModel           = Backbone.Model.extend( {} );
 	var ContentCompositeView = require ( 'apps/homepage/external/content/views/ContentCompositeView' );
@@ -17,24 +16,24 @@ define( function ( require ) {
 			compositeView = new ContentCompositeView( { 'model' : queueModel } );
 		} );
 
-		it ( 'should have a `template` property', function () {
-			expect( compositeView.template ).to.not.equal( undefined );
+		it ( 'should have `template` property', function () {
+			compositeView.should.have.property( 'template' );
 		} );
 
-		it ( 'should have a `itemView` property', function () {
-			expect( compositeView.itemView ).to.not.equal( undefined );
+		it ( 'should have `itemView` property', function () {
+			compositeView.should.have.property( 'itemView' );
 		} );
 
-		it ( 'should have a `className` property', function () {
-			expect( compositeView.className ).to.not.equal( undefined );
+		it ( 'should have `className` property', function () {
+			compositeView.should.have.property( 'className' );
 		} );
 
-		it ( 'should have a `templateHelpers` property', function () {
-			expect( compositeView.templateHelpers() ).to.not.equal( undefined );
+		it ( 'should have `templateHelpers` property', function () {
+			compositeView.should.have.property( 'templateHelpers' );
 		} );
 
-		it ( 'should have a `itemViewOptions` property', function () {
-			expect( compositeView.itemViewOptions() ).to.not.equal( undefined );
+		it ( 'should have `itemViewOptions` property', function () {
+			compositeView.should.have.property( 'itemViewOptions' );
 		} );
 
 	} );

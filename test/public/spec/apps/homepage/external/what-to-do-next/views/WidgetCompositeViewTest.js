@@ -6,6 +6,8 @@ define( function ( require ) {
 
 	describe( 'WidgetCompositeView CompositeView', function () {
 
+		var compositeView;
+
 		before ( function () {
 			var WidgetCompositeView = require( 'apps/homepage/external/what-to-do-next/views/WidgetCompositeView' );
 			var WidgetCollection    = require( 'apps/homepage/external/what-to-do-next/collections/WidgetCollection' );
@@ -24,23 +26,23 @@ define( function ( require ) {
 			require( 'apps/homepage/external/what-to-do-next/external/group-activity/base' ).register( parent,  sharedData );
 
 			var collection     = new WidgetCollection ( parent );
-			this.compositeView = new WidgetCompositeView( { 'model' : collection.models[0] } );
+			compositeView = new WidgetCompositeView( { 'model' : collection.models[0] } );
 		} );
 
 		it( 'should be an instance of Composite View', function () {
-			expect( this.compositeView ).to.be.an.instanceof( Marionette.CollectionView );
+			expect( compositeView ).to.be.an.instanceof( Marionette.CollectionView );
 		} );
 
 		it( 'should have an itemViewcontainer', function () {
-			expect( this.compositeView.itemViewContainer ).to.not.be.equal( undefined );
+			expect( compositeView.itemViewContainer ).to.not.be.equal( undefined );
 		} );
 
 		it( 'should have a tagName', function () {
-			expect( this.compositeView.tagName ).to.not.be.equal( undefined );
+			expect( compositeView.tagName ).to.not.be.equal( undefined );
 		} );
 
 		it( 'should have a template', function () {
-			expect( this.compositeView.template ).to.not.be.equal( undefined );
+			expect( compositeView.template ).to.not.be.equal( undefined );
 		} );
 
 	} );

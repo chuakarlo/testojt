@@ -1,8 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var base     = require( 'apps/homepage/external/content/external/your-queue/base' );
-	var expect   = require( 'chai' ).expect;
+	var controller = require( 'apps/homepage/external/content/external/your-queue/controllers/baseController' );
+	var base       = require( 'apps/homepage/external/content/external/your-queue/base' );
+	var expect     = require( 'chai' ).expect;
+	var sinon      = window.sinon;
 
 	describe ( 'Base Test for Your Queue', function () {
 
@@ -20,6 +22,41 @@ define( function ( require ) {
 			expect( base._items ).to.be.equal( collection );
 		} );
 
+		it( 'should have a header that contains Queue', function () {
+
+			var sStub = 'Rosana\'s Queue';
+			var setHeaderStub = sinon.stub( controller, 'doSetHeader' ).returns( sStub );
+
+			expect( base._header() ).to.be.equal( sStub );
+			setHeaderStub.should.have.callCount( 1 );
+
+			controller.doSetHeader.restore();
+		} );
+
+		it( 'renderToggle should return remove-from-queue' , function () {
+			expect( base.renderToggle() ).to.be.equal( 'remove-from-queue' );
+		} );
+
+		it( 'getFetchLogic should return an object ', function () {
+			var collection = [ {
+				'id'  : 1,
+				'url' : 'content/1'
+			},
+			{
+				'id'  : 2,
+				'url' : 'content/2'
+			},
+			{
+				'id'  : 3,
+				'url' : 'content/3'
+			} ];
+
+			var fetchLogic = base.getFetchLogic( collection );
+
+			expect( fetchLogic ).to.have.keys( 'collection', 'count' );
+			expect( fetchLogic ).to.have.property( 'collection' , collection );
+			expect( fetchLogic ).to.have.property( 'count', collection.length );
+		} );
 	} );
 
 } );

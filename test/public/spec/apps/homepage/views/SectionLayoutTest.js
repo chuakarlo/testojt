@@ -10,24 +10,26 @@ define( function ( require ) {
 
 	describe( 'SectionLayout Layout', function () {
 
+		var sectionLayout;
+
 		before( function () {
-			this.sectionLayout = new SectionLayout();
+			sectionLayout = new SectionLayout();
 		} );
 
 		it( 'should be an instance of SectionLayout Layout', function () {
-			expect( this.sectionLayout ).to.be.an.instanceof( Marionette.Layout );
+			expect( sectionLayout ).to.be.an.instanceof( Marionette.Layout );
 		} );
 
 		it( 'should have Regions', function () {
-			expect( this.sectionLayout.regions ).to.not.equal( {} );
+			expect( sectionLayout.regions ).to.not.equal( {} );
 		} );
 
 		it( 'should have Home Region', function () {
-			expect( this.sectionLayout.regions.home ).to.contain( 'home' );
+			expect( sectionLayout.regions.home ).to.contain( 'home' );
 		} );
 
 		it( 'should have a Template', function () {
-			expect( this.sectionLayout.template ).to.not.be.equal( undefined );
+			expect( sectionLayout.template ).to.not.be.equal( undefined );
 		} );
 
 	} );

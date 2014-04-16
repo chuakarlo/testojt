@@ -11,16 +11,18 @@ define( function ( require ) {
 
 	describe( 'SectionCollection Collection', function () {
 
+		var sectionCollection;
+
 		before ( function () {
-			this.sectionCollection = new SectionCollection();
+			sectionCollection = new SectionCollection();
 		} );
 
 		it( 'should be an instance of SectionCollection Collection', function () {
-			expect( this.sectionCollection ).to.be.an.instanceof( SectionCollection );
+			expect( sectionCollection ).to.be.an.instanceof( SectionCollection );
 		} );
 
 		it( 'should have a model of SectionModel instance', function () {
-			var model = new this.sectionCollection.model();
+			var model = new sectionCollection.model();
 			expect ( model ).to.be.an.instanceof( Sectionmodel );
 		} );
 
