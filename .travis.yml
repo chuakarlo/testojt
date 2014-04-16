@@ -11,26 +11,18 @@ notifications:
   flowdock: ce9d8b10b8bd428f1d59cf0a62915cff
 
 before_install:
-
-  # update npm
   - npm install -g npm
 
-  # run linting scripts
-  - npm install -g git+https://AxS4AaP:836e170c40319c4a1f0ada346f644615fc6005d2@github.com/School-Improvement-Network/travis-scripts.git
-  - travis lint
-
 install:
+  # install required dependencies
+  - npm install -g grunt-cli
+  - npm install -g bower
+  - npm install
+  - bower install
 
   # download selenium support
   - wget http://selenium-release.storage.googleapis.com/2.40/selenium-server-standalone-2.40.0.jar
   - npm install -g git+https://AxS4AaP:836e170c40319c4a1f0ada346f644615fc6005d2@github.com/School-Improvement-Network/selenium-runner.git
-
-  # install required dependencies
-  - npm install -g bower
-  - npm install -g grunt-cli
-  - npm install
-  - bower install
-  - grunt compile
 
 before_script:
   - grunt compile
@@ -45,4 +37,5 @@ before_script:
   - sleep 5
 
 script:
+  - grunt travis-lint
   - npm test
