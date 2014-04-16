@@ -4,7 +4,6 @@
 	var _        = require( 'underscore' );
 	var Backbone = require( 'backbone' );
 
-	var Remoting          = require( 'Remoting' );
 	var VideoSegmentModel = require( 'videoPlayer/models/VideoSegmentModel' );
 	var hhmmssFormat      = require( 'videoPlayer/utils/toHHMMSSFormat' );
 
@@ -12,34 +11,8 @@
 
 		'model' : VideoSegmentModel,
 
-		'url' : 'com.schoolimprovement.pd360.dao.ContentService',
-
-		'method' : 'getProgramFromSegment',
-
-		'initialize' : function() {},
-
-		'fetch' : function ( request, options ) {
-			options = options || {};
-
-			request.path = this.url;
-
-			request.method = this.method;
-
-			var fetchingRequest = Remoting.fetch( request );
-
-			if( options.success ) {
-				fetchingRequest.then( options.success );
-			}
-
-			if( options.error ) {
-				fetchingRequest.fail( options.error );
-			}
-
-			if( options.reset ) {
-				fetchingRequest.done( _.bind( this.resetCollection, this ) );
-			}
-
-			return fetchingRequest;
+		'initialize' : function( options ) {
+			this.resetCollection( options );
 		},
 
 		'buildModels' : function ( models ) {
@@ -53,10 +26,10 @@
 			return models;
 		},
 
-		'resetCollection' : function ( collection ) {
-			var resources = this.buildModels( _.first( collection ) );
+		'resetCollection' : function ( models ) {
+			var resources = this.buildModels( models );
 			this.reset( resources );
-			this.trigger( 'custom:sync' );
 		}
+
 	} );
 } );

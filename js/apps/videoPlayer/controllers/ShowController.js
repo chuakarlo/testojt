@@ -9,8 +9,9 @@ define( function ( require ) {
 	var Session  = require( 'Session' );
 	var Remoting = require( 'Remoting' );
 
-	var ContentModel        = require( 'videoPlayer/models/ContentModel' );
+	var ContentModel       = require( 'videoPlayer/models/ContentModel' );
 	var QuestionsCollection = require( 'videoPlayer/collections/QuestionsCollection' );
+	var SegmentCollection  = require( 'videoPlayer/collections/VideoSegmentCollection' );
 
 	App.module( 'VideoPlayer.Controller', function ( Controller ) {
 
@@ -64,7 +65,22 @@ define( function ( require ) {
 					}
 				};
 
-				var requests = [ questionsRequest, relatedVideosRequest, queueContentsRequest ];
+				// There are some responsed data that has no `Children` object
+				// this will emit an error on invoking getProgramSegment in CF
+				// so we have to check if `Children` is exist, if not will make one.
+				if( !videoModel.get( 'Children' ) ){
+					videoModel.set( 'Children', [] );
+				}
+
+				var segmentsRequest = {
+					'path'       : 'com.schoolimprovement.pd360.dao.ContentService',
+					'objectPath' : 'com.schoolimprovement.pd360.dao.core.Content',
+					'method'     : 'getProgramFromSegment',
+					'args'       : videoModel
+				};
+
+				var requests = [ questionsRequest, relatedVideosRequest, queueContentsRequest, segmentsRequest ];
+
 				var fetchingData = Remoting.fetch( requests );
 
 				$.when( fetchingData ).done( function ( response ) {
@@ -75,6 +91,7 @@ define( function ( require ) {
 					var questions     = App.VideoPlayer.Controller.Filter.filterQuestions( response[ 0 ] );
 					// var relatedVideos = response[ 1 ].slice( 1 );
 					var queueContents = response[ 2 ];
+					var segments      = response[ 3 ];
 
 					// Videojs player view
 					var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( { 'model' : videoModel } );
@@ -95,6 +112,11 @@ define( function ( require ) {
 					// show video tabs view
 					var videoTabsView = new App.VideoPlayer.Views.VideoTabsView();
 					layout.videoTabsRegion.show( videoTabsView );
+
+					var segmentsView = new App.VideoPlayer.Views.SegmentsView( {
+						'collection' : new SegmentCollection( segments ) }
+					);
+					layout.videoSegmentsRegion.show( segmentsView );
 
 				} );
 

@@ -3,7 +3,6 @@ define( function ( require ) {
 
 	require( 'slick' );
 	var $          = require( 'jquery' );
-	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 
 	var VideoSegmentItemView = require( 'videoPlayer/views/tabs/VideoSegmentItemView' );
@@ -24,37 +23,13 @@ define( function ( require ) {
 
 		'emptyView' : LoadingView,
 
-		'initialize' : function ( options ) {
-			_.bindAll( this );
-			_.extend( this, options );
-
-			this._initRequest();
-			this.listenTo( this.collection, 'custom:sync', this._initView );
-
-			return this;
-		},
-
-		'_initRequest' : function () {
-			if( !this.Content.get( 'Children') ) {
-				this.Content.set( 'Children', [] );
-			}
-
-			var request = {
-				'objectPath' : 'com.schoolimprovement.pd360.dao.core.Content',
-				'args' : this.Content.toJSON()
-			};
-
-			this.collection.fetch( request, { 'reset' : true } );
-
-		},
+		'initialize' : function () {},
 
 		'hover': function( element, time, callback ) {
 			$( element ).hover( function() {
 				//start time
 				if ( !this.timeoutId ) {
-					this.timeoutId = window.setInterval( function() {
-						callback();
-					}, time ); //for 1 second
+					this.timeoutId = window.setInterval( callback, time ); //for 1 second
 				}
 			}, this.clearTimeout );
 		},
@@ -80,13 +55,17 @@ define( function ( require ) {
 
 		},
 
-		'_initView' : function () {
+		'onShow' : function () {
 			this.$el.slick( {
 				'slidesToShow'   : 4,
 				'slidesToScroll' : 4,
 				'autoplay'       : false,
 				'autoplaySpeed'  : 2000,
 			} );
+
+			this.hoverNext( this.$el );
+			this.hoverPrev( this.$el );
+
 		},
 
 		'onClose' : function () {

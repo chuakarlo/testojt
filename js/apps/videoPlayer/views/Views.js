@@ -12,6 +12,7 @@ define( function ( require ) {
 		Views.VideoButtonsView = require( 'videoPlayer/views/tabs/ButtonsItemView' );
 		Views.ModalView        = require( 'videoPlayer/views/ModalRegion' );
 		Views.ShareVideoLayout = require( 'videoPlayer/views/share/ShareVideoLayout' );
+		Views.SegmentsView     = require( 'videoPlayer/views/tabs/VideoSegmentCollectionView' );
 
 	} );
 

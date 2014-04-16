@@ -72,10 +72,11 @@ define( function( require ) {
 
 				var showSpy = sinon.spy();
 				var layout = sinon.stub( App.VideoPlayer.Views, 'PageLayout' ).returns( {
-					'playerRegion'       : { 'show' : showSpy },
-					'questionsRegion'    : { 'show' : showSpy },
-					'videoButtonsRegion' : { 'show' : showSpy },
-					'videoTabsRegion'    : { 'show' : showSpy }
+					'playerRegion'        : { 'show' : showSpy },
+					'questionsRegion'     : { 'show' : showSpy },
+					'videoButtonsRegion'  : { 'show' : showSpy },
+					'videoTabsRegion'     : { 'show' : showSpy },
+					'videoSegmentsRegion' : { 'show' : showSpy }
 				} );
 
 				// Call showVideoResources
@@ -91,7 +92,7 @@ define( function( require ) {
 				showStub.should.have.callCount( 1 );
 
 				// regions should have called show
-				showSpy.should.have.callCount( 4 );
+				showSpy.should.have.callCount( 5 );
 
 				// Restoring stubs
 				Remoting.fetch.restore();

@@ -2,65 +2,46 @@ define( function ( require ) {
 	'use strict';
 
 	var sinon = window.sinon;
-	var Backbone = require( 'backbone' );
 
 	var VideoSegmentCollectionView = require( 'videoPlayer/views/tabs/VideoSegmentCollectionView' );
 	var VideoSegmentCollection     = require( 'videoPlayer/collections/VideoSegmentCollection' );
 
 	describe( 'VideoSegmentCollectionView', function () {
 		var videoSegmentCollectionView;
-		var videoSegmentCollectionTheView;
-		var ResourcesModel;
-		var resourcesModel;
-		var dummyData;
+		var fakeData;
 
 		before( function () {
+			fakeData = new VideoSegmentCollection();
 
-			dummyData = new VideoSegmentCollection();
-
-			sinon.stub( dummyData, 'fetch', function () {
-				dummyData.reset( [
-					{
-						'url'         : '',
-						'ContentName' : '',
-						'duration'    : ''
-					},{
-						'url'         : '',
-						'ContentName' : '',
-						'duration'    : ''
-					},{
-						'url'         : '',
-						'ContentName' : '',
-						'duration'    : ''
-					},{
-						'url'         : '',
-						'ContentName' : '',
-						'duration'    : ''
-					}
-				] );
-			} );
-
-			ResourcesModel = Backbone.Collection.extend( {} );
-
-			resourcesModel = new ResourcesModel();
-			resourcesModel.reset( [
+			fakeData.reset( [
 				{
-					'ContentId' : '613'
+					'url'         : '',
+					'ContentName' : '',
+					'duration'    : ''
+				},{
+					'url'         : '',
+					'ContentName' : '',
+					'duration'    : ''
+				},{
+					'url'         : '',
+					'ContentName' : '',
+					'duration'    : ''
+				},{
+					'url'         : '',
+					'ContentName' : '',
+					'duration'    : ''
 				}
 			] );
 
 			videoSegmentCollectionView = new VideoSegmentCollectionView( {
-				'Content' : resourcesModel,
-				'collection' : dummyData
+				'collection' : fakeData
 			} );
 
-			videoSegmentCollectionTheView = videoSegmentCollectionView.render();
+			videoSegmentCollectionView.render();
 
 		} );
 
 		after( function () {
-
-			this.view = null;
 
 		} );
 
@@ -104,9 +85,7 @@ define( function ( require ) {
 				 * Verify that the collection has 4 values
 				 */
 				it( 'should have a length of 4', function () {
-
 					videoSegmentCollectionView.collection.length.should.be.equal( 4 );
-
 				} );
 
 				/**
@@ -114,10 +93,116 @@ define( function ( require ) {
 				 */
 				it( 'should be equal to the data being passed', function () {
 
-					videoSegmentCollectionView.collection.should.equal( dummyData );
+					videoSegmentCollectionView.collection.should.equal( fakeData );
 
 				} );
 
+			} );
+
+		} );
+
+		describe( '.hoverNext', function () {
+			var fakeData;
+			var collectionView;
+			var SpiedCollectionView;
+
+			var hoverSpy;
+
+			before( function() {
+				hoverSpy = sinon.spy();
+
+				fakeData = new VideoSegmentCollection();
+
+				fakeData.reset( [
+					{
+						'url'         : '',
+						'ContentName' : '',
+						'duration'    : ''
+					},{
+						'url'         : '',
+						'ContentName' : '',
+						'duration'    : ''
+					},{
+						'url'         : '',
+						'ContentName' : '',
+						'duration'    : ''
+					},{
+						'url'         : '',
+						'ContentName' : '',
+						'duration'    : ''
+					}
+				] );
+
+				SpiedCollectionView = VideoSegmentCollectionView.extend( {
+					'hover' : hoverSpy
+				} );
+				collectionView = new SpiedCollectionView( {
+					'collection' : fakeData
+				} );
+
+				collectionView.render();
+
+			} );
+
+			after( function() {
+				hoverSpy.reset();
+			} );
+
+			it( 'should call `.hover`', function() {
+				collectionView.hoverNext( function() {} );
+				hoverSpy.should.have.been.called;
+			} );
+
+			it( 'should call `.hover`', function() {
+				collectionView.hoverPrev( function() {} );
+				hoverSpy.should.have.been.called;
+			} );
+
+		} );
+
+		describe( '`.clearTimeout`', function () {
+			var collectionView;
+			var fakeData;
+
+			before( function() {
+				fakeData = new VideoSegmentCollection();
+
+				fakeData.reset( [
+					{
+						'url'         : '',
+						'ContentName' : '',
+						'duration'    : ''
+					},{
+						'url'         : '',
+						'ContentName' : '',
+						'duration'    : ''
+					},{
+						'url'         : '',
+						'ContentName' : '',
+						'duration'    : ''
+					},{
+						'url'         : '',
+						'ContentName' : '',
+						'duration'    : ''
+					}
+				] );
+
+				collectionView = new VideoSegmentCollectionView( {
+					'collection' : fakeData
+				} );
+
+				collectionView.render();
+
+			} );
+
+			after( function() {
+
+			} );
+
+			it( 'will set timeoutId to null', function() {
+				collectionView.timeoutId = 123;
+				collectionView.clearTimeout();
+				( collectionView.timeoutId === null ).should.equal( true );
 			} );
 
 		} );
