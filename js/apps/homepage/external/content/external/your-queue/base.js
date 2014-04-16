@@ -8,7 +8,7 @@ define( function ( require ) {
 
 	return instance.extend({
 		'_id'           : 'your-queue',
-		'_header'       : function ( sharedData ) {
+		'_header'       : function ( ) {
 			return controller.doSetHeader();
 		},
 		'getCollection' : collection,

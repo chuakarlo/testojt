@@ -17,11 +17,6 @@ define( function ( require ) {
 			// learningTargets
 			'spec/apps/learningTargets/LearningTargetsTest',
 			'spec/apps/learningTargets/views/MainViewTest',
-			'spec/apps/learningTargets/views/processes/ProcessesItemViewTest',
-			'spec/apps/learningTargets/views/courses/CoursesItemViewTest',
-			'spec/apps/learningTargets/views/observations/ObservationsItemViewTest',
-			'spec/apps/learningTargets/views/portfolios/PortfoliosItemViewTest',
-			'spec/apps/learningTargets/views/questions/QuestionsItemViewTest',
 
 			'spec/apps/user/UserTest',
 
@@ -105,10 +100,19 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/utils/toHHMMSSFormatTest.js',
 
 			//Homepage
+			'spec/apps/homepage/external/content/controllers/contentCompositeControllerTest.js',
+			'spec/apps/homepage/external/content/views/ContentCompositeViewTest.js',
+			'spec/apps/billboard/BillboardTest',
+
+			//Homepage - Content
 			'spec/apps/homepage/external/content/views/ContentItemViewTest.js',
-			'spec/apps/homepage/external/external/content/controllers/contentCompositeControllerTest.js',
-			'spec/apps/homepage/external/external/content/views/ContentCompositeViewTest.js',
-			'spec/apps/billboard/BillboardTest'
+
+			//HomePage - Recommended
+
+			//Homepage - Your Queue
+			'spec/apps/homepage/external/content/external/your-queue/baseTest.js'
+
+
 		]
 
 	};

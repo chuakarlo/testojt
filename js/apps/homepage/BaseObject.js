@@ -29,6 +29,7 @@ define( function ( require ) {
 				function ( collection, model ) {
 					return 'add-to-queue';
 				};
+
 			this.getPreFetchLogic        = _proto.getPreFetchLogic ?
 				_proto.getPreFetchLogic :
 				function (data, callback) {
