@@ -9,5 +9,10 @@ define( function( require ) {
 
 		'template' : _.template( template ),
 
+		'regions' : {
+			'imageRegion' : '.footer-img-region'
+		}
+
 	} );
 } );
+
