@@ -1,10 +1,13 @@
 define( function ( require ) {
 	'use strict';
 
-	var _          = require( 'underscore' );
-	var Marionette = require( 'marionette' );
-	var Vent       = require( 'Vent' );
-	var template   = require( 'text!../templates/groupBannerView.html' );
+	var _              = require( 'underscore' );
+	var Marionette     = require( 'marionette' );
+	var Vent           = require( 'Vent' );
+	var Session        = require( 'Session' );
+	var App            = require( 'App' );
+	var template       = require( 'text!../templates/groupBannerView.html' );
+	var leaderTemplate = require( 'text!../templates/groupLeaderBannerView.html' );
 
 	return Marionette.ItemView.extend( {
 
@@ -12,8 +15,9 @@ define( function ( require ) {
 		'className' : 'container-smooth',
 
 		'events'   : {
-			'click button.Leave' : 'leaveGroup',
-			'click button.Join'  : 'joinGroup'
+			'click button.Leave'            : 'leaveGroup',
+			'click button.Join'             : 'joinGroup',
+			'click button#btn-leader-tools' : 'showLeaderTools'
 	    },
 
 	    'leaveGroup' : function ( e ) {
@@ -27,6 +31,24 @@ define( function ( require ) {
 
 			e.preventDefault();
 			Vent.trigger( 'group:joinGroup', this.model );
+
+	    },
+
+	    'showLeaderTools' : function ( e ) {
+
+			e.preventDefault();
+			App.request( 'group:showLeaderTools', this.model.attributes.LicenseId );
+
+	    },
+
+	    getTemplate : function(){
+
+			// add the remove button if user created the message
+			if ( String( this.model.attributes.Creator ) === String( Session.personnelId() ) ){
+				return _.template( leaderTemplate );
+			} else {
+				return _.template( template );
+			}
 
 	    },
 

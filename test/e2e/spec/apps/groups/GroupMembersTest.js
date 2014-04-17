@@ -45,7 +45,7 @@ suite( function ( env ) {
 		.hasElementByXPath( '//div[@id=\'wall\']//h2[.=\'Wall\']' ).should.eventually.equal( true )
 
 		// click members tab
-		.elementByCssSelector( '#learning-targets-nav > ul > li:nth-child(4) > a' ).click()
+		.elementByXPath( '//div[@id=\'group-sub-nav\']//a[.=\'Members\']' ).click()
 
 		.sleep( 2000 )
 

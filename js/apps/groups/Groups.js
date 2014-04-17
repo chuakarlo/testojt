@@ -31,10 +31,12 @@ define( function ( require ) {
 			},
 
 			'listGroups' : function () {
+				App.request( 'pd360:hide' );
 				Groups.List.Controller.listGroups();
 			},
 
 			'showGroup' : function ( groupID ) {
+				App.request( 'pd360:hide' );
 				Groups.Show.Controller.showGroup( groupID );
 			},
 
@@ -53,6 +55,18 @@ define( function ( require ) {
 
 		Vent.on( 'group:show', function ( model ) {
 			App.navigate( 'groups/' + model.attributes.LicenseId, { 'trigger' : true } );
+		} );
+
+		// set handler to navigate to group forums through communities app
+		App.reqres.setHandler( 'group:showForums', function ( LicenseId ) {
+			App.navigate( 'resources/communities/5/' + LicenseId, { 'trigger' : true } );
+		} );
+
+		// set handler to navigate to group leader tools
+		App.reqres.setHandler( 'group:showLeaderTools', function ( LicenseId ) {
+			App.request( 'pd360:navigate', null, 'communities', 'groupsBrowse', {
+				'LicenseId' : LicenseId
+			} );
 		} );
 
 		Vent.on( 'group:leaveGroup', function ( model ) {

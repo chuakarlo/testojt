@@ -55,6 +55,7 @@ define( function ( require ) {
 					'bannerRegion'        : { 'show' : showSpy },
 					'headerRegion'        : { 'show' : showSpy },
 					'groupInfoRegion'     : { 'show' : showSpy },
+					'subNavRegion'        : { 'show' : showSpy },
 					'commentCreateRegion' : { 'show' : showSpy },
 					'commentsRegion'      : { 'show' : showSpy },
 					'membersRegion'       : { 'show' : showSpy },
@@ -73,7 +74,7 @@ define( function ( require ) {
 				showStub.should.have.callCount( 1 );
 
 				// regions should have called show
-				showSpy.should.have.callCount( 6 );
+				showSpy.should.have.callCount( 5 );
 			} );
 
 		} );

@@ -14,6 +14,7 @@ define( function ( require ) {
 			'bannerRegion'        : '.banner',
 			'headerRegion'        : '.header',
 			'groupInfoRegion'     : '.left-side',
+			'subNavRegion'        : '#group-sub-nav',
 			'commentCreateRegion' : '.comment-create',
 			'commentsRegion'      : '.comments-list',
 			'membersRegion'       : '#members-list'

@@ -5,6 +5,15 @@ define( function ( require ) {
 
 	return Backbone.Model.extend( {
 
+        'defaults' : {
+            'Message'         : '',
+            'MessageThreadId' : '',
+            'MessageId'       : 0,
+            'CreatorAvatar'   : 'default.png',
+            'Created'         : '',
+            'CreatorFullName' : ''
+        },
+
 		initialize: function( ) {
 
 			var CommentCollection = require( '../collections/CommentCollection' );
@@ -13,6 +22,10 @@ define( function ( require ) {
 	        if ( replies ){
 	            this.replies = new CommentCollection( replies );
 	            this.unset('replies');
+	        }
+
+	        if ( this.Message === '' ) {
+				this.Message = this.NewsEntry;
 	        }
 
 	    }

@@ -9,9 +9,9 @@ define( function ( require ) {
 		'model'   : CommentModel,
 
 		'comparator' : function ( model ) {
-			// return this.sortKey.getTime();
-			// return model.get( this.sortKey );
-			return -new Date(model.get('Created'));
+
+			// collection will be sorted by 'Created' date in descending order ( newest first )
+			return -new Date( model.get('Created') );
 
 		}
 

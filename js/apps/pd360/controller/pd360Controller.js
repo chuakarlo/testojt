@@ -28,7 +28,7 @@ define( function ( require ) {
 				window.applicationComplete = function () {
 					Vent.trigger( 'pd360:applicationComplete' );
 				};
-				
+
 				// callback for pd360 login completion
 				window.loginComplete = function () {
 					Vent.trigger( 'pd360:loginComplete' );

@@ -20,12 +20,13 @@ define( function ( require ) {
 		'tagName' : 'li',
 
 		'ui' : {
-			'creator' : '.child-creator-name'
+			'removeReply' : '.remove-reply',
+			'creator'     : '.child-creator-name'
 		},
 
 		'events' : {
-			'click button.remove-btn' : 'removeComment',
-			'click @ui.creator'         : 'showMiniPersonnel'
+			'click @ui.removeReply' : 'removeReply',
+			'click @ui.creator'     : 'showMiniPersonnel'
 
 	    },
 
@@ -88,7 +89,9 @@ define( function ( require ) {
 			this.ui.creator.popover('destroy');
 	    },
 
-	    removeComment : function () {
+	    removeReply : function ( e ) {
+
+			e.preventDefault();
 
 			var message = {};
 

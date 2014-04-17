@@ -17,6 +17,8 @@ define( function ( require ) {
 
 			'showGroup' : function ( groupId ) {
 
+				// TODO: use sync instead of remoting
+
 				// Get general group info
 				var groupRequest = {
 					'path'   : 'com.schoolimprovement.pd360.dao.GroupService',
@@ -52,8 +54,8 @@ define( function ( require ) {
 					'args'   : {
 						'licId'     : groupId,
 						'startRow'  : 0,
-						'numRows'   : 20,
-						'totalRows' : 80,
+						'numRows'   : 10000,
+						'totalRows' : 10000,
 						'msgFlag'   : 1,
 						'newsFlag'  : 1
 					}
@@ -64,8 +66,8 @@ define( function ( require ) {
 
 				$.when( fetchingData ).done( function ( results ) {
 
-					var layout = new App.Groups.Views.Layout();
-					App.content.show( layout );
+					this.layout = new App.Groups.Views.Layout();
+					App.content.show( this.layout );
 
 					var group        = results [ 0 ];
 					var someMembers  = results [ 1 ].slice( 0, 8 );
@@ -79,16 +81,16 @@ define( function ( require ) {
 					// using 'MessageThreadId' this will create an array of objects
 					// each object will contain the main message and an array of 'replies'
 					var comments = _.map( _.groupBy( groupWall, 'MessageThreadId' ), function( comment ) {
-					    return _.extend( _.pick( _.find( comment, { 'MessageId': 1 }) , 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created' ), {
+					    return _.extend( _.pick( _.find( comment, { 'MessageId': 1 } ) , 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created', 'NewsEntry', 'NewsId' ), {
 					        replies: _.map( _.reject( comment, { 'MessageId' : 1 } ), function( elem ) {
-								return _.pick( elem, 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created' );
+								return _.pick( elem, 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created', 'NewsEntry', 'NewsId' );
 					        } )
 					    } );
 					} );
 
 					// Creating a comment needs to display the user avatar
 					// find the user in the members list
-					var user = _.find( members, function ( m ) {
+					var userInGroup = _.find( members, function ( m ) {
 						return String( m.PersonnelId ) === String( Session.personnelId() );
 					} );
 
@@ -99,10 +101,6 @@ define( function ( require ) {
 					memberCollection.count   = membersCount;
 					groupModel.groups        = groups;
 
-					// update the wall after creating a message
-					Vent.on( 'group:createComment', function ( model ) {
-						commentCollection.add( model );
-					}.bind( this ) );
 
 					Vent.on( 'group:removeComment', function ( model ) {
 						commentCollection.remove( model );
@@ -110,30 +108,66 @@ define( function ( require ) {
 
 					// banner image and join button
 					var bannerView = new App.Groups.Views.Banner( { 'model' : groupModel, 'groups' : groups } );
-					layout.bannerRegion.show( bannerView );
+					this.layout.bannerRegion.show( bannerView );
 
 					// group name
 					var headerView = new App.Groups.Views.Header( { 'model' : groupModel, 'collection' : someMemberCollection } );
-					layout.headerRegion.show( headerView );
+					this.layout.headerRegion.show( headerView );
 
 					// members list and group info
 					var infoView = new App.Groups.Views.Info( { 'model' : groupModel, 'collection' : someMemberCollection } );
-					layout.groupInfoRegion.show( infoView );
+					this.layout.groupInfoRegion.show( infoView );
 
-					// banner image and join button
-					var commentCreateView = new App.Groups.Views.CommentCreate( { 'model' : groupModel, 'user' : user } );
-					layout.commentCreateRegion.show( commentCreateView );
+					// group sub navigation ( tabs )
+					var subNavView = new App.Groups.Views.SubNav( { 'model' : groupModel, 'groups' : groups } );
+					this.layout.subNavRegion.show( subNavView );
 
-					// wall
-					var commentsView = new App.Groups.Views.CommentsCollection( { 'collection' : commentCollection } );
-					layout.commentsRegion.show( commentsView );
+					// Show group member items
+					if ( userInGroup ) {
+
+						// Wall
+						var commentsView = new App.Groups.Views.CommentsCollection( { 'collection' : commentCollection, 'user' : userInGroup } );
+						this.layout.commentsRegion.show( commentsView );
+
+						// Comment create textarea
+						var commentCreateView = new App.Groups.Views.CommentCreate( { 'model' : groupModel, 'user' : userInGroup } );
+						this.layout.commentCreateRegion.show( commentCreateView );
+
+						// update the wall after creating a message
+						Vent.on( 'group:createComment', function ( model ) {
+
+							// the wall needs to be requested because creating doesn't return the MessageThreadId
+							var requests     = [ wallRequest ];
+							var fetchingData = Remoting.fetch( requests );
+							$.when( fetchingData ).done( function ( results ) {
+
+								var newWall = results[ 0 ];
+
+								var comments = _.map( _.groupBy( newWall, 'MessageThreadId' ), function( comment ) {
+								    return _.extend( _.pick( _.find( comment, { 'MessageId': 1 } ) , 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created', 'NewsEntry', 'NewsId' ), {
+								        replies: _.map( _.reject( comment, { 'MessageId' : 1 } ), function( elem ) {
+											return _.pick( elem, 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created', 'NewsEntry', 'NewsId' );
+								        } )
+								    } );
+								} );
+
+								commentCollection = new CommentCollection( comments );
+
+								var commentsView = new App.Groups.Views.CommentsCollection( { 'collection' : commentCollection, 'user' : userInGroup } );
+								this.layout.commentsRegion.show( commentsView );
+
+							}.bind( this ) );
+
+						}.bind( this ) );
+
+					}
 
 					// Members tabs
 					var membersView = new App.Groups.Views.Members( { 'model' : groupModel, 'collection' : memberCollection } );
-					layout.membersRegion.show( membersView );
+					this.layout.membersRegion.show( membersView );
 
 
-				} ).fail( function ( error ) {
+				}.bind( this ) ).fail( function ( error ) {
 					// TODO: error handling
 				} );
 

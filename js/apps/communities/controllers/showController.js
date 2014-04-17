@@ -10,6 +10,18 @@ define( function ( require ) {
 
 			'showCommunities' : function () {
 				App.request( 'pd360:navigate', View, 'communities', 'communitiesBrowse' );
+			},
+
+			'showGroupForums' : function ( LocationTypeId, LocationId ) {
+
+				// Show group forums
+				App.request( 'pd360:navigate', View, 'communities', 'communitiesBrowse', {
+					'LocationTypeId' : LocationTypeId,
+					'LocationId'     : LocationId,
+					'ForumThreadId'  : 0,
+					'ForumPostId'    : 0
+				} );
+
 			}
 
 		};

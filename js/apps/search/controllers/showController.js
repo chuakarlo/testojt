@@ -175,7 +175,7 @@ define( function ( require ) {
 						// Update the count first so inifite scroll knows if it
 						// needs to setup
 						this.searchCollection.queryModel.updateStart();
-						
+
 						this.layout.results.show(searchCollectionView);
 						this.closeLoading();
 						this.setupInfiniteScroll();

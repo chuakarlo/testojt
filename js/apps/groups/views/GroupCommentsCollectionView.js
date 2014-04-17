@@ -1,15 +1,24 @@
 define( function ( require ) {
 	'use strict';
 
-	var _                 = require( 'underscore' );
 	var Marionette        = require( 'marionette' );
 	var GroupCommentsView = require( '../views/GroupCommentsView' );
-	var template          = require( 'text!../templates/groupCommentsCollectionView.html' );
 
 	return Marionette.CollectionView.extend( {
 
-		'template' : _.template( template ),
-		'itemView' : GroupCommentsView
+		'itemView' : GroupCommentsView,
+
+		// Replying to a comment needs the user avatar
+		'itemViewOptions' : function ( options ) {
+			return {
+				user : this.user
+			};
+		},
+
+		'initialize': function ( options ) {
+	        this.user = options.user;
+	    }
+
 
 	} );
 

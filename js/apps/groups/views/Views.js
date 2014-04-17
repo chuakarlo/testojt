@@ -10,6 +10,7 @@ define( function ( require ) {
 		Views.Banner             = require( './GroupBannerView' );
 		Views.Header             = require( './GroupHeaderView' );
 		Views.Info               = require( './GroupInfoView' );
+		Views.SubNav             = require( './GroupSubNavView' );
 		Views.Comments           = require( './GroupCommentsView' );
 		Views.CommentCreate      = require( './GroupCommentCreateView' );
 		Views.CommentsCollection = require( './GroupCommentsCollectionView' );

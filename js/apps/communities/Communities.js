@@ -15,6 +15,7 @@ define( function ( require ) {
 
 			'appRoutes' : {
 				'resources/communities' : 'showCommunities',
+				'resources/communities/:ltid/:lid' : 'showForumGroup',
 				'resources/communities/:ltid/:lid/:ftid' : 'showFormThread',
 				'resources/communities/:ltid/:lid/:ftid/:fpid' : 'showFormPost'
 			}
@@ -29,23 +30,27 @@ define( function ( require ) {
 				}
 			},
 
+			'showForumGroup' : function( LocationTypeId, LocationId ) {
+				Communities.Show.Controller.showGroupForums( LocationTypeId, LocationId );
+			},
+
 			'showFormThread' : function( LocationTypeId, LocationId, ForumThreadId ) {
 				Communities.Show.Controller.showCommunities();
 				App.request( 'pd360:navigate', null, 'communities', 'communitiesBrowse', {
 					'LocationTypeId' : LocationTypeId,
 					'LocationId'     : LocationId,
 					'ForumThreadId'  : ForumThreadId
-				});
+				} );
 			},
-			
+
 			'showFormPost' : function( LocationTypeId, LocationId, ForumThreadId, ForumPostId ) {
-				Communities.Show.Controller.showCommunities();
+				Communities.Show.Cntroller.showCommunities();
 				App.request( 'pd360:navigate', null, 'communities', 'communitiesBrowse', {
 					'LocationTypeId' : LocationTypeId,
 					'LocationId'     : LocationId,
 					'ForumThreadId'  : ForumThreadId,
 					'ForumPostId'    : ForumPostId
-				});
+				} );
 			}
 		};
 

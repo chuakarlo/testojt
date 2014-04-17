@@ -22,7 +22,7 @@ define( function ( require ) {
 			'commentCreate' : '#comment-create'
 		},
 
-		'events'   : {
+		'events' : {
 			'click button#create' : 'createComment'
 	    },
 
@@ -37,7 +37,7 @@ define( function ( require ) {
 			message.MessageThreadId = 0;
 			message.MessageId       = 1;
 			message.LicenseId       = this.model.attributes.LicenseId;
-			message.Message         = this.ui.commentCreate.val();
+			message.Message         = String( this.ui.commentCreate.val() );
 			message.Creator         = Session.personnelId();
 			message.Created         = '';
 			message.CreatorAvatar   = this.user.Avatar;
@@ -60,11 +60,9 @@ define( function ( require ) {
 				var groupCommentModel = new GroupCommentModel( message );
 				Vent.trigger( 'group:createComment', groupCommentModel );
 
-
 			} ).fail( function ( error ) {
 				// TODO: error handling
-				var groupCommentModel = new GroupCommentModel( message );
-				Vent.trigger( 'group:createComment', groupCommentModel );
+
 			} );
 
 	    }

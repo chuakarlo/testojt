@@ -31,15 +31,17 @@ define( function ( require ) {
 		'events' : {
 			'click a#comment-reply'     : 'showComment',
 			'click button.reply-submit' : 'replyComment',
-			'click button#remove-main'  : 'removeComment',
+			'click a#remove-main'       : 'removeComment',
 			'click @ui.creator'         : 'showMiniPersonnel'
 	    },
 
-		initialize: function () {
+		initialize: function ( options ) {
 	        // grab the child collection from the parent model
 	        // so that we can render the collection as children
 	        // of this parent node
 	        this.collection = this.model.replies;
+
+	        this.user = options.user;
 
 	        Vent.on( 'group:removeReply', function ( model ) {
 				this.collection.remove( model );
@@ -131,7 +133,7 @@ define( function ( require ) {
 			message.Message         = this.ui.message.val();
 			message.Creator         = Session.personnelId();
 			message.Created         = '';
-			message.CreatorAvatar   = '';
+			message.CreatorAvatar   = this.user.Avatar;
 			message.CreatorFullName = '';
 			message.Remover         = 0;
 			message.Removed         = '';
@@ -158,7 +160,9 @@ define( function ( require ) {
 
 	    },
 
-	    removeComment: function () {
+	    removeComment: function ( e ) {
+
+			e.preventDefault();
 
 			var message = {};
 
@@ -167,6 +171,7 @@ define( function ( require ) {
 			message.LicenseId       = this.model.attributes.LicenseId;
 			message.Message         = this.model.attributes.Message;
 			message.Creator         = this.model.attributes.Creator;
+			message.CreatorAvatar   = this.model.attributes.CreatorAvatar;
 			message.Created         = this.model.attributes.Created;
 			message.Remover         = this.model.attributes.Remover;
 			message.Removed         = this.model.attributes.Removed;
