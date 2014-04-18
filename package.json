@@ -5,7 +5,7 @@
   "description": "HTML5 + Flash PD360",
   "scripts": {
     "test": "grunt test",
-    "postinstall" : "cp grunt/config/git-hooks/pre-commit .git/hooks/ && chmod +x .git/hooks/pre-commit"
+    "postinstall": "cp grunt/config/git-hooks/pre-commit .git/hooks/ && chmod +x .git/hooks/pre-commit"
   },
   "repository": {
     "type": "git",
@@ -32,9 +32,8 @@
     "plato": "~1.0.1",
     "glob": "~3.2.9",
     "grunt-contrib-jshint": "~0.10.0",
-    "jshint-stylish": "~0.1.5"
-  },
-  "dependencies": {
-    "colors": "~0.6.2"
+    "jshint-stylish": "~0.1.5",
+    "colors": "~0.6.2",
+    "eslint": "~0.5.1"
   }
 }

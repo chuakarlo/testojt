@@ -16,9 +16,6 @@ var jshintrc = config.jshintrc;
 var globals  = jshintrc.globals;
 
 module.exports = function ( done ) {
-	console.log();
-	console.log( 'JSHint:'.bold );
-
 	var errors  = 0;
 	var command = 'git diff --name-only --staged';
 
@@ -31,6 +28,7 @@ module.exports = function ( done ) {
 			return console.log( 'No files to lint.' );
 		}
 
+		// Filter empty strings; non JS and JSON files; and folders not being ignored
 		var files = stdout.split( '\n' ).filter( String ).filter( function ( file ) {
 			return ( path.extname( file ) === '.js' || path.extname( file ) === 'json' ) && !file.match( config.ignoredPaths.join( '|' ) );
 		} );
@@ -53,10 +51,11 @@ module.exports = function ( done ) {
 			JSHINT( content, jshintrc, globals );
 
 			if ( !JSHINT.errors.length ) {
-				return console.log( String.fromCharCode( 0x2713 ).green, file.green );
+				return;
 			}
 
-			console.log( String.fromCharCode( 0x2715).red, file.red );
+			console.log();
+			console.log( file.underline );
 
 			JSHINT.errors.forEach( function ( error, index ) {
 				if ( !error || !error.reason ) {
@@ -65,13 +64,13 @@ module.exports = function ( done ) {
 
 				errors++;
 
-				console.log( ( '    ' + String.fromCharCode( 0x2022 ) + ' ' + error.line + ':' ).red, error.reason.red );
+				console.log( ( '  ' + error.line + ':' + error.character ).grey, ' error '.red, error.reason );
 			} );
 
 		} );
 
 		if ( errors ) {
-			throw new Error( errors + ' lint errors.' );
+			throw new Error( 'JSHint errors were found.' );
 		}
 
 		done();
