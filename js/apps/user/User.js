@@ -13,6 +13,7 @@ define( function ( require ) {
 	require( 'user/entities/License' );
 	require( 'user/entities/Profile' );
 	require( 'user/entities/Personnel' );
+	require( 'user/entities/Privilege' );
 
 	App.module( 'User', function ( User, App ) {
 

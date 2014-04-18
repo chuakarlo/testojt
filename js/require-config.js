@@ -70,6 +70,7 @@ require.config( {
 		'videoPlayer'         : 'apps/videoPlayer',
 		'contentNavigation'   : 'apps/contentNavigation',
 		'learningTargets'     : 'apps/learningTargets',
+		'resources'           : 'apps/resources',
 	},
 
 	'shim' : {

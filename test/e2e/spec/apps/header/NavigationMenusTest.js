@@ -13,7 +13,7 @@ suite( function ( env ) {
 
 			browser
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.elementById( 'login-input-email' ).clear().type( 'diao.chan' )
 				.elementById( 'login-input-password' ).clear().type( 'pd360' )
@@ -27,11 +27,11 @@ suite( function ( env ) {
 
 			browser
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.setWindowSize( resolutions.phone.portrait.width, resolutions.phone.portrait.height )
 				.elementByCssSelector( 'button.navbar-toggle' ).click()
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Resources' );
@@ -47,19 +47,19 @@ suite( function ( env ) {
 
 			browser
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.elementByCssSelector( '#resources-tab' ).click()
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Videos' );
 					html.should.contain( 'Learning Targets' );
-					html.should.contain( 'Observation' );
+					html.should.contain( 'Observation 360' );
 					html.should.contain( 'Communities' );
 					html.should.contain( 'Lumibook' );
-					html.should.contain( '{More Resources}' );
+					html.should.contain( 'More Resources' );
 				} )
 
 				.nodeify( done );
@@ -70,11 +70,11 @@ suite( function ( env ) {
 
 			browser
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.elementByCssSelector( '#user-tab' ).click()
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'User Settings' );
@@ -93,11 +93,11 @@ suite( function ( env ) {
 
 			browser
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.setWindowSize( resolutions.tablet.portrait.width, resolutions.tablet.portrait.height )
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Resources' );
@@ -113,19 +113,19 @@ suite( function ( env ) {
 
 			browser
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.elementByCssSelector( '#resources-tab' ).click()
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Videos' );
 					html.should.contain( 'Learning Targets' );
-					html.should.contain( 'Observation' );
+					html.should.contain( 'Observation 360' );
 					html.should.contain( 'Communities' );
 					html.should.contain( 'Lumibook' );
-					html.should.contain( '{More Resources}' );
+					html.should.contain( 'More Resources' );
 				} )
 
 				.nodeify( done );
@@ -136,12 +136,12 @@ suite( function ( env ) {
 
 			browser
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.setWindowSize( resolutions.desktop.landscape.width, resolutions.desktop.landscape.height )
 				.elementByCssSelector( '#user-tab' ).click()
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'User Settings' );
@@ -159,11 +159,11 @@ suite( function ( env ) {
 
 			browser
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.setWindowSize( resolutions.desktop.landscape.width, resolutions.desktop.landscape.height )
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Resources' );
@@ -179,19 +179,19 @@ suite( function ( env ) {
 
 			browser
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.elementByCssSelector( '#resources-tab' ).click()
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Videos' );
 					html.should.contain( 'Learning Targets' );
-					html.should.contain( 'Observation' );
+					html.should.contain( 'Observation 360' );
 					html.should.contain( 'Communities' );
 					html.should.contain( 'Lumibook' );
-					html.should.contain( '{More Resources}' );
+					html.should.contain( 'More Resources' );
 				} )
 
 				.nodeify( done );
@@ -202,15 +202,15 @@ suite( function ( env ) {
 
 			browser
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.setWindowSize( resolutions.desktop.landscape.width, resolutions.desktop.landscape.height )
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.elementByCssSelector( '#user-tab' ).click()
 
-				.sleep( 2000 )
+				.sleep( 200 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'User Settings' );
