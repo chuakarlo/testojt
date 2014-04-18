@@ -87,6 +87,7 @@ define( function ( require ) {
 			var result, ajax;
 
 			var fetch = function ( done ) {
+				App.request( 'user:licenses:reset' );
 				var fetching = App.request( 'user:licenses' );
 
 				$.when( fetching ).always( function ( res ) {

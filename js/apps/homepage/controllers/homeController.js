@@ -5,7 +5,6 @@ define( function ( require ) {
 	var Remoting = require( 'Remoting' );
 	var App      = require( 'App' );
 	var $        = require( 'jquery' );
-	var _        = require( 'underscore' );
 	var Backbone = require( 'backbone' );
 
 	var userData              = require( 'apps/homepage/configuration/userDataLookup' );
