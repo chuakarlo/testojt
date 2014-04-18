@@ -5,7 +5,7 @@
 
 #Home-page-view {
 
-	#your-queue-wrapper .watch-later .content-button{
+	#your-queue-wrapper .pc-watch-later .content-button{
 		color: @pc-blue-light;
 	}
 
@@ -58,7 +58,7 @@
 			left                : auto;
 		}
 
-		.watch-later {
+		.pc-watch-later {
 			width      : @pc-watch-later-box;
 			height     : @pc-watch-later-box;
 			background : none !important;
@@ -84,6 +84,9 @@
 			border-left   : 15px solid #fff;
 			border-right  : 15px solid #fff;
 			border-bottom : 20px solid #fff;
+			h4 {
+				margin : 10px;
+			}
 		}
 	}
 
@@ -167,18 +170,18 @@
 		}
 	}
 
-	#your-queue-wrapper .watch-later:hover {
+	#your-queue-wrapper .pc-watch-later:hover {
 		.content-wrapper-hover();
 	}
 
-	#recommended-wrapper .watch-later:hover {
+	#recommended-wrapper .pc-watch-later:hover {
 		.content-wrapper-hover();
 		.content-button {
 				color :	@pc-blue-light;
 			}
 	}
 
- .vid-thumb-overlay:hover .vid-thumb-bg {
+ .vid-thumb-overlay:hover .pc-vid-thumb-bg {
 		opacity             : .5;
 		transition-duration : .5s;
 	}

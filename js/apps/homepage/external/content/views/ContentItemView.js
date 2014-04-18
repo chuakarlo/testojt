@@ -19,7 +19,7 @@ define( function ( require ) {
 		},
 		'template'        : _.template( template ),
 		'tagName'         : 'li',
-		'className'       : 'grid-box col-md-3 vid-thumb no-padding',
+		'className'       : 'col-md-3 vid-thumb no-padding',
 
 		'templateHelpers' : function () {
 			return controller.doSetTemplateHelper( this );
