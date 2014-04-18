@@ -42,7 +42,14 @@ define( function ( require ) {
 		var API = {
 
 			'getLicenses' : function() {
- 
+
+				// Check to see if the defered is resolved or rejected so
+				// we don't run into any caching issues.
+				var state = defer.state();
+				if ( state === 'resolved' || state === 'rejected' ) {
+					defer = new $.Deferred();
+				}
+
 				// if we aren't currently fetching licenses
 				if ( !fetching ) {
 
@@ -79,7 +86,6 @@ define( function ( require ) {
 			// clear a users list of licenses
 			'clear' : function () {
 				licenses = null;
-				defer = new $.Deferred();
 			}
 
 		};
