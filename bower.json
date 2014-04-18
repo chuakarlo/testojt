@@ -10,6 +10,7 @@
     "backbone.stickit": "https://github.com/NYTimes/backbone.stickit.git#0702e7bae7bf473e60fa37cdadadb0bcd0723141",
     "bootstrap": "3.1.x",
     "es5-shim": "2.1.x",
+    "fontawesome": "4.0.x",
     "jquery": "2.1.x",
     "jqueryui": "1.10.4",
     "jquery.bum-smack": "https://github.com/mrjoelkemp/jquery.bum-smack.git#~1.1.0",

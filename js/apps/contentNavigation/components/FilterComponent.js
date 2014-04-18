@@ -130,9 +130,9 @@ define( function ( require ) {
 
 						itemViewContainer.slideToggle( 'fast', 'swing', function () {
 							if ( itemViewContainer.is( ':visible' ) ) {
-								collapseButton.addClass( 'glyphicon-minus' ).removeClass( 'glyphicon-plus' );
+								collapseButton.addClass( 'fa-minus' ).removeClass( 'fa-plus' );
 							} else {
-								collapseButton.addClass( 'glyphicon-plus' ).removeClass( 'glyphicon-minus' );
+								collapseButton.addClass( 'fa-plus' ).removeClass( 'fa-minus' );
 							}
 
 							vent.mediator.trigger( 'scroll:unset', filterHeight );

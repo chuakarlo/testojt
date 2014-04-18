@@ -20,42 +20,42 @@ define( function ( require ) {
 				{
 					'name' : 'Videos',
 					'url'  : 'resources/videos',
-					'icon' : 'glyphicon-info-sign'
+					'icon' : 'fa-youtube-play'
 				},
 				{
 					'name' : 'Learning Targets',
 					'url'  : 'resources/learning',
-					'icon' : 'glyphicon-info-sign'
+					'icon' : 'fa-bullseye'
 				},
 				{
 					'name' : 'Observation 360',
 					'url'  : 'resources/observation/me',
-					'icon' : 'glyphicon-info-sign'
+					'icon' : 'fa-eye'
 				},
 				{
 					'name' : 'Communities',
 					'url'  : 'resources/communities',
-					'icon' : 'glyphicon-info-sign'
+					'icon' : 'fa-users'
 				},
 				{
 					'name' : 'Lumibook',
 					'url'  : 'resources/lumibook',
-					'icon' : 'glyphicon-info-sign'
+					'icon' : 'fa-book'
 				},
 				{
 					'name' : '{User Video Uploader}',
 					'url'  : '',
-					'icon' : 'glyphicon-info-sign'
+					'icon' : 'fa-film'
 				},
 				{
 					'name' : '{Training}',
 					'url'  : '',
-					'icon' : 'glyphicon-info-sign'
+					'icon' : 'fa-bullhorn'
 				},
 				{
 					'name' : '{Learning Progression}',
 					'url'  : '',
-					'icon' : 'glyphicon-info-sign'
+					'icon' : 'fa-puzzle-piece'
 				},
 
 			] );
@@ -77,7 +77,7 @@ define( function ( require ) {
 
 							var adminModel = new Entities.Resources( {
 								'name' : '{Admin}',
-								'icon' : 'glyphicon-info-sign',
+								'icon' : 'fa-wrench',
 								'url'  : ''
 							} );
 
