@@ -7,7 +7,7 @@ var path = require( 'path' );
 var async    = require( 'async' );
 var mustache = require( 'mustache' );
 var JSHINT   = require( 'jshint' ).JSHINT;
-var comment  = require( './lib/comment' );
+var comment  = require( './comment' );
 var github   = require( '../github/authenticate' );
 
 require( 'colors' );

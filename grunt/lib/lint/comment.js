@@ -3,8 +3,8 @@
 // Load modules and config
 var mustache = require( 'mustache' );
 var _        = require( 'lodash' );
-var facts    = require( '../data/facts' );
-var github   = require( '../../github/authenticate' );
+var facts    = require( './data/facts' );
+var github   = require( '../github/authenticate' );
 
 var jshint = {
 
