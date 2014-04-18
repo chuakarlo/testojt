@@ -5,10 +5,18 @@ define( function ( require ) {
 	var Remoting = require( 'Remoting' );
 	var App      = require( 'App' );
 	var $        = require( 'jquery' );
+	var _        = require( 'underscore' );
+	var Backbone = require( 'backbone' );
 
-	var userData = require( 'apps/homepage/configuration/userDataLookup' );
-	var HomeView = require( 'apps/homepage/views/BaseItemView' );
-	var NullView = require( 'apps/homepage/views/BaseEmptyView' );
+	var userData              = require( 'apps/homepage/configuration/userDataLookup' );
+	var HomeView              = require( 'apps/homepage/views/BaseItemView' );
+	var NullView              = require( 'apps/homepage/views/BaseEmptyView' );
+	var manifest              = require( 'apps/homepage/manifest' );
+	var SectionCollectionView = require( 'apps/homepage/views/SectionCollectionView' );
+	var DistrictMessageView   = require( 'apps/homepage/views/DistrictMessageView' );
+	var DistrictMessageModel  = require( 'apps/homepage/entities/DistrictMessageModel' );
+
+
 
 	function hasOwnProperty ( object, key, value ) {
 		return object && object.hasOwnProperty( key ) ? object[ key ] : value;
@@ -61,31 +69,66 @@ define( function ( require ) {
 		Show.Controller = {
 			'showHomepage' : function () {
 
-				if ( Session.personnelId() ) {
+				var fetchingModels = Remoting.fetch( clientProfileParams( Session.personnelId() ) );
 
-					var fetchingModels = Remoting.fetch( clientProfileParams( Session.personnelId() ) );
+				var homeLayout = new HomeView();
 
-					$.when( fetchingModels ).done( function ( models ) {
+				App.content.show( homeLayout );
 
-						App.reqres.setHandler( 'homepage:userProfile', function () {
-							return models[0];
-						} );
+				// we can show loading here if we want.
 
-						App.reqres.setHandler( 'homepage:userTags', function () {
-							return setUserTags( models[1] );
-						} );
+				// Fetch the models required to display the content
+				$.when( fetchingModels ).done( function ( models ) {
 
-						App.content.show( new HomeView() );
-
-					} ).fail( function ( error ) {
-
-						App.content.show( new NullView() );
-
+					App.reqres.setHandler( 'homepage:userProfile', function () {
+						return models[0];
 					} );
 
-				} else {
+					App.reqres.setHandler( 'homepage:userTags', function () {
+						return setUserTags( models[1] );
+					} );
+
+
+					// Generate the sub views?
+					var externalSections = manifest();
+					var collection       = new Backbone.Collection(externalSections);
+					var sectionView      = new SectionCollectionView( {
+						'collection': collection
+					} );
+
+					homeLayout.contentRegion.show(sectionView);
+
+
+				} ).fail( function ( error ) {
+
 					App.content.show( new NullView() );
-				}
+
+				} );
+
+				// Check to see if they have a district message
+				var licenses = App.request( 'user:licenses' );
+				$.when( licenses ).done( function( licenses ) {
+
+					var ids = licenses.pluck('LicenseId');
+					var districtMessageModel = new DistrictMessageModel( {
+						'licIds' : ids
+					} );
+
+					districtMessageModel.fetch( {
+
+						'success' : function( model ) {
+							if ( model.isValidMessage() ) {
+								var districtMessageView = new DistrictMessageView( {
+									'model' : model
+								} );
+								homeLayout.messageRegion.show( districtMessageView );
+							}
+						}
+					} );
+
+				} );
+
+
 			}
 
 		};

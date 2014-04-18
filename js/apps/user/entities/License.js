@@ -37,53 +37,49 @@ define( function ( require ) {
 		// the list of users licenses
 		var licenses;
 		var fetching = false;
+		var defer = new $.Deferred();
 
 		var API = {
 
-			'initializeLicenses' : function ( defer ) {
+			'getLicenses' : function() {
+ 
+				// if we aren't currently fetching licenses
+				if ( !fetching ) {
 
-				// if currently fetching licenses
-				if ( fetching ) {
-					return defer.promise();
-				}
+					if ( licenses ) {
 
-				fetching = true;
-
-				licenses = new Entities.LicenseCollection();
-
-				licenses.fetch( {
-					
-					'success' : function () {
-						fetching = false;
 						defer.resolve( licenses );
-					},
 
-					'error' : function () {
-						fetching = false;
-						licenses = null;
-						defer.reject( new Error( 'Error fetching licenses' ) );
+					} else {
+
+						fetching = true;
+
+						licenses = new Entities.LicenseCollection();
+						licenses.fetch( {
+							
+							'success' : function( collection ) {
+								fetching = false;
+								defer.resolve( licenses );
+							},
+
+							'error' : function () {
+								fetching = false;
+								licenses = null;
+								defer.reject( new Error( 'Error fetching licenses' ) );
+							}
+						} );
+
 					}
-				} );
-
-			},
-
-			'getLicenses' : function () {
-				var defer = $.Deferred();
-
-				// if licenses were already fetched, return stored licenses
-				if ( licenses ) {
-					return defer.resolve( licenses );
 				}
-
-				// licenses haven't been set, fetch them
-				this.initializeLicenses( defer );
 
 				return defer.promise();
+
 			},
 
 			// clear a users list of licenses
 			'clear' : function () {
 				licenses = null;
+				defer = new $.Deferred();
 			}
 
 		};

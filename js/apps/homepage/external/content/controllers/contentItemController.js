@@ -99,7 +99,7 @@ define( function ( require ) {
 
 		'doSetTemplateHelper' : function ( view ) {
 			var model       = view.model;
-			var contentName = model.get( 'ContentName' );
+			var contentName = model.get( 'ContentName' ) || '';
 			var watchToggle = ( model.get( 'renderToggle' ) )( view.model.collection, view.model );
 
 			return {
