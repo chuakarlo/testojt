@@ -102,9 +102,9 @@ define( function ( require ) {
 			//Homepage
 			'spec/apps/homepage/external/content/controllers/contentCompositeControllerTest.js',
 			'spec/apps/homepage/external/content/views/ContentCompositeViewTest.js',
-			'spec/apps/billboard/BillboardTest',
 
-			//Homepage - Content
+			//Homepage
+			'spec/apps/homepage/external/billboard/views/BillboardItemViewTest.js',
 			'spec/apps/homepage/external/content/views/ContentItemViewTest.js',
 
 			//HomePage - Recommended

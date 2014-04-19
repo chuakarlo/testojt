@@ -1,6 +1,9 @@
 define(function(require) {
 	'use strict';
 
+	var App = require( 'App' );
+	var $   = require( 'jquery' );
+
 	var BillboardCollection = require( 'apps/homepage/external/billboard/collection/BillboardCollection' );
 	var transformSliderData = require( 'apps/homepage/external/billboard/utilities/transformSliderData' );
 	var billboardData       = require( 'apps/homepage/external/billboard/configuration/billboardDummyData' );
@@ -11,6 +14,7 @@ define(function(require) {
 	var scrollSelector  = '.scrollable';
 
 	var testClass = 'test';
+	var isTest = true;
 
 	return {
 
@@ -18,7 +22,7 @@ define(function(require) {
 			var collection = new BillboardCollection();
 			collection.fetch( {
 				'success' : function ( collection ) {
-					transformSliderData( true ? collection.toJSON() : billboardData, function ( res ) {
+					transformSliderData( isTest ? collection.toJSON() : billboardData, function ( res ) {
 						itemView.images   = res.images;
 						itemView.captions = res.captions;
 						itemView.render();
@@ -40,6 +44,10 @@ define(function(require) {
 					'billboardCaptions' : itemView.captions,
 					'id'                : '1'
 			};
+		},
+
+		'doRedirect' : function ( e ) {
+			App.navigate( $(e.currentTarget).attr('data-url'), { 'trigger' : true } );
 		}
 	};
 });

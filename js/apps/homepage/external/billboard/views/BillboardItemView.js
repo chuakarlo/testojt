@@ -8,11 +8,15 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 
-		'template'        : _.template( template ),
-		'className'       : 'wide-container-fluid resources section-container',
-		'id'              : 'billboard-container',
+		'template'          : _.template( template ),
+		'className'         : 'wide-container-fluid resources section-container',
+		'id'                : 'billboard-container',
+		'events' : {
+			'click a.videoplay' : 'redirect',
+			'click a.videoLink' : 'redirect'
+		},
 
-		'initialize'      : function ( options ) {
+		'initialize'      : function () {
 			controller.doInitialize( this );
 		},
 
@@ -22,6 +26,11 @@ define( function ( require ) {
 
 		'onRender'        : function ( parent ) {
 			controller.doOnRender( parent );
+		},
+
+		'redirect'        : function ( e ){
+			controller.doRedirect( e );
+			return false;
 		}
 	} );
 

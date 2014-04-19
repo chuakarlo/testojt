@@ -7,6 +7,8 @@ define( function ( require ) {
 	var captionTemplate     = require( 'text!apps/homepage/external/billboard/templates/billboardCaptionView.html' );
 	var urlTemplate         = require( 'text!apps/homepage/external/billboard/templates/billboardUrlView.html' );
 
+	var videoPlayerBaseUrl = 'resources/videos/';
+
 	return function ( billboardData, callback ) {
 
 		var images   = '';
@@ -26,10 +28,16 @@ define( function ( require ) {
 				} );
 			}
 
-			billboard.caption     = billboard.VideoURL && billboard.CoverFlowTypeId ?
-				_.template( urlTemplate, {
+			billboard.caption = '';
+
+			if( billboard.VideoURL && billboard.CoverFlowTypeId ){
+				var vidUrlParts = billboard.VideoURL.split('/');
+				//Assuming that the last token will be the content ID
+				billboard.VideoURL = videoPlayerBaseUrl + vidUrlParts[ vidUrlParts.length - 1 ];
+				billboard.caption  = _.template( urlTemplate, {
 					billboard: billboard
-				} ) : '';
+				} );
+			}
 
 			images   += billboard.imageHTML;
 			captions += _.template( captionTemplate, {
