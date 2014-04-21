@@ -11,9 +11,7 @@ define( function ( require ) {
 
 	describe( 'BillboardItemView ItemView ', function () {
 
-		//var SpiedBillboardObjInstance;
 		var BillboardItemViewInstance;
-		//var BillboardvideoLinkSpy;
 		var BillboardCollectionData;
 		var navigateBillboardStub;
 		var BillboardCollectionStub;

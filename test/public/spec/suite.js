@@ -104,6 +104,7 @@ define( function ( require ) {
 			'spec/apps/homepage/external/content/views/ContentCompositeViewTest.js',
 
 			//Homepage
+			'spec/apps/homepage/controllers/HomeControllerTest.js',
 			'spec/apps/homepage/external/billboard/views/BillboardItemViewTest.js',
 			'spec/apps/homepage/external/content/views/ContentItemViewTest.js',
 
@@ -111,7 +112,6 @@ define( function ( require ) {
 
 			//Homepage - Your Queue
 			'spec/apps/homepage/external/content/external/your-queue/baseTest.js'
-
 
 		]
 
