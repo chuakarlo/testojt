@@ -41,10 +41,6 @@ define( function ( require ) {
 
 		};
 
-		Vent.on( 'videoPlayer:showRelated', function ( relatedVideos ) {
-			API.showRelatedVideos( relatedVideos );
-		} );
-
 		Vent.on( 'videoPlayer:showResources', function () {
 			API.showAdditionalResources();
 		} );

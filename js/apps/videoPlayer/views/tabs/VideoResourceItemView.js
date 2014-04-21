@@ -7,7 +7,7 @@ define( function ( require ) {
 	var template   = require( 'text!videoPlayer/templates/tabs/videoResourceItemView.html' );
 
 	//confirm and ActiveXObject are globals that are defined externally
-	/*global ActiveXObject: false, confirm: false */
+	/*global ActiveXObject: false */
 
 	return Marionette.ItemView.extend( {
 
@@ -16,9 +16,9 @@ define( function ( require ) {
 		'tagName'  : 'li',
 
 		'ui'       : {
-			'thumbnail'   : '.video-resources-thumb',
-			'pdfModal'    : '#pdf-modal',
-			'modalIframe' : '#modal-iframe'
+			'thumbnail'    : '.video-resources-thumb img',
+			'pdfModal'     : '#pdf-modal',
+			'modalContent' : '#pdf-holder'
 		},
 
 		'events' : {
@@ -29,28 +29,32 @@ define( function ( require ) {
 			var hasPlugin = this.checkForPdfPlugin();
 			var isIE      = this.isIE();
 			var isPreview = this.isPreview();
+			var tags = {
+				'iframe' : 'iframe',
+				'embed'  : 'embed'
+			};
 
 			if ( isPreview !== false ) {
 				if ( isIE ) {
 					if ( hasPlugin ) {
-						this.showPdfModal( isPreview );
+						this.showPdfModal( isPreview, tags.iframe );
 					} else {
-						var answer = confirm( 'Adobe Reader not installed. Please click  OK to download.' );
-						if ( answer ) {
-						window.open( 'https://get.adobe.com/reader', '_blank' );
-						}
+						return false;
 					}
 				} else {
-					this.showPdfModal( isPreview );
+					this.showPdfModal( isPreview, tags.embed );
 				}
 			} else {
 				return false;
 			}
 		},
 
-		'showPdfModal' : function ( previewPath ) {
+		'showPdfModal' : function ( previewPath, tag ) {
 			this.ui.pdfModal.modal( 'show' );
-			this.ui.modalIframe.attr( 'src', previewPath );
+			//use iframe if ie and embed if not
+			this.ui.modalContent.html( function () {
+			  return '<'+ tag +' id="modal-iframe" src='+ previewPath + '></'+ tag + '>';
+			});
 		},
 
 		'isPreview' : function () {

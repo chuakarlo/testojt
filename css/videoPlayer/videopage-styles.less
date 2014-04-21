@@ -1,9 +1,9 @@
 #video-player-page {
 		.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
-			position: relative;
-			min-height: 1px;
-			padding-left: 0;
-			padding-right: 0;
+			position      : relative;
+			min-height    : 1px;
+			padding-left  : 0;
+			padding-right : 0;
 		}
 	#header {
 		h1 {
@@ -12,7 +12,8 @@
 			overflow      : hidden;
 			text-overflow : ellipsis;
 		}
-		.info {
+		#info {
+			cursor         : pointer;
 			color          : #3dadef;
 			vertical-align : middle;
 			font-size      : 25px;
@@ -21,39 +22,13 @@
 		}
 	}
 	#video {
-		position: relative;
+		position : relative;
 
 		#video-player {
 			float            : left;
 			padding          : 0px;
 			background-color : #000;
 		}
-
-		// .footer {
-		// 	width      : 100%;
-		// 	text-align : center;
-		// 	padding    : 17px;
-		// 	position   : absolute;
-		// 	bottom     : 0px;
-		// 	left       : 0px;
-		// 	background : #e7e9e9;
-		// 	height     : 57px;
-		// }
-
-		// h3 {
-		// 	font-weight : 600;
-		// }
-
-		// hr {
-		// 	border-top : 1px solid #e0e2e3;
-		// }
-
-		// button {
-		// 	width  : 138px;
-		// 	height : 37px;
-		// 	float  : right;
-		// 	margin : 17px 0;
-		// }
 	}
 
 	#video .carousel, #video .carousel .item {
@@ -76,90 +51,90 @@
 
 	span.email-name {
 
-		display: block;
-		box-sizing: border-box;
-		float: left;
-		width: 167px;
-		margin: 3px;
+		display    : block;
+		box-sizing : border-box;
+		float      : left;
+		width      : 167px;
+		margin     : 3px;
 
 		div.remove-item {
-			border: none;
-			background: #545965;
-			color: #FFFFFF;
-			cursor: pointer;
+			border     : none;
+			background : #545965;
+			color      : #FFFFFF;
+			cursor     : pointer;
 		}
 
 		span.email-item {
-			display: block;
-			-webkit-box-sizing: border-box; /* Saf <5.1, */
-			-moz-box-sizing: border-box; /* Fx */
-			box-sizing: border-box; /* Ch, Saf 5.1+, IE 8+, Op 9+  */
-			border: none;
-			background: #4B505C;
-			color: #FFFFFF;
-			max-width: 127px;
-			width: 127px;
-			white-space: nowrap;
-			overflow: hidden;
-			-o-text-overflow: ellipsis; /* Op <11, Op Mini, Op Mob <12.1 */
-			text-overflow: ellipsis; /* IE, Fx, Ch, Saf */
+			display            : block;
+			-webkit-box-sizing : border-box; /* Saf <5.1, */
+			-moz-box-sizing    : border-box; /* Fx */
+			box-sizing         : border-box; /* Ch, Saf 5.1+, IE 8+, Op 9+  */
+			border             : none;
+			background         : #4B505C;
+			color              : #FFFFFF;
+			max-width          : 127px;
+			width              : 127px;
+			white-space        : nowrap;
+			overflow           : hidden;
+			-o-text-overflow   : ellipsis; /* Op <11, Op Mini, Op Mob <12.1 */
+			text-overflow      : ellipsis; /* IE, Fx, Ch, Saf */
 		}
 	}
 
 	.tooltip-name{
-		font-weight: 500;
-		word-wrap: break-word;
+		font-weight : 500;
+		word-wrap   : break-word;
 	}
 
 	.tooltip-email{
-		font-size: 12px;
-		font-weight: 200;
-		word-wrap: break-word;
+		font-size   : 12px;
+		font-weight : 200;
+		word-wrap   : break-word;
 	}
 
 	.vjs-default-skin .vjs-volume-level {
-		background: #9fd753;
+		background : #9fd753;
 	}
 	.vjs-default-skin .vjs-play-progress {
-		background: #9fd753;
+		background : #9fd753;
 	}
 	.vjs-default-skin .vjs-volume-bar .vjs-volume-handle {
-		width: 4px;
-		height: 13px;
-		top: -4px;
-		background: #cccccc;
+		width      : 4px;
+		height     : 13px;
+		top        : -4px;
+		background : #cccccc;
 	}
 	.vjs-default-skin:hover .vjs-progress-control .vjs-seek-handle {
-		position: absolute;
-		width: 16px;
-		height: 16px;
-		background: #cccccc;
-		border: 5px solid #fff;
-		top: -0.5em;
-		-moz-border-radius: 0.9em;
-		-webkit-border-radius: 0.9em;
-		border-radius: 0.9em;
+		position              : absolute;
+		width                 : 16px;
+		height                : 16px;
+		background            : #cccccc;
+		border                : 5px solid #fff;
+		top                   : -0.5em;
+		-moz-border-radius    : 0.9em;
+		-webkit-border-radius : 0.9em;
+		border-radius         : 0.9em;
 	}
 	.vjs-default-skin .vjs-slider-handle:before {
-		content: '';
+		content : '';
 	}
 	.vjs-default-skin .vjs-duration {
-		display: none;
-		float: left;
+		display : none;
+		float   : left;
 	}
 	.vjs-default-skin .vjs-remaining-time {
-		float: left;
-		display: block;
+		float   : left;
+		display : block;
 	}
 	.vjs-default-skin .vjs-menu-button ul li.vjs-selected {
-		background-color: #cfcfcf;
-		color: #000000;
+		background-color : #cfcfcf;
+		color            : #000000;
 	}
 
 	.tabs ul li, .overflow ul li {
-		float:left;
-		margin-right: 45px;
-		padding: 0 10px 12px;
+		float        : left;
+		margin-right : 45px;
+		padding      : 0 10px 12px;
 	}
 
 	//video information button

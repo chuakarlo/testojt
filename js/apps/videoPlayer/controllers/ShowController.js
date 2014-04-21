@@ -42,6 +42,7 @@ define( function ( require ) {
 				var licenseType = [ 0, 1, 200, 300 ];
 
 				var videoModel = new ContentModel( videoInfo );
+				var layout = new App.VideoPlayer.Views.PageLayout( { 'model' : videoModel } );
 
 				var relatedVideosRequest = {
 					'path'   : 'com.schoolimprovement.pd360.dao.RespondService',
@@ -98,7 +99,7 @@ define( function ( require ) {
 
 				$.when( fetchingData ).done( function ( response ) {
 
-					var layout = new App.VideoPlayer.Views.PageLayout( { 'model' : videoModel } );
+					// var layout = new App.VideoPlayer.Views.PageLayout( { 'model' : videoModel } );
 					App.content.show( layout );
 
 					var questions     = App.VideoPlayer.Controller.Filter.filterQuestions( response[ 0 ] );

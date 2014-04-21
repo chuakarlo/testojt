@@ -9,24 +9,44 @@
 		.translate(0, 0);
 	}
 }
-
+.modal-wide {
+	.transition-mixin;
+	.modal-dialog {
+		width : 80%;
+		.modal-content {
+			height : 720px;
+			#modal-iframe {
+				width      : 100%;
+				min-height : 720px;
+			}
+			.close-modal {
+					display               : inline-block;
+					position              : absolute;
+					border                : inherit;
+					top                   : -15px;
+					right                 : -15px;
+					background            : black;
+					color                 : white;
+					height                : 35px;
+					width                 : 35px;
+					line-height           : 29px;
+					font-size             : 32px;
+					text-decoration       : none;
+					text-align            : center;
+					font-weight           : normal;
+					-webkit-border-radius : 35px;
+					-moz-border-radius    : 35px;
+					-o-border-radius      : 35px;
+					border-radius         : 35px;
+			}
+		}
+	}
+}
 .share-modal {
 	.modal-open {
 		overflow : auto;
 	}
-	.modal-wide .modal-dialog {
-		width : 90%;
-		#modal-iframe {
-			width      : 100%;
-			min-height : 720px;
-		}
-	}
-	#pdf-modal {
-		.modal-content {
-			height: 720px;
-		}
-		.transition-mixin;
-	}
+
 	.modal-dialog {
 		width : 720px;
 	}
@@ -192,52 +212,52 @@
 		}
 		.blue-btn:disabled {
 			background : #5ABEF9;
-			padding: 0px;
+			padding    : 0px;
 		}
 	}
 	.transition-mixin;
 	span.selected-name {
-		display: block;
-		box-sizing: border-box;
-		float: left;
-		width: 167px;
-		margin: 3px;
+		display    : block;
+		box-sizing : border-box;
+		float      : left;
+		width      : 167px;
+		margin     : 3px;
 		div.remove-item {
-			border: none;
-			background: #545965;
-			color: #FFFFFF;
-			cursor: pointer;
+			border     : none;
+			background : #545965;
+			color      : #FFFFFF;
+			cursor     : pointer;
 		}
 		span.selected-item {
-			display: block;
-			-webkit-box-sizing: border-box; /* Saf <5.1, */
-			-moz-box-sizing: border-box; /* Fx */
-			box-sizing: border-box; /* Ch, Saf 5.1+, IE 8+, Op 9+  */
-			border: none;
-			background: #4B505C;
-			color: #FFFFFF;
-			max-width: 127px;
-			width: 127px;
-			white-space: nowrap;
-			overflow: hidden;
-			-o-text-overflow: ellipsis; /* Op <11, Op Mini, Op Mob <12.1 */
-			text-overflow: ellipsis; /* IE, Fx, Ch, Saf */
+			display            : block;
+			-webkit-box-sizing : border-box; /* Saf <5.1, */
+			-moz-box-sizing    : border-box; /* Fx */
+			box-sizing         : border-box; /* Ch, Saf 5.1+, IE 8+, Op 9+  */
+			border             : none;
+			background         : #4B505C;
+			color              : #FFFFFF;
+			max-width          : 127px;
+			width              : 127px;
+			white-space        : nowrap;
+			overflow           : hidden;
+			-o-text-overflow   : ellipsis; /* Op <11, Op Mini, Op Mob <12.1 */
+			text-overflow      : ellipsis; /* IE, Fx, Ch, Saf */
 		}
 	}
 	.tooltip {
 		position : fixed;
 	}
 	.tooltip-inner {
-		white-space: pre-wrap;
+		white-space : pre-wrap;
 	}
 	.tooltip-name {
-		font-weight: 500;
-		word-wrap: break-word;
+		font-weight : 500;
+		word-wrap   : break-word;
 	}
 	.tooltip-location {
-		font-size: 12px;
-		font-weight: 200;
-		word-wrap: break-word;
+		font-size   : 12px;
+		font-weight : 200;
+		word-wrap   : break-word;
 	}
 }
 

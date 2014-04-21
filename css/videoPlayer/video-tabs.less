@@ -1,5 +1,24 @@
-#video-player-page {
+.tab-content > .tab-pane {
+display    : block;
+visibility : hidden;
+height     : 0;
+}
+.tab-content > .tab-pane.active {
+	visibility : visible;
+	height     : auto;
+}
 
+.tab-content > .tab-pane #video-resource,
+.tab-content > .tab-pane #video-segment {
+	height : 0;
+}
+
+.tab-content > .tab-pane.active #video-resource,
+.tab-content > .tab-pane.active #video-segment {
+	height : auto;
+}
+
+#video-player-page {
 	#tab-container {
 		width         : 100%;
 		border-bottom : 1px solid #EBEBEB;
@@ -9,6 +28,7 @@
 		a {
 			color : inherit;
 		}
+
 		#video-tabs {
 			.nav-tabs {
 				border-top    : none;
@@ -18,14 +38,14 @@
 						border : none;
 					}
 					a:hover, a:focus {
-						border-top : none;
-						cursor:pointer;
+						border-top    : none;
+						cursor        : pointer;
 						margin-bottom : 0;
 					}
 				}
 				li.active {
 					a {
-						border-top: none;
+						border-top    : none;
 						border-bottom : 3px solid #8DB62B;
 						color         : #8DB62B;
 					}
@@ -39,7 +59,7 @@
 				width    : 138px;
 				position : relative;
 				top      : -7px;
-				padding: 0 !important;
+				padding  : 0 !important;
 				.white-btn {
 					background    : none;
 					border        : 1px solid #A5A7AD;
@@ -63,14 +83,14 @@
 	}
 	//override less for slick carousel
 	.slick {
-
 		.slick-list {
-			height : 280px;
+			height : 282px;
 		}
 		.slick-slide {
-			box-sizing: border-box;
-			padding: 0px 10px;
-			width : 285px !important;
+			box-sizing : border-box;
+			padding    : 0px 10px;
+			width      : 285px !important;
+			min-height : 282px;
 			}
 
 		.slick-prev, .slick-next {
@@ -96,6 +116,15 @@
 
 	}
 
+	.vid-tab {
+		margin : 0 -40px;
+
+		li {
+			margin : 19px 10px;
+			width  : 265px;
+		}
+	}
+
 	.videos-thumb {
 		width      : 100%;
 		cursor     : pointer;
@@ -103,6 +132,7 @@
 		display    : block;
 		background : @vp-black;
 		color      : @vp-white;
+		min-height : 150px;
 
 		#icon-play {
 				position  : absolute;
@@ -114,7 +144,7 @@
 
 			#word-play {
 				display  : none;
-				top      : 53%;
+				top      : 62%;
 				left     : 37%;
 				position : absolute;
 			}
@@ -224,9 +254,10 @@
 			border-top-right-radius : 3px;
 			cursor                  : pointer;
 			position                : relative;
+			width                   : 265px;
 
 			img {
-				width : 97%;
+				width : 100%;
 			}
 			.hover {
 				width    : 100%;
@@ -250,7 +281,8 @@
 			border-bottom-left-radius  : 3px;
 			border-bottom-right-radius : 3px;
 			display                    : inline-block;
-			width                      : 97%;
+			width                      : 100%;
+			height                     : 70px;
 
 			h3 {
 			width         : 236px;
@@ -264,34 +296,30 @@
 					margin-top  : 10px;
 					color       : #b2b5b9;
 				}
-			.download {
-				// position        : absolute;
-				// width           : 105px;
-				// height          : 88px;
-				// background      : url('/./../img/download-icon.png') no-repeat;
-				// background-size : cover;
-				// top             : 150px;
-				// right           : 93px;
-				// cursor          : pointer;
-				position           : absolute;
-				font-size          : 35px;
-				top                : 201px;
-				right              : 127px;
-				cursor             : pointer;
-				color              : gray;
+			#download {
+				position  : absolute;
+				font-size : 32px;
+				top       : 210px;
+				right     : 118px;
+				cursor    : pointer;
+				color     : gray;
 			}
 
-			.download:hover {
+			#download:hover {
 				color : @vp-blue-light;
-				.add {
-				display : block;
+				.download {
+					display : block;
 				}
 			}
 		}
 		//divider of video resource and video segments
 		.additional-resources {
 			hr {
-				clear:both;
+				clear : both;
 			}
+		}
+
+		.tab-content #related-videos {
+			margin-top : 19px;
 		}
 }

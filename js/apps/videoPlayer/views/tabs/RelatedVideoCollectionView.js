@@ -1,4 +1,4 @@
-define( function( require ) {
+define( function ( require ) {
 	'use strict';
 
 	require( 'slick' );
@@ -11,36 +11,36 @@ define( function( require ) {
 
 	return Marionette.CollectionView.extend( {
 
-		'itemView': RelatedVideoItemView,
+		'itemView' : RelatedVideoItemView,
 
-		'emptyView': LoadingView, // to show loading animation when no collection is still available
+		'emptyView' : LoadingView, // to show loading animation when no collection is still available
 
-		'tagName': 'div',
+		'tagName' : 'div',
 
-		'className': 'slick',
+		'className' : 'slick',
 
-		'ui': {
-			'next': 'button.slick-next',
-			'prev': 'button.slick-prev'
+		'ui' : {
+			'next' : 'button.slick-next',
+			'prev' : 'button.slick-prev'
 		},
 
-		'initialize': function () { },
+		'initialize' : function () { },
 
-		'hover': function ( element, time, callback ) {
-			$( element ).hover( function() {
+		'hover' : function ( element, time, callback ) {
+			$( element ).hover( function () {
 				//start time
 				if ( !this.timeoutId ) {
 					this.timeoutId = window.setInterval( callback, time ); //for 1 second
 				}
 			}, this.clearTimeout );
 		},
-		'hoverNext': function ( element ) {
-			this.hover( this.ui.next, 1500, function() {
+		'hoverNext' : function ( element ) {
+			this.hover( this.ui.next, 1500, function () {
 				element.slickNext( 1 );
 			} );
 		},
-		'hoverPrev': function ( element ) {
-			this.hover( this.ui.prev, 1500, function() {
+		'hoverPrev' : function ( element ) {
+			this.hover( this.ui.prev, 1500, function () {
 				element.slickPrev( 1 );
 			} );
 		},
@@ -55,12 +55,22 @@ define( function( require ) {
 				'slidesToShow'   : 4,
 				'slidesToScroll' : 4
 			} );
+			this.arrowAnimate( this.$el );
 			this.hoverNext( this.$el );
 			this.hoverPrev( this.$el );
-		},
 
+		},
+		'arrowAnimate' : function ( element ) {
+			$( element ).hover( function () {
+				$( element[ 0 ].children[ 1 ] ).attr( 'style' , 'display:inline-block' );
+				$( element[ 0 ].children[ 2 ] ).attr( 'style' , 'display:inline-block' );
+			}, function () {
+				$( element[ 0 ].children[ 1 ]).attr( 'style' , 'display:none' );
+				$( element[ 0 ].children[ 2 ] ).attr( 'style' , 'display:none' );
+			} );
+		},
 		'onClose' : function () {
-			this.collection.reset( [] );
+			this.collection.reset( [ ] );
 		}
 	} );
 } );

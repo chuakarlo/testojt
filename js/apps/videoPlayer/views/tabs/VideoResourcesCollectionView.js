@@ -21,7 +21,7 @@ define( function ( require ) {
 		'initialize' : function () {},
 
 		'onClose' : function () {
-			this.collection.reset( [] );
+			this.collection.reset( [ ] );
 		}
 
 	} );

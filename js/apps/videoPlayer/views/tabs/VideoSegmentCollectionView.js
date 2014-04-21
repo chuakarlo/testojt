@@ -55,18 +55,26 @@ define( function ( require ) {
 
 		},
 
-		'onShow' : function () {
+		 'onShow' : function () {
 			this.$el.slick( {
 				'slidesToShow'   : 4,
-				'slidesToScroll' : 4,
-				'autoplay'       : false,
-				'autoplaySpeed'  : 2000
+				'slidesToScroll' : 4
 			} );
-
+			this.arrowAnimate( this.$el );
 			this.hoverNext( this.$el );
 			this.hoverPrev( this.$el );
 
 		},
+		'arrowAnimate' : function ( element ) {
+			$( element ).hover( function () {
+				$( element[0].children[1] ).attr( 'style' , 'display:inline-block' );
+				$( element[0].children[2] ).attr( 'style' , 'display:inline-block' );
+			}, function () {
+				$( element[0].children[1]).attr( 'style' , 'display:none' );
+				$( element[0].children[2] ).attr( 'style' , 'display:none' );
+			} );
+		},
+
 
 		'onClose' : function () {
 			this.collection.reset( [ ] );

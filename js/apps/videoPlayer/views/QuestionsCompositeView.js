@@ -48,6 +48,7 @@ define( function ( require ) {
 				'infinite'       : false,
 				'arrows'         : false,
 				'speed'          : 100,
+				'draggable'      : false,
 				'onAfterChange'  : this.afterChange.bind( this )
 			} );
 
