@@ -1,6 +1,7 @@
 'use strict';
 
 var lint = require( './lib/lint' );
+
 require( 'colors' );
 
 module.exports = function ( grunt ) {
