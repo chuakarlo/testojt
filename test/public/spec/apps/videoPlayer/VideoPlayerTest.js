@@ -84,7 +84,8 @@ define( function( require ) {
 					'videoButtonsRegion'   : { 'show' : showSpy },
 					'videoTabsRegion'      : { 'show' : showSpy },
 					'videoSegmentsRegion'  : { 'show' : showSpy },
-					'videoResourcesRegion' : { 'show' : showSpy }
+					'videoResourcesRegion' : { 'show' : showSpy },
+					'relatedVideosRegion'  : { 'show' : showSpy }
 				} );
 
 				// Call showVideoResources
@@ -100,7 +101,7 @@ define( function( require ) {
 				showStub.should.have.callCount( 1 );
 
 				// regions should have called show
-				showSpy.should.have.callCount( 6 );
+				showSpy.should.have.callCount( 7 );
 
 				// Restoring stubs
 				Remoting.fetch.restore();

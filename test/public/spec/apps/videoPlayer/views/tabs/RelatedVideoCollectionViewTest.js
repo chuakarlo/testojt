@@ -63,53 +63,6 @@ define ( function ( require ) {
 			} );
 		} );
 
-		describe( '.render', function () {
-			var setCarouselSpy;
-			var SpiedObject;
-
-			before( function () {
-				setCarouselSpy = sinon.spy();
-				SpiedObject    = RelatedVideoCollectionView.extend( {
-					'setCarousel' : setCarouselSpy
-				} );
-
-				relatedVideoCollectionView = new SpiedObject( {
-					'collection': testCollection
-				} );
-
-				relatedVideoCollectionView.render();
-			} );
-
-			after( function () {
-				setCarouselSpy.reset();
-				relatedVideoCollectionView = null;
-			} );
-
-			it( 'will call .setCarousel', function() {
-				setCarouselSpy.should.have.callCount( 1 );
-			} );
-		} );
-
-		describe( '.setCarousel', function() {
-			var carouselSlickSpy;
-
-			before( function () {
-				carouselSlickSpy           = sinon.spy( $.fn , 'slick' );
-				relatedVideoCollectionView = new RelatedVideoCollectionView( {
-					'collection': new RelatedVideoCollection( testData )
-				} );
-				relatedVideoCollectionView.setCarousel();
-			} );
-
-			after( function () {
-				carouselSlickSpy.reset();
-			} );
-
-			it( 'will call .slick' , function () {
-				carouselSlickSpy.callCount.should.be.at.least( 1 );
-			} );
-		} );
-
 		describe( '.hoverNext', function() {
 			var hoverSpy;
 			var SpiedObject;
