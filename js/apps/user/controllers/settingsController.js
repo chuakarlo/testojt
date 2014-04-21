@@ -17,8 +17,11 @@ define( function ( require ) {
 				}
 
 				// show a loading view while data is fetching
-				var loadingView = new App.Common.LoadingView();
+				var loadingView = new App.Common.LoadingView( {
+					'size' : 'large'
+				} );
 				App.content.show( loadingView );
+
 
 				var profileRequest   = App.request( 'user:profile' );
 				var personnelRequest = App.request( 'user:personnel' );
@@ -33,6 +36,7 @@ define( function ( require ) {
 
 					// show the view
 					App.content.show( settings );
+					
 				} ).fail( function ( error ) {
 					// TODO: error handling
 				} );

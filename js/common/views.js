@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	var LoadingView = require( './LoadingView' );
+	var LoadingView = require( './views/LoadingView' );
 	var App         = require( 'App' );
 
 	App.module( 'Common', function ( Common, App ) {

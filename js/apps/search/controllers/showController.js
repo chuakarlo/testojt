@@ -9,7 +9,6 @@ define( function ( require ) {
 	// Views
 	var SearchResultCollectionView = require( 'search/views/SearchResultCollectionView' );
 	var SearchNavCollectionView    = require( 'search/views/SearchNavCollectionView' );
-	var SearchLoadingView          = require( 'search/views/SearchLoadingView' );
 
 	require( 'search/entities/search' );
 
@@ -24,14 +23,14 @@ define( function ( require ) {
 				this.listenTo( this.layout, 'close', function() {
 					this.close();
 				} );
-			},
+			}
 
 		} );
 
 
 		Mod.NavController = Mod.BaseController.extend( {
 
-			'initialize' : function( options ) {
+			'initialize' : function() {
 
 				// Call the parent init
 				Mod.BaseController.prototype.initialize.apply(this, arguments);
@@ -58,7 +57,7 @@ define( function ( require ) {
 					{
 						'id'     : 'All',
 						'filter' : 'All'
-					},
+					}
 				] );
 
 				this.showNav();
@@ -86,7 +85,7 @@ define( function ( require ) {
 
 		Mod.ResultController =  Mod.BaseController.extend( {
 
-			'initialize' : function( options ) {
+			'initialize' : function() {
 
 				// Call the parent init
 				Mod.BaseController.prototype.initialize.apply(this, arguments);
@@ -123,14 +122,14 @@ define( function ( require ) {
 							that.searchCollection.fetch( {
 								'reset'   : false,
 								'remove'  : false,
-								'success' : function( collection, res, options ) {
+								'success' : function() {
 									that.searchCollection.queryModel.updateStart();
 									// TODO
 									// check length of queryModel results here.
 									that.setupInfiniteScroll();
 									that.closeLoading();
 								},
-								'error' : function( collection, res, options) {
+								'error' : function() {
 									console.log('error');
 								}
 							});
@@ -170,7 +169,7 @@ define( function ( require ) {
 				// Fetch the initial data
 				this.searchCollection.fetch( {
 					'remove'  : false,
-					'success' : _.bind( function( collection, res, options ) {
+					'success' : _.bind( function() {
 
 						// Update the count first so inifite scroll knows if it
 						// needs to setup
@@ -189,13 +188,22 @@ define( function ( require ) {
 
 			'showLoading' : function() {
 				// Show a loading view
-				var loading = new SearchLoadingView();
+				var loading = new App.Common.LoadingView( {
+					'size'       : 'small',
+					'background' : true,
+					'text'       : 'Loading Results'
+				} );
 				this.layout.loading.show(loading);
 			},
 
 			'closeLoading' : function() {
 				// Close the loading view
 				this.layout.loading.close();
+			},
+
+			'onClose' : function() {
+				// Make sure to stop the bum-smack
+				$( window ).off( 'scroll.smack' );
 			}
 
 		} );

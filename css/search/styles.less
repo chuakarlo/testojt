@@ -1,32 +1,17 @@
 //--------------------------
 // LOADING
 //--------------------------
-#search-result-loading .search-loading-view {
-	display : block;
-	position   : fixed;
-	margin  : 0px;
+#search-result-loading {
 
-	bottom     : 85px;
-	padding    : 0 @cn-base-padding;
-	color      : @cn-white;
-	background : @cn-black;
-
-	.border-radius( @cn-base-radius / 3 );
-	.opacity( .85 );
-
-	.spinner-container {
-
-		margin-top : 10px;
-		position   : relative;
-		height     : 50px;
-
-		.spinner {
-			position : absolute;
-			left     : 50%;
-			top      : 50%;
-		}
-	}
-
+	position: fixed;
+	bottom   : 85px;
+    /* center the element */
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left: auto;
+    /* give it dimensions */
+    width: 160px;
 }
 
 //--------------------------
@@ -99,6 +84,11 @@
 		span.cn-segment-videourl {
 			text-align : center;
 			display    : block;
+
+			img {
+				position   : relative;
+				min-height : 148px;
+			}
 		}
 
 		span.hover {
@@ -106,7 +96,7 @@
 			text-align : center;
 			width      : 100%;
 			height     : 100%;
-			font-size  : 35px;
+			font-size  : 25px;
 		}
 
 	}
@@ -116,9 +106,10 @@
 		text-decoration : none;
 
 		span.hover {
-			top : -67%;
+			position : absolute;
+			top : 45px;
 			display : block;
-			z-index : 1;
+			z-index : 2;
 			color   : @cn-white;
 		}
 
