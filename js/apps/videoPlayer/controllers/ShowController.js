@@ -9,10 +9,11 @@ define( function ( require ) {
 	var Session  = require( 'Session' );
 	var Remoting = require( 'Remoting' );
 
-	var ContentModel        = require( 'videoPlayer/models/ContentModel' );
-	var QuestionsCollection = require( 'videoPlayer/collections/QuestionsCollection' );
-	var SegmentCollection   = require( 'videoPlayer/collections/VideoSegmentCollection' );
-	var ResourcesCollection = require( 'videoPlayer/collections/VideoResourcesCollection' );
+	var ContentModel           = require( 'videoPlayer/models/ContentModel' );
+	var QuestionsCollection    = require( 'videoPlayer/collections/QuestionsCollection' );
+	var SegmentCollection      = require( 'videoPlayer/collections/VideoSegmentCollection' );
+	var ResourcesCollection    = require( 'videoPlayer/collections/VideoResourcesCollection' );
+	var RelatedVideoCollection = require( 'videoPlayer/collections/RelatedVideoCollection' );
 
 	App.module( 'VideoPlayer.Controller', function ( Controller ) {
 
@@ -101,7 +102,7 @@ define( function ( require ) {
 					App.content.show( layout );
 
 					var questions     = App.VideoPlayer.Controller.Filter.filterQuestions( response[ 0 ] );
-					// var relatedVideos = response[ 1 ].slice( 1 );
+					var relatedVideos = response[ 1 ].slice( 1 );
 					var queueContents = response[ 2 ];
 					var segments      = response[ 3 ];
 					var resources     = response[ 4 ];
@@ -134,13 +135,18 @@ define( function ( require ) {
 						'collection' : segmentsCollection
 					} );
 					layout.videoSegmentsRegion.show( segmentsView );
-
 					// show video resources
 					var resourcesCollection = new ResourcesCollection();
 					var resourcesView = new App.VideoPlayer.Views.ResourcesView( {
 						'collection' : resourcesCollection.resetCollection( resources )
 					} );
 					layout.videoResourcesRegion.show( resourcesView );
+
+					//show related vids
+					var relatedView = new App.VideoPlayer.Views.RelatedVideoView( {
+						'collection' : new RelatedVideoCollection( relatedVideos )
+					} );
+					layout.relatedVideosRegion.show( relatedView );
 				} );
 
 			},

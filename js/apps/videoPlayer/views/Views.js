@@ -14,6 +14,7 @@ define( function ( require ) {
 		Views.ShareVideoLayout = require( 'videoPlayer/views/share/ShareVideoLayout' );
 		Views.SegmentsView     = require( 'videoPlayer/views/tabs/VideoSegmentCollectionView' );
 		Views.ResourcesView    = require( 'videoPlayer/views/tabs/VideoResourcesCollectionView' );
+		Views.RelatedVideoView = require( 'videoPlayer/views/tabs/RelatedVideoCollectionView' );
 
 	} );
 

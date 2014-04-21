@@ -6,6 +6,7 @@ define( function ( require ) {
 
 	var Vent = require( 'Vent' );
 
+
 	App.module( 'VideoPlayer', function ( VideoPlayer ) {
 
 		require( 'videoPlayer/views/Views' );
@@ -40,8 +41,8 @@ define( function ( require ) {
 
 		};
 
-		Vent.on( 'videoPlayer:showRelated', function () {
-			API.showRelatedVideos();
+		Vent.on( 'videoPlayer:showRelated', function ( relatedVideos ) {
+			API.showRelatedVideos( relatedVideos );
 		} );
 
 		Vent.on( 'videoPlayer:showResources', function () {
