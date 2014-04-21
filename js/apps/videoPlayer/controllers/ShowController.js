@@ -164,7 +164,9 @@ define( function ( require ) {
 				var shareVideoLayout = new App.VideoPlayer.Views.ShareVideoLayout( {
 					'model' : model
 				} );
-				App.modalRegion.show( shareVideoLayout );
+
+				// show share video dialog
+				App.modalRegion.show( shareVideoLayout, { 'className' : 'share-modal' } );
 			}
 
 		};
