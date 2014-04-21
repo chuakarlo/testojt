@@ -48,29 +48,21 @@ define( function ( require ) {
 		describe( 'Instantiation', function () {
 
 			it( 'should should be an instance of `VideoSegmentCollectionView`', function () {
-
 				videoSegmentCollectionView.should.be.an.instanceof( VideoSegmentCollectionView );
-
 			} );
 
 			it( 'should have an `itemView` property', function () {
-
 				videoSegmentCollectionView.should.have.property( 'itemView' );
-
 			} );
 
 			it( 'should have a `className` property with value `slick`', function () {
-
 				videoSegmentCollectionView.should.have.property( 'className' );
 				videoSegmentCollectionView.className.should.be.equal( 'slick' );
-
 			} );
 
 			it( 'should have a `tagName` property with value `div`', function () {
-
 				videoSegmentCollectionView.should.have.property( 'tagName' );
 				videoSegmentCollectionView.tagName.should.be.equal( 'div' );
-
 			} );
 
 			describe( 'VideoSegmentCollectionView that are stored in the collection', function () {
@@ -92,9 +84,7 @@ define( function ( require ) {
 				 * Verify that the collection is equal to the value set.
 				 */
 				it( 'should be equal to the data being passed', function () {
-
 					videoSegmentCollectionView.collection.should.equal( fakeData );
-
 				} );
 
 			} );

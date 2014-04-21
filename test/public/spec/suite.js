@@ -89,9 +89,6 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/views/tabs/RelatedVideoCollectionViewTest.js',
 			'spec/apps/videoPlayer/views/tabs/RelatedVideoItemViewTest.js',
 			'spec/apps/videoPlayer/views/tabs/VideoResourceItemViewTest.js',
-			'spec/apps/videoPlayer/views/tabs/VideoSegmentItemViewTest.js',
-			'spec/apps/videoPlayer/views/tabs/VideoResourcesCollectionViewTest.js',
-			'spec/apps/videoPlayer/views/tabs/VideoSegmentCollectionViewTest.js',
 			// utils
 			'spec/apps/videoPlayer/utils/selectTextTest.js',
 			'spec/apps/videoPlayer/utils/toHHMMSSFormatTest.js',

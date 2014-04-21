@@ -12,6 +12,7 @@ define( function ( require ) {
 	var ContentModel        = require( 'videoPlayer/models/ContentModel' );
 	var QuestionsCollection = require( 'videoPlayer/collections/QuestionsCollection' );
 	var SegmentCollection   = require( 'videoPlayer/collections/VideoSegmentCollection' );
+	var ResourcesCollection = require( 'videoPlayer/collections/VideoResourcesCollection' );
 
 	App.module( 'VideoPlayer.Controller', function ( Controller ) {
 
@@ -37,6 +38,7 @@ define( function ( require ) {
 			},
 
 			'showVideoResources' : function ( videoInfo ) {
+				var licenseType = [ 0, 1, 200, 300 ];
 
 				var videoModel = new ContentModel( videoInfo );
 
@@ -70,7 +72,7 @@ define( function ( require ) {
 					'method' : 'getContentByContentIdAndLicenseTypes',
 					'args'   : {
 						'contId'   : videoModel.id,
-						'licTypes' : [ 0, 147, 1 ]
+						'licTypes' : licenseType
 					}
 				};
 
@@ -99,10 +101,10 @@ define( function ( require ) {
 					App.content.show( layout );
 
 					var questions     = App.VideoPlayer.Controller.Filter.filterQuestions( response[ 0 ] );
-					//var relatedVideos = response[ 1 ].slice( 1 );
+					// var relatedVideos = response[ 1 ].slice( 1 );
 					var queueContents = response[ 2 ];
 					var segments      = response[ 3 ];
-					//var resources     = response[ 4 ];
+					var resources     = response[ 4 ];
 
 					// Videojs player view
 					var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( { 'model' : videoModel } );
@@ -110,7 +112,9 @@ define( function ( require ) {
 
 					// Questions view
 					var questionsCollection = new QuestionsCollection( questions );
-					var questionsView = new App.VideoPlayer.Views.QuestionsView( { collection : questionsCollection } );
+					var questionsView = new App.VideoPlayer.Views.QuestionsView( {
+						'collection' : questionsCollection
+					} );
 					layout.questionsRegion.show( questionsView );
 
 					// set video model queued flag
@@ -124,12 +128,19 @@ define( function ( require ) {
 					var videoTabsView = new App.VideoPlayer.Views.VideoTabsView();
 					layout.videoTabsRegion.show( videoTabsView );
 
-					//show video resources
+					// show video segments
+					var segmentsCollection = new SegmentCollection( segments );
 					var segmentsView = new App.VideoPlayer.Views.SegmentsView( {
-						'collection' : new SegmentCollection( segments ) }
-					);
+						'collection' : segmentsCollection
+					} );
 					layout.videoSegmentsRegion.show( segmentsView );
 
+					// show video resources
+					var resourcesCollection = new ResourcesCollection();
+					var resourcesView = new App.VideoPlayer.Views.ResourcesView( {
+						'collection' : resourcesCollection.resetCollection( resources )
+					} );
+					layout.videoResourcesRegion.show( resourcesView );
 				} );
 
 			},

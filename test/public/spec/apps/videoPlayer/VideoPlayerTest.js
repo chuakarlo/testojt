@@ -65,18 +65,26 @@ define( function( require ) {
 				};
 				var fakeQueue = { 'ContentId' : 1 };
 				var fakeVideos = [ {}, { 'ContentId' : 123 } ];
-				var fakeData = [ fakeVideos, [ fakeQuestions ], [ fakeQueue ] ];
+				var fakeSegments = [];
+				var fakeResources = {
+					'GuidebookFileName'  : '',
+					'AudioFileName'      : '',
+					'TranscriptFileName' : ''
+				};
+
+				var fakeData = [ [ fakeQuestions ], fakeVideos, , [ fakeQueue ], fakeSegments, fakeResources ];
 
 				var showStub = sinon.stub( App.content, 'show' );
 				var remotingStub = sinon.stub( Remoting, 'fetch').returns( fakeData );
 
 				var showSpy = sinon.spy();
 				var layout = sinon.stub( App.VideoPlayer.Views, 'PageLayout' ).returns( {
-					'playerRegion'        : { 'show' : showSpy },
-					'questionsRegion'     : { 'show' : showSpy },
-					'videoButtonsRegion'  : { 'show' : showSpy },
-					'videoTabsRegion'     : { 'show' : showSpy },
-					'videoSegmentsRegion' : { 'show' : showSpy }
+					'playerRegion'         : { 'show' : showSpy },
+					'questionsRegion'      : { 'show' : showSpy },
+					'videoButtonsRegion'   : { 'show' : showSpy },
+					'videoTabsRegion'      : { 'show' : showSpy },
+					'videoSegmentsRegion'  : { 'show' : showSpy },
+					'videoResourcesRegion' : { 'show' : showSpy }
 				} );
 
 				// Call showVideoResources
@@ -92,7 +100,7 @@ define( function( require ) {
 				showStub.should.have.callCount( 1 );
 
 				// regions should have called show
-				showSpy.should.have.callCount( 5 );
+				showSpy.should.have.callCount( 6 );
 
 				// Restoring stubs
 				Remoting.fetch.restore();

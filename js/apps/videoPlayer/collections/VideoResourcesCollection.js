@@ -9,9 +9,7 @@
 
 		'model'  : VideoResourceModel,
 
-		'initialize' : function( options ) {
-			this.resetCollection( options );
-		},
+		'initialize' : function() {},
 
 		'buildModels' : function ( model ) {
 
@@ -36,8 +34,10 @@
 		},
 
 		'resetCollection' : function ( model ) {
-			var resources =  this.buildModels( model );
+			var resources = this.buildModels( model );
 			this.reset( resources );
+
+			return this;
 		}
 
 	} );

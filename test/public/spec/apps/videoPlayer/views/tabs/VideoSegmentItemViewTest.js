@@ -11,9 +11,10 @@ define( function ( require ) {
 		//set up and teardown test data - additional resources- video segment
 		before( function () {
 			videoSegment = new VideoSegmentModel( {
-				'ContentName'    : '',
-				'duration' : '',
-				'url'     : ''
+				'ContentId'   : 1,
+				'ContentName' : '',
+				'duration'    : '',
+				'url'         : ''
 			} );
 
 			videoSegmentItemView = new VideoSegmentItemView( {
