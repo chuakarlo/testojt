@@ -2,6 +2,7 @@
 
 // Load core modules
 var path = require( 'path' );
+var fs   = require( 'fs' );
 var exec = require( 'child_process' ).exec;
 
 // Load other modules
@@ -24,7 +25,9 @@ module.exports = function ( done ) {
 
 		// Filter empty strings; non JS and JSON files; and folders not being ignored
 		var files = stdout.split( '\n' ).filter( String ).filter( function ( file ) {
-			return ( path.extname( file ) === '.js' || path.extname( file ) === 'json' ) && !file.match( config.ignoredPaths.join( '|' ) );
+			var exists = fs.existsSync( path.join( process.cwd(), file ) );
+
+			return exists && ( path.extname( file ) === '.js' || path.extname( file ) === 'json' ) && !file.match( config.ignoredPaths.join( '|' ) );
 		} );
 
 		var code = eslint.cli.execute( [ null, null ].concat( files ) );
