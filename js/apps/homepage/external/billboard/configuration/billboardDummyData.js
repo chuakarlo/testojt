@@ -20,7 +20,7 @@ define( function ( require ) {
 		},
 		{
 			'LinkURL'         : 'zubu.cloudapp.net:3000/public',
-			'Description'     : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+			'Description'     : 'This is a test slider.',
 			'VideoURL'        : '',
 			'Remover'         : '',
 			'ImageURL'        : 'http://resources.pd360.com/PD360/uploads/recommendedVideoThumbs953999_1389827086011.jpeg',

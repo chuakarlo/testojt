@@ -10,11 +10,10 @@ define(function(require) {
 	var nivoSetting         = require( 'apps/homepage/external/billboard/configuration/nivoSettings' );
 
 	var sliderSelector  = '#slider';
-	var captionSelector = '.nivo-caption';
 	var scrollSelector  = '.scrollable';
 
 	var testClass = 'test';
-	var isTest = true;
+	var isTest    = true;
 
 	return {
 
@@ -33,7 +32,7 @@ define(function(require) {
 
 		'doOnRender' : function ( parent ) {
 			require( [ 'pc-nivo' ], function ( $ ) {
-					$( parent.$( sliderSelector ) ).nivoSlider( nivoSetting( $( parent.$( captionSelector ) ) ) );
+					$( parent.$( sliderSelector ) ).nivoSlider( nivoSetting() );
 				} );
 				parent.$( scrollSelector ).addClass( testClass );
 		},

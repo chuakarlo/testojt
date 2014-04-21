@@ -107,6 +107,10 @@ define( function ( require ) {
 			'spec/apps/homepage/external/content/views/ContentCompositeViewTest.js',
 
 			//Homepage - Content
+
+			//Homepage
+			'spec/apps/homepage/external/billboard/views/BillboardItemViewTest.js',
+			'spec/apps/homepage/external/billboard/configuration/nivoSettingsTest.js',
 			'spec/apps/homepage/external/content/views/ContentItemViewTest.js',
 
 			// //HomePage - Recommended
