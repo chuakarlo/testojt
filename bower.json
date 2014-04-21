@@ -24,7 +24,7 @@
     "requirejs-plugins": "1.0.2",
     "requirejs-text": "2.0.x",
     "respond": "1.4.x",
-    "spin.js": "https://github.com/fgnass/spin.js.git#~1.3.3",
+    "spin.js": "2.0.0",
     "text": "2.0.10",
     "swfobject": "*",
     "rotate": "https://jqueryrotate.googlecode.com/files/jQueryRotate.js",
@@ -41,8 +41,7 @@
     "circular-snap-carousel": "2.0.1",
     "progress-circle": "1.0.0",
     "nakautot.linq": "1.0.0",
-    "nivo-slider": "3.2",
-    "spin.js": "2.0.0"
+    "nivo-slider": "3.2"
   },
   "devDependencies": {
     "chai": "1.8.x",

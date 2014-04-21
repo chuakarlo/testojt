@@ -1,50 +1,166 @@
 define( function ( require ) {
 	'use strict';
 
-	var App          = require( 'App' );
-	var $            = require( 'jquery' );
-	var SettingsView = require( 'user/views/settings/SettingsView' );
+	var App               = require( 'App' );
+	var $                 = require( 'jquery' );
+	var Backbone          = require( 'backbone' );
+	var Marionette        = require( 'marionette' );
+
+	var NavCollectionView = require( 'user/views/settings/nav/NavCollectionView' );
+	var ProfileView       = require( 'user/views/settings/profile/ProfileView' );
+	var ReportsView       = require( 'user/views/settings/reports/ReportsView' );
+	var LicensesView      = require( 'user/views/settings/licenses/LicensesView' );
 
 	App.module( 'User.Settings', function ( Mod ) {
 
-		Mod.Controller = {
+		// A base controller to inherit from which will close when the
+		// layout closes
+		Mod.BaseController = Marionette.Controller.extend( {
 
-			'showSettings' : function ( page ) {
-				// if navigating to `#settings`, redirect to `#settings/personal-info`
-				if ( !page ) {
-					page = 'personal-info';
-					App.navigate( 'settings/personal-info' );
+			'initialize' : function( options ) {
+				this.layout = options.layout;
+				this.listenTo( this.layout, 'close', function() {
+					this.close();
+				} );
+			}
+
+		} );
+
+		Mod.NavController = Mod.BaseController.extend( {
+
+			'initialize' : function () {
+				Mod.BaseController.prototype.initialize.apply( this, arguments );
+
+				this.navCollection = new App.Entities.NavCollection( [
+					{
+						'id'     : 'Licenses',
+						'filter' : 'licenses'
+					},
+					{
+						'id'     : 'Personal Reports',
+						'filter' : 'personal-reports'
+					},
+					{
+						'id'     : 'Profile',
+						'filter' : 'profile'
+					}
+				] );
+
+				this.showNav();
+			},
+
+			'setPage' : function ( page ) {
+				this.navCollection.setActive( page );
+			},
+
+			'showNav' : function () {
+				var nav = new NavCollectionView( {
+					'collection' : this.navCollection
+				} );
+
+				this.layout.nav.show( nav );
+			}
+
+		} );
+
+		Mod.ContentController = Mod.BaseController.extend( {
+
+			'showPage' : function ( page ) {
+
+				if ( page === 'personal-reports' ) {
+
+					this.showReports();
+
+				} else if ( page === 'licenses' ) {
+
+					this.showLicenses();
+
+				} else if ( page === 'profile' ) {
+
+					this.showProfile();
+
+				} else if ( page === null ) {
+
+					App.navigate( 'settings/profile' );
+					this.showProfile();
+
+				} else {
+
+					App.content.show( new App.Common.NotFoundView() );
+
 				}
+				
+			},
 
-				// show a loading view while data is fetching
+			'showProfile' : function () {
+				this.showLoading();
+
+				var rolesRequest     = App.request( 'user:roles' );
+				var profileRequest   = App.request( 'user:profile' );
+				var subjectsRequest  = App.request( 'user:subjects' );
+				var personnelRequest = App.request( 'user:personnel' );
+				var gradesRequest    = App.request( 'user:grade-levels' );
+				var dates            = App.request( 'user:career-dates' );
+
+				$.when( profileRequest, personnelRequest, gradesRequest, rolesRequest, subjectsRequest )
+				.done( function ( profile, personnel, grades, roles, subjects ) {
+
+					var profileView = new ProfileView( {
+						'profileModel' : profile,
+						'careerDates'  : new Backbone.Collection( dates ),
+						'roleTypes'    : roles,
+						'subjects'     : subjects,
+						'grades'       : grades,
+						'model'        : personnel
+					} );
+
+					this.layout.content.show( profileView );
+					
+				}.bind( this ) ).fail( this.showProfileError.bind( this ) );
+
+			},
+
+			'showProfileError' : function ( error ) {
+				this.layout.content.show( new App.Common.ErrorView( {
+					'message' : error.message
+				} ) );
+			},
+
+			'showLoading' : function () {
 				var loadingView = new App.Common.LoadingView( {
 					'size' : 'large'
 				} );
-				App.content.show( loadingView );
+				this.layout.content.show( loadingView );
+			},
 
+			'closeLoading' : function () {
+				this.layout.content.close();
+			},
 
-				var profileRequest   = App.request( 'user:profile' );
-				var personnelRequest = App.request( 'user:personnel' );
+			'showReports' : function () {
+				this.layout.content.show( new ReportsView() );
+			},
 
-				$.when( profileRequest, personnelRequest ).done( function ( profile, personnel ) {
-					// new settings view with the desired sub page
-					var settings = new SettingsView( { 'page' : page } );
-
-					// set the models
-					settings.setProfileModel( profile );
-					settings.setPersonnelModel( personnel );
-
-					// show the view
-					App.content.show( settings );
-					
-				} ).fail( function ( error ) {
-					// TODO: error handling
-				} );
-
+			'showLicenses' : function () {
+				this.layout.content.show( new LicensesView() );
 			}
 
-		};
+		} );
+
+		// returns an array of years
+		App.reqres.setHandler( 'user:career-dates', function () {
+			var start = new Date().getFullYear();
+			var end   = 1919;
+			var dates = [ ];
+
+			for ( var i = start; i >= end; i-- ) {
+				dates.push( { 'year' : i } );
+			}
+
+			return dates;
+		} );
 
 	} );
 
 } );
+

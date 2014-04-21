@@ -14,34 +14,29 @@ suite( function ( env ) {
 
 			browser
 
-				.sleep( 2000 )
-
 				.elementById( 'login-input-email' ).clear().type( 'diao.chan' )
 				.elementById( 'login-input-password' ).clear().type( 'pd360' )
 				.elementById( 'login-button' ).click()
-				.sleep( 20000 )
-				//.elementByXPath( '//*[@id="main-content"]/div/h1' ).text().should.eventually.become( 'Home' )
-				.elementIfExists('id', 'Home-page-view')
+				.elementById( 'Home-page-view' )
 
 				.nodeify( done );
 
 		} );
 
-		it( 'should redirect to `#settings/personal-info` from `#settings`', function ( done ) {
+		it( 'should redirect to `#settings/profile` from `#settings`', function ( done ) {
 
 			browser
 
-				.sleep( 2000 )
-
 				.get( 'http://localhost:8080/#settings' )
-				.url().should.become( 'http://localhost:8080/#settings/personal-info' )
+				.sleep( 1000 )
+
+				.url().should.become( 'http://localhost:8080/#settings/profile' )
 
 				.nodeify( done );
 
 		} );
-//API for updating user profile currently does not work, please uncomment this test when it works
-/*
-		describe( 'Personal Info Section', function () {
+
+		describe.skip( 'Profile Section', function () {
 
 			// create new browser, necessary due to nesting
 			before( function ( done ) {
@@ -115,7 +110,7 @@ suite( function ( env ) {
 			} );
 
 		} );
-*/
+
 	} );
 
 } );

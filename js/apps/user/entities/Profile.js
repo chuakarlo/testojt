@@ -21,6 +21,14 @@ define( function ( require ) {
 						'id' : Session.personnelId()
 					}
 				};
+			},
+
+			'getUpdateOptions' : function () {
+				return {
+					'method'     : 'update',
+					'objectPath' : 'core.ClientPersonnelProfile',
+					'args'       : this.toJSON()
+				};
 			}
 
 		} );
@@ -42,7 +50,7 @@ define( function ( require ) {
 
 				'error' : function () {
 					defer.reject( new Error( 'Error fetching profile' ) );
-				},
+				}
 
 			} );
 

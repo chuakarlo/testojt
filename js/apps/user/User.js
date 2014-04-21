@@ -14,6 +14,12 @@ define( function ( require ) {
 	require( 'user/entities/Profile' );
 	require( 'user/entities/Personnel' );
 	require( 'user/entities/Privilege' );
+	require( 'user/entities/GradeLevels' );
+	require( 'user/entities/Roles' );
+	require( 'user/entities/Subjects' );
+	require( 'user/entities/Nav' );
+
+	var SettingsLayout = require( 'user/views/settings/SettingsLayout' );
 
 	App.module( 'User', function ( User, App ) {
 
@@ -58,10 +64,36 @@ define( function ( require ) {
 				App.request( 'pd360:logout' );
 			},
 
-			'showSettings' : function (page) {
+			'showSettings' : function ( page ) {
 				App.request( 'pd360:hide' );
-				User.Settings.Controller.showSettings(page);
+
+				if ( !this.layout ) {
+					this.layout = new SettingsLayout();
+					App.content.show( this.layout );
+					this.listenTo( this.layout, 'close', this.destroyControllers );
+				}
+
+				if ( !this.contentController ) {
+					this.contentController = new User.Settings.ContentController( {
+						'layout' : this.layout
+					} );
+				}
+
+				if ( !this.navController ) {
+					this.navController = new User.Settings.NavController( {
+						'layout' : this.layout
+					} );
+				}
+
+				this.navController.setPage( page );
+				this.contentController.showPage( page );
 			},
+
+			'destroyControllers' : function () {
+				this.navController     = null;
+				this.contentController = null;
+				this.layout            = null;
+			}
 
 		} );
 
@@ -93,7 +125,7 @@ define( function ( require ) {
 		} );
 
 		// set handler when requesting if session is authenticated
-		App.reqres.setHandler( 'session:checkSession', function ( args, callback ) {
+		App.reqres.setHandler( 'session:checkSession', function () {
 			if ( !Session.authenticated() ) {
 				return false;
 			}

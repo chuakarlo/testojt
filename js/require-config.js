@@ -46,6 +46,10 @@ require.config( {
 		'rotate'                : 'libs/rotate/index',
 		'ColdFusion'            : 'plugins/Backbone.CF',
 		'config'                : 'config/index',
+		'fine-uploader'         : 'libs/fine-uploader/build/jquery.fineuploader.min',
+		'ladda'                 : 'libs/ladda/dist/ladda.min',
+		'ladda-jquery'          : 'libs/ladda/dist/ladda.jquery.min',
+
 
 		'pc-linq'             : 'libs/nakautot.linq/linq.min',
 		'pc-nivo'             : 'libs/nivo-slider/jquery.nivo.slider',
@@ -70,7 +74,7 @@ require.config( {
 		'videoPlayer'         : 'apps/videoPlayer',
 		'contentNavigation'   : 'apps/contentNavigation',
 		'learningTargets'     : 'apps/learningTargets',
-		'resources'           : 'apps/resources',
+		'resources'           : 'apps/resources'
 	},
 
 	'shim' : {
@@ -81,7 +85,7 @@ require.config( {
 		},
 
 		'backbone.babysitter' : {
-			'deps' : [ 'backbone' ],
+			'deps' : [ 'backbone' ]
 		},
 
 		'backbone.wreqr' : {

@@ -42,14 +42,19 @@ define( function ( require ) {
 				options.args.should.have.property( 'id' );
 			} );
 
-			it( 'should not return an object for getUpdateOptions', function () {
+			it( 'should return an object for getUpdateOptions', function () {
 				model.should.have.property( 'getUpdateOptions' );
 				model.getUpdateOptions.should.be.a( 'function' );
 
 				var options = model.getUpdateOptions();
-				var expect = window.chai.expect;
 
-				expect( options ).to.be.a( 'undefined' );
+				options.should.have.property( 'method' );
+				options.method.should.equal( 'update' );
+
+				options.should.have.property( 'objectPath' );
+				options.objectPath.should.equal( 'core.ClientPersonnelProfile' );
+
+				options.should.have.property( 'args' );
 			} );
 
 			it( 'should not return an object for getDeleteOptions', function () {

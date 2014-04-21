@@ -86,7 +86,7 @@ define( function ( require ) {
 					this.hide();
 
 					// store the page to navigate to when loading/login completes
-					pendingNavigation         = {};
+					pendingNavigation         = { };
 					pendingNavigation.main    = main;
 					pendingNavigation.sub     = sub;
 					pendingNavigation.options = options;
@@ -141,7 +141,7 @@ define( function ( require ) {
 				if ( appLoaded ) {
 					pd360.loginFromContainer( username, password );
 				} else {
-					pendingLogin          = {};
+					pendingLogin          = { };
 					pendingLogin.username = username;
 					pendingLogin.password = password;
 				}
@@ -200,7 +200,17 @@ define( function ( require ) {
 			},
 
 			'available' : function () {
-				return appLoaded;
+				if ( appLoaded ) {
+					try {
+						pd360.cfJsonAPIMethod1();
+					} catch ( error ) {
+						return false;
+					}
+
+					return true;
+				}
+
+				return false;
 			},
 
 			'signature' : function ( method, args ) {

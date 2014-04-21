@@ -52,6 +52,7 @@ define( function ( require ) {
 			argsError();
 		}
 
+		// if this is an object being saved
 		if ( syncOptions.objectPath ) {
 			syncOptions.objectPath = config.base + syncOptions.objectPath;
 			params.url             = config.objectUrl;
@@ -78,6 +79,11 @@ define( function ( require ) {
 			return xhr;
 		}
 
+		// if this is an object, we need to get a signature using a different url
+		if ( syncOptions.objectPath ) {
+			params.url = config.url;
+		}
+
 		params.data = JSON.stringify( {
 			'method'      : config.method,
 			'CFToken'     : Session.token(),
@@ -101,6 +107,11 @@ define( function ( require ) {
 				'signature' : sig
 			} );
 
+			// if an object had requested a signature, reapply the correct object url to call
+			if ( syncOptions.objectPath ) {
+				params.url = config.objectUrl;
+			}
+			
 			params.data = JSON.stringify( data );
 
 			options.success = done;
