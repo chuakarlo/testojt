@@ -69,7 +69,7 @@ define( function ( require ) {
 				// this will emit an error on invoking getProgramSegment in CF
 				// so we have to check if `Children` is exist, if not will make one.
 				if( !videoModel.get( 'Children' ) ){
-					videoModel.set( 'Children', [] );
+					videoModel.set( 'Children', [ ] );
 				}
 
 				var segmentsRequest = {

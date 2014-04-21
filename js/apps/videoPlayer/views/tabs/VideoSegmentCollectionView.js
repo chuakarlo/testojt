@@ -60,7 +60,7 @@ define( function ( require ) {
 				'slidesToShow'   : 4,
 				'slidesToScroll' : 4,
 				'autoplay'       : false,
-				'autoplaySpeed'  : 2000,
+				'autoplaySpeed'  : 2000
 			} );
 
 			this.hoverNext( this.$el );
@@ -69,7 +69,7 @@ define( function ( require ) {
 		},
 
 		'onClose' : function () {
-			this.collection.reset( [] );
+			this.collection.reset( [ ] );
 		}
 
 	} );

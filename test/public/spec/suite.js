@@ -88,7 +88,6 @@ define( function ( require ) {
 			// views/tabs
 			'spec/apps/videoPlayer/views/tabs/RelatedVideoCollectionViewTest.js',
 			'spec/apps/videoPlayer/views/tabs/RelatedVideoItemViewTest.js',
-			'spec/apps/videoPlayer/views/tabs/AdditionalResourcesLayoutTest.js',
 			'spec/apps/videoPlayer/views/tabs/VideoResourceItemViewTest.js',
 			'spec/apps/videoPlayer/views/tabs/VideoSegmentItemViewTest.js',
 			'spec/apps/videoPlayer/views/tabs/VideoResourcesCollectionViewTest.js',
