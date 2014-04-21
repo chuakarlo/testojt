@@ -89,9 +89,7 @@ define( function ( require ) {
 					videoModel.set( 'queued', _.contains( _.pluck( queueContents, 'ContentId' ), videoModel.id ) );
 
 					// show video buttons view
-					var videoButtonsView = new App.VideoPlayer.Views.VideoButtonsView( {
-						'model'      : videoModel
-					} );
+					var videoButtonsView = new App.VideoPlayer.Views.VideoButtonsView( { 'model' : videoModel } );
 					layout.videoButtonsRegion.show( videoButtonsView );
 
 					// show video tabs view

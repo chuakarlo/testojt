@@ -173,8 +173,7 @@ define( function ( require ) {
 
 		'hideSearchResults' : function ( event ) {
 			if ( !_.isUndefined( event ) &&
-				$( event.target ).hasClass( 'search-input' ) )
-			{
+				$( event.target ).hasClass( 'search-input' ) ) {
 				return;
 			}
 

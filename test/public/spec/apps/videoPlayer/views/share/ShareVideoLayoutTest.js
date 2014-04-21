@@ -1,11 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	// test libraries
 	var sinon = window.sinon;
 
 	// dependency modules
-	var $                = require( 'jquery' );
+	var App              = require( 'App' );
 	var Remoting         = require( 'Remoting' );
 	var ShareVideoLayout = require( 'videoPlayer/views/share/ShareVideoLayout' );
 	var ContentModel     = require( 'videoPlayer/models/ContentModel' );
@@ -43,50 +42,9 @@ define( function ( require ) {
 
 		it( 'does have `events`', function () {
 			shareVideoLayout.should.have.property( 'events' );
-		} )
-
-		describe( 'events', function () {
-
-			var searchStub;
-			var shareVideoStub;
-
-			before( function () {
-				searchStub     = sinon.stub( shareVideoLayout, 'search' );
-				shareVideoStub = sinon.stub( shareVideoLayout, 'shareVideo' );
-
-				shareVideoLayout.render();
-			} );
-
-			after( function () {
-				shareVideoLayout.search.restore();
-				shareVideoLayout.shareVideo.restore();
-			} );
-
-			describe( 'when keyup in search input', function () {
-
-				it( 'does call `.search`', function ( done ) {
-					shareVideoLayout.ui.searchInput.on( 'keyup', function () {
-						done();
-					} );
-					shareVideoLayout.ui.searchInput.trigger( 'keyup' );
-				} );
-
-			} );
-
-			describe( 'when share video button is clicked', function () {
-
-				it( 'does call `.shareVideo`', function ( done ) {
-					shareVideoLayout.ui.shareButton.on( 'click', function () {
-						done();
-					} );
-					shareVideoLayout.ui.shareButton.trigger( 'click' );
-				} );
-
-			} );
-
 		} );
 
-		describe( '`.initialize`', function () {
+		describe( '.initialize', function () {
 
 			it( 'does copy the passed options', function () {
 				shareVideoLayout.model.should.not.be.undefined;
@@ -94,7 +52,7 @@ define( function ( require ) {
 
 		} );
 
-		describe( '`.onShow`', function () {
+		describe( '.onShow', function () {
 
 			var sharedVideoRegionShowStub;
 
@@ -107,13 +65,14 @@ define( function ( require ) {
 			} );
 
 			it( 'does show the shared video', function () {
+				sharedVideoRegionShowStub.should.have.callCount( 0 );
 				shareVideoLayout.render().onShow();
 				sharedVideoRegionShowStub.should.have.callCount( 1 );
 			} );
 
 		} );
 
-		describe( '`.selectText`', function () {
+		describe( '.selectText', function () {
 
 			var selectTextSpy;
 
@@ -123,7 +82,7 @@ define( function ( require ) {
 
 			after( function () {
 				shareVideoLayout.ui.searchInput.select.restore();
-			} )
+			} );
 
 			it( 'does select the search input value', function () {
 				shareVideoLayout.selectText();
@@ -132,27 +91,35 @@ define( function ( require ) {
 
 		} );
 
-		describe( '`.search`', function () {
-
-			var remotingFetchStub;
-			var fakeData = [ [], [] ];
+		describe( '.search', function () {
 
 			before( function () {
-				remotingFetchStub = sinon.stub( Remoting, 'fetch' ).returns( fakeData );
+				var stub = sinon.stub().returns( false );
+				App.reqres.setHandler( 'pd360:available', stub );
 			} );
 
 			after( function () {
+				App.reqres.removeHandler( 'pd360:available' );
 				Remoting.fetch.restore();
 			} );
 
-			it( 'does reset people and groups collection', function () {
+			it( 'does reset people and groups collection', function ( done ) {
+				var fakeData = [ [], [] ];
+				var remotingFetchStub = sinon.stub( Remoting, 'fetch' ).returns( fakeData );
+
 				shareVideoLayout.ui.searchInput.val( 'test' );
 				shareVideoLayout.search();
+
+				// Wait for debounce to finish
+				setTimeout( function () {
+					remotingFetchStub.should.have.callCount( 1 );
+					done();
+				}, 500 );
 			} );
 
 		} );
 
-		describe( '`.showSearchResults`', function () {
+		describe( '.showSearchResults', function () {
 
 			it( 'does show search results', function () {
 				shareVideoLayout.showSearchResults( [], [] );
@@ -162,7 +129,7 @@ define( function ( require ) {
 
 		} );
 
-		describe( '`.selectItem`', function () {
+		describe( '.selectItem', function () {
 
 			var itemView;
 			var hideSearchResultsSpy;
@@ -201,7 +168,7 @@ define( function ( require ) {
 
 		} );
 
-		describe( '`.hideSearchResults`', function () {
+		describe( '.hideSearchResults', function () {
 
 			var dummyEvent;
 			var searchResultsRegionCloseSpy;
@@ -237,7 +204,7 @@ define( function ( require ) {
 
 		} );
 
-		describe( '`.setShareBtnState`', function () {
+		describe( '.setShareBtnState', function () {
 
 			before( function () {
 				shareVideoLayout.render();
@@ -264,7 +231,7 @@ define( function ( require ) {
 				} );
 
 				it( 'does disable the share button', function () {
-					shareVideoLayout.ui.shareButton.is( '[disabled]' ).should.be.false;;
+					shareVideoLayout.ui.shareButton.is( '[disabled]' ).should.be.false;
 				} );
 
 			} );
