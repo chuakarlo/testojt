@@ -33,16 +33,15 @@ define( function ( require ) {
 
 		describe( 'Show Submodule', function () {
 
-			it( 'should create submodule `Show`', function () {
+			it( 'should create the showController', function () {
 
-				App.Communities.should.have.property( 'Show' );
-				App.Communities.Show.should.have.property( 'Controller' );
-				App.Communities.Show.Controller.should.have.property( 'showCommunities' );
+				App.Communities.should.have.property( 'showController' );
+				App.Communities.showController.should.have.property( 'showCommunities' );
 
 			} );
 
 			it( '`showCommunities` should call PD360.navigate', function () {
-				App.Communities.Show.Controller.showCommunities();
+				App.Communities.showController.showCommunities();
 
 				spy.should.have.callCount( 1 );
 				spy.should.have.been.calledWithExactly( View, 'communities', 'communitiesBrowse' );

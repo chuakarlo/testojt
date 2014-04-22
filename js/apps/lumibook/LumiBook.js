@@ -1,18 +1,17 @@
 define( function ( require ) {
 	'use strict';
 
+	var _   = require( 'underscore' );
 	var App = require( 'App' );
 
-	App.module( 'LumiBook', function ( LumiBook ) {
+	App.module( 'LumiBook', function ( Mod ) {
 
 		var AuthRouter = require( 'AuthRouter' );
-		// load sub apps
-		require( 'lumibook/controllers/showController' );
 
-		LumiBook.Router = AuthRouter.extend( {
+		Mod.Router = AuthRouter.extend( {
 
 			'appRoutes' : {
-				'resources/lumibook' : 'showLumiBook'
+				'resources/lumibook(/:lbid)(/:lbiid)' : 'showLumiBook'
 			}
 
 		} );
@@ -20,13 +19,41 @@ define( function ( require ) {
 		var API = {
 
 			'showLumiBook' : function() {
-				LumiBook.Show.Controller.showLumiBook();
+				App.request( 'pd360:navigate', null, 'liveBook' );
+				// Args we potentially are going to pass to the flash. These
+				// are in expected order of this function's arguments. If the
+				// router doesn't get a match for the argument, it passes null
+				var options = [
+					'LiveBookId',
+					'LiveBookItem'
+				];
+
+				// The final args we are going to pass to the flash
+				var requestArgs = { };
+
+				_.each( arguments, function( arg ) {
+					if( arg !== null ) {
+						requestArgs[ options.shift() ] = arg;
+					} else {
+						options.shift();
+					}
+				} );
+
+				// if the arguments are empty, just display the main community
+				// page
+				if ( _.isEmpty( requestArgs ) ) {
+					App.request( 'pd360:navigate', null, 'liveBook', '');
+				} else {
+					App.request( 'pd360:navigate', null, 'liveBook', '',
+						requestArgs );
+
+				}
 			}
 
 		};
 
 		App.addInitializer( function () {
-			new LumiBook.Router( {
+			new Mod.Router( {
 				'controller' : API
 			} );
 		} );
