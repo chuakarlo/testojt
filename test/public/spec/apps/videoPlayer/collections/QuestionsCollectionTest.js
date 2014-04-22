@@ -14,16 +14,9 @@ define( function ( require ) {
 		before( function () {
 			testData = [ {
 				'QuestionId'     : 1,
-				'QuestionText'   : 'What visual or real-world examples have you effectively used in helping students understand geometry?',
-				'QuestionTypeId' : 1
-			}, {
-				'QuestionId'     : 2,
-				'QuestionText'   : 'What visual or real-world examples have you effectively used in helping students understand geometry?',
-				'QuestionTypeId' : 2
-			}, {
-				'QuestionId'     : 3,
-				'QuestionText'   : 'What visual or real-world examples have you effectively used in helping students understand geometry?',
-				'QuestionTypeId' : 1
+				'QuestionText'   : 'Test question',
+				'QuestionTypeId' : 1,
+				'ContentTypeId'  : 3
 			} ];
 
 			questions = new QuestionsCollection();
@@ -48,13 +41,31 @@ define( function ( require ) {
 
 			it( 'objects inside the array should have the correct properties', function () {
 				var requests = questions.buildRequests();
-				var item     = requests[ 0 ];
+				var request  = requests[ 0 ];
 
-				item.should.have.property( 'objectPath' );
-				item.should.have.property( 'method' );
-				item.should.have.property( 'path' );
-				item.should.have.property( 'args' );
+				request.should.have.property( 'objectPath' );
+				request.should.have.property( 'method' );
+				request.should.have.property( 'path' );
+				request.should.have.property( 'args' );
 			} );
+
+			it( 'should have correct path and objectPath based on ContentTypeId', function () {
+				// Common core questions
+				questions.reset( [ {
+					'QuestionId'     : 1,
+					'QuestionText'   : 'Test question',
+					'QuestionTypeId' : 1,
+					'ContentTypeId'  : 6 // Common core type id
+				} ] );
+
+				var requests = questions.buildRequests();
+				var request  = requests[ 0 ];
+
+				request.path.should.equal( 'com.schoolimprovement.pd360.dao.commoncore.CCQuestionAnswersGateway' );
+				request.objectPath.should.equal( 'com.schoolimprovement.pd360.dao.commoncore.CCQuestionAnswers' );
+
+			} );
+
 		} );
 
 		describe( 'sync method', function () {
@@ -79,7 +90,9 @@ define( function ( require ) {
 				questions.sync();
 				Remoting.fetch.should.have.callCount( 1 );
 			} );
+
 		} );
 
 	} );
+
 } );

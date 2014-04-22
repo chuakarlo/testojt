@@ -9,26 +9,30 @@ define( function ( require ) {
 	var QuestionModel = require( 'videoPlayer/models/QuestionModel' );
 
 	return Backbone.Collection.extend( {
-
-		'url' : {
-			'fetch' : 'com.schoolimprovement.pd360.dao.ContentService',
-			'save'  : 'com.schoolimprovement.pd360.dao.core.QuestionAnswersGateway'
+		// Numbers corresponds to video ContentType
+		// 3 : core
+		// 6 : commoncore
+		'path' : {
+			'3' : 'com.schoolimprovement.pd360.dao.core.QuestionAnswersGateway',
+			'6' : 'com.schoolimprovement.pd360.dao.commoncore.CCQuestionAnswersGateway'
 		},
 
-		'objectPath' : 'com.schoolimprovement.pd360.dao.core.QuestionAnswers',
+		'objectPath' : {
+			'3' : 'com.schoolimprovement.pd360.dao.core.QuestionAnswers',
+			'6' : 'com.schoolimprovement.pd360.dao.commoncore.CCQuestionAnswers'
+		},
 
-		'method'     : 'getQuestionsWithAnswers',
+		'method' : 'getQuestionsWithAnswers',
 
-		'model'      : QuestionModel,
-
-		'initialize' : function () {},
+		'model' : QuestionModel,
 
 		'buildRequests' : function () {
+
 			return this.map( function ( question ) {
 				var request = {
-					'path'       : this.url.save,
-					'objectPath' : this.objectPath,
-					'method'     : 'update',
+					'path'       : this.path[ question.get( 'ContentTypeId' ) ],
+					'objectPath' : this.objectPath[ question.get( 'ContentTypeId' ) ],
+					'method'     : 'create',
 					'args'       : {
 						'PersonnelId' : Session.personnelId(),
 						'QuestionId'  : question.get( 'QuestionId' ),
@@ -42,11 +46,11 @@ define( function ( require ) {
 		},
 
 		'sync' : function ( options ) {
-			options = options || {};
+			options = options || { };
 
 			var requests    = this.buildRequests();
 			var saveRequest = Remoting.fetch( requests );
-			
+
 			if ( options.success ) {
 				saveRequest.then( options.success );
 			}

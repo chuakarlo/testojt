@@ -40,8 +40,12 @@ define( function( require ) {
 				var fakeVideoInfo = [ { 'ContentId' : 123 } ];
 				var showVideoResources = sinon.stub( App.VideoPlayer.Controller.Show, 'showVideoResources' );
 				var remotingStub = sinon.stub( Remoting, 'fetch' ).returns( fakeVideoInfo );
+				var showStub = sinon.stub( App.content, 'show' );
 
 				App.VideoPlayer.Controller.Show.showVideo( 123 );
+
+				// App should have shown layout
+				showStub.should.have.callCount( 1 );
 
 				// data have been fetched
 				remotingStub.should.have.callCount( 1 );
@@ -55,6 +59,7 @@ define( function( require ) {
 				// restore stubs
 				App.VideoPlayer.Controller.Show.showVideoResources.restore();
 				Remoting.fetch.restore();
+				App.content.show.restore();
 			} );
 
 			it( '.showVideoResources should request for video resources and display layout', function () {

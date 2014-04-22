@@ -14,11 +14,15 @@ define( function ( require ) {
 	var ResourcesCollection    = require( 'videoPlayer/collections/VideoResourcesCollection' );
 	var RelatedVideoCollection = require( 'videoPlayer/collections/RelatedVideoCollection' );
 
+	var LoadingView = require( 'common/views/LoadingView' );
+
 	App.module( 'VideoPlayer.Controller', function ( Controller ) {
 
 		Controller.Show = {
 
 			'showVideo' : function( videoId ) {
+				App.content.show( new LoadingView() );
+
 				var licenseType = [ 0, 1, 200, 300 ];
 
 				var videoContentRequests = {
@@ -41,7 +45,6 @@ define( function ( require ) {
 				var licenseType = [ 0, 1, 200, 300 ];
 
 				var videoModel = new ContentModel( videoInfo );
-				var layout = new App.VideoPlayer.Views.PageLayout( { 'model' : videoModel } );
 
 				var relatedVideosRequest = {
 					'path'   : 'com.schoolimprovement.pd360.dao.RespondService',
@@ -77,7 +80,6 @@ define( function ( require ) {
 					}
 				};
 
-
 				// There are some responsed data that has no `Children` object
 				// this will emit an error on invoking getProgramSegment in CF
 				// so we have to check if `Children` is exist, if not will make one.
@@ -98,7 +100,7 @@ define( function ( require ) {
 
 				$.when( fetchingData ).done( function ( response ) {
 
-					// var layout = new App.VideoPlayer.Views.PageLayout( { 'model' : videoModel } );
+					var layout = new App.VideoPlayer.Views.PageLayout( { 'model' : videoModel } );
 					App.content.show( layout );
 
 					var questions     = App.VideoPlayer.Controller.Filter.filterQuestions( response[ 0 ] );
@@ -113,6 +115,13 @@ define( function ( require ) {
 
 					// Questions view
 					var questionsCollection = new QuestionsCollection( questions );
+
+					// Set question ContentTypeId based on video ContentTypeId.
+					// This is used to when saving the set of questions.
+					questionsCollection.map( function ( question ) {
+						question.set( 'ContentTypeId', videoModel.get( 'ContentTypeId' ) );
+					} );
+
 					var questionsView = new App.VideoPlayer.Views.QuestionsView( {
 						'collection' : questionsCollection
 					} );
