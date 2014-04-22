@@ -1,14 +1,16 @@
 <a href="#" class="lt-toggle-btn">
 	<img class="icon" src="/img/eye.png" alt="">
 	<p><%= COURSENAME %></p>
-	<span class="blue-text">
+	<span>
 		<strong>3</strong> / <strong>5</strong> Completed
-		<img src="/img/arrow-blue-right.png" alt="">
+		<i class="fa fa-chevron-right"></i>
 	</span>
 </a>
 <div class="lt-toggle-content drawer" style="display: none;">
-	<span class="blue-text">3 Complete</span>
-	<span class="gray-text"><%= PERCENTCOMPLETE %>%</span>
+	<div class="complete-status">
+		<div class="complete-count">3 Complete</div>
+		<div class="complete-percentage"><%= PERCENTCOMPLETE %>%</div>
+	</div>
 	<br class="clear">
 	<div class="progress-box">
 		<div class="progress">
@@ -32,7 +34,7 @@
 		</li>
 		<li class="inprogress">
 			<p>Video: Basic Algebra</p>
-			<span class="blue-text">Finish</span>
+			<span class="status">Finish</span>
 		</li>
 		<li class="inprogress">
 			<p>Video: K-12 Administration</p>

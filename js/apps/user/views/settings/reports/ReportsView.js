@@ -11,7 +11,7 @@ define( function ( require ) {
 
 		'tagName' : 'h1',
 
-		'className' : 'sub-page-header'
+		'className' : 'page-header'
 
 	} );
 
