@@ -99,13 +99,22 @@ define( function ( require ) {
 
 			'showPortfolio' : function () {
 				var helper = Main.helper;
-				helper._setContent( 'portfolio' );
 
-				var portfolioView = new PortfoliosView( {
-					collection : new Backbone.Collection( [ { } ] ) // temporary implementation
+				// set content
+				helper._setContent( 'portfolios' );
+
+				// show a loading view while data is fetching
+				helper._showView( new App.Common.LoadingView() );
+
+				helper._apiRequest( 'lt:portfolios', function( collection ) {
+					var portfoliosView = new PortfoliosView( {
+						collection : collection
+					} );
+
+					// display Courses
+					helper._showView( portfoliosView );
 				} );
 
-				helper._showView( portfolioView );
 			},
 
 			'showObservations' : function () {

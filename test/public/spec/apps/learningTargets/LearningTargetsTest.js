@@ -143,8 +143,16 @@
 					App.LearningTargets.Main.controller.showPortfolio();
 				} );
 
-				it( 'should setup content for `portfolio`', function () {
-					setContent.should.have.been.calledWith( 'portfolio' );
+				it( 'should setup content for `portfolios`', function () {
+					setContent.should.have.been.calledWith( 'portfolios' );
+				} );
+
+				it( 'should display loading view', function () {
+					showView.should.have.been.calledWith( { 'loading' : 'view' } );
+				} );
+
+				it( 'should send request to API', function () {
+					request.should.have.been.calledWith( 'lt:portfolios' );
 				} );
 
 			} );
