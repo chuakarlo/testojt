@@ -9,7 +9,7 @@ define( function ( require ) {
 
 		'template' : _.template( template ),
 		'tagName'  : 'li',
-		'className' : 'col-md-3'
+		'className' : 'col-xs-6 col-sm-4 col-md-3'
 
 	} );
 
