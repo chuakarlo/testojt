@@ -9,8 +9,6 @@
 
 		'model'  : VideoResourceModel,
 
-		'initialize' : function() {},
-
 		'buildModels' : function ( model ) {
 
 			var previewUrl = 'http://upload.content.pd360.com/PD360/media/';

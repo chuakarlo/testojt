@@ -9,11 +9,9 @@ define( function ( require ) {
 
 	return Marionette.CollectionView.extend( {
 
-		'initialize' : function ( options ) {
+		'initialize' : function () {
 			this.listenTo( this, 'itemview:item:remove', this.itemViewRemove );
 		},
-
-		'tagName' : 'ul',
 
 		'itemView' : ItemView,
 

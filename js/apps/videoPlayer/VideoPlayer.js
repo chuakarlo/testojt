@@ -28,11 +28,11 @@ define( function ( require ) {
 			},
 
 			'addContentToQueue' : function ( model ) {
-				VideoPlayer.Controller.Queue.addContentToQueue( model );
+				VideoPlayer.Controller.Queue.addContent( model );
 			},
 
 			'removeContentFromQueue' : function ( model ) {
-				VideoPlayer.Controller.Queue.removeContentFromQueue( model );
+				VideoPlayer.Controller.Queue.removeContent( model );
 			},
 
 			'showShareDialog' : function ( model ) {

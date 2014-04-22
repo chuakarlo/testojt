@@ -34,11 +34,6 @@ define( function ( require ) {
 			searchResultsLayout.tagName.should.eql( 'ul' );
 		} );
 
-		it( 'does have a `.className`', function () {
-			searchResultsLayout.should.have.property( 'className' );
-			searchResultsLayout.className.should.eql( 'search-ac' );
-		} );
-
 		it( 'does have a `.region`', function () {
 			searchResultsLayout.should.have.property( 'regions' );
 			searchResultsLayout.peopleResultsRegion.should.not.be.undefined;

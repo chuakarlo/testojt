@@ -1,12 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	// test libraries
-	var sinon = window.sinon;
+	require( 'bootstrap' );
 
-	// dependency modules
-	var SelectedItemView  = require( 'videoPlayer/views/share/SelectedItemView' );
-	var PersonModel       = require( 'videoPlayer/models/PersonModel' );
+	var sinon            = window.sinon;
+	var SelectedItemView = require( 'videoPlayer/views/share/SelectedItemView' );
+	var PersonModel      = require( 'videoPlayer/models/PersonModel' );
 
 	describe( 'SelectedItemView', function () {
 		var selectedItemView;

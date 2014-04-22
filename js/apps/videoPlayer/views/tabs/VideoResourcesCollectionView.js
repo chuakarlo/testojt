@@ -18,8 +18,6 @@ define( function ( require ) {
 
 		'emptyView' : LoadingView,
 
-		'initialize' : function () {},
-
 		'onClose' : function () {
 			this.collection.reset( [ ] );
 		}

@@ -6,6 +6,7 @@ define( function( require ) {
 	var Remoting   = require( 'Remoting' );
 	var sinon      = window.sinon;
 	var App        = require( 'App' );
+	var Content    = require( 'videoPlayer/models/ContentModel' );
 
 	require( 'videoPlayer/VideoPlayer' );
 
@@ -69,8 +70,8 @@ define( function( require ) {
 					'AnswerText' : ''
 				};
 				var fakeQueue = { 'ContentId' : 1 };
-				var fakeVideos = [ {}, { 'ContentId' : 123 } ];
-				var fakeSegments = [];
+				var fakeVideos = [ { }, { 'ContentId' : 123 } ];
+				var fakeSegments = [ ];
 				var fakeResources = {
 					'GuidebookFileName'  : '',
 					'AudioFileName'      : '',
@@ -142,10 +143,61 @@ define( function( require ) {
 
 					 setTimeout( function () {
 						 var questions = App.VideoPlayer.Controller.Filter.filterQuestions( fakeData, options );
-						 questions[0].QuestionTypeId.should.equal( 2 );
+						 questions[ 0 ].QuestionTypeId.should.equal( 2 );
 						 done();
 					 }, 1000 );
 
+				} );
+
+			} );
+
+		} );
+
+		describe( 'Queue Controller', function () {
+
+			it( 'it attached to `App`', function () {
+				App.VideoPlayer.should.have.property( 'Controller' );
+				App.VideoPlayer.Controller.should.have.property( 'Queue' );
+				App.VideoPlayer.Controller.Queue.should.have.property( 'addContent' );
+				App.VideoPlayer.Controller.Queue.should.have.property( 'removeContent' );
+			} );
+
+			describe( '.addContent', function () {
+
+				it( 'does add the content to queue', function () {
+					var model = new Content( {
+						'queued' : false
+					} );
+
+					var remotingFetchStub = sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
+
+					App.VideoPlayer.Controller.Queue.addContent( model ).resolve();
+
+					// content should be added to queue
+					model.get( 'queued' ).should.be.true;
+					remotingFetchStub.should.have.callCount( 1 );
+
+					Remoting.fetch.restore();
+				} );
+
+			} );
+
+			describe( '.removeContent', function () {
+
+				it( 'does remove the content from queue', function () {
+					var model = new Content( {
+						'queued' : true
+					} );
+
+					var remotingFetchStub = sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
+
+					App.VideoPlayer.Controller.Queue.removeContent( model ).resolve();
+
+					// content should be added to queue
+					model.get( 'queued' ).should.be.false;
+					remotingFetchStub.should.have.callCount( 1 );
+
+					Remoting.fetch.restore();
 				} );
 
 			} );

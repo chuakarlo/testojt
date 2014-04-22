@@ -146,12 +146,11 @@
 					padding       : 7px 15px;
 				}
 			}
-			img {
-				float  : left;
-				margin : 6px;
-			}
-			.blue-btn:disabled {
-				background : #5ABEF9;
+			#selected-items {
+				width        : 100%;
+				height       : auto;
+				padding-top  : 10px;
+				padding-left : 9px;
 			}
 		}
 		.transition-mixin;
@@ -200,16 +199,18 @@
 		}
 	}
 	.modal-footer {
-		margin-top : 0px;
+		margin-top : 40px;
 		padding    : 19px 20px 20px;
 		text-align : right;
 		border     : none;
-		border-top : 1px solid #E5E5E5;
 		button {
 			width   : 148px;
 			height  : 41px;
 			cursor  : default;
 			display : inline;
+		}
+		.white-btn {
+			margin-top : -1px;
 		}
 		.blue-btn:disabled {
 			background : #5ABEF9;

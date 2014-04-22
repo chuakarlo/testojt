@@ -11,7 +11,7 @@ define( function ( require ) {
 
 		Controller.Queue = {
 
-			'addContentToQueue' : function ( model ) {
+			'addContent' : function ( model ) {
 				var addToQueueRequest = {
 					'path'       : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
 					'objectPath' : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmark',
@@ -28,9 +28,12 @@ define( function ( require ) {
 				$.when( addToQueue ).done( function () {
 					model.set( 'queued', true );
 				} );
+
+				// return promise so we can test execution of callbacks
+				return addToQueue;
 			},
 
-			'removeContentFromQueue' : function ( model ) {
+			'removeContent' : function ( model ) {
 				var removeFromQueueRequest = {
 					'path'       : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
 					'objectPath' : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmark',
@@ -47,6 +50,9 @@ define( function ( require ) {
 				$.when( removeFromQueue ).done( function () {
 					model.set( 'queued', false );
 				} );
+
+				// return promise so we can test execution of callbacks
+				return removeFromQueue;
 			}
 
 		};

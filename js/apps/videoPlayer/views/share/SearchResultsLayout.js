@@ -16,8 +16,6 @@ define( function ( require ) {
 
 		'tagName' : 'ul',
 
-		'className' : 'search-ac',
-
 		'regions' : {
 			'peopleResultsRegion' : '#people-results > div',
 			'groupsResultsRegion' : '#groups-results > div'

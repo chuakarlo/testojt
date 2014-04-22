@@ -72,7 +72,6 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/collections/PeopleCollectionTest.js',
 			'spec/apps/videoPlayer/collections/GroupsCollectionTest.js',
 			// views
-			'spec/apps/videoPlayer/views/ModalRegionTest.js',
 			'spec/apps/videoPlayer/views/LoadingViewTest.js',
 			// views/player
 			'spec/apps/videoPlayer/views/player/PlayerItemViewTest.js',
@@ -86,6 +85,8 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/views/share/SelectedItemViewTest.js',
 			'spec/apps/videoPlayer/views/share/SearchResultsLayoutTest.js',
 			// views/tabs
+			'spec/apps/videoPlayer/views/tabs/ButtonsItemViewTest.js',
+			'spec/apps/videoPlayer/views/tabs/TabsItemViewTest.js',
 			'spec/apps/videoPlayer/views/tabs/VideoResourceItemViewTest.js',
 			// utils
 			'spec/apps/videoPlayer/utils/selectTextTest.js',
