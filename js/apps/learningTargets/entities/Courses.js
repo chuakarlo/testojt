@@ -42,7 +42,7 @@ define( function ( require ) {
 
 				'error' : function () {
 					defer.reject( new Error( 'Error fetching courses' ) );
-				},
+				}
 
 			} );
 

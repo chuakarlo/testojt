@@ -15,7 +15,7 @@ define( function ( require ) {
 		var mainView, contentRegion;
 
 		Main.regions = {
-			'Content' : Backbone.Marionette.Region.extend( {} )
+			'Content' : Backbone.Marionette.Region.extend( { } )
 		};
 
 		Main.helper = {
@@ -32,7 +32,6 @@ define( function ( require ) {
 				}
 				App.content.show( mainView );
 
-				// set this.contentRegion
 				contentRegion = new Main.regions.Content( {
 					el : mainView.el.querySelector( '.lt-content' )
 				} );
@@ -48,6 +47,7 @@ define( function ( require ) {
 					callback( collections );
 				} ).fail( function ( error ) {
 					// TODO: handle error
+					throw error;
 				} );
 			}
 
@@ -59,7 +59,7 @@ define( function ( require ) {
 				if ( App.PD360.hide ) {
 					App.PD360.hide();
 				}
-				App.navigate( 'resources/learning/courses', true );
+				App.navigate( 'resources/learning/processes', true );
 			},
 
 			'showCourses' : function () {
@@ -87,8 +87,11 @@ define( function ( require ) {
 
 				helper._setContent( 'processes' );
 
+				// show a loading view while data is fetching
+				helper._showView( new App.Common.LoadingView() );
+
 				var processesView = new ProcessesView( {
-					collection : new Backbone.Collection( [ {}, {} ] ) // temporary implementation
+					collection : new Backbone.Collection( [ { }, { } ] ) // temporary implementation
 				} );
 
 				helper._showView( processesView );
@@ -99,7 +102,7 @@ define( function ( require ) {
 				helper._setContent( 'portfolio' );
 
 				var portfolioView = new PortfoliosView( {
-					collection : new Backbone.Collection( [ {} ] ) // temporary implementation
+					collection : new Backbone.Collection( [ { } ] ) // temporary implementation
 				} );
 
 				helper._showView( portfolioView );
@@ -109,11 +112,16 @@ define( function ( require ) {
 				var helper = Main.helper;
 				helper._setContent( 'observations' );
 
-				var observationsView = new ObservationsView( {
-					collection : new Backbone.Collection( [ {} ] ) // temporary implementation
-				} );
+				// show a loading view while data is fetching
+				helper._showView( new App.Common.LoadingView() );
 
-				helper._showView( observationsView );
+				helper._apiRequest( 'lt:observations', function( collection ) {
+					var observationsView = new ObservationsView( {
+						collection : collection
+					} );
+
+					helper._showView( observationsView );
+				} );
 			},
 
 			'showQuestions' : function () {
@@ -121,7 +129,7 @@ define( function ( require ) {
 				helper._setContent( 'questions' );
 
 				var questionsView = new QuestionsView( {
-					collection : new Backbone.Collection( [ {}, {}, {} ] ) // temporary implementation
+					collection : new Backbone.Collection( [ { }, { }, { } ] ) // temporary implementation
 				} );
 
 				helper._showView( questionsView );

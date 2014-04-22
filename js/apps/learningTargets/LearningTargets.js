@@ -6,6 +6,7 @@ define( function ( require ) {
 
 	require( 'apps/learningTargets/controllers/mainController' );
 	require( 'apps/learningTargets/entities/Courses' );
+	require( 'apps/learningTargets/entities/Observations' );
 
 	App.module( 'LearningTargets', function ( LearningTargets, App ) {
 
@@ -19,7 +20,7 @@ define( function ( require ) {
 				'resources/learning/observations' : 'showObservations',
 				'resources/learning/portfolio'    : 'showPortfolio',
 				'resources/learning/questions'    : 'showQuestions'
-			},
+			}
 
 		} );
 

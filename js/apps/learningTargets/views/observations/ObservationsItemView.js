@@ -8,9 +8,9 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 		'template' : _.template( template ),
-		'tagName'  : 'li',
+		'tagName'  : 'tr',
 		'ui'       : {
-			'drawerToggleButton'  : '.lt-toggle-btn',
+			'drawerToggleButton'  : '.lt-toggle-btn'
 		},
 
 		'events' : {

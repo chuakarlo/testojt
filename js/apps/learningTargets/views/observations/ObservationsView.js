@@ -9,7 +9,7 @@ define( function ( require ) {
 	return Marionette.CompositeView.extend( {
 		'template'          : _.template( template ),
 		'itemView'          : observationsItemView,
-		'itemViewContainer' : 'ul.lt-list',
+		'itemViewContainer' : '.data-list'
 	} );
 
 } );

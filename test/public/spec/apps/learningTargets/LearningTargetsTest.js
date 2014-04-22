@@ -102,8 +102,8 @@
 					hideMock.verify();
 				} );
 
-				it( 'should navigate to `resources/learning/courses`', function () {
-					navigateStub.should.have.been.calledWith( 'resources/learning/courses', true );
+				it( 'should navigate to `resources/learning/processes`', function () {
+					navigateStub.should.have.been.calledWith( 'resources/learning/processes', true );
 				} );
 			} );
 
