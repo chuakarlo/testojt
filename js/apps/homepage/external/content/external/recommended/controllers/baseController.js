@@ -22,7 +22,7 @@ define( function ( require ) {
 
 			return {
 				'collection' : CollectionPar,
-				'count'      : collectionRaw.get(' RESULTS ').SCORING.numFound
+				'count'      : collectionRaw.get( 'RESULTS' ).SCORING.numFound
 			};
 		},
 

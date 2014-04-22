@@ -36,17 +36,17 @@ define(function(require) {
 
 	return Backbone.Collection.extend({
 		'initialize': function(options) {
-			this['start']           = 0;
-			this['queueCollection'] = [];
+			this.start           = 0;
+			this.queueCollection = [ ];
 		},
 		'fetch' : function ( options ) {
 			$.when( fetchingModels( this.start ) ).done( function ( models ) {
 
-				var innerModel = new Backbone.Collection( models[0] );
-				innerModel.queueCollection = models[1];
+				var innerModel = new Backbone.Collection( models[ 0 ] );
+				innerModel.queueCollection = models[ 1 ];
 				options.success( innerModel );
 
-			} ).fail( function ( error ) {
+			} ).fail( function ( ) {
 				// TODO: error handling
 			} );
 		},

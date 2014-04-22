@@ -8,10 +8,10 @@ define( function ( require ) {
 			if ( !item ) {
 				return null;
 			} else {
-				var view = item.attributes.baseObject[ 'getExternalView' ];
+				var view = item.attributes.baseObject.getExternalView;
 				return view;
 			}
-		},
+		}
 	} );
 
 } );
