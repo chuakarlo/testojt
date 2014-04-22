@@ -11,7 +11,6 @@ define( function ( require ) {
 
 	var ContentModel           = require( 'videoPlayer/models/ContentModel' );
 	var QuestionsCollection    = require( 'videoPlayer/collections/QuestionsCollection' );
-	var SegmentCollection      = require( 'videoPlayer/collections/VideoSegmentCollection' );
 	var ResourcesCollection    = require( 'videoPlayer/collections/VideoResourcesCollection' );
 	var RelatedVideoCollection = require( 'videoPlayer/collections/RelatedVideoCollection' );
 
@@ -131,11 +130,11 @@ define( function ( require ) {
 					layout.videoTabsRegion.show( videoTabsView );
 
 					// show video segments
-					var segmentsCollection = new SegmentCollection( segments );
-					var segmentsView = new App.VideoPlayer.Views.SegmentsView( {
-						'collection' : segmentsCollection
+					var segmentsView = new App.VideoPlayer.Views.VideoCollectionView( {
+						'collection' : new RelatedVideoCollection( segments )
 					} );
 					layout.videoSegmentsRegion.show( segmentsView );
+
 					// show video resources
 					var resourcesCollection = new ResourcesCollection();
 					var resourcesView = new App.VideoPlayer.Views.ResourcesView( {
@@ -144,7 +143,7 @@ define( function ( require ) {
 					layout.videoResourcesRegion.show( resourcesView );
 
 					//show related vids
-					var relatedView = new App.VideoPlayer.Views.RelatedVideoView( {
+					var relatedView = new App.VideoPlayer.Views.VideoCollectionView( {
 						'collection' : new RelatedVideoCollection( relatedVideos )
 					} );
 					layout.relatedVideosRegion.show( relatedView );
@@ -156,10 +155,7 @@ define( function ( require ) {
 				var shareVideoLayout = new App.VideoPlayer.Views.ShareVideoLayout( {
 					'model' : model
 				} );
-
-				// show share video dialog
-				var modalView = new App.VideoPlayer.Views.ModalView();
-				modalView.show( shareVideoLayout );
+				App.modalRegion.show( shareVideoLayout );
 			}
 
 		};

@@ -33,8 +33,17 @@ define( function ( require ) {
 				var dateSubmitted = questions[ 0 ].Created;
 				
 				if ( dateSubmitted !== '' ) {
-					var now = moment().tz( options.timezone ).format( 'MMMM, D YYYY h:mm:ss' );
-					var diff = moment( now ).diff( moment( dateSubmitted ), options.duration );
+					// Adjust dateSubmitted to same timezone
+					var normalized = moment( dateSubmitted )
+					 .tz( options.timezone )
+					 .format( 'MMMM D, YYYY h:mm:ss' );
+
+					var now = moment()
+					 .tz( options.timezone )
+					 .format( 'MMMM D, YYYY h:mm:ss' );
+
+					var diff = moment( now )
+					 .diff( normalized, options.duration );
 
 					if ( diff >= options.timeDuration ) {
 						showTypes = type.Followup;

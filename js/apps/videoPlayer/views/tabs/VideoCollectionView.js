@@ -6,12 +6,12 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var $          = require( 'jquery' );
 
-	var LoadingView            = require( 'videoPlayer/views/LoadingView' );
-	var RelatedVideoItemView   = require( 'videoPlayer/views/tabs/RelatedVideoItemView' );
+	var LoadingView    = require( 'videoPlayer/views/LoadingView' );
+	var VideoItemView = require( 'videoPlayer/views/tabs/VideoItemView' );
 
 	return Marionette.CollectionView.extend( {
 
-		'itemView' : RelatedVideoItemView,
+		'itemView' : VideoItemView,
 
 		'emptyView' : LoadingView, // to show loading animation when no collection is still available
 
@@ -24,7 +24,8 @@ define( function ( require ) {
 			'prev' : 'button.slick-prev'
 		},
 
-		'initialize' : function () { },
+		'initialize' : function () {
+		},
 
 		'hover' : function ( element, time, callback ) {
 			$( element ).hover( function () {
@@ -53,20 +54,22 @@ define( function ( require ) {
 		'onShow' : function () {
 			this.$el.slick( {
 				'slidesToShow'   : 4,
-				'slidesToScroll' : 4
+				'slidesToScroll' : 4,
+				'onInit'         : this.arrowAnimate( this.$el )
 			} );
-			this.arrowAnimate( this.$el );
 			this.hoverNext( this.$el );
 			this.hoverPrev( this.$el );
-
 		},
 		'arrowAnimate' : function ( element ) {
+			var next = this.ui.next;
+			var prev = this.ui.prev;
+
 			$( element ).hover( function () {
-				$( element[ 0 ].children[ 1 ] ).attr( 'style' , 'display:inline-block' );
-				$( element[ 0 ].children[ 2 ] ).attr( 'style' , 'display:inline-block' );
+				$( next ).attr( 'style' , 'display:inline-block' );
+				$( prev ).attr( 'style' , 'display:inline-block' );
 			}, function () {
-				$( element[ 0 ].children[ 1 ]).attr( 'style' , 'display:none' );
-				$( element[ 0 ].children[ 2 ] ).attr( 'style' , 'display:none' );
+				$( next ).attr( 'style' , 'display:none' );
+				$( prev ).attr( 'style' , 'display:none' );
 			} );
 		},
 		'onClose' : function () {

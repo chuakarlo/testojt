@@ -86,8 +86,6 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/views/share/SelectedItemViewTest.js',
 			'spec/apps/videoPlayer/views/share/SearchResultsLayoutTest.js',
 			// views/tabs
-			'spec/apps/videoPlayer/views/tabs/RelatedVideoCollectionViewTest.js',
-			'spec/apps/videoPlayer/views/tabs/RelatedVideoItemViewTest.js',
 			'spec/apps/videoPlayer/views/tabs/VideoResourceItemViewTest.js',
 			// utils
 			'spec/apps/videoPlayer/utils/selectTextTest.js',
