@@ -5,7 +5,7 @@ var fs   = require( 'fs' );
 var path = require( 'path' );
 
 // Load config
-var config = require( '../../config' );
+var config = require( '../config' );
 
 module.exports = function ( files ) {
 	return files.filter( String ).filter( function ( file ) {

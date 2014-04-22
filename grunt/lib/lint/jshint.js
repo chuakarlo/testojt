@@ -6,8 +6,8 @@ var path   = require( 'path' );
 
 // Load other modules
 var JSHINT = require( 'jshint' ).JSHINT;
-var filter = require( './filter' );
-var diff   = require( './diff' );
+var filter = require( '../filter' );
+var diff   = require( '../diff' );
 
 require( 'colors' );
 
@@ -16,7 +16,7 @@ var config   = require( '../../config' );
 var jshintrc = config.jshintrc;
 var globals  = jshintrc.globals;
 
-var lint = function ( files, done ) {
+function lint ( files, callback ) {
 	var errors = 0;
 
 	files.forEach( function ( file, index ) {
@@ -55,19 +55,25 @@ var lint = function ( files, done ) {
 		throw new Error( 'JSHint errors were found.' );
 	}
 
-	if ( typeof done === 'function' ) {
-		done();
+	console.log( 'No JSHint errors found.' );
+
+	if ( typeof callback === 'function' ) {
+		callback();
 	}
 
-};
+}
 
-var git = function ( done ) {
+function git ( callback ) {
 
-	diff( function ( stdout ) {
-		lint( filter( stdout.split( '\n' ) ), done );
+	diff( function ( files ) {
+		if ( !files ) {
+			return callback();
+		}
+
+		lint( filter( files ), callback );
 	} );
 
-};
+}
 
 module.exports = {
 	'lint' : lint,

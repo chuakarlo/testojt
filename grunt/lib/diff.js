@@ -12,10 +12,12 @@ module.exports = function ( callback ) {
 		}
 
 		if ( !stdout ) {
-			return console.log( 'No files to lint.' );
+			console.log( 'No files return from: ' + command );
+
+			return callback();
 		}
 
-		callback( stdout );
+		callback( stdout.split( '\n' ) );
 
 	} );
 

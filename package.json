@@ -24,7 +24,7 @@
     "grunt-contrib-less": "~0.11.0",
     "assemble-less": "~0.7.0",
     "grunt-contrib-requirejs": "~0.4.3",
-    "lodash": "2.4.x",
+    "lodash": "~2.4.1",
     "mustache": "0.8.x",
     "github": "0.1.x",
     "async": "0.2.x",
@@ -34,6 +34,7 @@
     "grunt-contrib-jshint": "~0.10.0",
     "jshint-stylish": "~0.1.5",
     "colors": "~0.6.2",
-    "eslint": "~0.5.1"
+    "eslint": "~0.5.1",
+    "escomplex-js": "~0.1.1"
   }
 }

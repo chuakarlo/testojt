@@ -2,28 +2,34 @@
 
 // Load other modules
 var eslint = require( 'eslint' );
-var filter = require( './filter' );
-var diff   = require( './diff' );
+var filter = require( '../filter' );
+var diff   = require( '../diff' );
 
-var lint = function ( files, done ) {
+function lint ( files, callback ) {
 	var code = eslint.cli.execute( [ null, null ].concat( files ) );
 
 	if ( code ) {
 		throw new Error( 'ESLint errors were found.' );
 	}
 
-	if ( typeof done === 'function' ) {
-		done();
+	console.log( 'No ESLint errors found.' );
+
+	if ( typeof callback === 'function' ) {
+		callback();
 	}
-};
+}
 
-var git = function ( done ) {
+function git ( callback ) {
 
-	diff( function ( stdout ) {
-		lint( filter( stdout.split( '\n' ) ), done );
+	diff( function ( files ) {
+		if ( !files ) {
+			return callback();
+		}
+
+		lint( filter( files ), callback );
 	} );
 
-};
+}
 
 module.exports = {
 	'lint' : lint,
