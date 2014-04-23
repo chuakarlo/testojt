@@ -11,7 +11,7 @@ define( function ( require ) {
 		'template' : _.template( template ),
 
 		'ui' : {
-			'videoInfo'   : '#info',
+			'videoInfo'   : '#info-icon',
 			'infoContent' : '#info-video-content'
 		},
 
@@ -35,7 +35,7 @@ define( function ( require ) {
 				'trigger' : 'manual',
 				'title'   : this.model.get( 'ContentName' ),
 				'content' : function () {
-				return  self.ui.infoContent.html();
+					return  self.ui.infoContent.html();
 				},
 				'placement' : 'bottom'
 			} );

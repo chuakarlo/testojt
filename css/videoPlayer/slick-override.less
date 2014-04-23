@@ -1,0 +1,38 @@
+#video-player-page {
+
+	.slick {
+
+		.slick-list {
+			height : 282px;
+		}
+
+		.slick-slide {
+			box-sizing : border-box;
+			padding    : 0px 10px;
+			width      : 285px !important;
+			min-height : 282px;
+		}
+
+		.slick-prev, .slick-next {
+			border      : 0 none;
+			cursor      : pointer;
+			height      : 50px;
+			position    : absolute;
+			text-indent : -9999px;
+			width       : 50px;
+			z-index     : 10000;
+			display     : none;
+		}
+
+		.slick-prev {
+			background : url("./../img/left-arrow.png") no-repeat scroll center center rgba(0, 0, 0, 0.1);
+			left       : -10px;
+		}
+
+		.slick-next {
+			background : url("./../img/left-arrow-right.png") no-repeat scroll center center rgba(0, 0, 0, 0.1);
+			right      : -10px;
+		}
+
+	}
+}
