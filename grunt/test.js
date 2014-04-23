@@ -34,7 +34,7 @@ module.exports = function ( grunt ) {
 
 	} );
 
-	grunt.registerTask( 'test', 'run all tests', [ 'test:phantomjs', 'test:selenium' ] );
+	grunt.registerTask( 'test', 'run all tests', [ 'test:phantomjs' ] );
 
 	grunt.registerTask( 'test:phantomjs', 'run tests for public scripts', 'mocha_phantomjs:public-test' );
 

@@ -16,21 +16,11 @@ install:
   - npm install
   - bower install
 
-  # download selenium support
-  - wget http://selenium-release.storage.googleapis.com/2.40/selenium-server-standalone-2.40.0.jar
-  - npm install -g git+https://AxS4AaP:836e170c40319c4a1f0ada346f644615fc6005d2@github.com/School-Improvement-Network/selenium-runner.git
-
 before_script:
   - grunt compile
 
   # start node to serve public files
   - node server.js &
-
-  # configure firefox and selenium
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - java -jar selenium-server-standalone-2.40.0.jar > /dev/null 2>&1 &
-  - sleep 5
 
 script:
   - grunt travis-lint
