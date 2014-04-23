@@ -8,6 +8,7 @@ define( function ( require ) {
 	require( 'apps/learningTargets/entities/Courses' );
 	require( 'apps/learningTargets/entities/Observations' );
 	require( 'apps/learningTargets/entities/Portfolios' );
+	require( 'apps/learningTargets/entities/Processes' );
 
 	App.module( 'LearningTargets', function ( LearningTargets, App ) {
 

@@ -85,16 +85,20 @@ define( function ( require ) {
 			'showProcesses' : function () {
 				var helper = Main.helper;
 
+				// set content
 				helper._setContent( 'processes' );
 
 				// show a loading view while data is fetching
 				helper._showView( new App.Common.LoadingView() );
 
-				var processesView = new ProcessesView( {
-					collection : new Backbone.Collection( [ { }, { } ] ) // temporary implementation
-				} );
+				helper._apiRequest( 'lt:processes', function( collection ) {
+					var processesView = new ProcessesView( {
+						collection : collection
+					} );
 
-				helper._showView( processesView );
+					// display Courses
+					helper._showView( processesView );
+				} );
 			},
 
 			'showPortfolio' : function () {

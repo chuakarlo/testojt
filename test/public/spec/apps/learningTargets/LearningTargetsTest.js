@@ -136,6 +136,14 @@
 					setContent.should.have.been.calledWith( 'processes' );
 				} );
 
+				it( 'should display loading view', function () {
+					showView.should.have.been.calledWith( { 'loading' : 'view' } );
+				} );
+
+				it( 'should send request to API', function () {
+					request.should.have.been.calledWith( 'lt:processes' );
+				} );
+
 			} );
 
 			describe( 'method `showPortfolio`', function () {
