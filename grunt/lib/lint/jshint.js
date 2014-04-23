@@ -17,6 +17,13 @@ var jshintrc = config.jshintrc;
 var globals  = jshintrc.globals;
 
 function lint ( files, callback ) {
+
+	if ( !files.length ) {
+		console.log( '  No files for JSHint to lint.' );
+
+		return callback();
+	}
+
 	var errors = 0;
 
 	files.forEach( function ( file, index ) {
@@ -55,7 +62,7 @@ function lint ( files, callback ) {
 		throw new Error( 'JSHint errors were found.' );
 	}
 
-	console.log( 'No JSHint errors found.' );
+	console.log( '  No JSHint errors found.' );
 
 	if ( typeof callback === 'function' ) {
 		callback();

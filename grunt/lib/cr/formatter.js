@@ -40,7 +40,7 @@ function results ( report, details ) {
 
 function errors ( objects, color ) {
 	if ( !objects.length ) {
-		return 'No complexity errors found.\n';
+		return '  No complexity errors found.\n';
 	}
 
 	var stdout = [ ];

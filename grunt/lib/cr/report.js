@@ -6,7 +6,6 @@ var fs = require( 'fs' );
 // Load other modules
 var _         = require( 'lodash' );
 var escomplex = require( 'escomplex-js' );
-var filter    = require( '../filter' );
 var check     = require( './check' );
 var formatter = require( './formatter' );
 
@@ -16,10 +15,16 @@ require( 'colors' );
 var options = { 'newmi' : true };
 var verbose = process.argv.indexOf( '--details' ) > -1;
 
-function report ( paths, callback ) {
+function report ( files, callback ) {
+
+	if ( !files.length ) {
+		console.log( 'No files for Complexity Report to check.' );
+
+		return callback();
+	}
+
 	var warnings = [ ];
 	var errors   = [ ];
-	var files    = filter( paths );
 
 	files.forEach( function ( file, index ) {
 		var ast = {
