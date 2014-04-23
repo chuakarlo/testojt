@@ -1,20 +1,17 @@
 <a href="#" class="lt-toggle-btn">
-	<p class="truncate">
-		<strong><%= ProcessName %></strong>
-	</p>
-	<p><%= ProcessStatus %></p>
+	<div class="col-xs-2 col-md-1"><img src="/img/eye.png" alt=""></div>
+	<div class="col-xs-10 col-md-7"><%= ProcessName %></div><p class="truncate">
+	<div class="col-xs-10 col-md-7"><%= ProcessStatus %></div><p class="truncate">
 </a>
 <div class="lt-toggle-content drawer" style="display: none;">
-	<div class="container">
-		<table>
-			<tbody>
-				<tr>
-					<td><%= NextTaskName %>Next Step 1</td>
-					<td><%= CompleteByDate %></td>
-					<td><%= TaskCompleted %>Not Current</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+	<table>
+		<tbody>
+			<tr>
+				<td><%= NextTaskName %>Next Step 1</td>
+				<td><%= CompleteByDate %></td>
+				<td><%= TaskCompleted %>Not Current</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 <br class="clear">
