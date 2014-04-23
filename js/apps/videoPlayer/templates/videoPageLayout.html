@@ -1,9 +1,8 @@
 <!-- video player header -->
-<div id="video-player-header" lass="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	<div id="header" class="col-lg-12 col-md-12 col-sm-12col-xs-12">
-		<h1><%= ContentName %></h1><i class="fa fa-info-circle" id="info"></i>
-	</div>
-	<p class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Common Core:
+<div id="video-player-header" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	<h1><%= ContentName %></h1>
+	<div id="video-info"></div>
+	<p class="col-lg-11 col-md-11 col-sm-11 col-xs-11">Common Core:
 		<a class="blue-text" href="#">ELA</a>,
 		<a class="blue-text" href="#">Technology</a>,
 		<a class="blue-text" href="#">Future Teaching</a>
@@ -33,28 +32,4 @@
 		</div>
 	</div>
 	<div class="tab-pane col-lg-12 col-md-12 col-sm-12 col-xs-12" id="related-videos">Related Videos</div>
-</div>
-<!-- modal region -->
-<div class="modal fade share-modal" id="app-modal"></div>
-<!-- video info pop up -->
-<div id="info-video-content" hidden>
-	<div class="well well-sm">
-			<div class="row">
-				<div class="col-xs-4 col-md-4 text-center">
-					<ul>
-						<p id="tags">Tags:</p>
-						<% _.each(Tags, function(tag) { %>
-						<li><%= tag %></li>
-						<% }); %>
-					</ul>
-				</div>
-			<div class="col-xs-8 col-md-8 section-box">
-				<p><%= ContentDescription %></p>
-				<hr />
-				<div class="col-md-12">
-					<p> <span id="tags">Duration:</span> <%= SegmentLengthInSeconds %></p>
-				</div>
-			</div>
-		</div>
-	</div>
 </div>

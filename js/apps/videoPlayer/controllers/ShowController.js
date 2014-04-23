@@ -21,6 +21,7 @@ define( function ( require ) {
 		Controller.Show = {
 
 			'showVideo' : function( videoId ) {
+
 				App.content.show( new LoadingView() );
 
 				var licenseType = [ 0, 1, 200, 300 ];
@@ -112,6 +113,10 @@ define( function ( require ) {
 					// Videojs player view
 					var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( { 'model' : videoModel } );
 					layout.playerRegion.show( videoPlayerView );
+
+					//Video info view
+					var videoInfoView = new App.VideoPlayer.Views.VideoInfoView( { 'model' : videoModel } );
+					layout.videoInfoRegion.show( videoInfoView );
 
 					// Questions view
 					var questionsCollection = new QuestionsCollection( questions );

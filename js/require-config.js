@@ -49,6 +49,7 @@ require.config( {
 		'fine-uploader'         : 'libs/fine-uploader/build/jquery.fineuploader.min',
 		'ladda'                 : 'libs/ladda/dist/ladda.min',
 		'ladda-jquery'          : 'libs/ladda/dist/ladda.jquery.min',
+		'jquery-browser'        : 'libs/jquery.browser/dist/jquery.browser.min',
 
 
 		'pc-linq'             : 'libs/nakautot.linq/linq.min',
@@ -122,6 +123,10 @@ require.config( {
 		},
 
 		'jquery-placeholder' : {
+			'deps' : [ 'jquery' ]
+		},
+
+		'jquery-browser' : {
 			'deps' : [ 'jquery' ]
 		},
 

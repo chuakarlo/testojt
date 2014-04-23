@@ -1,97 +1,57 @@
 #video-player-page {
-		.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+		.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3,
+		.col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5,
+		.col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7,
+		.col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9,
+		.col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11,
+		.col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
 			position      : relative;
 			min-height    : 1px;
 			padding-left  : 0;
 			padding-right : 0;
 		}
-	#header {
-		h1 {
-			width         : auto;
-			white-space   : nowrap;
-			overflow      : hidden;
-			text-overflow : ellipsis;
-		}
-		#info {
-			cursor         : pointer;
-			color          : #3dadef;
-			vertical-align : middle;
-			font-size      : 25px;
-			float          : right;
-			margin-bottom  : -38px;
-		}
-	}
-	#video {
-		position : relative;
+	#video-player-header {
+			margin-top : 30px;
 
-		#video-player {
-			float            : left;
-			padding          : 0px;
-			background-color : #000;
-		}
-	}
+			h1 {
+				width         : auto;
+				white-space   : nowrap;
+				overflow      : hidden;
+				text-overflow : ellipsis;
+			}
+			#video-info {
+				.popover {
+					width            : auto;
+					background-color : white;
+					color            : black;
+				}
+				#info {
+						cursor         : pointer;
+						color          : #3dadef;
+						vertical-align : middle;
+						font-size      : 25px;
+						float          : right;
+						margin-bottom  : -38px;
+					}
+			}
 
-	#video .carousel, #video .carousel .item {
-		height : 450px;
-	}
-
-	#submit-answers.no-hover:hover {
-		background    : none;
-		color         : inherit;
-		border        : 1px solid #a5a7ad;
-		border-radius : 3px;
-	}
-
-	// When fading in the modal, animate it to slide down
-	&.fade .modal-dialog {
-		.translate(0, 0);
-		.transition-transform(~"0s ease-out");
-	}
-	&.in .modal-dialog { .translate(0, 0) }
-
-	span.email-name {
-
-		display    : block;
-		box-sizing : border-box;
-		float      : left;
-		width      : 167px;
-		margin     : 3px;
-
-		div.remove-item {
-			border     : none;
-			background : #545965;
-			color      : #FFFFFF;
-			cursor     : pointer;
-		}
-
-		span.email-item {
-			display            : block;
-			-webkit-box-sizing : border-box; /* Saf <5.1, */
-			-moz-box-sizing    : border-box; /* Fx */
-			box-sizing         : border-box; /* Ch, Saf 5.1+, IE 8+, Op 9+  */
-			border             : none;
-			background         : #4B505C;
-			color              : #FFFFFF;
-			max-width          : 127px;
-			width              : 127px;
-			white-space        : nowrap;
-			overflow           : hidden;
-			-o-text-overflow   : ellipsis; /* Op <11, Op Mini, Op Mob <12.1 */
-			text-overflow      : ellipsis; /* IE, Fx, Ch, Saf */
+		p {
+			margin-bottom : 30px;
 		}
 	}
 
-	.tooltip-name{
-		font-weight : 500;
-		word-wrap   : break-word;
+	#video-container {
+		#video {
+			position : relative;
+			#video-player {
+				float            : left;
+				padding          : 0px;
+				background-color : #000;
+			}
+		}
 	}
 
-	.tooltip-email{
-		font-size   : 12px;
-		font-weight : 200;
-		word-wrap   : break-word;
-	}
-
+	//videojs overrides
 	.vjs-default-skin .vjs-volume-level {
 		background : #9fd753;
 	}
@@ -129,66 +89,5 @@
 	.vjs-default-skin .vjs-menu-button ul li.vjs-selected {
 		background-color : #cfcfcf;
 		color            : #000000;
-	}
-
-	.tabs ul li, .overflow ul li {
-		float        : left;
-		margin-right : 45px;
-		padding      : 0 10px 12px;
-	}
-
-	//video information button
-	.well {
-		margin-bottom : 1px;
-	}
-
-	.popover {
-		max-width : 725px;
-		p {
-			font-size   : 14px;
-			line-height : 18px;
-		}
-		#tags {
-			font-weight : bold;
-		}
-		ul {
-			padding-top : 18px;
-			text-align  : left;
-			margin-left : 4px;
-		}
-	}
-
-	.popover-title {
-		font-size   : 16px;
-		font-weight : bold;
-	}
-
-	.loading-container {
-		height   : 200px;
-		position : relative;
-		display  : table;
-		left     : 50%;
-	}
-
-	.loading-container > .spinner {
-		position : absolute;
-		left     : 50%;
-		top      : 100px;
-	}
-
-
-	.info-thumbnail {
-		width              : 137px;
-		display            : block;
-		padding            : 4px;
-		margin-bottom      : 20px;
-		line-height        : 1.42857143;
-		background-color   : #ffffff;
-		border             : 1px solid #dddddd;
-		border-radius      : 4px;
-		-webkit-transition : all 0.2s ease-in-out;
-		-moz-transition    : all 0.2s ease-in-out;
-		-o-transition      : all 0.2s ease-in-out;
-		transition         : all 0.2s ease-in-out;
 	}
 }

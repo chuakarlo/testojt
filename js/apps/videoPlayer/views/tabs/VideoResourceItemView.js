@@ -3,19 +3,19 @@ define( function ( require ) {
 
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
+	var $          = require( 'jquery' );
 
 	var template   = require( 'text!videoPlayer/templates/tabs/videoResourceItemView.html' );
 
-	//confirm and ActiveXObject are globals that are defined externally
-	/*global ActiveXObject: false */
+	require( 'jquery-browser' );
 
 	return Marionette.ItemView.extend( {
 
 		'template' : _.template( template ),
 
-		'tagName'  : 'li',
+		'tagName' : 'li',
 
-		'ui'       : {
+		'ui' : {
 			'thumbnail'    : '.video-resources-thumb img',
 			'pdfModal'     : '#pdf-modal',
 			'modalContent' : '#pdf-holder'
@@ -26,66 +26,27 @@ define( function ( require ) {
 		},
 
 		'previewFile' : function () {
-			var hasPlugin = this.checkForPdfPlugin();
-			var isIE      = this.isIE();
-			var isPreview = this.isPreview();
-			var tags = {
-				'iframe' : 'iframe',
-				'embed'  : 'embed'
-			};
+			var previewPath = this.model.get( 'previewPath' );
 
-			if ( isPreview !== false ) {
-				if ( isIE ) {
-					if ( hasPlugin ) {
-						this.showPdfModal( isPreview, tags.iframe );
-					} else {
-						return false;
-					}
-				} else {
-					this.showPdfModal( isPreview, tags.embed );
-				}
-			} else {
+			if ( previewPath === '' ) {
 				return false;
+			}
+
+			// Chrome pdf in iframe has issues with displaying
+			// pdf files. Use `embed` tag instead.
+			if ( $.browser.name === 'chrome' ) {
+				this.showPdfModal( previewPath, 'embed' );
+			} else {
+				this.showPdfModal( previewPath, 'iframe' );
 			}
 		},
 
 		'showPdfModal' : function ( previewPath, tag ) {
 			this.ui.pdfModal.modal( 'show' );
-			//use iframe if ie and embed if not
+			//use embed if google chrome and iframe if not
 			this.ui.modalContent.html( function () {
 			  return '<'+ tag +' id="modal-iframe" src='+ previewPath + '></'+ tag + '>';
-			});
-		},
-
-		'isPreview' : function () {
-			var previewPath = this.model.get( 'previewPath' );
-			return previewPath !== '' ? previewPath : false;
-		},
-
-		'checkForPdfPlugin' : function () {
-			var isAdobe = this.getPDFPlugin();
-			return ( ( isAdobe !== null ) && ( isAdobe !== undefined ) ) ? true : false;
-		},
-		//get pdf plugin in ie
-		'getPDFPlugin' : function () {
-			// load the activeX control
-			// AcroPDF.PDF is used by version 7 and later
-			// PDF.PdfCtrl is used by version 6 and earlier
-			return this.getActiveXObject( 'AcroPDF.PDF' ) || this.getActiveXObject( 'PDF.PdfCtrl' );
-		},
-		//check if browser is ie
-		'isIE' : function () {
-			var userAgent = navigator ? navigator.userAgent.toLowerCase() : 'other';
-			var msie      = userAgent.indexOf( 'msie' ); //for older version of ie
-			var trident   = userAgent.indexOf( 'trident/' ); //for newer version of ie
-
-			return ( ( msie !== -1 ) || ( trident !== -1 ) ) ? true : false;
-		},
-
-		'getActiveXObject' : function ( name ) {
-			try {
-				return new ActiveXObject( name );
-			} catch( e ) {}
+			} );
 		}
 
 	} );

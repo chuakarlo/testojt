@@ -1,30 +1,33 @@
-.tab-content > .tab-pane {
-display    : block;
-visibility : hidden;
-height     : 0;
-}
-.tab-content > .tab-pane.active {
-	visibility : visible;
-	height     : auto;
-}
-
-.tab-content > .tab-pane #video-resource,
-.tab-content > .tab-pane #video-segment {
-	height : 0;
-}
-
-.tab-content > .tab-pane.active #video-resource,
-.tab-content > .tab-pane.active #video-segment {
-	height : auto;
-}
-
 #video-player-page {
+
+	.tab-content > .tab-pane {
+		display    : block;
+		visibility : hidden;
+		height     : 0;
+	}
+
+	.tab-content > .tab-pane.active {
+		visibility : visible;
+		height     : auto;
+	}
+
+	.tab-content > .tab-pane #video-resource,
+	.tab-content > .tab-pane #video-segment {
+		height : 0;
+	}
+
+	.tab-content > .tab-pane.active #video-resource,
+	.tab-content > .tab-pane.active #video-segment {
+		height : auto;
+	}
+
 	#tab-container {
 		width         : 100%;
 		border-bottom : 1px solid #EBEBEB;
 		position      : relative;
 		margin-top    : 20px;
 		margin-left   : 0px;
+
 		a {
 			color : inherit;
 		}
@@ -33,6 +36,7 @@ height     : 0;
 			.nav-tabs {
 				border-top    : none;
 				margin-bottom : 0;
+
 				li {
 					a {
 						border : none;
@@ -44,6 +48,7 @@ height     : 0;
 					}
 				}
 				li.active {
+
 					a {
 						border-top    : none;
 						border-bottom : 3px solid #8DB62B;
@@ -52,27 +57,33 @@ height     : 0;
 				}
 			}
 		}
+
 		#video-buttons {
 			padding-right  : 0px;
+
 			button {
 				height   : 37px;
 				width    : 138px;
 				position : relative;
 				top      : -7px;
 				padding  : 0 !important;
+
 				.white-btn {
 					background    : none;
 					border        : 1px solid #A5A7AD;
 					border-radius : 3px;
+
 					:hover {
 						opacity : .7;
 					}
 				}
+
 				.blue-btn {
 					margin-left : 20px;
 					background  : #3DADEF;
 					color       : white;
 					transition  : .3s;
+
 					:hover {
 						background : #5ABEF9;
 						color      : white;
@@ -83,15 +94,17 @@ height     : 0;
 	}
 	//override less for slick carousel
 	.slick {
+
 		.slick-list {
 			height : 282px;
 		}
+
 		.slick-slide {
 			box-sizing : border-box;
 			padding    : 0px 10px;
 			width      : 285px !important;
 			min-height : 282px;
-			}
+		}
 
 		.slick-prev, .slick-next {
 			border      : 0 none;
@@ -115,16 +128,19 @@ height     : 0;
 		}
 
 	}
-
+//video tab
 	.vid-tab {
 		margin : 0 -40px;
-
 		li {
-			margin : 19px 10px;
-			width  : 265px;
+			margin     : 19px 10px;
+			width      : 265px;
+			list-style : none;
+			float      : left;
+			position   : relative;
 		}
 	}
 
+	//videos thumbnail
 	.videos-thumb {
 		width      : 100%;
 		cursor     : pointer;
@@ -135,35 +151,34 @@ height     : 0;
 		min-height : 150px;
 
 		#icon-play {
-				position  : absolute;
-				display   : none;
-				top       : 35%;
-				left      : ~"calc(50% - 17.5px)";
-				font-size : 35px;
-			}
+			position  : absolute;
+			display   : none;
+			top       : 35%;
+			left      : ~"calc(50% - 17.5px)";
+			font-size : 35px;
+		}
 
-			#word-play {
-				display  : none;
-				top      : 62%;
-				left     : 37%;
-				position : absolute;
-			}
+		#word-play {
+			display  : none;
+			top      : 62%;
+			left     : 37%;
+			position : absolute;
+		}
 
 		:hover {
 			#image {
-					color               : @vp-white;
-					opacity             : .5;
-					transition-duration : .5s;
-				}
+				color               : @vp-white;
+				opacity             : .5;
+				transition-duration : .5s;
+			}
 			#icon-play, #word-play {
-					display : inline-block;
-					z-index : 1;
-					color   : @vp-white;
-				}
+				display : inline-block;
+				z-index : 1;
+				color   : @vp-white;
+			}
 		}
-
 	}
-
+	//videos information
 	.videos-info {
 		width                      : 100%;
 		padding                    : 20px;
@@ -199,55 +214,56 @@ height     : 0;
 			padding      : 5px;
 			margin-right : -33px;
 			top          : 220px;
+			position     : absolute;
+			right        : 57px;
+			z-index      : 1000;
 
-		.flag {
-			display : none;
-		}
-
-		.watch-later-icon {
-			font-size : 25px;
-			color     : @vp-gray;
-			cursor    : pointer;
-		}
-
-		.watch-later-icon:hover {
-			color : @vp-blue-light;
-		}
-
-		.remove {
-			display : none;
-		}
-
-		.flag:checked ~ .watch-later-icon {
-			color :	@vp-blue-dark;
-
-			.add {
+			.flag {
 				display : none;
 			}
 
-			.remove {
-				display : block;
+			.watch-later-icon {
+				font-size : 25px;
+				color     : @vp-gray;
+				cursor    : pointer;
 			}
 
+			.watch-later-icon:hover {
+				color : @vp-blue-light;
+			}
+
+			.remove {
+				display : none;
+			}
+
+			.flag:checked ~ .watch-later-icon {
+				color :	@vp-blue-dark;
+
+				.add {
+					display : none;
+				}
+
+				.remove {
+					display : block;
+				}
+
+			}
 		}
 
-	}
+		.watch-later:hover {
+			padding : ( ( @vp-base-padding / 5 ) * 2 );
+			border  : @border;
 
-	.watch-later:hover {
-		padding : ( ( @vp-base-padding / 5 ) * 2 );
-		border  : @border;
+			.border-radius( @cn-base-radius / 3 );
 
-		.border-radius( @cn-base-radius / 3 );
-
-		.watch-later-icon {
-			color :	@vp-blue-light;
+			.watch-later-icon {
+				color :	@vp-blue-light;
+			}
 		}
-	}
 
 	}
 
 	//video-resources
-
 		.video-resources-thumb {
 			overflow                : hidden;
 			border-top-left-radius  : 3px;
@@ -259,59 +275,54 @@ height     : 0;
 			img {
 				width : 100%;
 			}
-			.hover {
-				width    : 100%;
-				height   : 188px;
-				position : absolute;
-				top      : 0px;
-				left     : 0px;
-				display  : inline-block;
 
-			}
-			.hover:hover {
-				background-color    : rgba(0,0,0,0.5);
-				background-repeat   : no-repeat;
-				background-position : center;
-			}
-		}
-
-		.video-resources-info {
-			padding                    : 25px;
-			background                 : @whitesmoke;
-			border-bottom-left-radius  : 3px;
-			border-bottom-right-radius : 3px;
-			display                    : inline-block;
-			width                      : 100%;
-			height                     : 70px;
-
-			h3 {
-			width         : 236px;
-			white-space   : nowrap;
-			overflow      : hidden;
-			text-overflow : ellipsis;
-			font-size     : 18px;
-				}
-				p {
-					line-height : 1em;
-					margin-top  : 10px;
-					color       : #b2b5b9;
-				}
 			#download {
-				position  : absolute;
-				font-size : 32px;
-				top       : 210px;
-				right     : 118px;
-				cursor    : pointer;
-				color     : gray;
-			}
+				padding                    : 25px;
+				background                 : @whitesmoke;
+				border-bottom-left-radius  : 3px;
+				border-bottom-right-radius : 3px;
+				display                    : inline-block;
+				width                      : 100%;
+				height                     : 70px;
 
-			#download:hover {
-				color : @vp-blue-light;
-				.download {
-					display : block;
+				.watch-later {
+					display      : inline-block;
+					width        : 35px;
+					height       : 35px;
+					background   : none !important;
+					margin       : 0 10px 20px 25px;
+					padding      : 5px;
+					margin-right : 57px;
+					top          : 207px;
+					position     : absolute;
+					right        : 57px;
+					z-index      : 1000;
+
+					.cn-tool-tip {
+							font-size : 15px;
+						}
+
+					.download-icon {
+						font-size : 25px;
+						color     : @gray;
+						cursor    : pointer;
+					}
+
+					.download-icon:hover {
+						color : @vp-blue-light;
+					}
+
 				}
-			}
+				.watch-later:hover {
+					padding : ( ( @vp-base-padding / 5 ) * 2 );
+					border  : @border;
+					.border-radius( @cn-base-radius / 3 );
+					.download-icon {
+						color :	@vp-blue-light;
+					}
+				}
 		}
+	}
 		//divider of video resource and video segments
 		.additional-resources {
 			hr {

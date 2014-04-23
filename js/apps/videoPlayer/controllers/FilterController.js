@@ -34,16 +34,13 @@ define( function ( require ) {
 				var showTypes = type.Reflection; // default questions to show
 
 				if ( questions[ 0 ].Created !== '' ) {
-					// Reformat date to 12-hour format.
-					var normalized = moment( questions[ 0 ].Created )
-					 .format( 'MMMM D, YYYY h:mm:ss' );
-
+					// Reformat date to `options.timezone` format
 					var now = moment()
 					 .tz( options.timezone )
-					 .format( 'MMMM D, YYYY h:mm:ss' );
+					 .format( 'MMMM D, YYYY H:mm:ss' );
 
 					var diff = moment( now )
-					 .diff( normalized, options.duration );
+					 .diff( moment( questions[ 0 ].Created ), options.duration );
 
 					if ( diff >= options.timeDuration ) {
 						showTypes = type.Followup;

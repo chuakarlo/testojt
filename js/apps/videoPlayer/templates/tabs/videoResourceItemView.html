@@ -1,16 +1,17 @@
 <div class="video-resources-thumb">
 	<img src= "<%= thumbnail %>" />
-	<div class="video-resources-info">
-		<i class="fa fa-download download" id="download"></i><a href="<%= downloadPath %>"></a>
-			<div class="cn-tool-tip slideIn top download">Download</div>
-		</label>
-	</div>
+	<span id="download">
+			<div class="watch-later">
+				<i class="download-icon fa fa-download"></i><a href="<%= downloadPath %>"></a>
+				<div class="cn-tool-tip slideIn top">Download</div>
+			</div>
+	</span>
 </div>
 <div class="modal fade modal-wide" id="pdf-modal"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-		<button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<div id="pdf-holder"></div>
+			<button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<div id="pdf-holder"></div>
 		</div>
 	</div>
 </div>

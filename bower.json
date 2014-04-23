@@ -40,7 +40,8 @@
     "circular-snap-carousel": "2.0.1",
     "progress-circle": "1.0.0",
     "nakautot.linq": "1.0.0",
-    "nivo-slider": "3.2"
+    "nivo-slider": "3.2",
+    "jquery.browser": "~0.0.6"
   },
   "devDependencies": {
     "chai": "1.8.x",

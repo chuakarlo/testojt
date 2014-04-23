@@ -19,7 +19,8 @@ define( function ( require ) {
 			'videoTabsRegion'      : '#video-tabs',
 			'videoResourcesRegion' : '#video-resource',
 			'videoSegmentsRegion'  : '#video-segment',
-			'relatedVideosRegion'  : '#related-videos'
+			'relatedVideosRegion'  : '#related-videos',
+			'videoInfoRegion'      : '#video-info'
 		}
 
 	} );
