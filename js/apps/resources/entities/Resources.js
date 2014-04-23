@@ -38,7 +38,7 @@ define( function ( require ) {
 					'icon' : 'fa-users'
 				},
 				{
-					'name' : 'Lumibook',
+					'name' : 'LumiBook',
 					'url'  : 'resources/lumibook',
 					'icon' : 'fa-book'
 				},

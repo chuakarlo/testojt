@@ -58,7 +58,7 @@ suite( function ( env ) {
 					html.should.contain( 'Learning Targets' );
 					html.should.contain( 'Observation 360' );
 					html.should.contain( 'Communities' );
-					html.should.contain( 'Lumibook' );
+					html.should.contain( 'LumiBook' );
 					html.should.contain( 'More Resources' );
 				} )
 
@@ -124,7 +124,7 @@ suite( function ( env ) {
 					html.should.contain( 'Learning Targets' );
 					html.should.contain( 'Observation 360' );
 					html.should.contain( 'Communities' );
-					html.should.contain( 'Lumibook' );
+					html.should.contain( 'LumiBook' );
 					html.should.contain( 'More Resources' );
 				} )
 
@@ -190,7 +190,7 @@ suite( function ( env ) {
 					html.should.contain( 'Learning Targets' );
 					html.should.contain( 'Observation 360' );
 					html.should.contain( 'Communities' );
-					html.should.contain( 'Lumibook' );
+					html.should.contain( 'LumiBook' );
 					html.should.contain( 'More Resources' );
 				} )
 
