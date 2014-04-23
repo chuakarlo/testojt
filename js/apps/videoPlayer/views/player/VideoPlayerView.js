@@ -6,7 +6,8 @@ define( function ( require ) {
 	var videojs    = require( 'videojs' );
 	var Marionette = require( 'marionette' );
 
-	var template   = require( 'text!videoPlayer/templates/player/playerItemView.html' );
+	require( 'videoPlayer/utils/captionToggle' );
+	var template = require( 'text!videoPlayer/templates/player/playerItemView.html' );
 
 	return Marionette.ItemView.extend( {
 
@@ -20,12 +21,12 @@ define( function ( require ) {
 		},
 
 		'initializePlayer' : function () {
-
 			var player = videojs( 'example-video', {
 				'controls'               : true,
 				'techOrder'              : [ 'flash', 'html5' ],
 				'nativeControlsForTouch' : false
 			} );
+			player.ccToggle();
 
 			this.trigger( 'afterPlayerInit', player );
 		},
