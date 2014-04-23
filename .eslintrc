@@ -45,7 +45,7 @@
 		"no-shadow-restricted-names" : true,
 		"no-undef"                   : true,
 		"no-undef-init"              : true,
-		"no-unused-vars"             : [ 2, { "vars" : "local", "args" : "none" } ],
+		"no-unused-vars"             : false,
 		"no-use-before-define"       : true,
 
 		// Node.js
