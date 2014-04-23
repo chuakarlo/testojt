@@ -2,10 +2,13 @@
 						LEARNING TARGETS
 \************************************************************/
 .learning-targets {
-    @media (max-width: @screen-xs-max) {
+	@media (max-width: @screen-sm-max) {
         .lt-left-nav {
             border-bottom : 1px solid #ebebeb;
         }
+	.lt-courses-header {
+		display: none;
+	}
     }
     .lt-track {
         background: #f8f8f8;
@@ -49,6 +52,11 @@
         	}
         }
     }
+    .lt-courses-header {
+		padding: 20px 0 10px;
+		border-bottom: 1px solid #ebebeb;
+    }
+
     p {
         line-height: 21px;
     }
