@@ -17,7 +17,6 @@ install:
   # install required dependencies
   - npm install -g grunt-cli
   - npm install -g bower
-  - npm install -g complexity-report
   - npm install
   - bower install
 
