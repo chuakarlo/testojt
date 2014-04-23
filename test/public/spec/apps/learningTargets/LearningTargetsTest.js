@@ -143,8 +143,8 @@
 					App.LearningTargets.Main.controller.showPortfolio();
 				} );
 
-				it( 'should setup content for `portfolios`', function () {
-					setContent.should.have.been.calledWith( 'portfolios' );
+				it( 'should setup content for `portfolio`', function () {
+					setContent.should.have.been.calledWith( 'portfolio' );
 				} );
 
 				it( 'should display loading view', function () {

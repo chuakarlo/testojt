@@ -101,7 +101,7 @@ define( function ( require ) {
 				var helper = Main.helper;
 
 				// set content
-				helper._setContent( 'portfolios' );
+				helper._setContent( 'portfolio' );
 
 				// show a loading view while data is fetching
 				helper._showView( new App.Common.LoadingView() );
