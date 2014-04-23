@@ -36,6 +36,7 @@ suite( function ( env ) {
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Resources' );
 					html.should.contain( 'Groups' );
+					html.should.contain( 'Help' );
 					html.should.contain( 'User' );
 				} )
 
@@ -102,6 +103,7 @@ suite( function ( env ) {
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Resources' );
 					html.should.contain( 'Groups' );
+					html.should.contain( 'Help' );
 					html.should.contain( 'User' );
 				} )
 
@@ -168,6 +170,7 @@ suite( function ( env ) {
 				.elementByTagName( 'html' ).text().then( function ( html ) {
 					html.should.contain( 'Resources' );
 					html.should.contain( 'Groups' );
+					html.should.contain( 'Help' );
 					html.should.contain( 'User' );
 				} )
 

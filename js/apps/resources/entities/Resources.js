@@ -3,6 +3,8 @@ define( function ( require ) {
 
 	var Backbone = require( 'backbone' );
 	var App      = require( 'App' );
+	var Remoting = require( 'Remoting' );
+	var Session  = require( 'Session' );
 	var $        = require( 'jquery' );
 
 	App.module( 'Entities', function ( Entities ) {
@@ -20,43 +22,51 @@ define( function ( require ) {
 				{
 					'name' : 'Videos',
 					'url'  : 'resources/videos',
-					'icon' : 'fa-youtube-play'
+					'icon' : 'fa-youtube-play',
+					'id'   : 'link-more-videos'
 				},
 				{
 					'name' : 'Learning Targets',
 					'url'  : 'resources/learning',
-					'icon' : 'fa-bullseye'
+					'icon' : 'fa-bullseye',
+					'id'   : 'link-more-targets'
 				},
 				{
 					'name' : 'Observation 360',
 					'url'  : 'resources/observation/me',
-					'icon' : 'fa-eye'
+					'icon' : 'fa-eye',
+					'id'   : 'link-more-observation'
 				},
 				{
 					'name' : 'Communities',
 					'url'  : 'resources/communities',
-					'icon' : 'fa-users'
+					'icon' : 'fa-users',
+					'id'   : 'link-more-communities'
 				},
 				{
 					'name' : 'LumiBook',
 					'url'  : 'resources/lumibook',
-					'icon' : 'fa-book'
+					'icon' : 'fa-book',
+					'id'   : 'link-more-lumibook'
 				},
 				{
 					'name' : '{User Video Uploader}',
 					'url'  : '',
-					'icon' : 'fa-film'
+					'icon' : 'fa-film',
+					'id'   : 'link-more-uploader'
 				},
 				{
 					'name' : '{Training}',
 					'url'  : '',
-					'icon' : 'fa-bullhorn'
+					'icon' : 'fa-bullhorn',
+					'id'   : 'link-more-training'
 				},
 				{
 					'name' : '{Learning Progression}',
 					'url'  : '',
-					'icon' : 'fa-puzzle-piece'
-				},
+					'icon' : 'fa-puzzle-piece',
+					'id'   : 'link-more-progression'
+				}
 
 			] );
 
@@ -67,6 +77,7 @@ define( function ( require ) {
 			'getResources' : function () {
 
 				if ( Entities.resources === undefined ) {
+
 					var defer = $.Deferred();
 
 					initializeResources();
@@ -78,13 +89,59 @@ define( function ( require ) {
 							var adminModel = new Entities.Resources( {
 								'name' : '{Admin}',
 								'icon' : 'fa-wrench',
-								'url'  : ''
+								'url'  : '',
+								'id'   : 'link-more-admin'
 							} );
 
 							Entities.resources.add( adminModel );
 						}
 
-						defer.resolve( Entities.resources );
+						// check for thereNow access
+						// TODO: one of the nested defers can be eliminated
+						var thereNowLicense = App.request( 'user:isThereNow' );
+
+						$.when( thereNowLicense ).done( function( thereNow ) {
+
+							// only make request if they have access
+							if ( thereNow ) {
+
+								// request the link containing the token for thereNow
+								var thereNowRequest = {
+									'path'   : 'com.schoolimprovement.pd360.dao.AdminService',
+									'method' : 'genThereNowTokenandURL',
+									'args'   : {
+										'personnelId' : Session.personnelId()
+									}
+								};
+
+								var requests     = [ thereNowRequest ];
+								var fetchingData = Remoting.fetch( requests );
+
+								$.when( fetchingData ).done( function ( results ) {
+
+									var thereNowResult = results [ 0 ];
+									var thereNowToken  = thereNowResult.url.replace( '{token}', thereNowResult.Token );
+									var thereNowUrl    = thereNowToken.replace( '{action}{id}{tag}', 'index' );
+
+									// create link in more resources menu
+									var adminModel = new Entities.Resources( {
+										'name' : 'ThereNow',
+										'icon' : 'fa-hand-o-right',
+										'url'  : thereNowUrl,
+										'id'   : 'link-more-thereNow'
+									} );
+
+									Entities.resources.add( adminModel );
+
+									defer.resolve( Entities.resources );
+
+								} );
+
+							} else {
+								defer.resolve( Entities.resources );
+							}
+
+						} );
 
 					} );
 

@@ -44,6 +44,7 @@ define( function ( require ) {
 					if ( done ) {
 						done( jqXHR, status, error );
 					}
+
 				}.bind( this );
 
 				// remove username and password so that jQuery doesn't make the URL http://user:pass@domain.com

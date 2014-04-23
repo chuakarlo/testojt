@@ -5,6 +5,7 @@ define( function ( require ) {
 	var Session  = require( 'Session' );
 	var App      = require( 'App' );
 	var $        = require( 'jquery' );
+	var _        = require( 'underscore' );
 
 	App.module( 'Entities', function ( Entities ) {
 
@@ -105,6 +106,27 @@ define( function ( require ) {
 				} );
 
 				return defer.promise();
+			},
+
+			// Check if the user has thereNow license
+			'isThereNow' : function () {
+
+				var defer = $.Deferred();
+
+				var licenses = App.request( 'user:licenses' );
+
+				$.when( licenses ).done( function( licenses ) {
+
+					var thereNowLicense = _.find( licenses.models, function ( license ) {
+						return license.attributes.LicenseContentTypeId === 138;
+					} );
+
+					defer.resolve( thereNowLicense );
+
+				} );
+
+				return defer.promise();
+
 			}
 
 		};
@@ -115,6 +137,10 @@ define( function ( require ) {
 
 		App.reqres.setHandler( 'user:isAdmin', function () {
 			return API.isUserAdmin();
+		} );
+
+		App.reqres.setHandler( 'user:isThereNow', function () {
+			return API.isThereNow();
 		} );
 
 	} );

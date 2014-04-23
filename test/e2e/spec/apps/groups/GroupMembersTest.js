@@ -21,8 +21,8 @@ suite( function ( env ) {
 		.sleep( 2000 )
 
 		// login
-		.elementById( 'login-input-email' ).clear().type( 'taylor' )
-		.elementById( 'login-input-password' ).clear().type( 'sinet123' )
+		.elementById( 'login-input-email' ).clear().type( 'david.rojas@schoolimprovement.com' )
+		.elementById( 'login-input-password' ).clear().type( 'pd360' )
 		.elementById( 'login-button' ).click()
 
 		.sleep( 2000 )
@@ -39,7 +39,7 @@ suite( function ( env ) {
 		// click a group
 		.elementByCssSelector( 'div.profile.group' ).click()
 
-		.sleep( 2000 )
+		.sleep( 5000 )
 
 		// should contain a wall
 		.hasElementByXPath( '//div[@id=\'wall\']//h2[.=\'Wall\']' ).should.eventually.equal( true )

@@ -52,7 +52,7 @@ suite( function( env ) {
 		it( 'should set the "remember" cookie when you click on the checkbox', function( done ) {
 			browser
 
-				.sleep( 2000 )
+				.sleep( 3000 )
 
 				.get( 'http://localhost:8080/#login' )
 

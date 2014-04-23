@@ -10,7 +10,7 @@ define( function( require ) {
 
 	require( 'apps/homepage/controllers/homeController' );
 
-	describe( 'homeController controller', function() {
+	describe.skip( 'homeController controller', function() {
 
 		var fetchStud;
 		var viewStub;

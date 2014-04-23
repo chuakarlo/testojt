@@ -19,16 +19,18 @@ suite( function ( env ) {
 				.elementById( 'login-input-password' ).clear().type( 'pd360' )
 				.elementById( 'login-button' ).click()
 
-				// Verify that the nav menu exist by looking for an item that comes with the nav menu
+				// Verify that the groups tab is in nav
 				.hasElementById( 'groups-tab' ).should.eventually.equal( true )
 
 				// Open User Menu and Click Logout
 				.elementByCssSelector( '.user-menu a.dropdown-toggle' ).click()
 				.elementByLinkText( 'Log Out' ).click()
 
-				.url().should.become( 'http://localhost:8080/#login' )
+				.sleep( 300 )
 
-				// Verify the nav menu no longer exists
+				.url().should.eventually.equal( 'http://localhost:8080/#login' )
+
+				// Verify that the groups tab is not in nav
 				.hasElementById( 'groups-tab' ).should.eventually.equal( false )
 
 				.nodeify( done );

@@ -33,20 +33,22 @@ define( function ( require ) {
 			'bar2'        : '#bar2',
 			'bar3'        : '#bar3',
 			'search'      : '#nav-search',
-			'smallSearch' : '#nav-search-small'
+			'smallSearch' : '#nav-search-small',
+			'help'        : '#help'
 		},
 
 		'events' : {
 			'click @ui.userMenu'              : 'toggleUserMenu',
+			'click @ui.help'                  : 'showHelp',
 			'submit form'                     : 'showSearchResults',
-			'hidden.bs.dropdown @ui.userMenu' : 'hideUserMenuAnimation',
+			'hidden.bs.dropdown @ui.userMenu' : 'hideUserMenuAnimation'
 		},
 
 		'initialize' : function ( options ) {
 			this.authenticated = options.authenticated;
 		},
 
-		'getTemplate' : function ( options ) {
+		'getTemplate' : function () {
 			if ( this.authenticated === true ) {
 				return this.templates.loggedIn;
 			}
@@ -60,6 +62,30 @@ define( function ( require ) {
 			}
 
 			return this.showUserMenuAnimation( event );
+		},
+
+		'showHelp' : function () {
+
+			var urlHash = '';
+
+			if ( this.authenticated === true ) {
+
+				var personnelRequest = App.request( 'user:personnel' );
+
+				$.when( personnelRequest ).done( function ( personnel ) {
+
+					urlHash = '#EmailAddress:' + personnel.attributes.EmailAddress + '#FirstName:' + personnel.attributes.FirstName + '#LastName:' + personnel.attributes.LastName + '#PersonnelId:' + personnel.attributes.PersonnelId;
+
+					window.open( 'http://training.schoolimprovement.com' + urlHash, '_blank' );
+
+				} ).fail( function () {
+					// TODO: error handling
+				} );
+
+			} else {
+				window.open( 'http://training.schoolimprovement.com' + urlHash, '_blank' );
+			}
+
 		},
 
 		'hideUserMenuAnimation' : function ( event ) {
@@ -101,7 +127,7 @@ define( function ( require ) {
 			this.ui.menuBar.stop().animate( {
 				'top'   : 32,
 				'width' : 23,
-				'left'  : 22,
+				'left'  : 22
 			}, 200, function () {
 				this.ui.menuBar.animate( {
 					'left'  : 24,

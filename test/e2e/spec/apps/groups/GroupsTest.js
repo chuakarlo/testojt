@@ -21,8 +21,8 @@ suite( function ( env ) {
         .sleep( 2000 )
 
         // login
-        .elementById( 'login-input-email' ).clear().type( 'taylor' )
-        .elementById( 'login-input-password' ).clear().type( 'sinet123' )
+        .elementById( 'login-input-email' ).clear().type( 'matthew.donaldson@schoolimprovement.com' )
+        .elementById( 'login-input-password' ).clear().type( 'pd360' )
         .elementById( 'login-button' ).click()
 
         .sleep( 2000 )

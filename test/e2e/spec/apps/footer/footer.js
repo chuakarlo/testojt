@@ -64,7 +64,7 @@ suite( function( env ) {
 					.elementById( 'login-input-password' ).clear().type( 'pd360' )
 					.elementById( 'login-button' ).click()
 
-					.sleep( 2000 )
+					.sleep( 3000 )
 
 					.elementIfExists('id', 'Home-page-view')
 					.elementByCssSelector( '.footer-img-region > img')
@@ -82,7 +82,7 @@ suite( function( env ) {
 					.sleep( 1000 )
 					.elementByCssSelector( '.user-menu.open a[href="#logout"]').click()
 
-					.sleep( 1000 )
+					.sleep( 4000 )
 
 					.elementByCssSelector( '.footer-img-region > img')
 					.getAttribute('src').should.eventually.contain('img/pd-360.png')
