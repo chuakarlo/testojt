@@ -17,7 +17,6 @@ define( function ( require ) {
 
 			this.listenTo( this, 'show', this.initializePlayer );
 			this.listenTo( this, 'afterPlayerInit', this.startTracking.bind( this ) );
-			this.listenTo( this, 'afterPlayerInit', this.playerCleanup.bind( this ) );
 		},
 
 		'initializePlayer' : function () {
@@ -32,22 +31,44 @@ define( function ( require ) {
 		},
 
 		'startTracking' : function ( player ) {
+			// Here we'll track the player time manually
+			// so we won't depend on the player element
+			// being available in reporting video progress
+			// when page navigates to a different route.
+			player.on( 'timeupdate', function () {
+				this.model.set( 'currentTime' , player.currentTime() );
+			}.bind( this ) );
+
+			this.bindPlayerEvents( player );
+			this.bindPlayerCleanup( player, window );
+		},
+
+		// Tracked currentTime when video is paused and ended
+		'bindPlayerEvents' : function ( player ) {
+
 			player.on( 'pause', function () {
-				this.model.updateProgress( player.currentTime() );
+				this.model.updateProgress();
 			}.bind( this ) );
 
 			player.on( 'ended', function () {
-				this.model.updateProgress( player.currentTime() );
+				this.model.updateProgress();
 			}.bind( this ) );
+
 		},
 
-		'playerCleanup' : function ( player ) {
-			// TODO:
-			// Don't trigger dispose if we're still on resources/videos/
-			$( window ).on( 'hashchange', function dispose() {
+		// Destroys player instance when page navigates to a different route
+		'bindPlayerCleanup' : function ( player, element ) {
+
+			$( element ).on( 'hashchange.bindPlayerCleanup', function () {
+				// If currentTime is not equal 0 that means video was played, then
+				// update progress before disposing player instance.
+				if ( this.model.get( 'currentTime' ) !== 0) {
+					this.model.updateProgress();
+					this.model.set( 'currentTime', 0 );
+				}
 				player.dispose();
-				$( window ).off( 'hashchange', dispose );
-			} );
+				$( element ).off( 'hashchange.bindPlayerCleanup' );
+			}.bind( this ) );
 		}
 
 	} );

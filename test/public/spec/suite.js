@@ -74,7 +74,7 @@ define( function ( require ) {
 			// views
 			'spec/apps/videoPlayer/views/LoadingViewTest.js',
 			// views/player
-			'spec/apps/videoPlayer/views/player/PlayerItemViewTest.js',
+			'spec/apps/videoPlayer/views/player/VideoPlayerViewTest.js',
 			// views/questions
 			'spec/apps/videoPlayer/views/QuestionsCompositeViewTest.js',
 			'spec/apps/videoPlayer/views/QuestionItemViewTest.js',

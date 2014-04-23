@@ -12,9 +12,13 @@ define( function ( require ) {
 
 		'idAttribute' : 'ContentId',
 
-		'initialize' : function () {},
+		'defaults' : {
+			'currentTime' : 0
+		},
 
-		'updateProgress' : function ( secondsCompleted ) {
+		'initialize' : function () { },
+
+		'updateProgress' : function () {
 			var request = {
 				'path' : this.url,
 				'method' : 'RespondUpdatedViewingTimeWithStatusCheck',
@@ -22,13 +26,17 @@ define( function ( require ) {
 					'PersonnelId'      : Session.personnelId(),
 					'ContentId'        : this.id,
 					'ViewingId'        : 1,
-					'SecondsCompleted' : parseInt( secondsCompleted , 10),
+					'SecondsCompleted' : this.getCurrentTime(),
 					'licId'            : 0, // where to get licenses?
 					'taskId'           : 0
 				}
 			};
 
 			return Remoting.fetch( request );
+		},
+
+		'getCurrentTime' : function () {
+			return parseInt( this.get( 'currentTime' ) , 10);
 		}
 	} );
 } );

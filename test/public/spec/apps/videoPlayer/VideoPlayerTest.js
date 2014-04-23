@@ -136,7 +136,7 @@ define( function( require ) {
 					 };
 
 					 var fakeData = [ {
-						 'Created' : moment().tz( options.timezone ).format( 'MMMM, D YYYY h:mm:ss' ),
+						 'Created' : moment().tz( options.timezone ).format( 'MMMM, D YYYY H:mm:ss' ),
 						 'QuestionTypeId' : 1
 					 }, {
 						 'QuestionTypeId' : 2
