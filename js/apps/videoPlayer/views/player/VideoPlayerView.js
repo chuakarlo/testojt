@@ -17,7 +17,7 @@ define( function ( require ) {
 			videojs.options.flash.swf = 'js/libs/videojs/video-js.swf';
 
 			this.listenTo( this, 'show', this.initializePlayer );
-			this.listenTo( this, 'afterPlayerInit', this.startTracking.bind( this ) );
+			this.listenTo( this, 'afterPlayerInit', this.startTracking );
 		},
 
 		'initializePlayer' : function () {
