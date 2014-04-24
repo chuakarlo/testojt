@@ -45,6 +45,10 @@
 
 #group {
 
+	.date {
+		color: @gray-light;
+	}
+
 	div.post {
 		width: 100%;
 	}
@@ -138,10 +142,6 @@
 	#details-full {
 		display: none;
 	}
-
-	.comments .blue-text {
-		font-weight: 600;
-	}
 }
 
 #members-list {
@@ -157,7 +157,6 @@
 
 	ul.comments-list li {
 		border-bottom: 1px solid #ebebeb;
-		margin-bottom: 15px;
 
 		.container {
 			.container-smooth;
@@ -228,6 +227,7 @@
 			left: -41px;
 			width: 76px;
 			height: 76px;
+			border-radius: 50%;
 		}
 
 		.comment-main {
@@ -243,6 +243,7 @@
 	.reply {
 		background: #f8f8f8;
 		border-radius: 3px;
+		margin-bottom: 15px;
 
 		li {
 			padding: 13px;
@@ -266,13 +267,12 @@
 		.profile {
 			float: left;
 			width: 33px;
-			width: 33px;
+			height: 33px;
+			border-radius: 50%;
 		}
 
 		.text {
-			float: left;
-			max-width: 90%;
-			padding-left: 13px;
+			padding-left: 40px;
 
 			p {
 				line-height: 1.5em;
@@ -333,16 +333,3 @@
 		margin-bottom: 30px;
 	}
 }
-
-/* Buttons */
-.blue-btn { border-radius:3px; border:none; background:#3dadef; color:white; padding:13px 20px; transition: .3s; }
-.blue-btn:hover { background:#5abef9; color:white; }
-.blue-btn:active { background:#2a9adc; color:white; }
-.green-btn { border-radius:3px; background:#9fd753; color:white; padding:13px 20px; border:none; letter-spacing: 1px; }
-.green-btn:hover { background:#b5ea6d; color:white; }
-.green-btn:active { background:#93cb48; color:white; }
-.white-btn { background:none; border:1px solid #a5a7ad; border-radius: 3px; }
-.white-btn:hover { opacity: .7; }
-.white-blue-btn { background:none; border:1px solid #a5a7ad; border-radius: 3px; }
-.white-blue-btn:hover { background:#3dadef; color:white; border:1px solid #3dadef; }
-input { border-radius: 3px; }
