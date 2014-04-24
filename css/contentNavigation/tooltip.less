@@ -40,11 +40,16 @@
 }
 
 /* on hover of element containing tooltip default*/
-*:not(.on-focus):hover > .cn-tool-tip, .on-focus input:focus + .cn-tool-tip {
-    visibility : visible;
-    opacity    : 1;
+@media ( min-width: @screen-md-min ) {
+    *:not(.on-focus):hover > .cn-tool-tip, .on-focus input:focus + .cn-tool-tip {
+        visibility : visible;
+        opacity    : 1;
+    }
 }
 
-*:not(.on-focus):hover > .cn-tool-tip.slideIn, *:not(.on-focus):hover > .cn-tool-tip.slideIn.top, .on-focus > input:focus + .cn-tool-tip.slideIn, .on-focus > input:focus + .cn-tool-tip.slideIn.top {
+*:not(.on-focus):hover > .cn-tool-tip.slideIn,
+*:not(.on-focus):hover > .cn-tool-tip.slideIn.top, 
+.on-focus > input:focus + .cn-tool-tip.slideIn, 
+.on-focus > input:focus + .cn-tool-tip.slideIn.top {
     bottom : 150%;
 }

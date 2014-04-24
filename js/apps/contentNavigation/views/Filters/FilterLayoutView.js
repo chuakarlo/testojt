@@ -1,4 +1,5 @@
 define( function ( require ) {
+	
 	'use strict';
 
 	var _          = require( 'underscore' );
@@ -7,6 +8,8 @@ define( function ( require ) {
 	var template   = require( 'text!apps/contentNavigation/templates/Filters/FilterLayoutViewTemplate.html' );
 
 	return Marionette.ItemView.extend( {
+
 		'template' : _.template( template )
+
 	} );
 } );

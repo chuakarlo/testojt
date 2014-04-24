@@ -62,7 +62,7 @@ define( function( require ) {
 		},
 
 		'initializeFetching' : function ( options ) {
-			this.filterParam = options
+			this.filterParam = options;
 			this.component.getVent().once( 'component:ready', function ( ) {
 				this._fetchCollection( { reset : true } );
 			}.bind( this ) );
@@ -110,7 +110,7 @@ define( function( require ) {
 
 				var returnValue = _.has( model, 'ContentId' );
 				if ( returnValue ) {
-					return returnValue
+					return returnValue;
 				}
 				else {
 					return _.has( model, 'UUVideoId' );
@@ -122,25 +122,23 @@ define( function( require ) {
 	    },
 
 	    '_setFetchedSegments' : function ( models, options ) {
-			if ( models instanceof Array ) {
-				if ( options && options.reset ) {
-					this.collection.reset( models, { parse : true } );
+			if ( models instanceof Array && ( options && options.reset ) ) {
+				this.collection.reset( models, { parse : true } );
 
-					Utils.setWindowScrollOnTop();
+				Utils.setWindowScrollOnTop();
 
-				} else {
-					this.collection.add( models, { parse : true } );
-				}
+			} else {
+				this.collection.add( models, { parse : true } );
+			}
 
-				this.currentPage += 1;
+			this.currentPage += 1;
 
-				this._hideLoadingIndicators();
+			this._hideLoadingIndicators();
 
-				if ( models.length ) {
-					this.fetchWhileScrolling();
-				} else {
-					this._showNoMoreVideosIndicator();
-				}
+			if ( models.length ) {
+				this.fetchWhileScrolling();
+			} else {
+				this._showNoMoreVideosIndicator();
 			}
 
 		},

@@ -14,6 +14,7 @@ define( function( require ) {
 		},
 
 		'scrollIndicator' : {
+
 			'init' : function ( obj ) {
 				if ( $.isEmptyObject( obj ) ) {
 					return;
@@ -52,7 +53,11 @@ define( function( require ) {
 			        el.removeClass( 'enable-scroll-indicator' );
 			    }
 			}
-		}
+		},
+
+		'setWindowScrollOnTop' : function () {
+			$( 'html, body' ).scrollTop( 0 );
+	    }
 	};
 
 } );

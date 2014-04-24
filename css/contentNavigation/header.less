@@ -1,8 +1,9 @@
 .cn-header-content {
-	height: 92px;
-	background-color: @cn-white;
-	top: 70px !important;
-	z-index: 1029 !important;
+	height           : 92px;
+	background-color : @cn-white;
+	top              : 70px !important;
+	z-index          : 1029 !important;
+
 
 	.cn-resource-list {
 		text-align      : justify;
@@ -10,10 +11,10 @@
 		padding         : 0;
 
 		.cn-li-dropdowns {
-			padding-top: 23px;
+			padding-top : 23px;
 
 			ul.cn-dropdowns-container {
-				height: 65px;
+				height : 65px;
 			}
 		}
 	}
@@ -26,8 +27,8 @@
 
 
 	.cn-resources {
-		width : 100%;
-		height: 88px;
+		width  : 100%;
+		height : 88px;
 
 		.cn-toggle-select {
 
@@ -73,21 +74,31 @@
 	.cn-sortby-header , .cn-library-header {
 
 		.cn-library-container , .cn-sortby-container {
-			padding : 0;
-			height: 38px;
-			position: relative;
-			width: 222px;
+			padding  : 0;
+			height   : 38px;
+			position : relative;
+			width    : 222px;
 		}
 
 		.cn-library-container {
-			float: left;
+			float : left;
 
 			label {
-				left: -5px;
+				left : -38px;
 			}
 
 			button {
-				left: 58px;
+				left  : 22px;
+				width : 190px;
+
+				span.caret {
+					left : 170px;
+				}
+			}
+
+			.dropdown-menu {
+				width : 190px !important;
+				left  : 22px !important;
 			}
 		}
 
@@ -95,15 +106,20 @@
 			float: right;
 
 			label {
-				left: 0;
+				left : 0;
 			}
 
 			button {
-				left: 62px;
+				left  : 62px;
+				width : 160px;
+
+				span.caret {
+					left : 140px;
+				}
 			}
 		}
 
-		.cn-sortby-menu , .cn-libray-menu {
+		.cn-sortby-menu , .cn-library-menu {
 			position : absolute;
 			top      : 33px;
 			left     : 60px;
@@ -127,13 +143,11 @@
 
 		button {
 			position   : absolute;
-			width      : 160px;
 			text-align : left;
 			top        : 0px;
 
 			span.caret{
 				position : absolute;
-				left     : 140px;
 				top      : 15px;
 			}
 			span.cn-sortby-category , span.cn-library-category{
@@ -156,6 +170,10 @@
 
 			li {
 				padding : 5px;
+			}
+
+			span {
+				margin-left : @cn-base-margin;
 			}
 		}
 

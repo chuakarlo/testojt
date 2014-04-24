@@ -3,8 +3,8 @@ define( function ( require ) {
 
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
-	var config     = require( '../../config/config' );
 	var Remoting   = require( 'Remoting' );
+	var $          = require( 'jquery' );
 
 	var ControllerBase = {
 		'Filter' : require( '../base/FilterBase' )

@@ -1,4 +1,5 @@
 define( function ( require ) {
+
 	'use strict';
 
 	var _          = require( 'underscore' );
@@ -7,8 +8,16 @@ define( function ( require ) {
 	var template   = require( 'text!../../templates/Filters/FilterItemViewTemplate.html' );
 
 	return Marionette.ItemView.extend( {
-		'tagName'	: 'li',
+
+		'tagName'   : 'li',
 		'template'  : _.template( template ),
-		'className'	: 'filter-item'
+		'className' : 'filter-item',
+
+		'onRender' : function () {
+			if( this.model.id === 'Popular' ){
+				this.$el.addClass( 'addHighlight' );
+			}
+		}
+
 	} );
 } );

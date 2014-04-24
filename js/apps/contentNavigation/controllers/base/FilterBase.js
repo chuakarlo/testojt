@@ -59,7 +59,7 @@ define( function ( require ) {
 		},
 
 		'_buildFilters' : function () {
-			var _selectedFilters = [];
+			var _selectedFilters = [ ];
 
 			_.each( this.components, function ( cmp ) {
 				_selectedFilters.push( cmp.getSelectedFilters() );

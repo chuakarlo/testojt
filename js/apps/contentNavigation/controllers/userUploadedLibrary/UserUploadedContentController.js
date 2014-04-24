@@ -12,10 +12,47 @@ define( function( require ) {
 	var Session   = require( 'Session' );
 
 
+
+
 	var UserUploadedContentController = Marionette.Controller.extend( {
 
-	    'initialize' : function( options ) {
+		'initialize' : function( options ) {
 			_.extend( this , ControllerBase.Content );
+
+			this.Categories = {
+				'My Uploads' : {
+					'path'   : 'com.schoolimprovement.pd360.dao.uuvideos.UUVideoGateway',
+					'method' : 'getByCreatorId',
+					'args'   : {
+						'id' : Session.personnelId()
+					}
+				},
+				'Popular' : {
+					'path'   : 'com.schoolimprovement.pd360.dao.uuvideos.UUVideoGateway',
+					'method' : 'getMostPopularUUVideos',
+					'args'   : {
+						'startRow' : this._getStartingRow(),
+						'maxRows'  : this.queryLimit
+					}
+				},
+				'Recommended For You' : {
+					'path'   : 'com.schoolimprovement.pd360.dao.UUVideoService',
+					'method' : 'getRecommendedUUVideos',
+					'args'   : {
+						'persId' : Session.personnelId(),
+						'startRow' : this._getStartingRow(),
+						'maxRows'  : this.queryLimit
+					}
+				},
+				'Featured' : {
+					'path'   : 'com.schoolimprovement.pd360.dao.uuvideos.UUVideoGateway',
+						'method' : 'getFeaturedUUVideos',
+						'args'   : {
+							'startRow' : this._getStartingRow(),
+							'maxRows'  : this.queryLimit
+					}
+				}
+			};
 
 			this._createVents( options );
 
@@ -30,87 +67,30 @@ define( function( require ) {
 			this.App = options.App;
 
 			this.initializeFetching( 'Popular'  );
-	    },
+		},
 
-		_getSegmentParams	: function ( data ) {
-			var params = '';
-			switch( data ) {
+		'_getSegmentParams'	: function ( data ) {
 
-				case 'My Uploads':
+			if( this.Categories[ data ] ){
+				return this.Categories[ data ];
+			} else  {
 
-					params = {
-						'path'   : 'com.schoolimprovement.pd360.dao.uuvideos.UUVideoGateway',
-						'method' : 'getByCreatorId',
-						'args'   : {
-							'id' : Session.personnelId()
-					  	}
-					};
-
-				break;
-
-				case 'Popular':
-
-					params = {
-						'path'   : 'com.schoolimprovement.pd360.dao.uuvideos.UUVideoGateway',
-						'method' : 'getMostPopularUUVideos',
-						'args'   : {
-					      'startRow' : this._getStartingRow(),
-					      'maxRows'  : this.queryLimit
-					  	}
-					};
-
-				break;
-
-				case 'Recommended For You':
-
-					params = {
-						'path'   : 'com.schoolimprovement.pd360.dao.UUVideoService',
-						'method' : 'getRecommendedUUVideos',
-						'args'   : {
-						  'persId' : Session.personnelId(),
-					      'startRow' : this._getStartingRow(),
-					      'maxRows'  : this.queryLimit
-					  	}
-					};
-
-				break;
-
-				case 'Featured':
-
-					params = {
-						'path'   : 'com.schoolimprovement.pd360.dao.uuvideos.UUVideoGateway',
-						'method' : 'getFeaturedUUVideos',
-						'args'   : {
-					      'startRow' : this._getStartingRow(),
-					      'maxRows'  : this.queryLimit
-					  	}
-					};
-
-				break;
-
-				default:
-
-					params = {
+				return {
 						'path'   : 'com.schoolimprovement.pd360.dao.SearchService',
 						'method' : 'RespondSearchAPI',
 						'args'   : {
-					      'persId'     : Session.personnelId(),
-					      'start'      : this._getStartingRow(),
-					      'rows'       : this.queryLimit,
-					      'searchType' : 'VideosUserUploaded',
-					      'searchData' : data,
-					      'sort'       : this.sortByParam
+						  'persId'     : Session.personnelId(),
+						  'start'      : this._getStartingRow(),
+						  'rows'       : this.queryLimit,
+						  'searchType' : 'VideosUserUploaded',
+						  'searchData' : data,
+						  'sort'       : this.sortByParam
 						}
-					};
-
-				break;
+				};
 			}
-
-			return params;
 		}
 
 	} );
 
-    return UserUploadedContentController;
-
+	return UserUploadedContentController;
  } );

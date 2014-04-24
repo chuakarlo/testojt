@@ -1,4 +1,5 @@
 define( function ( require ) {
+	
 	'use strict';
 
 	var Marionette       = require( 'marionette' );
@@ -6,10 +7,15 @@ define( function ( require ) {
 	var segmentEmptyView = require('./SegmentCollectionEmptyView');
 
 	return Marionette.CollectionView.extend( {
-		'tagName'   : 'ul',
+
+		'tagName' : 'ul',
+
 		'className' : 'row cn-segments-container',
+
 		'emptyView' : segmentEmptyView,
-		'itemView'  : segmentItemView
+
+		'itemView' : segmentItemView
+
 	} );
 
 } );

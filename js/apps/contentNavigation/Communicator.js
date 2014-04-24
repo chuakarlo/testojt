@@ -1,11 +1,12 @@
 define( function ( require ) {
+    
     'use strict';
 
     var Backbone   = require( 'backbone' );
     var Marionette = require( 'marionette' );
 
 	return Marionette.Controller.extend( {
-		'initialize' : function () {
+		initialize : function () {
 
 			// create a pub sub
 			this.mediator = new Backbone.Wreqr.EventAggregator();

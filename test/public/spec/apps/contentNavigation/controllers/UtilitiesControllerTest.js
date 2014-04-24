@@ -4,17 +4,21 @@ define( function ( require ) {
 	var sinon      = window.sinon;
     var Utils      = require( 'contentNavigation/controllers/UtilitiesController' );
     var Controller = require( 'contentNavigation/controllers/GridController' );
-    var gridController;
-
-	var view;
 
     describe( 'Utilities Controller Test', function () {
 
-		before( function () {
-            gridController		= new Controller();
+		var gridController;
+		var view;
 
-            view = gridController.getView();
+		before( function () {
+            gridController = new Controller();
+            view           = gridController.getView();
             view.render();
+        } );
+
+       after( function () {
+            gridController = undefined;
+            view           = undefined;
         } );
 
 		it( 'should be an object', function () {

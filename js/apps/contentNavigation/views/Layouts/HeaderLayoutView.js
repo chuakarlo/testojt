@@ -1,15 +1,18 @@
 define( function ( require ) {
+
 	'use strict';
 
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 	var template   = require( 'text!../../templates/Layouts/HeaderLayoutTemplate.html' );
+	var ItemView   = require( 'apps/contentNavigation/views/Licenses/LicenseItemView' );
 
-	return Marionette.ItemView.extend( {
-		'template' : _.template( template ),
-		'ui' : {
-			'selectSort' : 'ul li.cn-sortby span.cn-sortby-category'
-		}
+	return Marionette.CompositeView.extend( {
+
+		'itemView'          : ItemView,
+		'itemViewContainer' : 'ul.cn-library-menu',
+		'template'          : _.template( template )
+
 	} );
 
 } );

@@ -1,5 +1,6 @@
 //           ## Manages f/e logic for the application
 define( function ( require ) {
+
 	'use strict';
 
 	var $          = require( 'jquery' );
@@ -8,32 +9,28 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var Remoting   = require( 'Remoting' );
 	var Session    = require( 'Session' );
-	var Utils      = require( 'contentNavigation/controllers/UtilitiesController' );
+	var Utils      = require( '../controllers/UtilitiesController' );
 
 	var collections  = {
-	    'SegmentCollection' : require( 'contentNavigation/collections/SegmentCollection' ),
-	    'WatchLaterCollection' : require( 'contentNavigation/collections/WatchLaterCollection' )
-	};
-	var views        = {
-	    'ErrorView'              : require( 'contentNavigation/views/ErrorView' ),
-	    'SegmentsCollectionView' : require( 'contentNavigation/views/Segments/SegmentCollectionView' )
-	};
-	var Communicator = _.extend( {}, Backbone.Events );
-	var defaults     = {
-		className : 'row cn-segments-container'
+		'SegmentCollection'    : require( '../collections/SegmentCollection' ),
+		'WatchLaterCollection' : require( '../collections/WatchLaterCollection' )
 	};
 
-	function throwError ( message, name ) {
-		var _error  = new Error( message );
-		_error.name = name || 'Error';
-		throw _error;
-	}
+	var views        = {
+		'ErrorView'              : require( '../views/ErrorView' ),
+		'SegmentsCollectionView' : require( '../views/Segments/SegmentCollectionView' )
+	};
+
+	var Communicator = _.extend( { }, Backbone.Events );
+	var defaults     = {
+		'className' : 'row cn-segments-container'
+	};
 
 	var SegmentCollectionComponent = Marionette.Controller.extend( {
 
-		initialize   : function ( options ) {
-
+		'initialize' : function ( options ) {
 			var _validOptions;
+
 			_validOptions = this._setOptions( options );
 			if ( _validOptions ) {
 				// Event
@@ -47,19 +44,14 @@ define( function ( require ) {
 
 		},
 
-		_setOptions : function ( options ) {
-			// collection
-			// url
-			// renderTo
-			// vent
-
+		'_setOptions' : function ( options ) {
 			var _optCollection = options.collection;
 			var _optUrl        = options.url;
 			var _optClassName  = options.className;
 			var _optSet        = true;
 
 			if ( !_optCollection && !_optUrl ) {
-				throwError( 'SegmentCollectionComponent needs a Backbone.collection or URL', 'SegmentCollectionComponent' );
+				Utils.throwError( 'SegmentCollectionComponent needs a Backbone.collection or URL', 'SegmentCollectionComponent' );
 
 				_optSet = false;
 			}
@@ -80,45 +72,59 @@ define( function ( require ) {
 
 		},
 
-		_createView	: function () {
-
+		'_createView'	: function () {
 			var self  = this;
+
 			this.view  = new views.SegmentsCollectionView( {
 				className       : defaults.className + ' ' + self.getClassName(),
 				itemViewOptions : {
 					events: {
-					    'click div.cn-watch-later input': function(clickEvent) {
-					        self._clickWatchLater.call(self, self._watchLaterCollection, clickEvent, this.el, this.model);
-					    },
-					    'click a': self._clickPlaySegment
+						'click label.cn-watch-later-icon' : function( clickEvent ) {
+							self._clickWatchLater.call( self, self._watchLaterCollection, clickEvent, this.el, this.model );
+						},
+						'click a': self._clickPlaySegment,
+						'click label.cn-info-icon' : function ( clickEvent ) {
+							var el = $( clickEvent.currentTarget );
+
+							if ( el.parent( '.cn-info' ).hasClass( 'open' ) ) {
+								$( 'div#' + el.attr( 'id' ) ).fadeOut();
+								el.parent( '.cn-info' ).removeClass( 'open' );
+								el.next( '.cn-tool-tip' ).text( 'Segment Description' );
+							}
+							else {
+								$( 'div#' + el.attr( 'id' ) ).fadeIn();
+								el.parent( '.cn-info' ).addClass( 'open' );
+								el.next( '.cn-tool-tip' ).text( 'Close' );
+							}
+						}
 					}
 				},
 				collection: this.getCollection()
 			} );
-			this.view.on('before:item:added', function (itemView) {
+
+			this.view.on( 'before:item:added', function ( itemView ) {
 				var model = itemView.model;
-				if(self._findWatchLaterSegment(model.id)){
+
+				if ( self._findWatchLaterSegment( model.id ) ) {
 					model.set( 'inWatchLaterQueue', true );
 				}
 			});
 
 		},
 
-		// Returns the collection view
-		getView	          : function () {
+		'getView' : function () {
 			return this.view;
 		},
 
-		_setCollection    : function ( collection ) {
+		'_setCollection' : function ( collection ) {
 			this.collection = collection;
 		},
 
-		// Returns the Backbone collection used
-		getCollection     : function () {
+		'getCollection' : function () {
 			return this.collection;
 		},
 
-		_initWatchLaterCollection	: function () {
+		'_initWatchLaterCollection' : function () {
 
 			this._setWatchLaterCollection();
 
@@ -126,119 +132,118 @@ define( function ( require ) {
 
 		},
 
-		_setWatchLaterCollection	: function () {
+		'_setWatchLaterCollection' : function () {
 			this._watchLaterCollection = new collections.WatchLaterCollection();
 		},
 
-		_getWatchLaterCollection	: function () {
+		'_getWatchLaterCollection' : function () {
 			return this._watchLaterCollection;
 		},
 
-		_fetchWatchLaterSegments	: function () {
+		'_fetchWatchLaterSegments' : function () {
 
 			var _watchLaterSegments	= {
-				'path'	: 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
-				'method': 'getContentAbbrevListByPersonnelId',
-				'args': {
-					'personnelId': Session.personnelId()
+				'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
+				'method' : 'getContentAbbrevListByPersonnelId',
+				'args'   : {
+					'personnelId' : Session.personnelId()
 				}
-		    };
+			};
 
-		    this._fetchingWatchLaterSegments = Remoting.fetch( [_watchLaterSegments] );
+			this._fetchingWatchLaterSegments = Remoting.fetch( [ _watchLaterSegments ] );
 
-	        $.when( this._fetchingWatchLaterSegments ).done( function ( models ) {
+			$.when( this._fetchingWatchLaterSegments ).done( function ( models ) {
 
-				this._setWatchLaterSegments( models[0] );
+				this._setWatchLaterSegments( models[ 0 ] );
 
 			}.bind( this ) ).fail( function ( error ) {
-				return this._fetchWaterLaterSegmentFailed.call(this, error);
+
+				return this._fetchWaterLaterSegmentFailed.call( this, error );
+
 			}.bind( this ) );
 
 		},
 
-		_setWatchLaterSegments	: function ( models ) {
+		'_setWatchLaterSegments' : function ( models ) {
 			var _collection = this._getWatchLaterCollection();
-			if (models instanceof Array) {
 
-				if (models.length) {
-					_collection.add( models, {parse: true});
+			if ( models instanceof Array ) {
+
+				if ( models.length ) {
+					_collection.add( models, { parse : true } );
 				}
 
-				if (!this._watchLaterCollectionReady) {
+				if ( !this._watchLaterCollectionReady ) {
 					this._watchLaterCollectionReady = true;
-					Communicator.trigger('component:ready');
+					Communicator.trigger( 'component:ready' );
 				}
 			}
 		},
 
-		_fetchWaterLaterSegmentFailed	: function (error) {
-
-		},
-
-		_addWatchLaterSegment	: function ( contentId ) {
-			// Add segment to watchLaterCollection if it doesn't exist
-			// Set true flag for model on segmentCollection
-		},
-
-		_removeWatchLaterSegment	: function ( contentId ) {
-			// remove segment on watchLaterCollection
-			// Set false flag for model on segmentCollection
-		},
-
-		_findWatchLaterSegment	: function ( contentId ) {
+		'_findWatchLaterSegment' : function ( contentId ) {
 			var _collection = this._getWatchLaterCollection();
-			var matchedId = _collection.get(contentId);
+			var matchedId   = _collection.get( contentId );
 
-			if(matchedId !== undefined){
+			if( matchedId !== undefined ){
 				return true;
 			}
 		},
 
-		_setVent          : function () {
+		'_setVent' : function () {
 			this.vent = Communicator;
 		},
 
 		// Returns the events for this component
-		getVent           : function () {
+		'getVent' : function () {
 			return this.vent;
 		},
 
-		_setClassName     : function ( className ) {
+		'_setClassName' : function ( className ) {
 			this.className = className ? className : '';
 		},
 
 		// Returns the base class for the collection view
-		getClassName      : function () {
+		'getClassName' : function () {
 			return this.className;
 		},
 
-		_clickWatchLater  : function ( watchLaterCollection, clickEvent, el, model ) {
+		_clickWatchLater : function ( watchLaterCollection, clickEvent, el, model ) {
+			var _clicked = null;
 
-			var _clicked = $( clickEvent.target ).is( ':checked' );
+			if( !( $( clickEvent.currentTarget ).hasClass( 'add' ) ) ) {
+				_clicked = true;
+			}
+
 			var _method = ( _clicked ? 'create' : 'deleteByObj' );
+
 			var _queueParams = {
-			    method : _method,
-			    args : {
-			        personnelId : Session.personnelId(),
-			        contentId : model.id,
-			        created : ' '
-			    },
-			    path: 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
-			    objectPath : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmark'
+				method : _method,
+				args   : {
+					personnelId : Session.personnelId(),
+					contentId   : model.id,
+					created     : ' '
+				},
+				path       : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
+				objectPath : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmark'
 			};
 
-			this._queueParams = Remoting.fetch( [_queueParams] );
+			this._queueParams = Remoting.fetch( [ _queueParams ] );
+
 			$.when( this._queueParams ).done( function () {
+
 				if ( _method === 'create' ) {
 					watchLaterCollection.add( model );
-
+					this.view.$el.find( 'label#' + clickEvent.currentTarget.id ).addClass( 'add' );
 				} else {
 					watchLaterCollection.remove( model );
+					this.view.$el.find( 'label#' + clickEvent.currentTarget.id ).removeClass( 'add' );
 				}
-			}).fail( function ( error ) {
-				Utils.throwError( error, 'Click Watch Later' );
-			});
 
+			}.bind( this ) ).fail( function ( error ) {
+
+				Utils.throwError( error, 'Click Watch Later' );
+
+			}.bind( this ) );
 
 			// Triggers watch later click event
 			// Params passed
@@ -247,14 +252,14 @@ define( function ( require ) {
 			Communicator.trigger( 'click:watchLater', this.model, _clicked );
 		},
 
-		_clickPlaySegment : function ( e ) {
+		'_clickPlaySegment' : function ( e ) {
 			// Triggers watch later click event
 			// Params passed
 			// clicked - Boolean value for the click state
 			// model - Backbone.Model for the clicked item
 			Communicator.trigger( 'click:playSegment', this.model, e );
 
-		},
+		}
 
 	} );
 

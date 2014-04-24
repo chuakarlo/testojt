@@ -1,4 +1,5 @@
 define( function ( require ) {
+
 	'use strict';
 
 	var $          = require( 'jquery' );
@@ -6,27 +7,20 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 
 	var views = {
-		'ErrorView'           : require( 'contentNavigation/views/ErrorView' ),
-		'FilterCompositeView' : require( 'contentNavigation/views/Filters/FilterCompositeView' )
+		'ErrorView'           : require( '../views/ErrorView' ),
+		'FilterCompositeView' : require( '../views/Filters/FilterCompositeView' )
 	};
 
 	var defaultConfig = {
-		'splitColumn' : false
+		'splitColumn' : false,
+		'multiSelect' : true
 	};
 
 	return Marionette.Controller.extend( {
 
 		'initialize' : function ( options ) {
-			if ( !options.title ) {
-				new Error( 'No title for filter component' );
-			}
-
-			if ( !options.vent ) {
-				new Error( 'No event handler for filter component' );
-			}
-
-			if ( !options.collection ) {
-				new Error( 'Filter component needs a collection' );
+			if ( !options.title || !options.vent || !options.collection ) {
+				new Error( 'Options Error.' );
 			}
 
 			this.setTitle( options.title );
@@ -34,10 +28,11 @@ define( function ( require ) {
 			this.setCollection( options.collection );
 			this.setVent( options.vent );
 			this.setSplitColumn( options.splitColumn );
+			this.setMultiSelect( options.multiSelect );
 			this.createView();
-
-			this.selectedFilters          = {};
-			this.flattenedSelectedFilters = [];
+			this.prevSelectedValue        = { };
+			this.selectedFilters          = { };
+			this.flattenedSelectedFilters = [ ];
 		},
 
 		'getView' : function () {
@@ -72,6 +67,18 @@ define( function ( require ) {
 			}
 		},
 
+		'getMultiSelect' : function () {
+			return this.multiSelect;
+		},
+
+		'setMultiSelect' : function ( multiSelect ) {
+			if ( !multiSelect ) {
+				this.multiSelect = multiSelect;
+			} else {
+				this.multiSelect = defaultConfig.multiSelect;
+			}
+		},
+
 		'getCollection' : function () {
 			return this.collection;
 		},
@@ -94,7 +101,8 @@ define( function ( require ) {
 				'data' : {
 					'title'       : self.getTitle(),
 					'componentId' : self.getComponentId(),
-					'splitColumn' : self.getSplitColumn()
+					'splitColumn' : self.getSplitColumn(),
+					'multiSelect' : self.getMultiSelect()
 				},
 
 				'itemViewOptions' : {
@@ -104,12 +112,18 @@ define( function ( require ) {
 
 							var el = $( this.el );
 
-							if ( this.el.className === 'filter-item' || this.el.className === 'filter-item right' ) {
+							var elClass = ( this.el.className === 'filter-item' ) || ( this.el.className === 'filter-item right' );
+
+							if( self.getMultiSelect() && elClass ){
 								self._addFilter( el, this.model );
 							}
-							else {
-								self._removeFilter( el, this.model );
+							else if( self.getMultiSelect() && !elClass ) {
+									self._removeFilter( el, this.model );
 							}
+							else{
+								self._singleSelectFilter( el, this.model );
+							}
+
 						}
 					}
 				},
@@ -145,6 +159,34 @@ define( function ( require ) {
 
 		'getSelectedFilters' : function () {
 			return this.flattenedSelectedFilters;
+		},
+
+		'_singleSelectFilter' : function ( el, model) {
+
+			var modelId     = model.get( 'id' );
+			var prevModelId = this.prevSelectedValue.modelId;
+			var prevEl      = this.prevSelectedValue.el;
+			var filterIndex = _.indexOf( this.flattenedSelectedFilters, prevModelId );
+
+			this.selectedFilters[ modelId ] = {
+				'id'    : modelId,
+				'el'    : el,
+				'model' : model
+			};
+
+			this.view.$el.find( 'li.filter-item' ).removeClass( 'addHighlight' );
+
+			if( prevEl && prevModelId ){
+				prevEl.removeClass( 'addHighlight' );
+				this.flattenedSelectedFilters.splice( filterIndex, 1 );
+				delete this.selectedFilters[ prevModelId ];
+			}
+
+			this.flattenedSelectedFilters.push( modelId );
+			el.addClass( 'addHighlight' );
+			this.vent.mediator.trigger( 'filter:change' );
+			this.prevSelectedValue.el = el;
+			this.prevSelectedValue.modelId = modelId;
 		},
 
 		'_addFilter' : function ( el, model ) {

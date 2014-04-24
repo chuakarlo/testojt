@@ -1,5 +1,5 @@
 define( function ( require ) {
-	
+
 	'use strict';
 
 	var Marionette   = require( 'marionette' );
@@ -23,7 +23,7 @@ define( function ( require ) {
 			// init option is for instantions that build or does not build
 			// the main view and its dependencies
 			if ( options.init !== false ) {
-				this.App  = {};
+				this.App  = { };
 				this.vent = new Communicator();
 
 				if ( options.config ) {
@@ -33,7 +33,7 @@ define( function ( require ) {
 				}
 
 				this.MainView       = this.createMainView();
-				this.MainView.views = {};
+				this.MainView.views = { };
 
 				this.App.topRegion    = this.getTopRegion();
 				this.App.leftRegion   = this.getLeftRegion();

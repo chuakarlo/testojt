@@ -4,12 +4,13 @@ define( function( require ) {
     var Backbone = require( 'backbone' );
 
     return Backbone.Model.extend( {
+
         'defaults' : {
-            'id'    : 'filter-1',
-            'title' : 'Default Filter'
+            id    : 'filter-1',
+            title : 'Default Filter'
         },
 
-        'idAttribute' : 'id',
+        'idAttribute' : 'id'
 
     } );
 

@@ -9,9 +9,6 @@ define( function( require ) {
 		'Content'	: require( '../base/ContentBase' )
 	};
 
-	var Session = require( 'Session' );
-
-
 	var CustomContentController = Marionette.Controller.extend( {
 
 	    'initialize' : function( options ) {

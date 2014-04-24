@@ -1,4 +1,5 @@
 define( function ( require ) {
+	
 	'use strict';
 
 	var _          = require( 'underscore' );
@@ -6,7 +7,9 @@ define( function ( require ) {
 	var template   = require( 'text!../../templates/Segments/SegmentCollectionEmptyView.html' );
 
 	return Marionette.ItemView.extend( {
-		'template': _.template( template )
+
+		'template' : _.template( template )
+
 	} );
 
 } );

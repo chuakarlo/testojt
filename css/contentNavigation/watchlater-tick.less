@@ -3,9 +3,10 @@
 	width      : 35px;
 	height     : 35px;
 	background : none !important;
-	margin     : 0 @cn-base-margin ( @cn-base-margin * 2 ) ( @cn-margin-wide );
-	padding    : ( @cn-base-padding / 2 );
-	float      : right;
+	bottom     : 1px;
+	right      : 4px;
+	position   : absolute !important;
+	z-index    : 3;
 
 	.flag {
 		display : none;
@@ -15,6 +16,7 @@
 		font-size : 25px;
 		color     : @cn-gray;
 		cursor    : pointer;
+
 	}
 
 	.cn-watch-later-icon:hover {
@@ -25,27 +27,21 @@
 		display : none;
 	}
 
-	.flag:checked ~ .cn-watch-later-icon {
+	.add {
 		color :	@cn-blue-dark;
 
-		.add {
-			display : none;
-		}
-
-		.remove {
+		.cn-tool-tip.remove {
 			display : block;
 		}
 
+		.cn-tool-tip.add {
+			display : none;
+		}
 	}
 
 }
 
 .cn-watch-later:hover {
-	padding : ( ( @cn-base-padding / 5 ) * 2 );
-	border  : @border;
-
-	.border-radius( @cn-base-radius / 3 );
-
 	.cn-watch-later-icon {
 		color :	@cn-blue-light;
 	}

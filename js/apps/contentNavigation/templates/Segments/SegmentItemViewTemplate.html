@@ -1,18 +1,34 @@
 <div class="cn-segment-content">
-	<a href="<%= VideoURL %>" class="cn-segment-videourl" ><img src="http://resources.pd360.com/PD360/media/thumb/<%= ImageURL %>" class="img-responsive"></a>
-	<a href="<%= VideoURL %>" ><span class="fa fa-play"></span>
-	<p class='cn-play-now'>Play Now</p></a>
+    <a href="#resources/videos/<%= ContentId %>" >
+        <img src="http://resources.pd360.com/PD360/media/thumb/<%= ImageURL %>" class="img-responsive">
+        <span class="fa fa-play cn-play-icon"></span>
+        <p class="cn-play-now">Play Now</p>
+    </a>
 </div>
 
-	<h4 class="cn-segment-name"><%= CName %></h4>
+<div class="cn-overlay" id="<%= ContentId %>">
+    <p class="cn-segment-name"><%= ContentName %></p>
+    <p class="cn-time-overlay"><span class="cn-segment-min"><%= min %></span>:<span class="cn-segment-sec"><%= sec %></span></p>
+    <p class='cn-content-description'><%= CDescription %></p>
+    <a href="#resources/videos/<%= ContentId %>" >
+        <span class="fa fa-play cn-overlay-play-icon"></span>
+        <span class="cn-overlay-play-now">Play Now</span>
+    </a>
+</div>
 
-	<p class="paragraph-light"><span class="cn-segment-min"><%= min %></span>:<span class="cn-segment-sec"><%= sec %></span></p>
 
-	<div class="cn-watch-later">
-		<input class="flag" id="<%= ContentId  %>" type="checkbox">
-		<label class="cn-watch-later-icon fa fa-clock-o" data-tooltip="Watch Later" for="<%= ContentId  %>" onClick>
-			<div class="cn-tool-tip slideIn top add">Add to Watch Later list</div>
-			<div class="cn-tool-tip slideIn top remove">Remove from Watch Later list</div>
-		</label>
-	</div>
-<div class="cn-segment-info-tooltip slideIn top"><%= CDescription %></div>
+<h4 class="cn-segment-name" title="<%= ContentName %>" > <%= CName %></h4>
+
+<p class="cn-time"><span class="cn-segment-min"><%= min %></span>:<span class="cn-segment-sec"><%= sec %></span></p>
+
+<div class="cn-info">
+    <label class="cn-info-icon fa fa-info-circle" id="<%= ContentId %>" >
+    </label>
+    <div class="cn-tool-tip slideIn">Segment Description</div>
+</div>
+<div class="cn-watch-later">
+    <label class="cn-watch-later-icon fa fa-clock-o" data-tooltip="Watch Later" for="<%= ContentId  %>" id="<%= ContentId  %>" onClick>
+        <div class="cn-tool-tip slideIn top add">Add to Watch Later list</div>
+        <div class="cn-tool-tip slideIn top remove">Remove from Watch Later list</div>
+    </label>
+</div>

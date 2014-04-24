@@ -1,8 +1,9 @@
 define( function ( require ) {
+	
 	'use strict';
 
 	var Backbone    = require( 'backbone' );
-	var FilterModel = require( 'contentNavigation/models/FilterModel' );
+	var FilterModel = require( '../models/FilterModel' );
 
 	return Backbone.Collection.extend( {
 		'url'   : '/',

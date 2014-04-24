@@ -1,8 +1,9 @@
 define( function ( require ) {
+	
 	'use strict';
 
 	var App               = require( 'App' );
-	var ContentController = require( 'contentNavigation/main' );
+	var ContentController = require( './main' );
 	var AuthRouter        = require( 'AuthRouter');
 
 	App.module( 'ContentNavigation', function ( ContentNavigation ) {

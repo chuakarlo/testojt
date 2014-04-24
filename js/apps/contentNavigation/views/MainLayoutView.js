@@ -6,14 +6,17 @@ define( function ( require ) {
 	var template   = require( 'text!../templates/Layouts/MainLayoutTemplate.html' );
 
 	return Marionette.Layout.extend( {
-		'template'  : _.template( template ),
-		'className' : 'cn-content',
 
-		'regions' : {
+		template : _.template( template ),
+
+		className : 'cn-content',
+
+		regions : {
 			'topRegion'    : '#cn-top-region',
 			'leftRegion'   : '#cn-left-region',
 			'centerRegion' : '#cn-middle-region'
 		}
+
 	} );
 
 } );

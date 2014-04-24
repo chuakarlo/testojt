@@ -4,6 +4,7 @@ define( function( require ) {
     var Backbone = require( 'backbone' );
 
     return Backbone.Model.extend( {
+
         'defaults' : {
             'ContentId'              : -1,
             'ContentParentId'        : 1011,
@@ -28,7 +29,7 @@ define( function( require ) {
             'SearchData'             : '',
             'EditionName'            : '',
             'ProgramName'            : '',
-            'Children'               : [],
+            'Children'               : [ ],
 
             // Mock data
             'VideoURL'     : '',
@@ -41,6 +42,7 @@ define( function( require ) {
         'idAttribute' : 'ContentId',
 
         'parse' : function( data ) {
+
             data = this._computeMinSec( data );
             data = this._setContentNameLength( data );
             data = this._setContentDescriptionLength( data );
@@ -60,13 +62,16 @@ define( function( require ) {
         },
 
         '_setContentNameLength': function ( data ) {
-            data.CName  = data.ContentName.length > 43 ? data.ContentName.substr( 0, 40 ) + '...' : data.ContentName;
+            data.CName        = data.ContentName.length > 35 ? data.ContentName.substr( 0, 35 ) + '...' : data.ContentName;
+            data.CNameOverlay = data.ContentName.length > 57 ? data.ContentName.substr( 0, 54 ) + '...' : data.ContentName;
 
             return data;
         },
 
         '_setContentDescriptionLength': function ( data ) {
-            data.CDescription = data.ContentDescription.length > 400 ? data.ContentDescription.substr( 0, 400 ) + '...' : data.ContentDescription;
+            data.ContentDescription = data.ContentDescription.replace( /(<([^>]+)>)/ig,'' );
+            data.ContentDescription = data.ContentDescription.length > 270 ? data.ContentDescription.substr( 0, 270 ) + '...' : data.ContentDescription;
+            data.CDescription       = data.ContentDescription.replace( /-/ig, '<br>-' );
 
             return data;
         }

@@ -1,9 +1,11 @@
 define( function( require ) {
     'use strict';
 
-    var sinon        = window.sinon;   
+    var sinon        = window.sinon;
     var Controller   = require( 'contentNavigation/controllers/HeaderController' );
     var Communicator = require( 'contentNavigation/Communicator' );
+    var $            = require( 'jquery' );
+    var Remoting     = require( 'Remoting' );
 
     var vent;
     var headerController;
@@ -12,8 +14,11 @@ define( function( require ) {
     describe( 'HeaderController Test', function () {
 
         before( function () {
+            sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
+
             vent                = new Communicator();
             headerController    = new Controller( {
+                App     : {},
                 vent    : vent
             } );
 
@@ -21,27 +26,34 @@ define( function( require ) {
             view.render();
         } );
 
+        after( function () {
+            Remoting.fetch.restore();
+        } );
 
         it( 'should be a controller instance', function () {
             headerController.should.be.an.instanceof( Controller );
         } );
 
-
         describe( 'testing click event', function () {
+
             it( 'should call \'_sortByChanged\' upon click', function () {
                 headerController.should.call( '_sortByChanged' ).when( function () {
-                    return headerController.getView().$el.find( '.dropdown-menu li' ).click();
+                    return headerController.getView().$el.find( '.cn-sortby-menu li' ).click();
+                } );
+            } );
+
+             it( 'should call \'_changeLibrary\' upon click', function () {
+                headerController.should.call( '_changeLibrary' ).when( function () {
+                    return headerController.getView().$el.find( '.cn-library-menu li' ).click();
                 } );
             } );
         } );
-
 
         describe( 'getView', function () {
             it( 'should have tagName', function () {
                 view.el.tagName.should.be.equal( 'DIV' );
             } );
         } );
-
 
         describe( '_createVents', function () {
             it( 'can be called', function () {
@@ -57,28 +69,6 @@ define( function( require ) {
 
         });
 
-
-        describe( '_getSortByValue', function () {
-            it( 'should get called', function () {
-                var _mock = sinon.mock( headerController );
-
-                _mock.expects( '_getSortByValue' ).once();
-
-                headerController._getSortByValue();
-
-                _mock.verify();
-                _mock.restore();
-            });
-
-            it( 'should get the sortby Value', function(){
-                var _sortByValue = headerController._getSortByValue();
-                var _sortOptions = [ 'Release Date', 'A-Z' ];
-                _sortOptions.should.contain( _sortByValue );
-            } );
-
-        } );
-
-
         describe( '_sortByChanged', function () {
 
             it( 'should be called', function () {
@@ -92,24 +82,55 @@ define( function( require ) {
                 _mock.restore();
             } );
 
-            it( 'should call the _getSortByValue method', function () {
+            it( 'should trigger the segment:sort event', function () {
+                vent.mediator.should.trigger ( 'segment:sort' ).when( function () {
+                    return headerController.getView().$el.find( '.cn-sortby-menu li' ).click();
+                } );
+            } );
+
+            it( 'should call dropdown value', function () {
+                headerController.should.call( '_getDropdownValue' ).when( function () {
+                    return headerController.getView().$el.find( '.cn-sortby-menu li' ).click();
+                } );
+            } );
+
+        } );
+
+        describe( '_changeLibrary', function () {
+
+            it( 'should be called', function () {
                 var _mock = sinon.mock( headerController );
 
-                _mock.expects( '_getSortByValue' ).once();
+                _mock.expects( '_changeLibrary' ).once();
 
-                headerController._sortByChanged();
+                headerController._changeLibrary();
 
                 _mock.verify();
                 _mock.restore();
             } );
 
             it( 'should trigger the segment:sort event', function () {
-                vent.mediator.should.trigger ( 'segment:sort' ).when( function () {
-                    return headerController._sortByChanged();
+                vent.mediator.should.trigger ( 'library:change' ).when( function () {
+                    return headerController.getView().$el.find( '.cn-library-menu li' ).click();
+                } );
+            } );
+
+            it( 'should call dropdown value', function () {
+                headerController.should.call( '_getDropdownValue' ).when( function () {
+                    return headerController.getView().$el.find( '.cn-library-menu li' ).click();
                 } );
             } );
 
         } );
+
+        describe( '_getDropdownValue', function () {
+            it( 'should return a string', function () {
+                 var el  = $( '<div/>', { 'text': 'PD360' } );
+                 var val = headerController._getDropdownValue( el );
+
+                 val.should.be.equal( 'PD360' );
+            } );
+        });
 
     } );
 } );
