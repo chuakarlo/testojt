@@ -8,6 +8,7 @@ define( function ( require ) {
 	var ObservationsView = require( 'apps/learningTargets/views/observations/ObservationsView' );
 	var PortfoliosView   = require( 'apps/learningTargets/views/portfolios/PortfoliosView' );
 	var QuestionsView    = require( 'apps/learningTargets/views/questions/QuestionsView' );
+	var CatalogsView     = require( 'apps/learningTargets/views/catalogs/CatalogsView' );
 	var Backbone         = require( 'backbone' );
 	var $                = require( 'jquery' );
 
@@ -159,6 +160,25 @@ define( function ( require ) {
 				} );
 
 				helper._showView( questionsView );
+			},
+
+			'showCatalogs' : function () {
+				var helper = Main.helper;
+
+				// set content
+				helper._setContent( 'catalogs' );
+
+				// show a loading view while data is fetching
+				helper._showView( new App.Common.LoadingView() );
+
+				helper._apiRequest( 'lt:catalogs', function( collection ) {
+					var catalogsView = new CatalogsView( {
+						collection : collection
+					} );
+
+					// display Courses
+					helper._showView( catalogsView );
+				} );
 			}
 
 		};

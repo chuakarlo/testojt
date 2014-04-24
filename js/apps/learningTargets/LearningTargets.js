@@ -9,6 +9,7 @@ define( function ( require ) {
 	require( 'apps/learningTargets/entities/Observations' );
 	require( 'apps/learningTargets/entities/Portfolios' );
 	require( 'apps/learningTargets/entities/Processes' );
+	require( 'apps/learningTargets/entities/Catalogs' );
 
 	App.module( 'LearningTargets', function ( LearningTargets, App ) {
 
@@ -21,7 +22,8 @@ define( function ( require ) {
 				'resources/learning/processes'    : 'showProcesses',
 				'resources/learning/observations' : 'showObservations',
 				'resources/learning/portfolio'    : 'showPortfolio',
-				'resources/learning/questions'    : 'showQuestions'
+				'resources/learning/questions'    : 'showQuestions',
+				'resources/learning/catalogs'     : 'showCatalogs',
 			}
 
 		} );
