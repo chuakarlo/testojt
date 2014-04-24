@@ -4,26 +4,23 @@ define( function ( require ) {
 	var Marionette      = require( 'marionette' );
 	var template        = require( 'text!apps/learningTargets/templates/observations/observation.html' );
 	var _               = require( 'underscore' );
-	var $               = require( 'jquery' );
 
 	return Marionette.ItemView.extend( {
 		'template' : _.template( template ),
-		'tagName'  : 'tr',
+		'tagName'  : 'li',
 		'ui'       : {
-			'drawerToggleButton'  : '.lt-toggle-btn'
+			'linkBtn' : '.lt-link'
 		},
 
 		'events' : {
-			'click @ui.drawerToggleButton' : 'toggleDrawer'
+			'click @ui.linkBtn' : 'showLegacyApp'
 		},
 
-		'toggleDrawer' : function ( e ) {
+		'showLegacyApp' : function ( e ) {
 			e.preventDefault();
-
-			var toggleBtn     = $( e.currentTarget );
-			var toggleContent = toggleBtn.siblings( '.lt-toggle-content' )[ 0 ];
-
-			$( toggleContent ).slideToggle( 300 );
+			var self = this;
+			
+			self.trigger( 'lt:redirect', 'observation', 'observationOfMe' );
 		}
 
 	} );

@@ -25,6 +25,8 @@ define( function ( require ) {
 			},
 
 			'_setContent' : function ( content ) {
+				// hide pd360 flash
+				App.request( 'pd360:hide' );
 
 				// show main view
 				if ( !mainView ) {
@@ -49,6 +51,13 @@ define( function ( require ) {
 					// TODO: handle error
 					throw error;
 				} );
+			},
+
+			'redirectToLegacyPage' : function ( target, page, sub, opts ) {
+
+				// navigate to legacy page
+				App.request( 'pd360:navigate', ProcessesView, page, sub, opts );
+
 			}
 
 		};
@@ -56,9 +65,6 @@ define( function ( require ) {
 		Main.controller = {
 
 			'showMain' : function () {
-				if ( App.PD360.hide ) {
-					App.PD360.hide();
-				}
 				App.navigate( 'resources/learning/processes', true );
 			},
 
@@ -96,6 +102,9 @@ define( function ( require ) {
 						collection : collection
 					} );
 
+					// bind to redirect event
+					processesView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
+
 					// display Courses
 					helper._showView( processesView );
 				} );
@@ -114,6 +123,8 @@ define( function ( require ) {
 					var portfoliosView = new PortfoliosView( {
 						collection : collection
 					} );
+					// bind to redirect event
+					portfoliosView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
 
 					// display Courses
 					helper._showView( portfoliosView );
@@ -132,6 +143,8 @@ define( function ( require ) {
 					var observationsView = new ObservationsView( {
 						collection : collection
 					} );
+					// bind to redirect event
+					observationsView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
 
 					helper._showView( observationsView );
 				} );

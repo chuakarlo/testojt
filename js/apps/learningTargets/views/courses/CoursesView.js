@@ -7,8 +7,8 @@ define( function ( require ) {
 	var _               = require( 'underscore' );
 
 	return Marionette.CompositeView.extend( {
-		'tagName'			: 'div',
-		'className'			: 'lt-content-courses',
+		'tagName'           : 'div',
+		'className'         : 'lt-content-courses',
 		'template'          : _.template( template ),
 		'itemView'          : CoursesItemView,
 		'itemViewContainer' : '.lt-list'

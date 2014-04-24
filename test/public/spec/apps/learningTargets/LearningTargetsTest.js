@@ -12,11 +12,6 @@
 	describe( 'Learning Targets Module', function () {
 
 		before( function () {
-			// creates a dummy pd360 submodule
-			App.module( 'PD360', function ( pd360, App ) {
-				pd360.hide = function() {};
-			} );
-
 			// creates a dummy COMMON submodule
 			App.module( 'Common', function ( common, App ) {
 				common.LoadingView = function() {
@@ -29,7 +24,6 @@
 
 		after( function () {
 			App.module( 'Common' ).stop();
-			App.module( 'PD360' ).stop();
 			App.module( 'LearningTargets' ).stop();
 		} );
 
@@ -74,13 +68,9 @@
 
 			// Test Controller methods
 			describe( 'method `showMain`', function () {
-				var navigateStub, hideMock;
+				var navigateStub;
 
 				before( function () {
-					// App.PD360 mocks
-					hideMock = sinon.mock( App.PD360 );
-					hideMock.expects( 'hide' ).once();
-
 					// App.navigate stub
 					navigateStub = sinon.stub( App, 'navigate' );
 
@@ -90,16 +80,7 @@
 
 				after( function () {
 					// restore stubs and mocks
-					hideMock.restore();
 					navigateStub.restore();
-
-					// remove pointers
-					hideMock     = undefined;
-					navigateStub = undefined;
-				} );
-
-				it( 'should call hide on App.PD360 submodule', function () {
-					hideMock.verify();
 				} );
 
 				it( 'should navigate to `resources/learning/processes`', function () {
