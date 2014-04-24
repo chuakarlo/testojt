@@ -20,7 +20,9 @@ define( function ( require ) {
 				var base = view.model.get('baseObject');
 
 				base.getPreFetchLogic( base.sharedData, function ( data, callback ) {
-					utils.collectionFetch( view, base, data);
+					utils.collectionFetch( view, base, data, 0 ,function ( collection ) {
+						utils.processFetchedCollection ( view, base, collection, data);
+					} );
 				} );
 			}
 		},

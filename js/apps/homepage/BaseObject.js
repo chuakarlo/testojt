@@ -1,9 +1,51 @@
+// To be replaced by App.module
 define( function () {
 	'use strict';
 
 	var BaseObject = function () {
 		this._id      = 0;
 	};
+
+	function defaultRenderToggle () {
+		return 'add-to-queue';
+	}
+
+	function defaultGetPreFetchLogic ( data, callback ) {
+		callback( data );
+	}
+
+	function defaultGetCarouselCustomAction () {
+		//decide a default
+	}
+
+	function setDefault ( key, dest, source, def ) {
+		dest[ key ] = key in source ? source[ key ] : def;
+	}
+
+	function setWidgetData ( dest, source ) {
+		dest.WidgetId    = source.WidgetId;
+		dest.WidgetName  = source.WidgetName;
+		dest.header      = source.header;
+		dest.footer      = source.footer;
+		dest.Description = source.Description;
+		dest.imgSrc      = source.imgSrc;
+		dest.em          = source.em;
+	}
+
+	function setlegacyData ( dest, source ) {
+		dest.getExternalView = source.getExternalView;
+		dest._id             = source._id;
+		dest._header         = source._header;
+		dest._footer         = source._footer;
+		dest._mainUrl        = source._mainUrl;
+		dest._items          = source.getCollection;
+		dest.getTemplate     = source.getTemplate;
+		dest.getFetchLogic   = source.getFetchLogic;
+
+		setDefault( 'renderToggle', dest, source, defaultRenderToggle );
+		setDefault( 'getPreFetchLogic', dest, source, defaultGetPreFetchLogic );
+		setDefault( 'getCarouselCustomAction', dest, source, defaultGetCarouselCustomAction );
+	}
 
 	BaseObject.prototype = {
 		//Unable to use js get and set since there are forums that state that it is not compatible with IE 9
@@ -16,29 +58,9 @@ define( function () {
 		},
 
 		'extend' : function ( _proto ) {
-			this.getExternalView         = _proto.getExternalView;
-			this._id                     = _proto._id;
-			this._header                 = _proto._header;
-			this._footer                 = _proto._footer;
-			this._mainUrl                = _proto._mainUrl;
-			this._items                  = _proto.getCollection;
-			this.getTemplate             = _proto.getTemplate;
-			this.getFetchLogic           = _proto.getFetchLogic;
-			this.renderToggle            = _proto.renderToggle ?
-				_proto.renderToggle :
-				function () {
-					return 'add-to-queue';
-				};
 
-			this.getPreFetchLogic        = _proto.getPreFetchLogic ?
-				_proto.getPreFetchLogic :
-				function ( data, callback ) {
-					callback( data );
-				};
-			this.getCarouselCustomAction = _proto.getCarouselCustomAction ?
-				_proto.getCarouselCustomAction :
-				function () {
-				};
+			setWidgetData( this, _proto );
+			setlegacyData( this, _proto );
 
 			return this;
 		},
@@ -50,6 +72,10 @@ define( function () {
 				baseObject : this,
 				id         : this._id
 			} );
+		},
+
+		'registerWidget' : function ( parent ) {
+			parent.push( this );
 		}
 	};
 

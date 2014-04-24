@@ -13,7 +13,7 @@ define(function(require) {
 			'method' : 'RespondSearchAPI',
 			'args'   : {
 				'persId'     : Session.personnelId(),
-				'searchType' : 'All',
+				'searchType' : 'VideosCore',
 				'start'      : start,
 				'rows'       : 24,
 				'searchData' : App.request( 'homepage:userTags' ),
@@ -31,7 +31,7 @@ define(function(require) {
 	};
 
 	function fetchingModels ( start ) {
-		return Remoting.fetch( [ recommendedRequest(0), queueRequest ] );
+		return Remoting.fetch( [ recommendedRequest( start ), queueRequest ] );
 	}
 
 	return Backbone.Collection.extend({

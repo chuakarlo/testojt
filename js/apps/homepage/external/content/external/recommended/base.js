@@ -6,7 +6,9 @@ define( function ( require ) {
 	var Collection = require( 'apps/homepage/external/content/external/recommended/collections/RecommendedCollection' );
 	var controller = require( 'apps/homepage/external/content/external/recommended/controllers/baseController' );
 	var template   = require( 'text!apps/homepage/external/content/external/recommended/templates/recommendedHeaderView.html' );
-	var instance   = new BaseObj();
+
+	var instance           = new BaseObj();
+
 
 	return instance.extend({
 		'_id'              : 'recommended',
@@ -21,8 +23,11 @@ define( function ( require ) {
 		'renderToggle' : function ( collection, model ) {
 			return controller.doRenderToggle( collection, model );
 		},
-		'getCarouselCustomAction' : function ( collection, view, element, id ) {
+		'getCarouselCustomAction' : function ( view, data, start ) {
 			//do carousel custom action here
+			return controller.doCarouselCustomAction(view, data, start, this);
+			//temporary only to demo after fetching another set
+
 		}
 	} );
 } );

@@ -25,11 +25,13 @@ define( function ( require ) {
 
 			$.when( fetchingModels ).done( function ( models ) {
 
-				options.success( new Collection( models[0] ) );
+				options.success( new Collection( models[ 0 ] ) );
 
 			} ).fail( function ( error ) {
 				// TODO: error handling
+				options.fail( error );
 			} );
-		}
+		},
+		'alterData' : function() {}
 	} );
 } );

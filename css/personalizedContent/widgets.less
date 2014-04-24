@@ -164,4 +164,112 @@
 		cursor      : pointer;
 	}
 
+	// Widget settings panel
+	#widgets-settings-panel {
+		background-color : #2b2d30;
+		margin           : auto;
+		color            : #FFF;
+		padding-bottom   : 5px;
+	}
+	#widget-settings-header {
+		margin     : auto;
+		margin-top : 12px;
+	}
+	#widget-settings-header ul {
+		border-bottom : 1px solid;
+	}
+	#widget-settings-header .main:hover {
+		border : none;
+		color  : #FFF;
+		cursor : auto;
+	}
+	#widget-settings-header ul {
+		padding : 0px 40px;
+	}
+	#widget-settings-header ul li {
+		padding-bottom : 15px;
+		margin-right   : -5px;
+		cursor         : pointer;
+	}
+	#widget-settings-header ul li:hover {
+		border-bottom : 5px solid #3dadef;
+		color         : #3dadef;
+	}
+	#widget-settings-header .selected {
+		color         : #3dadef;
+		border-bottom : 5px solid #3dadef;
+	}
+	#widget-settings-content {
+		padding-top: 20px;
+	}
+	#widget-settings-selection {
+		text-align   : center;
+		margin       : auto;
+		height       : 380px;
+		overflow-y   : scroll;
+		padding      : 0 20px 0 40px;
+		border-right : 2px solid #7d7d7d;
+	}
+	#widget-settings-selection li {
+		border     : 1px solid;
+		display    : inline-table;
+		width      : 115px;
+		height     : 144px;
+		margin     : 12px;
+		text-align : center;
+		cursor     : pointer;
+	}
+	#widget-settings-selection li .widget-icon-btn {
+		background-color : #3cacee;
+		border           : 3px solid #FFF;
+		font-weight      : bold;
+		float            : right;
+		padding          : 4px;
+	}
+	#widget-settings-selection li .inactive.widget-icon-btn {
+		background-color : #c2c2c2;
+	}
+	#widget-settings-selection li:first-child, #widget-settings-selection li:nth-child(2), #widget-settings-selection li:nth-child(3) {
+		margin-top : 0px;
+	}
+	#widget-settings-preview {
+		padding : 0 30px;
+		height  : 380px;
+	}
+	#widget-settings-preview .img-thumbnail {
+		width         : 180px;
+		height        : 180px;
+		margin-bottom : 28px;
+		float         : left;
+	}
+	#widget-settings-preview #widget-limit-message {
+		display : none;
+	}
+	#widget-settings-preview .description {
+		float  : left;
+		margin : 0px 30px;
+	}
+	#widget-settings-preview .actions {
+		clear         : both;
+		position      : absolute;
+		bottom        : 0;
+		margin-bottom : 20px;
+	}
+	#widget-settings-preview .actions button {
+		width   : 130px;
+		padding : 10px;
+		margin  : 10px 5px;
+		color   : #FFF;
+	}
+	#widget-settings-preview .actions button.cancel {
+		background-color : transparent;
+	}
+	#widget-settings-preview .actions button.save, #widget-settings-preview .actions button.remove {
+		background-color : #7d818b;
+	}
+	#widget-settings-preview .actions button.save:hover, #widget-settings-preview .actions button.remove:hover {
+		background-color : #757880;
+		border           : 1px solid #6a6d74;
+	}
+
 }

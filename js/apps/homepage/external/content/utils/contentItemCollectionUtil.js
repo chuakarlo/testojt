@@ -14,8 +14,7 @@ define( function ( require ) {
 		//decide later what to do with messages
 	}
 
-	function injectAttributes ( view, base, origCollection, collection, data ) {
-		var id   = base._id;
+	function injectAttributes ( view, base, collection, data , callback ) {
 
 		require( [ 'pc-linq' ], function () {
 
@@ -29,30 +28,20 @@ define( function ( require ) {
 			collection.models = col;
 			collection.sharedData = data;
 
-			processFetchedCollection ( view, id, base, origCollection, base.getFetchLogic( collection ));
+			callback( base.getFetchLogic( collection ) );
 		} );
 	}
 
-	function applyScroll ( view, id ) {
+	function applyScroll ( view, id , base, count) {
 
 		// Check if collection is empty to render the emptyContentCollectionView
 		if ( !view.collection.length ) {
 			view.emptyView = EmptyContentCollectionView;
 		} else {
-			UIManager.applyCircularScroll( view.$el, id );
+			UIManager.applyCircularScroll( view.$el, id, view, base, count );
 		}
 	}
 
-	function processFetchedCollection ( view, id, base, origCollection, collection) {
-		$( '#' + id + '-count' ).html( collection.count );
-		view.collection = collection.collection;
-
-		applyScroll( view, id);
-
-		view.render();
-		$( '#' + id + '-count' ).html( collection.count );
-		base.getCarouselCustomAction( origCollection, view, view.$el, id );
-	}
 
 	return {
 		'doError' : function ( message ) {
@@ -81,18 +70,30 @@ define( function ( require ) {
 			}
 		},
 
-		'collectionFetch' : function ( view, base, data) {
+		'collectionFetch' : function ( view, base, data, start, callback ) {
 			var collection     = new ( base._items )( data );
-			var origCollection = collection;
 
+			collection.alterData( start );
 			collection.fetch( {
 				'success' : function ( collection, response ) {
-					injectAttributes ( view, base, origCollection, collection, data );
+					injectAttributes ( view, base, collection, data, callback );
 				},
 				'error' : function () {
 					//todo
 				}
 			} );
+		},
+
+		'processFetchedCollection' : function ( view, base, collection, data) {
+			$( '#' + base._id + '-count' ).html( collection.count );
+			view.collection = collection.collection;
+
+			applyScroll( view, base._id, base, collection.count);
+
+			view.render();
+			// $( '#' + base._id + '-count' ).html( collection.count );
+			base.getCarouselCustomAction( view , data );
 		}
+
 	};
 } );

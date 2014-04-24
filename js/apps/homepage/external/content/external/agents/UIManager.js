@@ -3,30 +3,52 @@
  * @class
  * Common UI manipulations across Content Section
  */
-define ( function ( require ) {
+define( function ( require ) {
 	'use strict';
 
 	var ITEMS_SHOWN_PER_PANE = 4;
 
-	var UIManager = function () { };
 
-	function doApplyCircularScroll ( container, appendToID ) {
-		require( [ 'pc-carouselSnap' ], function( $ ) {
+	var UIManager = function () {};
+
+	function doApplyCircularScroll( container, appendToID, view, base, count ) {
+		var autoRotate = false;
+		require( [ 'pc-carouselSnap' ], function ( $ ) {
+			var rotate = ( appendToID === 'your-queue' );
 			$( container ).carouselSnap( {
-				nextID                : 'next-slide-' + appendToID,
-				prevID                : 'previous-slide-' + appendToID,
-				elementsToMoveOnClick : ITEMS_SHOWN_PER_PANE,
-				elementsToMoveOnHover : ITEMS_SHOWN_PER_PANE,
-				startOnCenter         : true,
-				time                  : 1000,
-				beforeShift           : function () {},
-				afterShift            : function () {}
+				nextID: 'next-slide-' + appendToID,
+				prevID: 'previous-slide-' + appendToID,
+				elementsToMoveOnClick: ITEMS_SHOWN_PER_PANE,
+				elementsToMoveOnHover: ITEMS_SHOWN_PER_PANE,
+				startOnCenter: false,
+				rotate: rotate,
+				time: 10000,
+				beforeShift: function () {
+
+					if ( view.collection.length && count === view.collection.length - 1 && !autoRotate ) {
+						view.$el.carouselRotate( true, function ( res, msg ) {
+							autoRotate = res;
+						} );
+					}
+
+
+				},
+				afterShift: function () {},
+				lastPaneEvent: function () {
+
+
+					if ( view.collection.length && count !== view.collection.length - 1 ) {
+						base.getCarouselCustomAction( view, view.collection, 1, base );
+					}
+
+
+				}
 			} );
 		} );
 	}
 
-	function doRemoveItemOnCarousel ( container, item ) {
-		require( [ 'pc-carouselSnap' ], function( $ ) {
+	function doRemoveItemOnCarousel( container, item ) {
+		require( [ 'pc-carouselSnap' ], function ( $ ) {
 			$( container ).carouselRemove( item );
 		} );
 	}
@@ -37,11 +59,11 @@ define ( function ( require ) {
 		 * Apply circular scroll to initially fetched videos
 		 * @param  {JQuery Obj} container UL element
 		 */
-		'applyCircularScroll' : function ( container, appendToID ) {
-			doApplyCircularScroll( container, appendToID );
+		'applyCircularScroll': function ( container, appendToID, view, base, count ) {
+			doApplyCircularScroll( container, appendToID, view, base, count );
 		},
 
-		'removeItemOnCarousel' : function ( container, item ) {
+		'removeItemOnCarousel': function ( container, item ) {
 			doRemoveItemOnCarousel( container, item );
 		}
 	};

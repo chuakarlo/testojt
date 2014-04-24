@@ -13,6 +13,16 @@
 		position : relative;
 		overflow : hidden;
 
+		#lazyload {
+			text-align : center;
+
+			img {
+				height : 15px;
+				width  : 45px;
+			}
+		}
+
+
 		.img-responsive {
 			width      : @pc-max-percent;
 			max-height : 158px;
@@ -40,20 +50,23 @@
 		}
 
 		.prevNext {
+			display     : none;
+		}
+		.prevNext.active {
 			cursor      : pointer;
-			width       : @pc-carousel-size;
-			height      : @pc-carousel-size;
-			background  : url(../img/arrows-grey.png) no-repeat;
+			width       : 50px;
+			height      : 55px;
+			background  : url('../img/left-arrow.png') no-repeat center center rgba(0, 0, 0, 0.1);
 			text-indent : -9999px;
 			border      : 0;
 			z-index     : 10000;
 			position    : absolute;
-			display     : inline-block;
 			bottom      : 150px;
 			left        : 0;
+			display     : none;
 		}
-		#next-slide {
-			background-position :-@pc-carousel-size @pc-min;
+		.nextLink.active {
+			background  : url('../img/left-arrow-right.png') no-repeat center center rgba(0, 0, 0, 0.1);
 			right               : @pc-min;
 			left                : auto;
 		}
@@ -188,9 +201,8 @@
 	}
 
 	//display if hovered
-	#your-queue-wrapper:hover .prevNext,
-	#recommended-wrapper:hover .prevNext {
+	#your-queue-wrapper:hover .prevNext.active,
+	#recommended-wrapper:hover .prevNext.active {
 		display : inline-block;
 	}
-
 }
