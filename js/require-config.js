@@ -1,12 +1,13 @@
 require.config( {
 
-	'baseUrl' : '/js/',
+	'baseUrl' : 'js/',
 
 	'paths' : {
 
 		// Tests
-		'SpecRunner'    : '../test/public/SpecRunner',
+		'SpecRunner'    : '../SpecRunner',
 		'spec'          : '../test/public/spec',
+		'polyfills'     : '../test/public/polyfills',
 		'chai'          : 'libs/chai/chai',
 		'sinon'         : 'libs/sinonjs/sinon',
 		'sinon-chai'    : 'libs/sinon-chai/lib/sinon-chai',
