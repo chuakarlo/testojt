@@ -29,6 +29,7 @@ define( function ( require ) {
 			'userMenu'    : '.user-menu',
 			'menuBar'     : '.menu-bar',
 			'drawer'      : '#menu',
+			'ddLink'      : '.navbar-collapse.in a:not(.dropdown-toggle)',
 			'bar1'        : '#bar1',
 			'bar2'        : '#bar2',
 			'bar3'        : '#bar3',
@@ -40,6 +41,7 @@ define( function ( require ) {
 		'events' : {
 			'click @ui.userMenu'              : 'toggleUserMenu',
 			'click @ui.help'                  : 'showHelp',
+			'click @ui.ddLink'                : 'hideCollapsibleMenu',
 			'submit form'                     : 'showSearchResults',
 			'hidden.bs.dropdown @ui.userMenu' : 'hideUserMenuAnimation'
 		},
@@ -54,6 +56,10 @@ define( function ( require ) {
 			}
 
 			return this.templates.loggedOut;
+		},
+
+		'hideCollapsibleMenu' : function ( event ) {
+			$( '#navbar .navbar-collapse.in' ).removeClass( 'in' );
 		},
 
 		'toggleUserMenu' : function ( event ) {
