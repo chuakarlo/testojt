@@ -1,21 +1,25 @@
 #video-player-page {
 	#tab-container {
-		width         : 100%;
-		border-bottom : 1px solid #EBEBEB;
-		position      : relative;
-		margin-top    : 20px;
-		margin-left   : 0px;
+			border-bottom : 1px solid #EBEBEB;
+			width         : 100%;
+			position      : relative;
+			padding-top   : 20px;
+			margin-left   : 0px;
+			height        : 63px;
 
 		a {
 			color : inherit;
 		}
 
 		#video-tabs {
+			padding : 0;
 			.nav-tabs {
 				border-top    : none;
 				margin-bottom : 0;
 
 				li {
+					margin-right      : 0px;
+					margin-bottom     : 15px;
 					a {
 						border : none;
 					}
@@ -37,8 +41,10 @@
 		}
 
 		#video-buttons {
-			padding-right : 0px;
-
+			padding : 0;
+			.button-container{
+				float   : right !important;
+			}
 			button {
 				min-width : 138px;
 				position  : relative;

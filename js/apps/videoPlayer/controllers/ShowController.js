@@ -1,6 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
+	var $ = require( 'jquery' );
+	var _ = require( 'underscore' );
+
+	require('tab-collapse');
+
 	var App      = require( 'App' );
 	var Session  = require( 'Session' );
 	var Remoting = require( 'Remoting' );
@@ -151,6 +156,8 @@ define( function ( require ) {
 						'collection' : new RelatedVideoCollection( relatedVideos )
 					} );
 					layout.relatedVideosRegion.show( relatedView );
+					//tabcollapse for small screens
+					$( '.tab-container' ).tabCollapse();
 				} );
 
 			},

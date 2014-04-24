@@ -9,7 +9,7 @@ define( function ( require ) {
 	return Marionette.ItemView.extend( {
 
 		'template'  : _.template( template ),
-		'className' : 'pull-right',
+		'className' : 'button-container',
 
 		'ui' : {
 			'userQueue'  : '#user-queue',

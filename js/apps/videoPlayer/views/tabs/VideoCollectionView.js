@@ -30,23 +30,25 @@ define( function ( require ) {
 					'settings'   : {
 						'slidesToShow'   : 3,
 						'slidesToScroll' : 3,
-						'dots'           : true
+						'centerMode'     : true
 					}
-				}, {
-					'breakpoint' : 604,
-					'settings'   : {
-						'slidesToShow'   : 2,
-						'slidesToScroll' : 2,
-						'dots'           : true
-					}
-				}, {
-					'breakpoint' : 324,
+				},  {
+					'breakpoint' : 700,
 					'settings'   : {
 						'slidesToShow'   : 1,
 						'slidesToScroll' : 1,
-						'dots'           : true
+						'arrows'         : false,
+						'centerMode'     : true
 					}
-				}  ]
+				} ,  {
+					'breakpoint' : 322,
+					'settings'   : {
+						'slidesToShow'   : 1,
+						'slidesToScroll' : 1,
+						'arrows'         : false,
+						'centerMode'     : true
+					}
+				} ]
 			} );
 		},
 

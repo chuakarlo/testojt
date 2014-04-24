@@ -12,7 +12,7 @@ define( function ( require ) {
 
 		'tagName'   : 'ul',
 
-		'className' : 'nav nav-tabs',
+		'className' : 'nav nav-tabs tab-container',
 
 		'ui' : {
 			'videoResources' : 'a[href="#video-resources"]',

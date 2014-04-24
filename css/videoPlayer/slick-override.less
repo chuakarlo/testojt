@@ -1,5 +1,10 @@
 #video-player-page {
 
+
+	.slick:hover > button {
+		visibility: visible;
+	}
+
 	.slick {
 
 		.slick-list {
@@ -7,32 +12,32 @@
 		}
 
 		ul.slick-track {
-			display    : block;
-			margin     : 0;
-			padding    : 0;
+			display : block;
+			margin : 0px;
+			padding : 0px;
 		}
 
 		.slick-prev, .slick-next {
 			border      : 0 none;
 			cursor      : pointer;
-			height      : 30px;
+			height      : 50px;
 			position    : absolute;
 			text-indent : -9999px;
-			width       : 30px;
+			width       : 50px;
 			z-index     : 10000;
 			display     : none;
 		}
 
 		.slick-prev {
 			background : url("./../img/left-arrow.png") no-repeat scroll center center rgba(0, 0, 0, 0.1);
-			visibility : hidden;
 			left       : -10px;
+			visibility : hidden;
 		}
 
 		.slick-next {
 			background : url("./../img/left-arrow-right.png") no-repeat scroll center center rgba(0, 0, 0, 0.1);
-			visibility : hidden;
 			right      : -10px;
+			visibility : hidden;
 		}
 	}
 }

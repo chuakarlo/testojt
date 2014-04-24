@@ -1,34 +1,39 @@
 <!-- video player header -->
-<div id="video-player-header" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	<h1><%- ContentName %></h1>
-	<div id="video-info"></div>
-	<p class="col-xs-11">Common Core:
-		<a href="#">ELA</a>,
-		<a href="#">Technology</a>,
-		<a href="#">Future Teaching</a>
-	</p>
-</div>
+	<div class="col-xs-12"  id="video-player-header">
+		<div class="page-header">
+			<div id="video-info"></div>
+			<h2 id=""><%= ContentName %></h2>
+		</div>
+		<p>Common Core:
+			<a href="#">ELA</a>,
+			<a href="#">Technology</a>,
+			<a href="#">Future Teaching</a>
+		</p>
+	</div>
 <!-- video player and questions -->
-<div id="video-container" class="col-xs-12">
-	<section id="video">
-		<div id="video-player" class="col-lg-8 col-md-8 col-sm-8 col-xs-12"></div>
-		<div id="video-questions" class="col-lg-4 col-md-4 col-sm-4 col-xs-12"></div>
-	</section>
-</div>
-<div class="col-lg-12 col-md-12 col-sm-12" id="tab-container">
-  <!-- video tabs -->
-	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="video-tabs"></div>
-	<!-- buttons -->
-	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="video-buttons"></div>
-</div>
-<!-- tab contents -->
-<div class="tab-content" id="tab-content">
-	<div class="tab-pane active" id="video-resources">
-		<div class="additional-resources">
-			<div class="col-lg-12 col-md-12 col-sm-12" id="video-resource">Addtional Resources</div>
-			<hr>
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="video-segment">Other Segments</div>
+	<div id="video-container" class="col-xs-12">
+		<section id="video">
+			<div id="video-player" class="col-lg-8 col-md-8 col-xs-12"></div>
+			<div id="video-questions" class="col-lg-4 col-md-4 col-xs-12"></div>
+		</section>
+	</div>
+	<!-- tab container -->
+	<div class="col-xs-12">
+		<div id="tab-container">
+			<!-- buttons -->
+			<div class="col-md-6 col-xs-12 pull-right" id="video-buttons"></div>
+			 <!-- video tabs -->
+			<div class="col-md-6 col-xs-12 pull-left" id="video-tabs"></div>
 		</div>
 	</div>
-	<div class="tab-pane col-lg-12 col-md-12 col-sm-12 col-xs-12" id="related-videos">Related Videos</div>
-</div>
+	<!-- tab contents -->
+	<div class="col-xs-12 tab-content" id="tab-content">
+		<div class="tab-pane active" id="video-resources">
+			<div class="additional-resources">
+				<div class="col-xs-12" id="video-resource">Addtional Resources</div>
+				<hr>
+				<div class="col-xs-12" id="video-segment">Other Segments</div>
+			</div>
+		</div>
+		<div class="tab-pane col-xs-12" id="related-videos">Related Videos</div>
+	</div>

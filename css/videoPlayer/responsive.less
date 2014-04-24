@@ -1,45 +1,175 @@
-@media (max-width : 361px ) {
+@media (max-width : 360px ) {
 	#video-player-page {
 		//video player
-		#video-player #example-video {
-				height : 270px !important;
+		#video-player #video-content {
+				height : 163px !important;
 		}
-		//reflection
-		//tab-container
-		//video tabs
-		#video-tabs .nav-tabs li {
-			width         : 100%;
-			border-bottom : 1px solid #EBEBEB;
-			.video-resources-thumb #download .watch-later {
-				top   : 220px !important;
-				right : 128px !important;
+		#video-player-header {
+			.page-header {
+				padding-bottom: 0px;
+				margin: 10px 0 10px;
+				h2{
+					font-size : 20px;
+				}
+			}
+			#video-info #info-icon {
+				margin-top: 5px;
+				font-size: 15px;
+			}
+			p {
+				margin: 0 0 5px;
+				font-size: 13px;
 			}
 		}
-		//video buttons
-		#video-buttons .button-container {
-			width : 100%;
-			button {
-				width         : 100%;
-				margin-bottom : 7px;
-				top           : 0;
+		//questions
+		#video-questions .right-bar {
+			height : 200px !important;
+			padding : 0;
+			.content {
+				padding : 3% !important;
+				h3 {
+					font-size: 18px;
+				}
+				hr {
+					margin : 3px;
+				}
+				#questions-items {
+					height : 130px !important;
+					padding : 0 !important;
+					overflow-y: auto;
+					.answer {
+						padding : 0;
+					}
+					textarea {
+						margin-top : 0px !important;
+						padding : 5px !important;
+					}
+					#submit-answers {
+						width: 125px !important;
+						margin: 3px 6px;
+					}
+				}
+				#questions-pagination {
+					padding: 2% !important;
+					height: 14%;
+					.left-control, .right-control {
+						bottom     : 0px !important;
+					}
+				}
+			}
+		}
+		//tab-container
+		#tab-container {
+			// border-bottom : none !important;
+			// #video-tabs #video-resources-collapse .nav-tabs {
+			// 	li {
+			// 		width         : 100%;
+			// 		.video-resources-thumb #download .watch-later {
+			// 			top   : 220px !important;
+			// 			right : 128px !important;
+			// 		}
+			// 	}
+			// }
+			//video buttons
+
+			#video-buttons .button-container {
+				width : 100%;
+				#user-queue {
+					font-size : 13.2px;
+				}
+				button {
+					width         : 49%;
+					margin-bottom : 7px;
+					top           : 0;
+				}
+				i{
+					display: inline-block;
+				}
 			}
 		}
 		//tab-content
-		#video-resources #video-resource .vid-tab li {
-			margin : 5% 5% !important;
-			width  : 90% !important;
-		}
+		// #video-resources-collapse .additional-resources .slick {
+		// 		.slick-slide {
+		// 			margin     : 19px 4px;
+		// 			width      : 252px !important;
+		// 			min-height : 282px;
+		// 		}
+		// 		ul {
+		// 			padding : 0 !important;
+		// 		}
+		// 		div {
+		// 				img {
+		// 					width: 233px;
+		// 				}
+		// 				#download {
+		// 				padding: 25px;
+		// 				background: #f3f5f6;
+		// 				border-bottom-left-radius: 3px;
+		// 				border-bottom-right-radius: 3px;
+		// 				display: inline-block;
+		// 				width: 233px;
+		// 				height: 70px;
+		// 				.watch-later {
+		// 					.download-icon {
+		// 						font-size: 25px;
+		// 						color: #808080;
+		// 						cursor: pointer;
+		// 						margin-left: 42%;
+		// 					}
+		// 				}
+		// 			}
+		// 		}
+
+		// }
 	}
 }
 
-@media ( min-width : 362px ) and (max-width : 481px ) {
+@media ( min-width : 321px ) and (max-width : 584px ) {
 	#video-player-page {
 		//video player
-		#video-player #example-video {
+		#video-player #video-content {
 			height : 300px !important;
 		}
-		//reflection
+		//questions
+		#video-questions .right-bar {
+			height : 300px !important;
+			padding : 0;
+			.content {
+				padding : 5% !important;
+				h3 {
+					font-size: 22px;
+				}
+				hr {
+					margin : 7px;
+				}
+				#questions-items {
+					height : 182px !important;
+					padding : 0 !important;
+					.answer {
+						padding : 0;
+					}
+					textarea {
+						margin-top : 0px !important;
+						padding : 5px !important;
+					}
+					#submit-answers {
+						width: 125px !important;
+						margin: 3px 6px;
+					}
+				}
+				#questions-pagination {
+					padding: 3% !important;
+					height: 14%;
+					.left-control, .right-control {
+						bottom     : 7% !important;
+					}
+				}
+			}
+		}
 		//tab-container
+		#tab-container {
+			border-bottom : none !important;
+		}
 		//video tabs
 		#video-tabs .nav-tabs li {
 			width         : 100%;
@@ -53,24 +183,86 @@
 			}
 		}
 		//tab-content
-		#video-resources #video-resource .vid-tab li {
-			margin : 8px 19% !important;
-			width  : 62% !important;
-		}
+		// #video-resources-collapse .additional-resources .slick {
+		// 			img {
+		// 					width: 215px;
+		// 				}
+		// 				#download {
+		// 				padding: 25px;
+		// 				background: #f3f5f6;
+		// 				border-bottom-left-radius: 3px;
+		// 				border-bottom-right-radius: 3px;
+		// 				display: inline-block;
+		// 				width: 215px;
+		// 				height: 70px;
+		// 				.watch-later {
+		// 					.download-icon {
+		// 						font-size: 25px;
+		// 						color: #808080;
+		// 						cursor: pointer;
+		// 						margin-left: 42%;
+		// 					}
+		// 				}
+		// 			}
+
+		// }
+
+
 	}
 }
 
-@media ( min-width : 482px ) and (max-width : 767px ) {
+@media ( min-width : 585px ) and (max-width : 768px ) {
 	#video-player-page {
 		//video player
-		#video-player #example-video {
-				height : 350px !important;
+		#video-player #video-content {
+				height : 415px !important;
 		}
-		//reflection
+		//questions
+		#video-questions .right-bar {
+			height : 311px !important;
+			padding : 0;
+			.content {
+				padding : 5% !important;
+
+				h3 {
+					font-size: 23px;
+				}
+				hr {
+					margin : 7px;
+				}
+				#questions-items {
+					height : 182px !important;
+					padding : 0 !important;
+					.answer {
+						padding : 0;
+					}
+					textarea {
+						margin-top : 0px !important;
+						padding : 5px !important;
+					}
+					#submit-answers {
+						width: 125px !important;
+						margin: 3px 6px;
+					}
+				}
+				#questions-pagination {
+					padding: 3% !important;
+					height: 14%;
+					.left-control, .right-control {
+						bottom     : 7% !important;
+					}
+				}
+			}
+		}
 		//tab-container
+
+		#tab-container {
+			border-bottom : none !important;
+		}
 		//video tabs
 		#video-tabs .nav-tabs {
 			border-bottom : 1px solid #EBEBEB;
+			margin-bottom: 3% !important;
 			li {
 				width         : 49.4%;
 				display       : inline-block;
@@ -81,56 +273,264 @@
 		#video-buttons .button-container {
 			width : 100%;
 			button {
-				width : 49.6%;
+				width : 49.56%;
+			}
+			#user-queue {
+				float : left;
+			}
+			#share-video {
+				float : right;
 			}
 		}
 		//tab-content
-		#video-resources #video-resource .vid-tab li {
-			margin : 3% 2% !important;
-			width  : 46% !important;
+		#video-resources #video-resource .slick li {
+			.watch-later {
+				top  : 78%;
+				left : 42%;
+			}
 		}
 	}
 }
 
-@media ( min-width : 768px ){
+@media ( min-width : 769px ) and ( max-width : 1199px ) {
 	#video-player-page {
+		.slick:hover > button {
+			visibility: visible;
+		}
 		#video-player {
-			#example-video {
-				height : 450px !important;
+			width: 65% !important;
+			#video-content {
+				height : 420px !important;
 			}
 		}
-		//reflection
-
-		#tab-container {
-			border-bottom : 1px solid #EBEBEB;
+		//questions
+		#video-questions {
+			width : 35% !important;
+			.right-bar {
+				height : 420px !important;
+				padding : 0;
+				.content {
+					padding : 5% !important;
+					h3 {
+						font-size: 22px;
+					}
+					#questions-items {
+						height : 281px !important;
+						padding : 0 !important;
+						.answer {
+							padding : 0;
+						}
+						textarea {
+							margin-top : 0px !important;
+							padding : 5px !important;
+						}
+						#submit-answers {
+							width: 125px !important;
+							margin: 3px 6px;
+						}
+					}
+					#questions-pagination {
+						padding : 7% !important;
+						height  : 14%;
+						.left-control, .right-control {
+							bottom     : 20% !important;
+						}
+					}
+				}
+			}
 		}
 		//video tabs
 		#video-tabs {
 			width : 58%;
 		}
-		//video buttons
 		#video-buttons {
 			width : 42%;
+			.button-container{
+				width : 100%;
+				button {
+					margin-left : 2%;
+					float       : right;
+				}
+			}
 		}
+		//tab-content
+		// #video-resources #video-resource .slick li {
+		// 	.watch-later {
+		// 		top  : 78%;
+		// 		left : 42%;
+		// 	}
+		// }
 	}
 }
-
-// @media ( min-width : 1064px ) {
-// 	#video-player-page {
-// 		#tab-content {
-// 			.videos-thumb {
-// 				img{
-// 					max-width : 276px;
-// 				}
-// 			}
-// 		}
-// 	}
-// }
-
-@media ( min-width : 806px ) {
-	#video-player-page {
-		.slick:hover > button {
-			visibility: visible;
+@media ( min-width : 1200px ) {
+		#video-player-page {
+			#video-buttons .button-container{
+				float : right !important;
+				width : 100%;
+				button {
+					margin-left : 3%;
+					float       : right;
+				}
+			}
+			#tab-content #video-resources .additional-resources #video-resource .slick li .video-resources-thumb #download .watch-later {
+					left: 42%;
+				}
 		}
+}
+
+@media ( max-width : 768px ) {
+	#video-player-page {
+		//video segments and related videos
+		.panel-body {
+			.video-resources-thumb{
+				max-width : 276px;
+
+				img {
+					width : 95%;
+				}
+				#download {
+					padding                    : 25px;
+					background                 : #f3f5f6;
+					border-bottom-left-radius  : 3px;
+					border-bottom-right-radius : 3px;
+					display                    : inline-block;
+					width                      : 95%;
+					height                     : 70px;
+					.watch-later {
+						.download-icon {
+							font-size   : 25px;
+							color       : #808080;
+							cursor      : pointer;
+							margin-left : 42%;
+						}
+					}
+				}
+			}
+			.videos-thumb {
+				max-width  : 100%;
+				display    : block;
+				padding    : 0 5%;
+
+				#icon-play,
+				a > span {
+					position  : absolute;
+					display   : none;
+					top       : 20%;
+					left      : ~"calc(50% - 17.5px)";
+					font-size : 35px;
+				}
+
+				img{
+					height : 120px;
+					width  : 276px;
+				}
+
+				#word-play,
+				a > p {
+					display  : none;
+					top      : 40%;
+					left     : 30%;
+					position : absolute;
+				}
+
+				:hover {
+					#image {
+						color               : @vp-white;
+						opacity             : .5;
+						transition-duration : .5s;
+					}
+					#icon-play, #word-play {
+						display : inline-block;
+						z-index : 1;
+						color   : @vp-white;
+					}
+				}
+			}
+
+			.videos-info {
+				max-width                  : 276px;
+				padding-top                : 20px;
+				margin-right               : 5%;
+				margin-left                : 5%;
+				background                 : @whitesmoke;
+				border-bottom-left-radius  : 3px;
+				border-bottom-right-radius : 3px;
+				display                    : block;
+				height                     : 110px; //130
+
+				h3.video-name {
+					width         : 85%; //85
+					white-space   : nowrap;
+					overflow      : hidden;
+					text-overflow : ellipsis;
+					font-size     : 16px; //16
+					margin-top    : 2%;
+					padding-left  : 5%;
+				}
+
+				p {
+						line-height  : 30px;
+						font-size    : 15px;
+						display      : inline-block;
+						// color        : #8a8d94;
+						margin-top   : 10px;
+						padding-left : 5%;
+				}
+
+				.watch-later {
+					width      : 35px;
+					height     : 35px;
+					padding    : 5px;
+					position   : absolute;
+					top        : 185px;
+					left       : 60%;
+					text-align : center;
+
+					.flag {
+						display : none;
+					}
+
+					.watch-later-icon {
+						font-size : 25px;
+						color     : @vp-gray;
+						cursor    : pointer;
+					}
+
+					.watch-later-icon:hover {
+						color : @vp-blue-light;
+					}
+
+					.remove {
+						display : none;
+					}
+
+					.flag:checked ~ .watch-later-icon {
+						color :	@vp-blue-dark;
+
+						.add {
+							display : none;
+						}
+
+						.remove {
+							display : block;
+						}
+
+					}
+				}
+				.watch-later:hover {
+					padding : ( ( @vp-base-padding / 5 ) * 2 );
+					border  : @border;
+
+					.border-radius( @cn-base-radius / 3 );
+
+					.watch-later-icon {
+						color :	@vp-blue-light;
+					}
+				}
+
+
+			}
+		}
+		//end for video-segments and related videos
 	}
 }
