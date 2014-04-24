@@ -33,11 +33,11 @@ define( function ( require ) {
 			this.groupsResultsRegion.show( this.groupsCollectionView );
 
 			// bind a click event on the body
-			$( 'body' ).bind( 'click', this._triggerClickBody );
+			$( 'body' ).bind( 'click.searchResultsLayout', this._triggerClickBody );
 		},
 
 		'onClose' : function () {
-			$( 'body' ).unbind( 'click' );
+			$( 'body' ).unbind( 'click.searchResultsLayout' );
 		},
 
 		'_triggerClickBody' : function ( event ) {

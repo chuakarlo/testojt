@@ -5,10 +5,13 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 	var template   = require( 'text!videoPlayer/templates/tabs/tabsItemView.html' );
+
 	return Marionette.ItemView.extend( {
 
 		'template'  : _.template( template ),
+
 		'tagName'   : 'ul',
+
 		'className' : 'nav nav-tabs',
 
 		'ui' : {
@@ -31,7 +34,7 @@ define( function ( require ) {
 		'showRelated' : function ( e ) {
 			e.preventDefault();
 
-			this.ui.relatedVideos.tab( 'show' )
+			this.ui.relatedVideos.tab( 'show' );
 			this._toggleActiveTab( e.target );
 		},
 

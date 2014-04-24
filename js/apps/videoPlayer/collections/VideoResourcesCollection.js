@@ -3,11 +3,7 @@
 
 	var Backbone = require( 'backbone' );
 
-	var VideoResourceModel = require( 'videoPlayer/models/VideoResourceModel' );
-
 	return Backbone.Collection.extend( {
-
-		'model'  : VideoResourceModel,
 
 		'buildModels' : function ( model ) {
 

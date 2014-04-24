@@ -6,7 +6,6 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 
 	var VideoResourceItemView = require( 'videoPlayer/views/tabs/VideoResourceItemView' );
-	var LoadingView           = require( 'videoPlayer/views/LoadingView' );
 
 	return Marionette.CollectionView.extend( {
 
@@ -15,8 +14,6 @@ define( function ( require ) {
 		'tagName'   : 'ul',
 
 		'className' : 'vid-tab',
-
-		'emptyView' : LoadingView,
 
 		'onClose' : function () {
 			this.collection.reset( [ ] );

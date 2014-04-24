@@ -7,6 +7,7 @@ define( function ( require ) {
 	var hhmmssFormat = require( 'videoPlayer/utils/toHHMMSSFormat' );
 
 	return Marionette.ItemView.extend( {
+
 		'template'  : _.template( template ),
 
 		'tagName'   : 'div',
@@ -15,7 +16,6 @@ define( function ( require ) {
 
 			'imageUrl' : function () {
 				var url = 'http://resources.pd360.com/PD360/media/thumb/';
-
 				return url + this.ImageURL;
 			},
 
