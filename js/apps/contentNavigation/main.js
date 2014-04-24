@@ -1,52 +1,25 @@
 define( function ( require ) {
+	
 	'use strict';
 
 	var Marionette   = require( 'marionette' );
 	var async        = require( 'async' );
-	var Communicator = require('./Communicator');
+	var Communicator = require( './Communicator' );
 	var config       = require( './config/config' );
 
 	var views = {
-		'MainLayoutView'         : require('./views/MainLayoutView'),
-		'SegmentItemView'        : require( './views/Segments/SegmentItemView' ),
-		'SegmentsCollectionView' : require( './views/Segments/SegmentCollectionView' )
-	};
-
-	var components = {
-		'FilterComponent'            : require( './components/FilterComponent' ),
-		'SegmentCollectionComponent' : require( './components/SegmentCollectionComponent' )
-	};
-
-	var collections = {
-	    'SegmentCollection' : require( './collections/SegmentCollection' )
+		'MainLayoutView' : require('./views/MainLayoutView')
 	};
 
 	var subControllers	= {
-		'HeaderController'   : require( './controllers/HeaderController' ),
-		'FiltersController'  : require( './controllers/FiltersController' ),
-		'GridController'     : require( './controllers/GridController' ),
-		'SegmentsController' : require( './controllers/SegmentsController' ),
-		'Utils'              : require( './controllers/UtilitiesController' )
+		'HeaderController'           : require( './controllers/HeaderController' ),
+		'ContentLibraryController'   : require( './controllers/ContentLibraryController' )
 	};
 
 
 	var MainController = Marionette.Controller.extend({
-		'Views' : {
-			'SegmentItem'       : views.SegmentItemView,
-			'SegmentCollection' : views.SegmentsCollectionView
-		},
-
-		'Components' : {
-			'Filter'            : components.FilterComponent,
-			'SegmentCollection' : components.SegmentCollectionComponent
-		},
-
-		'Collections' : {
-			'Segments' : collections.SegmentCollection
-		},
 
 		'initialize' : function ( options ) {
-
 			// init option is for instantions that build or does not build
 			// the main view and its dependencies
 			if ( options.init !== false ) {
@@ -62,23 +35,27 @@ define( function ( require ) {
 				this.MainView       = this.createMainView();
 				this.MainView.views = {};
 
+				this.App.topRegion    = this.getTopRegion();
+				this.App.leftRegion   = this.getLeftRegion();
+				this.App.centerRegion = this.getCenterRegion();
+
 				async.series( [
 					function ( callback ) {
-						this.createControllers.call(this, callback);
+						this.createControllers.call( this, callback );
 					}.bind( this )
 				], function () {
-					this.createMainViewItems.call(this);
+					this.createMainViewItems.call( this );
 				} .bind( this ) );
 
 			}
 
 		},
 
-		'createMainView' : function () {
+		'createMainView' : function ( ) {
 			return new views.MainLayoutView();
 		},
 
-		createControllers: function (callback) {
+		'createControllers' : function ( callback ) {
 			async.series( [
 				function ( callback ) {
 					this.App.HeaderController = new subControllers.HeaderController( {
@@ -90,25 +67,7 @@ define( function ( require ) {
 				}.bind( this ),
 
 				function ( callback ) {
-					this.App.FiltersController = new subControllers.FiltersController( {
-						'App'  : this.App,
-						'vent' : this.vent
-					} );
-
-					callback( null );
-				}.bind( this ),
-
-				function ( callback ) {
-					this.App.GridController = new subControllers.GridController( {
-						'App'  : this.App,
-						'vent' : this.vent
-					} );
-
-					callback( null );
-				}.bind( this ),
-
-				function ( callback ) {
-					this.App.SegmentsController = new subControllers.SegmentsController( {
+					this.App.ContentLibraryController = new subControllers.ContentLibraryController ( {
 						'App'  : this.App,
 						'vent' : this.vent
 					} );
@@ -116,49 +75,36 @@ define( function ( require ) {
 					callback( null );
 				}.bind( this )
 
-			], function () {
+			], function ( ) {
 				callback( null );
 			} );
-
 		},
 
 		'createMainViewItems' : function () {
+
 			this.createMainViewHeader();
-			this.createMainViewFilter();
-			this.createMainViewGrid();
-			this.createMainViewGridContent();
 		},
 
 		'createMainViewHeader' : function () {
-			this.MainView.topRegion.show( this.App.HeaderController.getView() );
 
-			return this.App.HeaderController;
+			this.getTopRegion().show( this.App.HeaderController.getView() );
 		},
 
-		'createMainViewFilter' : function () {
-			var filterView = this.App.FiltersController.getView();
+		'getTopRegion' : function () {
 
-			this.MainView.leftRegion.show( filterView );
-
-			return filterView;
+			return this.MainView.topRegion;
 		},
 
-		'createMainViewGrid' : function () {
-			var gridView = this.App.GridController.getView();
+		'getLeftRegion' : function () {
 
-			this.MainView.centerRegion.show(gridView);
-			this.MainView.views.GridContent = gridView;
-
-			return gridView;
+			return this.MainView.leftRegion;
 		},
 
-		'createMainViewGridContent' : function () {
-			var segmentsView = this.App.SegmentsController.getView();
+		'getCenterRegion'	: function () {
 
-			this.MainView.views.GridContent.mainRegion.show( segmentsView );
-
-			return segmentsView;
+			return this.MainView.centerRegion;
 		}
+
 
 	} );
 
