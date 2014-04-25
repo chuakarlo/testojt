@@ -20,8 +20,6 @@ function lint ( files, callback ) {
 
 	if ( !files.length ) {
 		console.log( '  No files for JSHint to lint.' );
-
-		return callback();
 	}
 
 	var errors = 0;

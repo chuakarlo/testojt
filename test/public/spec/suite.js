@@ -102,8 +102,6 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/collections/SelectedItemsCollectionTest.js',
 			'spec/apps/videoPlayer/collections/PeopleCollectionTest.js',
 			'spec/apps/videoPlayer/collections/GroupsCollectionTest.js',
-			// views
-			'spec/apps/videoPlayer/views/LoadingViewTest.js',
 			// views/player
 			'spec/apps/videoPlayer/views/player/VideoPlayerViewTest.js',
 			// views/questions

@@ -1,10 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	var sinon    = window.sinon;
+	var Backbone = require( 'backbone' );
 
 	var VideoResourceItemView = require( 'videoPlayer/views/tabs/VideoResourceItemView' );
-	var VideoResourceModel    = require( 'videoPlayer/models/VideoResourceModel' );
 
 	describe( 'VideoResource ItemView', function () {
 		var videoResource;
@@ -12,7 +11,7 @@ define( function ( require ) {
 
 		//set up and teardown test data - additional resources- video resource
 		before( function () {
-			videoResource = new VideoResourceModel( {
+			videoResource = new Backbone.Model( {
 				'downloadPath' : 'thisurl',
 				'previewPath'  : 'thisurl',
 				'thumbnail'    : ''
@@ -58,10 +57,6 @@ define( function ( require ) {
 
 			it( 'should have the same data to the data being passed', function () {
 				videoResourceItemView.model.should.equal( videoResource );
-			} );
-
-			it( 'should be an instance of the VideoResourceModel', function () {
-				videoResourceItemView.model.should.be.an.instanceof( VideoResourceModel );
 			} );
 
 		} );
