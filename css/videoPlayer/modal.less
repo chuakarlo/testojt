@@ -121,7 +121,7 @@
 			}
 		}
 		.right-bar {
-			position : relative;
+			position      : relative;
 			.search {
 				width         : 100%;
 				padding       : 22px;
@@ -140,42 +140,8 @@
 					padding       : 7px 15px;
 				}
 			}
-			#selected-items {
-				width        : 100%;
-				height       : auto;
-				padding-top  : 10px;
-				padding-left : 9px;
-			}
 		}
 		.transition-mixin;
-		span.selected-name {
-			display: block;
-			box-sizing: border-box;
-			float: left;
-			width: 167px;
-			margin: 3px;
-			div.remove-item {
-				border: none;
-				background: #545965;
-				color: #FFFFFF;
-				cursor: pointer;
-			}
-			span.selected-item {
-				display: block;
-				-webkit-box-sizing: border-box; /* Saf <5.1, */
-				-moz-box-sizing: border-box; /* Fx */
-				box-sizing: border-box; /* Ch, Saf 5.1+, IE 8+, Op 9+  */
-				border: none;
-				background: #4B505C;
-				color: #FFFFFF;
-				max-width: 127px;
-				width: 127px;
-				white-space: nowrap;
-				overflow: hidden;
-				-o-text-overflow: ellipsis; /* Op <11, Op Mini, Op Mob <12.1 */
-				text-overflow: ellipsis; /* IE, Fx, Ch, Saf */
-			}
-		}
 		.tooltip {
 			position : fixed;
 		}
@@ -200,50 +166,6 @@
 		button {
 			min-width : 138px;
 		}
-	}
-	.transition-mixin;
-	span.selected-name {
-		display    : block;
-		box-sizing : border-box;
-		float      : left;
-		width      : 167px;
-		margin     : 3px;
-		div.remove-item {
-			border     : none;
-			background : #545965;
-			color      : #FFFFFF;
-			cursor     : pointer;
-		}
-		span.selected-item {
-			display            : block;
-			-webkit-box-sizing : border-box; /* Saf <5.1, */
-			-moz-box-sizing    : border-box; /* Fx */
-			box-sizing         : border-box; /* Ch, Saf 5.1+, IE 8+, Op 9+  */
-			border             : none;
-			background         : #4B505C;
-			color              : #FFFFFF;
-			max-width          : 127px;
-			width              : 127px;
-			white-space        : nowrap;
-			overflow           : hidden;
-			-o-text-overflow   : ellipsis; /* Op <11, Op Mini, Op Mob <12.1 */
-			text-overflow      : ellipsis; /* IE, Fx, Ch, Saf */
-		}
-	}
-	.tooltip {
-		position : fixed;
-	}
-	.tooltip-inner {
-		white-space : pre-wrap;
-	}
-	.tooltip-name {
-		font-weight : 500;
-		word-wrap   : break-word;
-	}
-	.tooltip-location {
-		font-size   : 12px;
-		font-weight : 200;
-		word-wrap   : break-word;
 	}
 }
 

@@ -9,11 +9,12 @@ define( function ( require ) {
 
 	return Marionette.CollectionView.extend( {
 
+		'itemView' : ItemView,
+		'tagName'  : 'ul',
+
 		'initialize' : function () {
 			this.listenTo( this, 'itemview:item:remove', this.itemViewRemove );
 		},
-
-		'itemView' : ItemView,
 
 		'itemViewRemove' : function ( selectedItemView ) {
 			this.collection.remove( selectedItemView.model );

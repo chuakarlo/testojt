@@ -31,15 +31,15 @@ define( function ( require ) {
 
 		'templateHelpers' : {
 
-			'showImageUrl' : function () {
+			'getImageUrl' : function () {
 				return 'http://resources.pd360.com/PD360/media/thumb/' + this.ImageURL;
 			},
 
-			'showSegmentLength' : function () {
+			'getSegmentLength' : function () {
 				return utils.formatTime( this.SegmentLengthInSeconds );
 			},
 
-			'showVideoUrl' : function () {
+			'getVideoUrl' : function () {
 				return 'http://www.pd360.com/index.cfm?ContentId=' + this.ContentId;
 			}
 		}

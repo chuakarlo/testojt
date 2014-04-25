@@ -6,20 +6,18 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 
 	// templates
-	var template    = require( 'text!videoPlayer/templates/share/selectedItemView.html' );
-	var tooltipTmpl = require( 'text!videoPlayer/templates/share/selectedItemTooltip.html' );
+	var template         = require( 'text!videoPlayer/templates/share/selectedItemView.html' );
+	var personTooltipTpl = require( 'text!videoPlayer/templates/share/personItemTooltip.html' );
+	var groupTooltipTpl  = require( 'text!videoPlayer/templates/share/groupItemTooltip.html' );
 
 	return Marionette.ItemView.extend( {
 
-		'template' : _.template( template ),
-
-		'tagName' : 'span',
-
-		'className' : 'selected-name',
+		'template'  : _.template( template ),
+		'tagName'   : 'li',
 
 		'ui' : {
-			'removeItem'   : '.remove-item',
-			'selectedItem' : '.selected-item'
+			'removeItem'   : '.input-group-addon',
+			'selectedItem' : '.form-control'
 		},
 
 		'triggers' : {
@@ -27,14 +25,35 @@ define( function ( require ) {
 		},
 
 		'onShow' : function () {
-			var content = _.template( tooltipTmpl, this.model.attributes );
-
 			this.ui.selectedItem.tooltip( {
 				'animation' : false,
-				'title'     : content,
+				'title'     : this._getTooltipTpl( this.model ),
 				'container' : this.ui.selectedItem,
 				'html'      : true
 			} );
+		},
+
+		'templateHelpers' : {
+
+			'getName' : function () {
+				if ( this.LicenseName ) {
+					return this.LicenseName;
+				} else {
+					return this.FirstName + ' ' + this.LastName;
+				}
+			}
+		},
+
+		'_getTooltipTpl' : function ( model ) {
+			var template;
+
+			if ( model.get( 'LicenseName' ) ) {
+				template = groupTooltipTpl;
+			} else {
+				template = personTooltipTpl;
+			}
+
+			return _.template( template, model.attributes );
 		}
 
 	} );

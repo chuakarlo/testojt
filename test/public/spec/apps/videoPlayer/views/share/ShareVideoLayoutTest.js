@@ -1,23 +1,23 @@
 define( function ( require ) {
 	'use strict';
 
-	var sinon = window.sinon;
+	var sinon        = window.sinon;
+	var Backbone     = require( 'backbone' );
+	var App          = require( 'App' );
+	var Remoting     = require( 'Remoting' );
+	var ContentModel = require( 'videoPlayer/models/ContentModel' );
 
-	// dependency modules
-	var App              = require( 'App' );
-	var Remoting         = require( 'Remoting' );
-	var ShareVideoLayout = require( 'videoPlayer/views/share/ShareVideoLayout' );
-	var ContentModel     = require( 'videoPlayer/models/ContentModel' );
-	var PersonModel      = require( 'videoPlayer/models/PersonModel' );
+	require( 'videoPlayer/VideoPlayer' );
+	require( 'jquery.spin' );
 
-	describe( 'ShareVideoLayout Layout', function () {
+	describe( 'VideoPlayer ShareVideoLayout Layout View', function () {
 
 		var shareVideoLayout;
 		var contentModel;
 
 		before( function () {
 			contentModel     = new ContentModel();
-			shareVideoLayout = new ShareVideoLayout( { 'model' : contentModel } );
+			shareVideoLayout = new App.VideoPlayer.Views.ShareVideoLayout( { 'model' : contentModel } );
 		} );
 
 		after( function () {
@@ -54,20 +54,20 @@ define( function ( require ) {
 
 		describe( '.onShow', function () {
 
-			var sharedVideoRegionShowStub;
+			var selectedItemsRegionShowStub;
 
 			before( function () {
-				sharedVideoRegionShowStub = sinon.stub( shareVideoLayout.sharedVideoRegion, 'show' );
+				selectedItemsRegionShowStub = sinon.stub( shareVideoLayout.selectedItemsRegion, 'show' );
 			} );
 
 			after( function () {
-				shareVideoLayout.sharedVideoRegion.show.restore();
+				shareVideoLayout.selectedItemsRegion.show.restore();
 			} );
 
 			it( 'does show the shared video', function () {
-				sharedVideoRegionShowStub.should.have.callCount( 0 );
+				selectedItemsRegionShowStub.should.have.callCount( 0 );
 				shareVideoLayout.render().onShow();
-				sharedVideoRegionShowStub.should.have.callCount( 1 );
+				selectedItemsRegionShowStub.should.have.callCount( 1 );
 			} );
 
 		} );
@@ -96,15 +96,17 @@ define( function ( require ) {
 			before( function () {
 				var stub = sinon.stub().returns( false );
 				App.reqres.setHandler( 'pd360:available', stub );
+				sinon.stub( shareVideoLayout.searchResultsRegion, 'show' );
 			} );
 
 			after( function () {
 				App.reqres.removeHandler( 'pd360:available' );
 				Remoting.fetch.restore();
+				shareVideoLayout.searchResultsRegion.show.restore();
 			} );
 
 			it( 'does reset people and groups collection', function ( done ) {
-				var fakeData = [ [], [] ];
+				var fakeData = [ [ { 'PERSONNEL' : [ { } ], 'GROUPS' : [ { } ] } ] ];
 				var remotingFetchStub = sinon.stub( Remoting, 'fetch' ).returns( fakeData );
 
 				shareVideoLayout.ui.searchInput.val( 'test' );
@@ -119,28 +121,21 @@ define( function ( require ) {
 
 		} );
 
-		describe( '.showSearchResults', function () {
-
-			it( 'does show search results', function () {
-				shareVideoLayout.showSearchResults( [], [] );
-				shareVideoLayout.peopleCollection.length.should.eql( 0 );
-				shareVideoLayout.groupsCollection.length.should.eql( 0 );
-			} );
-
-		} );
-
 		describe( '.selectItem', function () {
 
 			var itemView;
 			var hideSearchResultsSpy;
+			var Person;
 
 			before( function () {
+				Person   = Backbone.Model.extend();
 				itemView = {
-					'model' : new PersonModel( {
+					'model' : new Person( {
 						'FirstName' : 'John',
 						'LastName'  : 'Doe'
 					} )
 				};
+
 				hideSearchResultsSpy = sinon.spy( shareVideoLayout, 'hideSearchResults' );
 				shareVideoLayout.selectedItems.reset();
 				shareVideoLayout.selectItem( itemView );

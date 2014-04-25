@@ -162,12 +162,13 @@ define( function ( require ) {
 			},
 
 			'showShareVideoDialog' : function ( model ) {
-				var shareVideoLayout = new App.VideoPlayer.Views.ShareVideoLayout( {
-					'model' : model
-				} );
-
 				// show share video dialog
+				var shareVideoLayout = new App.VideoPlayer.Views.ShareVideoLayout( { 'model' : model } );
 				App.modalRegion.show( shareVideoLayout, { 'className' : 'share-modal' } );
+
+				// show shared video on the share dialog
+				var sharedVideoView = new App.VideoPlayer.Views.SharedVideoView( { 'model' : model } );
+				shareVideoLayout.sharedVideoRegion.show( sharedVideoView );
 			}
 
 		};

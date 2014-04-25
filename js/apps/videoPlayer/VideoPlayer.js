@@ -4,14 +4,15 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var AuthRouter = require( 'AuthRouter' );
 
-	var Vent = require( 'Vent' );
-
 	App.module( 'VideoPlayer', function ( VideoPlayer ) {
 
+		require( 'common/views' );
 		require( 'videoPlayer/views/Views' );
 		require( 'videoPlayer/controllers/FilterController' );
 		require( 'videoPlayer/controllers/ShowController' );
 		require( 'videoPlayer/controllers/QueueController' );
+		require( 'videoPlayer/controllers/SearchController' );
+		require( 'videoPlayer/entities/SearchResults' );
 
 		VideoPlayer.Router = AuthRouter.extend( {
 			'appRoutes' : {
@@ -36,24 +37,28 @@ define( function ( require ) {
 
 			'showShareDialog' : function ( model ) {
 				VideoPlayer.Controller.Show.showShareVideoDialog( model );
+			},
+
+			'searchPeopleAndGroups' : function ( filter ) {
+				return VideoPlayer.Controller.Search.searchPeopleAndGroups( filter );
 			}
 
 		};
 
-		Vent.on( 'videoPlayer:showResources', function () {
-			API.showAdditionalResources();
-		} );
-
-		Vent.on( 'videoPlayer:showShareDialog', function ( model ) {
+		App.vent.on( 'videoPlayer:showShareDialog', function ( model ) {
 			API.showShareDialog( model );
 		} );
 
-		Vent.on( 'videoPlayer:addContentToQueue', function ( model ) {
+		App.vent.on( 'videoPlayer:addContentToQueue', function ( model ) {
 			API.addContentToQueue( model );
 		} );
 
-		Vent.on( 'videoPlayer:removeContentFromQueue', function ( model ) {
+		App.vent.on( 'videoPlayer:removeContentFromQueue', function ( model ) {
 			API.removeContentFromQueue( model );
+		} );
+
+		App.reqres.setHandler( 'videoPlayer:searchPeopleAndGroups', function ( filter ) {
+			return API.searchPeopleAndGroups( filter );
 		} );
 
 		App.addInitializer( function () {

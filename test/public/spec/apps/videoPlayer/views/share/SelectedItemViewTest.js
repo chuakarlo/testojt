@@ -3,17 +3,21 @@ define( function ( require ) {
 
 	require( 'bootstrap' );
 
-	var sinon            = window.sinon;
-	var SelectedItemView = require( 'videoPlayer/views/share/SelectedItemView' );
-	var PersonModel      = require( 'videoPlayer/models/PersonModel' );
+	var sinon    = window.sinon;
+	var App      = require( 'App' );
+	var Backbone = require( 'backbone' );
+
+	require( 'videoPlayer/VideoPlayer' );
 
 	describe( 'SelectedItemView', function () {
 		var selectedItemView;
+		var Person;
 
 		before( function () {
+			Person = Backbone.Model.extend();
 
-			selectedItemView = new SelectedItemView( {
-				'model' : new PersonModel( {
+			selectedItemView = new App.VideoPlayer.Views.SelectedItemView( {
+				'model' : new Person( {
 					'FirstName'    : 'John',
 					'LastName'     : 'Doe',
 					'DistrictName' : 'Salt Lake City',
@@ -24,7 +28,7 @@ define( function ( require ) {
 		} );
 
 		it( 'does be an instance of `SelectedItemView`', function () {
-			selectedItemView.should.be.an.instanceof( SelectedItemView );
+			selectedItemView.should.be.an.instanceof( App.VideoPlayer.Views.SelectedItemView );
 		} );
 
 		it( 'does have a `template` property', function () {
@@ -33,10 +37,6 @@ define( function ( require ) {
 
 		it( 'does have a `tagName` property', function () {
 			selectedItemView.should.have.property( 'tagName' );
-		} );
-
-		it( 'does have a `className` property', function () {
-			selectedItemView.should.have.property( 'className' );
 		} );
 
 		it( 'does have a `ui` property', function () {

@@ -2,7 +2,6 @@ define( function ( require ) {
 	'use strict';
 
 	var $        = require( 'jquery' );
-
 	var App      = require( 'App' );
 	var Session  = require( 'Session' );
 	var Remoting = require( 'Remoting' );
@@ -27,6 +26,7 @@ define( function ( require ) {
 
 				$.when( addToQueue ).done( function () {
 					model.set( 'queued', true );
+					App.vent.trigger( 'flash:message', { 'type' : 'success', 'message' : 'Added to Watch Later' } );
 				} );
 
 				// return promise so we can test execution of callbacks
@@ -49,6 +49,7 @@ define( function ( require ) {
 
 				$.when( removeFromQueue ).done( function () {
 					model.set( 'queued', false );
+					App.vent.trigger( 'flash:message', { 'type' : 'success', 'message' : 'Removed from Watch Later' } );
 				} );
 
 				// return promise so we can test execution of callbacks

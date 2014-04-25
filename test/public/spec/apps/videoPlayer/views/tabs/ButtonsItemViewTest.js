@@ -6,7 +6,7 @@ define( function ( require ) {
 	var $               = require( 'jquery' );
 	var sinon           = window.sinon;
 	var Remoting        = require( 'Remoting' );
-	var Vent            = require( 'Vent' );
+	var App             = require( 'App' );
 	var ButtonsItemView = require( 'videoPlayer/views/tabs/ButtonsItemView' );
 	var ContentModel    = require( 'videoPlayer/models/ContentModel' );
 
@@ -156,7 +156,7 @@ define( function ( require ) {
 			} );
 
 			it( 'does fire `videoPlayer:addContentToQueue` event', function ( done ) {
-				Vent.on( 'videoPlayer:addContentToQueue', function () {
+				App.vent.on( 'videoPlayer:addContentToQueue', function () {
 					Remoting.fetch.should.have.callCount( 1 );
 					done();
 				} );
@@ -177,7 +177,7 @@ define( function ( require ) {
 			} );
 
 			it( 'does fire `videoPlayer:removeContentFromQueue` event', function ( done ) {
-				Vent.on( 'videoPlayer:removeContentFromQueue', function () {
+				App.vent.on( 'videoPlayer:removeContentFromQueue', function () {
 					Remoting.fetch.should.have.callCount( 1 );
 					done();
 				} );
@@ -191,8 +191,16 @@ define( function ( require ) {
 
 			var evt = { 'preventDefault' : function () {} };
 
+			before( function () {
+				sinon.stub( App.VideoPlayer.Controller.Show, 'showShareVideoDialog' );
+			} );
+
+			after( function () {
+				App.VideoPlayer.Controller.Show.showShareVideoDialog.restore();
+			} );
+
 			it( 'does fire `videoPlayer:showShareDialog` event', function ( done ) {
-				Vent.on( 'videoPlayer:showShareDialog', function () {
+				App.vent.on( 'videoPlayer:showShareDialog', function () {
 					done();
 				} );
 

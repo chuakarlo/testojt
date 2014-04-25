@@ -99,15 +99,11 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/models/ContentModelTest.js',
 			'spec/apps/videoPlayer/models/QuestionModelTest.js',
 			'spec/apps/videoPlayer/models/RelatedVideoModelTest.js',
-			'spec/apps/videoPlayer/models/PersonModelTest.js',
-			'spec/apps/videoPlayer/models/GroupModelTest.js',
 			// collection
 			'spec/apps/videoPlayer/collections/QuestionsCollectionTest.js',
 			'spec/apps/videoPlayer/collections/VideoResourcesCollectionTest.js',
 			'spec/apps/videoPlayer/collections/RelatedVideoCollectionTest.js',
 			'spec/apps/videoPlayer/collections/SelectedItemsCollectionTest.js',
-			'spec/apps/videoPlayer/collections/PeopleCollectionTest.js',
-			'spec/apps/videoPlayer/collections/GroupsCollectionTest.js',
 			// views/player
 			'spec/apps/videoPlayer/views/player/VideoPlayerViewTest.js',
 			// views/questions
@@ -116,11 +112,12 @@ define( function ( require ) {
 			// views/info
 			'spec/apps/videoPlayer/views/VideoInfoItemViewTest.js',
 			// views/share
-			'spec/apps/videoPlayer/views/share/ShareVideoLayoutTest.js',
 			'spec/apps/videoPlayer/views/share/SharedVideoItemViewTest.js',
 			'spec/apps/videoPlayer/views/share/SelectedItemsCollectionViewTest.js',
 			'spec/apps/videoPlayer/views/share/SelectedItemViewTest.js',
-			'spec/apps/videoPlayer/views/share/SearchResultsLayoutTest.js',
+			'spec/apps/videoPlayer/views/share/ShareVideoLayoutTest.js',
+			'spec/apps/videoPlayer/views/share/SearchResultsTreeRootTest.js',
+			'spec/apps/videoPlayer/views/share/SearchResultsTreeViewTest.js',
 			// views/tabs
 			'spec/apps/videoPlayer/views/tabs/ButtonsItemViewTest.js',
 			'spec/apps/videoPlayer/views/tabs/TabsItemViewTest.js',
@@ -131,6 +128,8 @@ define( function ( require ) {
 			// utils
 			'spec/apps/videoPlayer/utils/selectTextTest.js',
 			'spec/apps/videoPlayer/utils/toHHMMSSFormatTest.js',
+			// entities
+			'spec/apps/videoPlayer/entities/SearchResultsTest.js',
 
 			//Homepage
 			'spec/apps/homepage/external/content/controllers/contentCompositeControllerTest.js',

@@ -3,7 +3,7 @@ define( function ( require ) {
 
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
-	var Vent       = require( 'Vent' );
+	var App        = require( 'App' );
 	var template   = require( 'text!videoPlayer/templates/tabs/buttonsItemView.html' );
 
 	return Marionette.ItemView.extend( {
@@ -47,11 +47,11 @@ define( function ( require ) {
 		},
 
 		'addContentToQueue' : function () {
-			Vent.trigger( 'videoPlayer:addContentToQueue', this.model );
+			App.vent.trigger( 'videoPlayer:addContentToQueue', this.model );
 		},
 
 		'removeContentFromQueue' : function () {
-			Vent.trigger( 'videoPlayer:removeContentFromQueue', this.model );
+			App.vent.trigger( 'videoPlayer:removeContentFromQueue', this.model );
 		},
 
 		'setQueueBtnUI' : function () {
@@ -67,7 +67,7 @@ define( function ( require ) {
 		'showShareDialog' : function ( e ) {
 			e.preventDefault();
 
-			Vent.trigger( 'videoPlayer:showShareDialog', this.model );
+			App.vent.trigger( 'videoPlayer:showShareDialog', this.model );
 		}
 
 	} );

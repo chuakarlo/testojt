@@ -1,0 +1,37 @@
+.share-modal {
+	#selected-items {
+		height      : auto;
+		padding-top : 10px;
+		overflow-x  : hidden;
+		overflow-y  : auto;
+		width       : 100%;
+		& > ul {
+			list-style : none;
+			margin     : 0;
+			padding    : 0;
+			& > li {
+				display        : inline-block;
+				margin         : 0;
+				padding        : 4px;
+				vertical-align : top; /* In case multi-word categories form two lines */
+				width          : 50%;
+				.input-group-addon {
+					background : #545965;
+					border     : none;
+					color      : #FFFFFF;
+					cursor     : pointer;
+				}
+				.form-control {
+					background       : #4B505C;
+					border           : none;
+					color            : #FFFFFF;
+					max-width        : 122px;
+					overflow         : hidden;
+					-o-text-overflow : ellipsis; /* Op <11, Op Mini, Op Mob <12.1 */
+					text-overflow    : ellipsis; /* IE, Fx, Ch, Saf */
+					white-space      : nowrap;
+				}
+			}
+		}
+	}
+}
