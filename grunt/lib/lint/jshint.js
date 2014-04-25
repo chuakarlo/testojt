@@ -16,10 +16,18 @@ var config   = require( '../../config' );
 var jshintrc = config.jshintrc;
 var globals  = jshintrc.globals;
 
+function cb ( callback ) {
+	if ( typeof callback === 'function' ) {
+		callback();
+	}
+}
+
 function lint ( files, callback ) {
 
 	if ( !files.length ) {
 		console.log( '  No files for JSHint to lint.' );
+
+		return cb( callback );
 	}
 
 	var errors = 0;

@@ -5,12 +5,18 @@ var eslint = require( 'eslint' );
 var filter = require( '../filter' );
 var diff   = require( '../diff' );
 
+function cb ( callback ) {
+	if ( typeof callback === 'function' ) {
+		callback();
+	}
+}
+
 function lint ( files, callback ) {
 
 	if ( !files.length ) {
 		console.log( '  No files for ESLint to lint.' );
 
-		return callback();
+		return cb( callback );
 	}
 
 	var code = eslint.cli.execute( [ null, null ].concat( files ) );
