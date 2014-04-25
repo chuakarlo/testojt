@@ -1,5 +1,10 @@
 #video-player-page {
 
+
+	.slick:hover > button {
+		visibility: visible;
+	}
+
 	.slick {
 
 		.slick-list {
@@ -27,12 +32,13 @@
 		.slick-prev {
 			background : url("./../img/left-arrow.png") no-repeat scroll center center rgba(0, 0, 0, 0.1);
 			left       : -10px;
+			visibility : hidden;
 		}
 
 		.slick-next {
 			background : url("./../img/left-arrow-right.png") no-repeat scroll center center rgba(0, 0, 0, 0.1);
 			right      : -10px;
+			visibility : hidden;
 		}
-
 	}
 }
