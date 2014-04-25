@@ -202,7 +202,7 @@ define( function ( require ) {
 			'available' : function () {
 				if ( appLoaded ) {
 					try {
-						pd360.cfJsonAPIMethod1();
+						pd360.cfJsonAPIMethod1( 'a', { 'b' : 'c' } );
 					} catch ( error ) {
 						return false;
 					}
