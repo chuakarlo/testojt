@@ -6,7 +6,6 @@ define( function ( require ) {
 	var Marionette      = require( 'marionette' );
 	var MemberItemView  = require( '../views/InfoMemberItemView' );
 	var template        = require( 'text!../templates/groupInfoView.html' );
-	var noGoalsTemplate = require( 'text!../templates/groupInfoNoGoalsView.html' );
 
 	return Marionette.CompositeView.extend( {
 
@@ -17,23 +16,29 @@ define( function ( require ) {
 		'itemViewContainer' : '.memberAvatars',
 
 		'ui' : {
-			'details'     : '.more-details',
-			'membersLink' : '#link-members'
+			'showMoredetails' : '.show-more-details',
+			'hideMoredetails' : '.hide-more-details',
+			'membersLink'     : '#link-members',
+			'groupGoals'      : '#group-goals'
 		},
 
 		'events' : {
-			'click @ui.details'     : 'toggleDetails',
-			'click @ui.membersLink' : 'showMembersTab'
+			'click @ui.showMoredetails' : 'toggleDetails',
+			'click @ui.hideMoredetails' : 'toggleDetails',
+			'click @ui.membersLink'     : 'showMembersTab'
 
 	    },
 
-	    getTemplate : function(){
+	    onRender : function( ) {
 
-			// only show goals if they are set
-			if ( this.model.attributes.Objectives === '' ) {
-				return _.template( noGoalsTemplate );
-			} else {
-				return _.template( template );
+			// display the hide show description link
+			if ( String( this.model.attributes.Misc ).length > 120 ) {
+				this.ui.showMoredetails.toggle();
+			}
+
+			// display the goals section
+			if ( this.model.attributes.Objectives !== '' ) {
+				this.ui.groupGoals.toggle();
 			}
 
 	    },
@@ -54,14 +59,22 @@ define( function ( require ) {
 
 			return {
 
-				getAbbreviation: function ( text, num ) {
-					var abbreviation = $.trim( text ).substring( 0, num ) + '...';
-					return abbreviation;
+				getAbbreviation : function ( string, num ) {
+
+					var text = string;
+
+					// return the num of characters for text
+					if ( string.length > num ) {
+						text = $.trim( string ).substring( 0, num ) + '...';
+						return text;
+
+					}
+					return text;
+
 				},
 
-				getArrayString: function ( array ) {
-
-					return array.join();
+				stripHtml : function ( html ) {
+					return $( html ).text();
 				}
 
 			};

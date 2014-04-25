@@ -25,9 +25,18 @@ define( function ( require ) {
 
 	    'templateHelpers' : {
 
-			getAbbreviation : function ( text, num ) {
-				var abbreviation = $.trim( text ).substring( 0, num ) + '...';
-				return abbreviation;
+			getAbbreviation : function ( string, num ) {
+
+				var text = string;
+
+				// return the num of characters for text
+				if ( string.length > num ) {
+					text = $.trim( string ).substring( 0, num ) + '...';
+					return text;
+
+				}
+				return text;
+
 			}
 
 		}

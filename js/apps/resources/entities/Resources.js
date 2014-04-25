@@ -82,7 +82,10 @@ define( function ( require ) {
 
 					initializeResources();
 
-					App.request( 'user:isAdmin' ).done( function ( isAdmin ) {
+					var adminRequest    = App.request( 'user:roles' );
+					var thereNowRequest = App.request( 'user:isThereNow' );
+
+					$.when( adminRequest, thereNowRequest ).done( function ( isAdmin, isThereNow ) {
 
 						if ( isAdmin === true ) {
 
@@ -96,52 +99,44 @@ define( function ( require ) {
 							Entities.resources.add( adminModel );
 						}
 
-						// check for thereNow access
-						// TODO: one of the nested defers can be eliminated
-						var thereNowLicense = App.request( 'user:isThereNow' );
+						// only make request if they have access
+						if ( isThereNow ) {
 
-						$.when( thereNowLicense ).done( function( thereNow ) {
+							// request the link containing the token for thereNow
+							var thereNowRequest = {
+								'path'   : 'com.schoolimprovement.pd360.dao.AdminService',
+								'method' : 'genThereNowTokenandURL',
+								'args'   : {
+									'personnelId' : Session.personnelId()
+								}
+							};
 
-							// only make request if they have access
-							if ( thereNow ) {
+							var requests     = [ thereNowRequest ];
+							var fetchingData = Remoting.fetch( requests );
 
-								// request the link containing the token for thereNow
-								var thereNowRequest = {
-									'path'   : 'com.schoolimprovement.pd360.dao.AdminService',
-									'method' : 'genThereNowTokenandURL',
-									'args'   : {
-										'personnelId' : Session.personnelId()
-									}
-								};
+							$.when( fetchingData ).done( function ( results ) {
 
-								var requests     = [ thereNowRequest ];
-								var fetchingData = Remoting.fetch( requests );
+								var thereNowResult = results [ 0 ];
+								var thereNowToken  = thereNowResult.url.replace( '{token}', thereNowResult.Token );
+								var thereNowUrl    = thereNowToken.replace( '{action}{id}{tag}', 'index' );
 
-								$.when( fetchingData ).done( function ( results ) {
-
-									var thereNowResult = results [ 0 ];
-									var thereNowToken  = thereNowResult.url.replace( '{token}', thereNowResult.Token );
-									var thereNowUrl    = thereNowToken.replace( '{action}{id}{tag}', 'index' );
-
-									// create link in more resources menu
-									var adminModel = new Entities.Resources( {
-										'name' : 'ThereNow',
-										'icon' : 'fa-hand-o-right',
-										'url'  : thereNowUrl,
-										'id'   : 'link-more-thereNow'
-									} );
-
-									Entities.resources.add( adminModel );
-
-									defer.resolve( Entities.resources );
-
+								// create link in more resources menu
+								var adminModel = new Entities.Resources( {
+									'name' : 'ThereNow',
+									'icon' : 'fa-hand-o-right',
+									'url'  : thereNowUrl,
+									'id'   : 'link-more-thereNow'
 								} );
 
-							} else {
-								defer.resolve( Entities.resources );
-							}
+								Entities.resources.add( adminModel );
 
-						} );
+								defer.resolve( Entities.resources );
+
+							} );
+
+						} else {
+							defer.resolve( Entities.resources );
+						}
 
 					} );
 

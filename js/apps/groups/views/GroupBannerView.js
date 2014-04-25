@@ -1,13 +1,14 @@
 define( function ( require ) {
 	'use strict';
 
-	var _              = require( 'underscore' );
-	var Marionette     = require( 'marionette' );
-	var Vent           = require( 'Vent' );
-	var Session        = require( 'Session' );
-	var App            = require( 'App' );
-	var template       = require( 'text!../templates/groupBannerView.html' );
-	var leaderTemplate = require( 'text!../templates/groupLeaderBannerView.html' );
+	var _               = require( 'underscore' );
+	var Marionette      = require( 'marionette' );
+	var Vent            = require( 'Vent' );
+	var Session         = require( 'Session' );
+	var App             = require( 'App' );
+	var template        = require( 'text!../templates/groupBannerView.html' );
+	var leaderTemplate  = require( 'text!../templates/groupLeaderBannerView.html' );
+	var creatorTemplate = require( 'text!../templates/groupCreatorBannerView.html' );
 
 	return Marionette.ItemView.extend( {
 
@@ -18,6 +19,11 @@ define( function ( require ) {
 			'click button.Leave'            : 'leaveGroup',
 			'click button.Join'             : 'joinGroup',
 			'click button#btn-leader-tools' : 'showLeaderTools'
+	    },
+
+	    'initialize' : function ( options ) {
+			this.isGroupAdmin = options.userGroupAdmin;
+
 	    },
 
 	    'leaveGroup' : function ( e ) {
@@ -41,11 +47,17 @@ define( function ( require ) {
 
 	    },
 
-	    getTemplate : function(){
+	    getTemplate : function() {
 
-			// add the remove button if user created the message
+			// displays group leader tools, but not leave option for creator
 			if ( String( this.model.attributes.Creator ) === String( Session.personnelId() ) ){
+				return _.template( creatorTemplate );
+
+			}
+			// leaders that are not the creator should be allowed to leave group
+			else if ( this.isGroupAdmin && ( String( this.model.attributes.Creator ) !== String( Session.personnelId() ) ) ) {
 				return _.template( leaderTemplate );
+
 			} else {
 				return _.template( template );
 			}
@@ -53,22 +65,21 @@ define( function ( require ) {
 	    },
 
 		'templateHelpers' : function () {
-
 			return {
 
-				getMemberStatus: function() {
+				getMemberStatus : function() {
 
 					var membership = _.find( this.model.groups, { 'LicenseId': this.model.attributes.LicenseId } );
 
-						if ( !membership ) {
-							if( this.model.attributes.PrivateGroup !== 0 ) {
-								return 'Join';
-							} else {
-								return 'Request';
-							}
+					if ( !membership ) {
+						if( this.model.attributes.PrivateGroup !== 0 ) {
+							return 'Join';
 						} else {
-							return 'Leave';
+							return 'Request';
 						}
+					} else {
+						return 'Leave';
+					}
 
 				}.bind( this )
 

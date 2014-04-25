@@ -66,7 +66,10 @@ define( function ( require ) {
 				this.listenTo( App.flashContent, 'close', function () {
 					Session.destroy();
 
-					App.navigate( 'login', { 'trigger' : true } );
+					var currentLocation = window.location.origin;
+
+					// this is to reload the application
+					window.location.assign( currentLocation );
 				} );
 
 				App.request( 'pd360:hide' );

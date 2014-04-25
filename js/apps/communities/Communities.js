@@ -44,7 +44,7 @@ define( function ( require ) {
 			},
 
 			'showFormPost' : function( LocationTypeId, LocationId, ForumThreadId, ForumPostId ) {
-				Communities.Show.Cntroller.showCommunities();
+				Communities.Show.Controller.showCommunities();
 				App.request( 'pd360:navigate', null, 'communities', 'communitiesBrowse', {
 					'LocationTypeId' : LocationTypeId,
 					'LocationId'     : LocationId,

@@ -18,14 +18,14 @@ define( function ( require ) {
 
 			var CommentCollection = require( '../collections/CommentCollection' );
 
-	        var replies = this.get('replies');
+	        var replies = this.get( 'replies' );
 	        if ( replies ){
 	            this.replies = new CommentCollection( replies );
 	            this.unset('replies');
 	        }
 
-	        if ( this.Message === '' ) {
-				this.Message = this.NewsEntry;
+	        if ( this.attributes.Message === '' ) {
+				this.attributes.Message = this.attributes.NewsEntry;
 	        }
 
 	    }

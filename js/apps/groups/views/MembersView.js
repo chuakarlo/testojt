@@ -3,7 +3,6 @@ define( function ( require ) {
 
 	var _              = require( 'underscore' );
 	var Marionette     = require( 'marionette' );
-	var $              = require( 'jquery' );
 	var MemberItemView = require( '../views/MemberItemView' );
 	var template       = require( 'text!../templates/groupMembersView.html' );
 
@@ -21,12 +20,7 @@ define( function ( require ) {
 
 				'memberCount' : function () {
 					return this.collection.count;
-				}.bind( this ),
-
-				getAbbreviation: function ( text, num ) {
-					var abbreviation = $.trim( text ).substring( 0, num ) + '...';
-					return abbreviation;
-				}
+				}.bind( this )
 
 			};
 

@@ -60,7 +60,7 @@ define( function ( require ) {
 				var groupCommentModel = new GroupCommentModel( message );
 				Vent.trigger( 'group:createComment', groupCommentModel );
 
-			} ).fail( function ( error ) {
+			} ).fail( function () {
 				// TODO: error handling
 
 			} );
