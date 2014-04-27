@@ -5,23 +5,27 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 	var Backbone   = require( 'backbone' );
-	var template   = require( 'text!user/templates/register/register.html' );
+	var template   = require( 'text!user/templates/register/registerLayout.html' );
 	var App        = require( 'App' );
 
 	require( 'validation' );
 	require( 'backbone.stickit' );
 
 
-	return Marionette.ItemView.extend( {
+	return Marionette.Layout.extend( {
 
 		'template' : _.template( template ),
 
+		'regions' : {
+			'eulaRegion' : '#eula-content'
+		},
+
 		'events' : {
-			'submit'                : 'register',
-			'change @ui.email'      : 'checkEmail',
-			'change @ui.country'    : 'updateStates',
-			'change @ui.state'      : 'updateDistricts',
-			'change @ui.district'   : 'updateSchools'
+			'submit'              : 'register',
+			'change @ui.email'    : 'checkEmail',
+			'change @ui.country'  : 'updateStates',
+			'change @ui.state'    : 'updateDistricts',
+			'change @ui.district' : 'updateSchools'
 		},
 
 		'ui' : {
@@ -64,9 +68,9 @@ define( function ( require ) {
 			'[name="State"]' : {
 				'observe' : 'State',
 				'selectOptions' : {
-					'collection' : [],
+					'collection' : [ ],
 					'labelPath'  : 'label',
-					'valuePath'  : 'value',
+					'valuePath'  : 'value'
 				}
 			},
 
@@ -128,7 +132,7 @@ define( function ( require ) {
 
 		'checkEmail' : function ( event ) {
 
-			if ( this.model.isValid( ['EmailAddress'] ) ) {
+			if ( this.model.isValid( [ 'EmailAddress' ] ) ) {
 
 				var that = this;
 
@@ -180,7 +184,7 @@ define( function ( require ) {
 							'[name="DistrictName"]' : {
 								'observe' : 'DistrictName',
 								'selectOptions' : {
-									'collection' : districts,
+									'collection' : districts
 								},
 								'defaultOption' : {
 									'label' : 'Choose a district...',
@@ -287,7 +291,7 @@ define( function ( require ) {
 				$( '.js-submitting' ).removeClass( 'hidden' );
 
 				$.ajax( {
-					'url' : url,
+					'url' : url
 				} ).done( function( data, textStatus, jqXHR ) {
 
 					if ( data === '\"email address already in use\"' ) {

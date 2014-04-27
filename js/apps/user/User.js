@@ -10,6 +10,7 @@ define( function ( require ) {
 	require( 'user/controllers/loginController' );
 	require( 'user/controllers/settingsController' );
 	require( 'user/controllers/registerController' );
+	require( 'user/controllers/eulaController' );
 	require( 'user/entities/License' );
 	require( 'user/entities/Profile' );
 	require( 'user/entities/Personnel' );
@@ -27,6 +28,7 @@ define( function ( require ) {
 		User.Router = AuthRouter.extend( {
 
 			'appRoutes' : {
+				'eula'             : 'showEula',
 				'login'            : 'showLogin',
 				'logout'           : 'showLogout',
 				'register'         : 'showRegister',
@@ -51,6 +53,12 @@ define( function ( require ) {
 				App.request( 'pd360:hide' );
 
 				User.Register.Controller.showRegister();
+			},
+
+			'showEula' : function () {
+				App.request( 'pd360:hide' );
+
+				User.Eula.Controller.showEula();
 			},
 
 			'showLogout' : function () {
@@ -125,6 +133,11 @@ define( function ( require ) {
 
 		App.reqres.setHandler( 'session:username', function () {
 			return Session.username();
+		} );
+
+		// set handler when requesting if EULA is accepted
+		App.reqres.setHandler( 'session:eulaAccepted', function () {
+			return Session.eulaAccepted();
 		} );
 
 		// set handler when requesting if session is authenticated

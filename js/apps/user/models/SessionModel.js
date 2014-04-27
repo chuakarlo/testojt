@@ -11,6 +11,7 @@ define( function ( require ) {
 
 	var usernameCookie  = 'UID';
 	var personnelCookie = 'PID';
+	var eulaCookie      = 'EULA';
 	var cfCookie        = 'CFAUTHORIZATION_PD360';
 	var cookieOptions   = { 'path' : '/' };
 
@@ -35,7 +36,8 @@ define( function ( require ) {
 
 					// Set the cookies before we trigger success
 					this.setCookie( usernameCookie, this.username );
-					this.setCookie( personnelCookie, jqXHR[ 0 ].PersonnelId );
+					this.setCookie( personnelCookie, jqXHR.PersonnelId );
+					this.setCookie( eulaCookie, jqXHR.LicenseAccepted );
 
 					Vent.trigger( 'login:success' );
 					Vent.trigger( 'session:change' );
@@ -71,6 +73,7 @@ define( function ( require ) {
 				this.removeCookie( usernameCookie );
 			}
 			this.removeCookie( personnelCookie );
+			this.removeCookie( eulaCookie );
 
 			// Log out of flash
 			Vent.trigger( 'pd360:logout' );
@@ -93,6 +96,10 @@ define( function ( require ) {
 			return _.every( cookies, function( cookie ) {
 				return Boolean( $.cookie( cookie ) );
 			} ) ;
+		},
+
+		'eulaAccepted' : function () {
+			return $.cookie( eulaCookie );
 		},
 
 		'username' : function () {

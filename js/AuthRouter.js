@@ -7,24 +7,33 @@ define( function ( require ) {
 	var AuthRouter = FilteredRouter.extend( {
 
 		'before' : {
-			'^groups' : function() {
-				return this.authCheck();
+			'^groups' : function () {
+				return this.checkAll();
 			},
 
-			'^resources' : function() {
-				return this.authCheck();
+			'^resources' : function () {
+				return this.checkAll();
 			},
 
-			'^settings' : function() {
-				return this.authCheck();
+			'^settings' : function () {
+				return this.checkAll();
 			},
 
-			'^home' : function() {
+			'^home' : function () {
+				return this.checkAll();
+			},
+
+			'^eula' : function () {
 				return this.authCheck();
 			}
 		},
 
-		'authCheck' : function() {
+		'checkAll' : function () {
+			return this.authCheck() && this.eulaCheck();
+		},
+
+		'authCheck' : function () {
+
 			if ( !App.request( 'session:checkSession' ) ) {
 				App.navigate( 'login', { 'trigger' : true } );
 
@@ -32,7 +41,19 @@ define( function ( require ) {
 			}
 
 			return true;
+		},
+
+		'eulaCheck' : function () {
+
+			if ( !App.request( 'session:eulaAccepted' ) ) {
+				App.navigate( 'eula', { 'trigger' : true } );
+
+				return false;
+			}
+
+			return true;
 		}
+
 	} );
 
 	return AuthRouter;

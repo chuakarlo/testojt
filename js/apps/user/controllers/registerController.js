@@ -1,8 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	var App          = require( 'App' );
-	var RegisterView = require( 'user/views/register/RegisterView' );
+	var App            = require( 'App' );
+	var RegisterLayout = require( 'user/views/register/RegisterLayout' );
+	var EulaContent    = require( 'user/views/eula/EulaContent' );
 
 	require( 'common/entities/States' );
 	require( 'common/entities/Districts' );
@@ -18,11 +19,14 @@ define( function ( require ) {
 				var loadingView = new App.Common.LoadingView();
 				App.content.show( loadingView );
 
-				var register = new RegisterView( {
+				var registerLayout = new RegisterLayout( {
 					'model'  : new App.Entities.Personnel()
 				} );
 
-				App.content.show( register );
+				App.content.show( registerLayout );
+
+				var eulaContent = new EulaContent();
+				registerLayout.eulaRegion.show( eulaContent );
 
 			}
 
