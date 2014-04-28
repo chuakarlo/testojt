@@ -15,12 +15,18 @@ require( 'colors' );
 var options = { 'newmi' : true };
 var verbose = process.argv.indexOf( '--details' ) > -1;
 
+function cb ( callback ) {
+	if ( typeof callback === 'function' ) {
+		callback();
+	}
+}
+
 function report ( files, callback ) {
 
 	if ( !files.length ) {
 		console.log( 'No files for Complexity Report to check.' );
 
-		return callback();
+		return cb();
 	}
 
 	var warnings = [ ];
@@ -98,7 +104,7 @@ function report ( files, callback ) {
 		console.log( 'No complexity errors found.\n' );
 	}
 
-	callback();
+	cb( callback );
 
 }
 

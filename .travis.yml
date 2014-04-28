@@ -23,5 +23,5 @@ before_script:
   - node server.js &
 
 script:
-  - grunt travis-lint
+  - grunt lint:travis
   - npm test

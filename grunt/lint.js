@@ -6,11 +6,12 @@ require( 'colors' );
 
 module.exports = function ( grunt ) {
 
-	grunt.registerTask( 'travis-lint', function () {
-		lint.travisLint( this.async() );
+	grunt.registerTask( 'lint', function ( type ) {
+		if ( type === 'file' || type === 'travis' ) {
+			return lint.lintFiles( this.async(), type );
+		}
+		grunt.task.run( [ 'jshint', 'eslint' ] );
 	} );
-
-	grunt.registerTask( 'lint', [ 'jshint', 'eslint' ] );
 
 	// Do not use directly, use the `lint` task instead
 	grunt.registerTask( 'jshint', function () {

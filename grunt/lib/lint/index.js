@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	'jshint'     : require( './jshint' ).git,
-	'eslint'     : require( './eslint' ).git,
-	'travisLint' : require( './travis-lint' )
+	'jshint'    : require( './jshint' ).git,
+	'eslint'    : require( './eslint' ).git,
+	'lintFiles' : require( './lintFiles' )
 };

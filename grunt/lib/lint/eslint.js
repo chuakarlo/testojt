@@ -27,9 +27,7 @@ function lint ( files, callback ) {
 
 	console.log( '  No ESLint errors found.' );
 
-	if ( typeof callback === 'function' ) {
-		callback();
-	}
+	cb( callback );
 }
 
 function git ( callback ) {

@@ -30,12 +30,14 @@
     "async": "0.2.x",
     "jshint": "2.3.x",
     "plato": "~1.0.1",
-    "glob": "~3.2.9",
+    "glob": "^3.2.9",
     "grunt-contrib-jshint": "~0.10.0",
     "jshint-stylish": "~0.1.5",
     "colors": "~0.6.2",
     "eslint": "~0.5.1",
     "escomplex-js": "~0.1.1",
-    "grunt-blanket-mocha": "~0.4.0"
+    "grunt-blanket-mocha": "~0.4.0",
+    "minimist": "0.0.8",
+    "readdirp": "^1.0.1"
   }
 }

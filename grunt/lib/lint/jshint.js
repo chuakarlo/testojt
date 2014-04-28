@@ -35,7 +35,7 @@ function lint ( files, callback ) {
 	files.forEach( function ( file, index ) {
 		var content;
 
-		var filePath = path.join( process.cwd(), file );
+		var filePath = path.resolve( process.cwd(), file );
 
 		try {
 			content = fs.readFileSync( filePath, 'utf8' );
@@ -70,9 +70,7 @@ function lint ( files, callback ) {
 
 	console.log( '  No JSHint errors found.' );
 
-	if ( typeof callback === 'function' ) {
-		callback();
-	}
+	cb( callback );
 
 }
 
