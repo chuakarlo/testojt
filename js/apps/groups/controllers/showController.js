@@ -95,7 +95,7 @@ define( function ( require ) {
 
 					var _pickComments = function( comment ){
 						return _.extend( _.pick( _.find( comment, { 'MessageId': 1 } ) , 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created', 'NewsEntry', 'NewsId' ), {
-					        replies: _.map( _.reject( comment, { 'MessageId' : 1 } ), function( elem ) {
+					        replies : _.map( _.reject( comment, { 'MessageId' : 1 } ), function( elem ) {
 								return _.pick( elem, 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created', 'NewsEntry', 'NewsId' );
 					        } )
 					    } );
@@ -168,7 +168,7 @@ define( function ( require ) {
 
 								var comments = _.map( _.groupBy( newWall, 'MessageThreadId' ), function( comment ) {
 								    return _.extend( _.pick( _.find( comment, { 'MessageId': 1 } ) , 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created', 'NewsEntry', 'NewsId' ), {
-								        replies: _.map( _.reject( comment, { 'MessageId' : 1 } ), function( elem ) {
+								        replies : _.map( _.reject( comment, { 'MessageId' : 1 } ), function( elem ) {
 											return _.pick( elem, 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created', 'NewsEntry', 'NewsId' );
 								        } )
 								    } );
