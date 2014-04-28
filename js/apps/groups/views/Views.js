@@ -15,6 +15,7 @@ define( function ( require ) {
 		Views.CommentCreate      = require( './GroupCommentCreateView' );
 		Views.CommentsCollection = require( './GroupCommentsCollectionView' );
 		Views.Members            = require( './MembersView' );
+		Views.Resources          = require( './GroupResourcesView' );
 
 	} );
 

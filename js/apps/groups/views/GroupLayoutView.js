@@ -17,7 +17,8 @@ define( function ( require ) {
 			'subNavRegion'        : '#group-sub-nav',
 			'commentCreateRegion' : '.comment-create',
 			'commentsRegion'      : '.comments-list',
-			'membersRegion'       : '#members-list'
+			'membersRegion'       : '#members-list',
+			'resourcesRegion'     : '.resources-list'
 
 		}
 

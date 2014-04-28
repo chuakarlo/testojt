@@ -59,6 +59,7 @@ define( function ( require ) {
 					'commentCreateRegion' : { 'show' : showSpy },
 					'commentsRegion'      : { 'show' : showSpy },
 					'membersRegion'       : { 'show' : showSpy },
+					'resourcesRegion'     : { 'show' : showSpy }
 				} );
 
 				// call controllers method
@@ -74,7 +75,7 @@ define( function ( require ) {
 				showStub.should.have.callCount( 1 );
 
 				// regions should have called show
-				showSpy.should.have.callCount( 5 );
+				showSpy.should.have.callCount( 6 );
 			} );
 
 		} );

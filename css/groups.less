@@ -87,7 +87,7 @@
 			width    : 140px;
 		}
 
-	 }
+	}
 
 	.header {
 
@@ -137,6 +137,40 @@
 				}
 			}
 		}
+	}
+
+	.resources-list {
+
+		.media-list {
+
+			.resource-upload-button {
+				float : right;
+			}
+
+			.resource-container {
+				padding-bottom : @padding-large-vertical * 2;
+				display        : block;
+
+				.resource-icon {
+					float         : left;
+					left          : -@padding-large-horizontal;
+					padding-right : @padding-small-horizontal;
+					max-width     : 100px;
+					max-height    : 100px;
+				}
+
+				.resource-main {
+					position : relative;
+
+					.resource-name {
+						color : @brand-primary;
+					}
+				}
+
+			}
+
+		}
+
 	}
 
 	#details-full {

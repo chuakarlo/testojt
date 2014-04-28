@@ -1,15 +1,16 @@
 define( function ( require ) {
 	'use strict';
 
-	var Remoting          = require( 'Remoting' );
-	var Session           = require( 'Session' );
-	var MemberCollection  = require( '../collections/MemberCollection' );
-	var CommentCollection = require( '../collections/CommentCollection' );
-	var GroupModel        = require( '../models/GroupModel' );
-	var App               = require( 'App' );
-	var $                 = require( 'jquery' );
-	var _                 = require( 'underscore' );
-	var Vent              = require( 'Vent' );
+	var Remoting            = require( 'Remoting' );
+	var Session             = require( 'Session' );
+	var MemberCollection    = require( '../collections/MemberCollection' );
+	var CommentCollection   = require( '../collections/CommentCollection' );
+	var ResourcesCollection = require( '../collections/ResourcesCollection' );
+	var GroupModel          = require( '../models/GroupModel' );
+	var App                 = require( 'App' );
+	var $                   = require( 'jquery' );
+	var _                   = require( 'underscore' );
+	var Vent                = require( 'Vent' );
 
 	App.module( 'Groups.Show', function ( Show ) {
 
@@ -61,7 +62,22 @@ define( function ( require ) {
 					}
 				};
 
-				var requests     = [ groupRequest, membersRequest, groupsRequest, wallRequest ];
+				// Get resources of the group
+				// TODO : replace with correct API
+				var resourcesRequest = {
+					'path'   : 'com.schoolimprovement.pd360.dao.groups.GroupMessagesGateway',
+					'method' : 'getGroupWall',
+					'args'   : {
+						'licId'     : groupId,
+						'startRow'  : 0,
+						'numRows'   : 10000,
+						'totalRows' : 10000,
+						'msgFlag'   : 1,
+						'newsFlag'  : 1
+					}
+				};
+
+				var requests     = [ groupRequest, membersRequest, groupsRequest, wallRequest, resourcesRequest ];
 				var fetchingData = Remoting.fetch( requests );
 
 				$.when( fetchingData ).done( function ( results ) {
@@ -75,17 +91,23 @@ define( function ( require ) {
 					var members      = results [ 1 ];
 					var groups       = results [ 2 ];
 					var groupWall    = results [ 3 ];
+					var resources    = results [ 4 ];
+
+					var _pickComments = function( comment ){
+						return _.extend( _.pick( _.find( comment, { 'MessageId': 1 } ) , 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created', 'NewsEntry', 'NewsId' ), {
+					        replies: _.map( _.reject( comment, { 'MessageId' : 1 } ), function( elem ) {
+								return _.pick( elem, 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created', 'NewsEntry', 'NewsId' );
+					        } )
+					    } );
+					};
 
 					// Set the comments
 					// the wall returned is a single list of comments
 					// using 'MessageThreadId' this will create an array of objects
 					// each object will contain the main message and an array of 'replies'
 					var comments = _.map( _.groupBy( groupWall, 'MessageThreadId' ), function( comment ) {
-					    return _.extend( _.pick( _.find( comment, { 'MessageId': 1 } ) , 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created', 'NewsEntry', 'NewsId' ), {
-					        replies: _.map( _.reject( comment, { 'MessageId' : 1 } ), function( elem ) {
-								return _.pick( elem, 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created', 'NewsEntry', 'NewsId' );
-					        } )
-					    } );
+
+					    return _pickComments( comment );
 					} );
 
 					// Creating a comment needs to display the user avatar
@@ -95,6 +117,7 @@ define( function ( require ) {
 					} );
 
 					var commentCollection    = new CommentCollection( comments );
+					var resourcesCollection  = new ResourcesCollection( resources );
 					var groupModel           = new GroupModel( group );
 					var someMemberCollection = new MemberCollection( someMembers );
 					var memberCollection     = new MemberCollection( members );
@@ -165,6 +188,9 @@ define( function ( require ) {
 					// Members tabs
 					var membersView = new App.Groups.Views.Members( { 'model' : groupModel, 'collection' : memberCollection } );
 					this.layout.membersRegion.show( membersView );
+
+					var resourcesView = new App.Groups.Views.Resources( { 'collection' : resourcesCollection } );
+					this.layout.resourcesRegion.show( resourcesView );
 
 
 				}.bind( this ) ).fail( function ( error ) {
