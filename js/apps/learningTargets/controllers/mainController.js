@@ -185,6 +185,4 @@ define( function ( require ) {
 
 	} );
 
-
-
 } );
