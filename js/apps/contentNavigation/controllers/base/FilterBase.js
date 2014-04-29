@@ -110,7 +110,7 @@ define( function ( require ) {
 			if( $( '#cn-left-region' ).length ) {
 				$( '#cn-left-region' ).perfectScrollbar( {
 					'minScrollbarLength' : 20,
-					'wheelPropagation'   : true
+					'wheelPropagation'   : false
 		        } );
 			}
 		},

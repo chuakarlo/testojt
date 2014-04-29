@@ -4,7 +4,7 @@ define( function( require ) {
     var expect                        = require( 'chai' ).expect;
     var sinon                         = window.sinon;
     var Component                     = require( 'contentNavigation/components/FilterComponent' );
-    var Collection                    = require( 'contentNavigation/collections/FiltersCollection' );
+    var Collection                    = require( 'contentNavigation/collections/FilterCollection' );
     var Model                         = require( 'contentNavigation/models/FilterModel' );
     var FilterBaseMixin               = require( 'contentNavigation/controllers/base/FilterBase' );
     var PD360FilterController         = require( 'contentNavigation/controllers/pd360Library/PD360FilterController' );
