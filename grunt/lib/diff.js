@@ -3,6 +3,9 @@
 // Load core modules
 var exec = require( 'child_process' ).exec;
 
+// Load other modules
+var _ = require( 'lodash' );
+
 module.exports = function ( callback ) {
 	var command = 'git diff --name-only --staged';
 
@@ -17,7 +20,9 @@ module.exports = function ( callback ) {
 			return callback();
 		}
 
-		callback( stdout.split( '\n' ) );
+		var array = _.without( stdout.split( '\n' ), '', null, undefined );
+
+		callback( array );
 
 	} );
 

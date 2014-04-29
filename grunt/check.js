@@ -2,6 +2,6 @@
 
 module.exports = function ( grunt ) {
 
-	grunt.registerTask( 'check', [ 'lint', 'cr' ] );
+	grunt.registerTask( 'check', [ 'lint', 'whitespace', 'cr' ] );
 
 };
