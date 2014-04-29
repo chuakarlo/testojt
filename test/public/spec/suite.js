@@ -26,13 +26,13 @@ define( function ( require ) {
 			//'spec/apps/contentNavigation/mainTest',
 
 			// //Models
-			// 'spec/apps/contentNavigation/models/SegmentModelTest',
-			// 'spec/apps/contentNavigation/models/FilterModelTest',
-			// 'spec/apps/contentNavigation/models/WatchLaterModelTest',
-			// 'spec/apps/contentNavigation/models/LibraryTreeChildrenModelTest',
-			// 'spec/apps/contentNavigation/models/LibraryTreeModelTest',
-			// 'spec/apps/contentNavigation/models/LicenseModelTest',
-			// 'spec/apps/contentNavigation/models/UUVModelTest',
+			'spec/apps/contentNavigation/models/SegmentModelTest',
+			'spec/apps/contentNavigation/models/FilterModelTest',
+			'spec/apps/contentNavigation/models/WatchLaterModelTest',
+			'spec/apps/contentNavigation/models/LibraryTreeChildrenModelTest',
+			'spec/apps/contentNavigation/models/LibraryTreeModelTest',
+			'spec/apps/contentNavigation/models/LicenseModelTest',
+			'spec/apps/contentNavigation/models/UUVModelTest',
 
 			// //Collections
 			'spec/apps/contentNavigation/collections/SegmentCollectionTest',
