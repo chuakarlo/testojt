@@ -4,7 +4,7 @@ define( function ( require ) {
 	var sinon = window.sinon;
 	var $     = require( 'jquery' );
 
-	var VideoCollectionView = require( 'videoPlayer/views/tabs/VideoCollectionView' );
+	var VideoCollectionView    = require( 'videoPlayer/views/tabs/VideoCollectionView' );
 	var RelatedVideoCollection = require( 'videoPlayer/collections/RelatedVideoCollection' );
 
 	describe( 'VideoCollectionView', function ( ) {
@@ -14,18 +14,31 @@ define( function ( require ) {
 
 		before( function ( ) {
 			testData = [ {
-				'ContentName' : '',
-				'ContentId'   : ''
+				'ImageURL'               : '',
+				'SegmentLengthInSeconds' : '',
+				'ContentName'            : '',
+				'ContentId'              : 1
 			} ];
 
-			testCollection = new RelatedVideoCollection( testData );
+			testCollection = new RelatedVideoCollection();
+			testCollection.reset( testData );
+
+			VideoCollectionView.prototype.onBeforeItemAdded = function ( itemView ) {
+				sinon.stub( itemView.templateHelpers, 'imageUrl' ).returns( '' );
+			};
+			VideoCollectionView.prototype.onItemRemoved = function ( itemView ) {
+				itemView.templateHelpers.imageUrl.restore();
+			};
+
 			videosCollectionView = new VideoCollectionView( {
 				'collection': testCollection
 			} );
+
 			videosCollectionView.render();
 		} );
 
 		after( function() {
+			videosCollectionView.remove();
 			videosCollectionView = null;
 		} );
 
@@ -49,8 +62,6 @@ define( function ( require ) {
 				videosCollectionView.tagName.should.be.equal( 'div' );
 			} );
 		} );
-
-
 
 		describe( '.onShow', function ( ) {
 			var slickSpy;

@@ -113,6 +113,8 @@ define( function ( require ) {
 			// views/questions
 			'spec/apps/videoPlayer/views/QuestionsCompositeViewTest.js',
 			'spec/apps/videoPlayer/views/QuestionItemViewTest.js',
+			// views/info
+			'spec/apps/videoPlayer/views/VideoInfoItemViewTest.js',
 			// views/share
 			'spec/apps/videoPlayer/views/share/ShareVideoLayoutTest.js',
 			'spec/apps/videoPlayer/views/share/SharedVideoItemViewTest.js',
