@@ -5,7 +5,7 @@ define( function ( require ) {
 	var expect		        = require( 'chai' ).expect;
 	var Backbone	        = require( 'backbone' );
 
-	var WatchLaterCollection	= require( 'contentNavigation/collections/watchLaterCollection' );
+	var WatchLaterCollection	= require( 'contentNavigation/collections/WatchLaterCollection' );
 	var watchLaterCollection	= new WatchLaterCollection();
 
 	var WatchLaterModel		= require( 'contentNavigation/models/WatchLaterModel' );
