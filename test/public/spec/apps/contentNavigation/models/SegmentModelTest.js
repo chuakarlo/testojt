@@ -23,7 +23,7 @@ define( function ( require ) {
 
     var segmentModel = new SegmentModel( );
 
-    describe( 'Segment Model' , function( ) {
+    describe( 'CN-Segment Model' , function( ) {
 
         describe( 'Every SegmentModel instance', function( ) {
 

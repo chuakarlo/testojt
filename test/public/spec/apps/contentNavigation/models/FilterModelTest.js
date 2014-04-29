@@ -8,7 +8,7 @@ define( function ( require ) {
 	var FilterModel = require( 'contentNavigation/models/FilterModel' );
 	var filterModel = new FilterModel();
 
-	describe( 'Filter Model', function () {
+	describe( 'CN-Filter Model', function () {
 
 		it( 'should be an instance of a Backbone.Model object', function () {
 			filterModel.should.be.an.instanceof( Backbone.Model );
