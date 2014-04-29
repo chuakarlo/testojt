@@ -1,10 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette   = require( 'marionette' );
-	var _            = require( 'underscore' );
-	var template     = require( 'text!videoPlayer/templates/tabs/videoItemView.html' );
-	var hhmmssFormat = require( 'videoPlayer/utils/toHHMMSSFormat' );
+	var Marionette = require( 'marionette' );
+	var _          = require( 'underscore' );
+	var template   = require( 'text!videoPlayer/templates/tabs/videoItemView.html' );
+	var utils      = require( 'videoPlayer/utils/utils' );
 
 	return Marionette.ItemView.extend( {
 
@@ -20,7 +20,7 @@ define( function ( require ) {
 			},
 
 			'duration' : function () {
-				return hhmmssFormat( this.SegmentLengthInSeconds );
+				return utils.formatTime( this.SegmentLengthInSeconds );
 			}
 
 		}

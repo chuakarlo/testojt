@@ -14,7 +14,9 @@ define ( function ( require ) {
 			stub = sinon.stub().returns( false );
 			sinon.stub( Remoting, 'fetch' );
 			App.reqres.setHandler( 'pd360:available', stub );
-			contentModel = new ContentModel();
+			contentModel = new ContentModel( {
+				'ContentId' : 1
+			} );
 		} );
 
 		after( function () {
@@ -26,12 +28,12 @@ define ( function ( require ) {
 			contentModel.should.be.an.instanceof( ContentModel );
 		} );
 
-		describe( '.updateProgress', function () {
+		describe( '.getUpdateOptions', function () {
 
-			it( 'should call Remoting', function () {
-				Remoting.fetch.should.have.callCount( 0 );
-				contentModel.updateProgress( 0 );
-				Remoting.fetch.should.have.callCount( 1 );
+			it( 'should return object with correct properties', function () {
+				var request = contentModel.getUpdateOptions();
+				request.should.have.property( 'method' );
+				request.should.have.property( 'args' );
 			} );
 
 		} );

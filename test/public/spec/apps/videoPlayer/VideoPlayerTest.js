@@ -8,6 +8,7 @@ define( function( require ) {
 	var App        = require( 'App' );
 	var Content    = require( 'videoPlayer/models/ContentModel' );
 
+	require( 'common/views' );
 	require( 'videoPlayer/VideoPlayer' );
 
 	describe( 'VideoPlayer Module', function () {
@@ -130,9 +131,9 @@ define( function( require ) {
 
 				 it( 'should return followup questions after a specified time', function ( done ) {
 					 var options = {
-						'timezone': 'MST7MDT',
-						'duration': 'seconds',
-						'timeDuration': 1
+						'timezone' : 'MST7MDT',
+						'unit'     : 'seconds',
+						'duration' : 1
 					 };
 
 					 var fakeData = [ {

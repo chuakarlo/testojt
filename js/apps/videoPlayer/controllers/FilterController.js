@@ -7,50 +7,47 @@ define( function ( require ) {
 	require( 'moment-timezone' );
 	require( 'timezone' );
 
-	var App = require( 'App' );
-
-	// Filter settings for reflection/followup questions
-	var settings = {
-		'timeDuration' : 10,
-		'timezone' : 'MST7MDT',
-		'duration' : 'minutes'
-	};
-
-	// Question type id
-	var type = {
-		'Reflection' : 1,
-		'Followup' : 2
-	};
+	var App    = require( 'App' );
+	var config = require( 'config' ).questions;
 
 	App.module( 'VideoPlayer.Controller', function( Controller ) {
 
 		Controller.Filter = {
 
 			// Logic to show which type of questions.
-			// `settings` is used to control which type to show.
-			'filterQuestions' : function( questions, options ) {
-				options = _.extend( settings, options );
+			'filterQuestions' : function ( questions, options ) {
+				options = _.extend( config, options );
 
-				var showTypes = type.Reflection; // default questions to show
+				var showFollowup = false;
 
-				if ( questions[ 0 ].Created !== '' ) {
-					// Reformat date to `options.timezone` format
+				function timeDiff ( time ) {
 					var now = moment()
 					 .tz( options.timezone )
 					 .format( 'MMMM D, YYYY H:mm:ss' );
 
 					var diff = moment( now )
-					 .diff( moment( questions[ 0 ].Created ), options.duration );
+					 .diff( moment( time ), options.unit );
 
-					if ( diff >= options.timeDuration ) {
-						showTypes = type.Followup;
-					}
+					 return diff;
 				}
 
 				return _.filter( questions, function( question ) {
-					return question.QuestionTypeId === showTypes;
-				} );
+					if ( !showFollowup &&
+						question.Created !== '' &&
+						question.QuestionTypeId === 1 &&
+						timeDiff( question.Created ) >= options.duration ) {
 
+						showFollowup = true;
+					}
+
+					// If time to showFollowup is true and question is of type follow-up questions then return question.
+					// If time to showFollowup is false and question is a reflection and yet it is not submitted then return question.
+					if ( ( showFollowup &&question.QuestionTypeId === 2 ) ||
+						 ( !showFollowup && question.QuestionTypeId === 1 && question.Created === '' ) ) {
+						return question;
+					}
+
+				} );
 			}
 
 		};

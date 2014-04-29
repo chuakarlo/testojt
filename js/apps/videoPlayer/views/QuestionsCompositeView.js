@@ -2,7 +2,6 @@ define( function ( require ) {
 	'use strict';
 
 	require( 'slick' );
-	require( 'jquery.mousewheel' );
 
 	var _                 = require( 'underscore' );
 	var Marionette        = require( 'marionette' );
@@ -54,7 +53,6 @@ define( function ( require ) {
 
 			this.showHeader();
 			this.showPagination();
-			this.initMouseTrap();
 		},
 
 		'showHeader' : function () {
@@ -72,12 +70,13 @@ define( function ( require ) {
 		},
 
 		'showPagination' : function () {
-			if ( this.collection && this.collection.length ) {
-				this.ui.currentPage.text( 1 );
-				this.ui.lastPage.text( this.collection.length );
-			} else {
+			if ( this.collection.isEmpty() ) {
 				this.ui.pagination.hide();
+				return;
 			}
+
+			this.ui.currentPage.text( 1 );
+			this.ui.lastPage.text( this.collection.length );
 		},
 
 		'showSubmitButton' : function ( page ) {
@@ -86,23 +85,6 @@ define( function ( require ) {
 			} else {
 				this.ui.submitButton.hide();
 			}
-		},
-
-		'initMouseTrap' : function () {
-			// Cross browser support for mousewheel
-			// Stop scrolling parent when child scroll reaches bottom or top
-			// http://jsbin.com/itajok/1/edit
-			var elem       = this.$el.find( '#reflection-items' );
-			var elemHeight = elem.height();
-
-			// -d scrollbar going down, +d scrollbar going up
-			elem.bind( 'mousewheel', function ( e, d ) {
-				var scrollHeight = elem.get( 0 ).scrollHeight;
-				if ( ( this.scrollTop === ( scrollHeight - elemHeight ) && d < 0 ) ||
-					( this.scrollTop === 0 && d > 0 ) ) {
-					e.preventDefault();
-				}
-			} );
 		},
 
 		'nextQuestion' : function () {
@@ -131,10 +113,10 @@ define( function ( require ) {
 			} );
 
 			if ( unanswered.length !== 0 ) {
-				this.showUnanswered( unanswered );
-			} else {
-				this.saveAnswers();
+				return this.showUnanswered( unanswered );
 			}
+
+			this.saveAnswers();
 		},
 
 		'showUnanswered' : function ( unanswered ) {

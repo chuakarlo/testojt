@@ -6,12 +6,37 @@ define( function ( require ) {
 	var videojs    = require( 'videojs' );
 	var Marionette = require( 'marionette' );
 
-	require( 'videoPlayer/utils/captionToggle' );
+	require( 'videoPlayer/plugins/captionToggle' );
+
 	var template = require( 'text!videoPlayer/templates/player/playerItemView.html' );
 
 	return Marionette.ItemView.extend( {
 
 		'template' : _.template( template ),
+
+		'templateHelpers' : {
+
+			'videoUrl' : function () {
+				var url       = 'http://schoolimp-vh.akamaihd.net/i/PD360/media/video/';
+				var bitrates  = ',304,552,800,1152,1552,1952,2448,';
+				var extension = '.mp4.csmil/master.m3u8';
+				var folder    = this.FileName.split( '.' )[ 0 ];
+				var file      = this.FileName.split( '.' )[ 0 ] + '_';
+
+				if ( this.ContentTypeId === 3 ) {
+					url += 'PD360/';
+				} else if ( this.ContentTypeId === 6 ) {
+					url += 'CC360/';
+				}
+
+				url += this.SKU + '/';
+				url += folder + '/';
+				url += file + bitrates + extension;
+
+				return url;
+			}
+
+		},
 
 		'initialize' : function () {
 			videojs.options.flash.swf = 'js/libs/videojs/video-js.swf';
@@ -21,7 +46,7 @@ define( function ( require ) {
 		},
 
 		'initializePlayer' : function () {
-			var player = videojs( 'example-video', {
+			var player = videojs( 'video-content', {
 				'controls'               : true,
 				'techOrder'              : [ 'flash', 'html5' ],
 				'nativeControlsForTouch' : false
@@ -48,11 +73,11 @@ define( function ( require ) {
 		'bindPlayerEvents' : function ( player ) {
 
 			player.on( 'pause', function () {
-				this.model.updateProgress();
+				this.model.save();
 			}.bind( this ) );
 
 			player.on( 'ended', function () {
-				this.model.updateProgress();
+				this.model.save();
 			}.bind( this ) );
 
 		},
@@ -64,7 +89,7 @@ define( function ( require ) {
 				// If currentTime is not equal 0 that means video was played, then
 				// update progress before disposing player instance.
 				if ( this.model.get( 'currentTime' ) !== 0) {
-					this.model.updateProgress();
+					this.model.save();
 					this.model.set( 'currentTime', 0 );
 				}
 				player.dispose();

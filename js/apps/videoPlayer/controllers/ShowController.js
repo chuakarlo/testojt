@@ -14,15 +14,13 @@ define( function ( require ) {
 	var ResourcesCollection    = require( 'videoPlayer/collections/VideoResourcesCollection' );
 	var RelatedVideoCollection = require( 'videoPlayer/collections/RelatedVideoCollection' );
 
-	var LoadingView = require( 'common/views/LoadingView' );
-
 	App.module( 'VideoPlayer.Controller', function ( Controller ) {
 
 		Controller.Show = {
 
 			'showVideo' : function( videoId ) {
 
-				App.content.show( new LoadingView() );
+				App.content.show( new App.Common.LoadingView() );
 
 				var licenseType = [ 0, 1, 200, 300 ];
 
@@ -38,7 +36,11 @@ define( function ( require ) {
 				var getVideoInfo = Remoting.fetch( videoContentRequests );
 
 				$.when( getVideoInfo ).done( function ( response ) {
-					this.showVideoResources( _.first( response ) );
+					if ( _.isEmpty( response ) || _.first( response ) === '' ) {
+						App.content.show( new App.Common.NotFoundView() );
+					} else {
+						this.showVideoResources( _.first( response ) );
+					}
 				}.bind( this ) );
 			},
 
@@ -104,7 +106,7 @@ define( function ( require ) {
 					var layout = new App.VideoPlayer.Views.PageLayout( { 'model' : videoModel } );
 					App.content.show( layout );
 
-					var questions     = App.VideoPlayer.Controller.Filter.filterQuestions( response[ 0 ] );
+					var questions     = response[ 0 ];
 					var relatedVideos = response[ 1 ].slice( 1 );
 					var queueContents = response[ 2 ];
 					var segments      = response[ 3 ];
@@ -119,6 +121,8 @@ define( function ( require ) {
 					layout.videoInfoRegion.show( videoInfoView );
 
 					// Questions view
+					// Determine what type of questions to show ( reflection/followup )
+					questions = App.VideoPlayer.Controller.Filter.filterQuestions( questions );
 					var questionsCollection = new QuestionsCollection( questions );
 
 					// Set question ContentTypeId based on video ContentTypeId.

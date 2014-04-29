@@ -2,13 +2,11 @@ define( function ( require ) {
 	'use strict';
 
 	var Backbone = require( 'backbone' );
-
 	var Session  = require( 'Session' );
-	var Remoting = require( 'Remoting' );
 
-	return Backbone.Model.extend( {
+	return Backbone.CFModel.extend( {
 
-		'url' : 'com.schoolimprovement.pd360.dao.RespondService',
+		'path' : 'RespondService',
 
 		'idAttribute' : 'ContentId',
 
@@ -16,27 +14,26 @@ define( function ( require ) {
 			'currentTime' : 0
 		},
 
-		'initialize' : function () { },
-
-		'updateProgress' : function () {
-			var request = {
-				'path' : this.url,
+		'getUpdateOptions' : function () {
+			// TODO
+			// Clarify where to get ViewingId, licId, taskId
+			return {
 				'method' : 'RespondUpdatedViewingTimeWithStatusCheck',
 				'args' : {
 					'PersonnelId'      : Session.personnelId(),
 					'ContentId'        : this.id,
 					'ViewingId'        : 1,
 					'SecondsCompleted' : this.getCurrentTime(),
-					'licId'            : 0, // where to get licenses?
+					'licId'            : 0,
 					'taskId'           : 0
 				}
 			};
-
-			return Remoting.fetch( request );
 		},
 
 		'getCurrentTime' : function () {
 			return parseInt( this.get( 'currentTime' ) , 10);
 		}
+
 	} );
+
 } );

@@ -8,7 +8,7 @@ define( function ( require ) {
 
 	var player     = Backbone.Events;
 	var SpiedModel = Backbone.Model.extend( {
-		'updateProgress' : sinon.spy()
+		'save' : sinon.spy()
 	} );
 
 	describe( 'VideoPlayerView', function () {
@@ -35,22 +35,22 @@ define( function ( require ) {
 			} );
 
 			it( 'reports video progress when video is paused and ends', function () {
-				videoPlayerView.model.updateProgress.should.have.callCount( 0 );
+				videoPlayerView.model.save.should.have.callCount( 0 );
 
 				player.trigger( 'pause' );
-				videoPlayerView.model.updateProgress.should.have.callCount( 1 );
+				videoPlayerView.model.save.should.have.callCount( 1 );
 
 				player.trigger( 'ended' );
-				videoPlayerView.model.updateProgress.should.have.callCount( 2 );
+				videoPlayerView.model.save.should.have.callCount( 2 );
 
-				videoPlayerView.model.updateProgress.reset();
+				videoPlayerView.model.save.reset();
 			} );
 
 			it( 'reports video progress when page navigates and video is played', function () {
 				videoPlayerView.model.set( 'currentTime', 1 );
 				$( window ).trigger( 'hashchange' );
 				player.dispose.should.have.callCount( 1 );
-				videoPlayerView.model.updateProgress.should.have.callCount( 1 );
+				videoPlayerView.model.save.should.have.callCount( 1 );
 			} );
 
 		} );

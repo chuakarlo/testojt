@@ -4,9 +4,9 @@ define( function ( require ) {
 	// libraries
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
-	var formatTime = require( 'videoPlayer/utils/toHHMMSSFormat' );
+	var utils      = require( 'videoPlayer/utils/utils' );
 
-	require( 'videoPlayer/utils/selectText' );
+	require( 'videoPlayer/plugins/selectText' );
 
 	// template
 	var template   = require( 'text!videoPlayer/templates/share/sharedVideoItemView.html' );
@@ -36,7 +36,7 @@ define( function ( require ) {
 			},
 
 			'showSegmentLength' : function () {
-				return formatTime( this.SegmentLengthInSeconds );
+				return utils.formatTime( this.SegmentLengthInSeconds );
 			},
 
 			'showVideoUrl' : function () {
