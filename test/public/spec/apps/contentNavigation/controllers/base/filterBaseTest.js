@@ -18,7 +18,7 @@ define( function( require ) {
     require( 'jquery.pscrollbar' );
 
 
-    describe( 'Filter Base Mixin Test', function () {
+    describe( 'CN-Filter Base Mixin Test', function () {
 
         var vent = new Communicator();
         var view = new View();

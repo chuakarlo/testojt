@@ -11,7 +11,7 @@ define( function( require ) {
     var headerController;
     var view;
 
-    describe( 'HeaderController Test', function () {
+    describe( 'CN-HeaderController Test', function () {
 
         before( function () {
             sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );

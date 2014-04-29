@@ -5,7 +5,7 @@ define( function ( require ) {
     var Utils      = require( 'contentNavigation/controllers/UtilitiesController' );
     var Controller = require( 'contentNavigation/controllers/GridController' );
 
-    describe( 'Utilities Controller Test', function () {
+    describe( 'CN-Utilities Controller Test', function () {
 
 		var gridController;
 		var view;
