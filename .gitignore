@@ -1,6 +1,9 @@
 # configuration
 config.js
 
+# meta
+plato/
+
 # libraries
 node_modules/
 js/libs/*
