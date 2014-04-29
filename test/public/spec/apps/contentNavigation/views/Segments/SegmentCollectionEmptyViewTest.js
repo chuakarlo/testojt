@@ -3,7 +3,7 @@ define( function ( require ) {
 
 	var SegmentCollectionEmptyView = require( 'contentNavigation/views/Segments/SegmentCollectionEmptyView' );
 
-	describe( 'SegmentCollectionEmpty View', function () {
+	describe( 'CN-SegmentCollectionEmpty View', function () {
 
 		var segmentCollectionEmptyView;
 

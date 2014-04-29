@@ -7,7 +7,7 @@ define( function ( require ) {
 
 	var FilterLayoutView = require( 'contentNavigation/views/Filters/FilterLayoutView' );
 
-	describe( 'FilterLayout View', function () {
+	describe( 'CN-FilterLayout View', function () {
 
 		var filterLayoutView;
 		var _renderedContent;

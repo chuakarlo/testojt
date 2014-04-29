@@ -4,7 +4,7 @@ define( function ( require ) {
 	// dependency modules
 	var FilterCompositeView = require( 'contentNavigation/views/Filters/FilterCompositeView' );
 
-	describe( 'FilterComposite View', function () {
+	describe( 'CN-FilterComposite View', function () {
 
 		var filterCompositeView;
 

@@ -6,8 +6,8 @@ define( function ( require ) {
 	var template   = require( 'text!../templates/ErrorView.html' );
 
 	return Marionette.ItemView.extend( {
-		template : _.template( template ),
-		className    : 'cn-error'
+		'template ' : _.template( template ),
+		'className' : 'cn-error'
 	} );
 
 } );

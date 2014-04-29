@@ -4,7 +4,7 @@ define( function ( require ) {
 	// dependency modules
 	var FilterCollectionView = require( 'contentNavigation/views/Filters/FilterCollectionView' );
 
-	describe( 'FilterCollection View', function () {
+	describe( 'CN-FilterCollection View', function () {
 
 		var filterCollectionView;
 

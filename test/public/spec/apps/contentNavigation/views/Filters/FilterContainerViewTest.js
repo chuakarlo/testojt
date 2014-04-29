@@ -3,7 +3,7 @@ define( function ( require ) {
 
 	var FilterContainerView = require( 'contentNavigation/views/Filters/FilterContainerView' );
 
-	describe( 'FilterContainer View', function () {
+	describe( 'CN-FilterContainer View', function () {
 
 		var filterContainerView;
 

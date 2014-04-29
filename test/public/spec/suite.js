@@ -23,16 +23,16 @@ define( function ( require ) {
 			//Start contentNavigation
 
 			//main
-			//'spec/apps/contentNavigation/main.js',
+			//'spec/apps/contentNavigation/mainTest',
 
 			// //Models
 			// 'spec/apps/contentNavigation/models/SegmentModelTest',
 			// 'spec/apps/contentNavigation/models/FilterModelTest',
 			// 'spec/apps/contentNavigation/models/WatchLaterModelTest',
-			// //'spec/apps/contentNavigation/models/LibraryTreeChildrenModelTests',
-			// //'spec/apps/contentNavigation/models/LibraryTreeModelTests',
-			// //'spec/apps/contentNavigation/models/LicenseModelTests',
-			// //'spec/apps/contentNavigation/models/UUVModelTests',
+			// 'spec/apps/contentNavigation/models/LibraryTreeChildrenModelTest',
+			// 'spec/apps/contentNavigation/models/LibraryTreeModelTest',
+			// 'spec/apps/contentNavigation/models/LicenseModelTest',
+			// 'spec/apps/contentNavigation/models/UUVModelTest',
 
 			// //Collections
 			'spec/apps/contentNavigation/collections/SegmentCollectionTest',
@@ -43,21 +43,26 @@ define( function ( require ) {
 			'spec/apps/contentNavigation/collections/LicensesCollectionTest',
 			'spec/apps/contentNavigation/collections//UUVCollectionTest',
 
-			// //Views
-			// 'spec/apps/contentNavigation/views/Filters/FilterLayoutViewTest',
-			// 'spec/apps/contentNavigation/views/Filters/FilterContainerViewTest',
-			// 'spec/apps/contentNavigation/views/Layouts/HeaderLayoutViewTest',
-			// 'spec/apps/contentNavigation/views/Segments/SegmentCollectionViewTest',
-			// 'spec/apps/contentNavigation/views/Segments/SegmentItemViewTest',
-			// 'spec/apps/contentNavigation/views/LibraryTree/LibraryCollectionViewTest',
-			// 'spec/apps/contentNavigation/views/LibraryTree/LibraryTreeCompositeViewTest',
-			// 'spec/apps/contentNavigation/views/LibraryTree/LibraryTreeItemViewTest',
-			// 'spec/apps/contentNavigation/views/Licenses/LicenseItemViewTest',
+			//Views
+			'spec/apps/contentNavigation/views/MainLayoutViewTest',
+			'spec/apps/contentNavigation/views/ErrorViewTest',
+			'spec/apps/contentNavigation/views/Filters/FilterLayoutViewTest',
+			'spec/apps/contentNavigation/views/Filters/FilterContainerViewTest',
+			'spec/apps/contentNavigation/views/Filters/FilterCollectionViewTest',
+			'spec/apps/contentNavigation/views/Filters/FilterCompositeViewTest',
+			'spec/apps/contentNavigation/views/Filters/FilterItemViewTest',
+			'spec/apps/contentNavigation/views/Layouts/HeaderLayoutViewTest',
+			'spec/apps/contentNavigation/views/Segments/SegmentCollectionViewTest',
+			'spec/apps/contentNavigation/views/Segments/SegmentItemViewTest',
+			//'spec/apps/contentNavigation/views/LibraryTree/LibraryTreeCollectionViewTest',
+			//'spec/apps/contentNavigation/views/LibraryTree/LibraryTreeCompositeViewTest',
+			'spec/apps/contentNavigation/views/LibraryTree/LibraryTreeItemViewTest',
+			//'spec/apps/contentNavigation/views/Licenses/LicenseItemViewTest',
 
 			//Controllers
 			'spec/apps/contentNavigation/controllers/HeaderControllerTest',
 			'spec/apps/contentNavigation/controllers/UtilitiesControllerTest',
-			'spec/apps/contentNavigation/controllers/base/filterBaseTest',
+			'spec/apps/contentNavigation/controllers/base/FilterBaseTest',
 			'spec/apps/contentNavigation/controllers/base/ContentBaseTest',
 
 			// 'spec/apps/contentNavigation/controllers/pd360Library/PD360ContentControllerTest',

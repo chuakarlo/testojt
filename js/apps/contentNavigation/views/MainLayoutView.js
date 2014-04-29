@@ -7,11 +7,10 @@ define( function ( require ) {
 
 	return Marionette.Layout.extend( {
 
-		template : _.template( template ),
+		'template'  : _.template( template ),
+		'className' : 'cn-content',
 
-		className : 'cn-content',
-
-		regions : {
+		'regions' : {
 			'topRegion'    : '#cn-top-region',
 			'leftRegion'   : '#cn-left-region',
 			'centerRegion' : '#cn-middle-region'

@@ -3,7 +3,7 @@ define( function ( require ) {
 
 	var HeaderLayoutView = require( 'contentNavigation/views/Layouts/HeaderLayoutView' );
 
-	describe( 'HeaderLayout View', function () {
+	describe( 'CN-HeaderLayout View', function () {
 
 		var headerLayoutView;
 		var headerChildren;

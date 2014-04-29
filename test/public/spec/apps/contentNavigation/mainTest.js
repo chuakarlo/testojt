@@ -7,6 +7,7 @@ define ( function ( require ) {
 	var async        = require( 'async' );
 	var Communicator = require( 'contentNavigation/Communicator' );
 	var Remoting     = require( 'Remoting' );
+	var Apps         = require( 'App' );
 
 	var views			= {
 		'MainLayoutView'	: require('contentNavigation/views/MainLayoutView')
@@ -28,27 +29,37 @@ define ( function ( require ) {
 	App.leftRegion    = mainView.leftRegion;
 	App.centerRegion  = mainView.centerRegion;
 
-	before( function ( ) {
+	var stub;
 
-		sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
+	//before( function ( ) {
+
+
+		// sinon.stub( Remoting, 'fetch' ).returns( $.deferred() );
+
+		// stub = sinon.stub().returns( false );
+		// App.reqres.setHandler( 'pd360:available', stub );
 
 		vent             = new Communicator();
 		mainController   = new Controller();
 
 		headerController = new subControllers.HeaderController( {
-            'App'  : App,
-			'vent' : vent
+            'App'        : App,
+			'vent'       : vent,
+			'initialize' : false
         } );
 
 		libraryController = new subControllers.ContentLibraryController( {
-            'App'  : App,
-			'vent' : vent
+            'vent'       : vent,
+			'initialize' : false
         } );
-	} );
+	//} );
 
-	after( function () {
-		Remoting.fetch.restore();
-	} );
+	// after( function (  ) {
+	// 	stub = null;
+	// 	Apps.reqres.removeHandler( 'pd360:available' );
+	// 	Apps.module( 'ContentNavigation' ).stop();
+	// 	//Remoting.fetch.restore();
+	// } );
 
 
 	describe( 'Main Test', function() {

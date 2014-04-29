@@ -3,7 +3,7 @@ define( function ( require ) {
 
 	var SegmentItemView = require( 'contentNavigation/views/Segments/SegmentItemView' );
 
-	describe( 'SegmentItem View', function () {
+	describe( 'CN-SegmentItem View', function () {
 
 		var segmentItemView;
 		var segmentItemChildren;

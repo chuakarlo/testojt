@@ -1,35 +1,32 @@
-// define( function ( require ) {
-// 	'use strict';
+define( function ( require ) {
+	'use strict';
 
-// 	var ItemView = require( 'contentNavigation/views/Libraries/LibraryItemView' );
-// 	var Model    = require( 'contentNavigation/models/LibraryModel' );
-// 	var item     = { 'id' : 'UUV', 'title' : 'User Uploaded Videos' };
-// 	var model    = new Model(item);
+	var LicenseItemView = require( 'contentNavigation/views/Licenses/LicenseItemView' );
 
-// 	describe( 'LibraryItemView', function () {
+	describe( 'LicenseItem View', function () {
 
-// 		var itemView;
+		var licenseItemView;
 
-// 		before( function () {
-// 			itemView = new ItemView( model );
-// 		} );
+		before( function () {
+			licenseItemView = new LicenseItemView ();
+		} );
 
-// 		after( function () {
-// 			itemView    = undefined;
-// 		} );
+		after( function () {
+			licenseItemView = undefined;
+		} );
 
-// 		it( 'should be an instance', function () {
-// 			itemView.should.be.an.instanceof( ItemView );
-// 		} );
+		it( 'should have "className" ', function () {
+			licenseItemView.should.have.property( 'className' );
+		} );
 
-// 		it( 'should have "template" ', function () {
-// 			itemView.should.have.property( 'template' );
-// 		} );
+		it( 'should have "template" ', function () {
+			licenseItemView.should.have.property( 'template' );
+		} );
 
-// 		it( 'should be have an element li, and should contain id and title', function () {
-// 			itemView.$el[ 0 ].tagName.should.be.equal( 'LI' );
-// 			itemView.$el[ 0 ].id.should.be.equal( 'UUV' );
-// 			itemView.$el[ 0 ].title.should.be.equal( 'User Uploaded Videos' );
-// 		} );
-// 	} );
-// } );
+		it( 'should be wrapped around a <li> element', function () {
+			licenseItemView.el.tagName.should.be.equal( 'LI' );
+		} );
+
+	} );
+
+} );

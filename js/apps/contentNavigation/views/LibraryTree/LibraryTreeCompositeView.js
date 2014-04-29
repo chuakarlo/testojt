@@ -9,8 +9,8 @@ define( function ( require ) {
 	return Marionette.CompositeView.extend( {
 
 		'template'          : _.template( template ),
-		tagName				: 'ul',
-		itemView            : LibraryTreeItemView,
+		'tagName'           : 'ul',
+		'itemView '         : LibraryTreeItemView,
 		'itemViewContainer' : '.cn-tree-category',
 
 		'initialize' : function () {

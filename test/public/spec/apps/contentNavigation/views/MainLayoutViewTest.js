@@ -4,7 +4,7 @@ define( function ( require ) {
 
 	var MainLayoutView = require( 'contentNavigation/views/MainLayoutView' );
 
-	describe( 'MainLayout View', function () {
+	describe( 'CN-MainLayout View', function () {
 
 		var mainLayoutView;
 		var _renderedContent;
