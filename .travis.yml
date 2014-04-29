@@ -7,14 +7,14 @@ notifications:
   flowdock: ce9d8b10b8bd428f1d59cf0a62915cff
 
 before_install:
-  - npm install -g npm
+  - travis_retry npm install -g npm
 
 install:
   # install required dependencies
-  - npm install -g grunt-cli
-  - npm install -g bower
-  - npm install
-  - bower install
+  - travis_retry npm install -g grunt-cli
+  - travis_retry npm install -g bower
+  - travis_retry npm install
+  - travis_retry bower install
 
 before_script:
   - grunt compile

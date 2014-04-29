@@ -11,6 +11,7 @@
 		require( 'bootstrap' );
 		require( 'rotate' );
 		require( 'modules' );
+		require( 'analytics' );
 
 		App.start();
 	} );

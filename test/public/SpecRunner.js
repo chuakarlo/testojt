@@ -1,10 +1,6 @@
 ( function () {
 	'use strict';
 
-	require.config( {
-		'baseUrl' : '../../js'
-	} );
-
 	define( function ( require ) {
 
 		// polyfill for Function.prototype.bind

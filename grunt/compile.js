@@ -25,7 +25,7 @@ module.exports = function ( grunt ) {
 		'compile' : {
 			'options' : {
 				'baseUrl'                : 'js/',
-				'mainConfigFile'         : 'js/require-config.js',
+				'mainConfigFile'         : 'js/config/require.js',
 				'out'                    : 'js/main.min.js',
 				'optimize'               : 'uglify',
 				'include'                : 'main',

@@ -1,11 +1,11 @@
 require.config( {
 
-	'baseUrl' : 'js/',
+	'baseUrl' : '/js/',
 
 	'paths' : {
 
 		// Tests
-		'SpecRunner'    : '../SpecRunner',
+		'SpecRunner'    : '../test/public/SpecRunner',
 		'spec'          : '../test/public/spec',
 		'polyfills'     : '../test/public/polyfills',
 		'chai'          : 'libs/chai/chai',
@@ -16,8 +16,9 @@ require.config( {
 
 		// Libraries
 		'async'                 : 'libs/async/lib/async',
+		'analytics'             : 'libs/ga',
 		'backbone'              : 'libs/backbone-amd/backbone',
-		'backbone.babysitter'   : 'libs/backbone.babysitter/lib/amd/backbone.babysitter',
+		'backbone.babysitter'   : 'libs/backbone.babysitter/lib/backbone.babysitter',
 		'backbone.validation'   : 'libs/backbone.validation/dist/backbone-validation-amd',
 		'backbone.stickit'      : 'libs/backbone.stickit/backbone.stickit',
 		'carouselSnap'          : 'libs/carouselSnap/js/carousel-snap',

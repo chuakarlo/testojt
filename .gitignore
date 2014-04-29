@@ -7,7 +7,7 @@ plato/
 # libraries
 node_modules/
 js/libs/*
-!js/libs/empty
+!js/libs/ga.js
 
 # minified / compiled
 *.min.js
