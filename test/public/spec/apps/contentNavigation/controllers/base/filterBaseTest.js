@@ -6,7 +6,7 @@ define( function( require ) {
     var Component                     = require( 'contentNavigation/components/FilterComponent' );
     var Collection                    = require( 'contentNavigation/collections/FiltersCollection' );
     var Model                         = require( 'contentNavigation/models/FilterModel' );
-    var FilterBaseMixin               = require( 'contentNavigation/controllers/base/filterBase' );
+    var FilterBaseMixin               = require( 'contentNavigation/controllers/base/FilterBase' );
     var PD360FilterController         = require( 'contentNavigation/controllers/pd360Library/PD360FilterController' );
     var CustomContentFilterController = require( 'contentNavigation/controllers/customContentLibrary/CustomContentFilterController' );
     var UserUploadedFilterController  = require( 'contentNavigation/controllers/userUploadedLibrary/UserUploadedContentFilterController' );
