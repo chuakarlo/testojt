@@ -3,7 +3,6 @@ define( function ( require ) {
 
 	var App      = require( 'App' );
 
-	var QueueModel = require( 'apps/homepage/external/content/external/your-queue/models/QueueModel' );
 	var $          = require( 'jquery' );
 	var utils = require( 'apps/homepage/external/content/utils/contentItemUtil' );
 
@@ -11,23 +10,21 @@ define( function ( require ) {
 
 	var queueSelector              = '#your-queue-wrapper';
 	var queueCountSelector         = '#your-queue-count';
-	var recommendedWrapperSelector = '#recommended-wrapper';
 	var toggleText                 = [ 'Watch Later', 'Remove from Queue' ];
+
+	function getToggleText ( watchToggle, queueClasses ) {
+		return toggleText[ watchToggle !== queueClasses[ 0 ] ];
+	}
+
+	function getQueueClass ( contentBtn ) {
+		return toggleText[ !contentBtn.hasClass( queueClasses[ 0 ] ) ];
+	}
 
 	return {
 
-		'doAddtoMyQueue' : function ( _this, e ) {
-			var newQueue   = new QueueModel();
-
+		'doAddtoMyQueue' : function ( view, e ) {
 			utils.switchRemove( e );
-			newQueue.save( _this.model.attributes, {
-				'success'  : function () {
-					utils.addSuccess( _this );
-				},
-				'error' : function () {
-					utils.addError( e );
-				}
-			} );
+			utils.addItemToQueue( view, e );
 		},
 
 		'doSetTemplateHelper' : function ( view ) {
@@ -40,13 +37,13 @@ define( function ( require ) {
 				'topic'         : view.limitCharacter( contentName, 35 ),
 				'duration'      : utils.getDuration( model ),
 				'watchToggle'   : utils.queueCheck( watchToggle, model ),
-				'contentStatus' : watchToggle === queueClasses[ 0 ] ? toggleText[ 0 ] : toggleText[ 1 ]
+				'contentStatus' : getToggleText( watchToggle, queueClasses )
 			};
 		},
 
 		'doEnableTooltip' : function ( e ) {
 			var contentBtn = $( e.currentTarget );
-			var content    = toggleText[ contentBtn.hasClass( queueClasses[ 0 ] ) ? 0 : 1 ];
+			var content    = getQueueClass( contentBtn );
 
 			contentBtn.tooltip( {
 				'placement' : 'top',
@@ -56,11 +53,10 @@ define( function ( require ) {
 
 		'doRemoveFromQueue' : function ( _this, e ) {
 			var contentBtn = $( e.currentTarget );
-			var counter    = $( queueCountSelector );
 			var totalCount = _this.model.collection.length - 1;
 
-			// Change the header
-			counter.html( totalCount );
+			$( queueCountSelector ).html( totalCount );
+
 			_this.model.destroy( {
 				'dataType' : 'text',
 				'success'  : function () {
@@ -72,17 +68,9 @@ define( function ( require ) {
 			} );
 		},
 
-		'doChangeRecommendedIcon' : function ( _that, removedModel ) {
-			if ( _that.model.get( 'ContentId' ) === removedModel.get( 'ContentId' ) ) {
-
-				var recommendedUL = $( recommendedWrapperSelector + ' ul' );
-				var contentBtn    = recommendedUL.find( '#content-button-'+ _that.model.get( 'ContentId' ) );
-				utils.switchClass( contentBtn, queueClasses[ 0 ], queueClasses[ 1 ] );
-
-				_that.model.attributes.renderToggle = function () {
-					return queueClasses[ 0 ];
-				};
-				_that.render();
+		'doChangeRecommendedIcon' : function ( view, removedModel ) {
+			if ( view.model.get( 'ContentId' ) === removedModel.get( 'ContentId' ) ) {
+				utils.changeIconOnRemove( view );
 			}
 		},
 
@@ -95,10 +83,10 @@ define( function ( require ) {
 		},
 
 		'doViewTags' : function ( _this, e ) {
-			var tags = _this.model.get('Tags');
+			var tags = _this.model.get( 'Tags' );
 			if( tags ) {
 				var contentBtn = $( e.currentTarget );
-				var strTags = { 'title' : _this.model.get('ContentName') , 'tags' : tags };
+				var strTags = { 'title' : _this.model.get( 'ContentName' ) , 'tags' : tags };
 				var data = JSON.stringify( strTags );
 
 				contentBtn.tooltip( {
