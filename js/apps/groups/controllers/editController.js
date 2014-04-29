@@ -59,6 +59,14 @@ define( function ( require ) {
 					// TODO: error handling
 				} );
 
+			},
+
+			'ignoreGroup' : function (model) {
+				// Ignore Group API insert here
+			},
+
+			'acceptGroup' : function (model) {
+				// Accept Group API insert here
 			}
 
 		};

@@ -238,18 +238,28 @@ define( function ( require ) {
 				// verify properties sent to remoting
 				remotingStub.should.have.been.calledWith( sinon.match( function ( request ) {
 					request.should.be.an.instanceof( Array );
-					request.should.have.length( 1 );
+					request.should.have.length( 2 );
 
-					var req = request[ 0 ];
+					var firstReq = request[ 0 ];
+					var secondReq = request[ 1 ];
 
-					req.should.have.property( 'path' );
-					req.path.should.equal( 'com.schoolimprovement.pd360.dao.GroupService' );
+					firstReq.should.have.property( 'path' );
+					firstReq.path.should.equal( 'com.schoolimprovement.pd360.dao.GroupService' );
 
-					req.should.have.property( 'method' );
-					req.method.should.equal( 'getValidGroupsByPersonnelIdOrderedByRecentActivity' );
+					firstReq.should.have.property( 'method' );
+					firstReq.method.should.equal( 'getValidGroupsByPersonnelIdOrderedByRecentActivity' );
 
-					req.should.have.property( 'args' );
-					req.args.should.have.property( 'persId' );
+					firstReq.should.have.property( 'args' );
+					firstReq.args.should.have.property( 'persId' );
+
+					secondReq.should.have.property( 'path' );
+					secondReq.path.should.equal( 'com.schoolimprovement.pd360.dao.GroupService' );
+
+					secondReq.should.have.property( 'method' );
+					secondReq.method.should.equal( 'getGroupMembershipInvites' );
+
+					secondReq.should.have.property( 'args' );
+					secondReq.args.should.have.property( 'emailAddress' );
 
 					return true;
 				} ) );
@@ -259,12 +269,13 @@ define( function ( require ) {
 
 				// should have been called with a list view
 				appStub.should.have.been.calledWith( sinon.match( function ( view ) {
-					view.should.be.an.instanceof( App.Groups.Views.List );
+					view.should.be.an.instanceof( App.Groups.Views.GroupListLayout );
 					return true;
 				} ) );
 			} );
 
 		} );
+
 
 	} );
 

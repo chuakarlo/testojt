@@ -48,6 +48,14 @@ define( function ( require ) {
 				Groups.Edit.Controller.joinGroup( model );
 			},
 
+			'ignoreGroup' : function ( model ) {
+				Groups.Edit.Controller.ignoreGroup( model );
+			},
+
+			'acceptGroup' : function ( model) {
+				Groups.Edit.Controller.acceptGroup( model );
+			},
+
 			'replyComment' : function ( message ) {
 				Groups.Edit.Controller.replyComment( message );
 			}
@@ -75,6 +83,14 @@ define( function ( require ) {
 
 		Vent.on( 'group:joinGroup', function ( model ) {
 			return API.joinGroup( model );
+		} );
+
+		Vent.on( 'group:ignoreGroup', function ( model ) {
+			return API.ignoreGroup( model );
+		} );
+
+		Vent.on( 'group:acceptGroup', function ( model ) {
+			return API.acceptGroup( model );
 		} );
 
 		Vent.on( 'group:replyComment', function ( message ) {

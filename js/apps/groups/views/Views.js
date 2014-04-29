@@ -6,7 +6,9 @@ define( function ( require ) {
 	App.module( 'Groups.Views', function ( Views ) {
 
 		Views.Layout             = require( './GroupLayoutView' );
+		Views.GroupListLayout    = require( './GroupListLayoutView' );
 		Views.List               = require( './GroupsView' );
+		Views.InvitesList        = require( './GroupInvitesView' );
 		Views.Banner             = require( './GroupBannerView' );
 		Views.Header             = require( './GroupHeaderView' );
 		Views.Info               = require( './GroupInfoView' );

@@ -70,7 +70,7 @@ define( function ( require ) {
 				'trigger'   : 'click',
 				'content'   : function() {
 					return view.render().el;
-				},
+				}
 			} );
 
 			// Since spin.js requires element to be in the dom, wait until
@@ -125,7 +125,7 @@ define( function ( require ) {
 				maxMessageIdModel = this.model;
 			}
 
-			var message = {};
+			var message = { };
 
 			message.MessageThreadId = maxMessageIdModel.attributes.MessageThreadId;
 			message.MessageId       = maxMessageIdModel.attributes.MessageId;
@@ -164,7 +164,7 @@ define( function ( require ) {
 
 			e.preventDefault();
 
-			var message = {};
+			var message = { };
 
 			message.MessageThreadId = this.model.attributes.MessageThreadId;
 			message.MessageId       = this.model.attributes.MessageId;

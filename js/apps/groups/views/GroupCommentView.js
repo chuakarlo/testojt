@@ -63,7 +63,7 @@ define( function ( require ) {
 				'trigger'   : 'click',
 				'content'   : function() {
 					return view.render().el;
-				},
+				}
 			} );
 
 			// Since spin.js requires element to be in the dom, wait until
@@ -93,7 +93,7 @@ define( function ( require ) {
 
 			e.preventDefault();
 
-			var message = {};
+			var message = { };
 
 			message.MessageThreadId = this.model.attributes.MessageThreadId;
 			message.MessageId       = this.model.attributes.MessageId;

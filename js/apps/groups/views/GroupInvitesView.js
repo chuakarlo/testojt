@@ -4,13 +4,13 @@ define( function ( require ) {
 	var _             = require( 'underscore' );
 	var $             = require( 'jquery' );
 	var Marionette    = require( 'marionette' );
-	var GroupItemView = require( '../views/GroupItemView' );
-	var template      = require( 'text!../templates/groupsView.html' );
+	var GroupItemView = require( '../views/GroupInvitesItemView' );
+	var template      = require( 'text!../templates/groupInvitesView.html' );
 
 	return Marionette.CompositeView.extend( {
 
 		'template'          : _.template( template ),
-		'id'                : 'groups',
+		'id'                : 'group-invites',
 		'itemView'          : GroupItemView,
 		'tagName'           : 'section',
 		'itemViewContainer' : '.groups-list',

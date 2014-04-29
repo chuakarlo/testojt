@@ -32,7 +32,7 @@ define( function ( require ) {
 
 	    createComment: function () {
 
-			var message = {};
+			var message = { };
 
 			message.MessageThreadId = 0;
 			message.MessageId       = 1;
