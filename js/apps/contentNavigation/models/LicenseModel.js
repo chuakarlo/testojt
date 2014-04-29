@@ -1,10 +1,10 @@
 define( function( require ) {
+
     'use strict';
 
-    var Backbone     = require( 'backbone' );
+    var Backbone = require( 'backbone' );
 
-    var LicenseModel = Backbone.Model.extend( {
-
+    return Backbone.Model.extend( {
         'defaults' : {
 			'CanVerify'            : 1,
 			'CertificateFileName'  : '',
@@ -23,8 +23,6 @@ define( function( require ) {
 			'LicenseName'          : 'Default License',
 			'LicenseTypeId'        : 800
         }
-
     } );
 
-    return LicenseModel;
 } );

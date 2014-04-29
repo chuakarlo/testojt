@@ -13,10 +13,6 @@ define( function ( require ) {
 				new Model( {
 					id    : 'grade-pre-k',
 					title : 'Pre-K'
-				} ),
-				new Model( {
-					id    : 'grade-1st',
-					title : '1st'
 				} )
 			] );
 		var	_filterComponent = new Component( {
@@ -63,23 +59,17 @@ define( function ( require ) {
 			it( 'should return an id', function () {
 				_returnView.id.should.be.equal( 'cn-grades-filter' );
 			} );
-			it( 'should call _addFilter when filter is clicked', function () {
-				_filterComponent.should.call( '_addFilter' ).when( function () {
-					return _returnView.$el.find( $( 'label.cn-filter-list' ) ).click();
-				} );
+			it( 'should have selected filters when filter is clicked', function () {
+				_returnView.$el.find( 'label.cn-filter-list' ).click();
+				_filterComponent.flattenedSelectedFilters.should.contain( 'grade-pre-k' );
 			} );
-			it( 'should call _removeFilter when filter is clicked again', function () {
-				_returnView.$el.find( $( 'label' ) ).click();
-				_filterComponent.should.call( '_removeFilter' ).when( function () {
-					return _returnView.$el.find( $( 'label' ) ).click();
-				} );
-			} );
+
 			it( 'should call clearFilters when clear filter is clicked', function () {
 				_filterComponent.should.call( 'clearFilters'  ).when( function () {
 					return _returnView.$el.find( 'span' ).click();
 				} );
 			} );
-		});
+		} );
 
 		describe( '_addFilter', function() {
 			var	_returnView = _filterComponent.getView();
@@ -107,7 +97,7 @@ define( function ( require ) {
 				done();
 			} );
 		} );
-		
+
 		describe( '_removeFilter', function () {
 			var	_returnView = _filterComponent.getView();
 				_returnView.render();
@@ -142,6 +132,6 @@ define( function ( require ) {
 				expect( _filterComponent.selectedFilters ).to.be.empty;
 			} );
 		} );
-		
+
 	} );
 } );

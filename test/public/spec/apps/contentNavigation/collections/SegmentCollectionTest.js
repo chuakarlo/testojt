@@ -10,7 +10,7 @@ define( function ( require ) {
 
 	var SegmentModel		= require( 'contentNavigation/models/SegmentModel' );
 
-	describe( 'Segments Collection', function () {
+	describe( 'CN-Segments Collection', function () {
 
 		var _testSegments = [ new SegmentModel( {
 				'ContentId'				: 10101,
@@ -44,10 +44,6 @@ define( function ( require ) {
 
 		it( 'should have SegmentModel as model', function () {
 			segmentsCollection.model.should.be.equal( SegmentModel );
-		} );
-
-		it( 'should have a url property', function () {
-			expect( segmentsCollection.url ).to.equal( '/api/contents' );
 		} );
 
 		it( 'should be an empty Backbone.Collection', function () {

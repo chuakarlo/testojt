@@ -10,7 +10,7 @@ define( function ( require ) {
 
 	var WatchLaterModel		= require( 'contentNavigation/models/WatchLaterModel' );
 
-	describe( 'WatchLater Collection', function () {
+	describe( 'CN-WatchLater Collection', function () {
 
 		it( 'should be an instance of a Backbone.Collection object', function () {
 			watchLaterCollection.should.be.an.instanceof( Backbone.Collection );
@@ -18,10 +18,6 @@ define( function ( require ) {
 
 		it( 'should have WatchLaterModel as model', function () {
 			watchLaterCollection.model.should.be.equal( WatchLaterModel );
-		} );
-
-		it( 'should have a url property', function () {
-			expect( watchLaterCollection.url ).to.equal( undefined );
 		} );
 
 		it( 'should be an empty Backbone.Collection', function () {

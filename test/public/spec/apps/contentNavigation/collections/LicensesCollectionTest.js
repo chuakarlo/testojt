@@ -1,60 +1,59 @@
-// define( function ( require ) {
+define( function ( require ) {
 
-// 	'use strict';
+	'use strict';
 
-// 	var expect		        = require( 'chai' ).expect;
-// 	var Backbone	        = require( 'backbone' );
+	var expect		        = require( 'chai' ).expect;
+	var Backbone	        = require( 'backbone' );
 
-// 	var LibraryCollection	= require( 'contentNavigation/collections/LibraryCollection' );
-// 	var libraryCollection	= new LibraryCollection();
+	var LicensesCollection	= require( 'contentNavigation/collections/LicensesCollection' );
+	var licensesCollection	= new LicensesCollection();
 
-// 	var LibraryModel		= require( 'contentNavigation/models/LibraryModel' );
+	var LicenseModel		= require( 'contentNavigation/models/LicenseModel' );
 
-// 	describe( 'Library Collection', function () {
+	describe( 'CN-LicensesCollection', function () {
 
-// 		it( 'should be an instance of a Backbone.Collection object', function () {
-// 			libraryCollection.should.be.an.instanceof( Backbone.Collection );
-// 		} );
+		it( 'should be an instance of a Backbone.Collection object', function () {
+			licensesCollection.should.be.an.instanceof( Backbone.Collection );
+		} );
 
-// 		it( 'should have LibraryModel as model', function () {
+		it( 'should have LicenseModel as model', function () {
 
-// 			var collectionModel = new libraryCollection.model();
-// 			var libModel        = new LibraryModel();
+			var collectionModel = new licensesCollection.model();
+			var licenseModel    = new LicenseModel();
+			collectionModel.attributes.LicenseId.should.be.equal( licenseModel.attributes.LicenseId );
+		} );
 
-// 			collectionModel.id.should.be.equal( libModel.id  );
-// 		} );
+		it( 'should have a url property', function () {
+			expect( licensesCollection.url ).to.equal( undefined );
+		} );
 
-// 		it( 'should have a url property', function () {
-// 			expect( libraryCollection.url ).to.equal( undefined );
-// 		} );
-
-// 		it( 'should be an empty Backbone.Collection', function () {
-// 			expect( libraryCollection.length ).to.equal( 0 );
-// 		} );
-
-
-// 		describe( 'creating new collection using this instance', function () {
-
-// 			var _testFilters = [
-// 				{ 'id' : 'PD360', 'title': 'PD360' , 'contentType' : 'PD360Content' },
-// 				{ 'id' : 'SINETInternalTraining', 'title': 'SINET Internal Training' ,  'contentType' : 'CustomContent' },
-// 				{ 'id' : 'GZDemo', 'title': 'GZ Demo' , 'contentType' : 'CustomContent' },
-// 				{ 'id' : 'UUV', 'title': 'User Uploaded Videos' , 'contentType' : 'UserUploadedContent' }
-// 			];
+		it( 'should be an empty Backbone.Collection', function () {
+			expect( licensesCollection.length ).to.equal( 0 );
+		} );
 
 
-// 			var _testLibraryCollection = new LibraryCollection( _testFilters );
+		describe( 'creating new collection using this instance', function () {
 
-// 			it( 'should not be empty', function () {
-// 				expect( _testLibraryCollection.length ).to.equal( 4 );
-// 			} );
+			var _testLicenses = [
+				{ 'id' : 'PD360', 'title': 'PD360' , 'contentType' : 'PD360Content' },
+				{ 'id' : 'SINETInternalTraining', 'title': 'SINET Internal Training' ,  'contentType' : 'CustomContent' },
+				{ 'id' : 'GZDemo', 'title': 'GZ Demo' , 'contentType' : 'CustomContent' },
+				{ 'id' : 'UUV', 'title': 'User Uploaded Videos' , 'contentType' : 'UserUploadedContent' }
+			];
 
-// 			it( 'should contain all the attributes of defined LibraryModel when retrieved from the collection', function () {
-// 				_testLibraryCollection.at( 0 ).attributes.should.include.keys( 'id', 'title' );
-// 			} );
 
-// 		} );
+			var _testLicensesCollection = new LicensesCollection( _testLicenses );
 
-// 	} );
+			it( 'should not be empty', function () {
+				expect( _testLicensesCollection.length ).to.equal( 4 );
+			} );
 
-// } );
+			it( 'should contain all the attributes of defined LicenseModel when retrieved from the collection', function () {
+				_testLicensesCollection.at( 0 ).attributes.should.include.keys( 'LicenseId', 'LicenseName' );
+			} );
+
+		} );
+
+	} );
+
+} );

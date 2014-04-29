@@ -10,7 +10,7 @@ define( function ( require ) {
 
 	var FilterModel			= require( 'contentNavigation/models/FilterModel' );
 
-	describe( 'Filters Collection', function () {
+	describe( 'CN-Filters Collection', function () {
 
 		it( 'should be an instance of a Backbone.Collection object', function () {
 			filtersCollection.should.be.an.instanceof( Backbone.Collection );
@@ -18,10 +18,6 @@ define( function ( require ) {
 
 		it( 'should have FilterModel as model', function () {
 			filtersCollection.model.should.be.equal( FilterModel );
-		} );
-
-		it( 'should have a url property', function () {
-			expect( filtersCollection.url ).to.equal( '/' );
 		} );
 
 		it( 'should be an empty Backbone.Collection', function () {
