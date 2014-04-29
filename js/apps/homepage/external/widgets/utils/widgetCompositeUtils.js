@@ -1,6 +1,8 @@
 define( function ( require ) {
 	'use strict';
 
+	var $ = require( 'jquery' );
+
 	var Remoting = require( 'Remoting' );
 	var Session  = require( 'Session' );
 	var App      = require( 'App' );
@@ -38,19 +40,25 @@ define( function ( require ) {
 	return {
 
 		'doShow' : function ( collection, view, e ) {
+			var widgetHeaderId = $( e.currentTarget ).attr( 'id' );
+
 			view.collection = collection;
 			view.render();
-			view.changeSelectedNavBtn( e );
+			view.$el.find( 'li.selected' ).removeClass( 'selected' );
+			view.$el.find( '#' + widgetHeaderId ).addClass( 'selected' );
 		},
 
-		'changeButtonAttr' : function ( view, parent, btnClassName, to, extra ) {
-			var singleActionBtn = parent.find( '.' + btnClassName );
-			singleActionBtn.removeClass( btnClassName ).addClass( to + extra[ 0 ] );
-			singleActionBtn.text( view.upperFirstLetter( to ) + extra[ 1 ] );
+		'changeButtonAttr' : function ( view, btn, btnClassName, to, extra ) {
+			var previewBtnUI = view.widgetPreviewItemView.ui;
+
+			btn.removeClass( btnClassName ).addClass( to + extra[ 0 ] );
+			previewBtnUI.actionBtn.text( view.upperFirstLetter( to ) );
+			previewBtnUI.actionCloseBtn.text( view.upperFirstLetter( to ) + extra[ 1 ] );
 		},
 
 		'newPreviewItem' : function ( view, e ) {
 			var widgetModel = view.getModelByClickEvent( e );
+
 			return new WidgetPreviewItemView( {
 				'model'                : widgetModel,
 				'userWidgetCollection' : view.options.userWidgetCollection
@@ -65,13 +73,21 @@ define( function ( require ) {
 		},
 
 		'doActivateWidgetCheck' : {
-			true  : function ( view, e ) {
-				var widgetModel = view.getModelByClickEvent( e );
+			'true'  : function ( view, e ) {
+				var widgetModel      = view.getModelByClickEvent( e );
+				var widgetCurrentTab = view.$el.find( 'li.selected' ).attr( 'id' );
+
+				view.hidePreviewErrorMsg( e );
 				view.addToWidgetCollection( widgetModel );
 				view.changeButtonAttr( e, btnActions[ 0 ], btnActions[ 1 ] );
 				view.changeWidgetIconBtnAttr( widgetModel, iconBtnActions[ 1 ], iconBtnActions[ 0 ] );
+				view.render();
+
+				view.changeWidgetSelectedTab( widgetCurrentTab );
+				view.showWidgetPreview( e );
 			},
-			false : function ( view, e ) {
+			'false' : function ( view, e ) {
+				view.showWidgetPreview( e );
 				view.displayLimitError( e );
 			}
 		},

@@ -4,10 +4,10 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
 
-	var WidgetCompositeView   = require( 'apps/homepage/external/widgets/views/WidgetItemView' );
-	var template              = require( 'text!apps/homepage/external/widgets/templates/widgetCompositeView.html' );
-	var utils                 = require( 'apps/homepage/external/widgets/controllers/widgetCompositeController' );
-	var utilsUpperFirstLetter = require( 'apps/homepage/utils/upperFirstLetter' );
+	var WidgetCompositeView          = require( 'apps/homepage/external/widgets/views/WidgetItemView' );
+	var template                     = require( 'text!apps/homepage/external/widgets/templates/widgetCompositeView.html' );
+	var utils                        = require( 'apps/homepage/external/widgets/controllers/widgetCompositeController' );
+	var utilsUpperFirstLetter        = require( 'apps/homepage/utils/upperFirstLetter' );
 
 	return Marionette.CompositeView.extend( {
 		'events' : {
@@ -16,10 +16,13 @@ define( function ( require ) {
 			'click #widget-settings-header li#active'   : 'showActiveWidgets',
 			'click #widget-settings-header li#inactive' : 'showInactiveWidgets',
 			'click .actions .save'                      : 'activateWidget',
+			'click .actions .save-and-close'            : 'activateWidget',
 			'click .widget-icon-btn.inactive'           : 'activateWidget',
 			'click .actions .remove'                    : 'deactivateWidget',
+			'click .actions .remove-and-close'          : 'deactivateWidget',
 			'click .widget-icon-btn.active'             : 'deactivateWidget'
 		},
+		'id'              : 'widgets-settings-panel',
 		'template'        : _.template( template ),
 		'itemView'        : WidgetCompositeView,
 		'itemViewOptions' : function () {
@@ -30,7 +33,8 @@ define( function ( require ) {
 		'itemViewContainer' : '#widget-settings-selection',
 
 		'ui' : {
-			'widgetPreview' : '#widget-settings-preview'
+			'widgetSettingsHeader' : '#widget-settings-header ul',
+			'widgetPreview'        : '#widget-settings-preview'
 		},
 
 		'showAllWidgets' : function ( e ) {
@@ -62,10 +66,12 @@ define( function ( require ) {
 		},
 
 		'activateWidget' : function ( e ) {
+			e.stopPropagation();
 			utils.doActivateWidget( this, e );
 		},
 
 		'deactivateWidget' : function ( e ) {
+			this.hidePreviewErrorMsg( e );
 			utils.doDeactivateWidget( this, e );
 		},
 
@@ -75,6 +81,10 @@ define( function ( require ) {
 
 		'removeToWidgetCollection' : function ( model ) {
 			utils.doRemoveToWidgetCollection( this, model );
+		},
+
+		'hidePreviewErrorMsg' : function ( e ) {
+			utils.doHidePreviewErrorMsg( this, e );
 		},
 
 		'displayLimitError' : function ( e ) {
@@ -95,6 +105,11 @@ define( function ( require ) {
 
 		'changeSelectedNavBtn' : function ( e ) {
 			utils.doChangeSelectedNavBtn( e );
+		},
+
+		'changeWidgetSelectedTab' : function ( currentTabId ) {
+			this.$el.find( 'li.selected' ).removeClass( 'selected' );
+			this.$el.find( '#' + currentTabId ).addClass( 'selected' );
 		}
 
 	} );

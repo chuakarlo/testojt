@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	var $          = require( 'jquery' );
+	var $ = require( 'jquery' );
 
 	var WidgetCollection      = require( 'apps/homepage/external/widgets/collections/WidgetCollection' );
 	var utils                 = require( 'apps/homepage/external/widgets/utils/widgetCompositeUtils' );
@@ -14,8 +14,8 @@ define( function ( require ) {
 	var btnActions       = [ 'save', 'remove' ];
 
 	var widgetDisplayLimit = 3;
-	var messages      = {
-		'widgetLimitError' : 'You have reached the amount of widgets to be displayed on your homepage?'
+	var messages           = {
+		'widgetLimitError' : 'You have reached the amount of widgets to be displayed on your homepage.'
 	};
 
 	return {
@@ -36,7 +36,7 @@ define( function ( require ) {
 			view.ui.widgetPreview.html( view.widgetPreviewItemView.render().el );
 		},
 
-		'doGetActiveWidgets' : function ( view ){
+		'doGetActiveWidgets' : function ( view ) {
 			return utils.doGetWidgets( view, true );
 		},
 
@@ -56,10 +56,15 @@ define( function ( require ) {
 
 		'doDeactivateWidget' : function ( view, e ) {
 			var widgetModel = view.getModelByClickEvent( e );
+			var widgetCurrentTab = view.$el.find( 'li.selected' ).attr( 'id' );
 
 			view.removeToWidgetCollection( widgetModel );
 			view.changeButtonAttr( e, btnActions[ 1 ], btnActions[ 0 ] );
 			view.changeWidgetIconBtnAttr( widgetModel, iconBtnActions[ 0 ], iconBtnActions[ 1 ] );
+			view.render();
+
+			view.changeWidgetSelectedTab( widgetCurrentTab );
+			view.showWidgetPreview( e );
 		},
 
 		'doAddToWidgetCollection' : function ( view, model ) {
@@ -70,20 +75,24 @@ define( function ( require ) {
 			utils.doProcessWidgetCollection( view, model, 'remove' );
 		},
 
-		'doDisplayLimitError' : function ( view, e ) {
+		'doHidePreviewErrorMsg' : function ( view, e ) {
 			view.showWidgetPreview( e );
+			view.widgetPreviewItemView.ui.widgetMessage.hide();
+		},
+
+		'doDisplayLimitError' : function ( view, e ) {
 			view.widgetPreviewItemView.ui.widgetMessage.html( messages.widgetLimitError ).show();
 		},
 
 		'doChangeButtonAttr' : function ( view, e , from, to ) {
-			var parent = $( e.currentTarget ).parent();
+			var previewBtnUI = view.widgetPreviewItemView.ui;
 
-			utils.changeButtonAttr( view, parent, from, to, [ '', '' ] );
-			utils.changeButtonAttr( view, parent, from + '-and-close', to, [ '-and-close', ' & Close' ] );
+			utils.changeButtonAttr( view, previewBtnUI.actionBtn, from, to, [ '', '' ] );
+			utils.changeButtonAttr( view, previewBtnUI.actionCloseBtn, from + '-and-close', to, [ '-and-close', ' & Close' ] );
 		},
 
 		'doChangeWidgetIconBtnAttr' : function ( view, model, from, to ) {
-			view.$el.find( '.widget-icon-btn[ data-id="'+ model.get( 'WidgetId' ) + '" ]' )
+			view.$el.find( '.widget-icon-btn[ data-id="' + model.get( 'WidgetId' ) + '" ]' )
 			.removeClass( iconBtnWithGlyphs[ from ] )
 			.addClass( iconBtnWithGlyphs[ to ] );
 		},

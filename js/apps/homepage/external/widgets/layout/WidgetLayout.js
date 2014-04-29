@@ -73,13 +73,15 @@ define( function ( require ) {
 		'events' : {
 			'click div#widget-settings.closed' : 'showWidgetSettingsPanel',
 			'click div#widget-settings.opened' : 'closeWidgetSettingsPanel',
-			'click div.actions .cancel'        : 'closeWidgetSettingsPanel'
+			'click div.actions .cancel'        : 'closeWidgetSettingsPanel',
+			'click .actions .save-and-close'   : 'closeWidgetSettingsPanel',
+			'click .actions .remove-and-close' : 'closeWidgetSettingsPanel'
 		},
 		'className' : 'widget-container',
 		'template'  : _.template( template ),
 		'regions'   : {
 			'userWidgets'    : '#user-widgets #active-widgets',
-			'widgetSettings' : '#widgets-settings-panel'
+			'widgetSettings' : '#widgets-settings-panel-wrapper'
 		},
 
 		'showWidgetSettingsPanel' : function ( e ) {

@@ -264,6 +264,7 @@
 		margin           : auto;
 		color            : #FFF;
 		padding-bottom   : 5px;
+		padding-top      : 1px;
 	}
 	#widget-settings-header {
 		margin     : auto;
@@ -286,21 +287,20 @@
 		cursor         : pointer;
 	}
 	#widget-settings-header ul li:hover {
-		border-bottom : 5px solid #3dadef;
-		color         : #3dadef;
+		color : #3dadef;
 	}
 	#widget-settings-header .selected {
 		color         : #3dadef;
 		border-bottom : 5px solid #3dadef;
 	}
 	#widget-settings-content {
-		padding-top: 20px;
+		padding-top : 20px;
+		height      : 400px;
 	}
 	#widget-settings-selection {
 		text-align   : center;
 		margin       : auto;
 		height       : 380px;
-		overflow-y   : scroll;
 		padding      : 0 20px 0 40px;
 		border-right : 2px solid #7d7d7d;
 	}
@@ -312,6 +312,7 @@
 		margin     : 12px;
 		text-align : center;
 		cursor     : pointer;
+		position   : relative;
 	}
 	#widget-settings-selection li .widget-icon-btn {
 		background-color : #3cacee;
@@ -319,6 +320,10 @@
 		font-weight      : bold;
 		float            : right;
 		padding          : 4px;
+		z-index          : 2;
+		position         : absolute;
+		margin-top       : -8px;
+		margin-left      : 40px;
 	}
 	#widget-settings-selection li .inactive.widget-icon-btn {
 		background-color : #c2c2c2;
@@ -326,9 +331,33 @@
 	#widget-settings-selection li:first-child, #widget-settings-selection li:nth-child(2), #widget-settings-selection li:nth-child(3) {
 		margin-top : 0px;
 	}
+	#widget-settings-selection li #widget-sequence-overlay {
+		background-color : #3dadef;
+		opacity          : 0.3;
+		font-size        : 100px;
+		position         : absolute;
+		width            : 113px;
+		height           : 142px;
+	}
+	#widget-settings-selection li #widget-sequence-overlay.img-thumbnail, #widget-settings-selection li.img-thumbnail  {
+		padding : 0px;
+		border  : 1px solid #2b2d30;
+	}
+	#widget-name {
+		background-color        : #3fa7f9;
+		position                : absolute;
+		width                   : 113px;
+		z-index                 : 1;
+		padding                 : 6px 5px;
+		font-size               : 12px;
+		bottom                  : 0;
+		.pc-border-radius ( 3px );
+		border-top-right-radius : 0px;
+		border-top-left-radius  : 0px;
+	}
 	#widget-settings-preview {
-		padding : 0 30px;
-		height  : 380px;
+		padding    : 0 30px;
+		height     : 380px;
 	}
 	#widget-settings-preview .img-thumbnail {
 		width         : 180px;
@@ -337,7 +366,9 @@
 		float         : left;
 	}
 	#widget-settings-preview #widget-limit-message {
-		display : none;
+		display    : none;
+		width      : 423px;
+		text-align : center;
 	}
 	#widget-settings-preview .description {
 		float  : left;

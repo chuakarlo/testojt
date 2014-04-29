@@ -4,8 +4,9 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
 
-	var template = require( 'text!apps/homepage/external/widgets/templates/widgetItemView.html' );
-	var widgetLookup = require( 'apps/homepage/external/widgets/manifest' );
+	var template                = require( 'text!apps/homepage/external/widgets/templates/widgetItemView.html' );
+	var sequenceOverlayTemplate = require( 'text!apps/homepage/external/widgets/templates/widgetSequenceOverlayTemplate.html' );
+	var widgetLookup            = require( 'apps/homepage/external/widgets/manifest' );
 
 	function setTemplateHelpers ( view ) {
 		view.widgets = widgetLookup()[ view.model.get( 'WidgetId' ) ];
@@ -46,15 +47,44 @@ define( function ( require ) {
 		return icon;
 	}
 
+	function doShowSequenceOverlay ( view ) {
+		var widgetKey        = view.getKeyByWidgetId();
+		var sequenceTemplate = _.template( sequenceOverlayTemplate, { 'sequence' : widgetKey } );
+
+		if ( widgetKey ) {
+			view.$el.prepend( sequenceTemplate );
+		}
+	}
+
+	function doGetKeyByWidgetId ( view ) {
+		var userWidgetCollection = view.options.userWidgetCollection;
+
+		for ( var i = 0; i < userWidgetCollection.models.length; i++ ) {
+			if ( userWidgetCollection.models[ i ].id === view.model.id ) {
+				return i + 1;
+			}
+		}
+	}
+
 	return Marionette.CompositeView.extend( {
 		'tagName'         : 'li',
+		'className'       : 'img-thumbnail',
 		'template'        : _.template( template ),
 		'templateHelpers' : function () {
 			return setTemplateHelpers( this );
 		},
 
-		'onRender' : function ( ) {
+		'onRender' : function ( options ) {
 			doOnRender( this );
+			this.showSequenceOverlay();
+		},
+
+		'showSequenceOverlay' : function () {
+			doShowSequenceOverlay( this );
+		},
+
+		'getKeyByWidgetId' : function () {
+			return doGetKeyByWidgetId( this );
 		},
 
 		'attributes' : function () {
@@ -69,4 +99,5 @@ define( function ( require ) {
 			return doGetWidgetIcon( this );
 		}
 	} );
+
 } );
