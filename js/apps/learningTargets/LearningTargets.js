@@ -10,6 +10,7 @@ define( function ( require ) {
 	require( 'apps/learningTargets/entities/Portfolios' );
 	require( 'apps/learningTargets/entities/Processes' );
 	require( 'apps/learningTargets/entities/Catalogs' );
+	require( 'apps/learningTargets/entities/Groups' );
 
 	App.module( 'LearningTargets', function ( LearningTargets, App ) {
 
@@ -23,7 +24,8 @@ define( function ( require ) {
 				'resources/learning/observations' : 'showObservations',
 				'resources/learning/portfolio'    : 'showPortfolio',
 				'resources/learning/questions'    : 'showQuestions',
-				'resources/learning/catalogs'     : 'showCatalogs'
+				'resources/learning/catalogs'     : 'showCatalogs',
+				'resources/learning/groups'       : 'showGroups'
 			}
 
 		} );

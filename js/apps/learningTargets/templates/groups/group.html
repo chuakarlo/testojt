@@ -1,0 +1,10 @@
+<div class="lt-toggle-btn">
+	<div class="col-xs-10"><img src="/img/eye.png" class="icon" alt=""> <p><a href="#" class="lt-link" title="more info"><%= ProcessName %></a></p></div>
+	<div class="col-xs-2"><%= ProcessStatus %></div>
+</div>
+<div class="lt-toggle-content drawer" style="display: none;">
+	<div class="col-xs-4"><%= NextTaskName || 'Next Step 1' %></div>
+	<div class="col-xs-6"><%= CompleteByDate %></div>
+	<div class="col-xs-2"><%= TaskCompleted || 'Not Current' %></div>
+</div>
+<br class="clearfix">
