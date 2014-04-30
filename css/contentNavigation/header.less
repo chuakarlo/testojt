@@ -88,11 +88,14 @@
 			}
 
 			button {
-				left  : 22px;
-				width : 190px;
+				left          : 22px;
+				width         : 190px;
+				white-space   : nowrap;
+				text-overflow : ellipsis;
+				overflow      : hidden;
 
 				span.caret {
-					left : 170px;
+					left : 173px;
 				}
 			}
 
@@ -126,7 +129,11 @@
 			.border-radius( 4px );
 
 			span{
-				margin-left : @cn-base-margin;
+				margin-left  : @cn-base-margin;
+				margin-right : @cn-base-margin;
+				display      : inline-block;
+				line-height  : 1.3;
+				word-break   : break-word;
 			}
 
 			li {
@@ -169,7 +176,7 @@
 			right : 0;
 
 			li {
-				padding : 5px;
+				padding     : 5px;
 			}
 
 			span {
