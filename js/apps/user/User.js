@@ -68,6 +68,11 @@ define( function ( require ) {
 				this.listenTo( App.flashContent, 'close', function () {
 					Session.destroy();
 
+					// IE does not have window.location.origin
+					if ( !window.location.origin ) {
+						window.location.origin = window.location.protocol + '//' + window.location.hostname + ( window.location.port ? ':' + window.location.port: '' );
+					}
+
 					var currentLocation = window.location.origin;
 
 					// this is to reload the application
