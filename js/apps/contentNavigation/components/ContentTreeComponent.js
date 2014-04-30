@@ -90,7 +90,7 @@ define( function ( require ) {
 
 				'itemViewOptions' : {
 					'events' : {
-						'click label.cn-library-list' : function ( event ) {
+						'click label' : function ( event ) {
 							event.preventDefault();
 
 							var el = $( this.el );
@@ -107,7 +107,7 @@ define( function ( require ) {
 					},
 					'itemViewOptions' : {
 						events : {
-							'click label.cn-category-list' : function ( event ){
+							'click label' : function ( event ){
 								event.preventDefault();
 
 								var el = $( this.el );

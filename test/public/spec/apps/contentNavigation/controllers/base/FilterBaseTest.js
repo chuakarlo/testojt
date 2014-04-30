@@ -137,11 +137,7 @@ define( function( require ) {
                     _mock.verify();
                     _mock.restore();
                     done();
-                } );
-                it( 'should add components', function () {
-                    pd360Controller.createFilterComponents();
-                    pd360Controller.components.should.contain.keys( 'gradesFilter', 'subjectsFilter', 'topicsFilter' );
-                } );
+                } );                
             } );
 
             describe( '_filterChanged', function () {

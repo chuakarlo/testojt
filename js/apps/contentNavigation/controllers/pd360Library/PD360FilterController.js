@@ -2,10 +2,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var _			= require( 'underscore' );
-	var Marionette  = require( 'marionette' );
-	var config      = require( '../../config/config' );
-
+	var _              = require( 'underscore' );
+	var Marionette     = require( 'marionette' );
+	var Remoting       = require( 'Remoting' );
+	var $              = require( 'jquery' );
 	var ControllerBase = {
 		'Filter' : require( '../base/FilterBase' )
 	};
@@ -33,15 +33,41 @@ define( function ( require ) {
 		},
 
 		'getCustomContentCategories' : function ( ) {
-			this.createFilterComponents( );
+			var fetchCategory =  {
+				'path'   : 'com.schoolimprovement.pd360.dao.RespondService',
+				'method' : 'RespondGetContentFilters',
+				'args'   : {
+					'persId'        : $.cookie( 'PID' ) || null
+				}
+			};
+
+			this.fetchingCategories = Remoting.fetch( [ fetchCategory ] );
+
+			$.when( this.fetchingCategories ).done( function ( models ) {
+				this.createFilterComponents( models );
+			}.bind( this ) ).fail( function ( error ) {
+			}.bind( this ) );
 		},
 
-		'createFilterComponents' : function () {
+		'mapFilter' : function ( data ) {
+
+			var pd360Filters = [ ];
+
+			_.each( data, function( filter ){
+				var filterList = {
+					'id' : filter,
+					'title' : filter
+				};
+				pd360Filters.push( filterList );
+			} );
+
+			return pd360Filters;
+		},
+
+		'createFilterComponents' : function ( data ) {
 			// Grades Filter
 			var gradesFilterCollection = new collections.FilterCollection();
-
-			gradesFilterCollection.add( config.Filters[ this.contentLibraryType + '-Grades' ] );
-
+			gradesFilterCollection.add( this.mapFilter( data[ 0 ].FILTERS.Grades ) );
 			var gradesFilterComponent = new components.FilterComponent( {
 				'vent'              : this.vent,
 				'title'             : 'Grades',
@@ -57,7 +83,7 @@ define( function ( require ) {
 			// Subjects Filter
 			var subjectsFilterCollection = new collections.FilterCollection();
 
-			subjectsFilterCollection.add( config.Filters[ this.contentLibraryType + '-Subjects' ] );
+			subjectsFilterCollection.add( this.mapFilter( data[ 0 ].FILTERS.Subjects ) );
 
 			var subjectsFilterComponent = new components.FilterComponent( {
 				'vent'              : this.vent,
@@ -73,7 +99,7 @@ define( function ( require ) {
 			// Topics Filter
 			var topicsFilterCollection = new collections.FilterCollection();
 
-			topicsFilterCollection.add( config.Filters[ this.contentLibraryType + '-Topics' ] );
+			topicsFilterCollection.add( this.mapFilter( data[ 0 ].FILTERS.Topics ) );
 
 			var topicsFilterComponent = new components.FilterComponent({
 				'vent'              : this.vent,
