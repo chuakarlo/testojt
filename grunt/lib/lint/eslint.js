@@ -1,17 +1,14 @@
 'use strict';
 
 // Load other modules
+var grunt  = require( 'grunt' );
 var eslint = require( 'eslint' );
 var filter = require( '../filter' );
 var diff   = require( '../diff' );
-
-function cb ( callback ) {
-	if ( typeof callback === 'function' ) {
-		callback();
-	}
-}
+var cb     = require( '../cb' );
 
 function lint ( files, callback ) {
+	console.log(); console.log( 'ESLint:'.bold );
 
 	if ( !files.length ) {
 		console.log( '  No files for ESLint to lint.' );
@@ -22,7 +19,7 @@ function lint ( files, callback ) {
 	var code = eslint.cli.execute( [ null, null ].concat( files ) );
 
 	if ( code ) {
-		throw new Error( 'ESLint errors were found.' );
+		grunt.fail.fatal( 'ESLint errors were found.' );
 	}
 
 	console.log( '  No ESLint errors found.' );
@@ -34,7 +31,7 @@ function git ( callback ) {
 
 	diff( function ( files ) {
 		if ( !files ) {
-			return callback();
+			return cb( callback );
 		}
 
 		lint( filter( files ), callback );

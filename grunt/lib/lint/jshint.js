@@ -5,9 +5,11 @@ var fs     = require( 'fs' );
 var path   = require( 'path' );
 
 // Load other modules
+var grunt  = require( 'grunt' );
 var JSHINT = require( 'jshint' ).JSHINT;
 var filter = require( '../filter' );
 var diff   = require( '../diff' );
+var cb     = require( '../cb' );
 
 require( 'colors' );
 
@@ -16,13 +18,8 @@ var config   = require( '../../config' );
 var jshintrc = config.jshintrc;
 var globals  = jshintrc.globals;
 
-function cb ( callback ) {
-	if ( typeof callback === 'function' ) {
-		callback();
-	}
-}
-
 function lint ( files, callback ) {
+	console.log(); console.log( 'JSHint:'.bold );
 
 	if ( !files.length ) {
 		console.log( '  No files for JSHint to lint.' );
@@ -49,36 +46,34 @@ function lint ( files, callback ) {
 			return;
 		}
 
-		console.log();
-		console.log( file.underline );
+		console.log(); console.log( file.underline );
 
 		JSHINT.errors.forEach( function ( error, index ) {
 			if ( !error || !error.reason ) {
 				return;
 			}
 
-			errors++;
+			errors ++;
 
-			console.log( ( '  ' + error.line + ':' + error.character ).grey, ' error '.red, error.reason );
+			console.log( ( '  ' + error.line + ':' + error.character ).grey + '\terror\t'.red + error.reason );
 		} );
 
 	} );
 
 	if ( errors ) {
-		throw new Error( 'JSHint errors were found.' );
+		grunt.fail.fatal( 'JSHint errors were found.' );
 	}
 
 	console.log( '  No JSHint errors found.' );
 
 	cb( callback );
-
 }
 
 function git ( callback ) {
 
 	diff( function ( files ) {
 		if ( !files ) {
-			return callback();
+			return cb( callback );
 		}
 
 		lint( filter( files ), callback );

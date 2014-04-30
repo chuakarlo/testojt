@@ -38,6 +38,8 @@
     "escomplex-js": "~0.1.1",
     "grunt-blanket-mocha": "~0.4.0",
     "minimist": "0.0.8",
-    "readdirp": "^1.0.1"
+    "readdirp": "^1.0.1",
+    "jscs": "~1.4.0",
+    "vow": "~0.4.3"
   }
 }
