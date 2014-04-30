@@ -42,7 +42,7 @@ require.config( {
 		'slick'                 : 'libs/slick-carousel/slick/slick',
 		'text'                  : 'libs/requirejs-text/text',
 		'timezone'              : 'common/Timezone',
-		'videojs'               : 'libs/videojs/video.dev',
+		'videojs'               : 'libs/videojs/video',
 		'underscore'            : 'libs/lodash/lodash',
 		'validation'            : 'plugins/validation',
 		'rotate'                : 'libs/rotate/index',

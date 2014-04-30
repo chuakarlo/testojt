@@ -4,7 +4,7 @@ define ( function( require ) {
 	var expect     = require( 'chai' ).expect;
 	var BaseObject = require( 'apps/homepage/BaseObject');
 	var base       = require( 'apps/homepage/external/billboard/base' );
-	var itemView   = require( 'apps/homepage/external/billboard/BillboardItemView' );
+	var itemView   = require( 'apps/homepage/external/billboard/views/BillboardItemView' );
 
 
 	describe( 'Billboard : base - Test ', function () {

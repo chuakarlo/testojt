@@ -133,10 +133,13 @@ define( function ( require ) {
 			//Homepage
 			'spec/apps/homepage/external/content/controllers/contentCompositeControllerTest.js',
 			'spec/apps/homepage/external/content/views/ContentCompositeViewTest.js',
-
-			//Homepage
-			'spec/apps/homepage/external/billboard/views/BillboardItemViewTest.js',
 			'spec/apps/homepage/external/content/views/ContentItemViewTest.js',
+
+			//HomePage - Billboard
+			'spec/apps/homepage/external/billboard/collection/BillboardCollectionTest.js',
+			'spec/apps/homepage/external/billboard/configuration/nivoSettingsTest.js',
+			'spec/apps/homepage/external/billboard/views/BillboardItemViewTest.js',
+			'spec/apps/homepage/external/billboard/baseTest.js',
 
 			//HomePage - Recommended
 
