@@ -48,6 +48,7 @@ define( function ( require ) {
 				'arrows'         : false,
 				'speed'          : 100,
 				'draggable'      : false,
+				'slide'          : 'li',
 				'onAfterChange'  : this.afterChange.bind( this )
 			} );
 
