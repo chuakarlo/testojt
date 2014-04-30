@@ -69,7 +69,7 @@ define( function ( require ) {
 
 				getMemberStatus : function() {
 
-					var membership = _.find( this.model.groups, { 'LicenseId': this.model.attributes.LicenseId } );
+					var membership = _.find( this.model.attributes.groups, { 'LicenseId': this.model.attributes.LicenseId } );
 
 					if ( !membership ) {
 						if( this.model.attributes.PrivateGroup !== 0 ) {

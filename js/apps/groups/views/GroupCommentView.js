@@ -25,8 +25,10 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'click @ui.removeReply' : 'removeReply',
-			'click @ui.creator'     : 'showMiniPersonnel'
+			'click @ui.removeReply'  : 'removeReply',
+			'click @ui.creator'      : 'showMiniPersonnel',
+			'mouseenter @ui.creator' : 'showMiniPersonnel',
+			'mouseleave @ui.creator' : 'hideMiniPersonnel'
 
 	    },
 
@@ -46,11 +48,11 @@ define( function ( require ) {
 			// and let the popover library handle the click so we
 			// don't have to fetch the model or create the view every
 			// time.
-			$(this.el).off( 'click', '.child-creator-name' );
+			$( this.el ).off( 'click', '.child-creator-name' );
 
-			var model = new MiniPersonnelModel({
+			var model = new MiniPersonnelModel( {
 				'persId' : this.model.get('Creator')
-			});
+			} );
 
 			var view = new MiniPersonnelView( {
 				'model' : model
@@ -82,6 +84,10 @@ define( function ( require ) {
 					view.render();
 				}, this )
 			} );
+		},
+
+		hideMiniPersonnel : function( event ) {
+			this.ui.creator.popover( 'hide' );
 		},
 
 	    onBeforeClose : function() {
@@ -118,7 +124,7 @@ define( function ( require ) {
 
 				Vent.trigger( 'group:removeReply', this.model );
 
-			}.bind( this ) ).fail( function ( error ) {
+			}.bind( this ) ).fail( function () {
 				// TODO: error handling
 
 			} );

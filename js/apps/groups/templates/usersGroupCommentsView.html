@@ -4,7 +4,7 @@
 		<img class="profile-main" src="http://resources.pd360.com/PD360/uploads/avatars/profile/<%= CreatorAvatar %>">
 
 		<div class="comment-main">
-			<p><span class="fake-link"><%= CreatorFullName %></span> <span class="date"><%= Created %></span></p>
+			<p><span class="fake-link creator-name"><%= CreatorFullName %></span> <span class="date"><%= Created %></span></p>
 			<p><%= Message %><a id="remove-main" style="border: 1px; padding-left:3px;"><span class="fa fa-times"></span></a></p>
 		</div>
 
@@ -15,15 +15,16 @@
 		<div class="container">
 			<ul class="media-list">
 				<li class="row">
-
-					<div class="col-md-10">
-						<div class="form-group">
-							<textarea class="comment-reply form-control" rows="1"></textarea>
+					<form role="comment">
+						<div class="col-md-10">
+							<div class="form-group">
+								<input type="comment" class="comment-reply form-control" rows="1"></input>
+							</div>
 						</div>
-					</div>
-					<div class="col-md-2">
-						<button class="reply-submit btn btn-default" type="submit">Post</button>
-					</div>
+						<div class="col-md-2">
+							<button class="reply-submit btn btn-default" type="submit">Post</button>
+						</div>
+					</form>
 
 				</li>
 			</ul>

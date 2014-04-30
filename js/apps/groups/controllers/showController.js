@@ -87,7 +87,18 @@ define( function ( require ) {
 					}
 				};
 
-				var requests     = [ groupRequest, membersRequest, groupsRequest, wallRequest, resourcesRequest, groupAdminRequest ];
+				// Get the last updated date
+				var groupLastUpdateRequest = {
+					'path'   : 'com.schoolimprovement.pd360.dao.GroupService',
+					'method' : 'getMostRecentActivityDateForGroup',
+					'args'   : {
+						'licId' : groupId
+					}
+				};
+
+
+
+				var requests     = [ groupRequest, membersRequest, groupsRequest, wallRequest, resourcesRequest, groupAdminRequest, groupLastUpdateRequest ];
 				var fetchingData = Remoting.fetch( requests );
 
 				$.when( fetchingData ).done( function ( results ) {
@@ -95,14 +106,15 @@ define( function ( require ) {
 					this.layout = new App.Groups.Views.Layout();
 					App.content.show( this.layout );
 
-					var group          = results [ 0 ];
-					var someMembers    = results [ 1 ].slice( 0, 8 );
-					var membersCount   = results [ 1 ].length;
-					var members        = results [ 1 ];
-					var groups         = results [ 2 ];
-					var groupWall      = results [ 3 ];
-					var resources      = results [ 4 ];
-					var userGroupAdmin = results [ 5 ];
+					var group            = results [ 0 ];
+					var someMembers      = results [ 1 ].slice( 0, 8 );
+					var membersCount     = results [ 1 ].length;
+					var members          = results [ 1 ];
+					var groups           = results [ 2 ];
+					var groupWall        = results [ 3 ];
+					var resources        = results [ 4 ];
+					var userGroupAdmin   = results [ 5 ];
+					var groupLastUpdated = results [ 6 ];
 
 					var getCommentGroup = function ( wall ) {
 						return _.groupBy( wall, 'MessageThreadId' );
@@ -180,8 +192,10 @@ define( function ( require ) {
 					var groupModel           = new GroupModel( group );
 					var someMemberCollection = new MemberCollection( someMembers );
 					var memberCollection     = new MemberCollection( members );
-					memberCollection.count   = membersCount;
-					groupModel.groups        = groups;
+
+					memberCollection.count            = membersCount;
+					groupModel.attributes.groups      = groups;
+					groupModel.attributes.lastUpdated = groupLastUpdated;
 
 
 					Vent.on( 'group:removeComment', function ( model ) {

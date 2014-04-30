@@ -23,7 +23,7 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'click button#create' : 'createComment'
+			'submit form' : 'createComment'
 	    },
 
 	    'initialize' : function ( options ) {

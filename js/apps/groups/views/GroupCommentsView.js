@@ -29,10 +29,12 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'click a#comment-reply'     : 'showComment',
-			'click button.reply-submit' : 'replyComment',
-			'click a#remove-main'       : 'removeComment',
-			'click @ui.creator'         : 'showMiniPersonnel'
+			'click a#comment-reply'  : 'showComment',
+			'submit form'            : 'replyComment',
+			'click a#remove-main'    : 'removeComment',
+			'click @ui.creator'      : 'showMiniPersonnel',
+			'mouseenter @ui.creator' : 'showMiniPersonnel',
+			'mouseleave @ui.creator' : 'hideMiniPersonnel'
 	    },
 
 		initialize: function ( options ) {
@@ -53,11 +55,11 @@ define( function ( require ) {
 			// and let the popover library handle the click so we
 			// don't have to fetch the model or create the view every
 			// time.
-			$(this.el).off( 'click', '.creator-name' );
+			$( this.el ).off( 'click', '.creator-name' );
 
 			var model = new MiniPersonnelModel({
 				'persId' : this.model.get('Creator')
-			});
+			} );
 
 			var view = new MiniPersonnelView( {
 				'model' : model
@@ -91,6 +93,10 @@ define( function ( require ) {
 			} );
 		},
 
+		hideMiniPersonnel : function( event ) {
+			this.ui.creator.popover( 'hide' );
+		},
+
 	    onBeforeClose : function() {
 			// Make sure to destroy the popover events
 			this.ui.creator.popover('destroy');
@@ -114,7 +120,22 @@ define( function ( require ) {
 
 	    },
 
-	    replyComment: function () {
+	    replyComment: function ( e ) {
+
+			e.preventDefault();
+
+			// The container div for the reply input
+			var formGroup   = $( '#input-reply' + this.model.attributes.MessageThreadId ).parent();
+			var formElement = $( '#input-reply' + this.model.attributes.MessageThreadId );
+
+			if ( this.ui.message.val() === '' ) {
+
+				// This is displayed if reply message is blank
+				var error = 'Reply is required';
+				this.displayError( formGroup, error );
+
+				return true;
+			}
 
 			var maxMessageIdModel;
 
@@ -150,17 +171,40 @@ define( function ( require ) {
 
 			$.when( fetchingData ).done( function ( results ) {
 
+				this.clearForm( formGroup, formElement );
+
 				var groupCommentModel = new GroupCommentModel( message );
 				this.collection.add( groupCommentModel );
 
-			}.bind( this ) ).fail( function ( error ) {
+			}.bind( this ) ).fail( function () {
 				// TODO: error handling
 
 			}.bind( this ) );
 
 	    },
 
-	    removeComment: function ( e ) {
+	    clearForm : function( formGroup, formElement ) {
+
+			// removes errors from input
+			formGroup.removeClass( 'has-error' );
+			formGroup.find( '.help-block' ).remove();
+			formElement.val('');
+
+	    },
+
+	    displayError : function( formGroup, error ) {
+
+			// add error to input
+			formGroup.addClass( 'has-error' );
+			formGroup.append(
+				$( '<span/>' )
+				.attr( 'class', 'help-block')
+				.html( error )
+			);
+
+	    },
+
+	    removeComment : function ( e ) {
 
 			e.preventDefault();
 
@@ -190,7 +234,7 @@ define( function ( require ) {
 
 				Vent.trigger( 'group:removeComment', this.model );
 
-			}.bind( this ) ).fail( function ( error ) {
+			}.bind( this ) ).fail( function () {
 				// TODO: error handling
 
 			}.bind( this ) );
