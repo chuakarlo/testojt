@@ -1,6 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
+	var _          = require( 'underscore' );
 	var Session    = require( 'Session' );
 	var Vent       = require( 'Vent' );
 	var App        = require( 'App' );
@@ -32,7 +33,8 @@ define( function ( require ) {
 				'login'            : 'showLogin',
 				'logout'           : 'showLogout',
 				'register'         : 'showRegister',
-				'settings(/:page)' : 'showSettings'
+				'settings(/:page)' : 'showSettings',
+				'sso(/:params)'    : 'ssoSignIn'
 			}
 
 		} );
@@ -101,6 +103,21 @@ define( function ( require ) {
 
 				this.navController.setPage( page );
 				this.contentController.showPage( page );
+			},
+
+			'ssoSignIn' : function ( params ) {
+
+				var options = { };
+				var groups  = params.split( '&' );
+
+				_.each( groups, function ( value ) {
+					var group = value.split( '=' );
+
+					options[ group[ 0 ] ] = group[ 1 ];
+				} );
+
+				Session.sso( options );
+
 			},
 
 			'destroyControllers' : function () {

@@ -3,9 +3,11 @@ define( function ( require ) {
 
 	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
+	var Ladda      = require( 'ladda' );
 	var Marionette = require( 'marionette' );
 	var Session    = require( 'Session' );
 	var template   = require( 'text!user/templates/login/loginView.html' );
+
 
 	return Marionette.ItemView.extend( {
 		'template' : _.template( template ),
@@ -42,6 +44,11 @@ define( function ( require ) {
 
 		'login' : function ( event ) {
 
+			var l = Ladda.create( document.querySelector( '#login-button' ) );
+			l.start();
+
+			$( '.js-invalid-message' ).addClass( 'hidden' );
+
 			event.preventDefault();
 
 			var username = this.ui.username.val();
@@ -55,11 +62,12 @@ define( function ( require ) {
 
 			if ( valid ) {
 
-				Session.fetch( {
+				Session.login( {
 					'username' : username,
 					'password' : password,
 					'error'    : function ( jqXHR, status, error ) {
-						// TODO: error handling
+						l.stop();
+						$( '.js-invalid-message' ).removeClass( 'hidden' );
 					}.bind( this )
 				} );
 

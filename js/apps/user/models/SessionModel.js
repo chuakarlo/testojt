@@ -24,18 +24,33 @@ define( function ( require ) {
 		// `username` & `password` to login
 		// does not pass the username and password in the ajax call
 		'fetch' : function ( options ) {
-			// credentials provided
-			if ( ( options.username && options.password ) ) {
 
-				this.username = options.username;
-				this.password = options.password;
+			var done = options.success;
 
-				var done = options.success;
+			options.success = function ( jqXHR, status, error ) {
 
-				options.success = function ( jqXHR, status, error ) {
+				// SSO returns array, Login returns object
+				if ( _.isArray(jqXHR) ) {
+					jqXHR = jqXHR[ 0 ];
+				}
 
+				// Redirect to login if SSO error occurred
+				if ( jqXHR.ErrorId ) {
+					// TODO: add error message on login page, or navigate to separate error page
+					App.navigate( 'login', { 'trigger' : true } );
+					App.vent.trigger( 'flash:message', {
+						'message' : 'Single sign-on was unsuccessful. Please try again, or contact your system administrator.',
+						'type'    : 'error',
+						'timeout' : 10000
+					} );
+				}
+
+				if ( jqXHR.PersonnelId ) {
 					// Set the cookies before we trigger success
-					this.setCookie( usernameCookie, this.username );
+					if ( this.username ) {
+						this.setCookie( usernameCookie, this.username );
+					}
+
 					this.setCookie( personnelCookie, jqXHR.PersonnelId );
 					this.setCookie( eulaCookie, jqXHR.LicenseAccepted );
 
@@ -46,17 +61,44 @@ define( function ( require ) {
 					if ( done ) {
 						done( jqXHR, status, error );
 					}
+				}
 
-				}.bind( this );
+
+			}.bind( this );
+
+			return this.sync( 'read', this, options );
+
+		},
+
+		'login' : function ( options ) {
+
+			if ( options.username && options.password ) {
+				this.username = options.username;
+				this.password = options.password;
 
 				// remove username and password so that jQuery doesn't make the URL http://user:pass@domain.com
 				delete options.username;
 				delete options.password;
 
-				return this.sync( 'read', this, options );
-
-			// else no credentials provided, TODO: Error handling
+				this.fetch( options );
 			}
+
+		},
+
+		'sso' : function ( options ) {
+			// force json return
+			options.returnformat = 'json';
+
+			// set defaults
+			this.username  = options.loginName;
+			this.ssoParams = $.param( options );
+
+			// update url for SSO
+			this.url = function () {
+				return '/com/schoolimprovement/pd360/dao/SessionService.cfc?method=authenticateSingleSignOnUser&' + this.ssoParams;
+			};
+
+			this.fetch( { } );
 		},
 
 		// extra logout steps
