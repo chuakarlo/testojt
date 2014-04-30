@@ -16,75 +16,201 @@ ul.cn-segments-container {
 	}
 
 	li {
-		min-height : 290px;
-		max-height : 290px;
 		.listOffset( 0 );
 		border-top    : 0;
 		border-left   : 15px solid #fff;
 		border-right  : 15px solid #fff;
 		border-bottom : 20px solid #fff;
 		background    : @cn-gray-light;
+		overflow      : hidden;
 
-		div {
-			position   : relative;
-			color      : @cn-white;
-			background : @cn-black;
+		div.cn-segment-content {
+			div.cn-segment-image {
+				position   : relative;
+				color      : @cn-white;
+				background : @cn-black;
 
-			.cn-play-icon {
-				position  : absolute;
-				display   : none;
-				top       : ~"calc(50% - 35px)";
-				left      : ~"calc(50% - 17.5px)";
-				font-size : 35px;
-			}
+				a {
+					text-decoration : none;
+					.cn-play-icon {
+						position  : absolute;
+						display   : none;
+						top       : ~"calc(50% - 35px)";
+						left      : ~"calc(50% - 17.5px)";
+						font-size : 35px;
+					}
 
-			.cn-play-now {
-				display  : none;
-				top      : 50%;
-				left     : ~"calc(50% - 40px)";
-				position : absolute;
-			}
-		}
+					.cn-play-now {
+						display  : none;
+						top      : 50%;
+						left     : ~"calc(50% - 35px)";
+						position : absolute;
+					}
+				}
 
+				a:hover {
+					color   : @cn-white;
+					padding : 0;
+					margin  : 0;
 
-		div:hover {
+					.cn-play-now, .cn-play-icon {
+						display : block;
+						color   : @cn-white;
+					}
 
-			.cn-play-now, .cn-play-icon {
-				display : block;
-				z-index : 1;
-				color   : @cn-white;
-			}
-
-			a {
-				color : @cn-white;
-
-				img {
-					background          : @cn-black;
-					opacity             : .5;
-					transition-duration : .3s;
+					img {
+						background          : @cn-black;
+						opacity             : .5;
+						transition-duration : .3s;
+					}
 				}
 			}
+
+			h4 {
+			font-size  : 16px;
+			margin     : ( @cn-base-margin * 2 ) ( @cn-base-margin  + 5 ) 0 ( @cn-base-margin + 5 );
+			color      : @cn-black;
+			text-align : left;
+			height     : 36px;
+			}
+
+			p.cn-time {
+				font-size   : 15px;
+				margin      : @cn-base-margin @cn-margin-wide ( @cn-base-margin * 2 ) ( @cn-base-margin + 5 );
+				display     : inline-block;
+				color       : @font-color-light;
+			}
+
+			.cn-info {
+				width      : 35px;
+				height     : 35px;
+				bottom     : 7px;
+				right      : 41px;
+				position   : absolute;
+				z-index    : 3;
+				background : none;
+
+				.cn-info-icon {
+					font-size   : 25px;
+					color       : @cn-gray;
+					cursor      : pointer;
+					top         : ~"calc(103% - 35px)";
+					left        : ~"calc(59% - 17.5px)";
+					height      : 30px;
+					line-height : 1.5;
+				}
+
+				div {
+					line-height : 10px;
+					font-size   : 11px;
+					margin-left : -50px;
+					top         : -39px;
+				}
+
+			}
+
+			.cn-info:hover, .open {
+				.cn-info-icon {
+					color : @cn-blue-light;
+				}
+			}
+
+			.cn-info.open {
+				.cn-tool-tip {
+					box-shadow: none;
+				}
+
+				&~ .cn-watch-later .cn-tool-tip {
+					box-shadow: none;
+				}
+			}
+
+			.cn-watch-later {
+				display    : inline-block;
+				width      : 35px;
+				height     : 35px;
+				background : none !important;
+				bottom     : 1px;
+				right      : 4px;
+				position   : absolute !important;
+				z-index    : 3;
+
+				.flag {
+					display : none;
+				}
+
+				.cn-watch-later-icon {
+					font-size : 25px;
+					color     : @cn-gray;
+					cursor    : pointer;
+
+				}
+
+				.cn-watch-later-icon:hover {
+					color : @cn-blue-light;
+				}
+
+				.remove {
+					display : none;
+				}
+
+				.add {
+					color :	@cn-blue-dark;
+
+					.cn-tool-tip.remove {
+						display : block;
+					}
+
+					.cn-tool-tip.add {
+						display : none;
+					}
+				}
+
+			}
+
+			.cn-watch-later:hover {
+				.cn-watch-later-icon {
+					color :	@cn-blue-light;
+				}
+			}
+
 		}
 
 		div.cn-overlay {
-			min-height : 269px;
-			max-height : 290px;
 			.listOffset( 0 );
-			background: rgba( 0, 0, 0, 0.70 );
+			background : rgba( 0, 0, 0, 0.70 );
 			position   : absolute;
-			top        : 0px;
-			right      : 0px;
-			left       : 0px;
+			top        : 0;
+			right      : 0;
+			left       : 0;
+			bottom     : 0;
+			height     : 100%;
+			width      : 100%;
+			overflow   : hidden;
 			display    : none;
 			z-index    : 2;
 			color      : @cn-white;
 			padding    : 15px 10px 5px 10px;
 
 			.cn-content-description {
-				font-size    : 14px;
+				font-size     : 14px;
+				text-align    : justify;
+				text-justify  : newspaper;
+				line-height   : 1.2em;
+				text-overflow : ellipsis;
+			}
+
+			.cn-segment-name {
+				font-size    : 16px;
+				line-height  : 1;
 				text-align   : justify;
 				text-justify : newspaper;
-				line-height  : 1.2em;
+			}
+
+			.cn-time-overlay {
+				font-size   : 14px;
+				z-index     : 3;
+				line-height : 1em;
 			}
 
 			a {
@@ -110,36 +236,7 @@ ul.cn-segments-container {
 				}
 			}
 
-			.cn-segment-name {
-				font-size    : 16px;
-				line-height  : 1;
-				text-align   : justify;
-				text-justify : newspaper;
-			}
-
-			.cn-time-overlay {
-				font-size   : 14px;
-				z-index     : 3;
-				line-height : 1em;
-			}
-
 		}
-
-		h4 {
-			font-size  : 16px;
-			margin     : ( @cn-base-margin * 2 ) ( @cn-base-margin  + 5 ) 0 ( @cn-base-margin + 5 );
-			color      : @cn-black;
-			text-align : left;
-			height     : 36px;
-		}
-
-		p.cn-time {
-			font-size   : 15px;
-			margin      : @cn-base-margin @cn-margin-wide ( @cn-base-margin * 2 ) ( @cn-base-margin + 5 );
-			display     : inline-block;
-			color       : @font-color-light;
-		}
-
 
 	}
 
@@ -150,50 +247,6 @@ ul.cn-segments-container {
 			text-align  : center;
 			font-weight : 400;
 			font-size   : 18px;
-		}
-	}
-
-	.cn-info {
-		width      : 35px;
-		height     : 35px;
-		bottom     : 7px;
-		right      : 41px;
-		position   : absolute;
-		z-index    : 3;
-		background : none;
-
-		.cn-info-icon {
-			font-size   : 25px;
-			color       : @cn-gray;
-			cursor      : pointer;
-			top         : ~"calc(103% - 35px)";
-			left        : ~"calc(59% - 17.5px)";
-			height      : 30px;
-			line-height : 1.5;
-		}
-
-		div {
-			line-height : 10px;
-			font-size   : 11px;
-			margin-left : -50px;
-			top         : -39px;
-		}
-
-	}
-
-	.cn-info:hover, .open {
-		.cn-info-icon {
-			color : @cn-blue-light;
-		}
-	}
-
-	.cn-info.open {
-		.cn-tool-tip {
-			box-shadow: none;
-		}
-
-		&~ .cn-watch-later .cn-tool-tip {
-			box-shadow: none;
 		}
 	}
 

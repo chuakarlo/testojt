@@ -84,17 +84,18 @@ define( function ( require ) {
 						},
 						'click a': self._clickPlaySegment,
 						'click label.cn-info-icon' : function ( clickEvent ) {
-							var el = $( clickEvent.currentTarget );
+							var el      = $( clickEvent.currentTarget );
+							var overlay = $( 'div[id=' + el.attr( 'id' )+']' );
 
 							if ( el.parent( '.cn-info' ).hasClass( 'open' ) ) {
-								$( 'div#' + el.attr( 'id' ) ).fadeOut();
-								el.parent( '.cn-info' ).removeClass( 'open' );
-								el.next( '.cn-tool-tip' ).text( 'Segment Description' );
+								overlay.fadeOut();
+								el.parent( '.cn-info' ).removeClass( 'open' )
+								  .next( '.cn-tool-tip' ).text( 'Segment Description' );
 							}
 							else {
-								$( 'div#' + el.attr( 'id' ) ).fadeIn();
-								el.parent( '.cn-info' ).addClass( 'open' );
-								el.next( '.cn-tool-tip' ).text( 'Close' );
+								overlay.fadeIn();
+								el.parent( '.cn-info' ).addClass( 'open' )
+								  .next( '.cn-tool-tip' ).text( 'Close' );
 							}
 						}
 					}
