@@ -168,6 +168,44 @@
 
 			} );
 
+			describe( 'method `showObservations`', function () {
+				before( function () {
+					App.LearningTargets.Main.controller.showObservations();
+				} );
+
+				it( 'should setup content for `observations`', function () {
+					setContent.should.have.been.calledWith( 'observations' );
+				} );
+
+				it( 'should display loading view', function () {
+					showView.should.have.been.calledWith( { 'loading' : 'view' } );
+				} );
+
+				it( 'should send request to API', function () {
+					request.should.have.been.calledWith( 'lt:observations' );
+				} );
+
+			} );
+
+			describe( 'method `showCatalogs`', function () {
+				before( function () {
+					App.LearningTargets.Main.controller.showCatalogs();
+				} );
+
+				it( 'should setup content for `catalogs`', function () {
+					setContent.should.have.been.calledWith( 'catalogs' );
+				} );
+
+				it( 'should display loading view', function () {
+					showView.should.have.been.calledWith( { 'loading' : 'view' } );
+				} );
+
+				it( 'should send request to API', function () {
+					request.should.have.been.calledWith( 'lt:catalogs' );
+				} );
+
+			} );
+
 		} );
 
 	} );

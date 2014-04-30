@@ -1,20 +1,12 @@
 <%
-	var link = '';
+	var ext = '';
 
-	if( CatalogResourceTypeId === 1 ) {
-		link = 'video';
-	}
-	else
-	if( CatalogResourceTypeId === 2 ) {
-		link = 'course';
-	}
-	else
 	if( CatalogResourceTypeId === 3 ) {
-		link = 'training';
+		ext = 'data-toggle="modal" data-target="#myModal"';
 	}
 %>
 
-<a href=<%= link %> class="lt-toggle-btn">
+<a class="lt-toggle-btn catalog-item" <%= ext %> >
 	<div class="col-xs-6 truncate"><img src="/img/eye.png" class="icon" alt=""><p><%= ResourceName %></p></div>
 	<div class="col-xs-6"><p><%= CreditHours %> credits</p></div>
 </a>

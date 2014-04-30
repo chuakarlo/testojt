@@ -10,6 +10,14 @@ define( function ( require ) {
 		'tagName'  : 'li',
 		'ui'       : {
 			'drawerToggleButton'  : '.lt-toggle-btn'
+		},
+		'events' : {
+			'click a.catalog-item' : 'showCatalogDescription'
+		},
+		'showCatalogDescription' : function ( e ) {
+			e.preventDefault();
+
+			this.trigger( 'lt:showdescription' );
 		}
 	} );
 

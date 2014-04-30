@@ -10,7 +10,9 @@ define( function ( require ) {
 	var QuestionsView    = require( 'apps/learningTargets/views/questions/QuestionsView' );
 	var CatalogsView     = require( 'apps/learningTargets/views/catalogs/CatalogsView' );
 	var GroupsView       = require( 'apps/learningTargets/views/groups/GroupsView' );
+	var DescriptionView  = require( 'apps/learningTargets/views/catalogs/Description' );
 	var Backbone         = require( 'backbone' );
+	var async            = require( 'async' );
 	var $                = require( 'jquery' );
 
 	App.module( 'LearningTargets.Main', function ( Main ) {
@@ -55,10 +57,53 @@ define( function ( require ) {
 				} );
 			},
 
+			'_apiRequestWithArgs' : function ( type, model, callback ) {
+				var request = App.request( type, model );
+
+				$.when( request ).done( function ( collections ) {
+					// run callback with collections
+					callback( collections );
+				} ).fail( function ( error ) {
+					// TODO: handle error
+					throw error;
+				} );
+			},
+
 			'redirectToLegacyPage' : function ( target, page, sub, opts ) {
 
 				// navigate to legacy page
 				App.request( 'pd360:navigate', ProcessesView, page, sub, opts );
+
+			},
+
+			'showModalDescription' : function( view ) {
+
+				if( view.model.get( 'CatalogResourceTypeId' ) === 2 ) {
+					window.location.assign( 'https://www.pd360.com/pd360.cfm#tab=courses&page=coursesBrowse' );
+				}
+				else
+				if( view.model.get( 'CatalogResourceTypeId' ) === 3 ) {
+					async.waterfall( [
+
+						function ( callback ) {
+
+							Main.helper._apiRequestWithArgs( 'lt:description', view.model, function( data ) {
+								var model = data.models[ 0 ];
+								callback( null, model );
+							} );
+
+						}
+
+					], function ( err, model ) {
+
+						var descriptionView = new DescriptionView( {
+							model : model
+						} );
+
+						App.modalRegion.show( descriptionView );
+
+					});
+				}
 
 			}
 
@@ -173,11 +218,28 @@ define( function ( require ) {
 				helper._showView( new App.Common.LoadingView() );
 
 				helper._apiRequest( 'lt:catalogs', function( collection ) {
+					collection.add({
+						'CatalogId': '255',
+						'CatalogResourceId': '88',
+						'CatalogResourceTypeId': '2',
+						'CreditHours': '5',
+						'Modified': 'February, 21 2014 15:52:42',
+						'Modifier': '13778',
+						'Removed': '',
+						'Remover': '0',
+						'ResourceDesc': 'Description 1',
+						'ResourceId': '3067',
+						'ResourceName': 'Course 1',
+						'Visible': '1'
+					});
+
 					var catalogsView = new CatalogsView( {
 						collection : collection
 					} );
 
-					// display Courses
+					catalogsView.on( 'itemview:lt:showdescription', helper.showModalDescription );
+
+					// display Catalogs
 					helper._showView( catalogsView );
 				} );
 			},
