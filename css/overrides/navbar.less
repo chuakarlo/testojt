@@ -168,20 +168,14 @@ body  {
 }
 
 // Search input
-.navbar-form {
-	margin: 12px 0px;
-}
-
 .search.form-group {
 	input {
-		.border-left-radius( 23px );
-		.border-right-radius( 23px );
-		height: 46px;
-		border: 0px;
+		.border-left-radius( 15px );
+		.border-right-radius( 15px );
 	}
 
 	.form-control-feedback {
-		top: 4px;
+		color: @gray-light;
 	}
 }
 
@@ -191,16 +185,22 @@ div.phone-search {
 
 	form {
 		margin: 0;
+		padding: 7px 10px 0 0;
+
 		.form-group {
 			margin: 0;
 		}
+	}
+
+	.form-control-feedback {
+		top: 0;
 	}
 }
 
 // Navbar toggle
 .navbar-toggle {
 	margin-right: 0;
-	padding: 9px 25px;
+	padding: 0px 20px;
 	background-color: #8dc73f;
 	border: 1px solid transparent;
 	border-radius: 0;
@@ -219,7 +219,7 @@ div.phone-search {
 }
 
 // MENU TO X Animation
-#bar1 { width:19px; height:2px; background:white; position: absolute; top:22px; left:24px; z-index: 4;
+#bar1 { width:19px; height:2px; background:white; position: absolute; top:12px; left:24px; z-index: 4;
 	-webkit-transform: rotate( 00deg );
 	-webkit-transform-origin: 9.5px 0px;
 	-moz-transform: rotate( 0deg );
@@ -228,7 +228,7 @@ div.phone-search {
 	-ms-transform-origin: 9.5px 0px;
 	transform: rotate( 0deg );
 	transform-origin: 9.5px 0px; }
-#bar2 { width:19px; height:2px; background:white; position: absolute; top:32px; left:24px;  z-index: 4;
+#bar2 { width:19px; height:2px; background:white; position: absolute; top:22px; left:24px;  z-index: 4;
 	-webkit-transform: rotate( 0deg );
 	-webkit-transform-origin: 9.5px 0px;
 	-moz-transform: rotate( 0deg );
@@ -237,7 +237,7 @@ div.phone-search {
 	-ms-transform-origin: 9.5px 0px;
 	transform: rotate( 0deg );
 	transform-origin: 9.5px 0px; }
-#bar3 { width:19px; height:2px; background:white; position: absolute; top:42px; left:24px; z-index: 4;
+#bar3 { width:19px; height:2px; background:white; position: absolute; top:32px; left:24px; z-index: 4;
 	-webkit-transform: rotate( 0deg );
 	-webkit-transform-origin: 9.5px 0px;
 	-moz-transform: rotate( 0deg );

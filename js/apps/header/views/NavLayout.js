@@ -115,13 +115,13 @@ define( function ( require ) {
 				if ( $(this.ui.bar1.selector).length > 0 ) {
 
 					this.ui.bar1.animate( {
-						'top' : 22
+						'top' : 12
 					}, 250 );
 					this.ui.bar2.animate( {
-						'top' : 32
+						'top' : 22
 					}, 250 );
 					this.ui.bar3.animate( {
-						'top' : 42
+						'top' : 32
 					}, 250 );
 
 				}
@@ -131,7 +131,7 @@ define( function ( require ) {
 
 		'showUserMenuAnimation' : function ( event ) {
 			this.ui.menuBar.stop().animate( {
-				'top'   : 32,
+				'top'   : 22,
 				'width' : 23,
 				'left'  : 22
 			}, 200, function () {
