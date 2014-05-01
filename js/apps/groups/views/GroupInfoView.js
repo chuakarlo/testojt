@@ -27,9 +27,9 @@ define( function ( require ) {
 			'click @ui.hideMoredetails' : 'toggleDetails',
 			'click @ui.membersLink'     : 'showMembersTab'
 
-	    },
+		},
 
-	    onRender : function( ) {
+		'onRender' : function () {
 
 			// display the hide show description link
 			if ( String( this.model.attributes.Misc ).length > 120 ) {
@@ -41,39 +41,27 @@ define( function ( require ) {
 				this.ui.groupGoals.toggle();
 			}
 
-	    },
+		},
 
-	    'showMembersTab' : function () {
+		'showMembersTab' : function () {
 			$('#tab-members').trigger('click');
-	    },
+		},
 
-	    // Hide show group description
-	    'toggleDetails' : function () {
+		// Hide show group description
+		'toggleDetails' : function () {
 
 			$('#details-abb').toggle();
 			$('#details-full').toggle();
 
-	    },
+		},
 
 		'templateHelpers' : function () {
 
 			return {
 
-				getAbbreviation : function ( string, num ) {
+				'getAbbreviation' : require( 'common/helpers/getAbbreviation' ),
 
-					var text = string;
-
-					// return the num of characters for text
-					if ( string.length > num ) {
-						text = $.trim( string ).substring( 0, num ) + '...';
-						return text;
-
-					}
-					return text;
-
-				},
-
-				stripHtml : function ( html ) {
+				'stripHtml' : function ( html ) {
 					return $( html ).text();
 				}
 

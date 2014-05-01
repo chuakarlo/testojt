@@ -4,7 +4,6 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 	var Vent       = require( 'Vent' );
-	var $          = require( 'jquery' );
 	var template   = require( 'text!../templates/groupInvitesItemView.html' );
 
 	return Marionette.ItemView.extend( {
@@ -16,35 +15,32 @@ define( function ( require ) {
 			'click a.groupDetails' : 'groupClicked',
 			'click a.group-ignore' : 'ignoreGroupClicked',
 			'click a.group-accept' : 'acceptGroupClicked'
-	    },
+		},
 
-	    groupClicked : function ( e ) {
+		'groupClicked' : function ( e ) {
 
 			e.preventDefault();
 			Vent.trigger( 'group:show', this.model );
 
-	    },
+		},
 
-	    ignoreGroupClicked : function ( e ) {
+		'ignoreGroupClicked' : function ( e ) {
 
 			e.preventDefault();
 			Vent.trigger( 'group:ignoreGroup', this.model );
 
-	    },
+		},
 
-	    acceptGroupClicked : function ( e ) {
+		'acceptGroupClicked' : function ( e ) {
 
 			e.preventDefault();
 			Vent.trigger( 'group:acceptGroup', this.model );
 
 		},
 
-	    'templateHelpers' : {
+		'templateHelpers' : {
 
-			getAbbreviation : function ( text, num ) {
-				var abbreviation = $.trim( text ).substring( 0, num ) + '...';
-				return abbreviation;
-			}
+			'getAbbreviation' : require( 'common/helpers/getAbbreviation' )
 
 		}
 

@@ -7,14 +7,8 @@ define( function ( require ) {
 
 	return {
 		'doSetHeader' : function () {
-			var str = App.request( 'homepage:userProfile' ).FirstName;
-			str = str.split( ' ' )[0];
-			str = str.toLowerCase().replace( /\b[a-z]/g, function ( letter ) {
-				return letter.toUpperCase();
-			});
-			str = str + '\'' + ( 'sz'.indexOf( str[ str.length - 1 ] ) !== -1 ? '' : 's' );
 			return _.template( template, {
-				'name' : str
+				'name' : App.request( 'homepage:userProfile' ).FirstName + '\'s'
 			});
 		},
 
