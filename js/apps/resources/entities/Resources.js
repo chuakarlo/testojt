@@ -21,49 +21,49 @@ define( function ( require ) {
 			Entities.resources = new Entities.ResourcesCollection( [
 				{
 					'name' : 'Videos',
-					'url'  : 'resources/videos',
+					'url'  : '#resources/videos',
 					'icon' : 'fa-youtube-play',
 					'id'   : 'link-more-videos'
 				},
 				{
 					'name' : 'Learning Targets',
-					'url'  : 'resources/learning',
+					'url'  : '#resources/learning',
 					'icon' : 'fa-bullseye',
 					'id'   : 'link-more-targets'
 				},
 				{
 					'name' : 'Observation 360',
-					'url'  : 'resources/observation/me',
+					'url'  : '#resources/observation/me',
 					'icon' : 'fa-eye',
 					'id'   : 'link-more-observation'
 				},
 				{
 					'name' : 'Communities',
-					'url'  : 'resources/communities',
+					'url'  : '#resources/communities',
 					'icon' : 'fa-users',
 					'id'   : 'link-more-communities'
 				},
 				{
 					'name' : 'LumiBook',
-					'url'  : 'resources/lumibook',
+					'url'  : '#resources/lumibook',
 					'icon' : 'fa-book',
 					'id'   : 'link-more-lumibook'
 				},
 				{
 					'name' : '{User Video Uploader}',
-					'url'  : '',
+					'url'  : '#',
 					'icon' : 'fa-film',
 					'id'   : 'link-more-uploader'
 				},
 				{
-					'name' : '{Training}',
-					'url'  : '',
+					'name' : 'PD 360 Training',
+					'url'  : 'http://help.schoolimprovement.com/training',
 					'icon' : 'fa-bullhorn',
 					'id'   : 'link-more-training'
 				},
 				{
 					'name' : '{Learning Progression}',
-					'url'  : '',
+					'url'  : '#',
 					'icon' : 'fa-puzzle-piece',
 					'id'   : 'link-more-progression'
 				}
