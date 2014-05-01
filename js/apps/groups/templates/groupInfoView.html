@@ -2,21 +2,21 @@
 
 	<div id="details-abb">
 		<span style="font-weight:bold;">Group Description</span>:
-		<span title="<%= Misc %>"><%= getAbbreviation( Misc, 120 ) %></span>
+		<span title="<%- Misc %>"><%- getAbbreviation( Misc, 120 ) %></span>
 		<a class="show-more-details"> (view more)</a>
 	</div>
 	<div id="details-full">
 		<span style="font-weight:bold;">Group Description</span>:
-		<span title="<%= Misc %>"><%= Misc %></span>
+		<span title="<%- Misc %>"><%- Misc %></span>
 		<a class="hide-more-details"> (hide more)</a>
 	</div>
 
 </p>
 <div>
-	<div><span style="font-weight:bold;">Group Foundation Date</span><span>: <%= Created %></span></div>
-	<div><span style="font-weight:bold;">Group Last Updated Date</span><span>: <%= lastUpdated %></span></div>
-	<div><span style="font-weight:bold;">Group Leader</span><span>: <%= CreatorFirstName %> <%= CreatorLastName %></span></div>
-	<div id="group-goals"><span style="font-weight:bold;">Group Goals</span><span>: <%= stripHtml( Objectives ) %></span></div>
+	<div><span style="font-weight:bold;">Group Foundation Date</span><span>: <%- Created %></span></div>
+	<div><span style="font-weight:bold;">Group Last Updated Date</span><span>: <%- lastUpdated %></span></div>
+	<div><span style="font-weight:bold;">Group Leader</span><span>: <%- CreatorFirstName %> <%- CreatorLastName %></span></div>
+	<div id="group-goals"><span style="font-weight:bold;">Group Goals</span><span>: <%- stripHtml( Objectives ) %></span></div>
 </div>
 <div class="members">
 	<div class="images">
@@ -25,5 +25,5 @@
 		</ul>
 	</div>
 	<br class="ipad-s">
-	<p><%= NumberOfMembers %> members <a id='link-members'>(see all)</a></p>
+	<p><%- NumberOfMembers %> members <a id='link-members'>(see all)</a></p>
 </div>

@@ -1,15 +1,15 @@
-<img class="img-thumbnail" src="../<%= imgSrc %>">
+<img class="img-thumbnail" src="../<%- imgSrc %>">
 <div class="description" style="max-width: 12em;">
-	<h4><%= WidgetName %></h4>
-	<p><%= Description %></p>
+	<h4><%- WidgetName %></h4>
+	<p><%- Description %></p>
 </div>
 
 <div id="widget-limit-message" class="clear alert alert-warning"></div>
 
 <div class="actions">
-	<button type="button" data-id="<%= WidgetId %>" class="cancel btn btn-default">Cancel</button>
-	<button type="button" data-id="<%= WidgetId %>" class="<%= action %> btn"><%= actionValue %></button>
-	<button type="button" data-id="<%= WidgetId %>" class="<%= action %>-and-close btn btn-primary">
-		<%= actionValue %> & Close
+	<button type="button" data-id="<%- WidgetId %>" class="cancel btn btn-default">Cancel</button>
+	<button type="button" data-id="<%- WidgetId %>" class="<%- action %> btn"><%- actionValue %></button>
+	<button type="button" data-id="<%- WidgetId %>" class="<%- action %>-and-close btn btn-primary">
+		<%- actionValue %> & Close
 	</button>
 </div>

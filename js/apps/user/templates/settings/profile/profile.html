@@ -1,11 +1,11 @@
 <div class="form-group img text-center">
-	<img src="http://resources.pd360.com/DEV/uploads/avatars/profile/<%= profile.Avatar %>">
+	<img src="http://resources.pd360.com/DEV/uploads/avatars/profile/<%- profile.Avatar %>">
 </div>
 
 <div class="form-group text-center fine-uploader"></div>
 
 <div class="form-group text-center">
-	<h4><%= personnel.FirstName %> <%= personnel.LastName %>'s Profile</h4>
+	<h4><%- personnel.FirstName %> <%- personnel.LastName %>'s Profile</h4>
 	<p>Username: <span id="username"></span></p>
 </div>
 

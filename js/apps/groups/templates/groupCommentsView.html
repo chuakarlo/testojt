@@ -1,11 +1,11 @@
 
 <div class="wrapper">
 	<div class="accordion-heading">
-		<img class="profile-main" src="http://resources.pd360.com/PD360/uploads/avatars/profile/<%= CreatorAvatar %>">
+		<img class="profile-main" src="http://resources.pd360.com/PD360/uploads/avatars/profile/<%- CreatorAvatar %>">
 
 		<div class="comment-main">
-			<p><span class="fake-link creator-name"><%= CreatorFullName %></span> <span class="date"><%= Created %></span></p>
-			<p><%= Message %></p>
+			<p><span class="fake-link creator-name"><%- CreatorFullName %></span> <span class="date"><%- Created %></span></p>
+			<p><%- Message %></p>
 		</div>
 
 		<ul class="reply media-list">
@@ -19,7 +19,7 @@
 					<form role="comment">
 						<div class="col-md-10">
 							<div class="form-group">
-								<div><input type="comment" id="input-reply<%=MessageThreadId%>" class="comment-reply form-control input-reply" rows="1"></input></div>
+								<div><input type="comment" id="input-reply<%-MessageThreadId%>" class="comment-reply form-control input-reply" rows="1"></input></div>
 							</div>
 						</div>
 						<div class="col-md-2">

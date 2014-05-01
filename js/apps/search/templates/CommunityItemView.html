@@ -1,17 +1,17 @@
-<a href="#resources/communities/<%= LocationTypeId %>/<%=  LocationId %>/<%= ForumThreadId %>/<%= ForumPostId %>">
+<a href="#resources/communities/<%- LocationTypeId %>/<%-  LocationId %>/<%- ForumThreadId %>/<%- ForumPostId %>">
 	<div class="sr-shadow">
 
 		<div class="sr-community-header">
-			<h5> <%= Subject %> </h5>
+			<h5> <%- Subject %> </h5>
 			<p class="paragraph-light">
-				posted by <%= PersonnelFullName %>
+				posted by <%- PersonnelFullName %>
 			</p>
 		</div>
 		<hr />
 
 		<div class="sr-footer">
 			<p class="paragraph-light">
-				<%= Text %> 
+				<%- Text %>
 				<span class="fake-link"> More </span>
 			</p>
 		</div>

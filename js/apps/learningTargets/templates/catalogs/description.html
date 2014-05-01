@@ -4,7 +4,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel"><%= ResourceName %></h4>
+        <h4 class="modal-title" id="myModalLabel"><%- ResourceName %></h4>
       </div>
       <div class="modal-body">
         <table class="catalog-description-table">
@@ -14,31 +14,31 @@
           </tr>
           <tr>
             <th>Facilitator:</th>
-            <td><%= FacilitatorFirstName %> <%= FacilitatorLastName %></td>
+            <td><%- FacilitatorFirstName %> <%- FacilitatorLastName %></td>
           </tr>
           <tr>
             <th>Title:</th>
-            <td><%= ResourceName %></td>
+            <td><%- ResourceName %></td>
           </tr>
           <tr>
             <th>Description:</th>
-            <td><%= ResourceDesc %></td>
+            <td><%- ResourceDesc %></td>
           </tr>
           <tr>
             <th>Start Date:</th>
-            <td><%= StartDate %></td>
+            <td><%- StartDate %></td>
           </tr>
           <tr>
             <th>End Date:</th>
-            <td><%= EndDate %></td>
+            <td><%- EndDate %></td>
           </tr>
           <tr>
             <th>Time:</th>
-            <td><%= StartTime %> - <%= EndTime %></td>
+            <td><%- StartTime %> - <%- EndTime %></td>
           </tr>
           <tr>
             <th>Location:</th>
-            <td><%= LocationDescription %></td>
+            <td><%- LocationDescription %></td>
           </tr>
         </table>
       </div>

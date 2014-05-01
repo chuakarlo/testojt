@@ -1,13 +1,13 @@
 <div class="lt-toggle-btn">
-	<div class="col-xs-8"><img class="icon" src="/img/eye.png" alt=""> <p><%= COURSENAME %></p></div>
+	<div class="col-xs-8"><img class="icon" src="/img/eye.png" alt=""> <p><%- COURSENAME %></p></div>
 	<div class="col-xs-3">
 		<div class="progress">
-			<div class="progress-bar" role="progressbar" aria-valuenow="<%= PERCENTCOMPLETE %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= PERCENTCOMPLETE %>%;">
+			<div class="progress-bar" role="progressbar" aria-valuenow="<%- PERCENTCOMPLETE %>" aria-valuemin="0" aria-valuemax="100" style="width: <%- PERCENTCOMPLETE %>%;">
 			</div>
 		</div>
 	</div>
 	<div class="col-xs-1">
-		<div><%= PERCENTCOMPLETE %>%</div>
+		<div><%- PERCENTCOMPLETE %>%</div>
 	</div>
 </div>
 <br class="clearfix">

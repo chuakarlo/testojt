@@ -6,7 +6,7 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 
-		'template' : _.template( '<%= message %>' ),
+		'template' : _.template( '<%- message %>' ),
 
 		'tagName' : 'span',
 
