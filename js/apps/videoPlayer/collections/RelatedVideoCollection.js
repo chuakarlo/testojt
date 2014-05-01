@@ -7,9 +7,7 @@ define ( function ( require ) {
 
 	return Backbone.Collection.extend( {
 
-		'model'  : RelatedVideoModel,
-
-		'initialize' : function( ) { }
+		'model' : RelatedVideoModel
 
 	} );
 

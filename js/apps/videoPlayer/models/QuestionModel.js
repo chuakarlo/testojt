@@ -8,10 +8,8 @@ define( function ( require ) {
 
 		'idAttribute' : 'QuestionId',
 
-		'initialize'  : function () {},
-
 		'getSanitizedAnswer' : function () {
-			function safeString( unsafe ) {
+			function safeString ( unsafe ) {
 				return String( unsafe )
 				.replace( /<\/script/g, '<\\/script' )
 				.replace( /<!--/g, '<\\!--' );

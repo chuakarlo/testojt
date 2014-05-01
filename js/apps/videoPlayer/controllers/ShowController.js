@@ -18,7 +18,7 @@ define( function ( require ) {
 
 		Controller.Show = {
 
-			'showVideo' : function( videoId ) {
+			'showVideo' : function ( videoId ) {
 
 				App.content.show( new App.Common.LoadingView() );
 
@@ -58,9 +58,9 @@ define( function ( require ) {
 				};
 
 				var questionsRequest = {
-					'path' : 'com.schoolimprovement.pd360.dao.ContentService',
+					'path'   : 'com.schoolimprovement.pd360.dao.ContentService',
 					'method' : 'getQuestionsWithAnswers',
-					'args' : {
+					'args'   : {
 						'persId'    : Session.personnelId(),
 						'ContentId' : videoModel.id
 					}
@@ -86,7 +86,7 @@ define( function ( require ) {
 				// There are some responsed data that has no `Children` object
 				// this will emit an error on invoking getProgramSegment in CF
 				// so we have to check if `Children` is exist, if not will make one.
-				if( !videoModel.get( 'Children' ) ){
+				if ( !videoModel.get( 'Children' ) ) {
 					videoModel.set( 'Children', [ ] );
 				}
 

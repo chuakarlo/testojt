@@ -20,7 +20,6 @@ define( function ( require ) {
 			'prev' : 'button.slick-prev'
 		},
 
-
 		'onShow' : function () {
 			this.$el.slick( {
 				'slidesToShow'   : 4,

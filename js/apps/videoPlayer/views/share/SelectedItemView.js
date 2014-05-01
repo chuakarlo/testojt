@@ -9,7 +9,6 @@ define( function ( require ) {
 	var template    = require( 'text!videoPlayer/templates/share/selectedItemView.html' );
 	var tooltipTmpl = require( 'text!videoPlayer/templates/share/selectedItemTooltip.html' );
 
-
 	return Marionette.ItemView.extend( {
 
 		'template' : _.template( template ),
@@ -20,7 +19,7 @@ define( function ( require ) {
 
 		'ui' : {
 			'removeItem'   : '.remove-item',
-			'selectedItem' : '.selected-item',
+			'selectedItem' : '.selected-item'
 		},
 
 		'triggers' : {

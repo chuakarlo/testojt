@@ -19,7 +19,7 @@ define( function ( require ) {
 			// Clarify where to get ViewingId, licId, taskId
 			return {
 				'method' : 'RespondUpdatedViewingTimeWithStatusCheck',
-				'args' : {
+				'args'   : {
 					'PersonnelId'      : Session.personnelId(),
 					'ContentId'        : this.id,
 					'ViewingId'        : 1,

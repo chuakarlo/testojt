@@ -47,17 +47,15 @@ define( function ( require ) {
 
 		'initializePlayer' : function () {
 			var player = videojs( 'video-content', {
-				'controls'               : true,
-				'defaultVolume'          : 1,
-				'techOrder'              : [ 'flash', 'html5' ],
-				'nativeControlsForTouch' : false
+				'controls'  : true,
+				'techOrder' : [ 'flash', 'html5' ]
 			}, function () {
 				// Bug in flash player where volume returns 0
-				// but actual video has sound and thus
-				// making the volume level ui to minimum.
-				// Manually set player volume to full to correct ui.
+				// but actual video has sound and ui shown is minimum.
+				// Manually set player volume to full to correct volume ui.
 				this.volume( 1 );
 			} );
+
 			player.ccToggle();
 
 			this.trigger( 'afterPlayerInit', player );

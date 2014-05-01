@@ -45,7 +45,7 @@ define( function ( require ) {
 			this.ui.pdfModal.modal( 'show' );
 			//use embed if google chrome and iframe if not
 			this.ui.modalContent.html( function () {
-			  return '<'+ tag +' id="modal-iframe" src='+ previewPath + '></'+ tag + '>';
+				return '<' + tag + ' id="modal-iframe" src=' + previewPath + '></' + tag + '>';
 			} );
 		}
 

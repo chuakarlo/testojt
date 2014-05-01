@@ -6,7 +6,6 @@ define( function ( require ) {
 
 	var Vent = require( 'Vent' );
 
-
 	App.module( 'VideoPlayer', function ( VideoPlayer ) {
 
 		require( 'videoPlayer/views/Views' );

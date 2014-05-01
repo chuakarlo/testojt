@@ -100,12 +100,12 @@ define( function ( require ) {
 			this.ui.currentPage.text( page );
 		},
 
-		'afterChange' : function( elem, page ) {
+		'afterChange' : function ( elem, page ) {
 			this.updatePage( page + 1 );
 			this.showSubmitButton( page + 1 );
 		},
 
-		'submitAnswers' : function() {
+		'submitAnswers' : function () {
 
 			// Filter out those models that don't have an answer
 			var unanswered = this.collection.filter( function ( model ) {

@@ -5,9 +5,7 @@ define( function ( require ) {
 
 	return Backbone.Model.extend( {
 
-		'idAttribute' : 'ContentId',
-
-		'initialize' : function ( ) { }
+		'idAttribute' : 'ContentId'
 
 	} );
 

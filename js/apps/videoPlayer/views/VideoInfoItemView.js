@@ -31,13 +31,13 @@ define( function ( require ) {
 			var self = this;
 
 			this.ui.videoInfo.popover( {
-				'html'    : true,
-				'trigger' : 'manual',
-				'title'   : this.model.get( 'ContentName' ),
-				'content' : function () {
-					return  self.ui.infoContent.html();
-				},
-				'placement' : 'bottom'
+				'html'      : true,
+				'trigger'   : 'manual',
+				'title'     : this.model.get( 'ContentName' ),
+				'placement' : 'bottom',
+				'content'   : function () {
+					return self.ui.infoContent.html();
+				}
 			} );
 
 			this.ui.videoInfo.popover( 'toggle' );
