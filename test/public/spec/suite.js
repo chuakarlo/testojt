@@ -139,11 +139,14 @@ define( function ( require ) {
 
 			//HomePage - Billboard
 			'spec/apps/homepage/external/billboard/collection/BillboardCollectionTest.js',
-			//'spec/apps/homepage/external/billboard/configuration/nivoSettingsTest.js',
+			'spec/apps/homepage/external/billboard/configuration/nivoSettingsTest.js',
 			'spec/apps/homepage/external/billboard/views/BillboardItemViewTest.js',
 			'spec/apps/homepage/external/billboard/baseTest.js',
 
-			//HomePage - Recommended
+			//HomePage - Widgets
+			//HomePage - Courses
+			'spec/apps/homepage/external/widgets/external/courses/baseTest.js',
+			'spec/apps/homepage/external/widgets/external/courses/views/WidgetItemViewTest',
 
 			//Homepage - Your Queue
 			'spec/apps/homepage/external/content/external/your-queue/baseTest.js'

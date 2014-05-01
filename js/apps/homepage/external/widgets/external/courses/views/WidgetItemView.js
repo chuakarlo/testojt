@@ -6,27 +6,27 @@ define( function ( require ) {
 	var progressTemplate = require( 'text!apps/homepage/external/widgets/external/courses/templates/progressItemTemplate.html' );
 	var limitCharacters  = require( 'apps/homepage/utils/limitCharacters' );
 
-	function doOnshow( view ) {
-		if( view.model ) {
-				var completion = view.model.get( 'PERCENTCOMPLETE' );
-				var that       = view;
-					require( [ 'pc-progressCircle' ], function ( $ ) {
-						$(that.$el).find( '.courses' ).progressCircle( {
-							'nPercent'        : completion,
-							'circleSize'      : 25,
-							'thickness'       : 4,
-							'showPercentText' : false
-						} );
-					} );
-			}
+	function doOnshow ( view ) {
+		if ( view.model ) {
+			var completion = view.model.get( 'PERCENTCOMPLETE' );
+			var that       = view;
+			require( [ 'pc-progressCircle' ], function ( $ ) {
+				$(that.$el).find( '.courses' ).progressCircle( {
+					'nPercent'        : completion,
+					'circleSize'      : 25,
+					'thickness'       : 4,
+					'showPercentText' : false
+				} );
+			} );
+		}
 	}
 
 	return Marionette.ItemView.extend( {
-		'initialize' : function ( ) {
+		'initialize'      : function ( ) {
 			//default template
 			this.template = _.template( progressTemplate );
 		},
-		'className' : 'col-md-12 no-padding learningTarget',
+		'className'       : 'col-md-12 no-padding learningTarget',
 		'templateHelpers' : function () {
 			return {
 				'url'        : '/dev.html#resources/learning/courses',
@@ -34,10 +34,10 @@ define( function ( require ) {
 				'completion' : this.model ? this.model.get( 'PERCENTCOMPLETE' ) : ''
 			};
 		},
-		'limitCharacter' : function ( text ) {
+		'limitCharacter'  : function ( text ) {
 			return limitCharacters( text, 32 );
 		},
-		'onShow'  : function ( ) {
+		'onShow'          : function ( ) {
 			doOnshow( this );
 		}
 
