@@ -5,6 +5,8 @@ node_js:
 
 notifications:
   flowdock: ce9d8b10b8bd428f1d59cf0a62915cff
+    on_success: change
+    on_failure: always
 
 before_install:
   - npm install -g npm
