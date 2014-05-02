@@ -19,6 +19,7 @@ define( function ( require ) {
 				var catalogResourceTypeId = this.catalogResourceTypeId;
 				return {
 					'method' : 'getResourceDetailsByCatalogIdAndCatalogResourceIdAndCatalogResourceTypeId',
+
 					'args' : {
 						'catalogId'             : catalogId,
 						'catalogResourceId'     : catalogResourceId,
