@@ -10,7 +10,7 @@ define( function ( require ) {
 	var QuestionsView    = require( 'apps/learningTargets/views/questions/QuestionsView' );
 	var CatalogsView     = require( 'apps/learningTargets/views/catalogs/CatalogsView' );
 	var GroupsView       = require( 'apps/learningTargets/views/groups/GroupsView' );
-	var DescriptionView  = require( 'apps/learningTargets/views/catalogs/Description' );
+	var DescriptionView  = require( 'apps/learningTargets/views/catalogs/DescriptionView' );
 	var Backbone         = require( 'backbone' );
 	var async            = require( 'async' );
 	var $                = require( 'jquery' );
