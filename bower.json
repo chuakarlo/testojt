@@ -5,7 +5,7 @@
     "async": "0.2.5",
     "backbone-amd": "1.0.x",
     "backbone.babysitter": "0.1.x",
-    "backbone.marionette": "1.6.x",
+    "backbone.marionette": "1.8.x",
     "backbone.wreqr": "1.0.x",
     "backbone.stickit": "https://github.com/NYTimes/backbone.stickit.git#0702e7bae7bf473e60fa37cdadadb0bcd0723141",
     "bootstrap": "3.1.x",
