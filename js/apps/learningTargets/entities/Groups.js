@@ -8,17 +8,17 @@ define( function ( require ) {
 
 	App.module( 'Entities', function ( Entities ) {
 
-		Entities.Processes = Backbone.CFCollection.extend( {
+		Entities.Groups = Backbone.CFCollection.extend( {
 
-			'path' : 'process.ProcessGateway',
+			'path' : 'GroupService',
 
 			'idAttribute' : 'personnelId',
 
 			'getReadOptions' : function () {
 				return {
-					'method' : 'getExtByEducatorForLearningTargets',
-					'args' : {
-						'educId' : Session.personnelId()
+					'method' : 'getGroupsWithTasksByPersonnelId',
+					'args'   : {
+						'persId' : Session.personnelId()
 					}
 				};
 			}
@@ -29,19 +29,19 @@ define( function ( require ) {
 
 	var API = {
 
-		'getProcesses' : function () {
+		'getGroups' : function () {
 			var defer = $.Deferred();
 
-			var processes = new App.Entities.Processes();
+			var groups = new App.Entities.Groups();
 
-			processes.fetch( {
+			groups.fetch( {
 
 				'success' : function () {
-					defer.resolve( processes );
+					defer.resolve( groups );
 				},
 
 				'error' : function () {
-					defer.reject( new Error( 'Error fetching processes' ) );
+					defer.reject( new Error( 'Error fetching groups' ) );
 				}
 
 			} );
@@ -52,7 +52,7 @@ define( function ( require ) {
 	};
 
 	App.reqres.setHandler( 'lt:groups', function () {
-		return API.getProcesses();
+		return API.getGroups();
 	} );
 
 } );
