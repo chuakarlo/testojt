@@ -86,7 +86,7 @@ define( function ( require ) {
 
 						function ( callback ) {
 
-							Main.helper._apiRequestWithArgs ( 'lt:description', view.model, function( data ) {
+							Main.helper._apiRequestWithArgs ( 'lt:description', view.model, function ( data ) {
 								var model = data.models[ 0 ];
 								callback ( null, model );
 							} );
