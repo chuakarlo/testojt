@@ -41,5 +41,11 @@
     "readdirp": "^1.0.1",
     "jscs": "~1.4.0",
     "vow": "~0.4.3"
+  },
+  "dependencies": {
+    "vow-fs": "~0.3.1",
+    "minimatch": "~0.2.14",
+    "esprima": "~1.2.0",
+    "strip-json-comments": "~0.1.2"
   }
 }
