@@ -11,7 +11,7 @@ define( function ( require ) {
 	require( 'apps/learningTargets/entities/Processes' );
 	require( 'apps/learningTargets/entities/Catalogs' );
 	require( 'apps/learningTargets/entities/Groups' );
-	require( 'apps/learningTargets/entities/CatalogDescription' );
+	require( 'apps/learningTargets/entities/CatalogDescriptions' );
 
 	App.module( 'LearningTargets', function ( LearningTargets, App ) {
 

@@ -7,7 +7,7 @@ define( function ( require ) {
 
 	App.module( 'Entities', function ( Entities ) {
 
-		Entities.CatalogDescription = Backbone.CFCollection.extend( {
+		Entities.CatalogDescriptions = Backbone.CFCollection.extend( {
 
 			'path' : 'CatalogService',
 
@@ -36,7 +36,7 @@ define( function ( require ) {
 		'getCatalogDescription' : function ( model ) {
 			var defer = $.Deferred();
 
-			var catalogDescription                   = new App.Entities.CatalogDescription();
+			var catalogDescription                   = new App.Entities.CatalogDescriptions();
 			catalogDescription.catalogId             = model.get( 'CatalogId' );
 			catalogDescription.catalogResourceId     = model.get( 'CatalogResourceId' );
 			catalogDescription.catalogResourceTypeId = model.get( 'CatalogResourceTypeId' );
