@@ -24,13 +24,13 @@ define( function ( require ) {
 
 		'events' : {
 			'submit form' : 'createComment'
-	    },
+		},
 
-	    'initialize' : function ( options ) {
+		'initialize' : function ( options ) {
 			this.user = options.user;
-	    },
+		},
 
-	    createComment: function () {
+		'createComment' : function () {
 
 			var message = { };
 
@@ -65,7 +65,7 @@ define( function ( require ) {
 
 			} );
 
-	    }
+		}
 
 	} );
 

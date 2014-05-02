@@ -30,9 +30,9 @@ define( function ( require ) {
 			'mouseenter @ui.creator' : 'showMiniPersonnel',
 			'mouseleave @ui.creator' : 'hideMiniPersonnel'
 
-	    },
+		},
 
-	    getTemplate : function(){
+		'getTemplate' : function () {
 
 			// add the remove button if user created the message
 			if ( String( this.model.attributes.Creator ) === String( Session.personnelId() ) ) {
@@ -41,9 +41,9 @@ define( function ( require ) {
 				return _.template( template );
 			}
 
-	    },
+		},
 
-		showMiniPersonnel : function( event ) {
+		'showMiniPersonnel' : function ( event ) {
 			// We disabled the event that just captured the click
 			// and let the popover library handle the click so we
 			// don't have to fetch the model or create the view every
@@ -63,14 +63,14 @@ define( function ( require ) {
 				'html'      : true,
 				'placement' : 'top',
 				'trigger'   : 'click',
-				'content'   : function() {
+				'content'   : function () {
 					return view.render().el;
 				}
 			} );
 
 			// Since spin.js requires element to be in the dom, wait until
 			// the popover has been shown to add the spin icon.
-			this.ui.creator.on( 'shown.bs.popover', function() {
+			this.ui.creator.on( 'shown.bs.popover', function () {
 				$(view.ui.spinner).spin();
 			} );
 
@@ -79,24 +79,23 @@ define( function ( require ) {
 			this.ui.creator.popover( 'show' );
 
 			model.fetch( {
-				'success': _.bind( function( model, res, options ) {
+				'success' : _.bind( function ( model, res, options ) {
 					// Render again once we have attributes
 					view.render();
 				}, this )
 			} );
 		},
 
-		hideMiniPersonnel : function( event ) {
+		'hideMiniPersonnel' : function ( event ) {
 			this.ui.creator.popover( 'hide' );
 		},
 
-	    onBeforeClose : function() {
+		'onBeforeClose' : function () {
 			// Make sure to destroy the popover events
 			this.ui.creator.popover('destroy');
-	    },
+		},
 
-	    removeReply : function ( e ) {
-
+		'removeReply' : function ( e ) {
 			e.preventDefault();
 
 			var message = { };
@@ -129,9 +128,8 @@ define( function ( require ) {
 
 			} );
 
-	    }
+		}
 
 	} );
 
 } );
-

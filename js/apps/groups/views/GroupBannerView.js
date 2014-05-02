@@ -19,60 +19,59 @@ define( function ( require ) {
 			'click button.Leave'            : 'leaveGroup',
 			'click button.Join'             : 'joinGroup',
 			'click button#btn-leader-tools' : 'showLeaderTools'
-	    },
+		},
 
-	    'initialize' : function ( options ) {
+		'initialize' : function ( options ) {
 			this.isGroupAdmin = options.userGroupAdmin;
 
-	    },
+		},
 
-	    'leaveGroup' : function ( e ) {
+		'leaveGroup' : function ( e ) {
 
 			e.preventDefault();
 			Vent.trigger( 'group:leaveGroup', this.model );
 
-	    },
+		},
 
-	    'joinGroup' : function ( e ) {
+		'joinGroup' : function ( e ) {
 
 			e.preventDefault();
 			Vent.trigger( 'group:joinGroup', this.model );
 
-	    },
+		},
 
-	    'showLeaderTools' : function ( e ) {
+		'showLeaderTools' : function ( e ) {
 
 			e.preventDefault();
 			App.request( 'group:showLeaderTools', this.model.attributes.LicenseId );
 
-	    },
+		},
 
-	    getTemplate : function() {
+		'getTemplate' : function () {
 
 			// displays group leader tools, but not leave option for creator
-			if ( String( this.model.attributes.Creator ) === String( Session.personnelId() ) ){
+			if ( String( this.model.attributes.Creator ) === String( Session.personnelId() ) ) {
 				return _.template( creatorTemplate );
 
-			}
 			// leaders that are not the creator should be allowed to leave group
-			else if ( this.isGroupAdmin && ( String( this.model.attributes.Creator ) !== String( Session.personnelId() ) ) ) {
+			} else if ( this.isGroupAdmin && ( String( this.model.attributes.Creator ) !== String( Session.personnelId() ) ) ) {
 				return _.template( leaderTemplate );
 
 			} else {
 				return _.template( template );
 			}
 
-	    },
+		},
 
 		'templateHelpers' : function () {
 			return {
 
-				getMemberStatus : function() {
+				getMemberStatus : function () {
 
-					var membership = _.find( this.model.attributes.groups, { 'LicenseId': this.model.attributes.LicenseId } );
+					var membership = _.find( this.model.attributes.groups, { 'LicenseId' : this.model.attributes.LicenseId } );
 
 					if ( !membership ) {
-						if( this.model.attributes.PrivateGroup !== 0 ) {
+						if ( this.model.attributes.PrivateGroup !== 0 ) {
 							return 'Join';
 						} else {
 							return 'Request';

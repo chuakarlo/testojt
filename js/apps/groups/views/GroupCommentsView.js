@@ -35,22 +35,22 @@ define( function ( require ) {
 			'click @ui.creator'      : 'showMiniPersonnel',
 			'mouseenter @ui.creator' : 'showMiniPersonnel',
 			'mouseleave @ui.creator' : 'hideMiniPersonnel'
-	    },
+		},
 
-		initialize: function ( options ) {
-	        // grab the child collection from the parent model
-	        // so that we can render the collection as children
-	        // of this parent node
-	        this.collection = this.model.replies;
+		'initialize' : function ( options ) {
+			// grab the child collection from the parent model
+			// so that we can render the collection as children
+			// of this parent node
+			this.collection = this.model.replies;
 
-	        this.user = options.user;
+			this.user = options.user;
 
-	        Vent.on( 'group:removeReply', function ( model ) {
+			Vent.on( 'group:removeReply', function ( model ) {
 				this.collection.remove( model );
 			}.bind( this ) );
-	    },
+		},
 
-		showMiniPersonnel : function( event ) {
+		'showMiniPersonnel' : function ( event ) {
 			// We disabled the event that just captured the click
 			// and let the popover library handle the click so we
 			// don't have to fetch the model or create the view every
@@ -70,14 +70,14 @@ define( function ( require ) {
 				'html'      : true,
 				'placement' : 'top',
 				'trigger'   : 'click',
-				'content'   : function() {
+				'content'   : function () {
 					return view.render().el;
 				}
 			} );
 
 			// Since spin.js requires element to be in the dom, wait until
 			// the popover has been shown to add the spin icon.
-			this.ui.creator.on( 'shown.bs.popover', function() {
+			this.ui.creator.on( 'shown.bs.popover', function () {
 				$(view.ui.spinner).spin();
 			} );
 
@@ -86,41 +86,41 @@ define( function ( require ) {
 			this.ui.creator.popover( 'show' );
 
 			model.fetch( {
-				'success': _.bind( function( model, res, options ) {
+				'success' : _.bind( function ( model, res, options ) {
 					// Render again once we have attributes
 					view.render();
 				}, this )
 			} );
 		},
 
-		hideMiniPersonnel : function( event ) {
+		'hideMiniPersonnel' : function ( event ) {
 			this.ui.creator.popover( 'hide' );
 		},
 
-	    onBeforeClose : function() {
+		'onBeforeClose' : function () {
 			// Make sure to destroy the popover events
 			this.ui.creator.popover('destroy');
-	    },
+		},
 
-	    appendHtml: function ( collectionView, itemView ) {
-	        // ensure we nest the child list inside of
-	        // the current list item
-	        collectionView.$( '.reply' ).append( itemView.el );
+		'appendHtml' : function ( collectionView, itemView ) {
+			// ensure we nest the child list inside of
+			// the current list item
+			collectionView.$( '.reply' ).append( itemView.el );
 
-	    },
+		},
 
-	    getTemplate : function(){
+		'getTemplate' : function () {
 
 			// add the remove button if user created the message
-			if ( String( this.model.attributes.Creator ) === String( Session.personnelId() ) ){
+			if ( String( this.model.attributes.Creator ) === String( Session.personnelId() ) ) {
 				return _.template( usersTemplate );
 			} else {
 				return _.template( template );
 			}
 
-	    },
+		},
 
-	    replyComment: function ( e ) {
+		'replyComment' : function ( e ) {
 
 			e.preventDefault();
 
@@ -141,7 +141,9 @@ define( function ( require ) {
 
 			// The backend needs the MessageId of the last message that it increments by one
 			if ( this.model.replies.length > 0 ) {
-				maxMessageIdModel = _.max( this.model.replies.models, function( model ) { return model.attributes.MessageId; } );
+				maxMessageIdModel = _.max( this.model.replies.models, function ( model ) {
+					return model.attributes.MessageId;
+				} );
 			} else {
 				maxMessageIdModel = this.model;
 			}
@@ -181,18 +183,18 @@ define( function ( require ) {
 
 			}.bind( this ) );
 
-	    },
+		},
 
-	    clearForm : function( formGroup, formElement ) {
+		clearForm : function ( formGroup, formElement ) {
 
 			// removes errors from input
 			formGroup.removeClass( 'has-error' );
 			formGroup.find( '.help-block' ).remove();
 			formElement.val('');
 
-	    },
+		},
 
-	    displayError : function( formGroup, error ) {
+		displayError : function ( formGroup, error ) {
 
 			// add error to input
 			formGroup.addClass( 'has-error' );
@@ -202,9 +204,9 @@ define( function ( require ) {
 				.html( error )
 			);
 
-	    },
+		},
 
-	    removeComment : function ( e ) {
+		removeComment : function ( e ) {
 
 			e.preventDefault();
 
@@ -239,7 +241,7 @@ define( function ( require ) {
 
 			}.bind( this ) );
 
-	    }
+		}
 
 	} );
 

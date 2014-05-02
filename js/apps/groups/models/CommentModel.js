@@ -5,30 +5,30 @@ define( function ( require ) {
 
 	return Backbone.Model.extend( {
 
-        'defaults' : {
-            'Message'         : '',
-            'MessageThreadId' : '',
-            'MessageId'       : 0,
-            'CreatorAvatar'   : 'default.png',
-            'Created'         : '',
-            'CreatorFullName' : ''
-        },
+		'defaults' : {
+			'Message'         : '',
+			'MessageThreadId' : '',
+			'MessageId'       : 0,
+			'CreatorAvatar'   : 'default.png',
+			'Created'         : '',
+			'CreatorFullName' : ''
+		},
 
-		initialize: function( ) {
+		'initialize' : function () {
 
 			var CommentCollection = require( '../collections/CommentCollection' );
 
-	        var replies = this.get( 'replies' );
-	        if ( replies ){
-	            this.replies = new CommentCollection( replies );
-	            this.unset('replies');
-	        }
+			var replies = this.get( 'replies' );
+			if ( replies ) {
+				this.replies = new CommentCollection( replies );
+				this.unset('replies');
+			}
 
-	        if ( this.attributes.Message === '' ) {
+			if ( this.attributes.Message === '' ) {
 				this.attributes.Message = this.attributes.NewsEntry;
-	        }
+			}
 
-	    }
+		}
 
 	} );
 

@@ -82,7 +82,7 @@ define( function ( require ) {
 					'path'   : 'com.schoolimprovement.pd360.dao.GroupService',
 					'method' : 'userIsGroupAdmin',
 					'args'   : {
-						'licId'     : groupId,
+						'licId'  : groupId,
 						'persId' : $.cookie( 'PID' ) || null
 					}
 				};
@@ -95,8 +95,6 @@ define( function ( require ) {
 						'licId' : groupId
 					}
 				};
-
-
 
 				var requests     = [ groupRequest, membersRequest, groupsRequest, wallRequest, resourcesRequest, groupAdminRequest, groupLastUpdateRequest ];
 				var fetchingData = Remoting.fetch( requests );
@@ -121,54 +119,55 @@ define( function ( require ) {
 					};
 
 					var getFirstComment = function ( commentGroup ) {
-						return _.find( commentGroup, { 'MessageId': 1 } );
+						return _.find( commentGroup, { 'MessageId' : 1 } );
 					};
 
 					// get the replies
 					var mapReplies = function ( commentGroup ) {
+						// return when MessageId is not 1
 						return _.map(
-							// return when MessageId is not 1
-							_.reject( commentGroup, { 'MessageId' : 1 } ), function( elem ) {
-							return _.pick( elem,
-								'MessageThreadId',
-								'MessageId',
-								'Message',
-								'LicenseId',
-								'Creator',
-								'Created',
-								'Remover',
-								'Removed',
-								'CreatorFullName',
-								'CreatorAvatar',
-								'Created',
-								'NewsEntry',
-								'NewsId'
-							);
-				        } );
+							_.reject( commentGroup, { 'MessageId' : 1 } ), function ( elem ) {
+								return _.pick( elem,
+									'MessageThreadId',
+									'MessageId',
+									'Message',
+									'LicenseId',
+									'Creator',
+									'Created',
+									'Remover',
+									'Removed',
+									'CreatorFullName',
+									'CreatorAvatar',
+									'Created',
+									'NewsEntry',
+									'NewsId'
+								);
+							}
+						);
 					};
 
 					// get message first message in thread
 					var getMainComment = function ( commentGroup ) {
-						 return _.pick( getFirstComment( commentGroup ),
-						    'MessageThreadId',
-						    'MessageId',
-						    'Message',
-						    'LicenseId',
-						    'Creator',
-						    'Created',
-						    'Remover',
-						    'Removed',
-						    'CreatorFullName',
-						    'CreatorAvatar',
-						    'Created',
-						    'NewsEntry',
-						    'NewsId'
-					    );
+						return _.pick( getFirstComment( commentGroup ),
+							'MessageThreadId',
+							'MessageId',
+							'Message',
+							'LicenseId',
+							'Creator',
+							'Created',
+							'Remover',
+							'Removed',
+							'CreatorFullName',
+							'CreatorAvatar',
+							'Created',
+							'NewsEntry',
+							'NewsId'
+						);
 					};
 
 					// set the comments
 					var getComments = function ( commentGroup ) {
-						return _.extend( getMainComment( commentGroup ), { replies: mapReplies( commentGroup ) } );
+						return _.extend( getMainComment( commentGroup ), { 'replies' : mapReplies( commentGroup ) } );
 					};
 
 					// Set the comments
@@ -176,8 +175,8 @@ define( function ( require ) {
 					// using 'MessageThreadId' this will create an array of objects
 					// each object will contain the main message and an array of 'replies'
 					var comments = _.map( getCommentGroup( groupWall ),
-						function( commentGroup ) {
-						    return getComments( commentGroup );
+						function ( commentGroup ) {
+							return getComments( commentGroup );
 						}
 					);
 
@@ -196,7 +195,6 @@ define( function ( require ) {
 					memberCollection.count            = membersCount;
 					groupModel.attributes.groups      = groups;
 					groupModel.attributes.lastUpdated = groupLastUpdated;
-
 
 					Vent.on( 'group:removeComment', function ( model ) {
 						commentCollection.remove( model );
@@ -239,12 +237,12 @@ define( function ( require ) {
 
 								var newWall = results[ 0 ];
 
-								var comments = _.map( _.groupBy( newWall, 'MessageThreadId' ), function( comment ) {
-								    return _.extend( _.pick( _.find( comment, { 'MessageId': 1 } ) , 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created', 'NewsEntry', 'NewsId' ), {
-								        replies : _.map( _.reject( comment, { 'MessageId' : 1 } ), function( elem ) {
+								var comments = _.map( _.groupBy( newWall, 'MessageThreadId' ), function ( comment ) {
+									return _.extend( _.pick( _.find( comment, { 'MessageId' : 1 } ), 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created', 'NewsEntry', 'NewsId' ), {
+										replies : _.map( _.reject( comment, { 'MessageId' : 1 } ), function ( elem ) {
 											return _.pick( elem, 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created', 'NewsEntry', 'NewsId' );
-								        } )
-								    } );
+										} )
+									} );
 								} );
 
 								commentCollection = new CommentCollection( comments );
@@ -264,7 +262,6 @@ define( function ( require ) {
 
 					var resourcesView = new App.Groups.Views.Resources( { 'collection' : resourcesCollection } );
 					this.layout.resourcesRegion.show( resourcesView );
-
 
 				}.bind( this ) ).fail( function () {
 					// TODO: error handling

@@ -25,26 +25,26 @@ define( function ( require ) {
 			'click @ui.resourceTab' : 'resetInfoClass',
 			'click @ui.forumTab'    : 'navigateForums',
 			'click @ui.membersTab'  : 'resetInfoClass'
-	    },
+		},
 
-	    'phone' : false,
+		'phone' : false,
 
-	    'onRender' : function () {
+		'onRender' : function () {
 			// add handler
 			$( window ).on( 'resize', this.resizeHandler.bind( this ) );
-	    },
+		},
 
-	    'onClose' : function () {
+		'onClose' : function () {
 			// remove handler
 			$( window ).off( 'resize', this.resizeHandler );
-	    },
+		},
 
-	    'resetInfoClass' : function () {
+		'resetInfoClass' : function () {
 			$( '.left-side' ).addClass( 'hidden-xs' );
 			$( '.right-side' ).show();
-	    },
+		},
 
-	    'resizeHandler' : function () {
+		'resizeHandler' : function () {
 
 			this.phone = true;
 			if ( $( window ).width() > 767 ) {
@@ -58,9 +58,9 @@ define( function ( require ) {
 				this.resetInfoClass();
 			}
 
-	    },
+		},
 
-		'showInfo' : function( event ) {
+		'showInfo' : function ( event ) {
 			event.preventDefault();
 
 			// Hide main content
@@ -70,7 +70,7 @@ define( function ( require ) {
 
 		},
 
-		'navigateForums' : function( event ) {
+		'navigateForums' : function ( event ) {
 			// This doesn't belong here
 			event.preventDefault();
 

@@ -15,10 +15,9 @@ define( function ( require ) {
 			};
 		},
 
-		'initialize': function ( options ) {
-	        this.user = options.user;
-	    }
-
+		'initialize' : function ( options ) {
+			this.user = options.user;
+		}
 
 	} );
 
