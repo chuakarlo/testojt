@@ -1,4 +1,4 @@
-define(function(require) {
+define( function ( require ) {
 	'use strict';
 
 	var App = require( 'App' );
@@ -6,14 +6,12 @@ define(function(require) {
 
 	var BillboardCollection = require( 'apps/homepage/external/billboard/collection/BillboardCollection' );
 	var transformSliderData = require( 'apps/homepage/external/billboard/utilities/transformSliderData' );
-	var billboardData       = require( 'apps/homepage/external/billboard/configuration/billboardDummyData' );
 	var nivoSetting         = require( 'apps/homepage/external/billboard/configuration/nivoSettings' );
 
 	var sliderSelector  = '#slider';
 	var scrollSelector  = '.scrollable';
 
 	var testClass = 'test';
-	var isTest    = true;
 
 	return {
 
@@ -21,7 +19,7 @@ define(function(require) {
 			var collection = new BillboardCollection();
 			collection.fetch( {
 				'success' : function ( collection ) {
-					transformSliderData( isTest ? collection.toJSON() : billboardData, function ( res ) {
+					transformSliderData( collection.toJSON(), function ( res ) {
 						itemView.images   = res.images;
 						itemView.captions = res.captions;
 						itemView.render();
@@ -30,18 +28,19 @@ define(function(require) {
 			} );
 		},
 
-		'doOnRender' : function ( parent ) {
+		'doOnRender' : function ( view ) {
+			var billboard = view.$el.find( sliderSelector );
+			billboard.html( view.images );
+			billboard.parent().append( view.captions );
 			require( [ 'pc-nivo' ], function ( $ ) {
-					$( parent.$( sliderSelector ) ).nivoSlider( nivoSetting() );
-				} );
-				parent.$( scrollSelector ).addClass( testClass );
+				$( billboard ).nivoSlider( nivoSetting() );
+			} );
+			$( view.$el.find( scrollSelector ) ).addClass( testClass );
 		},
 
 		'setTemplateHelpers' : function ( itemView ) {
 			return {
-					'billboardImages'   : itemView.images,
-					'billboardCaptions' : itemView.captions,
-					'id'                : '1'
+				'id' : '1'
 			};
 		},
 

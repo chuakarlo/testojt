@@ -139,7 +139,7 @@ define( function ( require ) {
 
 			//HomePage - Billboard
 			'spec/apps/homepage/external/billboard/collection/BillboardCollectionTest.js',
-			'spec/apps/homepage/external/billboard/configuration/nivoSettingsTest.js',
+			//'spec/apps/homepage/external/billboard/configuration/nivoSettingsTest.js',
 			'spec/apps/homepage/external/billboard/views/BillboardItemViewTest.js',
 			'spec/apps/homepage/external/billboard/baseTest.js',
 

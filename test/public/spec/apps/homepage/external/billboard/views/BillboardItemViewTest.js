@@ -1,10 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var sinon      = window.sinon;
-	var expect     = require( 'chai' ).expect;
-	var App        = require( 'App' );
-	var Marionette = require( 'marionette' );
+	var sinon               = window.sinon;
+	var $                   = require( 'jquery' );
+	var expect              = require( 'chai' ).expect;
+	var App                 = require( 'App' );
+	var Marionette          = require( 'marionette' );
 	var BillboardCollection = require( 'apps/homepage/external/billboard/collection/BillboardCollection' );
 
 	var BillboardItemView   = require( 'apps/homepage/external/billboard/views/BillboardItemView' );
@@ -22,7 +23,7 @@ define( function ( require ) {
 
 			BillboardCollectionData = new BillboardCollection( [
 				{
-					'LinkURL'         : 'zubu.cloudapp.net:3000/public',
+					'LinkURL'         : 'zubu.cloudapp.netdddd:3000/public?ContentId=123456',
 					'Description'     : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 					'VideoURL'        : 'old/pd360/video/link/123456',
 					'Remover'         : '',
@@ -42,7 +43,6 @@ define( function ( require ) {
 			BillboardCollectionStub = sinon.stub( BillboardCollection.prototype, 'fetch' ).yieldsTo('success', BillboardCollectionData);
 
 			BillboardItemViewInstance = new BillboardItemView();
-			BillboardItemViewInstance.render();
 		} );
 
 		after( function () {
@@ -56,8 +56,10 @@ define( function ( require ) {
 
 		describe( 'Video Slider', function () {
 				it ( 'should redirect to /#resources/videos/:contentId', function () {
-					BillboardItemViewInstance.$el.find( 'a.videoplay' ).first().trigger( 'click' );
-					navigateBillboardStub.should.have.been.calledWithExactly( 'resources/videos/123456', { 'trigger' : true } );
+					$.when( BillboardItemViewInstance.render() ).done( function (x) {
+						x.$el.find( 'a.videoplay' ).first().trigger( 'click' );
+						navigateBillboardStub.should.have.been.calledWithExactly( 'resources/videos/123456', { 'trigger' : true } );
+					} );
 				} );
 			} );
 	} );

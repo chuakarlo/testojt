@@ -16,7 +16,7 @@ define( function ( require ) {
 			'click a.videoLink' : 'redirect'
 		},
 
-		'initialize'      : function () {
+		'initialize' : function () {
 			controller.doInitialize( this );
 		},
 
@@ -24,11 +24,11 @@ define( function ( require ) {
 			return controller.setTemplateHelpers( this );
 		},
 
-		'onRender'        : function ( parent ) {
-			controller.doOnRender( parent );
+		'onRender' : function () {
+			controller.doOnRender( this );
 		},
 
-		'redirect'        : function ( e ){
+		'redirect' : function ( e ) {
 			controller.doRedirect( e );
 			return false;
 		}

@@ -15,7 +15,7 @@ define( function ( require ) {
 
 			var BillboardCollectionData = [ [
 				{
-					'LinkURL'         : 'zubu.cloudapp.net:3000/public',
+					'LinkURL'         : 'zubu.cloudasdsdpp.net:3000/public?ContentId=123456',
 					'Description'     : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 					'VideoURL'        : 'old/pd360/video/link/123456',
 					'Remover'         : '',
