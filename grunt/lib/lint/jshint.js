@@ -37,7 +37,7 @@ function lint ( files, callback ) {
 		try {
 			content = fs.readFileSync( filePath, 'utf8' );
 		} catch ( error ) {
-			return console.log( ( 'Could not read file ' + filePath ).red );
+			return console.log( ( '  Could not read file ' + filePath ).red );
 		}
 
 		JSHINT( content, jshintrc, globals );

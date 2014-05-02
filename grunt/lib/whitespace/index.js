@@ -23,11 +23,17 @@ function trailing ( files, callback ) {
 	}
 
 	files.forEach( function ( file, index ) {
-		var contents = fs.readFileSync( path.join( process.cwd(), file ), 'utf8' );
-		var match    = new RegExp( /[\t ]+$/m ).test( contents );
+		var filePath = path.join( process.cwd(), file );
 
-		if ( match ) {
-			errors.push( file );
+		try {
+			var contents = fs.readFileSync( filePath, 'utf8' );
+			var match    = new RegExp( /[\t ]+$/m ).test( contents );
+
+			if ( match ) {
+				errors.push( file );
+			}
+		} catch ( error ) {
+			return console.log( ( '  Could not read file ' + filePath ).red );
 		}
 	} );
 
