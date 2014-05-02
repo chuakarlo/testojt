@@ -102,69 +102,62 @@ body  {
 }
 
 // Resource Icons
-.icon.thumbnail {
-	border: 0px;
-	background: rgba( 0,0,0,.3 );
-	border-radius: 15px;
-	width: 125px;
-	height: 125px;
-	margin: 10px auto 50px;
-	color: #fff;
-
-	img {
-		margin-top: 40px;
-		width: auto;
-		height: auto;
+.yamm-content {
+	@media ( max-width: @screen-xs-max ) {
+		display: table-row;
 	}
 
-	&:hover,
-	&:focus {
-		text-decoration: none;
-		background-color: black;
-		color: @pd360-green;
-	}
+	// This overrides some of the styles for the resources page
+	.resources-list {
 
-	p.icon.description {
-		text-align: center;
-		font-size: 18px;
-		margin: 50px -20px 0;
-	}
-}
+		li {
+			// Large Screens
+			@media ( min-width: @screen-sm-min ) {
 
-// Resource Icons (Phone)
-@media ( max-width: @screen-xs-max ) {
-	.yamm .yamm-content {
-		padding: 0;
-	}
+				padding: 0 5px;
 
-	.icon.thumbnail {
-		width: auto;
-		height: auto;
-		margin: 0;
-		padding: 0;
-		border-radius: 0;
-		background: none;
+				a.tile {
 
-		img {
-			display: none;
+					.icon {
+						height: 120px;
+						width: 120px;
+						line-height: 2.4;
+					}
+
+					.title {
+						color: #fff;
+						font-size: 18px;
+					}
+
+				}
+
+			}
+
+			// Small Screen
+			@media ( max-width: @screen-xs-max ) {
+				padding: 5px 15px 5px 25px;
+
+				&:hover,
+				&:focus {
+					background-color: @navbar-default-link-hover-bg;
+
+					a.tile {
+						color: @navbar-default-link-hover-color;
+						text-decoration: none;
+					}
+				}
+
+				a.tile {
+					color: #fff;
+
+					.title {
+						margin-bottom: 0;
+					}
+				}
+			}
+
 		}
-
-		&:hover,
-		&:focus {
-			background-color: @navbar-default-link-hover-bg;
-			color: @navbar-default-link-hover-color;
-		}
-
-		p.icon.description {
-			text-align: left;
-			font-size: 14px;
-			margin: 0;
-			padding: 5px 15px 5px 25px;
-			line-height: 20px;
-		}
-
 	}
-
 }
 
 // Search input
