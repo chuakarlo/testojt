@@ -17,11 +17,6 @@ define( function ( require ) {
 			contentCompositeView = new ContentCompositeView( { 'model' : contentModel } );
 		} );
 
-		it( 'should return a header on `doTemplateHelpers`', function () {
-			var doTemplateHelpers = controller.doTemplateHelpers( contentCompositeView );
-			doTemplateHelpers.heading.should.be.equal( recommendedBaseObj._header() );
-		} );
-
 		it( 'should return a parentView on `doItemViewOptions`', function () {
 			var doItemViewOptions = controller.doItemViewOptions( contentCompositeView );
 			doItemViewOptions.parentView.should.be.equal( contentCompositeView );

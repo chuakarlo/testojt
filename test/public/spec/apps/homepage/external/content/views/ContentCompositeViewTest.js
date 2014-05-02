@@ -28,10 +28,6 @@ define( function ( require ) {
 			compositeView.should.have.property( 'className' );
 		} );
 
-		it ( 'should have `templateHelpers` property', function () {
-			compositeView.should.have.property( 'templateHelpers' );
-		} );
-
 		it ( 'should have `itemViewOptions` property', function () {
 			compositeView.should.have.property( 'itemViewOptions' );
 		} );
