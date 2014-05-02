@@ -16,7 +16,8 @@ define( function ( require ) {
 	var $                = require( 'jquery' );
 
 	App.module( 'LearningTargets.Main', function ( Main ) {
-		var mainView, contentRegion;
+		var mainView;
+		var contentRegion;
 
 		Main.regions = {
 			'Content' : Backbone.Marionette.Region.extend( { } )
@@ -76,21 +77,18 @@ define( function ( require ) {
 
 			},
 
-			'showModalDescription' : function( view ) {
+			'showModalDescription' : function ( view ) {
 
-				if( view.model.get( 'CatalogResourceTypeId' ) === 2 ) {
-					console.log( view.model.get( 'CatalogResourceTypeId' ) + ' bhsdchjdsbcdsjsdjc' );
+				if ( view.model.get( 'CatalogResourceTypeId' ) === 2 ) {
 					window.location.assign( 'https://www.pd360.com/pd360.cfm#tab=courses&page=coursesBrowse' );
-				}
-				else
-				if( view.model.get( 'CatalogResourceTypeId' ) === 3 ) {
+				} else if ( view.model.get( 'CatalogResourceTypeId' ) === 3 ) {
 					async.waterfall( [
 
 						function ( callback ) {
 
-							Main.helper._apiRequestWithArgs( 'lt:description', view.model, function( data ) {
+							Main.helper._apiRequestWithArgs ( 'lt:description', view.model, function( data ) {
 								var model = data.models[ 0 ];
-								callback( null, model );
+								callback ( null, model );
 							} );
 
 						}
@@ -125,7 +123,7 @@ define( function ( require ) {
 				// show a loading view while data is fetching
 				helper._showView( new App.Common.LoadingView() );
 
-				helper._apiRequest( 'lt:courses', function( collection ) {
+				helper._apiRequest( 'lt:courses', function ( collection ) {
 					var coursesView = new CoursesView( {
 						collection : collection
 					} );
@@ -145,7 +143,7 @@ define( function ( require ) {
 				// show a loading view while data is fetching
 				helper._showView( new App.Common.LoadingView() );
 
-				helper._apiRequest( 'lt:processes', function( collection ) {
+				helper._apiRequest( 'lt:processes', function ( collection ) {
 					var processesView = new ProcessesView( {
 						collection : collection
 					} );
@@ -167,7 +165,7 @@ define( function ( require ) {
 				// show a loading view while data is fetching
 				helper._showView( new App.Common.LoadingView() );
 
-				helper._apiRequest( 'lt:portfolios', function( collection ) {
+				helper._apiRequest( 'lt:portfolios', function ( collection ) {
 					var portfoliosView = new PortfoliosView( {
 						collection : collection
 					} );
@@ -187,7 +185,7 @@ define( function ( require ) {
 				// show a loading view while data is fetching
 				helper._showView( new App.Common.LoadingView() );
 
-				helper._apiRequest( 'lt:observations', function( collection ) {
+				helper._apiRequest( 'lt:observations', function ( collection ) {
 					var observationsView = new ObservationsView( {
 						collection : collection
 					} );
@@ -218,23 +216,23 @@ define( function ( require ) {
 				// show a loading view while data is fetching
 				helper._showView( new App.Common.LoadingView() );
 
-				helper._apiRequest( 'lt:catalogs', function( collection ) {
-					collection.add({
-						'CatalogId': '255',
-						'CatalogResourceId': '88',
-						'CatalogResourceTypeId': 2,
-						'CreditHours': '5',
-						'Modified': 'February, 21 2014 15:52:42',
-						'Modifier': '13778',
-						'Removed': '',
-						'Remover': '0',
-						'ResourceDesc': 'Description 1',
-						'ResourceId': '3067',
-						'ResourceName': 'Course 1',
-						'Visible': '1'
+				helper._apiRequest( 'lt:catalogs', function ( collection ) {
+					collection.add ( {
+						'CatalogId'             : '255',
+						'CatalogResourceId'     : '88',
+						'CatalogResourceTypeId' : 2,
+						'CreditHours'           : '5',
+						'Modified'              : 'February, 21 2014 15:52:42',
+						'Modifier'              : '13778',
+						'Removed'               : '',
+						'Remover'               : '0',
+						'ResourceDesc'          : 'Description 1',
+						'ResourceId'            : '3067',
+						'ResourceName'          : 'Course 1',
+						'Visible'               : '1'
 					});
 
-					var catalogsView = new CatalogsView( {
+					var catalogsView = new CatalogsView ( {
 						collection : collection
 					} );
 
@@ -254,7 +252,7 @@ define( function ( require ) {
 				// show a loading view while data is fetching
 				helper._showView( new App.Common.LoadingView() );
 
-				helper._apiRequest( 'lt:groups', function( collection ) {
+				helper._apiRequest( 'lt:groups', function ( collection ) {
 					var groupsView = new GroupsView( {
 						collection : collection
 					} );
