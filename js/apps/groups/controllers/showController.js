@@ -166,19 +166,24 @@ define( function ( require ) {
 					};
 
 					// set the comments
-					var getComments = function ( commentGroup ) {
+					var attachReplies = function ( commentGroup ) {
 						return _.extend( getMainComment( commentGroup ), { 'replies' : mapReplies( commentGroup ) } );
+					};
+
+					// set the comments
+					var getComments = function ( wall ) {
+						_.map( getCommentGroup( wall ),
+							function ( commentGroup ) {
+								return attachReplies( commentGroup );
+							}
+						);
 					};
 
 					// Set the comments
 					// the wall returned is a single list of comments
 					// using 'MessageThreadId' this will create an array of objects
 					// each object will contain the main message and an array of 'replies'
-					var comments = _.map( getCommentGroup( groupWall ),
-						function ( commentGroup ) {
-							return getComments( commentGroup );
-						}
-					);
+					var comments = getComments( groupWall );
 
 					// Creating a comment needs to display the user avatar
 					// find the user in the members list
@@ -237,13 +242,7 @@ define( function ( require ) {
 
 								var newWall = results[ 0 ];
 
-								var comments = _.map( _.groupBy( newWall, 'MessageThreadId' ), function ( comment ) {
-									return _.extend( _.pick( _.find( comment, { 'MessageId' : 1 } ), 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created', 'NewsEntry', 'NewsId' ), {
-										replies : _.map( _.reject( comment, { 'MessageId' : 1 } ), function ( elem ) {
-											return _.pick( elem, 'MessageThreadId', 'MessageId', 'Message', 'LicenseId', 'Creator', 'Created', 'Remover', 'Removed', 'CreatorFullName', 'CreatorAvatar', 'Created', 'NewsEntry', 'NewsId' );
-										} )
-									} );
-								} );
+								var comments = getComments( newWall );
 
 								commentCollection = new CommentCollection( comments );
 

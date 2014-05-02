@@ -9,9 +9,8 @@ define( function ( require ) {
 	var Session           = require( 'Session' );
 	var GroupCommentModel = require( '../models/CommentModel' );
 	var template          = require( 'text!../templates/groupCommentCreateView.html' );
-
-	var path       = 'com.schoolimprovement.pd360.dao.groups.GroupMessagesGateway';
-	var objectPath = 'com.schoolimprovement.pd360.dao.groups.GroupMessages';
+	var path              = 'com.schoolimprovement.pd360.dao.groups.GroupMessagesGateway';
+	var objectPath        = 'com.schoolimprovement.pd360.dao.groups.GroupMessages';
 
 	return Marionette.ItemView.extend( {
 
@@ -30,7 +29,9 @@ define( function ( require ) {
 			this.user = options.user;
 		},
 
-		'createComment' : function () {
+		'createComment' : function ( e ) {
+
+			e.preventDefault();
 
 			var message = { };
 
@@ -57,14 +58,21 @@ define( function ( require ) {
 
 			$.when( fetchingData ).done( function ( results ) {
 
+				this.clearForm();
+
 				var groupCommentModel = new GroupCommentModel( message );
 				Vent.trigger( 'group:createComment', groupCommentModel );
 
-			} ).fail( function () {
+			}.bind( this ) ).fail( function () {
 				// TODO: error handling
 
 			} );
 
+		},
+
+		'clearForm' : function () {
+			// removes comment from textarea
+			this.ui.commentCreate.val( '' );
 		}
 
 	} );

@@ -52,6 +52,7 @@ require.config( {
 		'ladda'                 : 'libs/ladda/dist/ladda.min',
 		'ladda-jquery'          : 'libs/ladda/dist/ladda.jquery.min',
 		'jquery-browser'        : 'libs/jquery.browser/dist/jquery.browser.min',
+		'validator-js'          : 'libs/validator-js/validator.min',
 
 
 		'pc-linq'             : 'libs/nakautot.linq/linq.min',

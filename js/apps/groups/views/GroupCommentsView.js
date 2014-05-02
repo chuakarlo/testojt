@@ -13,6 +13,7 @@ define( function ( require ) {
 	var GroupCommentModel  = require( '../models/CommentModel' );
 	var MiniPersonnelModel = require('../../common/entities/MiniPersonnel');
 	var MiniPersonnelView  = require('../../common/views/MiniPersonnel');
+	var stripHtml          = require( 'common/helpers/stripHtml' );
 
 	var path       = 'com.schoolimprovement.pd360.dao.groups.GroupMessagesGateway';
 	var objectPath = 'com.schoolimprovement.pd360.dao.groups.GroupMessages';
@@ -38,6 +39,10 @@ define( function ( require ) {
 		},
 
 		'initialize' : function ( options ) {
+
+			// strip html before deciding whether to show goals section or not
+			this.model.attributes.Message = stripHtml( this.model.attributes.Message );
+
 			// grab the child collection from the parent model
 			// so that we can render the collection as children
 			// of this parent node
@@ -51,14 +56,15 @@ define( function ( require ) {
 		},
 
 		'showMiniPersonnel' : function ( event ) {
+
 			// We disabled the event that just captured the click
 			// and let the popover library handle the click so we
 			// don't have to fetch the model or create the view every
 			// time.
 			$( this.el ).off( 'click', '.creator-name' );
 
-			var model = new MiniPersonnelModel({
-				'persId' : this.model.get('Creator')
+			var model = new MiniPersonnelModel( {
+				'persId' : this.model.get( 'Creator' )
 			} );
 
 			var view = new MiniPersonnelView( {
@@ -103,6 +109,7 @@ define( function ( require ) {
 		},
 
 		'appendHtml' : function ( collectionView, itemView ) {
+
 			// ensure we nest the child list inside of
 			// the current list item
 			collectionView.$( '.reply' ).append( itemView.el );
@@ -113,9 +120,13 @@ define( function ( require ) {
 
 			// add the remove button if user created the message
 			if ( String( this.model.attributes.Creator ) === String( Session.personnelId() ) ) {
+
 				return _.template( usersTemplate );
+
 			} else {
+
 				return _.template( template );
+
 			}
 
 		},

@@ -1,11 +1,12 @@
 define( function ( require ) {
 	'use strict';
 
-	var _               = require( 'underscore' );
-	var $               = require( 'jquery' );
-	var Marionette      = require( 'marionette' );
-	var MemberItemView  = require( '../views/InfoMemberItemView' );
-	var template        = require( 'text!../templates/groupInfoView.html' );
+	var _              = require( 'underscore' );
+	var $              = require( 'jquery' );
+	var Marionette     = require( 'marionette' );
+	var MemberItemView = require( '../views/InfoMemberItemView' );
+	var template       = require( 'text!../templates/groupInfoView.html' );
+	var stripHtml      = require( 'common/helpers/stripHtml' );
 
 	return Marionette.CompositeView.extend( {
 
@@ -36,8 +37,11 @@ define( function ( require ) {
 				this.ui.showMoredetails.toggle();
 			}
 
+			// strip html before deciding whether to show goals section or not
+			this.model.attributes.Objectives = stripHtml( this.model.attributes.Objectives );
+
 			// display the goals section
-			if ( this.model.attributes.Objectives !== '' ) {
+			if ( this.model.attributes.Objectives && this.model.attributes.Objectives !== '' ) {
 				this.ui.groupGoals.toggle();
 			}
 
@@ -59,11 +63,7 @@ define( function ( require ) {
 
 			return {
 
-				'getAbbreviation' : require( 'common/helpers/getAbbreviation' ),
-
-				'stripHtml' : function ( html ) {
-					return $( html ).text();
-				}
+				'getAbbreviation' : require( 'common/helpers/getAbbreviation' )
 
 			};
 

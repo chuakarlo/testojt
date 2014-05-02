@@ -11,6 +11,7 @@ define( function ( require ) {
 	var usersTemplate      = require( 'text!../templates/usersGroupCommentView.html' );
 	var MiniPersonnelModel = require('../../common/entities/MiniPersonnel');
 	var MiniPersonnelView  = require('../../common/views/MiniPersonnel');
+	var stripHtml          = require( 'common/helpers/stripHtml' );
 
 	var path       = 'com.schoolimprovement.pd360.dao.groups.GroupMessagesGateway';
 	var objectPath = 'com.schoolimprovement.pd360.dao.groups.GroupMessages';
@@ -29,7 +30,11 @@ define( function ( require ) {
 			'click @ui.creator'      : 'showMiniPersonnel',
 			'mouseenter @ui.creator' : 'showMiniPersonnel',
 			'mouseleave @ui.creator' : 'hideMiniPersonnel'
+		},
 
+		initialize : function () {
+			// strip html before deciding whether to show goals section or not
+			this.model.attributes.Message = stripHtml( this.model.attributes.Message );
 		},
 
 		'getTemplate' : function () {
