@@ -79,6 +79,7 @@ define( function ( require ) {
 			'showModalDescription' : function( view ) {
 
 				if( view.model.get( 'CatalogResourceTypeId' ) === 2 ) {
+					console.log( view.model.get( 'CatalogResourceTypeId' ) + ' bhsdchjdsbcdsjsdjc' );
 					window.location.assign( 'https://www.pd360.com/pd360.cfm#tab=courses&page=coursesBrowse' );
 				}
 				else
@@ -221,7 +222,7 @@ define( function ( require ) {
 					collection.add({
 						'CatalogId': '255',
 						'CatalogResourceId': '88',
-						'CatalogResourceTypeId': '2',
+						'CatalogResourceTypeId': 2,
 						'CreditHours': '5',
 						'Modified': 'February, 21 2014 15:52:42',
 						'Modifier': '13778',

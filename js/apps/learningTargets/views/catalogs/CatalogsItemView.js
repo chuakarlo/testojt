@@ -12,7 +12,7 @@ define( function ( require ) {
 			'drawerToggleButton'  : '.lt-toggle-btn'
 		},
 		'events' : {
-			'click a.catalog-item' : 'showCatalogDescription'
+			'click div.catalog-item' : 'showCatalogDescription'
 		},
 		'showCatalogDescription' : function ( e ) {
 			e.preventDefault();
