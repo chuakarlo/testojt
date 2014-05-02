@@ -10,14 +10,14 @@ define( function ( require ) {
 
 		'template'          : _.template( template ),
 		'tagName'           : 'ul',
-		'itemView '         : LibraryTreeItemView,
+		'itemView'          : LibraryTreeItemView,
 		'itemViewContainer' : '.cn-tree-category',
 
 		'initialize' : function () {
 			this.collection = this.model.Children;
 		},
 
-		'onRender' : function() {
+		'onRender' : function () {
 			if ( !this.model.get( 'firstLibrary' ) ) {
 				this.$el.find( 'ul.cn-tree-category' ).hide();
 			}
@@ -32,5 +32,4 @@ define( function ( require ) {
 		}
 
 	} );
-
 } );

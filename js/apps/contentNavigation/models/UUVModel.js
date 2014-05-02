@@ -1,4 +1,4 @@
-define( function( require ) {
+define ( function ( require ) {
 
 	'use strict';
 
@@ -6,7 +6,7 @@ define( function( require ) {
 
 	var UUVModel = Backbone.Model.extend( {
 
-		defaults : {
+		'defaults' : {
 			'Created'        : 'April, 09 2013 07:22:07',
 			'Creator'        : 586606,
 			'Description'    : 'Default Description',
@@ -29,10 +29,10 @@ define( function( require ) {
 
 		'idAttribute' : 'UUVideoId',
 
-	   'parse' : function( data ) {
-			data.ContentId = data.UUVideoId;
+		'parse' : function ( data ) {
+			data.ContentId              = data.UUVideoId;
 			data.SegmentLengthInSeconds = 0;
-			data.ContentName = data.Name;
+			data.ContentName            = data.Name;
 
 			data = this._computeMinSec( data );
 			data = this._setContentNameLength( data );
@@ -62,7 +62,7 @@ define( function( require ) {
 			return data;
 		},
 
-		'_setContentNameLength': function ( data ) {
+		'_setContentNameLength' : function ( data ) {
 			if ( !data.Name.length ) {
 				data.Name = 'Blank Title';
 			}
@@ -71,10 +71,10 @@ define( function( require ) {
 			return data;
 		},
 
-		'_setContentDescriptionLength': function ( data ) {
+		'_setContentDescriptionLength' : function ( data ) {
 			data.Description  = data.Description.replace( /(<([^>]+)>)/ig,'' );
-			data.Description  = data.Description.length > 270 ? data.Description.substr( 0, 270 ) + '...' : data.Description;
-			data.CDescription = data.Description.replace( /-/ig, '<br>-' );
+			data.Description  = data.Description.length > 240 ? data.Description.substr( 0, 240 ) + '...' : data.Description;
+			data.CDescription = data.Description;
 
 			return data;
 		}
