@@ -1,5 +1,5 @@
 {
-	"exclude"   : "js/libs",
+	"exclude"   : "(js/libs|config/|data/|.min.js)",
 	"recursive" : "true",
 	"title"     : "pd360-html",
 
