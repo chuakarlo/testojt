@@ -8,12 +8,11 @@ define( function ( require ) {
 	var Session    = require( 'Session' );
 	var template   = require( 'text!user/templates/login/loginView.html' );
 
-
 	return Marionette.ItemView.extend( {
 		'template' : _.template( template ),
 
 		'events' : {
-			'submit' : 'login',
+			'submit'             : 'login',
 			'click @ui.remember' : 'rememberMe'
 		},
 
@@ -23,7 +22,7 @@ define( function ( require ) {
 			'remember' : 'input[type="checkbox"]'
 		},
 
-		onRender : function() {
+		onRender : function () {
 			// If the user selected the remember me option,
 			// populate the username for them.
 			if ( $.cookie( 'remember' ) === 'true' ) {
@@ -32,7 +31,7 @@ define( function ( require ) {
 			}
 		},
 
-		'rememberMe' : function( event ) {
+		'rememberMe' : function ( event ) {
 			// if the checkbox is checked, set the remember cookie,
 			// else remove it.
 			if ( this.ui.remember.is( ':checked' ) ) {
@@ -67,7 +66,6 @@ define( function ( require ) {
 					'password' : password,
 					'error'    : function ( jqXHR, status, error ) {
 						l.stop();
-						$( '.js-invalid-message' ).removeClass( 'hidden' );
 					}.bind( this )
 				} );
 

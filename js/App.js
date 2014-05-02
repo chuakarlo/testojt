@@ -47,8 +47,9 @@ define( function ( require ) {
 	} );
 
 	App.vent.on( 'flash:message', function ( options ) {
-		var message = options.message;
-		var timeout = options.timeout || 3500;
+		var message        = options.message;
+		var wordsPerSecond = options.message.split( ' ' ).length * 300;
+		var timeout        = options.timeout || Math.max( wordsPerSecond, 3500 );
 
 		if ( options.type ) {
 			$( App.flashMessage.el ).addClass( options.type );
@@ -61,7 +62,7 @@ define( function ( require ) {
 		App.flashMessage.show( flashLayout );
 
 		setTimeout( function () {
-			
+
 			if ( options.type ) {
 				$( App.flashMessage.el ).removeClass( options.type );
 			}

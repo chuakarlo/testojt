@@ -151,6 +151,10 @@ define( function ( require ) {
 			}
 		} );
 
+		App.reqres.setHandler( 'login:error', function ( error ) {
+			User.Login.Controller.showLoginError( error );
+		} );
+
 		// set handler when requesting if session is authenticated
 		App.reqres.setHandler( 'session:authenticated', function () {
 			return Session.authenticated();

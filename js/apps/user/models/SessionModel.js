@@ -17,10 +17,6 @@ define( function ( require ) {
 
 	var Session = Backbone.Model.extend( {
 
-		'url' : function () {
-			return '/com/schoolimprovement/pd360/dao/RespondService.cfc?method=rspndLogin&loginNm=' + this.username + '&passwrd=' + this.password + '&returnformat=json';
-		},
-
 		// `username` & `password` to login
 		// does not pass the username and password in the ajax call
 		'fetch' : function ( options ) {
@@ -36,13 +32,8 @@ define( function ( require ) {
 
 				// Redirect to login if SSO error occurred
 				if ( jqXHR.ErrorId ) {
-					// TODO: add error message on login page, or navigate to separate error page
-					App.navigate( 'login', { 'trigger' : true } );
-					App.vent.trigger( 'flash:message', {
-						'message' : 'Single sign-on was unsuccessful. Please try again, or contact your system administrator.',
-						'type'    : 'error',
-						'timeout' : 10000
-					} );
+					App.request( 'login:error', jqXHR );
+					return;
 				}
 
 				if ( jqXHR.PersonnelId ) {
@@ -63,7 +54,6 @@ define( function ( require ) {
 					}
 				}
 
-
 			}.bind( this );
 
 			return this.sync( 'read', this, options );
@@ -71,6 +61,9 @@ define( function ( require ) {
 		},
 
 		'login' : function ( options ) {
+			this.url = function () {
+				return '/com/schoolimprovement/pd360/dao/RespondService.cfc?method=rspndLogin&loginNm=' + this.username + '&passwrd=' + this.password + '&returnformat=json';
+			};
 
 			if ( options.username && options.password ) {
 				this.username = options.username;
@@ -111,7 +104,7 @@ define( function ( require ) {
 			this.removeCookie( 'CFTOKEN' );
 
 			// remove personnelId & username
-			if( !$.cookie( 'remember' ) ) {
+			if ( !$.cookie( 'remember' ) ) {
 				this.removeCookie( usernameCookie );
 			}
 			this.removeCookie( personnelCookie );
@@ -135,7 +128,7 @@ define( function ( require ) {
 				personnelCookie
 			];
 			// IE9 + supports array.every but why not use underscore
-			return _.every( cookies, function( cookie ) {
+			return _.every( cookies, function ( cookie ) {
 				return Boolean( $.cookie( cookie ) );
 			} ) ;
 		},
