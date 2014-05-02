@@ -12,7 +12,7 @@ define( function ( require ) {
 
 		'tagName' : 'li',
 
-		'className' : 'reflection-item',
+		'className' : 'questions-item',
 
 		'template' : _.template( template ),
 

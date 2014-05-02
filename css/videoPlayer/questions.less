@@ -1,49 +1,58 @@
 #video-player-page {
 
-	#video-reflection  {
+	#video-questions  {
 		position : relative;
 
 		.slick-slider {
 			margin-bottom: 0px;
 		}
 
-		#reflection-title {
+		#questions-title {
 			margin-top: 0px;
 		}
 
-		#reflection-items {
+		#questions-items {
 			width      : 100%;
 			height     : 300px;
 			padding    : 0px 2px;
 			box-sizing : border-box;
-			overflow-y : auto;
+			overflow-y : hidden;
 			position   : relative;
 		}
 
-    #reflection-items.disabled {
-        opacity: 0.5;
-    }
+		#questions-item-region {
+			.slick-track {
+				padding: 0px;
+				list-style: none;
+			}
+		}
 
-		.reflection-item {
+		#questions-items.disabled {
+			opacity: 0.5;
+		}
+
+		.questions-item {
+			width : 100%;
+
 			.item-container {
 				padding : 0px 5px;
 			}
 		}
 
-		.reflection-item textarea {
+		.questions-item textarea {
 			height     : 120px;
 			box-sizing : border-box;
 		}
 
-		.reflection-item .answer {
+		.questions-item .answer {
 			padding-bottom: 20px;
 		}
 
-		.reflection-item textarea.error {
+		.questions-item textarea.error {
 			border : 1px solid red;
 		}
 
-		#reflection-pagination {
+		#questions-pagination {
 			width      : 100%;
 			text-align : center;
 			padding    : 15px;

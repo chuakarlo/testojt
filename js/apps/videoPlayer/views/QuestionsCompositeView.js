@@ -16,12 +16,13 @@ define( function ( require ) {
 
 		'itemView' : QuestionsItemView,
 
-		'itemViewContainer' : '#reflection-item-region',
+		'itemViewContainer' : '#questions-item-region',
 
 		'ui' : {
-			'headerTitle'  : '#reflection-title',
-			'carousel'     : '#reflection-item-region',
-			'pagination'   : '#reflection-paging',
+			'headerTitle'  : '#questions-title',
+			'carouselCont' : '#questions-items',
+			'carousel'     : '#questions-item-region',
+			'pagination'   : '#questions-paging',
 			'currentPage'  : '#current-page',
 			'lastPage'     : '#last-page',
 			'submitButton' : '#submit-answers',
@@ -49,11 +50,16 @@ define( function ( require ) {
 				'speed'          : 100,
 				'draggable'      : false,
 				'slide'          : 'li',
+				'onInit'         : this.onInit.bind( this ),
 				'onAfterChange'  : this.afterChange.bind( this )
 			} );
 
 			this.showHeader();
 			this.showPagination();
+		},
+
+		'onInit' : function () {
+			this.ui.carouselCont.css( 'overflow-y', 'auto' );
 		},
 
 		'showHeader' : function () {
