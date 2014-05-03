@@ -6,7 +6,6 @@ define( function ( require ) {
 	var Vent        = require( 'Vent' );
 	var ModalRegion = require( 'common/regions/ModalRegion');
 	var FlashLayout = require( 'common/views/FlashLayout' );
-	var $           = require( 'jquery' );
 
 	// main app
 	var App = new Marionette.Application();
@@ -46,32 +45,31 @@ define( function ( require ) {
 		}
 	} );
 
+	App.content.on( 'before:show', function ( view ) {
+		App.flashMessage.close();
+	} );
+
 	App.vent.on( 'flash:message', function ( options ) {
-		var message        = options.message;
-		var wordsPerSecond = options.message.split( ' ' ).length * 300;
-		var timeout        = options.timeout || Math.max( wordsPerSecond, 3500 );
 
-		if ( options.type ) {
-			$( App.flashMessage.el ).addClass( options.type );
-		}
-
-		var flashLayout = new FlashLayout( { 'message' : message } );
-
-		$( App.flashMessage.el ).removeClass( 'hidden' );
+		var flashLayout = new FlashLayout( {
+			'message'   : options.message,
+			'className' : 'flash-message-container ' + options.type
+		} );
 
 		App.flashMessage.show( flashLayout );
 
-		setTimeout( function () {
+		// Setup auto close for everything that's not an error message
+		if ( options.type !== 'error' ) {
 
-			if ( options.type ) {
-				$( App.flashMessage.el ).removeClass( options.type );
-			}
+			var wordsPerSecond = options.message.split( ' ' ).length * 300;
+			var timeout        = options.timeout || Math.max( wordsPerSecond, 3500 );
 
-			$( App.flashMessage.el ).addClass( 'hidden' );
+			setTimeout( function () {
 
-			App.flashMessage.close();
+				flashLayout.closeView();
 
-		}, timeout );
+			}, timeout );
+		}
 
 	} );
 

@@ -1,25 +1,48 @@
 #flash-message {
+	position : fixed;
+	bottom   : 0px;
+	z-index  : 99999;
+	width    : 100%;
+}
 
-	background : rgba(0, 0, 0, 0.75);
-	position   : fixed;
-	bottom     : 0px;
-	width      : 100%;
+.flash-message-container {
+
+	background : rgba( 0,0,0,0.75 );
 	color      : #fff;
 	padding    : 15px;
-	z-index    : 99999;
-
+	text-align : center;
 
 	&.success {
-		border-top: 5px solid rgb(159, 215, 83); // same color as navbar
+		border-top : 5px solid @brand-success;
+
+		.flash-close {
+			background-color : @brand-success;
+		}
 	}
 
 	&.error {
-		border-top: 5px solid red;
+		border-top : 5px solid @brand-danger;
+
+		.flash-close {
+			background-color : @brand-danger;
+		}
 	}
 
-	span {
+	.message {
 		vertical-align : middle;
 		display        : inline-block;
 		max-width      : 700px;
 	}
+
+}
+
+.flash-close {
+	margin                  : -41px auto 20px;
+	width                   : 3em;
+	height                  : 1.5em;
+	text-align              : center;
+	line-height             : 1.5;
+	border-top-left-radius  : 50%;
+	border-top-right-radius : 50%;
+	cursor                  : pointer;
 }
