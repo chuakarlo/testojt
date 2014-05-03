@@ -146,7 +146,13 @@ define( function ( require ) {
 			//HomePage - Widgets
 			//HomePage - Courses
 			'spec/apps/homepage/external/widgets/external/courses/baseTest.js',
-			'spec/apps/homepage/external/widgets/external/courses/views/WidgetItemViewTest',
+			'spec/apps/homepage/external/widgets/external/courses/views/WidgetItemViewTest.js',
+			//HomePage - Focus Objectives
+			'spec/apps/homepage/external/widgets/external/focusObjective/baseTest.js',
+			//'spec/apps/homepage/external/widgets/external/focusObjective/collections/WidgetCollection.js',
+			//'spec/apps/homepage/external/widgets/external/focusObjective/views/InactiveWidgetItemView.js',
+			//'spec/apps/homepage/external/widgets/external/focusObjective/models/WidgetModel.js',
+			'spec/apps/homepage/external/widgets/external/focusObjective/views/WidgetItemViewTest.js',
 
 			//Homepage - Your Queue
 			'spec/apps/homepage/external/content/external/your-queue/baseTest.js'

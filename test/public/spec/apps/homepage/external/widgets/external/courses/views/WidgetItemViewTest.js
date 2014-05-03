@@ -122,7 +122,6 @@ define(function(require) {
 
 		it( 'should be an instance of ItemView', function() {
 			UserWidgetCompositeViewInstance = new UserWidgetCompositeView.itemView();
-			console.log( UserWidgetCompositeViewInstance.model );
 			expect( UserWidgetCompositeViewInstance ).to.be.an.instanceof( WidgetItemView );
 			UserWidgetCompositeViewInstance.render();
 		});
