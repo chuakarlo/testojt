@@ -48,12 +48,15 @@ define( function ( require ) {
 		'initializePlayer' : function () {
 			var player = videojs( 'video-content', {
 				'controls'  : true,
+				'autoplay'  : true,
 				'techOrder' : [ 'flash', 'html5' ]
 			}, function () {
 				// Bug in flash player where volume returns 0
 				// but actual video has sound and ui shown is minimum.
 				// Manually set player volume to full to correct volume ui.
-				this.volume( 1 );
+				this.volume( 0.5 );
+				this.loadingSpinner.show();
+				this.controlBar.show();
 			} );
 
 			player.ccToggle();
