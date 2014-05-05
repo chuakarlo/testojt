@@ -41,6 +41,7 @@ define(function(require) {
 				var eventspy = sinon.spy();
 
 				layout.showWidgetSettingsPanel( eventspy );
+				layout.closeWidgetSettingsPanel( eventspy );
 			} );
 
 			after( function ( ) {
