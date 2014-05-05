@@ -19,36 +19,38 @@ define( function ( require ) {
 	}
 
 	return instance.extend( {
-		'WidgetId'    : 1,
-		'WidgetName'  : function () {
+		'WidgetId'        : 1,
+		'WidgetName'      : function () {
 			return 'Courses';
 		},
-		'header'      : function () {
+		'header'          : function () {
 			return 'Courses';
 		},
-		'footer'      : function () {
+		'footer'          : function () {
 			return 'See All Courses';
 		},
-		'Description' : function () {
+		'Description'     : function () {
 			return 'Have quick access to your courses.';
 		},
-		'imgSrc'      : function () {
+		'imgSrc'          : function () {
 			return 'img/homepage-widgets/courses.png';
 		},
-		'em'          : 8.5,
+		'em'              : 8.5,
 		'getExternalView' : WidgetItemView,
 		'getCollection'   : function ( callback, options ) {
 			doGetCollection ( callback, options );
 		},
-		'getTemplate' : InactiveWidgetItemView,
-		'_id'         : 'groupActivity',
-		'_header'     : function () {
+		'getTemplate'     : InactiveWidgetItemView,
+		'_id'             : 'courses',
+		'_header'         : function () {
 			return 'Courses';
 		},
-		'_footer'     : function ( ) {
+		'_footer'         : function ( ) {
 			return 'See All Courses';
 		},
-		'_mainUrl' : '/dev.html#resources/learning/courses'
-
+		'EmptyMessage'    : function () {
+			return 'No available courses!';
+		},
+		'_mainUrl'        : '/dev.html#resources/learning/courses'
 	} );
 } );

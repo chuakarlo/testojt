@@ -23,13 +23,14 @@ define( function () {
 	}
 
 	function setWidgetData ( dest, source ) {
-		dest.WidgetId    = source.WidgetId;
-		dest.WidgetName  = source.WidgetName;
-		dest.header      = source.header;
-		dest.footer      = source.footer;
-		dest.Description = source.Description;
-		dest.imgSrc      = source.imgSrc;
-		dest.em          = source.em;
+		dest.WidgetId     = source.WidgetId;
+		dest.WidgetName   = source.WidgetName;
+		dest.header       = source.header;
+		dest.footer       = source.footer;
+		dest.Description  = source.Description;
+		dest.imgSrc       = source.imgSrc;
+		dest.em           = source.em;
+		dest.EmptyMessage = source.EmptyMessage;
 	}
 
 	function setlegacyData ( dest, source ) {

@@ -2,13 +2,32 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette           = require( 'marionette' );
+	var Backbone             = require( 'backbone' );
 	var _                    = require( 'underscore' );
 	var template             = require( 'text!apps/homepage/external/widgets/templates/userWidgetCompositeView.html' );
+	var ItemView             = require( 'apps/homepage/external/widgets/views/EmptyWidgetView' );
 	var footerTemplate       = require( 'text!apps/homepage/external/widgets/templates/widgetFooterTemplate.html' );
 	var widgetLookup         = require( 'apps/homepage/external/widgets/manifest' );
 	var WidgetItemCollection = require( 'apps/homepage/external/widgets/collections/WidgetItemCollection' );
 
-	function doGetCollection( view, collection, widgets ) {
+	function returnCollection ( view, collection, widgets ) {
+		return collection;
+	}
+
+	function replaceCollection ( view, collection, widgets ) {
+		view.itemView                        = ItemView;
+		view.itemView.prototype.EmptyMessage = widgets.EmptyMessage();
+		return new Backbone.Collection( [ { } ] );
+	}
+
+	var emptyViewActions = {
+		true  : returnCollection,
+		false : replaceCollection
+	};
+
+	function doGetCollection ( view, collection, widgets ) {
+
+		collection = emptyViewActions[ collection.length > 0 ]( view, collection, widgets );
 
 		var footer = _.template( footerTemplate, {
 			'text' : widgets._footer( collection ),
@@ -17,7 +36,7 @@ define( function ( require ) {
 
 		view.$el.find( 'div.footer' ).append( footer );
 
-		if( view._isRendered === true ) {
+		if ( view._isRendered === true ) {
 			view.collection.set( collection.models );
 		}
 	}
@@ -36,11 +55,8 @@ define( function ( require ) {
 		view.itemView   = widgets.getExternalView;
 		view.collection = new WidgetItemCollection();
 
-		var _this = view;
-
-		var getCollection = widgets._items;
-		getCollection ( function ( collection ) {
-			doGetCollection( _this, collection, widgets );
+		widgets._items ( function ( collection ) {
+			doGetCollection( view, collection, widgets );
 		}, { } );
 	}
 
@@ -57,10 +73,10 @@ define( function ( require ) {
 		'templateHelpers'   : function () {
 			return setTemplateHelpers( this );
 		},
-		'initialize' : function () {
+		'initialize'        : function () {
 			doInitialize( this );
 		},
-		'onRender' : function () {
+		'onRender'          : function () {
 			doOnRender( this );
 		}
 	} );
