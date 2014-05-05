@@ -37,15 +37,24 @@ define( function ( require ) {
 				}
 			} );
 		},
+<<<<<<< HEAD
+		'_mainUrl'        : '/dev.html#resources/learning/',
+		'getTemplate'     : InactiveWidgetItemView,
+		'_id'             : 'focusObjective',
+		'_header'         : function () {
+			return 'Focus Objectives';
+		},
+		'EmptyMessage'    : function () {
+			return 'No available videos!';
+		},
+=======
 		'_mainUrl'        : '/index.html#resources/learning/processes',
 		'getTemplate'     : InactiveWidgetItemView,
 		'_id'             : 'whatsNew',
 		'_header'         : function () {
 			return 'Focus Objectives';
 		},
-		'EmptyMessage'    : function () {
-			return 'No groups shared recent activities!';
-		},
+>>>>>>> Fixed Group Activity widget Defetct (4244)
 		'_footer'         : function ( ) {
 			return 'See All Focus Objectives';
 		}
