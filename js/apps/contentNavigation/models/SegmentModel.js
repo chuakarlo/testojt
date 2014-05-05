@@ -69,7 +69,7 @@ define ( function ( require ) {
 
 		'_setContentDescriptionLength' : function ( data ) {
 			data.ContentDescription = data.ContentDescription.replace( /(<([^>]+)>)/ig,'' );
-			data.ContentDescription = data.ContentDescription.length > 175 ? data.ContentDescription.substr( 0, 175 ) + '...' : data.ContentDescription;
+			data.ContentDescription = data.ContentDescription.length > 160 ? data.ContentDescription.substr( 0, 160 ) + '...' : data.ContentDescription;
 			data.CDescription       = data.ContentDescription;
 
 			return data;
