@@ -78,8 +78,10 @@ define( function ( require ) {
 			},
 
 			'showModalDescription' : function ( view ) {
-
-				if ( view.model.get( 'CatalogResourceTypeId' ) === 2 ) {
+				if ( view.model.get( 'CatalogResourceTypeId' ) === 1 ) {
+					var resourceId = view.model.get( 'ResourceId' );
+					window.location.assign( 'dev.html#resources/videos/' + resourceId );
+				} else if ( view.model.get( 'CatalogResourceTypeId' ) === 2 ) {
 					window.location.assign( 'https://www.pd360.com/pd360.cfm#tab=courses&page=coursesBrowse' );
 				} else if ( view.model.get( 'CatalogResourceTypeId' ) === 3 ) {
 					async.waterfall( [
