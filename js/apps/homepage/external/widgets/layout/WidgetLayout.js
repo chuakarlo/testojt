@@ -50,8 +50,8 @@ define( function ( require ) {
 
 	function doCloseWidgetSettingsPanel ( view, e ) {
 		var panelBtn = $( e.currentTarget );
-			view.widgetSettings.close();
-			view.changePanelStatus( panelBtn, panelStatuses[ 0 ], panelStatuses[ 1 ] );
+		view.widgetSettings.close();
+		view.changePanelStatus( panelBtn, panelStatuses[ 0 ], panelStatuses[ 1 ] );
 	}
 
 	function changePanelStatus ( btn, from, to ) {
@@ -74,7 +74,7 @@ define( function ( require ) {
 			'click div#widget-settings.opened' : 'closeWidgetSettingsPanel',
 			'click div.actions .cancel'        : 'closeWidgetSettingsPanel'
 		},
-		'className' : 'container',
+		'className' : 'widget-container',
 		'template'  : _.template( template ),
 		'regions'   : {
 			'userWidgets'    : '#user-widgets #active-widgets',

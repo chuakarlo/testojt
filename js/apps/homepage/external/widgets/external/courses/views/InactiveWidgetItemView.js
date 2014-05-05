@@ -5,7 +5,7 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var template   = require( 'text!apps/homepage/external/widgets/external/courses/templates/inactiveWidgetItemView.html' );
 
-	var className = 'widget-wrapper row';
+	var className = 'widget-wrapper';
 
 	return Marionette.ItemView.extend( {
 

@@ -143,6 +143,7 @@ define( function ( require ) {
 			'spec/apps/homepage/external/billboard/baseTest.js',
 
 			//HomePage - Widgets
+			'spec/apps/homepage/external/widgets/layout/WidgetLayoutTest.js',
 			//HomePage - Courses
 			'spec/apps/homepage/external/widgets/external/courses/baseTest.js',
 			'spec/apps/homepage/external/widgets/external/courses/views/WidgetItemViewTest.js',

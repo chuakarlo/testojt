@@ -21,7 +21,7 @@ define( function ( require ) {
 
 	return Marionette.CompositeView.extend( {
 		'itemView'  : ContentItemCollectionView,
-		'className' : 'container',
+		'className' : 'vid-container',
 
 		'initialize' : function ( options ) {
 			preInitialize( this );
