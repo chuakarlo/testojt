@@ -6,7 +6,7 @@ define( function ( require ) {
 	//-----------------------------------------------
 	// Handle calls from flash to navigate elsewhere
 	//-----------------------------------------------
-	window.pd360link = function( link ) {
+	window.pd360link = function ( link ) {
 
 		var url;
 		//-----------------------
@@ -16,7 +16,7 @@ define( function ( require ) {
 			url = '#resources/communities/' + link.LOCTYPE;
 
 			// Since none of these are guarenteed...
-			_.each( [ 'LOC', 'THREAD', 'POST', 'TASK' ], function( val ) {
+			_.each( [ 'LOC', 'THREAD', 'POST', 'TASK' ], function ( val ) {
 				if ( _.has( link, val ) ) {
 
 					// If it contains a task, add a extra arg to the url
@@ -37,7 +37,7 @@ define( function ( require ) {
 			if ( _.has( link, 'LB_IID' ) ) {
 				url += '/' + link.LB_IID;
 			}
-			
+
 			App.navigate( url );
 		//-----------------------
 		// VIDEO LINKS

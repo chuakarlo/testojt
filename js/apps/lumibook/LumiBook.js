@@ -18,7 +18,7 @@ define( function ( require ) {
 
 		var API = {
 
-			'showLumiBook' : function() {
+			'showLumiBook' : function () {
 				App.request( 'pd360:navigate', null, 'liveBook' );
 				// Args we potentially are going to pass to the flash. These
 				// are in expected order of this function's arguments. If the
@@ -31,8 +31,8 @@ define( function ( require ) {
 				// The final args we are going to pass to the flash
 				var requestArgs = { };
 
-				_.each( arguments, function( arg ) {
-					if( arg !== null ) {
+				_.each( arguments, function ( arg ) {
+					if ( arg !== null ) {
 						requestArgs[ options.shift() ] = arg;
 					} else {
 						options.shift();

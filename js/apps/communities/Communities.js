@@ -23,7 +23,7 @@ define( function ( require ) {
 
 		var Controller = Marionette.Controller.extend( {
 
-			'showCommunities' : function() {
+			'showCommunities' : function () {
 				// Args we potentially are going to pass to the flash. These
 				// are in expected order of this function's arguments. If the
 				// router doesn't get a match for the argument, it passes null
@@ -39,8 +39,8 @@ define( function ( require ) {
 				var requestArgs = { };
 
 				// Iterates in order...
-				_.each( arguments, function( arg ) {
-					if( arg !== null ) {
+				_.each( arguments, function ( arg ) {
+					if ( arg !== null ) {
 						requestArgs[ options.shift() ] = arg;
 					} else {
 						options.shift();

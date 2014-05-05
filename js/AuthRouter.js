@@ -1,7 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
+	var Backbone       = require( 'backbone' );
+
 	var App            = require( 'App' );
+	var Vent           = require( 'Vent' );
 	var FilteredRouter = require( 'FilteredRouter' );
 
 	var AuthRouter = FilteredRouter.extend( {
@@ -35,8 +38,7 @@ define( function ( require ) {
 		'authCheck' : function () {
 
 			if ( !App.request( 'session:checkSession' ) ) {
-				App.navigate( 'login', { 'trigger' : true } );
-
+				Vent.trigger( 'login:show', Backbone.history.fragment );
 				return false;
 			}
 
