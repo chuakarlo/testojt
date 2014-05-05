@@ -1,28 +1,16 @@
-<%
-	var status   = '';
-	var txtColor = '';
-%>
-
 <div class="lt-toggle-btn">
 	<div class="col-xs-10"><img src="/img/eye.png" class="icon" alt=""> <p><a href="#" class="lt-link" title="more info"><%- ProcessName %></a></p></div>
-	<div class="col-xs-2"><%- ProcessStatus %></div>
+	<div class="col-xs-2 <%- txtColor %>"><%- ProcessStatus %></div>
 </div>
 <div class="lt-toggle-content drawer steps" style="display: none;">
 	<div class="steps-indention">
-		<% _.each( Tasks, function ( tasksObj ) {
-		 if ( tasksObj.CompleteByDate === CompleteByDate || CompleteByDate === '' ) {
-				status   = 'Current';
-				txtColor = 'step-current';
-			} else {
-				status = 'Not Current';
-				txtColor = 'step-not-current';
-		} %>
-		<div class="col-xs-4 step-item">Next Step <%- tasksObj.ProcessTaskId %></div>
-		<div class="col-xs-6 step-item"><%- tasksObj.CompleteByDate %></div>
-		<div class="col-xs-2 step-item <%- txtColor %>">
-			<%- status %>
-		</div>
-		<br class="clearfix">
+		<% _.each( Tasks, function ( tasksObj ) { %>
+			<div class="col-xs-4 step-item">Next Step <%- tasksObj.ProcessTaskId %></div>
+			<div class="col-xs-6 step-item"><%- tasksObj.CompleteByDate %></div>
+			<div class="col-xs-2 step-item <%- tasksObj.txtColor %>">
+				<%- tasksObj.status %>
+			</div>
+			<br class="clearfix">
 		<% } ); %>
 	</div>
 </div>
