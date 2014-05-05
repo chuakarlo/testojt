@@ -1,4 +1,3 @@
-// ## Manages f/e logic for the application
 define( function ( require ) {
 	'use strict';
 
@@ -22,30 +21,33 @@ define( function ( require ) {
 
 				App.content.show( new App.Common.LoadingView() );
 
-				var licenseType = [ 0, 1, 200, 300 ];
+				var getLicenses = App.request( 'user:licenses' );
 
-				var videoContentRequests = {
-					'path'   : 'com.schoolimprovement.pd360.dao.ContentService',
-					'method' : 'getContentByContentIdAndLicenseTypes',
-					'args'   : {
-						'contId'   : videoId,
-						'licTypes' : licenseType
-					}
-				};
+				$.when( getLicenses ).then( function ( licenses ) {
+					var licenseType =  _.unique( licenses.pluck( 'LicenseContentTypeId' ) );
 
-				var getVideoInfo = Remoting.fetch( videoContentRequests );
+					var videoContentRequests = {
+						'path'   : 'com.schoolimprovement.pd360.dao.ContentService',
+						'method' : 'getContentByContentIdAndLicenseTypes',
+						'args'   : {
+							'contId'   : videoId,
+							'licTypes' : licenseType
+						}
+					};
 
-				$.when( getVideoInfo ).done( function ( response ) {
-					if ( _.isEmpty( response ) || _.first( response ) === '' ) {
+					return Remoting.fetch( videoContentRequests );
+
+				} ).then( function ( videoContent ) {
+					if ( _.isEmpty( videoContent ) || _.first( videoContent ) === '' ) {
 						App.content.show( new App.Common.NotFoundView() );
 					} else {
-						this.showVideoResources( _.first( response ) );
+						this.showVideoResources( _.first( videoContent ) );
 					}
 				}.bind( this ) );
+
 			},
 
 			'showVideoResources' : function ( videoInfo ) {
-				var licenseType = [ 0, 1, 200, 300 ];
 
 				var videoModel = new ContentModel( videoInfo );
 
@@ -74,15 +76,6 @@ define( function ( require ) {
 					}
 				};
 
-				var resourcesRequest = {
-					'path'   : 'com.schoolimprovement.pd360.dao.ContentService',
-					'method' : 'getContentByContentIdAndLicenseTypes',
-					'args'   : {
-						'contId'   : videoModel.id,
-						'licTypes' : licenseType
-					}
-				};
-
 				// There are some responsed data that has no `Children` object
 				// this will emit an error on invoking getProgramSegment in CF
 				// so we have to check if `Children` is exist, if not will make one.
@@ -97,7 +90,7 @@ define( function ( require ) {
 					'args'       : videoModel.toJSON()
 				};
 
-				var requests = [ questionsRequest, relatedVideosRequest, queueContentsRequest, segmentsRequest, resourcesRequest ];
+				var requests = [ questionsRequest, relatedVideosRequest, queueContentsRequest, segmentsRequest ];
 
 				var fetchingData = Remoting.fetch( requests );
 
@@ -110,7 +103,6 @@ define( function ( require ) {
 					var relatedVideos = response[ 1 ].slice( 1 );
 					var queueContents = response[ 2 ];
 					var segments      = response[ 3 ];
-					var resources     = response[ 4 ];
 
 					// Videojs player view
 					var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( { 'model' : videoModel } );
@@ -122,7 +114,7 @@ define( function ( require ) {
 
 					// Questions view
 					// Determine what type of questions to show ( reflection/followup )
-					questions = App.VideoPlayer.Controller.Filter.filterQuestions( questions );
+					questions = App.VideoPlayer.Controller.Filter.setQuestions( questions );
 					var questionsCollection = new QuestionsCollection( questions );
 
 					// Set question ContentTypeId based on video ContentTypeId.
@@ -156,7 +148,7 @@ define( function ( require ) {
 					// show video resources
 					var resourcesCollection = new ResourcesCollection();
 					var resourcesView = new App.VideoPlayer.Views.ResourcesView( {
-						'collection' : resourcesCollection.resetCollection( resources )
+						'collection' : resourcesCollection.resetCollection( videoModel.toJSON() )
 					} );
 					layout.videoResourcesRegion.show( resourcesView );
 

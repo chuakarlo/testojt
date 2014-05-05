@@ -1,8 +1,10 @@
 define( function( require ) {
 	'use strict';
 
+	var $          = require( 'jquery' );
 	var moment     = require( 'moment' );
 	var Marionette = require( 'marionette' );
+	var Backbone   = require( 'backbone' );
 	var Remoting   = require( 'Remoting' );
 	var sinon      = window.sinon;
 	var App        = require( 'App' );
@@ -16,10 +18,14 @@ define( function( require ) {
 		before( function () {
 			var stub = sinon.stub().returns( false );
 			App.reqres.setHandler( 'pd360:available', stub );
+
+			var licenseStub = sinon.stub().returns( new Backbone.Collection() );
+			App.reqres.setHandler( 'user:licenses', licenseStub );
 		} );
 
 		after( function () {
 			App.reqres.removeHandler( 'pd360:available' );
+			App.reqres.removeHandler( 'user:licenses' );
 			App.module( 'VideoPlayer' ).stop();
 		} );
 
@@ -124,7 +130,7 @@ define( function( require ) {
 			it( 'is attached to `App`', function () {
 				App.VideoPlayer.should.have.property( 'Controller' );
 				App.VideoPlayer.Controller.should.have.property( 'Filter' );
-				App.VideoPlayer.Controller.Filter.should.have.property( 'filterQuestions' );
+				App.VideoPlayer.Controller.Filter.should.have.property( 'setQuestions' );
 			 } );
 
 			 describe( '.filterQuestions', function () {
@@ -140,13 +146,14 @@ define( function( require ) {
 						 'Created' : moment().tz( options.timezone ).format( 'MMMM, D YYYY H:mm:ss' ),
 						 'QuestionTypeId' : 1
 					 }, {
+						 'Created' : '',
 						 'QuestionTypeId' : 2
 					 } ];
 
 					 setTimeout( function () {
-						 var questions = App.VideoPlayer.Controller.Filter.filterQuestions( fakeData, options );
-						 questions[ 0 ].QuestionTypeId.should.equal( 2 );
-						 done();
+						var questions = App.VideoPlayer.Controller.Filter.setQuestions( fakeData, options );
+						questions[ 0 ].QuestionTypeId.should.equal( 2 );
+						done();
 					 }, 1000 );
 
 				} );
