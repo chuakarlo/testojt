@@ -23,7 +23,30 @@ define( function ( require ) {
 		'onShow' : function () {
 			this.$el.slick( {
 				'slidesToShow'   : 4,
-				'slidesToScroll' : 4
+				'slidesToScroll' : 4,
+				'dots'           : true,
+				'responsive'     : [ {
+					'breakpoint' : 804,
+					'settings'   : {
+						'slidesToShow'   : 3,
+						'slidesToScroll' : 3,
+						'dots'           : true
+					}
+				}, {
+					'breakpoint' : 604,
+					'settings'   : {
+						'slidesToShow'   : 2,
+						'slidesToScroll' : 2,
+						'dots'           : true
+					}
+				}, {
+					'breakpoint' : 324,
+					'settings'   : {
+						'slidesToShow'   : 1,
+						'slidesToScroll' : 1,
+						'dots'           : true
+					}
+				}  ]
 			} );
 		},
 

@@ -32,15 +32,30 @@ define( function ( require ) {
 				url += this.SKU + '/';
 				url += folder + '/';
 				url += file + bitrates + extension;
+				console.log(url);
+				return url;
+			},
+
+			'getCC' : function () {
+				var url    = 'http://schoolimp-vh.akamaihd.net/i/PD360/media/video/';
+				var folder = this.FileName.split( '.' )[ 0 ];
+				var file   = folder + '_';
+				if ( this.ContentTypeId === 3 ) {
+					url += 'PD360/';
+				} else if ( this.ContentTypeId === 6 ) {
+					url += 'CC360/';
+				}
+				url += this.SKU + '/';
+				url += folder + '/';
+				url += file + '.vtt';
 
 				return url;
+				// return 'js/apps/videoPlayer/utils/BPP_Segment_1.vtt';
 			}
-
 		},
 
 		'initialize' : function () {
 			videojs.options.flash.swf = 'js/libs/videojs/video-js.swf';
-
 			this.listenTo( this, 'show', this.initializePlayer );
 			this.listenTo( this, 'afterPlayerInit', this.startTracking );
 		},
@@ -90,6 +105,9 @@ define( function ( require ) {
 
 		// Tracked currentTime when video is paused and ended
 		'bindPlayerEvents' : function ( player ) {
+
+	// <track kind="captions" src="<%= ccUrl() %>"></track>
+	// console.log( this.getCC() );
 
 			player.on( 'pause', function () {
 				this.model.save();

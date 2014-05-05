@@ -37,13 +37,16 @@
 
 		//videos thumbnail for video-segments and related-videos
 		.videos-thumb {
-			width      : 100%;
-			cursor     : pointer;
-			position   : relative;
-			display    : block;
-			background : @vp-black;
-			color      : @vp-white;
-			min-height : 150px;
+			// max-width : 276px;
+			// width        : 276px;
+			cursor       : pointer;
+			position     : relative;
+			display      : block;
+			color        : @vp-white;
+			// background : @vp-black; //deleted
+			min-height   : 125px; //125
+			padding   : 0 5%;
+
 
 			#icon-play,
 			a > span {
@@ -52,6 +55,11 @@
 				top       : 35%;
 				left      : ~"calc(50% - 17.5px)";
 				font-size : 35px;
+			}
+
+			img{
+				height    : 140px;
+				width     : 266px;
 			}
 
 			#word-play,
@@ -77,40 +85,46 @@
 		}
 		//videos information for video-segments and related-videos
 		.videos-info {
-			width                      : 100%;
-			padding                    : 20px;
+			max-width                  : 276px;
+			// width : 276px; //deleted
+			// padding : 20px; //del
+			padding-top                : 20px;
+			margin-right               : 5%;
+			margin-left                : 5%;
 			background                 : @whitesmoke;
 			border-bottom-left-radius  : 3px;
 			border-bottom-right-radius : 3px;
 			display                    : block;
-			height                     : 132px;
+			height                     : 132px; //130
 
 			h3.video-name {
-				width         : 236px;
+				width         : 85%; //85
 				white-space   : nowrap;
 				overflow      : hidden;
 				text-overflow : ellipsis;
-				font-size     : 18px;
+				font-size     : 16px; //16
 				margin-top    : 2%;
+				padding-left  : 5%;
 			}
 
 			p {
-					line-height : 30px;
-					font-size   : 15px;
-					display     : inline-block;
-					color       : #8a8d94;
-					margin-top  : 10px;
+					line-height  : 30px;
+					font-size    : 15px;
+					display      : inline-block;
+					// color        : #8a8d94;
+					margin-top   : 10px;
+					padding-left : 5%;
 			}
 
 			.watch-later {
-				display      : inline-block;
-				width        : 35px;
-				height       : 35px;
-				padding      : 5px;
-				position     : absolute;
-				top          : 207px;
-				right        : 20px;
-				text-align   : center;
+				display    : inline-block;
+				width      : 35px;
+				height     : 35px;
+				padding    : 5px;
+				position   : absolute;
+				top        : 207px; //220
+				right      : 20px; // left 70%
+				text-align : center;
 
 				.flag {
 					display : none;
