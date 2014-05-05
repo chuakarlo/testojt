@@ -1,16 +1,16 @@
-define( function( require ) {
+define( function ( require ) {
 	'use strict';
 
 	var _          = require( 'underscore' );
 	var template   = require( 'text!../templates/GroupItemView.html' );
 
 	var SearchResultItemView = require( './SearchResultItemView' );
-	
+
 	return SearchResultItemView.extend( {
-		
+
 		'template'  : _.template( template ),
 
-		'serializeData' : function() {
+		'serializeData' : function () {
 
 			var avatar = this.model.get('Avatar');
 			if ( !avatar ) {
@@ -26,12 +26,12 @@ define( function( require ) {
 				'Avatar'          : avatar,
 				'BrandingImage'   : banner,
 				'LicenseName'     : this.shortenTitle( this.model.get('LicenseName') ),
-				'LicenseId'        : this.model.get( 'LicenseId' ),
+				'LicenseId'       : this.model.get( 'LicenseId' ),
 				'NumberOfMembers' : this.model.get( 'NumberOfMembers' )
 			};
 
 			return data;
-		},
+		}
 
 	} );
 } );

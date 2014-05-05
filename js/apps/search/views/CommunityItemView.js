@@ -1,28 +1,26 @@
-define( function( require ) {
+define( function ( require ) {
 	'use strict';
 
 	var _          = require( 'underscore' );
 	var template   = require( 'text!../templates/CommunityItemView.html' );
 
+	var stripHtml            = require( 'common/helpers/stripHtml' );
+	var getAbbreviation      = require( 'common/helpers/getAbbreviation' );
 	var SearchResultItemView = require( './SearchResultItemView' );
-	
+
 	return SearchResultItemView.extend( {
-		
+
 		'template'  : _.template( template ),
 
-		'shortenText' : function() {
+		'shortenText' : function () {
 			var t = this.model.get('Text');
 			if ( t ) {
-				t = t.replace(/<\/?[^>]+(>|$)/g, '');
-				if ( t.length > 100 ) {
-					return t.substr( 0, 100);
-				}
-				return t;
+				return getAbbreviation( stripHtml( t ), 100 );
 			}
 			return '';
 		},
 
-		'serializeData' : function() {
+		'serializeData' : function () {
 			return {
 				'Text'              : this.shortenText(),
 				'PersonnelFullName' : this.model.get( 'PersonnelFullName' ),

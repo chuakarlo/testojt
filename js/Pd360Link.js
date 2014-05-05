@@ -27,7 +27,6 @@ define( function ( require ) {
 				}
 			} );
 
-			App.navigate( url );
 		//-----------------------
 		// LIVE BOOK LINKS
 		//-----------------------
@@ -38,7 +37,6 @@ define( function ( require ) {
 				url += '/' + link.LB_IID;
 			}
 
-			App.navigate( url );
 		//-----------------------
 		// VIDEO LINKS
 		//-----------------------
@@ -47,20 +45,25 @@ define( function ( require ) {
 		} else if ( _.has( link, 'CONTENTID' ) ) {
 			url = '#resources/videos/' + link.CONTENTID;
 
-			App.navigate( url );
 		//-----------------------
 		// GROUP LINKS
 		//-----------------------
 		} else if ( _.has( link, 'JOINGROUP' ) ) {
 			url = '#groups/' + link.JOINGROUP;
 
-			App.navigate( url );
 		//-----------------------
 		// COLLEAGUE LINKS
 		//-----------------------
 		} else if ( _.has( link, 'SHOWPROFILE' ) ) {
 			// We need to define what is happening here.
 			return;
+		}
+
+		// If we built a url, navigate to it.
+		if ( url ) {
+			App.navigate( url, {
+				'trigger' : true
+			} );
 		}
 
 	};
