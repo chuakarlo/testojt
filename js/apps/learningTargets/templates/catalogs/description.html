@@ -1,3 +1,8 @@
+<%
+  var arrStartTime = StartTime.split( ' ' );
+  var arrEndTime   = EndTime.split( ' ' );
+%>
+
 <!-- Modal -->
 <div class="learning-targets">
   <div class="modal-dialog">
@@ -34,7 +39,7 @@
           </tr>
           <tr>
             <th>Time:</th>
-            <td><%- StartTime %> - <%- EndTime %></td>
+            <td><%- arrStartTime[ 3 ] %> - <%- arrEndTime[ 3 ] %></td>
           </tr>
           <tr>
             <th>Location:</th>
