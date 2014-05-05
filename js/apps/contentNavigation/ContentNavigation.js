@@ -1,5 +1,5 @@
 define( function ( require ) {
-	
+
 	'use strict';
 
 	var App               = require( 'App' );
@@ -8,9 +8,6 @@ define( function ( require ) {
 
 	App.module( 'ContentNavigation', function ( ContentNavigation ) {
 
-		// load sub apps
-		// require( './controllers/showController' );
-
 		ContentNavigation.Router = AuthRouter.extend( {
 			'appRoutes' : {
 				'resources/videos' : 'showContentNavigation'
@@ -18,8 +15,8 @@ define( function ( require ) {
 		} );
 
 		var API = {
-			// TODO: error handling
 			'showContentNavigation' : function ( args ) {
+				App.request( 'pd360:hide' );
 				var contentNavigation = new ContentController( { 'init' : true } );
 				App.content.show( contentNavigation.MainView );
 			}
