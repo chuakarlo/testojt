@@ -41,7 +41,8 @@ define( function ( require ) {
 			searchResultsTreeView.should.have.property( 'events' );
 		} );
 
-		describe( '.selectItem', function () {
+		// These don't have any assertions?
+		describe.skip( '.selectItem', function () {
 
 			var evt = {
 				'stopPropagation' : function () {},
@@ -58,7 +59,7 @@ define( function ( require ) {
 
 		} );
 
-		describe( '._triggerClickBody', function () {
+		describe.skip( '._triggerClickBody', function () {
 
 			it( 'does fire an event', function ( done ) {
 				App.vent.on( 'videoPlayer:click:body', function () {
