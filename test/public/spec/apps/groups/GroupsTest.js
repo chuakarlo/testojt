@@ -8,7 +8,7 @@ define( function ( require ) {
 
 	require( 'groups/Groups' );
 
-	describe( 'Groups Module', function () {
+	describe ('Groups Module', function () {
 
 		after( function () {
 			App.module( 'Groups' ).stop();
@@ -52,14 +52,15 @@ define( function ( require ) {
 
 				var showSpy = sinon.spy();
 				var layout  = sinon.stub( App.Groups.Views, 'Layout' ).returns( {
-					'bannerRegion'        : { 'show' : showSpy },
-					'headerRegion'        : { 'show' : showSpy },
-					'groupInfoRegion'     : { 'show' : showSpy },
-					'subNavRegion'        : { 'show' : showSpy },
-					'commentCreateRegion' : { 'show' : showSpy },
-					'commentsRegion'      : { 'show' : showSpy },
-					'membersRegion'       : { 'show' : showSpy },
-					'resourcesRegion'     : { 'show' : showSpy }
+					'bannerRegion'           : { 'show' : showSpy },
+					'headerRegion'           : { 'show' : showSpy },
+					'groupInfoRegion'        : { 'show' : showSpy },
+					'subNavRegion'           : { 'show' : showSpy },
+					'commentCreateRegion'    : { 'show' : showSpy },
+					'commentsRegion'         : { 'show' : showSpy },
+					'membersRegion'          : { 'show' : showSpy },
+					'resourcesRegion'        : { 'show' : showSpy },
+					'resourcesMembersRegion' : { 'show' : showSpy }
 				} );
 
 				// call controllers method
@@ -75,7 +76,7 @@ define( function ( require ) {
 				showStub.should.have.callCount( 1 );
 
 				// regions should have called show
-				showSpy.should.have.callCount( 6 );
+				showSpy.should.have.callCount( 7 );
 			} );
 
 		} );
