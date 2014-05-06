@@ -18,6 +18,7 @@ define( function ( require ) {
 			'getReadOptions' : function () {
 				return {
 					'method' : 'getById',
+
 					'args' : {
 						'id' : Session.personnelId()
 					}
@@ -72,12 +73,15 @@ define( function ( require ) {
 			},
 
 			'validation' : {
+
 				'FirstName' : {
-					'required' : true,
+					'required' : true
 				},
+
 				'LastName' : {
-					'required' : true,
+					'required' : true
 				},
+
 				'EmailAddress' : [
 					{
 						'required' : true
@@ -87,14 +91,28 @@ define( function ( require ) {
 						'msg'     : 'A valid email is required'
 					}
 				]
+
+			},
+
+			'setupEulaValidation' : function () {
+
+				this.validation = {
+					'LicenseInitials' : {
+						'required' : true,
+						'msg'      : 'Initials are required'
+					}
+				};
+
 			},
 
 			'setupRegistrationValidation' : function () {
 				_.extend( this.validation, {
+
 					'Password' : {
 						'required'  : true,
 						'minLength' : 4
 					},
+
 					'Password2' : [
 						{
 							'required' : true,
@@ -105,19 +123,24 @@ define( function ( require ) {
 							'msg'     : 'Passwords are mismatched'
 						}
 					],
+
 					'Country' : {
-						'required' : true,
+						'required' : true
 					},
+
 					'State' : {
 						'required' : true
 					},
+
 					'DistrictName' : {
 						'required' : true
 					},
+
 					'ClientId' : {
 						'required' : true,
-						'msg' : 'School name is required'
+						'msg'      : 'School name is required'
 					}
+
 				} );
 			},
 
@@ -148,7 +171,6 @@ define( function ( require ) {
 
 				return defer.promise();
 			},
-
 
 			'getUsersByEmailorUsername' : function ( email ) {
 

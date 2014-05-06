@@ -26,6 +26,11 @@ define( function ( require ) {
 
 					eulaLayout.eulaRegion.show( eulaContent );
 
+					App.vent.trigger( 'flash:message', {
+						'message' : 'Before proceeding to PD 360, you must accept the terms of the End User License Agreement.',
+						'type'    : 'error'
+					} );
+
 				});
 
 			}

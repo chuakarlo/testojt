@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	var _          = require( 'underscore' );
 	var $          = require( 'jquery' );
+	var Backbone   = require( 'backbone' );
 	var Marionette = require( 'marionette' );
 	var template   = require( 'text!user/templates/eula/eulaLayout.html' );
 	var App        = require( 'App' );
@@ -11,6 +12,8 @@ define( function ( require ) {
 
 	require( 'moment-timezone' );
 	require( 'timezone' );
+	require( 'validation' );
+	require( 'backbone.stickit' );
 
 	return Marionette.Layout.extend( {
 
@@ -26,8 +29,30 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'click @ui.acceptButton'  : 'accept',
+			'submit'                  : 'accept',
 			'click @ui.declineButton' : 'decline'
+		},
+
+		'bindings' : {
+			'[name="LicenseInitials"]' : 'LicenseInitials'
+		},
+
+		'onRender' : function () {
+
+			// Clear out License Initials to force them to re-enter them
+			this.model.set( 'LicenseInitials', '' );
+
+			// Bind model to form
+			this.stickit();
+
+		},
+
+		'initialize' : function ( options ) {
+
+			// Add validation
+			this.model.setupEulaValidation();
+			Backbone.Validation.bind( this );
+
 		},
 
 		'accept' : function ( event ) {
@@ -37,10 +62,8 @@ define( function ( require ) {
 				var l = Ladda.create( document.querySelector( '#btn-accept' ) );
 				l.start();
 
-				var LicenseInitials = this.model.get( 'FirstName' ).charAt( 0 ) + this.model.get( 'LastName' ).charAt( 0 );
-				var now             = moment().tz( 'MST7MDT' ).format( 'MMMM D, YYYY H:mm:ss' );
+				var now = moment().tz( 'MST7MDT' ).format( 'MMMM D, YYYY H:mm:ss' );
 
-				this.model.set( 'LicenseInitials', LicenseInitials );
 				this.model.set( 'LicenseAccepted', now );
 
 				this.model.save( null, {
@@ -62,7 +85,6 @@ define( function ( require ) {
 				} );
 
 			}
-
 
 		},
 

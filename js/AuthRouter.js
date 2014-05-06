@@ -22,6 +22,10 @@ define( function ( require ) {
 				return this.checkAll();
 			},
 
+			'^search' : function () {
+				return this.checkAll();
+			},
+
 			'^home' : function () {
 				return this.checkAll();
 			},

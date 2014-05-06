@@ -60,6 +60,10 @@ define( function ( require ) {
 			'showEula' : function () {
 				App.request( 'pd360:hide' );
 
+				if ( App.request( 'session:eulaAccepted' ) ) {
+					return App.navigate( 'home', { 'trigger' : true } );
+				}
+
 				User.Eula.Controller.showEula();
 			},
 

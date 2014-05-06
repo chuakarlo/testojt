@@ -1,11 +1,27 @@
 <div class="page-header">
 	<h2>License Agreement</h2>
 </div>
-<div class="form-container">
-	<div class="alert alert-danger">Before proceeding to PD 360, you must accept the terms of the End User License Agreement.</div>
+<div class="form-container user-registration">
 
-	<div id="eula-content"></div>
+	<form role="form" class="form-horizontal">
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="eula">Agreement</label>
 
-	<button id="btn-accept" class="btn btn-primary ladda-button" data-style="expand-right">Accept</button>
-	<button id="btn-decline" class="btn btn-default">Decline</button>
+			<div class="col-sm-10">
+				<div id="eula-content"></div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="initials">Initials</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="initials" name="LicenseInitials" maxlength="20">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-10 col-sm-offset-2">
+				<button id="btn-accept" class="btn btn-primary ladda-button" data-style="expand-right" type="sumbit">Accept</button>
+				<button id="btn-decline" class="btn btn-default">Decline</button>
+			</div>
+		</div>
+	</form>
 </div>

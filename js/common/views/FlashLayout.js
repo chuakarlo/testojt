@@ -18,7 +18,7 @@ define( function ( require ) {
 		},
 
 		'initialize' : function ( options ) {
-			this.message   = options.message;
+			this.message = options.message;
 		},
 
 		'serializeData' : function () {
