@@ -46,7 +46,7 @@ define( function ( require ) {
 			return 'Group Activity';
 		},
 		'EmptyMessage'    : function () {
-			return 'No available courses!';
+			return 'No groups shared recent activities!';
 		},
 		'_footer'         : function ( ) {
 			return 'See All Groups';

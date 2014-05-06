@@ -1,3 +1,4 @@
+//code-review
 define( function ( require ) {
 	'use strict';
 
@@ -6,19 +7,20 @@ define( function ( require ) {
 	var template        = require( 'text!apps/homepage/external/widgets/external/groupActivity/templates/widgetItemView.html' );
 	var limitCharacters = require( 'apps/homepage/utils/limitCharacters' );
 
+	var className    = 'col-md-12 no-padding groupActivity';
+	var templateBind = _.template( template );
+
 	return Marionette.ItemView.extend( {
-		'template'        : _.template( template ),
-		'className'       : 'col-md-12 no-padding groupActivity',
+		'template'        : templateBind,
+		'className'       : function () {
+			return className;
+		},
 		'templateHelpers' : function () {
-			var creatorName = this.limitCharacter(this.model.get( 'LicenseName' ));
 			return {
-				'type'        : this.model.get( 'LicenseContentTypeId' ),
-				'creatorName' : creatorName,
-				'url'         : this.model.get( 'LicenseId' ),
-				'imgIcon'     : this.model.get( 'Avatar' )
+				'creatorName' : this.limitCharacters( this.model.get( 'LicenseName' ) )
 			};
 		},
-		'limitCharacter'  : function ( text ) {
+		'limitCharacters' : function ( text ) {
 			return limitCharacters( text, 30 );
 		}
 	} );

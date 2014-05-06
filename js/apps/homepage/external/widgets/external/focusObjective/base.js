@@ -44,7 +44,7 @@ define( function ( require ) {
 			return 'Focus Objectives';
 		},
 		'EmptyMessage'    : function () {
-			return 'No groups shared recent activities!';
+			return 'No available videos!';
 		},
 		'_footer'         : function ( ) {
 			return 'See All Focus Objectives';
