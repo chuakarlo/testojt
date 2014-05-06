@@ -8,14 +8,6 @@ define( function ( require ) {
 
 	var QueueModel = require( 'apps/homepage/external/content/external/your-queue/models/QueueModel' );
 
-	var queueRequest = {
-		'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
-		'method' : 'getContentAbbrevListByPersonnelId',
-		'args'   : {
-			'personnelId' : Session.personnelId()
-		}
-	};
-
 	var Collection = Backbone.Collection.extend( {
 		'model' : QueueModel
 	} );
@@ -23,6 +15,15 @@ define( function ( require ) {
 	return Backbone.Collection.extend( {
 
 		'fetch' : function ( options ) {
+
+			var queueRequest = {
+				'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
+				'method' : 'getContentAbbrevListByPersonnelId',
+				'args'   : {
+					'personnelId' : Session.personnelId()
+				}
+			};
+
 			var fetchingModels = Remoting.fetch( [ queueRequest ] );
 
 			App.when( fetchingModels ).done( function ( models ) {
@@ -33,6 +34,7 @@ define( function ( require ) {
 				// TODO: error handling
 				options.fail( error );
 			} );
+
 		},
 
 		'alterData' : function () {}

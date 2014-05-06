@@ -143,9 +143,10 @@ define( function ( require ) {
 			},
 
 			'available' : function () {
+
 				if ( appLoaded ) {
 					try {
-						pd360.cfJsonAPIMethod1( 'a', { 'b' : 'c' } );
+						this.signature( 'a', { 'b' : 'c' } );
 					} catch ( error ) {
 						return false;
 					}

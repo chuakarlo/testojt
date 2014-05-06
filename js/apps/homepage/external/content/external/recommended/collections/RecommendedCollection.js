@@ -21,15 +21,16 @@ define( function ( require ) {
 		};
 	};
 
-	var queueRequest =  {
-		'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
-		'method' : 'getContentAbbrevListByPersonnelId',
-		'args'   : {
-			'personnelId' : Session.personnelId()
-		}
-	};
-
 	var fetchingModels = function ( start ) {
+
+		var queueRequest =  {
+			'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
+			'method' : 'getContentAbbrevListByPersonnelId',
+			'args'   : {
+				'personnelId' : Session.personnelId()
+			}
+		};
+
 		return Remoting.fetch( [ recommendedRequest( start ), queueRequest ] );
 	};
 
