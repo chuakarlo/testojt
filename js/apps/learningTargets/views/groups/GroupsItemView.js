@@ -53,7 +53,14 @@ define( function ( require ) {
 
 			App.when( fetchingModels ).done( function ( models ) {
 
-				$( '#data-' + self.model.get( 'LICENSEID' ) ).html(models[ 0 ][ 0 ].QuestionTitle);
+				var questionsText = models[ 0 ][ 0 ].QuestionText;
+
+				// remove inline font face and size
+				var qt = questionsText
+									.replace( /face\="Verdana"/gi, '' )
+									.replace( /size\="10"/gi, '' );
+
+				$( '#data-' + self.model.get( 'LICENSEID' ) ).html( qt );
 
 			} ).fail( function ( ) {
 
