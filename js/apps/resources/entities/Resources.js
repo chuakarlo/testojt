@@ -61,8 +61,8 @@ define( function ( require ) {
 					'id'   : 'link-more-training'
 				},
 				{
-					'name' : '{Learning Progression}',
-					'url'  : '#',
+					'name' : 'Learning Progression',
+					'url'  : '#resources/learningProgression',
 					'icon' : 'fa-puzzle-piece',
 					'id'   : 'link-more-progression'
 				}
