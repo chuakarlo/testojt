@@ -30,25 +30,18 @@ define( function ( require ) {
 					'settings'   : {
 						'slidesToShow'   : 3,
 						'slidesToScroll' : 3,
-						'dots'           : true
+						'arrows'         : false,
+						'centerMode'     : true
 					}
 				},  {
-					'breakpoint' : 700,
+					'breakpoint' : 490,
 					'settings'   : {
 						'slidesToShow'   : 1,
 						'slidesToScroll' : 1,
 						'arrows'         : false,
 						'centerMode'     : true
 					}
-				} ,  {
-					'breakpoint' : 322,
-					'settings'   : {
-						'slidesToShow'   : 1,
-						'slidesToScroll' : 1,
-						'arrows'         : false,
-						'centerMode'     : true
-					}
-				} ]
+				}  ]
 			} );
 		},
 
