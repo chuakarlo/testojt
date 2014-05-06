@@ -123,7 +123,6 @@ define( function ( require ) {
 					}
 				};
 
-<<<<<<< HEAD
 				// Get the last updated date
 				var groupLastUpdateRequest = {
 					'path'   : 'com.schoolimprovement.pd360.dao.GroupService',
@@ -133,11 +132,8 @@ define( function ( require ) {
 					}
 				};
 
-				var requests     = [ groupRequest, membersRequest, groupsRequest, wallRequest, resourcesRequest, groupAdminRequest, groupLastUpdateRequest ];
-=======
-				var requests     = [ groupRequest, membersRequest, groupsRequest, wallRequest, leaderResourcesRequest, userResourcesRequest, leaderLinksRequest, userLinksRequest, groupAdminRequest ];
+				var requests     = [ groupRequest, membersRequest, groupsRequest, wallRequest, leaderResourcesRequest, userResourcesRequest, leaderLinksRequest, userLinksRequest, groupAdminRequest, groupLastUpdateRequest ];
 
->>>>>>> Group Resources feature implementation.
 				var fetchingData = Remoting.fetch( requests );
 
 				App.when( fetchingData ).done( function ( results ) {
@@ -145,29 +141,18 @@ define( function ( require ) {
 					this.layout = new App.Groups.Views.Layout();
 					App.content.show( this.layout );
 
-<<<<<<< HEAD
 					var group            = results [ 0 ];
 					var someMembers      = results [ 1 ].slice( 0, 8 );
 					var membersCount     = results [ 1 ].length;
 					var members          = results [ 1 ];
 					var groups           = results [ 2 ];
 					var groupWall        = results [ 3 ];
-					var resources        = results [ 4 ];
-					var userGroupAdmin   = results [ 5 ];
-					var groupLastUpdated = results [ 6 ];
-=======
-					var group           = results [ 0 ];
-					var someMembers     = results [ 1 ].slice( 0, 8 );
-					var membersCount    = results [ 1 ].length;
-					var members         = results [ 1 ];
-					var groups          = results [ 2 ];
-					var groupWall       = results [ 3 ];
-					var leaderResources = results [ 4 ];
-					var memberResources = results [ 5 ];
-					var leaderLinks     = results [ 6 ];
-					var memberLinks     = results [ 7 ];
-					var userGroupAdmin  = results [ 8 ];
->>>>>>> Group Resources feature implementation.
+					var leaderResources  = results [ 4 ];
+					var memberResources  = results [ 5 ];
+					var leaderLinks      = results [ 6 ];
+					var memberLinks      = results [ 7 ];
+					var userGroupAdmin   = results [ 8 ];
+					var groupLastUpdated = results [ 9 ];
 
 					var getCommentGroup = function ( wall ) {
 						return _.groupBy( wall, 'MessageThreadId' );
@@ -246,17 +231,6 @@ define( function ( require ) {
 						return String( m.PersonnelId ) === String( Session.personnelId() );
 					} );
 
-<<<<<<< HEAD
-					var commentCollection    = new CommentCollection( comments );
-					var resourcesCollection  = new ResourcesCollection( resources );
-					var groupModel           = new GroupModel( group );
-					var someMemberCollection = new MemberCollection( someMembers );
-					var memberCollection     = new MemberCollection( members );
-
-					memberCollection.count            = membersCount;
-					groupModel.attributes.groups      = groups;
-					groupModel.attributes.lastUpdated = groupLastUpdated;
-=======
 					var commentCollection          = new CommentCollection( comments );
 					var leaderResourcesCollection  = new ResourcesCollection( leaderResources );
 					var membersResourcesCollection = new ResourcesCollection( memberResources );
@@ -264,13 +238,13 @@ define( function ( require ) {
 					var someMemberCollection       = new MemberCollection( someMembers );
 					var memberCollection           = new MemberCollection( members );
 
-					memberCollection.count   = membersCount;
-					groupModel.groups        = groups;
+					memberCollection.count            = membersCount;
+					groupModel.attributes.groups      = groups;
+					groupModel.attributes.lastUpdated = groupLastUpdated;
 
 					// add links to Collections
 					leaderResourcesCollection.add( leaderLinks );
 					membersResourcesCollection.add( memberLinks );
->>>>>>> Group Resources feature implementation.
 
 					Vent.on( 'group:removeComment', function ( model ) {
 						commentCollection.remove( model );
@@ -333,13 +307,9 @@ define( function ( require ) {
 					var resourcesView = new App.Groups.Views.Resources( { 'collection' : leaderResourcesCollection } );
 					this.layout.resourcesRegion.show( resourcesView );
 
-<<<<<<< HEAD
-=======
 					var resourcesMembersView = new App.Groups.Views.ResourcesMembers( { 'collection' : membersResourcesCollection } );
 					this.layout.resourcesMembersRegion.show( resourcesMembersView );
 
-
->>>>>>> Group Resources feature implementation.
 				}.bind( this ) ).fail( function () {
 					// TODO: error handling
 				} );
