@@ -152,16 +152,15 @@ define( function ( require ) {
 				helper._showView( new App.Common.LoadingView() );
 
 				helper._apiRequest( 'lt:processes', function ( collection ) {
-					var index = 0;
-					_.each( collection.models, function ( model ) {
+					_.each( collection.models, function ( model, index ) {
 						var mainCompletedDate          = new Date( model.get( 'CompleteByDate' ) );
 						var mainCompletedDateTimestamp = mainCompletedDate.getTime() / 100;
 						var tasks                      = model.get( 'Tasks' );
 
 						if ( model.get( 'ProcessStatus' ) === 'Current' || model.get( 'ProcessStatus' ) === '' ) {
-							collection.models[index].attributes.txtColor = 'step-current';
+							collection.models[ index ].attributes.txtColor = 'step-current';
 						} else {
-							collection.models[index].attributes.txtColor = 'step-not-current';
+							collection.models[ index ].attributes.txtColor = 'step-not-current';
 						}
 
 						_.each( tasks, function ( taskObj ) {
@@ -177,7 +176,7 @@ define( function ( require ) {
 							}
 
 						} );
-						index ++;
+
 					} );
 
 					var processesView = new ProcessesView( {
