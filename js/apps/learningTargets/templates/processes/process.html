@@ -6,7 +6,7 @@
 	<div class="steps-indention">
 		<% _.each( Tasks, function ( tasksObj ) { %>
 			<div class="col-xs-4 step-item">Next Step <%- tasksObj.ProcessTaskId %></div>
-			<div class="col-xs-6 step-item"><%- tasksObj.CompleteByDate %></div>
+			<div class="col-xs-4 step-item"><%- tasksObj.CompleteByDate %></div>
 			<div class="col-xs-4 step-item <%- tasksObj.txtColor %>">
 				<%- tasksObj.status %>
 			</div>
