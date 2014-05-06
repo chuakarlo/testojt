@@ -44,7 +44,7 @@ define( function ( require ) {
 				Groups.Edit.Controller.leaveGroup( model );
 			},
 
-			'joinGroup' : function ( model) {
+			'joinGroup' : function ( model ) {
 				Groups.Edit.Controller.joinGroup( model );
 			},
 
@@ -52,7 +52,7 @@ define( function ( require ) {
 				Groups.Edit.Controller.ignoreGroup( model );
 			},
 
-			'acceptGroup' : function ( model) {
+			'acceptGroup' : function ( model ) {
 				Groups.Edit.Controller.acceptGroup( model );
 			},
 

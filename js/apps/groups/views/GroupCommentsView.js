@@ -27,8 +27,9 @@ define( function ( require ) {
 		'tagName'           : 'li',
 
 		'ui' : {
-			'message' : '.comment-reply',
-			'creator' : '.creator-name'
+			'message'  : '.comment-reply',
+			'creator'  : '.creator-name',
+			'replyBox' : '#reply-box'
 		},
 
 		'events' : {
@@ -42,19 +43,28 @@ define( function ( require ) {
 
 		'initialize' : function ( options ) {
 
-			// strip html before deciding whether to show goals section or not
-			this.model.attributes.Message = stripHtml( this.model.attributes.Message );
-
 			// grab the child collection from the parent model
 			// so that we can render the collection as children
 			// of this parent node
 			this.collection = this.model.replies;
+
+			// strip html before deciding whether to show goals section or not
+			this.model.attributes.Message = stripHtml( this.model.attributes.Message );
 
 			this.user = options.user;
 
 			Vent.on( 'group:removeReply', function ( model ) {
 				this.collection.remove( model );
 			}.bind( this ) );
+		},
+
+		'onRender' : function () {
+
+			// Do not allow replies to news items
+			if ( this.model.attributes.NewsId ) {
+				this.ui.replyBox.hide();
+			}
+
 		},
 
 		'showMiniPersonnel' : function ( event ) {
@@ -107,7 +117,7 @@ define( function ( require ) {
 
 		'onBeforeClose' : function () {
 			// Make sure to destroy the popover events
-			this.ui.creator.popover('destroy');
+			this.ui.creator.popover( 'destroy' );
 		},
 
 		'appendHtml' : function ( collectionView, itemView ) {
@@ -141,9 +151,9 @@ define( function ( require ) {
 			var formGroup   = $( '#input-reply' + this.model.attributes.MessageThreadId ).parent();
 			var formElement = $( '#input-reply' + this.model.attributes.MessageThreadId );
 
+			// Error message displayed if reply message is blank
 			if ( this.ui.message.val() === '' ) {
 
-				// This is displayed if reply message is blank
 				var error = 'Reply is required';
 				this.displayError( formGroup, error );
 

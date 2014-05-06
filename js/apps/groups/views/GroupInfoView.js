@@ -30,15 +30,18 @@ define( function ( require ) {
 
 		},
 
+		'initialize' : function () {
+
+			// strip html before deciding whether to show goals section or not
+			this.model.attributes.Objectives = stripHtml( this.model.attributes.Objectives );
+		},
+
 		'onRender' : function () {
 
 			// display the hide show description link
 			if ( String( this.model.attributes.Misc ).length > 120 ) {
 				this.ui.showMoredetails.toggle();
 			}
-
-			// strip html before deciding whether to show goals section or not
-			this.model.attributes.Objectives = stripHtml( this.model.attributes.Objectives );
 
 			// display the goals section
 			if ( this.model.attributes.Objectives && this.model.attributes.Objectives !== '' ) {

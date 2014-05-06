@@ -154,6 +154,12 @@ define( function ( require ) {
 					var userGroupAdmin   = results [ 8 ];
 					var groupLastUpdated = results [ 9 ];
 
+					var newsDefaults = function ( wall ) {
+						return _.map( wall, function ( element ) {
+							return _.defaults( element, { 'MessageThreadId' : element.NewsId, 'Message' : element.NewsEntry, 'MessageId' : 1 } );
+						} );
+					};
+
 					var getCommentGroup = function ( wall ) {
 						return _.groupBy( wall, 'MessageThreadId' );
 					};
@@ -212,7 +218,7 @@ define( function ( require ) {
 
 					// set the comments
 					var getComments = function ( wall ) {
-						_.map( getCommentGroup( wall ),
+						return _.map( getCommentGroup( wall ),
 							function ( commentGroup ) {
 								return attachReplies( commentGroup );
 							}
@@ -223,7 +229,8 @@ define( function ( require ) {
 					// the wall returned is a single list of comments
 					// using 'MessageThreadId' this will create an array of objects
 					// each object will contain the main message and an array of 'replies'
-					var comments = getComments( groupWall );
+					var newsWall = newsDefaults( groupWall );
+					var comments = getComments( newsWall );
 
 					// Creating a comment needs to display the user avatar
 					// find the user in the members list
@@ -285,8 +292,7 @@ define( function ( require ) {
 							var fetchingData = Remoting.fetch( requests );
 							App.when( fetchingData ).done( function ( results ) {
 
-								var newWall = results[ 0 ];
-
+								var newWall  = results[ 0 ];
 								var comments = getComments( newWall );
 
 								commentCollection = new CommentCollection( comments );

@@ -11,7 +11,7 @@ define( function ( require ) {
 		'comparator' : function ( model ) {
 
 			// collection will be sorted by 'Created' date in descending order ( newest first )
-			return -new Date( model.get('Created') );
+			return -new Date( model.get( 'Created' ) );
 
 		}
 
