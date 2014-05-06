@@ -52,19 +52,22 @@ define( function ( require ) {
 				'autoplay'  : true,
 				'techOrder' : [ 'flash', 'html5' ]
 			}, function () {
-				// Bug in flash player where volume returns 0
-				// but actual video has sound and ui shown is minimum.
-				// Manually set player volume to correct volume ui.
-				this.volume( 0.5 );
-				this.loadingSpinner.show();
-				this.controlBar.show();
-
+				// Check if flash is supported so,
+				// volume() won't throw an error if flash player isn't available.
+				if ( videojs.Flash.isSupported() ) {
+					// Bug in flash player where volume returns 0
+					// but actual video has sound and ui shown is minimum.
+					// Manually set player volume to correct volume ui.
+					this.volume( 0.5 );
+					this.loadingSpinner.show();
+					this.controlBar.show();
+				}
+				// Make sure custom control is hidden in mobile devices
 				if ( videojs.IS_IOS ||
 					videojs.IS_ANDROID ||
 					videojs.IS_OLD_ANDROID ) {
 					this.controlBar.hide();
 				}
-
 			} );
 
 			player.ccToggle();

@@ -48,7 +48,6 @@ define( function ( require ) {
 				'infinite'       : false,
 				'arrows'         : false,
 				'speed'          : 100,
-				'draggable'      : false,
 				'slide'          : 'li',
 				'onInit'         : this.onInit.bind( this ),
 				'onAfterChange'  : this.afterChange.bind( this )
