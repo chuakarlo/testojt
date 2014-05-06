@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-  - "0.10"
+  - "0.10.28"
 
 notifications:
   flowdock: ce9d8b10b8bd428f1d59cf0a62915cff
