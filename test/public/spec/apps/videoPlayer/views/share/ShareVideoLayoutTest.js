@@ -131,8 +131,9 @@ define( function ( require ) {
 				Person   = Backbone.Model.extend();
 				itemView = {
 					'model' : new Person( {
-						'FirstName' : 'John',
-						'LastName'  : 'Doe'
+						'PersonnelId' : 12345,
+						'FirstName'   : 'John',
+						'LastName'    : 'Doe'
 					} )
 				};
 
@@ -227,6 +228,109 @@ define( function ( require ) {
 
 				it( 'does disable the share button', function () {
 					shareVideoLayout.ui.shareButton.is( '[disabled]' ).should.be.false;
+				} );
+
+			} );
+
+		} );
+
+		describe( '._filterItems', function () {
+
+			var ShareObj  = Backbone.Model.extend();
+			var personnel = new ShareObj( { 'PersonnelId' : 12345 } );
+			var group     = new ShareObj( { 'LicenseId' : 67890 } );
+
+			it( 'does separate personnels and groups', function () {
+				shareVideoLayout.selectedItems.reset();
+				shareVideoLayout.selectedItems.add( [ personnel, group ] );
+				shareVideoLayout.shareTargets.personnels.should.have.length( 0 );
+				shareVideoLayout.shareTargets.groups.should.have.length( 0 );
+				shareVideoLayout._filterItems();
+				shareVideoLayout.shareTargets.personnels.should.have.length( 1 );
+				shareVideoLayout.shareTargets.groups.should.have.length( 1 );
+			} );
+
+		} );
+
+		describe( '._getItemId', function () {
+
+			var ShareObj = Backbone.Model.extend();
+
+			describe( 'when the model is of type personnel', function () {
+
+				var model = new ShareObj( { 'PersonnelId' : 12345 } );
+
+				it( 'does return the `PersonnelId`', function () {
+					shareVideoLayout._getItemId( model ).should.eql( 12345 );
+				} );
+
+			} );
+
+			describe( 'when the model is of type group', function () {
+
+				var model = new ShareObj( { 'LicenseId' : 67890 } );
+
+				it( 'does return the `LicenseId`', function () {
+					shareVideoLayout._getItemId( model ).should.eql( 67890 );
+				} );
+
+			} );
+
+		} );
+
+		describe( '._getItemName', function () {
+
+			var ShareObj = Backbone.Model.extend();
+
+			describe( 'when the model is of type personnel', function () {
+
+				var model = new ShareObj( {
+					'PersonnelId' : 12345,
+					'FirstName'   : 'John',
+					'LastName'    : 'Doe'
+				} );
+
+				it( 'does return the `PersonnelId`', function () {
+					shareVideoLayout._getItemName( model ).should.eql( 'John Doe' );
+				} );
+
+			} );
+
+			describe( 'when the model is of type group', function () {
+
+				var model = new ShareObj( {
+					'LicenseId'   : 67890,
+					'LicenseName' : 'Test Group'
+				} );
+
+				it( 'does return the `LicenseId`', function () {
+					shareVideoLayout._getItemName( model ).should.eql( 'Test Group' );
+				} );
+
+			} );
+
+		} );
+
+		describe( '._isPersonnel', function () {
+
+			var ShareObj = Backbone.Model.extend();
+
+			describe( 'when the model is of type personnel', function () {
+
+				var model = new ShareObj( { 'PersonnelId' : 12345 } );
+
+				it( 'does return `true`', function () {
+					shareVideoLayout._isPersonnel( model ).should.be.true;
+				} );
+
+			} );
+
+			describe( 'when the model is of type group', function () {
+
+				var model = new ShareObj( { 'LicenseId' : 12345 } );
+
+				it( 'does return `false`', function () {
+					shareVideoLayout._isPersonnel( model ).should.be.false;
 				} );
 
 			} );

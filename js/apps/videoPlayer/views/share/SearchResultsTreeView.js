@@ -30,7 +30,7 @@ define( function ( require ) {
 			App.vent.trigger( 'videoPlayer:share:item:selected', this );
 		},
 
-		initialize: function(){
+		initialize : function () {
 			// grab the child collection from the parent model
 			// so that we can render the collection as children
 			// of this parent node

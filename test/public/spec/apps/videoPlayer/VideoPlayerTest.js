@@ -235,6 +235,33 @@ define( function( require ) {
 
 		} );
 
+		describe( 'Share Controller', function () {
+
+			it( 'it attached to `App`', function () {
+				App.VideoPlayer.should.have.property( 'Controller' );
+				App.VideoPlayer.Controller.should.have.property( 'Share' );
+				App.VideoPlayer.Controller.Share.should.have.property( 'shareVideo' );
+			} );
+
+			describe( '.shareVideo', function () {
+
+				it( 'does share video to personnels and groups', function () {
+					var remotingFetchStub = sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
+					var shareTargets      = {
+						'message'    : 'test',
+						'personnels' : [ '12345' ],
+						'groups'     : [ '67890' ]
+					};
+
+					App.VideoPlayer.Controller.Share.shareVideo( shareTargets ).resolve();
+					remotingFetchStub.should.have.callCount( 1 );
+					Remoting.fetch.restore();
+				} );
+
+			} );
+
+		} );
+
 	} );
 
 } );

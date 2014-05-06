@@ -26,7 +26,8 @@ define( function ( require ) {
 
 		'ui' : {
 			'searchInput' : '.search-input',
-			'shareButton' : '#share-btn'
+			'shareButton' : '#share-btn',
+			'message'     : '.message > textarea'
 		},
 
 		'events' : {
@@ -40,6 +41,13 @@ define( function ( require ) {
 			_.extend( this, options );
 
 			this.selectedItems = new SelectedItems();
+
+			// object for holding personnels, groups and message for sharing
+			this.shareTargets = {
+				'personnels' : [ ],
+				'groups'     : [ ],
+				'message'    : ''
+			};
 
 			// common loading instance
 			this.loadingView = new App.Common.LoadingView( {
@@ -137,22 +145,57 @@ define( function ( require ) {
 		},
 
 		'shareVideo' : function () {
-			//TODO: implement video sharing
+			// get the share message
+			this.shareTargets.message = this.ui.message.val();
+
+			// group items into personnels and groups
+			this._filterItems();
+
+			var share = App.request( 'videoPlayer:share:video', this.shareTargets );
+
+			$.when( share ).done( function ( response ) {
+				if ( response[ 0 ] === 200 ) {
+					App.modalRegion.close();
+				}
+			} );
+		},
+
+		'_filterItems' : function () {
+			// empty the personnels and groups
+			this.shareTargets.personnels.length = 0;
+			this.shareTargets.groups.length     = 0;
+
+			_.each( this.selectedItems.models, function ( model ) {
+				if ( this._isPersonnel( model ) ) {
+					this.shareTargets.personnels.push( model.get( 'PersonnelId' ) );
+				} else {
+					this.shareTargets.groups.push( model.get( 'LicenseId' ) );
+				}
+			}.bind( this ) );
 		},
 
 		'_getItemId' : function ( model ) {
-			if ( model.get( 'LicenseId' ) ) {
-				return model.get( 'LicenseId' );
-			} else {
+			if ( this._isPersonnel( model ) ) {
 				return model.get( 'PersonnelId' );
+			} else {
+				return model.get( 'LicenseId' );
 			}
 		},
 
 		'_getItemName' : function ( model ) {
-			if ( model.get( 'LicenseName' ) ) {
-				return model.get( 'LicenseName' );
-			} else {
+			if ( this._isPersonnel( model ) ) {
 				return model.get( 'FirstName' ) + ' ' + model.get( 'LastName' );
+			} else {
+				return model.get( 'LicenseName' );
+			}
+		},
+
+		// check if an item is a personnel or else it's a group
+		'_isPersonnel' : function ( model ) {
+			if ( model.get( 'PersonnelId' ) ) {
+				return true;
+			} else {
+				return false;
 			}
 		}
 

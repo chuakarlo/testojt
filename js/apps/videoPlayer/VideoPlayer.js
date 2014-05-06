@@ -12,6 +12,7 @@ define( function ( require ) {
 		require( 'videoPlayer/controllers/ShowController' );
 		require( 'videoPlayer/controllers/QueueController' );
 		require( 'videoPlayer/controllers/SearchController' );
+		require( 'videoPlayer/controllers/ShareController' );
 		require( 'videoPlayer/entities/SearchResults' );
 
 		VideoPlayer.Router = AuthRouter.extend( {
@@ -41,6 +42,10 @@ define( function ( require ) {
 
 			'searchPeopleAndGroups' : function ( filter ) {
 				return VideoPlayer.Controller.Search.searchPeopleAndGroups( filter );
+			},
+
+			'shareVideo' : function ( shareTargets ) {
+				return VideoPlayer.Controller.Share.shareVideo( shareTargets );
 			}
 
 		};
@@ -59,6 +64,10 @@ define( function ( require ) {
 
 		App.reqres.setHandler( 'videoPlayer:searchPeopleAndGroups', function ( filter ) {
 			return API.searchPeopleAndGroups( filter );
+		} );
+
+		App.reqres.setHandler( 'videoPlayer:share:video', function ( shareTargets ) {
+			return API.shareVideo( shareTargets );
 		} );
 
 		App.addInitializer( function () {
