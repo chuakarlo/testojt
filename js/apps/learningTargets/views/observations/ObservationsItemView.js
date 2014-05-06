@@ -19,7 +19,6 @@ define( function ( require ) {
 		'showLegacyApp' : function ( e ) {
 			e.preventDefault();
 			var self = this;
-			
 			self.trigger( 'lt:redirect', 'observation', 'observationOfMe' );
 		}
 

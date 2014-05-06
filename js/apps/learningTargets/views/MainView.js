@@ -11,24 +11,15 @@ define( function ( require ) {
 		'className' : 'learning-targets',
 
 		'ui' : {
-			'nav'           : '.lt-left-nav',
-			'closeTrackBtn' : '.close-track'
+			'nav'        : '.lt-left-nav',
+			'focusTitle' : '.nav-subtitle a'
 		},
 
 		'events' : {
-			'click @ui.closeTrackBtn' : 'hideTrackSection'
+			'click @ui.focusTitle' : 'activateTitleTab'
 		},
 
-		'hideTrackSection' : function ( e ) {
-			e.preventDefault();
-			var self         = this;
-			var trackSection = self.el.querySelector( '.lt-track' );
-
-			// hide lt-track section
-			$( trackSection ).hide();
-		},
-
-		'activateTab' : function ( content ) {
+		'activateTab' : function ( content, options ) {
 			var self = this;
 
 			// remove class from current active li
@@ -38,7 +29,24 @@ define( function ( require ) {
 
 			// activate selected tab
 			$( '.' + content ).addClass( 'active' );
+
+			if ( options ) {
+				$( '.nav-objectives' )
+					.find( '.focus-title-' +  options.statestdid )
+					.addClass( 'active' );
+			}
+		},
+
+		'activateTitleTab' : function ( e ) {
+			// remove class from current active title li
+			$( '.nav-objectives' )
+				.find( '.active' )
+				.removeClass( 'active' );
+
+			// activate title selected tab
+			$( e.target.parentElement ).addClass( 'active' );
 		}
+
 	} );
 
 } );

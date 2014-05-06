@@ -47,41 +47,5 @@ define( function ( require ) {
 		it( 'does have `events` property', function () {
 			mainView.should.have.property( 'events' );
 		} );
-		describe( '.hideTrackSection', function () {
-			describe( 'when `close` button or `X` in the upper right corner is clicked', function () {
-				var hideTrackSectionSpy;
-
-				before( function () {
-					hideTrackSectionSpy = sinon.spy( mainView, 'hideTrackSection' );
-					mainView.hideTrackSection( dummyEvt );
-				} );
-
-				after( function () {
-					mainView.hideTrackSection.restore();
-				} );
-
-				it( 'does call `.hideTrackSection`', function () {
-					hideTrackSectionSpy.should.have.been.calledOnce;
-				} );
-			} );
-		} );
-		describe( '.activateTab', function () {
-			describe( 'when select a Tab', function () {
-				var activateTabSpy;
-
-				before( function () {
-					activateTabSpy = sinon.spy( mainView, 'activateTab' );
-					mainView.activateTab( dummyCnt );
-				} );
-
-				after( function () {
-					mainView.activateTab.restore();
-				} );
-
-				it( 'does call `.activateTab`', function () {
-					activateTabSpy.should.have.been.calledOnce;
-				} );
-			} );
-		} );
 	} );
 } );

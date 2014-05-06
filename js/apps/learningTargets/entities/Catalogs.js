@@ -17,7 +17,7 @@ define( function ( require ) {
 			'getReadOptions' : function () {
 				return {
 					'method' : 'getUsersIncompleteCatalogItems',
-					'args' : {
+					'args'   : {
 						'personnelId' : Session.personnelId()
 					}
 				};

@@ -17,7 +17,7 @@ define( function ( require ) {
 			'getReadOptions' : function () {
 				return {
 					'method' : 'getExtByEducatorForLearningTargets',
-					'args' : {
+					'args'   : {
 						'educId' : Session.personnelId()
 					}
 				};

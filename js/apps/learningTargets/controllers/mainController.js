@@ -1,24 +1,27 @@
 define( function ( require ) {
 	'use strict';
 
-	var App      = require( 'App' );
-	var Backbone = require( 'backbone' );
-	var async    = require( 'async' );
-	var _        = require( 'underscore' );
+	var _                     = require( 'underscore' );
+	var async                 = require( 'async' );
 
-	var MainView         = require( 'apps/learningTargets/views/MainView' );
-	var GroupsView       = require( 'apps/learningTargets/views/groups/GroupsView' );
-	var CoursesView      = require( 'apps/learningTargets/views/courses/CoursesView' );
-	var CatalogsView     = require( 'apps/learningTargets/views/catalogs/CatalogsView' );
-	var ProcessesView    = require( 'apps/learningTargets/views/processes/ProcessesView' );
-	var QuestionsView    = require( 'apps/learningTargets/views/questions/QuestionsView' );
-	var PortfoliosView   = require( 'apps/learningTargets/views/portfolios/PortfoliosView' );
-	var DescriptionView  = require( 'apps/learningTargets/views/catalogs/DescriptionView' );
-	var ObservationsView = require( 'apps/learningTargets/views/observations/ObservationsView' );
+	var App                   = require( 'App' );
+	var Backbone              = require( 'backbone' );
+	var MainView              = require( 'apps/learningTargets/views/MainView' );
+	var GroupsView            = require( 'apps/learningTargets/views/groups/GroupsView' );
+	var CoursesView           = require( 'apps/learningTargets/views/courses/CoursesView' );
+	var CatalogsView          = require( 'apps/learningTargets/views/catalogs/CatalogsView' );
+	var ProcessesView         = require( 'apps/learningTargets/views/processes/ProcessesView' );
+	var QuestionsView         = require( 'apps/learningTargets/views/questions/QuestionsView' );
+	var PortfoliosView        = require( 'apps/learningTargets/views/portfolios/PortfoliosView' );
+	var DescriptionView       = require( 'apps/learningTargets/views/catalogs/DescriptionView' );
+	var ObservationsView      = require( 'apps/learningTargets/views/observations/ObservationsView' );
+	var ObjectivesTitleView   = require( 'apps/learningTargets/views/objectives/titles/TitleView' );
+	var ObjectivesContentView = require( 'apps/learningTargets/views/objectives/contents/ContentView' );
 
 	App.module( 'LearningTargets.Main', function ( Main ) {
 		var mainView;
 		var contentRegion;
+		var titleRegion;
 
 		Main.regions = {
 			'Content' : Backbone.Marionette.Region.extend( { } )
@@ -30,7 +33,14 @@ define( function ( require ) {
 				contentRegion.show( view );
 			},
 
-			'_setContent' : function ( content ) {
+			'_showTitleView' : function ( view, options ) {
+				titleRegion.show( view );
+
+				mainView.activateTab( 'focus-objectives', options );
+			},
+
+			'_setContent' : function ( content, options ) {
+
 				// hide pd360 flash
 				App.request( 'pd360:hide' );
 
@@ -38,17 +48,22 @@ define( function ( require ) {
 				if ( !mainView ) {
 					mainView = new MainView();
 				}
+
 				App.content.show( mainView );
 
 				contentRegion = new Main.regions.Content( {
 					el : mainView.el.querySelector( '.lt-content' )
 				} );
 
+				titleRegion = new Main.regions.Content( {
+					el : mainView.el.querySelector( '.focus-objectives-title' )
+				} );
+
 				mainView.activateTab( content );
 			},
 
-			'_apiRequest' : function ( type, callback ) {
-				var request = App.request( type );
+			'_apiRequest' : function ( type, callback, options ) {
+				var request = App.request( type, options );
 
 				App.when( request ).done( function ( collections ) {
 					// run callback with collections
@@ -84,10 +99,8 @@ define( function ( require ) {
 			},
 
 			'showModalDescription' : function ( view ) {
-				if ( view.model.get( 'CatalogResourceTypeId' ) === 1 ) {
-					var resourceId = view.model.get( 'ResourceId' );
-					window.location.assign( 'dev.html#resources/videos/' + resourceId );
-				} else if ( view.model.get( 'CatalogResourceTypeId' ) === 2 ) {
+
+				if ( view.model.get( 'CatalogResourceTypeId' ) === 2 ) {
 					window.location.assign( 'https://www.pd360.com/pd360.cfm#tab=courses&page=coursesBrowse' );
 				} else if ( view.model.get( 'CatalogResourceTypeId' ) === 3 ) {
 					async.waterfall( [
@@ -139,7 +152,6 @@ define( function ( require ) {
 					// display Courses
 					helper._showView( coursesView );
 				} );
-
 			},
 
 			'showProcesses' : function () {
@@ -298,8 +310,76 @@ define( function ( require ) {
 					helper._showView( groupsView );
 				} );
 
-			}
+			},
 
+			'showFocusObjectives' : function ( options ) {
+				var helper = Main.helper;
+
+				// set content
+				helper._setContent( 'focus-objectives' );
+
+				// show a loading view while data is fetching
+				helper._showView( new App.Common.LoadingView() );
+
+				this.showFocusObjectivesTitle( helper, options );
+
+			},
+
+			'showFocusObjectivesTitle' : function ( helper, options ) {
+				helper._apiRequest( 'lt:objectivestitle', function ( collection ) {
+
+					var objectivesTitleView = new ObjectivesTitleView ( {
+						collection : collection
+					} );
+
+					// set the default view - select the first model
+					if ( !options ) {
+						options = {
+							ncesid     : collection.models[ 0 ].get('NCESId'),
+							statestdid : collection.models[ 0 ].get('StateStandardId')
+						};
+
+						App.navigate( 'resources/learning/objectives/' + options.ncesid + '/' + options.statestdid, true );
+					}
+
+					// display Focus Objectives Title
+					helper._showTitleView( objectivesTitleView, options );
+
+				} );
+			},
+
+			'showFocusObjectivesContent' : function ( ncesid, statestdid ) {
+				var helper = Main.helper;
+
+				var options = {
+					ncesid     : ncesid,
+					statestdid : statestdid
+				};
+
+				// if browser is being refresh - then call showFocusObjectives to set content
+				if ( !mainView ) {
+					this.showFocusObjectives( options );
+				}
+
+				// show a loading view while data is fetching
+				helper._showView( new App.Common.LoadingView() );
+
+				helper._apiRequest( 'lt:objectivescontent', function ( collection ) {
+
+					var objectivesContentView = new ObjectivesContentView( {
+						collection : collection
+					} );
+
+					if ( collection.length > 1 && !collection.models[ 0 ].get( 'ContentId' ) ) {
+						// todo to iteratively get the focus folder
+						console.log( 'TODO: iteratively get the focus folder' );
+					} else {
+						// display contents of focus folders
+						helper._showView( objectivesContentView );
+					}
+
+				}, options );
+			}
 		};
 
 	} );

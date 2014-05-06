@@ -17,7 +17,7 @@ define( function ( require ) {
 			'getReadOptions' : function () {
 				return {
 					'method' : 'getProfessionalLearningPlansForLearningTargets',
-					'args' : {
+					'args'   : {
 						'persId' : Session.personnelId()
 					}
 				};

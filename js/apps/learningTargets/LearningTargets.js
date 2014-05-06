@@ -7,6 +7,7 @@ define( function ( require ) {
 	require( 'apps/learningTargets/controllers/mainController' );
 	require( 'apps/learningTargets/entities/Courses' );
 	require( 'apps/learningTargets/entities/Observations' );
+	require( 'apps/learningTargets/entities/Objectives' );
 	require( 'apps/learningTargets/entities/Portfolios' );
 	require( 'apps/learningTargets/entities/Processes' );
 	require( 'apps/learningTargets/entities/Catalogs' );
@@ -26,7 +27,10 @@ define( function ( require ) {
 				'resources/learning/portfolio'    : 'showPortfolio',
 				'resources/learning/questions'    : 'showQuestions',
 				'resources/learning/catalogs'     : 'showCatalogs',
-				'resources/learning/groups'       : 'showGroups'
+				'resources/learning/groups'       : 'showGroups',
+				'resources/learning/objectives'   : 'showFocusObjectives',
+
+				'resources/learning/objectives/:ncesid/:statestdid'   : 'showFocusObjectivesContent'
 			}
 
 		} );

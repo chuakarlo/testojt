@@ -17,7 +17,7 @@ define( function ( require ) {
 			'getReadOptions' : function () {
 				return {
 					'method' : 'getObservationsByTargetIdWithPrescribedPDCount',
-					'args' : {
+					'args'   : {
 						'targetId' : Session.personnelId()
 					}
 				};

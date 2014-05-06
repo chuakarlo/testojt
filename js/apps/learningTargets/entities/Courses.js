@@ -17,7 +17,7 @@ define( function ( require ) {
 			'getReadOptions' : function () {
 				return {
 					'method' : 'getUsersCourseCompletionPercentageForLearningTargets',
-					'args' : {
+					'args'   : {
 						'personnelId' : Session.personnelId()
 					}
 				};

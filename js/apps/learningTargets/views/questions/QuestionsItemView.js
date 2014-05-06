@@ -10,7 +10,7 @@ define( function ( require ) {
 		'template' : _.template( template ),
 		'tagName'  : 'li',
 		'ui'       : {
-			'drawerToggleButton'  : '.lt-toggle-btn',
+			'drawerToggleButton' : '.lt-toggle-btn'
 		},
 
 		'events' : {
