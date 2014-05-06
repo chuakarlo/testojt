@@ -283,7 +283,7 @@ define( function ( require ) {
 				var helper = Main.helper;
 
 				// set content
-				helper._setContent( 'groups' );
+				helper._setContent( 'group-task' );
 
 				// show a loading view while data is fetching
 				helper._showView( new App.Common.LoadingView() );
