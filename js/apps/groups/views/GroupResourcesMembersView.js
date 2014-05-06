@@ -4,8 +4,8 @@ define( function ( require ) {
 	var Marionette        = require( 'marionette' );
 	var _                 = require( 'underscore' );
 	var ResourceItemView  = require( '../views/GroupResourceItemView' );
-	var ResourceEmptyView = require( '../views/GroupResourceEmptyView' );
-	var template          = require( 'text!../templates/groupResourcesView.html' );
+	var ResourceEmptyView = require( '../views/GroupResourceMembersEmptyView' );
+	var template          = require( 'text!../templates/groupResourcesMembersView.html' );
 
 	return Marionette.CompositeView.extend( {
 

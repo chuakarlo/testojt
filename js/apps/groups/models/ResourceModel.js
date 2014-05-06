@@ -3,13 +3,6 @@ define( function ( require ) {
 
 	var Backbone = require( 'backbone' );
 
-	return Backbone.Model.extend( {
-
-		'defaults' : {
-			'ResourceName'        : 'Default resource title',
-			'ResourceDescription' : 'This is a default description'
-		}
-
-	} );
+	return Backbone.Model.extend( { } );
 
 } );

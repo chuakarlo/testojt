@@ -148,27 +148,32 @@
 		.media-list {
 
 			.resource-upload-button {
-				float : right;
+				float          : right;
+				padding-bottom : @padding-large-vertical;
 			}
 
 			.resource-container {
-				padding-bottom : @padding-large-vertical * 2;
 				display        : block;
 
 				.resource-icon {
-					float         : left;
-					left          : -@padding-large-horizontal;
-					padding-right : @padding-small-horizontal;
 					max-width     : 100px;
 					max-height    : 100px;
 				}
 
 				.resource-main {
-					position : relative;
+					clear          : right;
+					padding-bottom : @padding-large-vertical * 2;
 
 					.resource-name {
-						color : @brand-primary;
+						color          : @brand-primary;
+						font-weight    : bold;
+						font-size      : @font-size-base;
 					}
+
+					.hidden {
+						display : none;
+					}
+
 				}
 
 			}
