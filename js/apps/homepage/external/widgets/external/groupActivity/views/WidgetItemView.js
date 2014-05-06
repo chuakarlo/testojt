@@ -7,7 +7,7 @@ define( function ( require ) {
 	var template        = require( 'text!apps/homepage/external/widgets/external/groupActivity/templates/widgetItemView.html' );
 	var limitCharacters = require( 'apps/homepage/utils/limitCharacters' );
 
-	var className    = 'col-md-12 no-padding groupActivity';
+	var className    = 'col-md-12 no-padding widget-item';
 	var templateBind = _.template( template );
 
 	return Marionette.ItemView.extend( {

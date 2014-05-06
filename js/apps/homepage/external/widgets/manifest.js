@@ -11,6 +11,7 @@ define( function ( require ) {
 		require( 'apps/homepage/external/widgets/external/groupActivity/base' ).registerWidget( parent );
 		require( 'apps/homepage/external/widgets/external/whatsNew/base' ).registerWidget( parent );
 		require( 'apps/homepage/external/widgets/external/yourProfile/base' ).registerWidget( parent );
+		require( 'apps/homepage/external/widgets/external/observationsOfMe/base' ).registerWidget( parent );
 
 		return parent;
 	};

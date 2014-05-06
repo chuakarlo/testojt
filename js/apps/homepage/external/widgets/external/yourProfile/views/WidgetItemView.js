@@ -7,7 +7,7 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 		'template'          : _.template( template ),
-		'className'         : 'col-md-12 no-padding yourProfile',
+		'className'         : 'col-md-12 no-padding',
 		'templateHelpers'   : function ( ) {
 			return {
 				'avatar'      : this.getAvatarWithLink( this.model.attributes.Avatar ),

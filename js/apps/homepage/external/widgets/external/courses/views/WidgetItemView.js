@@ -26,7 +26,7 @@ define( function ( require ) {
 			//default template
 			this.template = _.template( progressTemplate );
 		},
-		'className'       : 'col-md-12 no-padding learningTarget',
+		'className'       : 'col-md-12 no-padding widget-item',
 		'templateHelpers' : function () {
 			return {
 				'url'        : '/dev.html#resources/learning/courses',

@@ -8,7 +8,7 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 		'template'        : _.template( template ),
-		'className'       : 'col-md-12 no-padding whatsnew',
+		'className'       : 'col-md-12 no-padding widget-item',
 		'templateHelpers' : function () {
 			return {
 				'content' : this.limitCharacter( this.model.get( 'ContentName' ) ),
