@@ -392,3 +392,53 @@
 		margin-bottom: 30px;
 	}
 }
+
+/* Groups Slick Carousel Override*/
+
+#groups-slick-carousel {
+
+	.slick:hover > button {
+		visibility: visible;
+	}
+
+	.slick {
+
+		.slick-list {
+			height : 390px;
+		}
+
+		.slick-track {
+			padding-left: 0px;
+		}
+
+		.slick-slide {
+			box-sizing : border-box;
+			padding    : 0px 10px;
+			width      : 283px !important;
+			min-height : 282px;
+		}
+
+		.slick-prev, .slick-next {
+			border      : 0 none;
+			cursor      : pointer;
+			height      : 50px;
+			position    : absolute;
+			text-indent : -9999px;
+			width       : 50px;
+			z-index     : 20;
+			display     : none;
+		}
+
+		.slick-prev {
+			background : url("./../img/left-arrow.png") no-repeat scroll center center rgba(0, 0, 0, 0.1);
+			left       : -10px;
+			visibility : hidden;
+		}
+
+		.slick-next {
+			background : url("./../img/left-arrow-right.png") no-repeat scroll center center rgba(0, 0, 0, 0.1);
+			right      : -10px;
+			visibility : hidden;
+		}
+	}
+}

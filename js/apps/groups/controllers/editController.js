@@ -4,6 +4,7 @@ define( function ( require ) {
 	var Remoting = require( 'Remoting' );
 	var App      = require( 'App' );
 	var $        = require( 'jquery' );
+	var Vent     = require( 'Vent' );
 
 	App.module( 'Groups.Edit', function ( Edit ) {
 
@@ -62,7 +63,26 @@ define( function ( require ) {
 			},
 
 			'ignoreGroup' : function (model) {
-				// Ignore Group API insert here
+				var ignoreGroupRequest = {
+					'path'   : 'com.schoolimprovement.pd360.dao.GroupService',
+					'method' : 'deleteInviteByLicenseIdCreatorIdAndInviteeEmail',
+					'args'   : {
+						'LicenseId'    : model.attributes.LicenseId,
+						'CreatorId'    : model.attributes.Creator,
+						'InviteeEmail' : model.attributes.InviteeEmail
+					}
+				};
+
+				var requests     = [ ignoreGroupRequest ];
+				var fetchingData = Remoting.fetch( requests );
+
+				$.when( fetchingData ).done( function ( results ) {
+
+					Vent.trigger( 'group:removeGroupInvites', model );
+
+				} ).fail( function ( error ) {
+					// TODO: error handling
+				} );
 			},
 
 			'acceptGroup' : function (model) {

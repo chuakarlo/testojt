@@ -234,7 +234,7 @@ define( function ( require ) {
 				App.Groups.List.Controller.listGroups();
 
 				// remoting should have been called
-				remotingStub.should.have.callCount( 1 );
+				remotingStub.should.have.callCount( 2 );
 
 				// verify properties sent to remoting
 				remotingStub.should.have.been.calledWith( sinon.match( function ( request ) {
@@ -254,13 +254,13 @@ define( function ( require ) {
 					firstReq.args.should.have.property( 'persId' );
 
 					secondReq.should.have.property( 'path' );
-					secondReq.path.should.equal( 'com.schoolimprovement.pd360.dao.GroupService' );
+					secondReq.path.should.equal( 'com.schoolimprovement.pd360.dao.core.ClientPersonnelGateway' );
 
 					secondReq.should.have.property( 'method' );
-					secondReq.method.should.equal( 'getGroupMembershipInvites' );
+					secondReq.method.should.equal( 'getById' );
 
 					secondReq.should.have.property( 'args' );
-					secondReq.args.should.have.property( 'emailAddress' );
+					secondReq.args.should.have.property( 'id' );
 
 					return true;
 				} ) );
