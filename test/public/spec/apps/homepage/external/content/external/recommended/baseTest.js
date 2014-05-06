@@ -9,7 +9,6 @@ define( function ( require ) {
 
 		before( function () {
 			collectionParam = base.Collection;
-			console.log( base );
 		} );
 
 		it( 'should be an instance of `BaseObject`', function () {
