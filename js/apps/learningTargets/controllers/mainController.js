@@ -1,20 +1,20 @@
 define( function ( require ) {
 	'use strict';
 
-	var App              = require( 'App' );
+	var App      = require( 'App' );
+	var Backbone = require( 'backbone' );
+	var async    = require( 'async' );
+	var _        = require( 'underscore' );
+
 	var MainView         = require( 'apps/learningTargets/views/MainView' );
-	var CoursesView      = require( 'apps/learningTargets/views/courses/CoursesView' );
-	var ProcessesView    = require( 'apps/learningTargets/views/processes/ProcessesView' );
-	var ObservationsView = require( 'apps/learningTargets/views/observations/ObservationsView' );
-	var PortfoliosView   = require( 'apps/learningTargets/views/portfolios/PortfoliosView' );
-	var QuestionsView    = require( 'apps/learningTargets/views/questions/QuestionsView' );
-	var CatalogsView     = require( 'apps/learningTargets/views/catalogs/CatalogsView' );
 	var GroupsView       = require( 'apps/learningTargets/views/groups/GroupsView' );
+	var CoursesView      = require( 'apps/learningTargets/views/courses/CoursesView' );
+	var CatalogsView     = require( 'apps/learningTargets/views/catalogs/CatalogsView' );
+	var ProcessesView    = require( 'apps/learningTargets/views/processes/ProcessesView' );
+	var QuestionsView    = require( 'apps/learningTargets/views/questions/QuestionsView' );
+	var PortfoliosView   = require( 'apps/learningTargets/views/portfolios/PortfoliosView' );
 	var DescriptionView  = require( 'apps/learningTargets/views/catalogs/DescriptionView' );
-	var Backbone         = require( 'backbone' );
-	var async            = require( 'async' );
-	var $                = require( 'jquery' );
-	var _                = require( 'underscore' );
+	var ObservationsView = require( 'apps/learningTargets/views/observations/ObservationsView' );
 
 	App.module( 'LearningTargets.Main', function ( Main ) {
 		var mainView;
@@ -50,7 +50,7 @@ define( function ( require ) {
 			'_apiRequest' : function ( type, callback ) {
 				var request = App.request( type );
 
-				$.when( request ).done( function ( collections ) {
+				App.when( request ).done( function ( collections ) {
 					// run callback with collections
 					callback( collections );
 				} ).fail( function ( error ) {
@@ -62,7 +62,7 @@ define( function ( require ) {
 			'_apiRequestWithArgs' : function ( type, model, callback ) {
 				var request = App.request( type, model );
 
-				$.when( request ).done( function ( collections ) {
+				App.when( request ).done( function ( collections ) {
 					// run callback with collections
 					callback( collections );
 				} ).fail( function ( error ) {
@@ -72,10 +72,15 @@ define( function ( require ) {
 			},
 
 			'redirectToLegacyPage' : function ( target, page, sub, opts ) {
+				var pd360Loaded = App.request( 'pd360:loaded' );
+
+				App.content.show( new App.Common.LoadingView() );
 
 				// navigate to legacy page
-				App.request( 'pd360:navigate', ProcessesView, page, sub, opts );
-
+				App.when( pd360Loaded ).done( function () {
+					App.content.show( new ProcessesView() );
+					App.request( 'pd360:navigate', page, sub, opts );
+				} );
 			},
 
 			'showModalDescription' : function ( view ) {

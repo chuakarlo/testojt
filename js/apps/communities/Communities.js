@@ -47,16 +47,20 @@ define( function ( require ) {
 					}
 				} );
 
-				// if the arguments are empty, just display the main community
-				// page
-				if ( _.isEmpty( requestArgs ) ) {
-					App.request( 'pd360:navigate', CommunityView, 'communities',
-						'communitiesBrowse' );
-				} else {
-					App.request( 'pd360:navigate', CommunityView, 'communities',
-						'communitiesBrowse', requestArgs );
+				// check if pd360 swf is loaded
+				var pd360Loaded = App.request( 'pd360:loaded' );
 
-				}
+				// show a loading view while we wait
+				App.content.show( new App.Common.LoadingView() );
+
+				// when loading is complete, show the community header and navigate to flash page
+				App.when( pd360Loaded ).done( function () {
+
+					App.content.show( new CommunityView() );
+
+					// if `requestArgs` is empty, will navigate to main communities page
+					App.request( 'pd360:navigate', 'communities', 'communitiesBrowse', requestArgs );
+				} );
 
 			}
 

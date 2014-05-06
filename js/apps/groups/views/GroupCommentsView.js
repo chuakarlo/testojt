@@ -1,12 +1,14 @@
 define( function ( require ) {
 	'use strict';
 
-	var _                  = require( 'underscore' );
-	var Marionette         = require( 'marionette' );
-	var $                  = require( 'jquery' );
-	var Vent               = require( 'Vent' );
-	var Remoting           = require( 'Remoting' );
-	var Session            = require( 'Session' );
+	var _          = require( 'underscore' );
+	var Marionette = require( 'marionette' );
+	var Remoting   = require( 'Remoting' );
+	var Session    = require( 'Session' );
+	var $          = require( 'jquery' );
+	var Vent       = require( 'Vent' );
+	var App        = require( 'App' );
+
 	var template           = require( 'text!../templates/groupCommentsView.html' );
 	var usersTemplate      = require( 'text!../templates/usersGroupCommentsView.html' );
 	var GroupCommentView   = require( '../views/GroupCommentView' );
@@ -182,7 +184,7 @@ define( function ( require ) {
 			var requests     = [ request ];
 			var fetchingData = Remoting.fetch( requests );
 
-			$.when( fetchingData ).done( function ( results ) {
+			App.when( fetchingData ).done( function ( results ) {
 
 				this.clearForm( formGroup, formElement );
 
@@ -243,7 +245,7 @@ define( function ( require ) {
 			var requests     = [ request ];
 			var fetchingData = Remoting.fetch( requests );
 
-			$.when( fetchingData ).done( function ( results ) {
+			App.when( fetchingData ).done( function ( results ) {
 
 				Vent.trigger( 'group:removeComment', this.model );
 

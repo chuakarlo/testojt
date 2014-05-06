@@ -8,16 +8,14 @@ define( function ( require ) {
 
 	App.module( 'PD360.Show', function ( Show, App ) {
 
-		var container = $( App.flashContent.el );
+		var container   = $( App.flashContent.el );
+		var loadedDefer = App.Deferred();
 
 		var loginComplete = false;
 		var appLoaded     = false;
 		var hasFlash      = true;
 
-		var pendingNavigation;
 		var pendingLogin;
-
-		var RequestedView;
 		var pd360;
 
 		Show.Controller = {
@@ -53,55 +51,19 @@ define( function ( require ) {
 				}
 			},
 
-			// accepts a requested view to show within the `content` section,
-			// a main app to navigate to in pd360, an optional sub view
-			// and any options as a hash. ex: { 'forumId' : 1 }
-			'navigate' : function ( View, main, sub, options ) {
+			'navigate' : function ( main, sub, options ) {
 				sub = sub || '';
 
-				if ( appLoaded && loginComplete ) {
+				try {
 					pd360.navigateFromContainer( main, sub, options );
+				} catch ( error ) {}
 
-					// if a view will be shown above flash content
-					if ( View ) {
-						App.content.show( new View() );
-					} else {
-						App.content.close();
-					}
-
-					// show flash content
-					this.show();
-
-				} else if ( !hasFlash ) {
-
-					// close existing view
-					App.content.close();
-
-					// show flash player install
-					this.show();
-
-				} else {
-
-					// ensure pd360 remains hidden
-					this.hide();
-
-					// store the page to navigate to when loading/login completes
-					pendingNavigation         = { };
-					pendingNavigation.main    = main;
-					pendingNavigation.sub     = sub;
-					pendingNavigation.options = options;
-
-					// store the requested view and show a loading view while PD360 loads
-					RequestedView = View;
-					App.content.show( new App.Common.LoadingView() );
-				}
-
+				// show flash content
+				this.show();
 			},
 
 			'show' : function () {
-				if ( !pendingNavigation ) {
-					container.removeClass( 'hidden-flash' );
-				}
+				container.removeClass( 'hidden-flash' );
 			},
 
 			'hide' : function () {
@@ -114,7 +76,7 @@ define( function ( require ) {
 				if ( pendingLogin ) {
 					this.login( pendingLogin.username, pendingLogin.password );
 					pendingLogin = null;
-				} else if ( App.request( 'session:authenticated' ) ){
+				} else if ( App.request( 'session:authenticated' ) ) {
 					this.compare();
 				}
 			},
@@ -122,19 +84,7 @@ define( function ( require ) {
 			'loginComplete' : function () {
 				loginComplete = true;
 
-				if ( pendingNavigation ) {
-					var view    = RequestedView;
-					var main    = pendingNavigation.main;
-					var sub     = pendingNavigation.sub;
-					var options = pendingNavigation.options;
-
-					// clear pending
-					RequestedView     = null;
-					pendingNavigation = null;
-
-					// navigate to pending page
-					this.navigate( view, main, sub, options );
-				}
+				loadedDefer.resolve( true );
 			},
 
 			'login' : function ( username, password ) {
@@ -148,15 +98,11 @@ define( function ( require ) {
 			},
 
 			'logout' : function () {
-				if ( pd360 ) {
-					// attempt to logout, if in the process of logging in,
-					// the method won't be available and will throw an error
-					try {
-						pd360.logoutFromContainer();
-					} catch ( error ) {}
-
-					pd360 = null;
-				}
+				// attempt to logout, if in the process of logging in,
+				// the method won't be available and will throw an error
+				try {
+					pd360.logoutFromContainer();
+				} catch ( error ) {}
 
 				App.flashContent.close();
 
@@ -173,10 +119,8 @@ define( function ( require ) {
 
 					if ( valid ) {
 						this.loginShared();
-					}
-
-					// user has cookie but no pd360 creds
-					else if ( username && !valid ) {
+					} else if ( username && !valid ) {
+						// user has cookie but no pd360 creds
 						Vent.trigger( 'login:show' );
 					}
 
@@ -194,9 +138,8 @@ define( function ( require ) {
 			},
 
 			'noFlash' : function () {
-				hasFlash          = false;
-				pendingNavigation = null;
-				pendingLogin      = null;
+				hasFlash     = false;
+				pendingLogin = null;
 			},
 
 			'available' : function () {
@@ -215,6 +158,20 @@ define( function ( require ) {
 
 			'signature' : function ( method, args ) {
 				return pd360.cfJsonAPIMethod1( method, args );
+			},
+
+			'loaded' : function () {
+				var state = loadedDefer.state();
+
+				if ( state === 'resolved' || state === 'rejected' ) {
+					loadedDefer = $.Deferred();
+				}
+
+				if ( !hasFlash || appLoaded && loginComplete ) {
+					return loadedDefer.resolve();
+				}
+
+				return loadedDefer.promise();
 			}
 
 		};

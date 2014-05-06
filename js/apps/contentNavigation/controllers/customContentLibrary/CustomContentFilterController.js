@@ -4,7 +4,7 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 	var Remoting   = require( 'Remoting' );
-	var $          = require( 'jquery' );
+	var App        = require( 'App' );
 
 	var ControllerBase = {
 		'Filter' : require( '../base/FilterBase' )
@@ -36,14 +36,14 @@ define( function ( require ) {
 				'path'   : 'com.schoolimprovement.pd360.dao.RespondService',
 				'method' : 'RespondCustomContentGetTree',
 				'args'   : {
-				    'licenseTypeId'        : 1,
-				    'licenseContentTypeId' : 174
+					'licenseTypeId'        : 1,
+					'licenseContentTypeId' : 174
 				}
 			};
 
-	        this.fetchingCategories = Remoting.fetch( [ fetchCategory ] );
+			this.fetchingCategories = Remoting.fetch( [ fetchCategory ] );
 
-			$.when( this.fetchingCategories ).done( function ( models ) {
+			App.when( this.fetchingCategories ).done( function ( models ) {
 				this.createFilterComponents( models );
 			}.bind( this ) ).fail( function ( error ) {
 			}.bind( this ) );

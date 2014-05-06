@@ -1,7 +1,6 @@
 define( function ( require ) {
 	'use strict';
 
-	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
 	var App        = require( 'App' );
 	var Vent       = require( 'Vent' );
@@ -14,39 +13,39 @@ define( function ( require ) {
 
 	App.module( 'Footer', function ( Mod ) {
 
-		Mod.addInitializer( function() {
+		Mod.addInitializer( function () {
 
 			Mod.ShowController = Marionette.Controller.extend( {
 
-				'initialize' : function() {
+				'initialize' : function () {
 					_.bindAll( this, 'determineBranding' );
 					this.listenTo(Vent, 'login:success', this.buildBranding);
 					this.listenTo(Vent, 'pd360:logout', this.buildBranding);
 				},
 
-				'showFooter' : function() {
+				'showFooter' : function () {
 					this.footerView = new FooterView();
 					App.footerRegion.show(this.footerView);
 					this.buildBranding();
 				},
 
-				'buildBranding' : function() {
+				'buildBranding' : function () {
 					if ( Session.authenticated() ) {
 						var licenses = App.request( 'user:licenses' );
-						$.when( licenses ).done( this.determineBranding );
+						App.when( licenses ).done( this.determineBranding );
 					} else {
 						this.defaultBranding();
 					}
 				},
 
-				'determineBranding' : function( licenses ) {
+				'determineBranding' : function ( licenses ) {
 					// Determine if they have any district or school branding.
 					// Eventually need to have logic giving the proper priority
 					// on which branding image to display. This should really
 					// be handled on the backend.
-					var filtered = licenses.where( { 'LicenseTypeId' : 1 });
+					var filtered = licenses.where( { 'LicenseTypeId' : 1 } );
 
-					var banners = _.reject(filtered, function( l ) {
+					var banners = _.reject( filtered, function ( l ) {
 						var img = l.get( 'BrandingImage' );
 						if (img !== '' && img !== 'default.png' ) {
 							return false;
@@ -54,9 +53,9 @@ define( function ( require ) {
 						return true;
 					} );
 
-					var banner = _.last(banners);
+					var banner = _.last( banners );
 
-					if (banner) {
+					if ( banner ) {
 
 						var imageView = new ImageView( {
 							'model' : banner
@@ -69,7 +68,7 @@ define( function ( require ) {
 					}
 				},
 
-				'defaultBranding' : function() {
+				'defaultBranding' : function () {
 					// Display the default PD 360 Image
 					var imageView = new ImageView( {
 						'model' : new Backbone.Model( {
@@ -78,7 +77,7 @@ define( function ( require ) {
 					} );
 
 					this.footerView.imageRegion.show( imageView );
-				},
+				}
 
 			} );
 

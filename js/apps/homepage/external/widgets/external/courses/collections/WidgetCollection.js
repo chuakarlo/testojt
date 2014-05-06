@@ -1,11 +1,12 @@
 define ( function ( require ) {
 	'use strict';
 
-	var Backbone    = require( 'backbone' );
+	var Backbone = require( 'backbone' );
+	var Remoting = require( 'Remoting' );
+	var Session  = require( 'Session' );
+	var App      = require( 'App' );
+
 	var WidgetModel = require( 'apps/homepage/external/widgets/external/courses/models/WidgetModel' );
-	var Remoting    = require( 'Remoting' );
-	var $           = require( 'jquery' );
-	var Session     = require( 'Session' );
 
 	function widgetRequest ( personnelId ) {
 		return {
@@ -18,18 +19,22 @@ define ( function ( require ) {
 	}
 
 	var Collection = Backbone.Collection.extend( {
-		'model'      : WidgetModel,
+
+		'model' : WidgetModel,
+
 		'comparator' : function ( model ) {
 			var date = new Date( model.get( 'EXPIREDATE' ) ).getTime();
 			return -date;
-		}	} );
+		}
+
+	} );
 
 	return Backbone.Collection.extend( {
-		'fetch' : function ( options ) {
 
+		'fetch' : function ( options ) {
 			var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId() ) ] );
 
-			$.when( fetchingModels ).done( function ( models ) {
+			App.when( fetchingModels ).done( function ( models ) {
 
 				options.success( new Collection( models[ 0 ] ) );
 
@@ -37,5 +42,7 @@ define ( function ( require ) {
 				// TODO: error handling
 			} );
 		}
+
 	} );
+
 } );

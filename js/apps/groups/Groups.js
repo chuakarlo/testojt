@@ -72,7 +72,7 @@ define( function ( require ) {
 
 		// set handler to navigate to group leader tools
 		App.reqres.setHandler( 'group:showLeaderTools', function ( LicenseId ) {
-			App.request( 'pd360:navigate', null, 'communities', 'groupsBrowse', {
+			App.request( 'pd360:navigate', 'communities', 'groupsBrowse', {
 				'LicenseId' : LicenseId
 			} );
 		} );

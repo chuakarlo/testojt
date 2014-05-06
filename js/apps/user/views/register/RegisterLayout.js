@@ -1,16 +1,16 @@
 define( function ( require ) {
 	'use strict';
 
-	var $          = require( 'jquery' );
-	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 	var Backbone   = require( 'backbone' );
-	var template   = require( 'text!user/templates/register/registerLayout.html' );
 	var App        = require( 'App' );
+	var _          = require( 'underscore' );
+	var $          = require( 'jquery' );
+
+	var template = require( 'text!user/templates/register/registerLayout.html' );
 
 	require( 'validation' );
 	require( 'backbone.stickit' );
-
 
 	return Marionette.Layout.extend( {
 
@@ -29,11 +29,11 @@ define( function ( require ) {
 		},
 
 		'ui' : {
-			'email'     : 'input[name=EmailAddress]',
-			'country'   : '[name="Country"]',
-			'state'     : '[name="State"]',
-			'district'  : '[name=DistrictName]',
-			'school'    : '[name="ClientId"]'
+			'email'    : 'input[name=EmailAddress]',
+			'country'  : '[name="Country"]',
+			'state'    : '[name="State"]',
+			'district' : '[name=DistrictName]',
+			'school'   : '[name="ClientId"]'
 		},
 
 		// The 'other' ids for that have special handling
@@ -54,7 +54,7 @@ define( function ( require ) {
 			'[name="Password2"]'    : 'Password2',
 
 			'[name="Country"]' : {
-				'observe' : 'Country',
+				'observe'       : 'Country',
 				'selectOptions' : {
 					'collection' : [
 						{ 'value' : '', 'label' : 'Choose a country...' },
@@ -66,7 +66,7 @@ define( function ( require ) {
 			},
 
 			'[name="State"]' : {
-				'observe' : 'State',
+				'observe'       : 'State',
 				'selectOptions' : {
 					'collection' : [ ],
 					'labelPath'  : 'label',
@@ -75,7 +75,7 @@ define( function ( require ) {
 			},
 
 			'[name="DistrictName"]' : {
-				'observe' : 'DistrictName',
+				'observe'       : 'DistrictName',
 				'selectOptions' : {
 					'collection' : [
 						{ 'value' : '', 'label' : 'Choose a district...' },
@@ -85,7 +85,7 @@ define( function ( require ) {
 			},
 
 			'[name="ClientId"]' : {
-				'observe' : 'ClientId',
+				'observe'       : 'ClientId',
 				'selectOptions' : {
 					'collection' : [
 						{ 'value' : '', 'label' : 'Choose a school...' },
@@ -95,7 +95,7 @@ define( function ( require ) {
 			}
 		},
 
-		'onRender' : function() {
+		'onRender' : function () {
 
 			this.stickit();
 
@@ -106,7 +106,7 @@ define( function ( require ) {
 
 					this.addBinding( null, {
 						'[name="State"]' : {
-							'observe' : 'State',
+							'observe'       : 'State',
 							'selectOptions' : {
 								'collection' : states
 							},
@@ -120,7 +120,6 @@ define( function ( require ) {
 			} );
 
 		},
-
 
 		'initialize' : function ( options ) {
 
@@ -141,7 +140,7 @@ define( function ( require ) {
 				this.ui.email.hide();
 				$( '.alert-warning.js-email' ).removeClass( 'hidden' );
 
-				$.when( usedRequest ).done( function ( used ) {
+				App.when( usedRequest ).done( function ( used ) {
 
 					if ( used.length > 2 ) {
 						$( '.alert-danger.js-email' ).removeClass( 'hidden' );
@@ -172,61 +171,56 @@ define( function ( require ) {
 
 			element.hide();
 
-			switch( element.attr( 'name' ) ) {
+			var name = element.attr( 'name' );
 
-				case 'DistrictName':
+			if ( name === 'DistrictName' ) {
 
-					var districtRequest = App.request( 'common:districts', id );
+				var districtRequest = App.request( 'common:districts', id );
 
-					$.when( districtRequest ).done( function ( districts ) {
+				App.when( districtRequest ).done( function ( districts ) {
 
-						that.addBinding( null, {
-							'[name="DistrictName"]' : {
-								'observe' : 'DistrictName',
-								'selectOptions' : {
-									'collection' : districts
-								},
-								'defaultOption' : {
-									'label' : 'Choose a district...',
-									'value' : null
-								}
+					that.addBinding( null, {
+						'[name="DistrictName"]' : {
+							'observe'       : 'DistrictName',
+							'selectOptions' : {
+								'collection' : districts
+							},
+							'defaultOption' : {
+								'label' : 'Choose a district...',
+								'value' : null
 							}
-						} );
-
-						element.show();
-
-					} ).fail( function ( error ) {
-						// TODO: error handling
+						}
 					} );
-
-				break;
-
-				case 'ClientId':
-
-					var schoolsRequest = App.request( 'common:schools', id );
-
-					$.when( schoolsRequest ).done( function ( schools ) {
-
-						that.addBinding( null, {
-							'[name="ClientId"]' : {
-								'observe' : 'ClientId',
-								'selectOptions' : {
-									'collection' : schools
-								}
-							}
-						} );
-
-						element.show();
-
-					} ).fail( function ( error ) {
-						// TODO: error handling
-					} );
-
-				break;
-
-				default:
 
 					element.show();
+
+				} ).fail( function ( error ) {
+					// TODO: error handling
+				} );
+
+			} else if ( name === 'ClientId' ) {
+
+				var schoolsRequest = App.request( 'common:schools', id );
+
+				App.when( schoolsRequest ).done( function ( schools ) {
+
+					that.addBinding( null, {
+						'[name="ClientId"]' : {
+							'observe'       : 'ClientId',
+							'selectOptions' : {
+								'collection' : schools
+							}
+						}
+					} );
+
+					element.show();
+
+				} ).fail( function ( error ) {
+					// TODO: error handling
+				} );
+
+			} else {
+				element.show();
 			}
 
 			element.prop( 'disabled', false );
@@ -277,7 +271,7 @@ define( function ( require ) {
 		'register' : function ( event ) {
 			event.preventDefault();
 
-			if(this.model.isValid(true)){
+			if ( this.model.isValid( true ) ) {
 
 				// override element values since we save the label instead of the ID
 				this.model.attributes.State        = this.ui.state.find( 'option:selected' ).text();
@@ -292,7 +286,7 @@ define( function ( require ) {
 
 				$.ajax( {
 					'url' : url
-				} ).done( function( data, textStatus, jqXHR ) {
+				} ).done( function ( data, textStatus, jqXHR ) {
 
 					if ( data === '\"email address already in use\"' ) {
 						$( 'form' ).show();

@@ -28,7 +28,12 @@ define( function ( require ) {
 
 			'^eula' : function () {
 				return this.authCheck();
+			},
+
+			'^admin' : function () {
+				return this.authCheck();
 			}
+
 		},
 
 		'checkAll' : function () {

@@ -1,8 +1,7 @@
-define( function( require ) {
+define( function ( require ) {
 	'use strict';
 
 	var App = require( 'App' );
-	var $   = require( 'jquery' );
 
 	var Remoting = require( 'Remoting' );
 	var Session  = require( 'Session' );
@@ -15,21 +14,22 @@ define( function( require ) {
 	var setUserTags = require( 'apps/homepage/utils/setUserTags' );
 
 	// to show the user's personal info, grab the ClientPersonnel object
-	function clientProfileParams( personnelId ) {
+	function clientProfileParams ( personnelId ) {
 		return [
-		{
-			'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelGateway',
-			'method' : 'getById',
-			'args'   : {
-				'id' : personnelId
+			{
+				'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelGateway',
+				'method' : 'getById',
+				'args'   : {
+					'id' : personnelId
+				}
+			}, {
+				'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelProfileGateway',
+				'method' : 'getById',
+				'args'   : {
+					'id' : personnelId
+				}
 			}
-		}, {
-			'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelProfileGateway',
-			'method' : 'getById',
-			'args'   : {
-				'id' : personnelId
-			}
-		} ];
+		];
 	}
 
 	function setUserProfileReqres ( model ) {
@@ -48,7 +48,7 @@ define( function( require ) {
 		'loadHomepage' : function ( layout ) {
 			var fetchingModels = Remoting.fetch( clientProfileParams( Session.personnelId() ) );
 
-			$.when( fetchingModels ).done( function ( models ) {
+			App.when( fetchingModels ).done( function ( models ) {
 
 				setUserProfileReqres( models[ 0 ] );
 				setUserTagsReqRes( models[ 1 ] );
@@ -56,7 +56,7 @@ define( function( require ) {
 				var externalSections = manifest();
 				var collection       = new Backbone.Collection(externalSections);
 				var sectionView      = new SectionCollectionView( {
-					'collection': collection
+					'collection' : collection
 				} );
 
 				layout.contentRegion.show(sectionView);

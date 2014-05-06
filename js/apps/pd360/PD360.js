@@ -14,8 +14,8 @@ define( function ( require ) {
 				PD360.Show.Controller.embed();
 			},
 
-			'navigate' : function ( view, main, sub, options ) {
-				PD360.Show.Controller.navigate( view, main, sub, options );
+			'navigate' : function ( main, sub, options ) {
+				PD360.Show.Controller.navigate( main, sub, options );
 			},
 
 			'show' : function () {
@@ -52,9 +52,15 @@ define( function ( require ) {
 
 			'signature' : function ( method, args ) {
 				return PD360.Show.Controller.signature( method, args );
+			},
+
+			'loaded' : function () {
+				return PD360.Show.Controller.loaded();
 			}
 
 		};
+
+		App.reqres.setHandler( 'pd360:loaded', API.loaded );
 
 		App.reqres.setHandler( 'pd360:available', API.available );
 

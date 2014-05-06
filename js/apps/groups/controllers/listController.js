@@ -32,7 +32,7 @@ define( function ( require ) {
 				var requests     = [ groupsRequest, groupInvitesRequest ];
 				var fetchingData = Remoting.fetch( requests );
 
-				$.when( fetchingData ).done( function ( results ) {
+				App.when( fetchingData ).done( function ( results ) {
 
 					var groups = new GroupCollection( results[ 0 ] );
 					var groupInvites = new GroupInviteCollection( results[ 1 ] );
@@ -45,7 +45,7 @@ define( function ( require ) {
 
 					var groupInvitesView = new App.Groups.Views.InvitesList( { 'collection' : groupInvites } );
 					this.layout.groupInvitesRegion.show( groupInvitesView );
-					
+
 				}.bind( this ) ).fail( function ( error ) {
 					// TODO: error handling
 				} );

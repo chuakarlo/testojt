@@ -10,7 +10,6 @@ define( function ( require ) {
 	return Marionette.CompositeView.extend( {
 
 		'template'          : _.template( template ),
-		'className'         : 'aoeu',
 		'itemView'          : resourcesItemView,
 		'itemViewContainer' : 'ul'
 

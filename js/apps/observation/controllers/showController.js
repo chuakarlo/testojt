@@ -7,7 +7,14 @@ define( function ( require ) {
 	App.module( 'Observation.Show', function ( Show ) {
 
 		var navigate = function ( sub ) {
-			App.request( 'pd360:navigate', ObservationView, 'observation', sub );
+			var pd360Loaded = App.request( 'pd360:loaded' );
+
+			App.content.show( new App.Common.LoadingView() );
+
+			App.when( pd360Loaded ).done( function () {
+				App.content.show( new ObservationView() );
+				App.request( 'pd360:navigate', 'observation', sub );
+			} );
 		};
 
 		Show.Controller = {
@@ -22,5 +29,5 @@ define( function ( require ) {
 
 		};
 	} );
-	
+
 } );

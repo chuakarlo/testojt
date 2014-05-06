@@ -4,8 +4,8 @@ define ( function ( require ) {
 	var Backbone    = require( 'backbone' );
 	var WidgetModel = require( 'apps/homepage/external/widgets/external/yourProfile/models/WidgetModel' );
 	var Remoting    = require( 'Remoting' );
-	var $           = require( 'jquery' );
 	var Session     = require( 'Session' );
+	var App         = require( 'App' );
 
 	function widgetRequest ( personnelId ) {
 		return {
@@ -28,7 +28,7 @@ define ( function ( require ) {
 
 				var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId() ) ] );
 
-				$.when( fetchingModels ).done( function ( models ) {
+				App.when( fetchingModels ).done( function ( models ) {
 
 					options.success( new Collection( models[ 0 ] ) );
 

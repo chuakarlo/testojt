@@ -99,7 +99,7 @@ define( function ( require ) {
 				var requests     = [ groupRequest, membersRequest, groupsRequest, wallRequest, resourcesRequest, groupAdminRequest, groupLastUpdateRequest ];
 				var fetchingData = Remoting.fetch( requests );
 
-				$.when( fetchingData ).done( function ( results ) {
+				App.when( fetchingData ).done( function ( results ) {
 
 					this.layout = new App.Groups.Views.Layout();
 					App.content.show( this.layout );
@@ -238,7 +238,7 @@ define( function ( require ) {
 							// the wall needs to be requested because creating doesn't return the MessageThreadId
 							var requests     = [ wallRequest ];
 							var fetchingData = Remoting.fetch( requests );
-							$.when( fetchingData ).done( function ( results ) {
+							App.when( fetchingData ).done( function ( results ) {
 
 								var newWall = results[ 0 ];
 

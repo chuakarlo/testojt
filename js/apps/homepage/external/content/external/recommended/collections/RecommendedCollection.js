@@ -1,13 +1,12 @@
-define(function(require) {
+define( function ( require ) {
 	'use strict';
 
-	var Backbone = require('backbone');
+	var Backbone = require( 'backbone' );
 	var Remoting = require( 'Remoting' );
-	var App      = require( 'App' );
-	var $        = require( 'jquery' );
 	var Session  = require( 'Session' );
+	var App      = require( 'App' );
 
-	function recommendedRequest( start ) {
+	var recommendedRequest = function ( start ) {
 		return {
 			'path'   : 'com.schoolimprovement.pd360.dao.SearchService',
 			'method' : 'RespondSearchAPI',
@@ -20,7 +19,7 @@ define(function(require) {
 				'sort'       : 'created desc'
 			}
 		};
-	}
+	};
 
 	var queueRequest =  {
 		'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
@@ -30,17 +29,19 @@ define(function(require) {
 		}
 	};
 
-	function fetchingModels ( start ) {
+	var fetchingModels = function ( start ) {
 		return Remoting.fetch( [ recommendedRequest( start ), queueRequest ] );
-	}
+	};
 
 	return Backbone.Collection.extend({
-		'initialize': function(options) {
+
+		'initialize' : function ( options ) {
 			this.start           = 0;
 			this.queueCollection = [ ];
 		},
+
 		'fetch' : function ( options ) {
-			$.when( fetchingModels( this.start ) ).done( function ( models ) {
+			App.when( fetchingModels( this.start ) ).done( function ( models ) {
 
 				var innerModel = new Backbone.Collection( models[ 0 ] );
 				innerModel.queueCollection = models[ 1 ];
@@ -50,8 +51,11 @@ define(function(require) {
 				// TODO: error handling
 			} );
 		},
-		'alterData': function(start) {
+
+		'alterData' : function ( start ) {
 			this.start = start;
 		}
+
 	});
+
 });

@@ -6,6 +6,7 @@ define( function ( require ) {
 	var $          = require( 'jquery' );
 	var Remoting   = require( 'Remoting' );
 	var Session    = require( 'Session' );
+	var App        = require( 'App' );
 
 	var views = {
 		'ErrorView'    : require( '../views/ErrorView' ),
@@ -30,13 +31,13 @@ define( function ( require ) {
 
 					'click .cn-sortby-menu li' : function ( ev ) {
 
-					    this._sortByChanged( $( ev.currentTarget ) );
+						this._sortByChanged( $( ev.currentTarget ) );
 
 					}.bind( this ),
 
 					'click .cn-library-menu li' : function ( ev ) {
 
-					    this._changeLibrary( $( ev.currentTarget ) );
+						this._changeLibrary( $( ev.currentTarget ) );
 
 					}.bind( this )
 				},
@@ -60,7 +61,7 @@ define( function ( require ) {
 			var fetchLicenses = this._getLicenses();
 			this.licences = Remoting.fetch( [ fetchLicenses ] );
 
-			$.when( this.licences ).done( function ( models ) {
+			App.when( this.licences ).done( function ( models ) {
 				this._setLicensesCollection( models[ 0 ] );
 			}.bind( this ) ).fail( function ( error ) {
 				return this._fetchLicenseFailed.call( this, error );
@@ -74,7 +75,7 @@ define( function ( require ) {
 				'args'   : {
 					'personnelId' : Session.personnelId()
 				},
-				'path' : 'com.schoolimprovement.pd360.dao.RespondService'
+				'path'   : 'com.schoolimprovement.pd360.dao.RespondService'
 			};
 		},
 
@@ -88,10 +89,10 @@ define( function ( require ) {
 			} );
 		},
 
-        '_setLicenseLength' : function ( data ) {
-            data.LicenseName = data.LicenseName.length > 23 ? data.LicenseName.substr( 0, 20 ) + '...' : data.LicenseName;
-            return data;
-        },
+		'_setLicenseLength' : function ( data ) {
+			data.LicenseName = data.LicenseName.length > 23 ? data.LicenseName.substr( 0, 20 ) + '...' : data.LicenseName;
+			return data;
+		},
 
 		'getView' : function () {
 			return this.layoutView;
@@ -106,7 +107,7 @@ define( function ( require ) {
 
 		'_sortInit' : function () {
 			var sortBy = this.layoutView.$el.find( '.cn-sortby-category').text();
-			if( sortBy === 'Release Date' ) {
+			if ( sortBy === 'Release Date' ) {
 				sortBy = 'created desc';
 			} else {
 				sortBy = 'title asc';
@@ -118,7 +119,7 @@ define( function ( require ) {
 			var sort   = this._getDropdownValue( el );
 			var sortBy = '';
 
-			if( sort === 'Release Date' ) {
+			if ( sort === 'Release Date' ) {
 				sortBy = 'created desc';
 			} else {
 				sortBy = 'title asc';
@@ -131,18 +132,16 @@ define( function ( require ) {
 			var _libraryLabel = this._getDropdownValue( el );
 			var _contentType  = '';
 
-			if( _libraryLabel === 'PD360' ) {
+			if ( _libraryLabel === 'PD360' ) {
 				_contentType = 'PD360Content';
 
 				this._showSortBy();
-			}
-			else if( _libraryLabel === 'User Uploaded Videos' ) {
+			} else if ( _libraryLabel === 'User Uploaded Videos' ) {
 				_contentType = 'UserUploadedContent';
 
 				// hide sortBy dropdown
 				this._hideSortBy();
-			}
-			else {
+			} else {
 				_contentType = 'CustomContent';
 
 				this._showSortBy();

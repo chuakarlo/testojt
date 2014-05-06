@@ -1,7 +1,6 @@
 define( function ( require ) {
 	'use strict';
 
-	var $        = require( 'jquery' );
 	var App      = require( 'App' );
 	var Session  = require( 'Session' );
 	var Remoting = require( 'Remoting' );
@@ -24,7 +23,7 @@ define( function ( require ) {
 
 				var addToQueue = Remoting.fetch( addToQueueRequest );
 
-				$.when( addToQueue ).done( function () {
+				App.when( addToQueue ).done( function () {
 					model.set( 'queued', true );
 					App.vent.trigger( 'flash:message', { 'type' : 'success', 'message' : 'Added to Watch Later' } );
 				} );
@@ -47,7 +46,7 @@ define( function ( require ) {
 
 				var removeFromQueue = Remoting.fetch( removeFromQueueRequest );
 
-				$.when( removeFromQueue ).done( function () {
+				App.when( removeFromQueue ).done( function () {
 					model.set( 'queued', false );
 					App.vent.trigger( 'flash:message', { 'type' : 'success', 'message' : 'Removed from Watch Later' } );
 				} );

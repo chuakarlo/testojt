@@ -1,10 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var Backbone       = require( 'backbone' );
+	var Backbone = require( 'backbone' );
+	var Remoting = require( 'Remoting' );
+	var App      = require( 'App' );
+
 	var BillBoardModel = require( 'apps/homepage/external/billboard/model/BillboardModel' );
-	var Remoting       = require( 'Remoting' );
-	var $              = require( 'jquery' );
 
 	function billboardRequest ( typeId ) {
 		return {
@@ -25,9 +26,9 @@ define( function ( require ) {
 
 			var fetchingModels = Remoting.fetch( [ billboardRequest(1), billboardRequest(2) ] );
 
-			$.when( fetchingModels ).done( function ( models ) {
+			App.when( fetchingModels ).done( function ( models ) {
 
-				options.success( new Collection( models[0].concat(models[1]) ) );
+				options.success( new Collection( models[ 0 ].concat( models[ 1 ] ) ) );
 
 			} ).fail( function ( error ) {
 				// TODO: error handling

@@ -6,6 +6,7 @@ define( function ( require ) {
 	var Vent        = require( 'Vent' );
 	var ModalRegion = require( 'common/regions/ModalRegion');
 	var FlashLayout = require( 'common/views/FlashLayout' );
+	var $           = require( 'jquery' );
 
 	// main app
 	var App = new Marionette.Application();
@@ -60,7 +61,6 @@ define( function ( require ) {
 
 		// Setup auto close for everything that's not an error message
 		if ( options.type !== 'error' ) {
-
 			var wordsPerSecond = options.message.split( ' ' ).length * 300;
 			var timeout        = options.timeout || Math.max( wordsPerSecond, 3500 );
 
@@ -72,6 +72,10 @@ define( function ( require ) {
 		}
 
 	} );
+
+	// convenience access for jquery methods
+	App.when     = $.when;
+	App.Deferred = $.Deferred;
 
 	return App;
 } );

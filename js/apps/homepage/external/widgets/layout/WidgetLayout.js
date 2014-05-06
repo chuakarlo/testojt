@@ -2,20 +2,21 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette = require( 'marionette' );
+	var Session    = require( 'Session' );
+	var App        = require( 'App' );
 	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
-	var Session    = require( 'Session' );
 
 	var Remoting = require( 'Remoting' );
 
-	var WidgetCollection     = require( 'apps/homepage/external/widgets/collections/WidgetCollection' );
+	var WidgetCollection = require( 'apps/homepage/external/widgets/collections/WidgetCollection' );
 
 	var UserWidgetCollectionView = require( 'apps/homepage/external/widgets/views/UserWidgetCollectionView' );
 	var WidgetCompositeView      = require( 'apps/homepage/external/widgets/views/WidgetCompositeView' );
 	var template                 = require( 'text!apps/homepage/external/widgets/templates/widgetLayoutView.html' );
 
 	var panelStatuses = [ 'opened', 'closed' ];
-	var widgets  = require( 'apps/homepage/external/widgets/manifest' )().splice(1);
+	var widgets       = require( 'apps/homepage/external/widgets/manifest' )().splice(1);
 
 	function fetchingModels ( personnelId ) {
 		return {
@@ -28,7 +29,7 @@ define( function ( require ) {
 	}
 
 	function doInitialize ( view ) {
-		$.when( Remoting.fetch( fetchingModels( Session.personnelId() ) ) ).done( function ( models ) {
+		App.when( Remoting.fetch( fetchingModels( Session.personnelId() ) ) ).done( function ( models ) {
 			view.widgetCollection     = new WidgetCollection( widgets );
 			view.userWidgetCollection = new WidgetCollection( view.getUserWidgetCollection( models[ 0 ] ) );
 

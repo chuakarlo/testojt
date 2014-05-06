@@ -4,23 +4,26 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var sinon      = window.sinon;
 	var App        = require( 'App' );
-	var View       = require( 'communities/views/CommunitiesView' );
-
 
 	require( 'communities/Communities' );
 
 	describe( 'Communities Module', function () {
 
-		var spy;
+		var navigateSpy, loadedSpy;
 
 		before( function () {
-			spy = sinon.spy();
-			App.reqres.setHandler( 'pd360:navigate', spy );
+			navigateSpy = sinon.spy();
+			loadedSpy   = sinon.stub().returns( true );
+			App.reqres.setHandler( 'pd360:navigate', navigateSpy );
+			App.reqres.setHandler( 'pd360:loaded', loadedSpy );
 		} );
 
 		after( function () {
 			App.reqres.removeHandler( 'pd360:navigate' );
+			App.reqres.removeHandler( 'pd360:loaded' );
 			App.module( 'Communities' ).stop();
+			navigateSpy = null;
+			loadedSpy   = null;
 		} );
 
 		it( 'should create module Communities', function () {
@@ -43,8 +46,11 @@ define( function ( require ) {
 			it( '`showCommunities` should call PD360.navigate', function () {
 				App.Communities.showController.showCommunities();
 
-				spy.should.have.callCount( 1 );
-				spy.should.have.been.calledWithExactly( View, 'communities', 'communitiesBrowse' );
+				loadedSpy.should.have.callCount( 1 );
+				loadedSpy.should.have.been.calledBefore( navigateSpy );
+
+				navigateSpy.should.have.callCount( 1 );
+				navigateSpy.should.have.been.calledWithExactly( 'communities', 'communitiesBrowse', {} );
 			} );
 
 		} );

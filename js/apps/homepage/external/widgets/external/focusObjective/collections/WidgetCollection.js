@@ -1,11 +1,12 @@
 define ( function (require ) {
 	'use strict';
 
-	var Backbone     = require( 'backbone' );
-	var WidgetModel  = require( 'apps/homepage/external/widgets/external/focusObjective/models/WidgetModel' );
-	var Remoting    = require( 'Remoting' );
-	var $           = require( 'jquery' );
-	var Session     = require( 'Session' );
+	var Backbone = require( 'backbone' );
+	var Remoting = require( 'Remoting' );
+	var Session  = require( 'Session' );
+	var App      = require( 'App' );
+
+	var WidgetModel = require( 'apps/homepage/external/widgets/external/focusObjective/models/WidgetModel' );
 
 	function widgetRequest ( personnelId ) {
 		return {
@@ -18,7 +19,7 @@ define ( function (require ) {
 	}
 
 	var Collection = Backbone.Collection.extend( {
-		'model'      : WidgetModel
+		'model' : WidgetModel
 	} );
 
 	return Backbone.Collection.extend( {
@@ -26,7 +27,7 @@ define ( function (require ) {
 
 			var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId() ) ] );
 
-			$.when( fetchingModels ).done( function ( models ) {
+			App.when( fetchingModels ).done( function ( models ) {
 
 				options.success( new Collection( models[ 0 ] ) );
 
@@ -34,6 +35,7 @@ define ( function (require ) {
 				// TODO: error handling
 			} );
 		}
+
 	} );
 
 } );

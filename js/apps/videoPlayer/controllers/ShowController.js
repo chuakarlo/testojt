@@ -1,12 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var $ = require( 'jquery' );
-	var _ = require( 'underscore' );
-
 	var App      = require( 'App' );
 	var Session  = require( 'Session' );
 	var Remoting = require( 'Remoting' );
+	var _        = require( 'underscore' );
 
 	var ContentModel           = require( 'videoPlayer/models/ContentModel' );
 	var QuestionsCollection    = require( 'videoPlayer/collections/QuestionsCollection' );
@@ -23,7 +21,7 @@ define( function ( require ) {
 
 				var getLicenses = App.request( 'user:licenses' );
 
-				$.when( getLicenses ).then( function ( licenses ) {
+				App.when( getLicenses ).then( function ( licenses ) {
 					var licenseType =  _.unique( licenses.pluck( 'LicenseContentTypeId' ) );
 
 					var videoContentRequests = {
@@ -94,7 +92,7 @@ define( function ( require ) {
 
 				var fetchingData = Remoting.fetch( requests );
 
-				$.when( fetchingData ).done( function ( response ) {
+				App.when( fetchingData ).done( function ( response ) {
 
 					var layout = new App.VideoPlayer.Views.PageLayout( { 'model' : videoModel } );
 					App.content.show( layout );

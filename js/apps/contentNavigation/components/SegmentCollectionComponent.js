@@ -9,6 +9,8 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var Remoting   = require( 'Remoting' );
 	var Session    = require( 'Session' );
+	var App        = require( 'App' );
+
 	var Utils      = require( '../controllers/UtilitiesController' );
 
 	var collections  = {
@@ -76,31 +78,30 @@ define( function ( require ) {
 			var self  = this;
 
 			this.view  = new views.SegmentsCollectionView( {
-				className       : defaults.className + ' ' + self.getClassName(),
-				itemViewOptions : {
-					events: {
-						'click label.cn-watch-later-icon' : function( clickEvent ) {
+				'collection'      : this.getCollection(),
+				'className'       : defaults.className + ' ' + self.getClassName(),
+				'itemViewOptions' : {
+					'events' : {
+						'click label.cn-watch-later-icon' : function ( clickEvent ) {
 							self._clickWatchLater.call( self, self._watchLaterCollection, clickEvent, this.el, this.model );
 						},
-						'click a': self._clickPlaySegment,
-						'click label.cn-info-icon' : function ( clickEvent ) {
+						'click a'                         : self._clickPlaySegment,
+						'click label.cn-info-icon'        : function ( clickEvent ) {
 							var el      = $( clickEvent.currentTarget );
-							var overlay = $( 'div[id=' + el.attr( 'id' )+']' );
+							var overlay = $( 'div[id=' + el.attr( 'id' ) + ']' );
 
 							if ( el.parent( '.cn-info' ).hasClass( 'open' ) ) {
 								overlay.fadeOut();
 								el.parent( '.cn-info' ).removeClass( 'open' )
-								  .next( '.cn-tool-tip' ).text( 'Segment Description' );
-							}
-							else {
+								.next( '.cn-tool-tip' ).text( 'Segment Description' );
+							} else {
 								overlay.fadeIn();
 								el.parent( '.cn-info' ).addClass( 'open' )
-								  .next( '.cn-tool-tip' ).text( 'Close' );
+								.next( '.cn-tool-tip' ).text( 'Close' );
 							}
 						}
 					}
-				},
-				collection: this.getCollection()
+				}
 			} );
 
 			this.view.on( 'before:item:added', function ( itemView ) {
@@ -153,7 +154,7 @@ define( function ( require ) {
 
 			this._fetchingWatchLaterSegments = Remoting.fetch( [ _watchLaterSegments ] );
 
-			$.when( this._fetchingWatchLaterSegments ).done( function ( models ) {
+			App.when( this._fetchingWatchLaterSegments ).done( function ( models ) {
 
 				this._setWatchLaterSegments( models[ 0 ] );
 
@@ -185,7 +186,7 @@ define( function ( require ) {
 			var _collection = this._getWatchLaterCollection();
 			var matchedId   = _collection.get( contentId );
 
-			if( matchedId !== undefined ){
+			if ( matchedId !== undefined ) {
 				return true;
 			}
 		},
@@ -211,26 +212,26 @@ define( function ( require ) {
 		_clickWatchLater : function ( watchLaterCollection, clickEvent, el, model ) {
 			var _clicked = null;
 
-			if( !( $( clickEvent.currentTarget ).hasClass( 'add' ) ) ) {
+			if ( !( $( clickEvent.currentTarget ).hasClass( 'add' ) ) ) {
 				_clicked = true;
 			}
 
 			var _method = ( _clicked ? 'create' : 'deleteByObj' );
 
 			var _queueParams = {
-				method : _method,
-				args   : {
+				'method'     : _method,
+				'path'       : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
+				'objectPath' : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmark',
+				'args'       : {
 					personnelId : Session.personnelId(),
 					contentId   : model.id,
 					created     : ' '
-				},
-				path       : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
-				objectPath : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmark'
+				}
 			};
 
 			this._queueParams = Remoting.fetch( [ _queueParams ] );
 
-			$.when( this._queueParams ).done( function () {
+			App.when( this._queueParams ).done( function () {
 
 				if ( _method === 'create' ) {
 					watchLaterCollection.add( model );

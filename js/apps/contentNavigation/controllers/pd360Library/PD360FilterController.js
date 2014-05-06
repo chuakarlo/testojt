@@ -2,15 +2,17 @@
 define( function ( require ) {
 	'use strict';
 
-	var _              = require( 'underscore' );
-	var Marionette     = require( 'marionette' );
-	var Remoting       = require( 'Remoting' );
-	var $              = require( 'jquery' );
+	require( 'jquery.pscrollbar' );
+
+	var _          = require( 'underscore' );
+	var Marionette = require( 'marionette' );
+	var Remoting   = require( 'Remoting' );
+	var $          = require( 'jquery' );
+	var App        = require( 'App' );
+
 	var ControllerBase = {
 		'Filter' : require( '../base/FilterBase' )
 	};
-
-	require( 'jquery.pscrollbar' );
 
 	var components  = {
 		'FilterComponent' : require( '../../components/FilterComponent' )
@@ -37,13 +39,13 @@ define( function ( require ) {
 				'path'   : 'com.schoolimprovement.pd360.dao.RespondService',
 				'method' : 'RespondGetContentFilters',
 				'args'   : {
-					'persId'        : $.cookie( 'PID' ) || null
+					'persId' : $.cookie( 'PID' ) || null
 				}
 			};
 
 			this.fetchingCategories = Remoting.fetch( [ fetchCategory ] );
 
-			$.when( this.fetchingCategories ).done( function ( models ) {
+			App.when( this.fetchingCategories ).done( function ( models ) {
 				this.createFilterComponents( models );
 			}.bind( this ) ).fail( function ( error ) {
 			}.bind( this ) );
@@ -53,9 +55,9 @@ define( function ( require ) {
 
 			var pd360Filters = [ ];
 
-			_.each( data, function( filter ){
+			_.each( data, function ( filter ) {
 				var filterList = {
-					'id' : filter,
+					'id'    : filter,
 					'title' : filter
 				};
 				pd360Filters.push( filterList );
@@ -73,7 +75,7 @@ define( function ( require ) {
 				'title'             : 'Grades',
 				'id'                : 'cn-grades-filter',
 				'splitColumn'       : true,
-				'multiSelect'		: true,
+				'multiSelect'       : true,
 				'itemViewContainer' : '.cn-content-filter',
 				'collection'        : gradesFilterCollection
 			} );
@@ -88,11 +90,11 @@ define( function ( require ) {
 			var subjectsFilterComponent = new components.FilterComponent( {
 				'vent'              : this.vent,
 				'title'             : 'Subjects',
-				'multiSelect'		: true,
+				'multiSelect'       : true,
 				'id'                : 'cn-subjects-filter',
 				'itemViewContainer' : '.cn-content-filter',
 				'collection'        : subjectsFilterCollection
-			 } );
+			} );
 
 			this.addFilterComponent( 'subjectsFilter', subjectsFilterComponent );
 
@@ -104,7 +106,7 @@ define( function ( require ) {
 			var topicsFilterComponent = new components.FilterComponent({
 				'vent'              : this.vent,
 				'title'             : 'Topics',
-				'multiSelect'		: true,
+				'multiSelect'       : true,
 				'id'                : 'cn-topics-filter',
 				'itemViewContainer' : '.cn-content-filter',
 				'collection'        : topicsFilterCollection

@@ -119,6 +119,10 @@ define( function ( require ) {
 						'msg' : 'School name is required'
 					}
 				} );
+			},
+
+			'isSinetAdmin' : function () {
+				return this.get( 'RoleTypeId' ) === 3;
 			}
 
 		} );

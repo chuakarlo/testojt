@@ -1,17 +1,18 @@
 // ## Manages f/e logic for the application
-define( function( require ) {
+define( function ( require ) {
 	'use strict';
 
 	require( 'jquery.bum-smack' );
 	require( 'jquery.spin' );
 
-	var $          = require( 'jquery' );
-	var _          = require( 'underscore' );
-	var Remoting   = require( 'Remoting' );
-	var Utils      = require( '../UtilitiesController' );
+	var $        = require( 'jquery' );
+	var _        = require( 'underscore' );
+	var Remoting = require( 'Remoting' );
+	var App      = require( 'App' );
 
+	var Utils    = require( '../UtilitiesController' );
 
-	 var ContentControllerMixin = {
+	var ContentControllerMixin = {
 
 		Collections : {
 			'SegmentCollection' : require( '../../collections/SegmentCollection' ),
@@ -33,12 +34,10 @@ define( function( require ) {
 		'vent'              : null,
 		'fetchingSegments'  : null,
 
-
 		'initializeCollection' : function ( options, license ) {
-			if( license === 'UUV' ) {
+			if ( license === 'UUV' ) {
 				this._initializeUUVCollection( options );
-			}
-			else {
+			} else {
 				this._initializeSegmentCollection( options );
 			}
 		},
@@ -84,9 +83,9 @@ define( function( require ) {
 
 			var fetchSegment = this._getSegmentParams( this.filterParam );
 
-	        this.fetchingSegments = Remoting.fetch( [ fetchSegment ] );
+			this.fetchingSegments = Remoting.fetch( [ fetchSegment ] );
 
-			$.when( this.fetchingSegments ).done( function ( models ) {
+			App.when( this.fetchingSegments ).done( function ( models ) {
 				var validModels = this._purgeSegmentModels( models[ 0 ] );
 
 				this._setFetchedSegments( validModels, options );
@@ -101,9 +100,9 @@ define( function( require ) {
 				return this._fetchSegmentFailed.call( this, error );
 
 			}.bind( this ) );
-	    },
+		},
 
-	    '_purgeSegmentModels' : function ( models ) {
+		'_purgeSegmentModels' : function ( models ) {
 			var purgedRawModels;
 
 			purgedRawModels = _.filter( models, function ( model ) {
@@ -111,17 +110,16 @@ define( function( require ) {
 				var returnValue = _.has( model, 'ContentId' );
 				if ( returnValue ) {
 					return returnValue;
-				}
-				else {
+				} else {
 					return _.has( model, 'UUVideoId' );
 				}
 
 			});
 
 			return purgedRawModels;
-	    },
+		},
 
-	    '_setFetchedSegments' : function ( models, options ) {
+		'_setFetchedSegments' : function ( models, options ) {
 			if ( models instanceof Array && ( options && options.reset ) ) {
 				this.collection.reset( models, { parse : true } );
 
@@ -154,7 +152,7 @@ define( function( require ) {
 
 			this.currentPage = 0;
 
-			this._fetchCollection( { reset: true } );
+			this._fetchCollection( { 'reset' : true } );
 
 		},
 
@@ -179,9 +177,9 @@ define( function( require ) {
 
 		'_fetchSegmentFailed'	: function ( error ) {
 			Utils.throwError( error, 'Fetch Segments' );
-	    },
+		},
 
-	    '_getStartingRow' : function () {
+		'_getStartingRow' : function () {
 			var startingRow = 0;
 
 			if ( this.currentPage ) {
@@ -190,56 +188,56 @@ define( function( require ) {
 			}
 
 			return startingRow;
-	    },
+		},
 
-	    'getCollection' : function () {
+		'getCollection' : function () {
 			return this.collection;
-	    },
+		},
 
-	    'getView' : function () {
-	        return this.view;
-	    },
+		'getView' : function () {
+			return this.view;
+		},
 
-	    'cancelPendingCollectionFetch' : function ( ) {
+		'cancelPendingCollectionFetch' : function ( ) {
 			if ( this.collectionRequest !== null ) {
 				this.collectionRequest.abort();
 			}
-	    },
+		},
 
-	    'fetchWhileScrolling' : function ( ) {
+		'fetchWhileScrolling' : function ( ) {
 			$( window ).smack( {
-				'threshold': '200px'
+				'threshold' : '200px'
 			} ).done( function () {
 				this._showLoadingIndicator();
 
 				this._fetchCollection( );
 
 			}.bind( this ) );
-	    },
+		},
 
-	    '_addSegmentsTopShadow' : function ( ) {
+		'_addSegmentsTopShadow' : function ( ) {
 			Utils.scrollIndicator.init( {
 				'scrollingEl' : $( window ),
 				'boxShadowEl' : $( '#cn-content-shadow' )
 			} );
 
-	    },
+		},
 
-	    '_showLoadingIndicator' : function (  ) {
+		'_showLoadingIndicator' : function (  ) {
 			$( '#loading-indicator' ).show();
 			$( '#loading-spinner' ).spin();
-	    },
+		},
 
-	    '_showNoMoreVideosIndicator' : function ( ) {
+		'_showNoMoreVideosIndicator' : function ( ) {
 			$( '#loading-stopper' ).show().delay( 2000 ).fadeOut( 'slow' );
-	    },
+		},
 
-	    '_hideLoadingIndicators' : function () {
+		'_hideLoadingIndicators' : function () {
 			$( '#loading-indicator' ).hide();
 			$( '#loading-stopper' ).hide();
-	    }
+		}
 
-	 };
+	};
 
-    return ContentControllerMixin;
+	return ContentControllerMixin;
 } );

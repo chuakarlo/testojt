@@ -11,6 +11,7 @@ define( function ( require ) {
 	require( 'apps/contentNavigation/ContentNavigation' );
 	require( 'apps/videoPlayer/VideoPlayer');
 	require( 'apps/homepage/Homepage' );
+	require( 'apps/admin/Admin' );
 
 	require( 'common/views' );
 

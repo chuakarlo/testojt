@@ -25,7 +25,7 @@ define( function ( require ) {
 				var requests     = [ leaveGroupRequest ];
 				var fetchingData = Remoting.fetch( requests );
 
-				$.when( fetchingData ).done( function ( results ) {
+				App.when( fetchingData ).done( function ( results ) {
 
 					App.navigate( 'groups', { 'trigger' : true } );
 
@@ -51,7 +51,7 @@ define( function ( require ) {
 				var requests     = [ joinGroupRequest ];
 				var fetchingData = Remoting.fetch( requests );
 
-				$.when( fetchingData ).done( function ( results ) {
+				App.when( fetchingData ).done( function ( results ) {
 
 					App.navigate( 'groups', { 'trigger' : true } );
 

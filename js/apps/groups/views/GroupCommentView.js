@@ -1,12 +1,14 @@
 define( function ( require ) {
 	'use strict';
 
-	var _                  = require( 'underscore' );
-	var Marionette         = require( 'marionette' );
-	var $                  = require( 'jquery' );
-	var Remoting           = require( 'Remoting' );
-	var Session            = require( 'Session' );
-	var Vent               = require( 'Vent' );
+	var _          = require( 'underscore' );
+	var Marionette = require( 'marionette' );
+	var Remoting   = require( 'Remoting' );
+	var Session    = require( 'Session' );
+	var $          = require( 'jquery' );
+	var Vent       = require( 'Vent' );
+	var App        = require( 'App' );
+
 	var template           = require( 'text!../templates/groupCommentView.html' );
 	var usersTemplate      = require( 'text!../templates/usersGroupCommentView.html' );
 	var MiniPersonnelModel = require('../../common/entities/MiniPersonnel');
@@ -124,7 +126,7 @@ define( function ( require ) {
 			var requests     = [ request ];
 			var fetchingData = Remoting.fetch( requests );
 
-			$.when( fetchingData ).done( function ( results ) {
+			App.when( fetchingData ).done( function ( results ) {
 
 				Vent.trigger( 'group:removeReply', this.model );
 

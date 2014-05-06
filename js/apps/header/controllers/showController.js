@@ -1,7 +1,6 @@
 define( function ( require ) {
 	'use strict';
 
-	var $    = require( 'jquery' );
 	var App  = require( 'App' );
 	var Menu = require( 'header/views/NavLayout' );
 
@@ -32,7 +31,7 @@ define( function ( require ) {
 					return init( generateLink() );
 				}
 
-				$.when( App.request( 'user:personnel' ) ).done( function ( personnel ) {
+				App.when( App.request( 'user:personnel' ) ).done( function ( personnel ) {
 					var email       = 'email='       + personnel.attributes.EmailAddress;
 					var fname       = 'fname='       + personnel.attributes.FirstName;
 					var lname       = 'lname='       + personnel.attributes.LastName;

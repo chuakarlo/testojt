@@ -1,12 +1,13 @@
 define( function ( require ) {
 	'use strict';
 
-	var _                 = require( 'underscore' );
-	var $                 = require( 'jquery' );
-	var Marionette        = require( 'marionette' );
-	var Vent              = require( 'Vent' );
-	var Remoting          = require( 'Remoting' );
-	var Session           = require( 'Session' );
+	var _          = require( 'underscore' );
+	var Marionette = require( 'marionette' );
+	var Remoting   = require( 'Remoting' );
+	var Session    = require( 'Session' );
+	var Vent       = require( 'Vent' );
+	var App        = require( 'App' );
+
 	var GroupCommentModel = require( '../models/CommentModel' );
 	var template          = require( 'text!../templates/groupCommentCreateView.html' );
 	var path              = 'com.schoolimprovement.pd360.dao.groups.GroupMessagesGateway';
@@ -56,7 +57,7 @@ define( function ( require ) {
 			var requests     = [ request ];
 			var fetchingData = Remoting.fetch( requests );
 
-			$.when( fetchingData ).done( function ( results ) {
+			App.when( fetchingData ).done( function ( results ) {
 
 				this.clearForm();
 

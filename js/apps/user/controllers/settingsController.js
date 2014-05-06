@@ -1,10 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	var App               = require( 'App' );
-	var $                 = require( 'jquery' );
-	var Backbone          = require( 'backbone' );
-	var Marionette        = require( 'marionette' );
+	var App        = require( 'App' );
+	var Backbone   = require( 'backbone' );
+	var Marionette = require( 'marionette' );
 
 	var NavCollectionView = require( 'user/views/settings/nav/NavCollectionView' );
 	var ProfileView       = require( 'user/views/settings/profile/ProfileView' );
@@ -17,9 +16,9 @@ define( function ( require ) {
 		// layout closes
 		Mod.BaseController = Marionette.Controller.extend( {
 
-			'initialize' : function( options ) {
+			'initialize' : function ( options ) {
 				this.layout = options.layout;
-				this.listenTo( this.layout, 'close', function() {
+				this.listenTo( this.layout, 'close', function () {
 					this.close();
 				} );
 			}
@@ -89,7 +88,7 @@ define( function ( require ) {
 					App.content.show( new App.Common.NotFoundView() );
 
 				}
-				
+
 			},
 
 			'showProfile' : function () {
@@ -102,7 +101,7 @@ define( function ( require ) {
 				var gradesRequest    = App.request( 'user:grade-levels' );
 				var dates            = App.request( 'user:career-dates' );
 
-				$.when( profileRequest, personnelRequest, gradesRequest, rolesRequest, subjectsRequest )
+				App.when( profileRequest, personnelRequest, gradesRequest, rolesRequest, subjectsRequest )
 				.done( function ( profile, personnel, grades, roles, subjects ) {
 
 					var profileView = new ProfileView( {
@@ -115,7 +114,7 @@ define( function ( require ) {
 					} );
 
 					this.layout.content.show( profileView );
-					
+
 				}.bind( this ) ).fail( this.showProfileError.bind( this ) );
 
 			},
@@ -163,4 +162,3 @@ define( function ( require ) {
 	} );
 
 } );
-

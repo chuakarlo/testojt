@@ -7,6 +7,7 @@ define( function ( require ) {
 	var $          = require( 'jquery' );
 	var Remoting   = require( 'Remoting' );
 	var Session    = require( 'Session' );
+	var App        = require( 'App' );
 
 	function clientProfileParams ( personnelId ) {
 		return [
@@ -50,7 +51,7 @@ define( function ( require ) {
 			var fetchingModels = Remoting.fetch( clientProfileParams( this.model.get( 'LICENSEID' ) ) );
 			var self = this;
 
-			$.when( fetchingModels ).done( function ( models ) {
+			App.when( fetchingModels ).done( function ( models ) {
 
 				$( '#data-' + self.model.get( 'LICENSEID' ) ).html(models[ 0 ][ 0 ].QuestionTitle);
 

@@ -1,16 +1,16 @@
 define( function ( require ) {
 	'use strict';
 
-	var $        = require( 'jquery' );
 	var Remoting = require( 'Remoting' );
 	var Session  = require( 'Session' );
+	var App      = require( 'App' );
 
 	var WidgetPreviewItemView = require( 'apps/homepage/external/widgets/views/WidgetPreviewItemView' );
 
 	var iconBtnActions = [ 'active', 'inactive' ];
 	var btnActions     = [ 'save', 'remove' ];
 
-	function fetchingModels ( personnelId, widgetIds ) {
+	var fetchingModels = function ( personnelId, widgetIds ) {
 		return {
 			'path'   : 'com.schoolimprovement.pd360.dao.core.WidgetGateway',
 			'method' : 'addWidgetsByPersonnelId',
@@ -19,21 +19,21 @@ define( function ( require ) {
 				'widgetIds'   : widgetIds
 			}
 		};
-	}
+	};
 
-	function doUpdateUserWidgets ( personnelId, widgetIds ) {
-		$.when( Remoting.fetch( fetchingModels( personnelId, widgetIds ) ) ).done( function ( ) {
+	var doUpdateUserWidgets = function ( personnelId, widgetIds ) {
+		App.when( Remoting.fetch( fetchingModels( personnelId, widgetIds ) ) ).done( function ( ) {
 			//do something
 		} );
-	}
+	};
 
-	function pushWidgetIds ( userWidgets ) {
+	var pushWidgetIds = function ( userWidgets ) {
 		var widgetIds = [ ];
 		for ( var index in userWidgets ) {
 			widgetIds.push( userWidgets[ index ].get( 'WidgetId' ) );
 		}
 		return widgetIds;
-	}
+	};
 
 	return {
 
@@ -51,7 +51,7 @@ define( function ( require ) {
 
 		'newPreviewItem' : function ( view, e ) {
 			var widgetModel = view.getModelByClickEvent( e );
-			return  new WidgetPreviewItemView( {
+			return new WidgetPreviewItemView( {
 				'model'                : widgetModel,
 				'userWidgetCollection' : view.options.userWidgetCollection
 			} );
@@ -65,7 +65,7 @@ define( function ( require ) {
 		},
 
 		'doActivateWidgetCheck' : {
-			true : function ( view, e ) {
+			true  : function ( view, e ) {
 				var widgetModel = view.getModelByClickEvent( e );
 				view.addToWidgetCollection( widgetModel );
 				view.changeButtonAttr( e, btnActions[ 0 ], btnActions[ 1 ] );

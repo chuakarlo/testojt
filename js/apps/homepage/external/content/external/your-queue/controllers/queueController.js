@@ -3,7 +3,7 @@ define( function ( require ) {
 
 	var Session  = require( 'Session' );
 	var Remoting = require( 'Remoting' );
-	var $        = require( 'jquery' );
+	var App      = require( 'App' );
 
 	function queueRequest ( ContentId, method ) {
 		return {
@@ -20,13 +20,17 @@ define( function ( require ) {
 
 	return {
 
-		'doFetch' : function ( model, options, method ){
+		'doFetch' : function ( model, options, method ) {
 			var fetchingModels = Remoting.fetch( [ queueRequest( model.id, method) ] );
-			$.when( fetchingModels ).done( function ( models ) {
+
+			App.when( fetchingModels ).done( function ( models ) {
 				options.success();
 			} ).fail( function ( error ) {
 				options.error();
 			} );
+
 		}
+
 	};
+
 } );

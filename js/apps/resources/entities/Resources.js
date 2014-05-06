@@ -2,10 +2,9 @@ define( function ( require ) {
 	'use strict';
 
 	var Backbone = require( 'backbone' );
-	var App      = require( 'App' );
 	var Remoting = require( 'Remoting' );
 	var Session  = require( 'Session' );
-	var $        = require( 'jquery' );
+	var App      = require( 'App' );
 
 	App.module( 'Entities', function ( Entities ) {
 
@@ -78,21 +77,21 @@ define( function ( require ) {
 
 				if ( Entities.resources === undefined ) {
 
-					var defer = $.Deferred();
+					var defer = App.Deferred();
 
 					initializeResources();
 
-					var adminRequest    = App.request( 'user:roles' );
+					var adminRequest    = App.request( 'user:isAdmin' );
 					var thereNowRequest = App.request( 'user:isThereNow' );
 
-					$.when( adminRequest, thereNowRequest ).done( function ( isAdmin, isThereNow ) {
+					App.when( adminRequest, thereNowRequest ).done( function ( isAdmin, isThereNow ) {
 
 						if ( isAdmin === true ) {
 
 							var adminModel = new Entities.Resources( {
-								'name' : '{Admin}',
+								'name' : 'Admin',
 								'icon' : 'fa-wrench',
-								'url'  : '',
+								'url'  : '#admin',
 								'id'   : 'link-more-admin'
 							} );
 
@@ -114,7 +113,7 @@ define( function ( require ) {
 							var requests     = [ thereNowRequest ];
 							var fetchingData = Remoting.fetch( requests );
 
-							$.when( fetchingData ).done( function ( results ) {
+							App.when( fetchingData ).done( function ( results ) {
 
 								var thereNowResult = results [ 0 ];
 								var thereNowToken  = thereNowResult.url.replace( '{token}', thereNowResult.Token );

@@ -84,7 +84,7 @@ define( function ( require ) {
 
 					var doSearch = App.request( 'videoPlayer:searchPeopleAndGroups', filter );
 
-					$.when( doSearch ).done( function ( results ) {
+					App.when( doSearch ).done( function ( results ) {
 						_.each( _.keys( results[ 0 ] ), function ( key ) {
 							if ( !_.isEmpty( results[ 0 ][ key ] ) ) {
 								treeData.push( {

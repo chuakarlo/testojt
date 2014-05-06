@@ -4,145 +4,177 @@ define( function ( require ) {
 	var Backbone = require( 'backbone' );
 	var Session  = require( 'Session' );
 	var App      = require( 'App' );
-	var $        = require( 'jquery' );
 	var _        = require( 'underscore' );
 
-	App.module( 'Entities', function ( Entities ) {
+	var Author = Backbone.CFModel.extend( {
 
-		Entities.Privilege = Backbone.CFModel.extend( {
-
-			'getReadOptions' : function () {
-				return {
-					'method' : 'getUserPrivilegeTypes',
-					'args' : {
-						'persId' : Session.personnelId()
-					}
-				};
-			},
-
-			'path' : 'AdminService'
-
-		} );
-
-		Entities.PrivilegeCollection = Backbone.CFCollection.extend( {
-
-			'getReadOptions' : function () {
-				return {
-					'method' : 'getUserPrivilegeTypes',
-					'args' : {
-						'persId' : Session.personnelId()
-					}
-				};
-			},
-
-			'path' : 'AdminService',
-
-			'model' : Entities.Privilege
-
-		} );
-
-		// the list of users privileges
-		var privileges;
-		var fetching = false;
-
-		var API = {
-
-			'initializePrivileges' : function ( defer ) {
-
-				// if currently fetching privileges
-				if ( fetching ) {
-					return defer.promise();
+		'getReadOptions' : function () {
+			return {
+				'method' : 'getByPersonnelId',
+				'args'   : {
+					'persId' : Session.personnelId()
 				}
+			};
+		},
 
-				fetching = true;
+		'path' : 'livebook.AuthorGateway'
 
-				privileges = new Entities.Privilege();
+	} );
 
-				privileges.fetch( {
+	var Privilege = Backbone.CFModel.extend( {
 
-					'success' : function () {
-						fetching = false;
-						defer.resolve( privileges );
-					},
-
-					'error' : function () {
-						fetching   = false;
-						privileges = null;
-						defer.reject( new Error( 'Error fetching privileges' ) );
-					}
-				} );
-
-			},
-
-			'getPrivileges' : function () {
-				var defer = $.Deferred();
-
-				// if privileges were already fetched, return stored privileges
-				if ( privileges ) {
-					return defer.resolve( privileges );
+		'getReadOptions' : function () {
+			return {
+				'method' : 'getUserPrivilegeTypes',
+				'args'   : {
+					'persId' : Session.personnelId()
 				}
+			};
+		},
 
-				// privileges haven't been set, fetch them
-				this.initializePrivileges( defer );
+		'path' : 'AdminService',
 
-				return defer.promise();
-			},
+		'isLibraryAdmin' : function () {
+			return this.get( '0' ) > 0;
+		},
 
-			'isUserAdmin' : function () {
-				var defer = $.Deferred();
+		'isCourseAdmin' : function () {
+			return this.get( '1' ) > 0;
+		},
 
-				var privilegesResponse = this.getPrivileges();
+		'isCommunityAdmin' : function () {
+			return this.get( '2' ) > 0;
+		},
 
-				$.when( privilegesResponse ).done( function ( response ) {
+		'isGroupAdmin' : function () {
+			return this.get( '3' ) > 0;
+		},
 
-					$.each( response.attributes, function ( index, value ) {
-						if ( value > 0 ) {
-							defer.resolve( true );
-							return false;
-						}
-					});
+		'isCatalogAdmin' : function () {
+			return this.get( '4' ) > 0;
+		},
 
-					defer.resolve( false );
-				} );
+		'isAdmin' : function () {
+			return this.isLibraryAdmin() || this.isCourseAdmin() || this.isCommunityAdmin() || this.isGroupAdmin() || this.isCatalogAdmin();
+		}
 
-				return defer.promise();
-			},
+	} );
 
-			// Check if the user has thereNow license
-			'isThereNow' : function () {
+	// the list of users privileges
+	var privileges;
+	var fetchingPrivileges = App.Deferred();
 
-				var defer = $.Deferred();
+	var API = {
 
-				var licenses = App.request( 'user:licenses' );
+		'initializePrivileges' : function () {
+			var privilege = new Privilege();
 
-				$.when( licenses ).done( function( licenses ) {
+			privilege.fetch( {
 
-					var thereNowLicense = _.find( licenses.models, function ( license ) {
-						return license.attributes.LicenseContentTypeId === 138;
-					} );
+				'success' : function () {
+					privileges = privilege;
+					fetchingPrivileges.resolve( privileges );
+				},
 
-					defer.resolve( thereNowLicense );
+				'error' : function () {
+					privileges = null;
+					fetchingPrivileges.reject( new Error( 'Error fetching privileges' ) );
+				}
+			} );
 
-				} );
+		},
 
-				return defer.promise();
+		'getPrivileges' : function () {
+			var state = fetchingPrivileges.state();
 
+			if ( state === 'resolved' || state === 'rejected' ) {
+				fetchingPrivileges = App.Deferred();
 			}
 
-		};
+			// if privileges were already fetched, return stored privileges
+			if ( privileges ) {
+				return fetchingPrivileges.resolve( privileges );
+			}
 
-		App.reqres.setHandler( 'user:privileges', function () {
-			return API.getPrivileges();
-		} );
+			// privileges haven't been set, fetch them
+			this.initializePrivileges();
 
-		App.reqres.setHandler( 'user:isAdmin', function () {
-			return API.isUserAdmin();
-		} );
+			return fetchingPrivileges.promise();
+		},
 
-		App.reqres.setHandler( 'user:isThereNow', function () {
-			return API.isThereNow();
-		} );
+		'isUserAdmin' : function () {
+			var defer = App.Deferred();
 
+			var privilegesResponse = this.getPrivileges();
+			var personnelRequest   = App.request( 'user:personnel' );
+			var lumibookRequest    = App.request( 'user:isAuthor' );
+
+			App.when( privilegesResponse, personnelRequest, lumibookRequest ).done( function ( privileges, personnel, isAuthor ) {
+				var hasPrivileges = privileges.isAdmin();
+				var isSinetAdmin  = personnel.isSinetAdmin();
+
+				var isAdmin = hasPrivileges || isSinetAdmin || isAuthor;
+
+				defer.resolve( isAdmin );
+			} );
+
+			return defer.promise();
+		},
+
+		// Check if the user has thereNow license
+		'isThereNow' : function () {
+			var defer = App.Deferred();
+
+			var licenses = App.request( 'user:licenses' );
+
+			App.when( licenses ).done( function ( licenses ) {
+
+				var thereNowLicense = _.find( licenses.models, function ( license ) {
+					return license.get( 'LicenseContentTypeId' ) === 138;
+				} );
+
+				defer.resolve( thereNowLicense );
+
+			} );
+
+			return defer.promise();
+		},
+
+		'isAuthor' : function () {
+			var defer = App.Deferred();
+
+			var author = new Author();
+
+			author.fetch( {
+
+				'success' : function ( model, lumibooks ) {
+					defer.resolve( lumibooks.length > 0 );
+				},
+
+				'error' : function () {
+					defer.reject( 'An error occurred while fetching authored LumiBooks' );
+				}
+			} );
+
+			return defer.promise();
+		}
+
+	};
+
+	App.reqres.setHandler( 'user:privileges', function () {
+		return API.getPrivileges();
+	} );
+
+	App.reqres.setHandler( 'user:isAdmin', function () {
+		return API.isUserAdmin();
+	} );
+
+	App.reqres.setHandler( 'user:isThereNow', function () {
+		return API.isThereNow();
+	} );
+
+	App.reqres.setHandler( 'user:isAuthor', function () {
+		return API.isAuthor();
 	} );
 
 } );
