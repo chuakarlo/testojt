@@ -1,4 +1,3 @@
-//code review
 define( function ( require ) {
 	'use strict';
 
@@ -8,10 +7,6 @@ define( function ( require ) {
 	return Marionette.CollectionView.extend( {
 		'tagName'   : 'ul',
 		'itemView'  : UserWidgetItemView,
-		'className' : 'row',
-		'onRender' : function () {
-			this.$el.css('width', '1200px');
-		}
+		'className' : 'row'
 	} );
-
 } );

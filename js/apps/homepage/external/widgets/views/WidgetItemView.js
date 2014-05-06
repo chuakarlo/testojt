@@ -69,5 +69,4 @@ define( function ( require ) {
 			return doGetWidgetIcon( this );
 		}
 	} );
-
 } );
