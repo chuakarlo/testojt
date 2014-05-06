@@ -1,9 +1,11 @@
-<a class="groupDetails" href="selected">
-<div class="profile group" style='background-image:url("http://builtbyhq.com/projects/school/CORE/v1/img/group-bg-4.png");'>
-	<img style='background:url("http://resources.pd360.com/PD360/uploads/avatars/group/<%- Avatar %>"); background-size: contain; background-color: white;' />
-</div>
-</a><div class="details"><a class="groupDetails" href="selected">
-	<h4><%- getAbbreviation( LicenseName, 50 ) %></h4>
-	<p><%- NumberOfMembers %> Members</p>
-	</a><a class="groupDetails" href="selected"><button class="btn btn-primary">View</button></a>
-</div>
+<a class="js-group-details" href="#groups/<%- LicenseId %>">
+	<div class="group-banner-container">
+		<img class="group-banner" src="<%- getBrandingPath( BrandingImage ) %>">
+	</div>
+	<img class="group-avatar" src="<%- getAvatarPath( Avatar ) %>">
+	<div class="details">
+		<h4><%- getAbbreviation( LicenseName, 50 ) %></h4>
+		<p><%- NumberOfMembers %> Members</p>
+		<a class="js-group-accept btn btn-primary" href="#groups/<%- LicenseId %>">View</a>
+	</div>
+</a>

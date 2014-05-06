@@ -73,7 +73,7 @@ define( function ( require ) {
 				layout.should.have.been.calledWithNew;
 
 				// App should have shown layout
-				showStub.should.have.callCount( 1 );
+				showStub.should.have.callCount( 2 );
 
 				// regions should have called show
 				showSpy.should.have.callCount( 7 );
@@ -266,17 +266,16 @@ define( function ( require ) {
 				} ) );
 
 				// app.content.show should have been called
-				appStub.should.have.callCount( 1 );
+				appStub.should.have.callCount( 2 );
 
 				// should have been called with a list view
-				appStub.should.have.been.calledWith( sinon.match( function ( view ) {
+				appStub.secondCall.should.have.been.calledWith( sinon.match( function ( view ) {
 					view.should.be.an.instanceof( App.Groups.Views.GroupListLayout );
 					return true;
 				} ) );
 			} );
 
 		} );
-
 
 	} );
 

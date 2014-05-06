@@ -14,6 +14,10 @@ define( function ( require ) {
 		List.Controller = {
 
 			'listGroups' : function () {
+
+				// show a loading view while data is fetching
+				App.content.show( new App.Common.LoadingView() );
+
 				// get email address of user
 				var userProfileRequest = {
 					'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelGateway',
@@ -22,6 +26,7 @@ define( function ( require ) {
 						'id' : $.cookie( 'PID' ) || null
 					}
 				};
+
 				// get general groups info
 				var groupsRequest = {
 					'path'   : 'com.schoolimprovement.pd360.dao.GroupService',

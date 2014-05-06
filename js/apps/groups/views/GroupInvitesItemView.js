@@ -12,9 +12,9 @@ define( function ( require ) {
 		'tagName'   : 'div',
 		'className' : 'col-xs-12 col-sm-6 col-md-4 col-lg-3',
 		'events'    : {
-			'click a.groupDetails' : 'groupClicked',
-			'click a.group-ignore' : 'ignoreGroupClicked',
-			'click a.group-accept' : 'acceptGroupClicked'
+			'click a.js-group-details' : 'groupClicked',
+			'click a.js-group-ignore'  : 'ignoreGroupClicked',
+			'click a.js-group-accept'  : 'acceptGroupClicked'
 		},
 
 		'groupClicked' : function ( e ) {
@@ -40,7 +40,9 @@ define( function ( require ) {
 
 		'templateHelpers' : {
 
-			'getAbbreviation' : require( 'common/helpers/getAbbreviation' )
+			'getAbbreviation' : require( 'common/helpers/getAbbreviation' ),
+			'getAvatarPath'   : require( '../helpers/getAvatarPath' ),
+			'getBrandingPath' : require( '../helpers/getBrandingPath' )
 
 		}
 

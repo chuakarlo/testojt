@@ -18,6 +18,9 @@ define( function ( require ) {
 
 			'showGroup' : function ( groupId ) {
 
+				// show a loading view while data is fetching
+				App.content.show( new App.Common.LoadingView() );
+
 				// TODO: use sync instead of remoting
 
 				// Get general group info

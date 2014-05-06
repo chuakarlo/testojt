@@ -7,9 +7,15 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 
-		'template'          : _.template( template ),
-		'class'             : 'header',
-		'tagName'           : 'div'
+		'template' : _.template( template ),
+		'class'    : 'header',
+		'tagName'  : 'div',
+
+		'templateHelpers' : {
+
+			'getAvatarPath' : require( '../helpers/getAvatarPath' )
+
+		}
 
 	} );
 
