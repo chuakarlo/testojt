@@ -9,5 +9,4 @@ define( function ( require ) {
 		'model' : ResourceModel
 
 	} );
-
 } );

@@ -77,10 +77,10 @@ define( function ( require ) {
 
 				// generate timestamp
 				var getTimeStampRequest = {
-				'path'   : 'com.schoolimprovement.pd360.dao.AdminService',
-				'method' : 'akamaiTokenizer',
-				'args'   : {
-					'url' : url
+					'path'   : 'com.schoolimprovement.pd360.dao.AdminService',
+					'method' : 'akamaiTokenizer',
+					'args'   : {
+						'url' : url
 					}
 				};
 
@@ -95,11 +95,9 @@ define( function ( require ) {
 
 			}.bind( this ) ).fail( function ( error ) {
 				// TODO: error handling
-
 			}.bind( this ) );
 
 		}
 	} );
 
 } );
-

@@ -7,9 +7,8 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 
-		'template'        : _.template( template )
+		'template' : _.template( template )
 
 	} );
 
 } );
-
