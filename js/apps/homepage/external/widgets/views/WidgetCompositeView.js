@@ -2,12 +2,16 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette = require( 'marionette' );
+	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
 
 	var WidgetCompositeView          = require( 'apps/homepage/external/widgets/views/WidgetItemView' );
 	var template                     = require( 'text!apps/homepage/external/widgets/templates/widgetCompositeView.html' );
 	var utils                        = require( 'apps/homepage/external/widgets/controllers/widgetCompositeController' );
 	var utilsUpperFirstLetter        = require( 'apps/homepage/utils/upperFirstLetter' );
+
+	var panelStatuses     = [ 'opened', 'closed' ];
+	var widgetSettingsBtn = $( '#widget-settings' );
 
 	return Marionette.CompositeView.extend( {
 		'events' : {
@@ -16,10 +20,10 @@ define( function ( require ) {
 			'click #widget-settings-header li#active'   : 'showActiveWidgets',
 			'click #widget-settings-header li#inactive' : 'showInactiveWidgets',
 			'click .actions .save'                      : 'activateWidget',
-			'click .actions .save-and-close'            : 'activateWidget',
+			'click .actions .save-and-close'            : 'activateWidgetAndClose',
 			'click .widget-icon-btn.inactive'           : 'activateWidget',
 			'click .actions .remove'                    : 'deactivateWidget',
-			'click .actions .remove-and-close'          : 'deactivateWidget',
+			'click .actions .remove-and-close'          : 'deactivateWidgetAndClose',
 			'click .widget-icon-btn.active'             : 'deactivateWidget'
 		},
 		'id'              : 'widgets-settings-panel',
@@ -66,13 +70,26 @@ define( function ( require ) {
 		},
 
 		'activateWidget' : function ( e ) {
-			e.stopPropagation();
+			utils.doActivateWidget( this, e );
+		},
+
+		'activateWidgetAndClose' : function ( e ) {
 			utils.doActivateWidget( this, e );
 		},
 
 		'deactivateWidget' : function ( e ) {
-			this.hidePreviewErrorMsg( e );
 			utils.doDeactivateWidget( this, e );
+		},
+
+		'deactivateWidgetAndClose' : function ( e ) {
+			utils.doDeactivateWidget( this, e );
+			this.closeWidgetPanel();
+		},
+
+		'closeWidgetPanel' : function () {
+			this.close();
+			widgetSettingsBtn.removeClass( panelStatuses[ 0 ] );
+			widgetSettingsBtn.addClass( panelStatuses[ 1 ] );
 		},
 
 		'addToWidgetCollection' : function ( model ) {
@@ -83,6 +100,11 @@ define( function ( require ) {
 			utils.doRemoveToWidgetCollection( this, model );
 		},
 
+		'onTab' : function ( tab ) {
+			var currentTabId = this.$el.find( 'li.selected' ).attr( 'id' );
+			return currentTabId === tab ? true : false;
+		},
+
 		'hidePreviewErrorMsg' : function ( e ) {
 			utils.doHidePreviewErrorMsg( this, e );
 		},
@@ -91,8 +113,8 @@ define( function ( require ) {
 			utils.doDisplayLimitError( this, e );
 		},
 
-		'changeButtonAttr' : function ( e, from, to ) {
-			utils.doChangeButtonAttr( this, e, from, to );
+		'changeButtonAttr' : function ( from, to ) {
+			utils.doChangeButtonAttr( this, from, to );
 		},
 
 		'upperFirstLetter' : function ( text ) {

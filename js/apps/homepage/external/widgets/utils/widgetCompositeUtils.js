@@ -76,15 +76,21 @@ define( function ( require ) {
 			'true'  : function ( view, e ) {
 				var widgetModel      = view.getModelByClickEvent( e );
 				var widgetCurrentTab = view.$el.find( 'li.selected' ).attr( 'id' );
+				var hasRemoveCloseClass   = $( e.currentTarget ).hasClass( 'save-and-close' );
 
 				view.hidePreviewErrorMsg( e );
 				view.addToWidgetCollection( widgetModel );
-				view.changeButtonAttr( e, btnActions[ 0 ], btnActions[ 1 ] );
-				view.changeWidgetIconBtnAttr( widgetModel, iconBtnActions[ 1 ], iconBtnActions[ 0 ] );
-				view.render();
+				view.$el.find( '#widget-settings-header li#' + widgetCurrentTab ).trigger( 'click' );
 
 				view.changeWidgetSelectedTab( widgetCurrentTab );
-				view.showWidgetPreview( e );
+				if ( view.onTab( 'all' ) ) {
+					view.changeButtonAttr( e, btnActions[ 0 ], btnActions[ 1 ] );
+					view.changeWidgetIconBtnAttr( widgetModel, iconBtnActions[ 1 ], iconBtnActions[ 0 ] );
+					view.showWidgetPreview( e );
+				}
+				if ( hasRemoveCloseClass ) {
+					view.closeWidgetPanel();
+				}
 			},
 			'false' : function ( view, e ) {
 				view.showWidgetPreview( e );

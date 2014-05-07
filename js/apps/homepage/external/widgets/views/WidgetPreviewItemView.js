@@ -32,7 +32,11 @@ define( function ( require ) {
 		},
 
 		'getWidgetAction' : function () {
-			return this.options.userWidgetCollection.get( this.model.get( 'WidgetId' ) ) ? 'remove' : 'save';
+			var widgetAction = '';
+			if ( this.model ) {
+				widgetAction = this.options.userWidgetCollection.get( this.model.get( 'WidgetId' ) ) ? 'remove' : 'save';
+			}
+			return widgetAction;
 		}
 	} );
 

@@ -45,7 +45,7 @@ define( function ( require ) {
 		},
 
 		'doGetModelByClickEvent' : function ( view, e ) {
-			var widgetId    = $( e.currentTarget ).attr( 'data-id' );
+			var widgetId = $( e.currentTarget ).attr( 'data-id' );
 			return view.collection.get( widgetId );
 		},
 
@@ -55,16 +55,20 @@ define( function ( require ) {
 		},
 
 		'doDeactivateWidget' : function ( view, e ) {
-			var widgetModel = view.getModelByClickEvent( e );
+			var widgetModel      = view.getModelByClickEvent( e );
+			var widgetModelId    = widgetModel.id;
 			var widgetCurrentTab = view.$el.find( 'li.selected' ).attr( 'id' );
 
 			view.removeToWidgetCollection( widgetModel );
-			view.changeButtonAttr( e, btnActions[ 1 ], btnActions[ 0 ] );
-			view.changeWidgetIconBtnAttr( widgetModel, iconBtnActions[ 0 ], iconBtnActions[ 1 ] );
-			view.render();
+			view.$el.find( '#widget-settings-header li#' + widgetCurrentTab ).trigger( 'click' );
 
 			view.changeWidgetSelectedTab( widgetCurrentTab );
-			view.showWidgetPreview( e );
+			if ( view.onTab( 'all' ) ) {
+				view.changeButtonAttr( btnActions[ 1 ], btnActions[ 0 ] );
+				view.changeWidgetIconBtnAttr( widgetModelId, iconBtnActions[ 0 ], iconBtnActions[ 1 ] );
+				view.showWidgetPreview( e );
+				view.hidePreviewErrorMsg( e );
+			}
 		},
 
 		'doAddToWidgetCollection' : function ( view, model ) {
@@ -84,15 +88,15 @@ define( function ( require ) {
 			view.widgetPreviewItemView.ui.widgetMessage.html( messages.widgetLimitError ).show();
 		},
 
-		'doChangeButtonAttr' : function ( view, e , from, to ) {
+		'doChangeButtonAttr' : function ( view, from, to ) {
 			var previewBtnUI = view.widgetPreviewItemView.ui;
 
 			utils.changeButtonAttr( view, previewBtnUI.actionBtn, from, to, [ '', '' ] );
 			utils.changeButtonAttr( view, previewBtnUI.actionCloseBtn, from + '-and-close', to, [ '-and-close', ' & Close' ] );
 		},
 
-		'doChangeWidgetIconBtnAttr' : function ( view, model, from, to ) {
-			view.$el.find( '.widget-icon-btn[ data-id="' + model.get( 'WidgetId' ) + '" ]' )
+		'doChangeWidgetIconBtnAttr' : function ( view, widgetModelId, from, to ) {
+			view.$el.find( '.widget-icon-btn[ data-id="' + widgetModelId + '" ]' )
 			.removeClass( iconBtnWithGlyphs[ from ] )
 			.addClass( iconBtnWithGlyphs[ to ] );
 		},
