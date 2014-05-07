@@ -23,7 +23,7 @@ define ( function ( require ) {
 		'model' : WidgetModel,
 
 		'comparator' : function ( model ) {
-			var date = new Date( model.get( 'EXPIREDATE' ) ).getTime();
+			var date = new Date( model.get( 'STARTDATE' ) ).getTime();
 			return -date;
 		}
 
