@@ -22,16 +22,7 @@
 					'previewPath'  : previewUrl + 'transcripts/' + model.TranscriptFileName,
 					'downloadPath' : '/transcripts/' + model.TranscriptFileName,
 					'thumbnail'    : '/img/transcribe.jpg'
-				}, {
-					'previewPath'  : 'test',
-					'downloadPath' : '/transcripts/',
-					'thumbnail'    : '/img/transcribe.jpg'
-				}, {
-					'previewPath'  : 'test',
-					'downloadPath' : '/transcripts/',
-					'thumbnail'    : '/img/transcribe.jpg'
 				}
-
 			];
 			return resources;
 		},

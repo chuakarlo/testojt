@@ -1,15 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var $ = require( 'jquery' );
 	var _ = require( 'underscore' );
-
-	require('tab-collapse');
 
 	var App      = require( 'App' );
 	var Session  = require( 'Session' );
 	var Remoting = require( 'Remoting' );
-	var _        = require( 'underscore' );
 
 	var ContentModel           = require( 'videoPlayer/models/ContentModel' );
 	var QuestionsCollection    = require( 'videoPlayer/collections/QuestionsCollection' );
@@ -134,10 +130,6 @@ define( function ( require ) {
 					var videoButtonsView = new App.VideoPlayer.Views.VideoButtonsView( { 'model' : videoModel } );
 					layout.videoButtonsRegion.show( videoButtonsView );
 
-					// show video tabs view
-					var videoTabsView = new App.VideoPlayer.Views.VideoTabsView();
-					layout.videoTabsRegion.show( videoTabsView );
-
 					// show video segments
 					var segmentsView = new App.VideoPlayer.Views.VideoCollectionView( {
 						'collection' : new RelatedVideoCollection( segments )
@@ -156,8 +148,11 @@ define( function ( require ) {
 						'collection' : new RelatedVideoCollection( relatedVideos )
 					} );
 					layout.relatedVideosRegion.show( relatedView );
-					//tabcollapse for small screens
-					$( '.tab-container' ).tabCollapse();
+
+					// show video tabs view
+					var videoTabsView = new App.VideoPlayer.Views.VideoTabsView();
+					layout.videoTabsRegion.show( videoTabsView );
+
 				} );
 
 			},

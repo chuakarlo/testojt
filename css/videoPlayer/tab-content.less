@@ -19,33 +19,28 @@
 
 		.tab-pane #video-resource,
 		.tab-pane #video-segment {
-			height : 0;
+			height  : 0;
+			padding : 0 !important
 		}
 
 		.tab-pane.active #video-resource,
 		.tab-pane.active #video-segment {
-			height : auto;
+			height         : auto;
+			padding-bottom : 4% !important;
 		}
 
 		.tab-pane:not(.active)#related-videos .slick .slick-list {
 			height: 0;
 		}
 
-		#related-videos {
-			margin-top : 19px;
-		}
-
 		//videos thumbnail for video-segments and related-videos
 		.videos-thumb {
-			// max-width : 276px;
-			// width        : 276px;
-			cursor       : pointer;
-			position     : relative;
-			display      : block;
-			color        : @vp-white;
-			// background : @vp-black; //deleted
-			min-height   : 125px; //125
-			padding   : 0 5%;
+			cursor     : pointer;
+			position   : relative;
+			display    : block;
+			color      : @vp-white;
+			min-height : 125px;
+			padding    : 0 5%;
 
 
 			#icon-play,
@@ -86,8 +81,6 @@
 		//videos information for video-segments and related-videos
 		.videos-info {
 			max-width                  : 276px;
-			// width : 276px; //deleted
-			// padding : 20px; //del
 			padding-top                : 20px;
 			margin-right               : 5%;
 			margin-left                : 5%;
@@ -95,14 +88,14 @@
 			border-bottom-left-radius  : 3px;
 			border-bottom-right-radius : 3px;
 			display                    : block;
-			height                     : 132px; //130
+			height                     : 132px;
 
 			h3.video-name {
-				width         : 85%; //85
+				width         : 85%;
 				white-space   : nowrap;
 				overflow      : hidden;
 				text-overflow : ellipsis;
-				font-size     : 16px; //16
+				font-size     : 16px;
 				margin-top    : 2%;
 				padding-left  : 5%;
 			}
@@ -111,7 +104,6 @@
 					line-height  : 30px;
 					font-size    : 15px;
 					display      : inline-block;
-					// color        : #8a8d94;
 					margin-top   : 10px;
 					padding-left : 5%;
 			}
@@ -172,14 +164,18 @@
 		#video-resources {
 
 			.additional-resources {
-				hr {
-					clear : both;
+				i#icon {
+					font-size : 16px;
+					padding   : 1% 0;
+				}
+				span#video-programs {
+					font-size : 18px;
 				}
 				#video-resource {
 					padding       : 0;
-					margin-bottom : 4%;
+					border-bottom : 1px solid #EBEBEB;
 					.slick {
-						margin : 0px;
+						margin  : 0px;
 						padding : 0px;
 						ul {
 							padding : 0 !important;
@@ -198,7 +194,7 @@
 									margin-right : 5%;
 								}
 
-								#download {
+								span {
 									padding                    : 25px;
 									background                 : #f3f5f6;
 									border-bottom-left-radius  : 3px;
@@ -241,11 +237,9 @@
 									}
 							}
 						}
+					}
 				}
 			}
 		}
 	}
-
-	}
-
 }

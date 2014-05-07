@@ -42,9 +42,9 @@ define( function ( require ) {
 				videoResourceItemView.should.have.property( 'ui' );
 			} );
 
-			it( 'should have an `tagName` property with value `li`', function () {
+			it( 'should have an `tagName` property with value `div`', function () {
 				videoResourceItemView.should.have.property( 'tagName' );
-				videoResourceItemView.tagName.should.equal( 'li' );
+				videoResourceItemView.tagName.should.equal( 'div' );
 			} );
 
 		} );

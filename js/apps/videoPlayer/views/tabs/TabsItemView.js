@@ -6,6 +6,8 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var template   = require( 'text!videoPlayer/templates/tabs/tabsItemView.html' );
 
+	require( 'tab-collapse' );
+
 	return Marionette.ItemView.extend( {
 
 		'template'  : _.template( template ),
@@ -13,6 +15,8 @@ define( function ( require ) {
 		'tagName'   : 'ul',
 
 		'className' : 'nav nav-tabs tab-container',
+
+		'id' : 'my-tab',
 
 		'ui' : {
 			'videoResources' : 'a[href="#video-resources"]',
@@ -22,6 +26,10 @@ define( function ( require ) {
 		'events' : {
 			'click @ui.videoResources' : 'showResources',
 			'click @ui.relatedVideos'  : 'showRelated'
+		},
+
+		'onShow' : function () {
+			$( '#my-tab' ).tabCollapse();
 		},
 
 		'showResources' : function ( e ) {

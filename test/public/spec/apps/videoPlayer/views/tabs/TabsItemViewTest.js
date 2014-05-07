@@ -31,7 +31,7 @@ define( function ( require ) {
 
 		it( 'does have a className', function () {
 			tabsItemView.should.have.property( 'className' );
-			tabsItemView.className.should.eql( 'nav nav-tabs' );
+			tabsItemView.className.should.eql( 'nav nav-tabs tab-container' );
 		} );
 
 		it( 'does have ui', function () {
