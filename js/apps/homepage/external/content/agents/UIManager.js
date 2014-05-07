@@ -19,15 +19,12 @@ define ( function ( require ) {
 		 */
 		'applyCircularScroll' : function ( container, appendToID, view, base ) {
 
-
-			require( [ 'pc-carouselSnap' ], function( $ ) {
-				$( container ).carouselSnap( {
+			require( [ 'pc-carouselSnap' ], function ( $ ) {
+				$( container ).carouselSnap ( {
 					nextID                : 'next-slide-' + appendToID,
 					prevID                : 'previous-slide-' + appendToID,
 					elementsToMoveOnClick : ITEMS_SHOWN_PER_PANE,
-					elementsToMoveOnHover : ITEMS_SHOWN_PER_PANE,
 					startOnCenter         : true,
-					time                  : 1000,
 					beforeShift           : function () {},
 					afterShift            : function () {}
 				} );
@@ -35,8 +32,8 @@ define ( function ( require ) {
 		},
 
 		'removeItemOnCarousel' : function ( container, item ) {
-			require( [ 'pc-carouselSnap' ], function( $ ) {
-				$( container ).carouselRemove( item );
+			require( [ 'pc-carouselSnap' ], function ( $ ) {
+				$( container ).carouselRemove ( item );
 			} );
 		},
 		'setContentCount' : function ( id, count ) {
@@ -48,4 +45,3 @@ define ( function ( require ) {
 	return new UIManager();
 
 } );
-

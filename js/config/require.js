@@ -54,13 +54,13 @@ require.config( {
 		'jquery-browser'        : 'libs/jquery.browser/dist/jquery.browser.min',
 		'validator-js'          : 'libs/validator-js/validator.min',
 
-
-		'pc-linq'             : 'libs/nakautot.linq/linq.min',
-		'pc-nivo'             : 'libs/nivo-slider/jquery.nivo.slider',
-		'pc-progressCircle'   : 'libs/progress-circle/progress-circle',
-		'pc-mouseWheel'       : 'libs/perfect-scrollbar/jquery.mousewheel',
-		'pc-carouselSnap'     : 'libs/circular-snap-carousel/carousel-snap',
-		'pc-htmlconcat'       : 'libs/htmlConcat/htmlconcat',
+		'pc-linq'               : 'libs/nakautot.linq/linq.min',
+		'pc-nivo'               : 'libs/nivo-slider/jquery.nivo.slider',
+		'pc-progressCircle'     : 'libs/progress-circle/progress-circle',
+		'pc-mouseWheel'         : 'libs/perfect-scrollbar/jquery.mousewheel',
+		'pc-carouselSnap'       : 'libs/circular-snap-carousel/carousel-snap',
+		'pc-swipe'              : 'libs/circular-snap-carousel/jquery.touchSwipe',
+		'pc-htmlconcat'         : 'libs/htmlConcat/htmlconcat',
 
 		// Base application level classes
 		'Session' : 'apps/user/models/SessionModel',
@@ -181,9 +181,14 @@ require.config( {
 			'deps'    : [ 'jquery' ]
 		},
 
-		'pc-carouselSnap' : {
+		'pc-swipe'  : {
 			'exports' : '$',
 			'deps'    : [ 'jquery' ]
+		},
+
+		'pc-carouselSnap' : {
+			'exports' : '$',
+			'deps'    : [ 'jquery', 'pc-swipe' ]
 		},
 
 		'pc-htmlconcat' : {

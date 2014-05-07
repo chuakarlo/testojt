@@ -20,13 +20,13 @@ define( function ( require ) {
 			effect       : 'fade',
 			pauseOnHover : true,
 			animSpeed    : '1000',
+			afterLoad    : hideDirectionNav,
 			beforeChange : function () {
 				$( captionSelector ).fadeOut( 500 );
 			},
 			afterChange  : function () {
 				$( captionSelector ).fadeIn( 500 );
-			},
-			afterLoad : hideDirectionNav
+			}
 		};
 	};
 } );

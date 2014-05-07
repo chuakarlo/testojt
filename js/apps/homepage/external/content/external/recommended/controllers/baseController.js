@@ -35,14 +35,13 @@ define( function ( require ) {
 			return toggleClass;
 		},
 		'doCarouselCustomAction' : function ( view, data, start, base ) {
-
 			if ( start ) {
-				$( '#recommended-wrapper ul' ).parent().append( '<div id="lazyload"><img src="img/loading-bar.gif"/></div>' );
+				$( '#recommended-wrapper .lazyload' ).append( '<div id="lazyload"><img src="img/loading-bar.gif"/></div>' );
 				start = view.collection.length - 1;
 				utils.collectionFetch( view, base, data, start, function ( collection ) {
 					view.collection.add( collection.collection.models );
-					view.render();
 					$( '#recommended-wrapper ul' ).getActivePane( function ( activePane ) {
+						view.render();
 						$( '#recommended-wrapper ul' ).shiftOnPane( activePane );
 					} );
 					$( '#lazyload' ).remove();

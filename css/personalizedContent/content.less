@@ -29,8 +29,8 @@
 		}
 
 		ul {
-			height          : inherit;
-			min-height      : 310px;
+			height          : 290px;
+			overflow-y      : hidden;
 			list-style-type : none;
 			padding         : @pc-min;
 		}
@@ -202,11 +202,17 @@
 		.content-wrapper-hover();
 	}
 
-	#recommended-wrapper .pc-watch-later:hover {
-		.content-wrapper-hover();
-		.content-button {
-				color :	@pc-blue-light;
-			}
+	#recommended-wrapper {
+		.lazyload {
+			height  : 50px;
+			display : block;
+		}
+		.pc-watch-later:hover {
+			.content-wrapper-hover();
+			.content-button {
+					color :	@pc-blue-light;
+				}
+		}
 	}
 
  .vid-thumb-overlay:hover .pc-vid-thumb-bg {
@@ -228,6 +234,26 @@
 	.empty-view {
 		margin-top : 75px;
 		text-align : center;
+	}
+}
+
+@media (min-width: 300px) and (max-width: 768px) {
+	#Home-page-view {
+		.nivo-controlNav a {
+			display : none;
+		}
+		#content-display {
+			.prevNext {
+				display : none !important;
+			}
+			.vid-thumb-overlay:hover .pc-vid-thumb-bg {
+				opacity             : 1 !important;
+				transition-duration : none;
+			}
+			.vid-thumb-overlay:hover  .video-hover {
+				display : none !important;
+			}
+		}
 	}
 }
 
