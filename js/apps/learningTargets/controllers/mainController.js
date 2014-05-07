@@ -111,9 +111,10 @@ define( function ( require ) {
 				} );
 			},
 
-			'showModalDescription' : function ( view ) {
-
-				if ( view.model.get( 'CatalogResourceTypeId' ) === 2 ) {
+			'performEvent' : function ( view ) {
+				if ( view.model.get( 'CatalogResourceTypeId' ) === 1 ) {
+					window.location.assign( 'dev.html#resources/videos/' + view.model.get( 'ResourceId' ) );
+				} else if ( view.model.get( 'CatalogResourceTypeId' ) === 2 ) {
 					window.location.assign( 'https://www.pd360.com/pd360.cfm#tab=courses&page=coursesBrowse' );
 				} else if ( view.model.get( 'CatalogResourceTypeId' ) === 3 ) {
 					async.waterfall( [
@@ -275,6 +276,7 @@ define( function ( require ) {
 				helper._showView( new App.Common.LoadingView() );
 
 				helper._apiRequest( 'lt:catalogs', function ( collection ) {
+
 					collection.add ( {
 						'CatalogId'             : '255',
 						'CatalogResourceId'     : '88',
@@ -294,7 +296,7 @@ define( function ( require ) {
 						collection : collection
 					} );
 
-					catalogsView.on( 'itemview:lt:showdescription', helper.showModalDescription );
+					catalogsView.on( 'itemview:lt:performevent', helper.performEvent );
 
 					// display Catalogs
 					helper._showView( catalogsView );

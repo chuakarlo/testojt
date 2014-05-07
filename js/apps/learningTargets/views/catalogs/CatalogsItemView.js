@@ -15,13 +15,13 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'click div.catalog-item' : 'showCatalogDescription'
+			'click div.catalog-item' : 'performEvent'
 		},
 
-		'showCatalogDescription' : function ( e ) {
+		'performEvent' : function ( e ) {
 			e.preventDefault();
 
-			this.trigger( 'lt:showdescription' );
+			this.trigger( 'lt:performevent' );
 		}
 	} );
 } );
