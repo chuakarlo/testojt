@@ -160,7 +160,7 @@ define( function ( require ) {
 
 			var share = App.request( 'videoPlayer:share:video', this.shareTargets );
 
-			App.when( share ).done( function ( response ) {
+			App.when( share ).done( function () {
 				App.vent.trigger( 'flash:message', { 'type' : 'success', 'message' : 'Video successfully shared.' } );
 			} ).fail( function () {
 				App.vent.trigger( 'flash:message', { 'type' : 'error', 'message' : 'Failed to share video.' } );

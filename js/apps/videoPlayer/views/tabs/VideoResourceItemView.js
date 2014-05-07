@@ -1,52 +1,38 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette = require( 'marionette' );
-	var _          = require( 'underscore' );
-	var $          = require( 'jquery' );
-
-	var template   = require( 'text!videoPlayer/templates/tabs/videoResourceItemView.html' );
-
-	require( 'jquery-browser' );
+	var _           = require( 'underscore' );
+	var Marionette  = require( 'marionette' );
+	var App         = require( 'App' );
+	var PreviewView = require( 'videoPlayer/views/tabs/PreviewItemView' );
+	var template    = require( 'text!videoPlayer/templates/tabs/videoResourceItemView.html' );
 
 	return Marionette.ItemView.extend( {
 
 		'template' : _.template( template ),
-
-		'tagName' : 'li',
+		'tagName'  : 'li',
 
 		'ui' : {
-			'thumbnail'    : '.video-resources-thumb img',
-			'pdfModal'     : '#pdf-modal',
-			'modalContent' : '#pdf-holder'
+			'thumbnail' : '.video-resources-thumb > img'
 		},
 
 		'events' : {
 			'click @ui.thumbnail' : 'previewFile'
 		},
 
-		'previewFile' : function () {
+		'previewFile' : function ( e ) {
+			e.preventDefault();
+
 			var previewPath = this.model.get( 'previewPath' );
+			var pdfPreview  = new PreviewView( { 'model' : this.model } );
 
 			if ( previewPath === '' ) {
 				return false;
-			}
-
-			// Chrome pdf in iframe has issues with displaying
-			// pdf files. Use `embed` tag instead.
-			if ( $.browser.name === 'chrome' ) {
-				this.showPdfModal( previewPath, 'embed' );
 			} else {
-				this.showPdfModal( previewPath, 'iframe' );
+				App.modalRegion.show( pdfPreview, {
+					'className' : 'pdf-preview-modal'
+				} );
 			}
-		},
-
-		'showPdfModal' : function ( previewPath, tag ) {
-			this.ui.pdfModal.modal( 'show' );
-			//use embed if google chrome and iframe if not
-			this.ui.modalContent.html( function () {
-				return '<' + tag + ' id="modal-iframe" src=' + previewPath + '></' + tag + '>';
-			} );
 		}
 
 	} );

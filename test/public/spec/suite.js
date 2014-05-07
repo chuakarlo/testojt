@@ -125,6 +125,7 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/views/tabs/VideoResourceItemViewTest.js',
 			'spec/apps/videoPlayer/views/tabs/VideoResourcesCollectionViewTest.js',
 			'spec/apps/videoPlayer/views/tabs/VideoItemViewTest.js',
+			'spec/apps/videoPlayer/views/tabs/PreviewItemViewTest.js',
 			// utils
 			'spec/apps/videoPlayer/utils/selectTextTest.js',
 			'spec/apps/videoPlayer/utils/toHHMMSSFormatTest.js',

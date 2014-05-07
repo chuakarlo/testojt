@@ -42,13 +42,9 @@ define( function ( require ) {
 				videoResourceItemView.should.have.property( 'ui' );
 			} );
 
-			it( 'should have an `tagName` property with value `LI`', function () {
+			it( 'should have an `tagName` property with value `li`', function () {
 				videoResourceItemView.should.have.property( 'tagName' );
 				videoResourceItemView.tagName.should.equal( 'li' );
-			} );
-
-			it( 'should create a `DIV` element', function () {
-				videoResourceItemView.el.nodeName.should.equal( 'LI' );
 			} );
 
 		} );
@@ -57,20 +53,6 @@ define( function ( require ) {
 
 			it( 'should have the same data to the data being passed', function () {
 				videoResourceItemView.model.should.equal( videoResource );
-			} );
-
-		} );
-
-		describe( '.showPdfModal', function () {
-
-			before( function () {
-				videoResourceItemView.showPdfModal();
-			} );
-
-			it( 'should show a modal', function () {
-				videoResourceItemView.ui.pdfModal.modal( 'show' );
-				var $modal = videoResourceItemView.$el.find( '.modal' );
-				$modal.should.have.length( 1 );
 			} );
 
 		} );
