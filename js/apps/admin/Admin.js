@@ -25,6 +25,8 @@ define( function ( require ) {
 		var AdminController = Marionette.Controller.extend( {
 
 			'showAdmin' : function () {
+				App.request( 'pd360:hide' );
+
 				if ( !this.layout ) {
 					this.layout = new AdminLayout();
 					App.content.show( this.layout );
@@ -44,7 +46,6 @@ define( function ( require ) {
 
 			'destroyControllers' : function () {
 				this.contentController = null;
-				this.navController     = null;
 				this.layout            = null;
 			}
 
