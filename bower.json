@@ -43,7 +43,8 @@
     "nakautot.linq": "1.0.0",
     "nivo-slider": "3.2",
     "jquery.browser": "~0.0.6",
-    "validator-js": "~3.11.0"
+    "validator-js": "~3.11.0",
+    "bootstro.js": "git@github.com:clu3/bootstro.js.git"
   },
   "devDependencies": {
     "chai": "1.8.x",

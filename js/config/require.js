@@ -54,7 +54,6 @@ require.config( {
 		'jquery-browser'        : 'libs/jquery.browser/dist/jquery.browser.min',
 		'validator-js'          : 'libs/validator-js/validator.min',
 		'tab-collapse'          : 'libs/tab-collapse/bootstrap-tabcollapse',
-
 		'pc-linq'               : 'libs/nakautot.linq/linq.min',
 		'pc-nivo'               : 'libs/nivo-slider/jquery.nivo.slider',
 		'pc-progressCircle'     : 'libs/progress-circle/progress-circle',
@@ -62,6 +61,7 @@ require.config( {
 		'pc-carouselSnap'       : 'libs/circular-snap-carousel/carousel-snap',
 		'pc-swipe'              : 'libs/circular-snap-carousel/jquery.touchSwipe',
 		'pc-htmlconcat'         : 'libs/htmlConcat/htmlconcat',
+		'bootstro'              : 'libs/bootstro.js/bootstro',
 
 		// Base application level classes
 		'Session' : 'apps/user/models/SessionModel',
@@ -195,6 +195,11 @@ require.config( {
 		'pc-htmlconcat' : {
 			'exports' : '$',
 			'deps'    : [ 'jquery' ]
+		},
+
+		'bootstro' : {
+			'exports' : 'bootstro',
+			'deps'    : [ 'jquery', 'bootstrap' ]
 		}
 
 	}

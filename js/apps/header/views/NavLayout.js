@@ -21,7 +21,7 @@ define( function ( require ) {
 		'tagName' : 'nav',
 
 		'attributes' : {
-			'class' : 'navbar yamm navbar-default navbar-fixed-top',
+			'class' : 'navbar yamm navbar-default navbar-static-top',
 			'role'  : 'navigation'
 		},
 

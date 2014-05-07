@@ -9,11 +9,12 @@ define( function ( require ) {
 
 	require( 'jquery-cookie' );
 
-	var usernameCookie  = 'UID';
-	var personnelCookie = 'PID';
-	var eulaCookie      = 'EULA';
-	var cfCookie        = 'CFAUTHORIZATION_PD360';
-	var cookieOptions   = { 'path' : '/' };
+	var usernameCookie   = 'UID';
+	var personnelCookie  = 'PID';
+	var eulaCookie       = 'EULA';
+	var cfCookie         = 'CFAUTHORIZATION_PD360';
+	var useWizardsCookie = 'USEWIZARDS';
+	var cookieOptions    = { 'path' : '/' };
 
 	var Session = Backbone.Model.extend( {
 
@@ -35,6 +36,8 @@ define( function ( require ) {
 					App.request( 'login:error', jqXHR );
 					return;
 				}
+
+				this.setCookie( useWizardsCookie, jqXHR.UseWizards );
 
 				if ( jqXHR.PersonnelId ) {
 					// Set the cookies before we trigger success
@@ -102,6 +105,7 @@ define( function ( require ) {
 			this.removeCookie( cfCookie );
 			this.removeCookie( 'CFID' );
 			this.removeCookie( 'CFTOKEN' );
+			this.removeCookie( useWizardsCookie );
 
 			// remove personnelId & username
 			if ( !$.cookie( 'remember' ) ) {
@@ -135,6 +139,10 @@ define( function ( require ) {
 
 		'eulaAccepted' : function () {
 			return $.cookie( eulaCookie );
+		},
+
+		'useWizards' : function () {
+			return $.cookie( useWizardsCookie ) === '1';
 		},
 
 		'username' : function () {
