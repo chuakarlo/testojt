@@ -19,7 +19,7 @@ define( function ( require ) {
 	}
 
 	return instance.extend( {
-		'WidgetId'        : 5,
+		'WidgetId'        : 4,
 		'WidgetName'      : function () {
 			return 'Your Profile';
 		},

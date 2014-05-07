@@ -10,7 +10,7 @@ define( function ( require ) {
 	instance._id = 'widgets';
 
 	return instance.extend( {
-		'WidgetId'        : 4,
+		'WidgetId'        : 6,
 		'WidgetName'      : function () {
 			return 'What\'s New';
 		},

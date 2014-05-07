@@ -39,7 +39,7 @@ define( function ( require ) {
 		},
 		'_mainUrl'        : '/index.html#resources/learning/processes',
 		'getTemplate'     : InactiveWidgetItemView,
-		'_id'             : 'whatsNew',
+		'_id'             : 'focusObjective',
 		'_header'         : function () {
 			return 'Focus Objectives';
 		},

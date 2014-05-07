@@ -19,7 +19,7 @@ define( function ( require ) {
 	}
 
 	return instance.extend( {
-		'WidgetId'        : 6,
+		'WidgetId'        : 5,
 		'WidgetName'      : function () {
 			return 'Observations Of Me';
 		},
@@ -33,7 +33,7 @@ define( function ( require ) {
 			return 'Have quick access to your Observation Items';
 		},
 		'imgSrc'          : function () {
-			return 'img/homepage-widgets/observationsOfMe.png';
+			return 'http://i61.photobucket.com/albums/h72/l5x12w19/observationsOfMe.png';
 		},
 		'em'              : 7,
 		'getExternalView' : WidgetItemView,
@@ -51,6 +51,6 @@ define( function ( require ) {
 		'_footer'         : function ( ) {
 			return 'See In Observations';
 		},
-		'_mainUrl'        : '#'
+		'_mainUrl'        : '#resources/observation/me'
 	} );
 } );
