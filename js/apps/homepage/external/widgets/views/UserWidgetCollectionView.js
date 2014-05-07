@@ -7,6 +7,6 @@ define( function ( require ) {
 	return Marionette.CollectionView.extend( {
 		'tagName'   : 'ul',
 		'itemView'  : UserWidgetItemView,
-		'className' : 'row'
+		'className' : 'active-widgets-container no-padding'
 	} );
 } );

@@ -26,7 +26,7 @@ define( function ( require ) {
 			//default template
 			this.template = _.template( progressTemplate );
 		},
-		'className'       : 'col-md-12 no-padding widget-item',
+		'className'       : 'widget-item',
 		'templateHelpers' : function () {
 			return {
 				'url'        : '/dev.html#resources/learning/courses',
@@ -35,7 +35,7 @@ define( function ( require ) {
 			};
 		},
 		'limitCharacter'  : function ( text ) {
-			return limitCharacters( text, 32 );
+			return limitCharacters( text, 37 );
 		},
 		'onShow'          : function ( ) {
 			doOnshow( this );

@@ -21,7 +21,7 @@ define( function ( require ) {
 			};
 		},
 		'limitCharacters' : function ( text ) {
-			return limitCharacters( text, 30 );
+			return limitCharacters( text, 37 );
 		}
 	} );
 } );

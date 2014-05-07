@@ -146,9 +146,9 @@ define(function(require) {
 			expect( UserWidgetCompositeViewInstance ).to.be.an.instanceof( WidgetItemView );
 		});
 
-		it( 'should limit the number of characters to 30 with elipses', function () {
+		it( 'should limit the number of characters to 37 with elipses', function () {
 			var focusObjective = UserWidgetCompositeViewInstance.limitCharacters( modelData[0].LicenseName );
-			expect( focusObjective ).to.be.equal( 'Testfoo This is a very long na...' );
+			expect( focusObjective ).to.be.equal( 'Testfoo This is a very long name that...' );
 		} );
 
 	});

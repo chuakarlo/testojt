@@ -96,9 +96,9 @@ define(function(require) {
 			expect( UserWidgetCompositeViewInstance ).to.be.an.instanceof( WidgetItemView );
 		});
 
-		it( 'should limit the number of characters to 27 with elipses', function () {
+		it( 'should limit the number of characters to 37 with elipses', function () {
 			var focusObjective = UserWidgetCompositeViewInstance.limitCharacter( modelData[0].ContentName );
-			expect( focusObjective ).to.be.equal( 'Defining the Professional L...' );
+			expect( focusObjective ).to.be.equal( 'Defining the Professional Learning Co...' );
 		} );
 
 	});

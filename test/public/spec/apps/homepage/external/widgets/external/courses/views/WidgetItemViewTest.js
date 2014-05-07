@@ -126,9 +126,9 @@ define(function(require) {
 			UserWidgetCompositeViewInstance.render();
 		});
 
-		it( 'should limit the number of characters to 32 with elipses', function () {
+		it( 'should limit the number of characters to 37 with elipses', function () {
 			var courseName = UserWidgetCompositeViewInstance.limitCharacter( modelData[5].COURSENAME );
-			expect( courseName ).to.be.equal( 'CSvSC1 Talk About Teaching! with...' );
+			expect( courseName ).to.be.equal( 'CSvSC1 Talk About Teaching! with Char...' );
 		} );
 
 	});

@@ -6,12 +6,11 @@
 
 	.three-box-container( @height ) {
 		position    : relative;
-		height      : @height;
+		min-height      : @height;
 	}
 
 	.widget-wrapper {
-		width                 : 92%;
-		margin                : @pc-min @mar-side-widget;
+		margin                : 0 10px;
 		border                : 1px solid @pc-gray-lighter;
 		height                : inherit;
 		.pc-border-radius ( 5px );
@@ -27,7 +26,55 @@
 			.three-box-container( 433px );
 		}
 	}
-#yourProfile{
+
+	//Group Activity
+
+	.group-activity-item, .focus-objective-item, .courses-item, .progress-item  {
+		height   : 35px;
+		overflow : hidden;
+		div {
+			overflow       : hidden;
+			display        : inline-block;
+			vertical-align : top;
+		}
+		.thumb {
+			width  : 35px;
+			height : 35px;
+			margin : 0 10px 0 13px;
+			img {
+				width       : 35px;
+			}
+		}
+		.description {
+			width : 245px;
+			p {
+				padding: 0;
+			}
+		}
+	}
+	.progress-item {
+		.description {
+			width : 285px;
+			margin-left: 13px;
+		}
+		.progress-circle-item {
+			width  : 35px;
+			margin : 0 10px;
+		}
+	}
+
+	.focus-objective-item {
+		.thumb {
+			width  : 35px;
+			height : 35px;
+			margin : 0 10px 0 13px;
+			img {
+				height : 35px;
+				width  : auto;
+			}
+		}
+	}
+	#yourProfile{
 		.your-profile-container{
 
 		padding:15px;
@@ -138,7 +185,6 @@
 		}
 	}
 
-
 	#active-widgets, #inactive-widgets  {
 		width: inherit;
 
@@ -151,7 +197,8 @@
 		}
 
 		li p {
-			margin : 0px
+			margin      : 0px;
+			line-height : 35px;
 		}
 
 		//widget header
@@ -175,7 +222,7 @@
 
 			> div {
 				border-top : 1px solid @pc-gray-lighter;
-				padding : 14px 0;
+				padding : 10px 0;
 
 				//Todo much better that image to be scaled should have a class
 				a > img, .icons {
@@ -189,6 +236,31 @@
 		.footer {
 			border-top : 1px solid @pc-gray-lighter;
 			padding    : 14px 0 14px 14px;
+		}
+	}
+
+	#active-widgets {
+		ul {
+			margin-left : 0px;
+			li {
+				width          : 380px;
+				padding-bottom : 20px;
+				display        : inline-block;
+			}
+		}
+		i.fa {
+			font-size     : 13px;
+			color         : #FFFFFF;
+			background    : #00A8FF;
+			padding       : 7px 0 0 9px;
+			height        : 26px;
+			border-radius : 13px;
+			width         : 26px;
+			margin        : 3px 10px;
+		}
+		a:hover {
+			i.fa {
+			}
 		}
 	}
 

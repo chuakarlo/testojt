@@ -68,7 +68,7 @@ define( function ( require ) {
 	return Marionette.CompositeView.extend( {
 		'template'          : _.template( template ),
 		'tagName'           : 'li',
-		'className'         : 'col-md-4 no-padding',
+		'className'         : 'widget-specific no-padding',
 		'itemViewContainer' : '.item-container',
 		'templateHelpers'   : function () {
 			return setTemplateHelpers( this );
