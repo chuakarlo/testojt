@@ -6,36 +6,35 @@ define( function ( require ) {
 	var $ = require( 'jquery' );
 
 	return {
-		'doFetchLogic': function ( collectionParam ) {
+		'doFetchLogic' : function ( collectionParam ) {
 
 			var count = collectionParam.models[ 0 ].get( 'numFound' );
 
 			collectionParam.models = collectionParam.models.slice( 1 );
 
 			return {
-				'collection': collectionParam,
-				'count': count
+				'collection' : collectionParam,
+				'count'      : count
 			};
 		},
 
-		'doPreFetchLogic': function ( options, callback ) {
+		'doPreFetchLogic' : function ( options, callback ) {
 			callback( options );
 		},
 
-		'doRenderToggle': function ( collection, model ) {
+		'doRenderToggle' : function ( collection, model ) {
 			var toggleClass = 'add-to-queue';
 
 			for ( var item in collection.queueCollection ) {
 				if ( collection.queueCollection[ item ].ContentId === model.get( 'ContentId' ) ) {
-					toggleClass = 'remove-from-queue';
+					toggleClass = 'recommended-remove-from-queue';
 					break;
 				}
 			}
 
 			return toggleClass;
 		},
-		'doCarouselCustomAction': function ( view, data, start, base ) {
-
+		'doCarouselCustomAction' : function ( view, data, start, base ) {
 
 			if ( start ) {
 				$( '#recommended-wrapper ul' ).parent().append( '<div id="lazyload"><img src="img/loading-bar.gif"/></div>' );
