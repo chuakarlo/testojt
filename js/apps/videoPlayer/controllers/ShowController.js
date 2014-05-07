@@ -74,18 +74,14 @@ define( function ( require ) {
 					}
 				};
 
-				// There are some responsed data that has no `Children` object
-				// this will emit an error on invoking getProgramSegment in CF
-				// so we have to check if `Children` is exist, if not will make one.
-				if ( !videoModel.get( 'Children' ) ) {
-					videoModel.set( 'Children', [ ] );
-				}
-
 				var segmentsRequest = {
-					'path'       : 'com.schoolimprovement.pd360.dao.ContentService',
-					'objectPath' : 'com.schoolimprovement.pd360.dao.core.Content',
-					'method'     : 'getProgramFromSegment',
-					'args'       : videoModel.toJSON()
+					'path'   : 'com.schoolimprovement.pd360.dao.ContentService',
+					'method' : 'getProgramFromSegment',
+					'args'   : {
+						'ContentId'       : videoModel.get( 'ContentId' ),
+						'ContentParentId' : videoModel.get( 'ContentParentId' ),
+						'ContentTypeId'   : videoModel.get( 'ContentTypeId' )
+					}
 				};
 
 				var requests = [ questionsRequest, relatedVideosRequest, queueContentsRequest, segmentsRequest ];
