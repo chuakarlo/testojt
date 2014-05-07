@@ -21,10 +21,10 @@ define( function ( require ) {
 	return instance.extend( {
 		'WidgetId'        : 4,
 		'WidgetName'      : function () {
-			return 'Your Profile';
+			return 'User Settings';
 		},
 		'header'          : function () {
-			return 'Your Profile';
+			return 'User Settings';
 		},
 		'footer'          : function () {
 			return 'Edit Settings';
@@ -43,7 +43,7 @@ define( function ( require ) {
 		'getTemplate'     : InactiveWidgetItemView,
 		'_id'             : 'yourProfile',
 		'_header'         : function () {
-			return 'Your Profile';
+			return 'User Settings';
 		},
 		'EmptyMessage'    : function () {
 			return '';

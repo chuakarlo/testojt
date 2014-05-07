@@ -51,10 +51,15 @@ define( function ( require ) {
 
 			require( [ 'pc-progressCircle' ], function ( $ ) {
 				$(eCircle).progressCircle( {
-					'nPercent'   : nPercent,
-					'circleSize' : 90,
-					'thickness'  : 2
+					'nPercent'        : nPercent,
+					'showPercentText' : true,
+					'circleSize'      : 80,
+					'thickness'       : 2
 				} );
+
+				$(eCircle).find( '.fill' )
+					.css( 'width', '0.99em' )
+					.css( 'height', '0.99em' );
 			} );
 		}
 	} );
