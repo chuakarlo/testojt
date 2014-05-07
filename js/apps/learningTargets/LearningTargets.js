@@ -28,9 +28,9 @@ define( function ( require ) {
 				'resources/learning/questions'    : 'showQuestions',
 				'resources/learning/catalogs'     : 'showCatalogs',
 				'resources/learning/groups'       : 'showGroups',
-				'resources/learning/objectives'   : 'showFocusObjectives',
+				'resources/learning/objectives'   : 'showFocusObjectivesTitle',
 
-				'resources/learning/objectives/:ncesid/:statestdid'   : 'showFocusObjectivesContent'
+				'resources/learning/objectives/:focustitle/:ncesid/:statestdid'   : 'showFocusObjectivesContent'
 			}
 
 		} );

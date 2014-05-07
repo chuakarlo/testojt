@@ -6,9 +6,12 @@ define( function ( require ) {
 	return Backbone.Model.extend( {
 
 		'parse' : function ( model ) {
+
 			if ( !model.ContentId ) {
+				model = this._setStateStandardTitleLength( model );
 				return model;
 			}
+
 			model = this._computeMinSec( model );
 			model = this._setContentNameLength( model );
 			model = this._setViewCompleted( model );
@@ -33,6 +36,15 @@ define( function ( require ) {
 			model.CName = model.ContentName;
 			if ( model.ContentName.length > 35 ) {
 				model.CName = model.ContentName.substr( 0, 35 ) + '...';
+			}
+
+			return model;
+		},
+
+		'_setStateStandardTitleLength' : function ( model ) {
+			model.SSTitle = model.StateStandardTitle;
+			if ( model.StateStandardTitle.length > 50 ) {
+				model.SSTitle = model.StateStandardTitle.substr( 0, 50 ) + '...';
 			}
 
 			return model;

@@ -21,6 +21,8 @@ define( function ( require ) {
 
 			'path' : 'SessionService',
 
+			'model' : model.ObjectivesModel,
+
 			'idAttribute' : 'personnelId',
 
 			'getReadOptions' : function () {

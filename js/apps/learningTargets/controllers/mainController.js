@@ -325,54 +325,42 @@ define( function ( require ) {
 
 			},
 
-			'showFocusObjectives' : function ( options ) {
-				var helper = Main.helper;
-
+			'showFocusObjectives' : function ( helper, options ) {
 				// set content
 				helper._setContent( 'focus-objectives' );
 
 				// show a loading view while data is fetching
 				helper._showView( new App.Common.LoadingView() );
-
-				this.showFocusObjectivesTitle( helper, options );
-
 			},
 
-			'showFocusObjectivesTitle' : function ( helper, options ) {
+			'showFocusObjectivesTitle' : function ( options ) {
+				var helper = Main.helper;
+
+				this.showFocusObjectives( helper, options );
+
 				helper._apiRequest( 'lt:objectivestitle', function ( collection ) {
 
 					var objectivesTitleView = new ObjectivesTitleView ( {
 						collection : collection
 					} );
 
-					// set the default view - select the first model
-					if ( !options ) {
-						options = {
-							ncesid     : collection.models[ 0 ].get( 'NCESId' ),
-							statestdid : collection.models[ 0 ].get( 'StateStandardId' )
-						};
-
-						App.navigate( 'resources/learning/objectives/' + options.ncesid + '/' + options.statestdid, true );
-					}
-
 					// display Focus Objectives Title
-					helper._showTitleView( objectivesTitleView, options );
+					helper._showView( objectivesTitleView );
 
 				} );
 			},
 
-			'showFocusObjectivesContent' : function ( ncesid, statestdid ) {
+			'showFocusObjectivesContent' : function ( focusTitle, ncesId, statestdId ) {
 				var helper = Main.helper;
 
 				var options = {
-					ncesid     : ncesid,
-					statestdid : statestdid
+					focustitle : focusTitle,
+					ncesid     : ncesId,
+					statestdid : statestdId
 				};
 
 				// if browser is being refresh - then call showFocusObjectives to set content
-				if ( !mainView ) {
-					this.showFocusObjectives( options );
-				}
+				this.showFocusObjectives( helper, options );
 
 				// show a loading view while data is fetching
 				helper._showView( new App.Common.LoadingView() );
@@ -380,16 +368,20 @@ define( function ( require ) {
 				helper._apiRequest( 'lt:objectivescontent', function ( collection ) {
 
 					var objectivesContentView = new ObjectivesContentView( {
-						collection : collection
+						collection : collection,
+						data       : options
 					} );
 
-					if ( collection.length > 1 && !collection.models[ 0 ].get( 'ContentId' ) ) {
-						// todo to iteratively get the focus folder
-						console.log( 'TODO: iteratively get the focus folder' );
-					} else {
-						// display contents of focus folders
-						helper._showView( objectivesContentView );
+					// change view to focus folder
+					if ( collection.length > 0 && !collection.models[ 0 ].get( 'ContentId' ) ) {
+						objectivesContentView = new ObjectivesTitleView ( {
+							collection : collection,
+							data       : options
+						} );
 					}
+
+					// display contents or title of focus folders
+					helper._showView( objectivesContentView );
 
 				}, options );
 			}

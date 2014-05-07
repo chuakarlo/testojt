@@ -8,7 +8,7 @@ define( function ( require ) {
 	return Marionette.ItemView.extend( {
 		'template'  : _.template( template ),
 		'tagName'   : 'li',
-		'className' : 'nav-subtitle'
+		'className' : 'col-xs-12 col-sm-4 col-md-4'
 	} );
 
 } );

@@ -2,24 +2,35 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette    = require( 'marionette' );
-	var TitleItemView = require( 'apps/learningTargets/views/objectives/titles/TitleItemView' );
-	var $             = require( 'jquery' );
 	var _             = require( 'underscore' );
+	var template      = require( 'text!apps/learningTargets/templates/objectives/titles.html' );
+	var TitleItemView = require( 'apps/learningTargets/views/objectives/titles/TitleItemView' );
+	var EmptyView     = require( 'apps/learningTargets/views/objectives/EmptyView' );
 
-	return Marionette.CollectionView.extend( {
-		'tagName'   : 'ul',
-		'className' : 'nav-objectives',
-		'itemView'  : TitleItemView,
+	return Marionette.CompositeView.extend( {
+		'template'          : _.template( template ),
+		'emptyView'         : EmptyView,
+		'itemViewContainer' : 'ul.nav-objectives',
 
-		onRender : function ( ) {
+		'tagName'           : 'div',
+		'itemView'          : TitleItemView,
+		'className'         : 'objectives-folder',
 
-			var self       = this;
-			var childCount = 0;
+		initialize : function ( ) {
+			this.FocusTitle     = '';
+			this.showFocusTitle = 'hide';
 
-			_.each( this.collection.models, function ( model ) {
-				$( self.el.children[ childCount ] ).addClass( 'focus-title-' + model.get( 'StateStandardId' ) );
-				childCount+=1;
-			} );
+			if ( this.options.data ) {
+				this.FocusTitle     = this.options.data.focustitle;
+				this.showFocusTitle = '';
+			}
+		},
+
+		templateHelpers : function ( ) {
+			return {
+				FocusTitle     : this.FocusTitle,
+				showFocusTitle : this.showFocusTitle
+			};
 		}
 
 	} );
