@@ -39,6 +39,11 @@ define( function ( require ) {
 				mainView.activateTab( 'focus-objectives', options );
 			},
 
+			'_convertToTimestamp' : function ( stringDate ) {
+				var date = new Date( stringDate );
+				return date.getTime() / 100;
+			},
+
 			'_setContent' : function ( content, options ) {
 
 				// hide pd360 flash
@@ -165,8 +170,7 @@ define( function ( require ) {
 
 				helper._apiRequest( 'lt:processes', function ( collection ) {
 					_.each( collection.models, function ( model, index ) {
-						var mainCompletedDate          = new Date( model.get( 'CompleteByDate' ) );
-						var mainCompletedDateTimestamp = mainCompletedDate.getTime() / 100;
+						var mainCompletedDateTimestamp = helper._convertToTimestamp( model.get( 'CompleteByDate' ) );
 						var tasks                      = model.get( 'Tasks' );
 
 						if ( model.get( 'ProcessStatus' ) === 'Current' || model.get( 'ProcessStatus' ) === '' ) {
@@ -176,8 +180,7 @@ define( function ( require ) {
 						}
 
 						_.each( tasks, function ( taskObj ) {
-							var date                      = new Date( taskObj.CompleteByDate );
-							var taskCompleteDateTimestamp = date.getTime() / 100;
+							var taskCompleteDateTimestamp = helper._convertToTimestamp( taskObj.CompleteByDate );
 
 							if ( ( taskCompleteDateTimestamp <= mainCompletedDateTimestamp ) || ( mainCompletedDateTimestamp === '' )  ) {
 								taskObj.status   = 'Current';
@@ -335,8 +338,8 @@ define( function ( require ) {
 					// set the default view - select the first model
 					if ( !options ) {
 						options = {
-							ncesid     : collection.models[ 0 ].get('NCESId'),
-							statestdid : collection.models[ 0 ].get('StateStandardId')
+							ncesid     : collection.models[ 0 ].get( 'NCESId' ),
+							statestdid : collection.models[ 0 ].get( 'StateStandardId' )
 						};
 
 						App.navigate( 'resources/learning/objectives/' + options.ncesid + '/' + options.statestdid, true );
