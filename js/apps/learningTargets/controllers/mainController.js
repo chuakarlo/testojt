@@ -44,6 +44,14 @@ define( function ( require ) {
 				return date.getTime() / 100;
 			},
 
+			'_isProcessStatusCurrent' : function ( model ) {
+				return ( ( model.get( 'ProcessStatus' ) === 'Current' ) || ( model.get( 'ProcessStatus' ) === '' ) );
+			},
+
+			'_isTaskStatusCurrent' : function ( taskCompleteDateTimestamp, mainCompletedDateTimestamp ) {
+				return ( taskCompleteDateTimestamp <= mainCompletedDateTimestamp ) || ( mainCompletedDateTimestamp === '' );
+			},
+
 			'_setContent' : function ( content, options ) {
 
 				// hide pd360 flash
@@ -173,7 +181,7 @@ define( function ( require ) {
 						var mainCompletedDateTimestamp = helper._convertToTimestamp( model.get( 'CompleteByDate' ) );
 						var tasks                      = model.get( 'Tasks' );
 
-						if ( model.get( 'ProcessStatus' ) === 'Current' || model.get( 'ProcessStatus' ) === '' ) {
+						if ( helper._isProcessStatusCurrent( model ) === true ) {
 							collection.models[ index ].attributes.txtColor = 'step-current';
 						} else {
 							collection.models[ index ].attributes.txtColor = 'step-not-current';
@@ -182,7 +190,7 @@ define( function ( require ) {
 						_.each( tasks, function ( taskObj ) {
 							var taskCompleteDateTimestamp = helper._convertToTimestamp( taskObj.CompleteByDate );
 
-							if ( ( taskCompleteDateTimestamp <= mainCompletedDateTimestamp ) || ( mainCompletedDateTimestamp === '' )  ) {
+							if ( helper._isTaskStatusCurrent( taskCompleteDateTimestamp, mainCompletedDateTimestamp ) === true ) {
 								taskObj.status   = 'Current';
 								taskObj.txtColor = 'step-current';
 							} else {
