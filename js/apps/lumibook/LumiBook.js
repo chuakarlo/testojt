@@ -19,7 +19,6 @@ define( function ( require ) {
 		var API = {
 
 			'showLumiBook' : function () {
-				App.request( 'pd360:navigate', null, 'liveBook' );
 				// Args we potentially are going to pass to the flash. These
 				// are in expected order of this function's arguments. If the
 				// router doesn't get a match for the argument, it passes null
@@ -39,15 +38,20 @@ define( function ( require ) {
 					}
 				} );
 
-				// if the arguments are empty, just display the main community
-				// page
-				if ( _.isEmpty( requestArgs ) ) {
-					App.request( 'pd360:navigate', null, 'liveBook', '');
-				} else {
-					App.request( 'pd360:navigate', null, 'liveBook', '',
-						requestArgs );
+				// check if pd360 is loaded
+				var pd360Loaded = App.request( 'pd360:loaded' );
 
-				}
+				// show a loading view while we wait
+				App.content.show( new App.Common.LoadingView() );
+
+				App.when( pd360Loaded ).done( function () {
+					//close loading
+					App.content.close();
+
+					// if `requestArgs` are empty, will display the lumibook bookshelf
+					App.request( 'pd360:navigate', 'liveBook', '', requestArgs );
+				} );
+
 			}
 
 		};
