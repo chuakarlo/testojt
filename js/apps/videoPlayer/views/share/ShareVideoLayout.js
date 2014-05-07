@@ -6,6 +6,7 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 	var App        = require( 'App' );
+	var Ladda      = require( 'ladda' );
 
 	// view template
 	var template = require( 'text!videoPlayer/templates/share/shareVideoLayout.html' );
@@ -145,18 +146,27 @@ define( function ( require ) {
 		},
 
 		'shareVideo' : function () {
+			// initialize ladda for share video button
+			var l = Ladda.create( document.querySelector( '#share-btn' ) );
+			l.start();
+
+			var videoUrl = 'http://www.pd360.com/index.cfm?ContentId=' + this.model.id;
+
 			// get the share message
-			this.shareTargets.message = this.ui.message.val();
+			this.shareTargets.message = this.ui.message.val() + ' ' + videoUrl;
 
 			// group items into personnels and groups
 			this._filterItems();
 
 			var share = App.request( 'videoPlayer:share:video', this.shareTargets );
 
-			$.when( share ).done( function ( response ) {
-				if ( response[ 0 ] === 200 ) {
-					App.modalRegion.close();
-				}
+			App.when( share ).done( function ( response ) {
+				App.vent.trigger( 'flash:message', { 'type' : 'success', 'message' : 'Video successfully shared.' } );
+			} ).fail( function () {
+				App.vent.trigger( 'flash:message', { 'type' : 'error', 'message' : 'Failed to share video.' } );
+			} ).always( function () {
+				l.stop();
+				App.modalRegion.close();
 			} );
 		},
 
