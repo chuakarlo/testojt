@@ -19,6 +19,15 @@ define( function ( require ) {
 			'spec/apps/learningTargets/LearningTargetsTest',
 			'spec/apps/learningTargets/views/MainViewTest',
 
+			'spec/apps/learningTargets/entities/CoursesTest',
+			'spec/apps/learningTargets/entities/CatalogsTest',
+			'spec/apps/learningTargets/entities/CatalogDescriptionsTest',
+			'spec/apps/learningTargets/entities/GroupsTest',
+			'spec/apps/learningTargets/entities/ObjectivesTest',
+			'spec/apps/learningTargets/entities/ObservationsTest',
+			'spec/apps/learningTargets/entities/PortfoliosTest',
+			'spec/apps/learningTargets/entities/ProcessesTest',
+
 			'spec/apps/user/UserTest',
 
 			//Start contentNavigation

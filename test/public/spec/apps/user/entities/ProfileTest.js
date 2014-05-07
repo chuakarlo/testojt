@@ -14,7 +14,7 @@ define( function ( require ) {
 		} );
 
 		describe( 'when initialized', function () {
-			
+
 			var model;
 
 			before( function () {
@@ -25,7 +25,7 @@ define( function ( require ) {
 				model = null;
 			} );
 
-			it( 'should be an instance of CFCollection', function () {
+			it( 'should be an instance of CFModel', function () {
 				model.should.be.an.instanceof( Backbone.CFModel );
 			} );
 
@@ -75,7 +75,7 @@ define( function ( require ) {
 		} );
 
 		describe( 'when requesting `user:profile`', function () {
-			
+
 			var result, ajax;
 
 			var fetch = function ( done ) {
@@ -134,5 +134,5 @@ define( function ( require ) {
 		} );
 
 	} );
-	
+
 } );
