@@ -58,7 +58,7 @@ define( function ( require ) {
 				// remove inline font face and size
 				var qt = questionsText
 									.replace( /face\="Verdana"/gi, '' )
-									.replace( /size\="10"/gi, '' );
+									.replace( /size\="10"|"12"/gi, '' );
 
 				$( '#data-' + self.model.get( 'LICENSEID' ) ).html( qt );
 
