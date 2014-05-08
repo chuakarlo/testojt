@@ -8,7 +8,7 @@ define( function ( require ) {
 
 	require( 'groups/Groups' );
 
-	describe ('Groups Module', function () {
+	describe.only ('Groups Module', function () {
 
 		after( function () {
 			App.module( 'Groups' ).stop();
@@ -105,6 +105,8 @@ define( function ( require ) {
 				App.Groups.Edit.should.have.property( 'Controller' );
 				App.Groups.Edit.Controller.should.have.property( 'leaveGroup' );
 				App.Groups.Edit.Controller.should.have.property( 'joinGroup' );
+				App.Groups.Edit.Controller.should.have.property( 'ignoreGroup' );
+				App.Groups.Edit.Controller.should.have.property( 'acceptGroup' );				
 
 			} );
 
@@ -199,6 +201,104 @@ define( function ( require ) {
 				// app navigate should have been called
 				navigate.should.have.callCount( 1 );
 				navigate.should.have.been.calledWithExactly( 'groups', { 'trigger' : true } );
+			} );
+
+			it( '`ignoreGroup` should call remoting', function () {
+				var expectedLicenseId = 1;
+				var expectedCreatorId = 1234;
+				var expectedInviteeEmail = 'global_zeal@sinet.com';
+
+				var fakeModel = {
+					'attributes' : {
+						'LicenseId'   : expectedLicenseId,
+						'Creator'   : expectedCreatorId,
+						'InviteeEmail': expectedInviteeEmail
+					}
+				};
+
+				// call the method
+				App.Groups.Edit.Controller.ignoreGroup( fakeModel );
+
+				// remoting should have been called
+				remotingStub.should.have.callCount( 1 );
+
+				// verify properties sent to remoting
+				remotingStub.should.have.been.calledWith( sinon.match( function ( request ) {
+					request.should.be.an.instanceof( Array );
+					request.should.have.length( 1 );
+
+					var req = request[ 0 ];
+					
+					req.should.have.property( 'path' );
+					req.path.should.equal( 'com.schoolimprovement.pd360.dao.GroupService' );
+
+					req.should.have.property( 'method' );
+					req.method.should.equal( 'deleteInviteByLicenseIdCreatorIdAndInviteeEmail' );
+
+					req.should.have.property( 'args' );
+
+					req.args.should.have.property( 'LicenseId' );
+					req.args.LicenseId.should.equal( expectedLicenseId );
+
+					req.args.should.have.property( 'CreatorId' );
+					req.args.CreatorId.should.equal( expectedCreatorId );
+
+					req.args.should.have.property( 'InviteeEmail' );
+					req.args.InviteeEmail.should.equal( expectedInviteeEmail );
+
+					return true;
+				} ) );				
+			} );
+
+			it( '`acceptGroup` should call remoting', function () {
+				var expectedLicenseId = 1;
+				var expectedSingleUseKey = 1234;				
+
+				var fakeModel = {
+					'attributes' : {
+						'LicenseId'   : expectedLicenseId,
+						'SingleUseKey'   : expectedSingleUseKey						
+					}
+				};
+
+				// call the method
+				App.Groups.Edit.Controller.acceptGroup( fakeModel );
+
+				// remoting should have been called
+				remotingStub.should.have.callCount( 1 );
+
+				// verify properties sent to remoting
+				remotingStub.should.have.been.calledWith( sinon.match( function ( request ) {
+					request.should.be.an.instanceof( Array );
+					request.should.have.length( 2 );
+
+					var firstReq = request[ 0 ];
+					var secondReq = request[ 1 ];
+					//	checkLicenseRequest
+					firstReq.should.have.property( 'path' );
+					firstReq.path.should.equal( 'com.schoolimprovement.pd360.dao.AdminService' );
+
+					firstReq.should.have.property( 'method' );
+					firstReq.method.should.equal( 'checkLicenseByLicenseKey' );
+
+					firstReq.should.have.property( 'args' );
+
+					firstReq.args.should.have.property( 'key' );
+					firstReq.args.key.should.equal( expectedSingleUseKey );
+					// getLicenseKeySingleUseObjectRequest
+					secondReq.should.have.property( 'path' );
+					secondReq.path.should.equal( 'com.schoolimprovement.pd360.dao.core.LicenseKeySingleUseGateway' );
+
+					secondReq.should.have.property( 'method' );
+					secondReq.method.should.equal( 'getByKey' );
+
+					secondReq.should.have.property( 'args' );
+
+					secondReq.args.should.have.property( 'Key' );
+					secondReq.args.Key.should.equal( expectedSingleUseKey );											
+
+					return true;
+				} ) );				
 			} );
 
 		} );
