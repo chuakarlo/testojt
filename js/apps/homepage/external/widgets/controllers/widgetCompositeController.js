@@ -84,7 +84,7 @@ define( function ( require ) {
 			view.widgetPreviewItemView.ui.widgetMessage.hide();
 		},
 
-		'doDisplayLimitError' : function ( view, e ) {
+		'doDisplayLimitError' : function ( view ) {
 			view.widgetPreviewItemView.ui.widgetMessage.html( messages.widgetLimitError ).show();
 		},
 

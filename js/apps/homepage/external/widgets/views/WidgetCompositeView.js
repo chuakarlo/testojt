@@ -70,6 +70,7 @@ define( function ( require ) {
 		},
 
 		'activateWidget' : function ( e ) {
+			e.stopPropagation();
 			utils.doActivateWidget( this, e );
 		},
 
@@ -78,6 +79,7 @@ define( function ( require ) {
 		},
 
 		'deactivateWidget' : function ( e ) {
+			this.hidePreviewErrorMsg( e );
 			utils.doDeactivateWidget( this, e );
 		},
 
