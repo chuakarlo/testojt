@@ -31,10 +31,11 @@ define( function ( require ) {
 			this.createView();
 
 			this.prevSelectedValue = {
-				'el' : '',
-				'model' : '',
+				'el'                : '',
+				'model'             : '',
 				'categoryContainer' : ''
 			};
+
 			this.selectedCategory = '';
 			this.selectedLibrary = this.collection.first().id;
 		},
@@ -89,17 +90,16 @@ define( function ( require ) {
 				},
 
 				'itemViewOptions' : {
-					'events' : {
-						'click label' : function ( event ) {
+					'events'          : {
+						'click label'	: function ( event ) {
 							event.preventDefault();
 
 							var el = $( this.el );
 							var parentHasChildren = this.model.Children.length;
 
-							if(parentHasChildren){
+							if ( parentHasChildren ) {
 								self._selectLibrary( el, this.model );
-							}
-							else{
+							} else {
 								self._selectCategory( el, this.model, true );
 							}
 
@@ -107,17 +107,15 @@ define( function ( require ) {
 					},
 					'itemViewOptions' : {
 						events : {
-							'click label' : function ( event ){
+							'click label' : function ( event ) {
 								event.preventDefault();
 
 								var el = $( this.el );
 								var parentHasChildren = this.model.Children;
 
-								if(parentHasChildren){
+								if ( parentHasChildren ) {
 									self._selectLibrary( el, this.model );
-								}
-
-								else{
+								} else {
 									self._selectCategory( el, this.model, false );
 								}
 							}
@@ -150,8 +148,8 @@ define( function ( require ) {
 			} );
 		},
 
-		'_selectLibrary' : function ( el, model) {
-			if( model.id !== this.selectedLibrary ){
+		'_selectLibrary' : function ( el, model ) {
+			if ( model.id !== this.selectedLibrary ) {
 				var itemViewContainer = el.find( 'ul.cn-tree-category' );
 
 				this.view.$el.find( 'ul.cn-tree-category' ).slideUp();
@@ -160,17 +158,17 @@ define( function ( require ) {
 			}
 		},
 
-		'_selectCategory' : function ( el, model, option) {
-			this.view.$el.find( 'li' ).removeClass( 'addHighlight' );
+		'_selectCategory' : function ( el, model, option ) {
+			this.view.$el.find( 'li' ).removeClass( 'addHighlight' ).find( '.filter-tick' ).removeClass( 'fa fa-check' );
 			this.view.$el.find( 'ul' ).removeClass( 'addHighlight' );
 
-			if( option ){
+			if ( option ) {
 				this.view.$el.find( 'ul.cn-tree-category' ).slideUp();
-				el.find('li').addClass( 'addHighlight' );
+				el.find('li').addClass( 'addHighlight' ).find( '.filter-tick' ).addClass( 'fa fa-check' );
 				this.selectedLibrary = model.id;
 			}
 
-			el.addClass( 'addHighlight' );
+			el.addClass( 'addHighlight' ).find( '.filter-tick' ).addClass( 'fa fa-check' );
 
 			this.selectedCategory = model.id;
 			this.vent.mediator.trigger( 'filter:change' );

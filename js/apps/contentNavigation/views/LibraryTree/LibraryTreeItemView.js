@@ -14,8 +14,8 @@ define( function ( require ) {
 		'onRender' : function () {
 			var isFirstCategory = this.model.get( 'firstCategory' );
 
-			if( isFirstCategory ) {
-				this.$el.addClass( 'addHighlight' );
+			if ( isFirstCategory ) {
+				this.$el.addClass( 'addHighlight' ).find( '.filter-tick' ).addClass( 'fa fa-check' );
 			}
 		}
 	} );

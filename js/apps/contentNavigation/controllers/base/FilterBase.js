@@ -23,6 +23,8 @@ define( function ( require ) {
 			this.view = new views.FilterContainerView();
 
 			this.view.on( 'show', function ( ) {
+				this._destroyFilterScroll( $( '#cn-left-region' ) );
+
 				this.getCustomContentCategories( );
 
 				this._setFilterScroll(	);
@@ -99,19 +101,23 @@ define( function ( require ) {
 		'_getFilterHeight' : function () {
 			var windowHeight = $( window ).height();
 			var allowance    = 85;
-			var headerHeight = $( '#cn-header-content' ).height() + $( '#navbar' ).height() + allowance;
+			var headerHeight = $( '#cn-header-content' ).height() + allowance;
 
-			return parseInt( windowHeight - headerHeight, 10 );
+			if ( $( window ).width() < 768 ) {
+				return parseInt( windowHeight - 52, 10 );
+			} else {
+				return parseInt( windowHeight - headerHeight, 10 );
+			}
 		},
 
 		'_setFilterScroll' : function () {
 			this._setFilterHeight( this._getFilterHeight() );
 
-			if( $( '#cn-left-region' ).length ) {
+			if ( $( '#cn-left-region' ).length ) {
 				$( '#cn-left-region' ).perfectScrollbar( {
 					'minScrollbarLength' : 20,
 					'wheelPropagation'   : false
-		        } );
+				} );
 			}
 		},
 
@@ -119,10 +125,9 @@ define( function ( require ) {
 
 			var el = $( '#cn-left-region' );
 
-			if ( origHeight < el.height() ){
+			if ( origHeight < el.height() ) {
 				this._destroyFilterScroll( el );
-			}
-			else {
+			} else {
 				this._updateFilterScroll( el );
 			}
 		},

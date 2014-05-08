@@ -114,13 +114,11 @@ define( function ( require ) {
 
 							var elClass = ( this.el.className === 'filter-item' ) || ( this.el.className === 'filter-item right' );
 
-							if( self.getMultiSelect() && elClass ){
+							if ( self.getMultiSelect() && elClass ) {
 								self._addFilter( el, this.model );
-							}
-							else if( self.getMultiSelect() && !elClass ) {
-									self._removeFilter( el, this.model );
-							}
-							else{
+							} else if ( self.getMultiSelect() && !elClass ) {
+								self._removeFilter( el, this.model );
+							} else {
 								self._singleSelectFilter( el, this.model );
 							}
 
@@ -161,7 +159,7 @@ define( function ( require ) {
 			return this.flattenedSelectedFilters;
 		},
 
-		'_singleSelectFilter' : function ( el, model) {
+		'_singleSelectFilter' : function ( el, model ) {
 
 			var modelId     = model.get( 'id' );
 			var prevModelId = this.prevSelectedValue.modelId;
@@ -174,16 +172,16 @@ define( function ( require ) {
 				'model' : model
 			};
 
-			this.view.$el.find( 'li.filter-item' ).removeClass( 'addHighlight' );
+			this.view.$el.find( 'li.filter-item' ).removeClass( 'addHighlight' ).find( '.filter-tick' ).removeClass( 'fa fa-check' );
 
-			if( prevEl && prevModelId ){
-				prevEl.removeClass( 'addHighlight' );
+			if ( prevEl && prevModelId ) {
+				prevEl.removeClass( 'addHighlight' ).find( '.filter-tick' ).removeClass( 'fa fa-check' );
 				this.flattenedSelectedFilters.splice( filterIndex, 1 );
 				delete this.selectedFilters[ prevModelId ];
 			}
 
 			this.flattenedSelectedFilters.push( modelId );
-			el.addClass( 'addHighlight' );
+			el.addClass( 'addHighlight' ).find( '.filter-tick' ).addClass( 'fa fa-check' );
 			this.vent.mediator.trigger( 'filter:change' );
 			this.prevSelectedValue.el = el;
 			this.prevSelectedValue.modelId = modelId;
@@ -204,7 +202,7 @@ define( function ( require ) {
 				this.flattenedSelectedFilters.push( modelId );
 			}
 
-			el.addClass( 'addHighlight' );
+			el.addClass( 'addHighlight' ).find( '.filter-tick' ).addClass( 'fa fa-check' );
 			this.vent.mediator.trigger( 'filter:change' );
 		},
 
@@ -217,7 +215,7 @@ define( function ( require ) {
 
 			delete this.selectedFilters[ modelId ];
 
-			el.removeClass( 'addHighlight' );
+			el.removeClass( 'addHighlight' ).find( '.filter-tick' ).removeClass( 'fa fa-check' );
 
 			if ( this.flattenedSelectedFilters.length <= 0 ) {
 				clear.attr( 'disabled', 'disabled' );
@@ -231,8 +229,8 @@ define( function ( require ) {
 
 			$( this.view.ui.clearButton ).attr( 'disabled', 'disabled' );
 
-			_.each(currentFilters, function( data ) {
-				$( data.el ).removeClass( 'addHighlight' );
+			_.each( currentFilters, function ( data ) {
+				$( data.el ).removeClass( 'addHighlight' ).find( '.filter-tick' ).removeClass( 'fa fa-check' );
 
 				var modelId     = data.model.get( 'id' );
 				var filterIndex = _.indexOf( self.flattenedSelectedFilters, modelId );

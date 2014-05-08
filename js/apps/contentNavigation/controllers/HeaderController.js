@@ -33,13 +33,23 @@ define( function ( require ) {
 
 						this._sortByChanged( $( ev.currentTarget ) );
 
+						this.reloadSidebarLibrarySwitcher();
+
 					}.bind( this ),
 
 					'click .cn-library-menu li' : function ( ev ) {
 
 						this._changeLibrary( $( ev.currentTarget ) );
 
+					}.bind( this ),
+
+					'click .cn-responsive-filter-toggle' : function ( ev ) {
+
+						$( '.cn-sidebar-content' ).removeClass( 'responsive-hidden' );
+						$( 'body' ).addClass( 'responsive-non-scrollable' );
+
 					}.bind( this )
+
 				},
 
 				collection : this.collection
@@ -51,9 +61,6 @@ define( function ( require ) {
 
 		'_initCollection' : function () {
 			this.collection = new LicensesCollection();
-			this.collection.add( {
-				LicenseName : 'PD360'
-			} );
 		},
 
 		'_fetchLicensesCollection' : function () {
@@ -80,6 +87,9 @@ define( function ( require ) {
 		},
 
 		'_setLicensesCollection' : function ( models ) {
+			this.collection.add( {
+				LicenseName : 'PD360'
+			} );
 			_.each( models, function ( model ) {
 				model = this._setLicenseLength( model );
 				this.collection.add( model );
@@ -87,6 +97,8 @@ define( function ( require ) {
 			this.collection.add( {
 				LicenseName : 'User Uploaded Videos'
 			} );
+
+			this.reloadSidebarLibrarySwitcher();
 		},
 
 		'_setLicenseLength' : function ( data ) {
@@ -107,11 +119,13 @@ define( function ( require ) {
 
 		'_sortInit' : function () {
 			var sortBy = this.layoutView.$el.find( '.cn-sortby-category').text();
+
 			if ( sortBy === 'Release Date' ) {
 				sortBy = 'created desc';
 			} else {
 				sortBy = 'title asc';
 			}
+
 			return sortBy;
 		},
 
@@ -131,31 +145,42 @@ define( function ( require ) {
 		'_changeLibrary' : function ( el ) {
 			var _libraryLabel = this._getDropdownValue( el );
 			var _contentType  = '';
+			var that = this;
 
 			if ( _libraryLabel === 'PD360' ) {
 				_contentType = 'PD360Content';
-
-				this._showSortBy();
 			} else if ( _libraryLabel === 'User Uploaded Videos' ) {
 				_contentType = 'UserUploadedContent';
-
-				// hide sortBy dropdown
-				this._hideSortBy();
 			} else {
 				_contentType = 'CustomContent';
-
-				this._showSortBy();
 			}
 
-			this.vent.mediator.trigger( 'library:change', _contentType, _libraryLabel );
+			setTimeout( function ( ) {
+				that.vent.mediator.trigger( 'library:change', _contentType, _libraryLabel );
+				that.reloadSidebarLibrarySwitcher();
+
+				if ( _contentType === 'UserUploadedContent' ) {
+					that._hideSortBy();
+				} else {
+					that._showSortBy();
+				}
+
+			} );
+
 		},
 
 		'_hideSortBy' : function () {
 			$( '.cn-sortby' ).hide();
+			setTimeout( function () {
+				$( '.cn-sidebar-content .cn-filter.sortby' ).hide();
+			}, 0 );
 		},
 
 		'_showSortBy' : function () {
 			$( '.cn-sortby' ).show();
+			setTimeout( function () {
+				$( '.cn-sidebar-content .cn-filter.sortby' ).show();
+			}, 0 );
 		},
 
 		'_getDropdownValue' : function ( el ) {
@@ -167,10 +192,53 @@ define( function ( require ) {
 
 				selectBox = el.closest( '.btn-group' );
 				selectBox.find( '[data-bind="label"]' ).text( val );
+
 			}
 
 			return val;
+		},
+
+		'reloadSidebarLibrarySwitcher' : function () {
+
+			$( '.cn-sidebar-content .cn-filter.library .cn-content-filter' ).html('');
+
+			this.collection.each( function ( model ) {
+				$( '.cn-sidebar-content .cn-filter.library .cn-content-filter' )
+					.append( '<li class="filter-item"><label class="cn-filter-list"><span class="filter-tick"></span>' + model.get( 'LicenseName' ) + '</label></li>' );
+			} );
+
+			$( '.cn-sidebar-content .cn-filter.library .cn-content-filter .filter-item .cn-filter-list:contains("' + $('.cn-library-category').text() + '")' )
+				.children( '.filter-tick' )
+				.addClass( 'fa fa-check' )
+				.parent()
+				.parent()
+				.addClass( 'addHighlight' );
+
+			$( '.cn-sidebar-content .cn-filter.sortby .cn-content-filter .filter-item .cn-filter-list' )
+				.children( '.filter-tick' )
+				.removeClass( 'fa fa-check' )
+				.parent()
+				.parent()
+				.removeClass( 'addHighlight' );
+
+			$( '.cn-sidebar-content .cn-filter.sortby .cn-content-filter .filter-item .cn-filter-list:contains("' + $('.cn-sortby-category').text() + '")' )
+				.children( '.filter-tick' )
+				.addClass( 'fa fa-check' )
+				.parent()
+				.parent()
+				.addClass( 'addHighlight' );
+
+			this.redelegateSidebarLibrarySwitcherEvents();
+		},
+
+		'redelegateSidebarLibrarySwitcherEvents' : function () {
+			$( '.cn-content-filter.library li' ).click( function () {
+				$( '.cn-library-menu li:contains("' + $( this )[ 0 ].textContent + '")' ).click();
+			} );
+
+			$( '.cn-content-filter.sortby li' ).click( function () {
+				$( '.cn-sortby-menu li:contains("' + $( this )[ 0 ].textContent + '")' ).click();
+			} );
 		}
 	} );
-
 } );

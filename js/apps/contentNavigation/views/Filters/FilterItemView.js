@@ -14,8 +14,8 @@ define( function ( require ) {
 		'className' : 'filter-item',
 
 		'onRender' : function () {
-			if( this.model.id === 'Popular' ){
-				this.$el.addClass( 'addHighlight' );
+			if ( this.model.id === 'Popular' ) {
+				this.$el.addClass( 'addHighlight' ).find( '.filter-tick' ).addClass( 'fa fa-check' );
 			}
 		}
 

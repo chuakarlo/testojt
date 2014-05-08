@@ -40,8 +40,8 @@
 				}
 
 				h2 {
-					margin-top: @cn-custom-margin2 + 8;
-					font-size: 18px;
+					margin-top	: @cn-custom-margin2 + 8;
+					font-size	: 18px;
 				}
 
 				.cn-clr-filter-btn {
@@ -138,8 +138,31 @@
 .touch {
   .cn-content-filter {
   	li label:hover {
-  		color :			none;
-		background-color :	transparent;
+  		color 				:	none;
+		background-color 	:	transparent;
   	}
   }
 }
+
+
+//toggle check mark on each filter selection ( only visible on non-desktop )
+.filter-tick {
+	&:not( .fa ) {
+		padding : 0px 21px 0px 0px;
+	}
+	&.fa {
+		padding : 0px 7px 0px 0px;
+	}
+
+	@media ( min-width : @screen-xs-max ) {
+		display : none;
+	}
+}
+
+
+@media ( min-width : @screen-xs-max ) {
+	.cn-library-control, .cn-responsive-button-panel {
+		display : none;
+	}
+}
+

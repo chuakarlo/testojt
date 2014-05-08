@@ -42,11 +42,6 @@ define( function( require ) {
                 } );
             } );
 
-             it( 'should call \'_changeLibrary\' upon click', function () {
-                headerController.should.call( '_changeLibrary' ).when( function () {
-                    return headerController.getView().$el.find( '.cn-library-menu li' ).click();
-                } );
-            } );
         } );
 
         describe( 'getView', function () {
@@ -107,18 +102,6 @@ define( function( require ) {
 
                 _mock.verify();
                 _mock.restore();
-            } );
-
-            it( 'should trigger the segment:sort event', function () {
-                vent.mediator.should.trigger ( 'library:change' ).when( function () {
-                    return headerController.getView().$el.find( '.cn-library-menu li' ).click();
-                } );
-            } );
-
-            it( 'should call dropdown value', function () {
-                headerController.should.call( '_getDropdownValue' ).when( function () {
-                    return headerController.getView().$el.find( '.cn-library-menu li' ).click();
-                } );
             } );
 
         } );
