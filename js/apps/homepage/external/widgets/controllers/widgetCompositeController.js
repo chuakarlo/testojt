@@ -33,7 +33,9 @@ define( function ( require ) {
 
 		'doShowWidgetPreview' : function ( view, e ) {
 			view.widgetPreviewItemView = utils.newPreviewItem( view, e );
-			view.ui.widgetPreview.html( view.widgetPreviewItemView.render().el );
+			if ( view.widgetPreviewItemView ) {
+				view.ui.widgetPreview.html( view.widgetPreviewItemView.render().el );
+			}
 		},
 
 		'doGetActiveWidgets' : function ( view ) {

@@ -59,10 +59,12 @@ define( function ( require ) {
 		'newPreviewItem' : function ( view, e ) {
 			var widgetModel = view.getModelByClickEvent( e );
 
-			return new WidgetPreviewItemView( {
-				'model'                : widgetModel,
-				'userWidgetCollection' : view.options.userWidgetCollection
-			} );
+			if ( widgetModel ) {
+				return new WidgetPreviewItemView( {
+					'model'                : widgetModel,
+					'userWidgetCollection' : view.options.userWidgetCollection
+				} );
+			}
 		},
 
 		'doProcessWidgetCollection' : function ( view, model, mode ) {
