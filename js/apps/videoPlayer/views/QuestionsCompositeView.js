@@ -3,8 +3,9 @@ define( function ( require ) {
 
 	require( 'slick' );
 
-	var _                 = require( 'underscore' );
-	var Marionette        = require( 'marionette' );
+	var _          = require( 'underscore' );
+	var Marionette = require( 'marionette' );
+
 	var QuestionsItemView = require( 'videoPlayer/views/QuestionItemView' );
 	var template          = require( 'text!videoPlayer/templates/questionsCompositeView.html' );
 
@@ -94,11 +95,17 @@ define( function ( require ) {
 		},
 
 		'nextQuestion' : function () {
-			this.ui.carousel.slickNext();
+			var slide = this.ui.carousel.slickCurrentSlide();
+			if ( slide + 1 < this.collection.length ) {
+				this.ui.carousel.slickNext();
+			}
 		},
 
 		'prevQuestion' : function () {
-			this.ui.carousel.slickPrev();
+			var slide = this.ui.carousel.slickCurrentSlide();
+			if ( slide > 0 ) {
+				this.ui.carousel.slickPrev();
+			}
 		},
 
 		'updatePage' : function ( page ) {

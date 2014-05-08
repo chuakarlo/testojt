@@ -142,6 +142,7 @@ define( function ( require )  {
 
 			it( 'called when clicking ui.next', function () {
 				questionsView.ui.carousel.slickNext = sinon.spy();
+				questionsView.ui.carousel.slickCurrentSlide = sinon.stub().returns( 0 );
 				questionsView.ui.carousel.slickNext.should.have.callCount( 0 );
 				questionsView.ui.next.click();
 				questionsView.ui.carousel.slickNext.should.have.callCount( 1 );
@@ -153,6 +154,7 @@ define( function ( require )  {
 
 			it( 'called when clicking ui.prev', function () {
 				questionsView.ui.carousel.slickPrev = sinon.spy();
+				questionsView.ui.carousel.slickCurrentSlide = sinon.stub().returns( 1 );
 				questionsView.ui.carousel.slickPrev.should.have.callCount( 0 );
 				questionsView.ui.prev.click();
 				questionsView.ui.carousel.slickPrev.should.have.callCount( 1 );
