@@ -8,7 +8,7 @@ define( function ( require ) {
 
 	require( 'groups/Groups' );
 
-	describe.only ('Groups Module', function () {
+	describe ('Groups Module', function () {
 
 		after( function () {
 			App.module( 'Groups' ).stop();
