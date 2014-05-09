@@ -21,7 +21,29 @@ define( function ( require ) {
 					}
 				};
 
-				return Remoting.fetch( shareRequest );
+				var share = Remoting.fetch( shareRequest );
+
+				App.when( share ).done( function () {
+
+					App.vent.trigger( 'flash:message', {
+						'type'    : 'success',
+						'message' : 'Video successfully shared.'
+					} );
+
+				} ).fail( function () {
+
+					App.vent.trigger( 'flash:message', {
+						'type'    : 'error',
+						'message' : 'Failed to share video.'
+					} );
+
+				} ).always( function () {
+
+					App.modalRegion.close();
+
+				} );
+
+				return share;
 			}
 
 		};

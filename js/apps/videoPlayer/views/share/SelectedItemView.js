@@ -36,10 +36,10 @@ define( function ( require ) {
 		'templateHelpers' : {
 
 			'getName' : function () {
-				if ( this.LicenseName ) {
-					return this.LicenseName;
-				} else {
+				if ( this.PersonnelId ) {
 					return this.FirstName + ' ' + this.LastName;
+				} else {
+					return this.LicenseName;
 				}
 			}
 		},
@@ -47,10 +47,10 @@ define( function ( require ) {
 		'_getTooltipTpl' : function ( model ) {
 			var template;
 
-			if ( model.get( 'LicenseName' ) ) {
-				template = groupTooltipTpl;
-			} else {
+			if ( model.get( 'PersonnelId' ) ) {
 				template = personTooltipTpl;
+			} else {
+				template = groupTooltipTpl;
 			}
 
 			return _.template( template, model.attributes );

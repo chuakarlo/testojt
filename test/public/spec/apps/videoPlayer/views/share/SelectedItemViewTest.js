@@ -14,10 +14,11 @@ define( function ( require ) {
 		var Person;
 
 		before( function () {
-			Person = Backbone.Model.extend();
+			Person = App.VideoPlayer.Entities.TreeNodeModel.extend();
 
 			selectedItemView = new App.VideoPlayer.Views.SelectedItemView( {
 				'model' : new Person( {
+					'PersonnelId'  : 12345,
 					'FirstName'    : 'John',
 					'LastName'     : 'Doe',
 					'DistrictName' : 'Salt Lake City',

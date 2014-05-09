@@ -91,36 +91,6 @@ define( function ( require ) {
 
 		} );
 
-		describe( '.search', function () {
-
-			before( function () {
-				var stub = sinon.stub().returns( false );
-				App.reqres.setHandler( 'pd360:available', stub );
-				sinon.stub( shareVideoLayout.searchResultsRegion, 'show' );
-			} );
-
-			after( function () {
-				App.reqres.removeHandler( 'pd360:available' );
-				Remoting.fetch.restore();
-				shareVideoLayout.searchResultsRegion.show.restore();
-			} );
-
-			it( 'does reset people and groups collection', function ( done ) {
-				var fakeData = [ [ { 'PERSONNEL' : [ { } ], 'GROUPS' : [ { } ] } ] ];
-				var remotingFetchStub = sinon.stub( Remoting, 'fetch' ).returns( fakeData );
-
-				shareVideoLayout.ui.searchInput.val( 'test' );
-				shareVideoLayout.search();
-
-				// Wait for debounce to finish
-				setTimeout( function () {
-					remotingFetchStub.should.have.callCount( 1 );
-					done();
-				}, 500 );
-			} );
-
-		} );
-
 		describe( '.selectItem', function () {
 
 			var itemView;
@@ -128,7 +98,7 @@ define( function ( require ) {
 			var Person;
 
 			before( function () {
-				Person   = Backbone.Model.extend();
+				Person   = App.VideoPlayer.Entities.TreeNodeModel.extend();
 				itemView = {
 					'model' : new Person( {
 						'PersonnelId' : 12345,
@@ -234,105 +204,19 @@ define( function ( require ) {
 
 		} );
 
-		describe( '._filterItems', function () {
+		describe( '.getShareObject', function () {
 
-			var ShareObj  = Backbone.Model.extend();
+			var ShareObj  = App.VideoPlayer.Entities.TreeNodeModel.extend();
 			var personnel = new ShareObj( { 'PersonnelId' : 12345 } );
 			var group     = new ShareObj( { 'LicenseId' : 67890 } );
+			var shareTargets;
 
 			it( 'does separate personnels and groups', function () {
 				shareVideoLayout.selectedItems.reset();
 				shareVideoLayout.selectedItems.add( [ personnel, group ] );
-				shareVideoLayout.shareTargets.personnels.should.have.length( 0 );
-				shareVideoLayout.shareTargets.groups.should.have.length( 0 );
-				shareVideoLayout._filterItems();
-				shareVideoLayout.shareTargets.personnels.should.have.length( 1 );
-				shareVideoLayout.shareTargets.groups.should.have.length( 1 );
-			} );
-
-		} );
-
-		describe( '._getItemId', function () {
-
-			var ShareObj = Backbone.Model.extend();
-
-			describe( 'when the model is of type personnel', function () {
-
-				var model = new ShareObj( { 'PersonnelId' : 12345 } );
-
-				it( 'does return the `PersonnelId`', function () {
-					shareVideoLayout._getItemId( model ).should.eql( 12345 );
-				} );
-
-			} );
-
-			describe( 'when the model is of type group', function () {
-
-				var model = new ShareObj( { 'LicenseId' : 67890 } );
-
-				it( 'does return the `LicenseId`', function () {
-					shareVideoLayout._getItemId( model ).should.eql( 67890 );
-				} );
-
-			} );
-
-		} );
-
-		describe( '._getItemName', function () {
-
-			var ShareObj = Backbone.Model.extend();
-
-			describe( 'when the model is of type personnel', function () {
-
-				var model = new ShareObj( {
-					'PersonnelId' : 12345,
-					'FirstName'   : 'John',
-					'LastName'    : 'Doe'
-				} );
-
-				it( 'does return the `PersonnelId`', function () {
-					shareVideoLayout._getItemName( model ).should.eql( 'John Doe' );
-				} );
-
-			} );
-
-			describe( 'when the model is of type group', function () {
-
-				var model = new ShareObj( {
-					'LicenseId'   : 67890,
-					'LicenseName' : 'Test Group'
-				} );
-
-				it( 'does return the `LicenseId`', function () {
-					shareVideoLayout._getItemName( model ).should.eql( 'Test Group' );
-				} );
-
-			} );
-
-		} );
-
-		describe( '._isPersonnel', function () {
-
-			var ShareObj = Backbone.Model.extend();
-
-			describe( 'when the model is of type personnel', function () {
-
-				var model = new ShareObj( { 'PersonnelId' : 12345 } );
-
-				it( 'does return `true`', function () {
-					shareVideoLayout._isPersonnel( model ).should.be.true;
-				} );
-
-			} );
-
-			describe( 'when the model is of type group', function () {
-
-				var model = new ShareObj( { 'LicenseId' : 12345 } );
-
-				it( 'does return `false`', function () {
-					shareVideoLayout._isPersonnel( model ).should.be.false;
-				} );
-
+				shareTargets = shareVideoLayout.getShareObject();
+				shareTargets.personnels.should.have.length( 1 );
+				shareTargets.groups.should.have.length( 1 );
 			} );
 
 		} );

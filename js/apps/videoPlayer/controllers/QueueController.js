@@ -24,8 +24,13 @@ define( function ( require ) {
 				var addToQueue = Remoting.fetch( addToQueueRequest );
 
 				App.when( addToQueue ).done( function () {
+
 					model.set( 'queued', true );
-					App.vent.trigger( 'flash:message', { 'type' : 'success', 'message' : 'Added to Watch Later' } );
+					App.vent.trigger( 'flash:message', {
+						'type'    : 'success',
+						'message' : 'Added to Watch Later'
+					} );
+
 				} );
 
 				// return promise so we can test execution of callbacks
@@ -47,8 +52,13 @@ define( function ( require ) {
 				var removeFromQueue = Remoting.fetch( removeFromQueueRequest );
 
 				App.when( removeFromQueue ).done( function () {
+
 					model.set( 'queued', false );
-					App.vent.trigger( 'flash:message', { 'type' : 'success', 'message' : 'Removed from Watch Later' } );
+					App.vent.trigger( 'flash:message', {
+						'type'    : 'success',
+						'message' : 'Removed from Watch Later'
+					} );
+
 				} );
 
 				// return promise so we can test execution of callbacks

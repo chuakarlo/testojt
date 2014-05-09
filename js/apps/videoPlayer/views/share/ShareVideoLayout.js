@@ -43,13 +43,6 @@ define( function ( require ) {
 
 			this.selectedItems = new SelectedItems();
 
-			// object for holding personnels, groups and message for sharing
-			this.shareTargets = {
-				'personnels' : [ ],
-				'groups'     : [ ],
-				'message'    : ''
-			};
-
 			// common loading instance
 			this.loadingView = new App.Common.LoadingView( {
 				'background' : true,
@@ -80,50 +73,20 @@ define( function ( require ) {
 		},
 
 		'search' : function () {
-			var treeData = [ ];
-			var filter   = this.ui.searchInput.val().trim();
-
 			if ( this.ui.searchInput.val().trim() !== '' ) {
-
 				// show loading view
 				this.searchResultsRegion.show( this.loadingView );
 
-				// debounce search for 250 milliseconds
-				this._debouncedSearch = _.debounce( function () {
-
-					var doSearch = App.request( 'videoPlayer:searchPeopleAndGroups', filter );
-
-					App.when( doSearch ).done( function ( results ) {
-						_.each( _.keys( results[ 0 ] ), function ( key ) {
-							if ( !_.isEmpty( results[ 0 ][ key ] ) ) {
-								treeData.push( {
-									'nodeName' : key,
-									'nodes'    : results[ 0 ][ key ]
-								} );
-							}
-						} );
-
-						var tree     = new App.VideoPlayer.Entities.TreeNodeCollection( treeData );
-						var treeRoot = new App.VideoPlayer.Views.SearchResultsTreeRoot( { 'collection' : tree } );
-
-						// show search results
-						this.searchResultsRegion.show( treeRoot );
-					}.bind( this ) );
-
-				}, 250 ) || this._debouncedSearch;
-
-				return this._debouncedSearch();
+				// request search person and groups
+				App.request( 'videoPlayer:searchPeopleAndGroups', this );
 			} else {
 				this.searchResultsRegion.close();
 			}
 		},
 
 		'selectItem' : function ( itemView ) {
-			// set dynamic model id to prevent the same item to be added to the selection
-			itemView.model.set( 'id', this._getItemId( itemView.model ) );
-
 			this.selectedItems.add( itemView.model );
-			this.ui.searchInput.val( this._getItemName( itemView.model ) );
+			this.ui.searchInput.val( itemView.model.getName() );
 			this.hideSearchResults();
 			this.ui.searchInput.blur();
 		},
@@ -150,63 +113,34 @@ define( function ( require ) {
 			var l = Ladda.create( document.querySelector( '#share-btn' ) );
 			l.start();
 
+			// request to share video
+			App.request( 'videoPlayer:share:video', this.getShareObject() );
+		},
+
+		'getShareObject' : function () {
+			// url of video to be shared
 			var videoUrl = 'http://www.pd360.com/index.cfm?ContentId=' + this.model.id;
 
-			// get the share message
-			this.shareTargets.message = this.ui.message.val() + ' ' + videoUrl;
+			// object for holding personnels, groups and message for sharing
+			var shareTargets = {
+				'personnels' : [ ],
+				'groups'     : [ ],
+				'message'    : ''
+			};
 
-			// group items into personnels and groups
-			this._filterItems();
+			// share object message
+			shareTargets.message = this.ui.message.val() + ' ' + videoUrl;
 
-			var share = App.request( 'videoPlayer:share:video', this.shareTargets );
-
-			App.when( share ).done( function () {
-				App.vent.trigger( 'flash:message', { 'type' : 'success', 'message' : 'Video successfully shared.' } );
-			} ).fail( function () {
-				App.vent.trigger( 'flash:message', { 'type' : 'error', 'message' : 'Failed to share video.' } );
-			} ).always( function () {
-				l.stop();
-				App.modalRegion.close();
-			} );
-		},
-
-		'_filterItems' : function () {
-			// empty the personnels and groups
-			this.shareTargets.personnels.length = 0;
-			this.shareTargets.groups.length     = 0;
-
+			// share object personnels and groups
 			_.each( this.selectedItems.models, function ( model ) {
-				if ( this._isPersonnel( model ) ) {
-					this.shareTargets.personnels.push( model.get( 'PersonnelId' ) );
+				if ( model.isPerson() ) {
+					shareTargets.personnels.push( model.id );
 				} else {
-					this.shareTargets.groups.push( model.get( 'LicenseId' ) );
+					shareTargets.groups.push( model.id );
 				}
 			}.bind( this ) );
-		},
 
-		'_getItemId' : function ( model ) {
-			if ( this._isPersonnel( model ) ) {
-				return model.get( 'PersonnelId' );
-			} else {
-				return model.get( 'LicenseId' );
-			}
-		},
-
-		'_getItemName' : function ( model ) {
-			if ( this._isPersonnel( model ) ) {
-				return model.get( 'FirstName' ) + ' ' + model.get( 'LastName' );
-			} else {
-				return model.get( 'LicenseName' );
-			}
-		},
-
-		// check if an item is a personnel or else it's a group
-		'_isPersonnel' : function ( model ) {
-			if ( model.get( 'PersonnelId' ) ) {
-				return true;
-			} else {
-				return false;
-			}
+			return shareTargets;
 		}
 
 	} );

@@ -64,10 +64,10 @@ define( function ( require ) {
 			'getNodeData' : function () {
 				if ( this.nodeName ) {
 					return '<h4 class="list-group-header">' + this.nodeName + '</h4>';
-				} else if ( this.LicenseName ) {
-					return _.template( groupItemTpl, this );
-				} else {
+				} else if ( this.PersonnelId ) {
 					return _.template( personItemTpl, this );
+				} else {
+					return _.template( groupItemTpl, this );
 				}
 			}
 

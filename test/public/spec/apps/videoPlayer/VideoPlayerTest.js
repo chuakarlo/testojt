@@ -171,28 +171,6 @@ define( function( require ) {
 
 		} );
 
-		describe( 'Search Controller', function () {
-
-			it( 'it attached to `App`', function () {
-				App.VideoPlayer.should.have.property( 'Controller' );
-				App.VideoPlayer.Controller.should.have.property( 'Search' );
-				App.VideoPlayer.Controller.Search.should.have.property( 'searchPeopleAndGroups' );
-			} );
-
-			describe( '.searchPeopleAndGroups', function () {
-
-				it( 'does search for people and group at once', function () {
-					var remotingFetchStub = sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
-
-					App.VideoPlayer.Controller.Search.searchPeopleAndGroups( 'test' ).resolve();
-					remotingFetchStub.should.have.callCount( 1 );
-					Remoting.fetch.restore();
-				} );
-
-			} );
-
-		} );
-
 		describe( 'Share Controller', function () {
 
 			it( 'it attached to `App`', function () {
