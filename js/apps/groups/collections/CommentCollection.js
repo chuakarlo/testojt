@@ -2,11 +2,9 @@ define( function ( require ) {
 	'use strict';
 
 	var Backbone     = require( 'backbone' );
-	var CommentModel = require( '../models/CommentModel' );
+	// var CommentModel = require( '../models/CommentModel' );
 
 	return Backbone.Collection.extend( {
-
-		'model'   : CommentModel,
 
 		'comparator' : function ( model ) {
 

@@ -3,11 +3,8 @@ define( function ( require ) {
 
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
-	var Remoting   = require( 'Remoting' );
 	var Session    = require( 'Session' );
 	var $          = require( 'jquery' );
-	var Vent       = require( 'Vent' );
-	var App        = require( 'App' );
 
 	var template           = require( 'text!../templates/groupCommentView.html' );
 	var usersTemplate      = require( 'text!../templates/usersGroupCommentView.html' );
@@ -15,15 +12,12 @@ define( function ( require ) {
 	var MiniPersonnelView  = require('../../common/views/MiniPersonnel');
 	var stripHtml          = require( 'common/helpers/stripHtml' );
 
-	var path       = 'com.schoolimprovement.pd360.dao.groups.GroupMessagesGateway';
-	var objectPath = 'com.schoolimprovement.pd360.dao.groups.GroupMessages';
-
 	return Marionette.ItemView.extend( {
 
 		'tagName' : 'li',
 
 		'ui' : {
-			'removeReply' : '.remove-reply',
+			'removeReply' : '.remove-child',
 			'creator'     : '.child-creator-name'
 		},
 
@@ -36,13 +30,13 @@ define( function ( require ) {
 
 		initialize : function () {
 			// strip html before deciding whether to show goals section or not
-			this.model.attributes.Message = stripHtml( this.model.attributes.Message );
+			this.model.set( 'Message', stripHtml( this.model.attributes.Message ) );
 		},
 
 		'getTemplate' : function () {
 
 			// add the remove button if user created the message
-			if ( String( this.model.attributes.Creator ) === String( Session.personnelId() ) ) {
+			if ( String( this.model.get( 'Creator' ) ) === String( Session.personnelId() ) ) {
 				return _.template( usersTemplate );
 			} else {
 				return _.template( template );
@@ -103,37 +97,8 @@ define( function ( require ) {
 		},
 
 		'removeReply' : function ( e ) {
-			e.preventDefault();
 
-			var message = { };
-
-			message.MessageThreadId = this.model.attributes.MessageThreadId;
-			message.MessageId       = this.model.attributes.MessageId;
-			message.LicenseId       = this.model.attributes.LicenseId;
-			message.Message         = this.model.attributes.Message;
-			message.Creator         = this.model.attributes.Creator;
-			message.Created         = this.model.attributes.Created;
-			message.Remover         = this.model.attributes.Remover;
-			message.Removed         = this.model.attributes.Removed;
-
-			var request = {
-				'path'       : path,
-				'objectPath' : objectPath,
-				'method'     : 'deleteByObj',
-				'args'       : message
-			};
-
-			var requests     = [ request ];
-			var fetchingData = Remoting.fetch( requests );
-
-			App.when( fetchingData ).done( function ( results ) {
-
-				Vent.trigger( 'group:removeReply', this.model );
-
-			}.bind( this ) ).fail( function () {
-				// TODO: error handling
-
-			} );
+			this.model.destroy();
 
 		}
 

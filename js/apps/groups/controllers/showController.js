@@ -1,20 +1,162 @@
 define( function ( require ) {
 	'use strict';
 
-	var Remoting            = require( 'Remoting' );
-	var Session             = require( 'Session' );
-	var MemberCollection    = require( '../collections/MemberCollection' );
-	var CommentCollection   = require( '../collections/CommentCollection' );
-	var ResourcesCollection = require( '../collections/ResourcesCollection' );
-	var GroupModel          = require( '../models/GroupModel' );
 	var App                 = require( 'App' );
 	var $                   = require( 'jquery' );
 	var _                   = require( 'underscore' );
+	var Marionette          = require( 'marionette' );
 	var Vent                = require( 'Vent' );
 
-	App.module( 'Groups.Show', function ( Show ) {
+	var Remoting            = require( 'Remoting' );
+	var Session             = require( 'Session' );
+	var MemberCollection    = require( '../collections/MemberCollection' );
+	var ResourcesCollection = require( '../collections/ResourcesCollection' );
+	var GroupModel          = require( '../models/GroupModel' );
 
-		Show.Controller = {
+	require( 'groups/entities/WallCommentCollection');
+	require( 'groups/entities/WallCommentModel');
+
+	App.module( 'Groups.Show', function ( Mod ) {
+
+		var ShowController = Marionette.Controller.extend( {
+
+			'initialize' : function () {
+				this.listenTo( App.vent, 'groups:newCommentFetch', this.newCommentFetch );
+			},
+
+			'newCommentFetch' : function ( options ) {
+				// This is a fun function that handles when a new comment was
+				// added. Allows you to specify a specific location to query
+				// against the server to get just a specific comment ( parent
+				// comments only ). Also allows a success and error cb function
+				// to be passed and called. We've known each other for so long
+				// Your heart's been aching, but you're too shy to say it
+				// Inside, we both know what's been going on
+				// We know the game and we're gonna play it
+
+				// The last starting point for the query
+				var oldStart = this.wallCollection.wallQueryModel.get( 'startRow' );
+				var oldNum = this.wallCollection.wallQueryModel.get( 'numRows' );
+
+				this.wallCollection.wallQueryModel.set( {
+					'startRow' : options.startRow,
+					'numRows'  : options.numRows
+				} );
+
+				this.wallCollection.fetch( {
+					'reset'   : false,
+					'remove'  : false,
+					'success' : _.bind( function () {
+						// Once we've fetched just that post and it's
+						// children, set the queryModel back to what it was
+						this.wallCollection.wallQueryModel.set( {
+							'startRow' : oldStart,
+							'numRows'  : oldNum
+						} );
+
+						if ( options.successCb ) {
+							options.successCb();
+						}
+
+					}, this ),
+
+					'error' : function () {
+						if ( options.errorCb ) {
+							options.errorCb();
+						}
+					}
+				} );
+			},
+
+			'fetchWall' : function ( groupId ) {
+
+				// This keeps track of our query for infinite scrolling
+				this.wallQueryModel = new App.Entities.WallQueryModel( {
+					'licId' : groupId
+				} );
+
+				// This will hold all of our wall posts.
+				this.wallCollection = new App.Entities.WallCommentCollection( {
+					'queryModel' : this.wallQueryModel
+				});
+
+				this.wallCollection.fetch( {
+					'success' : _.bind( function ( collection ) {
+						this.wallCollection.updateStartRow();
+						this.buildWall();
+					}, this ),
+
+					'error' : function () {
+						this.layout.commentsRegion.show( new App.Common.ErrorView( {
+							'message' : 'There was an error loading the wall.',
+							'flash'   : 'An error occurred. Please try again later.'
+						} ) );
+					}
+				} );
+
+			},
+
+			'buildWall' : function ( collection ) {
+				// Wall
+				var commentsView = new App.Groups.Views.CommentsCollection( {
+					'collection' : this.wallCollection,
+					'user'       : this.userInGroup
+				} );
+
+				this.layout.commentsRegion.show( commentsView );
+				this.setupInfiniteScroll();
+
+			},
+
+			'setupInfiniteScroll' : function () {
+				// When the window scroll bar gets to 200px from the bottom
+				// of the window, fetch the next set of results.
+
+				// check to see if we should continue setting up the smack
+				if ( !this.wallCollection.maxResults ) {
+
+				// if ( totalRows > start && totalRows > rows || !totalRows && !start ) {
+					$( window ).smack( {
+						'threshold' : '200px'
+					} )
+						.done( _.bind(function () {
+							// Show Loading
+							this.showLoading();
+							// Reset starting point
+							this.wallCollection.fetch( {
+								'reset'   : false,
+								'remove'  : false,
+								'success' : _.bind( function () {
+									this.wallCollection.updateStartRow();
+									this.setupInfiniteScroll();
+									this.closeLoading();
+								}, this ),
+								'error'   : _.bind( function () {
+									var msg = 'An error occurred loading more' +
+									'comments. Please try again later.';
+									App.vent.trigger( 'flash:message', {
+										'message' : msg
+									} );
+									this.closeLoading();
+								}, this )
+							});
+						}, this) );
+				}
+
+			},
+
+			'showLoading' : function () {
+				var loading = new App.Common.LoadingView( {
+					'size'       : 'small',
+					'background' : true,
+					'text'       : 'Loading Posts'
+				} );
+				this.layout.loadingRegion.show(loading);
+			},
+
+			'closeLoading' : function () {
+				this.layout.loadingRegion.close();
+			},
 
 			'showGroup' : function ( groupId ) {
 
@@ -48,20 +190,6 @@ define( function ( require ) {
 					'method' : 'getValidGroupsByPersonnelIdOrderedByRecentActivity',
 					'args'   : {
 						'persId' : $.cookie( 'PID' ) || null
-					}
-				};
-
-				// Get groups to determine if already a member
-				var wallRequest = {
-					'path'   : 'com.schoolimprovement.pd360.dao.groups.GroupMessagesGateway',
-					'method' : 'getGroupWall',
-					'args'   : {
-						'licId'     : groupId,
-						'startRow'  : 0,
-						'numRows'   : 10000,
-						'totalRows' : 10000,
-						'msgFlag'   : 1,
-						'newsFlag'  : 1
 					}
 				};
 
@@ -135,7 +263,7 @@ define( function ( require ) {
 					}
 				};
 
-				var requests     = [ groupRequest, membersRequest, groupsRequest, wallRequest, leaderResourcesRequest, userResourcesRequest, leaderLinksRequest, userLinksRequest, groupAdminRequest, groupLastUpdateRequest ];
+				var requests     = [ groupRequest, membersRequest, groupsRequest, leaderResourcesRequest, userResourcesRequest, leaderLinksRequest, userLinksRequest, groupAdminRequest, groupLastUpdateRequest ];
 
 				var fetchingData = Remoting.fetch( requests );
 
@@ -144,104 +272,27 @@ define( function ( require ) {
 					this.layout = new App.Groups.Views.Layout();
 					App.content.show( this.layout );
 
+					this.fetchWall( groupId );
+
 					var group            = results [ 0 ];
 					var someMembers      = results [ 1 ].slice( 0, 8 );
 					var membersCount     = results [ 1 ].length;
 					var members          = results [ 1 ];
 					var groups           = results [ 2 ];
-					var groupWall        = results [ 3 ];
-					var leaderResources  = results [ 4 ];
-					var memberResources  = results [ 5 ];
-					var leaderLinks      = results [ 6 ];
-					var memberLinks      = results [ 7 ];
-					var userGroupAdmin   = results [ 8 ];
-					var groupLastUpdated = results [ 9 ];
-
-					var newsDefaults = function ( wall ) {
-						return _.map( wall, function ( element ) {
-							return _.defaults( element, { 'MessageThreadId' : element.NewsId, 'Message' : element.NewsEntry, 'MessageId' : 1 } );
-						} );
-					};
-
-					var getCommentGroup = function ( wall ) {
-						return _.groupBy( wall, 'MessageThreadId' );
-					};
-
-					var getFirstComment = function ( commentGroup ) {
-						return _.find( commentGroup, { 'MessageId' : 1 } );
-					};
-
-					// get the replies
-					var mapReplies = function ( commentGroup ) {
-						// return when MessageId is not 1
-						return _.map(
-							_.reject( commentGroup, { 'MessageId' : 1 } ), function ( elem ) {
-								return _.pick( elem,
-									'MessageThreadId',
-									'MessageId',
-									'Message',
-									'LicenseId',
-									'Creator',
-									'Created',
-									'Remover',
-									'Removed',
-									'CreatorFullName',
-									'CreatorAvatar',
-									'Created',
-									'NewsEntry',
-									'NewsId'
-								);
-							}
-						);
-					};
-
-					// get message first message in thread
-					var getMainComment = function ( commentGroup ) {
-						return _.pick( getFirstComment( commentGroup ),
-							'MessageThreadId',
-							'MessageId',
-							'Message',
-							'LicenseId',
-							'Creator',
-							'Created',
-							'Remover',
-							'Removed',
-							'CreatorFullName',
-							'CreatorAvatar',
-							'Created',
-							'NewsEntry',
-							'NewsId'
-						);
-					};
-
-					// set the comments
-					var attachReplies = function ( commentGroup ) {
-						return _.extend( getMainComment( commentGroup ), { 'replies' : mapReplies( commentGroup ) } );
-					};
-
-					// set the comments
-					var getComments = function ( wall ) {
-						return _.map( getCommentGroup( wall ),
-							function ( commentGroup ) {
-								return attachReplies( commentGroup );
-							}
-						);
-					};
-
-					// Set the comments
-					// the wall returned is a single list of comments
-					// using 'MessageThreadId' this will create an array of objects
-					// each object will contain the main message and an array of 'replies'
-					var newsWall = newsDefaults( groupWall );
-					var comments = getComments( newsWall );
+					var leaderResources  = results [ 3 ];
+					var memberResources  = results [ 4 ];
+					var leaderLinks      = results [ 5 ];
+					var memberLinks      = results [ 6 ];
+					var userGroupAdmin   = results [ 7 ];
+					var groupLastUpdated = results [ 8 ];
 
 					// Creating a comment needs to display the user avatar
 					// find the user in the members list
-					var userInGroup = _.find( members, function ( m ) {
+					this.userInGroup = _.find( members, function ( m ) {
 						return String( m.PersonnelId ) === String( Session.personnelId() );
 					} );
 
-					var commentCollection          = new CommentCollection( comments );
+					// var commentCollection          = new CommentCollection( comments );
 					var leaderResourcesCollection  = new ResourcesCollection( leaderResources );
 					var membersResourcesCollection = new ResourcesCollection( memberResources );
 					var groupModel                 = new GroupModel( group );
@@ -257,7 +308,7 @@ define( function ( require ) {
 					membersResourcesCollection.add( memberLinks );
 
 					Vent.on( 'group:removeComment', function ( model ) {
-						commentCollection.remove( model );
+						// commentCollection.remove( model );
 					}.bind( this ) );
 
 					// banner image and join button
@@ -277,31 +328,31 @@ define( function ( require ) {
 					this.layout.subNavRegion.show( subNavView );
 
 					// Show group member items
-					if ( userInGroup ) {
-
-						// Wall
-						var commentsView = new App.Groups.Views.CommentsCollection( { 'collection' : commentCollection, 'user' : userInGroup } );
-						this.layout.commentsRegion.show( commentsView );
+					if ( this.userInGroup ) {
 
 						// Comment create textarea
-						var commentCreateView = new App.Groups.Views.CommentCreate( { 'model' : groupModel, 'user' : userInGroup } );
+						var commentCreateView = new App.Groups.Views.CommentCreate( {
+							'model' : groupModel,
+							'user'  : this.userInGroup
+						} );
+
 						this.layout.commentCreateRegion.show( commentCreateView );
 
 						// update the wall after creating a message
 						Vent.on( 'group:createComment', function () {
 
 							// the wall needs to be requested because creating doesn't return the MessageThreadId
-							var requests     = [ wallRequest ];
+							// var requests     = [ wallRequest ];
 							var fetchingData = Remoting.fetch( requests );
 							App.when( fetchingData ).done( function ( results ) {
 
-								var newWall  = results[ 0 ];
-								var comments = getComments( newWall );
+								// var newWall  = results[ 0 ];
+								// var comments = getComments( newWall );
 
-								commentCollection = new CommentCollection( comments );
+								// commentCollection = new CommentCollection( comments );
 
-								var commentsView = new App.Groups.Views.CommentsCollection( { 'collection' : commentCollection, 'user' : userInGroup } );
-								this.layout.commentsRegion.show( commentsView );
+								// var commentsView = new App.Groups.Views.CommentsCollection( { 'collection' : commentCollection, 'user' : this.userInGroup } );
+								// this.layout.commentsRegion.show( commentsView );
 
 							}.bind( this ) );
 
@@ -325,7 +376,9 @@ define( function ( require ) {
 
 			}
 
-		};
+		} );
+
+		Mod.Controller = new ShowController();
 
 	} );
 

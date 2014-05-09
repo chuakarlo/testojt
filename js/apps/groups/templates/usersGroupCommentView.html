@@ -1,5 +1,15 @@
 <img class="profile" src="http://resources.pd360.com/PD360/uploads/avatars/profile/<%- CreatorAvatar %>">
 <div class="text">
-	<p><span class="fake-link child-creator-name"><%- CreatorFullName %></span> <span class="date"><%- Created %></span></p>
-	<p><%- Message %><a class="remove-reply" style="padding-left:3px;"><span class="fa fa-times"></span></a></p>
+	<p>
+		<span class="fake-link child-creator-name">
+			<%- CreatorFullName %>
+		</span>
+		<span class="date">
+			<%- Created %>
+		</span>
+	</p>
+	<p>
+		<%- Message %>
+		<button type="button" class="close remove-child">&times</button>
+	</p>
 </div>

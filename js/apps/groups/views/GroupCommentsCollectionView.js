@@ -17,6 +17,16 @@ define( function ( require ) {
 
 		'initialize' : function ( options ) {
 			this.user = options.user;
+		},
+
+		'appendHtml' : function ( collectionView, itemView, index ) {
+			// This is kind of hacky but it lets us insert new comments at the
+			// top of the collection view.
+			if ( this.collection.first() === itemView.model ) {
+				collectionView.$el.prepend( itemView.el );
+			} else {
+				collectionView.$el.append( itemView.el );
+			}
 		}
 
 	} );

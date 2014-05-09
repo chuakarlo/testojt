@@ -4,8 +4,14 @@
 		<img class="profile-main" src="http://resources.pd360.com/PD360/uploads/avatars/profile/<%- CreatorAvatar %>">
 
 		<div class="comment-main">
-			<p><span class="fake-link creator-name"><%- CreatorFullName %></span> <span class="date"><%- Created %></span></p>
-			<p><%- Message %><a id="remove-main" style="border: 1px; padding-left:3px;"><span class="fa fa-times"></span></a></p>
+			<p>
+				<span class="fake-link creator-name"><%- CreatorFullName %></span>
+				<span class="date"><%- Created %></span>
+			</p>
+			<p>
+				<%- Message %>
+				<button type="button" class="close remove-parent">&times</button>
+			</p>
 		</div>
 
 		<ul class="reply media-list">

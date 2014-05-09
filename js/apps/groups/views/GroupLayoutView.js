@@ -19,7 +19,8 @@ define( function ( require ) {
 			'commentsRegion'         : '.comments-list',
 			'membersRegion'          : '#members-list',
 			'resourcesRegion'        : '.resources-leader-list',
-			'resourcesMembersRegion' : '.resources-members-list'
+			'resourcesMembersRegion' : '.resources-members-list',
+			'loadingRegion'          : '#group-wall-loading'
 
 		}
 

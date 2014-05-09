@@ -6,13 +6,13 @@ define( function ( require ) {
 	var template   = require( 'text!search/templates/searchResultsLayout.html' );
 
 	return Marionette.Layout.extend( {
-		
+
 		'template' : _.template( template ),
 
 		'regions'  : {
 			'nav'     : '#search-result-nav',
 			'results' : '#search-result-region',
-			'loading' : '#search-result-loading',
+			'loading' : '#search-result-loading'
 		},
 
 		'ui' : {

@@ -2,23 +2,21 @@ define( function ( require ) {
 	'use strict';
 
 	var _          = require( 'underscore' );
+	var Backbone   = require( 'backbone' );
 	var Marionette = require( 'marionette' );
-	var Remoting   = require( 'Remoting' );
 	var Session    = require( 'Session' );
 	var $          = require( 'jquery' );
-	var Vent       = require( 'Vent' );
 	var App        = require( 'App' );
 
 	var template           = require( 'text!../templates/groupCommentsView.html' );
 	var usersTemplate      = require( 'text!../templates/usersGroupCommentsView.html' );
+	var newsTemplate = require( 'text!../templates/NewsItemView.html');
+
 	var GroupCommentView   = require( '../views/GroupCommentView' );
-	var GroupCommentModel  = require( '../models/CommentModel' );
+	// var GroupCommentModel  = require( '../models/CommentModel' );
 	var MiniPersonnelModel = require('../../common/entities/MiniPersonnel');
 	var MiniPersonnelView  = require('../../common/views/MiniPersonnel');
 	var stripHtml          = require( 'common/helpers/stripHtml' );
-
-	var path       = 'com.schoolimprovement.pd360.dao.groups.GroupMessagesGateway';
-	var objectPath = 'com.schoolimprovement.pd360.dao.groups.GroupMessages';
 
 	return Marionette.CompositeView.extend( {
 
@@ -27,18 +25,18 @@ define( function ( require ) {
 		'tagName'           : 'li',
 
 		'ui' : {
-			'message'  : '.comment-reply',
-			'creator'  : '.creator-name',
-			'replyBox' : '#reply-box'
+			'commentReply'  : '.comment-reply',
+			'removeComment' : '.remove-parent',
+			'creator'       : '.creator-name',
+			'replyBox'      : '.reply-box'
 		},
 
 		'events' : {
-			'click a#comment-reply'  : 'showComment',
-			'submit form'            : 'replyComment',
-			'click a#remove-main'    : 'removeComment',
-			'click @ui.creator'      : 'showMiniPersonnel',
-			'mouseenter @ui.creator' : 'showMiniPersonnel',
-			'mouseleave @ui.creator' : 'hideMiniPersonnel'
+			'submit form'             : 'replyComment',
+			'click @ui.removeComment' : 'removeComment',
+			'click @ui.creator'       : 'showMiniPersonnel',
+			'mouseenter @ui.creator'  : 'showMiniPersonnel',
+			'mouseleave @ui.creator'  : 'hideMiniPersonnel'
 		},
 
 		'initialize' : function ( options ) {
@@ -46,22 +44,20 @@ define( function ( require ) {
 			// grab the child collection from the parent model
 			// so that we can render the collection as children
 			// of this parent node
-			this.collection = this.model.replies;
+			this.collection = new App.Entities.WallCommentChildCollection(
+				this.model.get( 'replies' )
+			);
 
 			// strip html before deciding whether to show goals section or not
-			this.model.attributes.Message = stripHtml( this.model.attributes.Message );
+			this.model.set( 'Message', stripHtml( this.model.get( 'Message' ) ) );
 
 			this.user = options.user;
 
-			Vent.on( 'group:removeReply', function ( model ) {
-				this.collection.remove( model );
-			}.bind( this ) );
 		},
 
 		'onRender' : function () {
-
 			// Do not allow replies to news items
-			if ( this.model.attributes.NewsId ) {
+			if ( this.model.get( 'NewsId' ) ) {
 				this.ui.replyBox.hide();
 			}
 
@@ -121,17 +117,18 @@ define( function ( require ) {
 		},
 
 		'appendHtml' : function ( collectionView, itemView ) {
-
 			// ensure we nest the child list inside of
 			// the current list item
 			collectionView.$( '.reply' ).append( itemView.el );
-
 		},
 
 		'getTemplate' : function () {
 
+			if ( this.model.get( 'NewsEntry' ) ) {
+				return _.template( newsTemplate );
+			}
 			// add the remove button if user created the message
-			if ( String( this.model.attributes.Creator ) === String( Session.personnelId() ) ) {
+			if ( String( this.model.get( 'Creator' ) ) === String( Session.personnelId() ) ) {
 
 				return _.template( usersTemplate );
 
@@ -147,123 +144,76 @@ define( function ( require ) {
 
 			e.preventDefault();
 
-			// The container div for the reply input
-			var formGroup   = $( '#input-reply' + this.model.attributes.MessageThreadId ).parent();
-			var formElement = $( '#input-reply' + this.model.attributes.MessageThreadId );
-
-			// Error message displayed if reply message is blank
-			if ( this.ui.message.val() === '' ) {
+			if ( this.ui.commentReply.val() === '' ) {
 
 				var error = 'Reply is required';
-				this.displayError( formGroup, error );
-
-				return true;
+				this.showInputError( error );
+				return;
 			}
 
-			var maxMessageIdModel;
+			var lastComment = this.collection.last();
 
-			// The backend needs the MessageId of the last message that it increments by one
-			if ( this.model.replies.length > 0 ) {
-				maxMessageIdModel = _.max( this.model.replies.models, function ( model ) {
-					return model.attributes.MessageId;
-				} );
-			} else {
-				maxMessageIdModel = this.model;
+			if ( !lastComment ) {
+				lastComment = this.model;
 			}
 
-			var message = { };
+			// The backend requires some of the attributes from the last
+			// comment in order to create a new comment.
+			var replyModel = new App.Entities.WallCommentModel( {
+				'MessageThreadId' : lastComment.get( 'MessageThreadId' ),
+				'MessageId'       : lastComment.get( 'MessageId' ),
+				'LicenseId'       : lastComment.get( 'LicenseId' ),
+				'Message'         : this.ui.commentReply.val(),
+				'Creator'         : Session.personnelId(),
+				'CreatorAvatar'   : this.user.Avatar
+			}, {
+				'reply' : true
+			} );
 
-			message.MessageThreadId = maxMessageIdModel.attributes.MessageThreadId;
-			message.MessageId       = maxMessageIdModel.attributes.MessageId;
-			message.LicenseId       = maxMessageIdModel.attributes.LicenseId;
-			message.Message         = this.ui.message.val();
-			message.Creator         = Session.personnelId();
-			message.Created         = '';
-			message.CreatorAvatar   = this.user.Avatar;
-			message.CreatorFullName = '';
-			message.Remover         = 0;
-			message.Removed         = '';
+			replyModel.save(null, {
 
-			var request = {
-				'path'       : path,
-				'objectPath' : objectPath,
-				'method'     : 'respondToMessage',
-				'args'       : message
-			};
+				'success' : _.bind( function () {
 
-			var requests     = [ request ];
-			var fetchingData = Remoting.fetch( requests );
+					// We have to figure out where to start the query
+					this.model.collection.getComputedPosition( this.model );
+					var computedModelIndex = this.model.collection.computedPosition;
 
-			App.when( fetchingData ).done( function ( results ) {
+					var successCb = _.bind( function () {
+						this.collection.set( this.model.get( 'replies' ) );
+						this.clearForm();
+					}, this );
 
-				this.clearForm( formGroup, formElement );
+					var options = {
+						'startRow'  : computedModelIndex,
+						'numRows'   : 1,
+						'successCb' : successCb
+					};
 
-				var groupCommentModel = new GroupCommentModel( message );
-				this.collection.add( groupCommentModel );
+					App.vent.trigger( 'groups:newCommentFetch', options );
 
-			}.bind( this ) ).fail( function () {
-				// TODO: error handling
-
-			}.bind( this ) );
-
-		},
-
-		clearForm : function ( formGroup, formElement ) {
-
-			// removes errors from input
-			formGroup.removeClass( 'has-error' );
-			formGroup.find( '.help-block' ).remove();
-			formElement.val('');
+				}, this)
+			} );
 
 		},
 
-		displayError : function ( formGroup, error ) {
-
-			// add error to input
-			formGroup.addClass( 'has-error' );
-			formGroup.append(
-				$( '<span/>' )
-				.attr( 'class', 'help-block')
-				.html( error )
-			);
-
+		removeComment : function ( ) {
+			this.model.destroy();
 		},
 
-		removeComment : function ( e ) {
+		'clearForm' : function () {
+			// removes comment from textarea
+			this.ui.commentReply.val( '' );
+			this.clearInputError();
+		},
 
-			e.preventDefault();
+		'showInputError' : function ( msg ) {
+			var invalid = Backbone.Validation.callbacks.invalid;
+			invalid( this, 'comment-reply', msg, 'name' );
+		},
 
-			var message = { };
-
-			message.MessageThreadId = this.model.attributes.MessageThreadId;
-			message.MessageId       = this.model.attributes.MessageId;
-			message.LicenseId       = this.model.attributes.LicenseId;
-			message.Message         = this.model.attributes.Message;
-			message.Creator         = this.model.attributes.Creator;
-			message.CreatorAvatar   = this.model.attributes.CreatorAvatar;
-			message.Created         = this.model.attributes.Created;
-			message.Remover         = this.model.attributes.Remover;
-			message.Removed         = this.model.attributes.Removed;
-
-			var request = {
-				'path'       : path,
-				'objectPath' : objectPath,
-				'method'     : 'deleteByObj',
-				'args'       : message
-			};
-
-			var requests     = [ request ];
-			var fetchingData = Remoting.fetch( requests );
-
-			App.when( fetchingData ).done( function ( results ) {
-
-				Vent.trigger( 'group:removeComment', this.model );
-
-			}.bind( this ) ).fail( function () {
-				// TODO: error handling
-
-			}.bind( this ) );
-
+		'clearInputError' : function () {
+			var valid = Backbone.Validation.callbacks.valid;
+			valid( this, 'comment-reply', 'name' );
 		}
 
 	} );

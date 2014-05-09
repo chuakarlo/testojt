@@ -2,17 +2,15 @@ define( function ( require ) {
 	'use strict';
 
 	var _          = require( 'underscore' );
+	var Backbone   = require( 'backbone' );
 	var Marionette = require( 'marionette' );
-	var Remoting   = require( 'Remoting' );
 	var Session    = require( 'Session' );
-	var Vent       = require( 'Vent' );
 	var App        = require( 'App' );
 
-	var GroupCommentModel = require( '../models/CommentModel' );
-	var template          = require( 'text!../templates/groupCommentCreateView.html' );
-	var path              = 'com.schoolimprovement.pd360.dao.groups.GroupMessagesGateway';
-	var objectPath        = 'com.schoolimprovement.pd360.dao.groups.GroupMessages';
-	var stripHtml         = require( 'common/helpers/stripHtml' );
+	var template  = require( 'text!../templates/groupCommentCreateView.html' );
+	var stripHtml = require( 'common/helpers/stripHtml' );
+
+	require( 'groups/entities/WallCommentModel');
 
 	return Marionette.ItemView.extend( {
 
@@ -35,40 +33,42 @@ define( function ( require ) {
 
 			e.preventDefault();
 
-			var message = { };
+			var msg = String( stripHtml( this.ui.commentCreate.val() ) );
 
-			message.MessageThreadId = 0;
-			message.MessageId       = 1;
-			message.LicenseId       = this.model.attributes.LicenseId;
-			// strip html and new line characters
-			message.Message         = String( stripHtml( this.ui.commentCreate.val() ) );
-			message.Creator         = Session.personnelId();
-			message.Created         = '';
-			message.CreatorAvatar   = this.user.Avatar;
-			message.CreatorFullName = '';
-			message.Remover         = '';
-			message.Removed         = '';
+			if ( msg === '' ) {
+				this.showInputError( 'Must contain a message' );
+				return;
+			}
 
-			var request = {
-				'path'       : path,
-				'objectPath' : objectPath,
-				'method'     : 'createNewMessage',
-				'args'       : message
-			};
+			var model = new App.Entities.WallCommentModel( {
+				'MessageThreadId' : 0,
+				'MessageId'       : 1,
+				'LicenseId'       : this.model.get( 'LicenseId'),
+				'Message'         : msg,
+				'Creator'         : Session.personnelId(0),
+				'CreatorAvatar'   : this.user.Avatar
+			} );
 
-			var requests     = [ request ];
-			var fetchingData = Remoting.fetch( requests );
+			model.save( null, {
+				'success' : _.bind( function () {
+					this.clearForm();
 
-			App.when( fetchingData ).done( function ( results ) {
+					var options = {
+						'startRow' : 0,
+						'numRows'  : 1
+					};
 
-				this.clearForm();
+					App.vent.trigger( 'groups:newCommentFetch', options );
 
-				var groupCommentModel = new GroupCommentModel( message );
-				Vent.trigger( 'group:createComment', groupCommentModel );
+				}, this ),
 
-			}.bind( this ) ).fail( function () {
-				// TODO: error handling
-
+				'error' : function () {
+					var msg = 'An error occurred while saving your comment. ' +
+					'Please try again later.';
+					App.vent.trigger( 'flash:message', {
+						'message' : msg
+					} );
+				}
 			} );
 
 		},
@@ -76,6 +76,17 @@ define( function ( require ) {
 		'clearForm' : function () {
 			// removes comment from textarea
 			this.ui.commentCreate.val( '' );
+			this.clearInputError();
+		},
+
+		'showInputError' : function ( msg ) {
+			var invalid = Backbone.Validation.callbacks.invalid;
+			invalid( this, 'comment-create', msg, 'name' );
+		},
+
+		'clearInputError' : function () {
+			var valid = Backbone.Validation.callbacks.valid;
+			valid( this, 'comment-create', 'name' );
 		}
 
 	} );

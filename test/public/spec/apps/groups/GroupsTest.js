@@ -10,6 +10,11 @@ define( function ( require ) {
 
 	describe ('Groups Module', function () {
 
+		before( function () {
+			var stub = sinon.stub().returns(false);
+			App.reqres.setHandler( 'pd360:available', stub );
+		} );
+
 		after( function () {
 			App.module( 'Groups' ).stop();
 		} );
@@ -106,7 +111,7 @@ define( function ( require ) {
 				App.Groups.Edit.Controller.should.have.property( 'leaveGroup' );
 				App.Groups.Edit.Controller.should.have.property( 'joinGroup' );
 				App.Groups.Edit.Controller.should.have.property( 'ignoreGroup' );
-				App.Groups.Edit.Controller.should.have.property( 'acceptGroup' );				
+				App.Groups.Edit.Controller.should.have.property( 'acceptGroup' );
 
 			} );
 
@@ -228,7 +233,7 @@ define( function ( require ) {
 					request.should.have.length( 1 );
 
 					var req = request[ 0 ];
-					
+
 					req.should.have.property( 'path' );
 					req.path.should.equal( 'com.schoolimprovement.pd360.dao.GroupService' );
 
@@ -247,17 +252,17 @@ define( function ( require ) {
 					req.args.InviteeEmail.should.equal( expectedInviteeEmail );
 
 					return true;
-				} ) );				
+				} ) );
 			} );
 
 			it( '`acceptGroup` should call remoting', function () {
 				var expectedLicenseId = 1;
-				var expectedSingleUseKey = 1234;				
+				var expectedSingleUseKey = 1234;
 
 				var fakeModel = {
 					'attributes' : {
 						'LicenseId'   : expectedLicenseId,
-						'SingleUseKey'   : expectedSingleUseKey						
+						'SingleUseKey'   : expectedSingleUseKey
 					}
 				};
 
@@ -295,10 +300,10 @@ define( function ( require ) {
 					secondReq.should.have.property( 'args' );
 
 					secondReq.args.should.have.property( 'Key' );
-					secondReq.args.Key.should.equal( expectedSingleUseKey );											
+					secondReq.args.Key.should.equal( expectedSingleUseKey );
 
 					return true;
-				} ) );				
+				} ) );
 			} );
 
 		} );
