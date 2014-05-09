@@ -5,9 +5,14 @@ define( function ( require ) {
 
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
+	var App        = require( 'App' );
 
-	var QuestionsItemView = require( 'videoPlayer/views/QuestionItemView' );
-	var template          = require( 'text!videoPlayer/templates/questionsCompositeView.html' );
+	var QuestionsItemView     = require( 'videoPlayer/views/QuestionItemView' );
+	var ReflectionSummaryView = require( 'videoPlayer/views/ReflectionSummaryView' );
+	var FollowupSummaryView   = require( 'videoPlayer/views/FollowupSummaryView' );
+
+	var template = require( 'text!videoPlayer/templates/questionsCompositeView.html' );
+	var vq       = App.VideoPlayer.Entities.VideoQuestions;
 
 	return Marionette.CompositeView.extend( {
 
@@ -20,10 +25,11 @@ define( function ( require ) {
 		'itemViewContainer' : '#questions-item-region',
 
 		'ui' : {
-			'headerTitle'  : '#questions-title',
+			'header'       : '#questions-header',
+			'headerTitle'  : '#questions-header h3',
 			'carouselCont' : '#questions-items',
 			'carousel'     : '#questions-item-region',
-			'pagination'   : '#questions-paging',
+			'pagination'   : '#questions-pagination',
 			'currentPage'  : '#current-page',
 			'lastPage'     : '#last-page',
 			'submitButton' : '#submit-answers',
@@ -37,9 +43,35 @@ define( function ( require ) {
 			'click @ui.submitButton' : 'submitAnswers'
 		},
 
+		'isEmpty' : function () {
+			return ( this.collection.isEmpty() ||
+					vq.reflectionSummary ||
+					vq.followupSummary );
+		},
+
+		'getEmptyView' : function () {
+			if ( this.collection.isEmpty() ) {
+				this.remove();
+			} else if ( vq.reflectionSummary ) {
+				return ReflectionSummaryView;
+			} else if ( vq.followupSummary ) {
+				return FollowupSummaryView;
+			}
+		},
+
+		'itemViewOptions' : function () {
+			if ( vq.reflectionSummary ) {
+				return {
+					'diff' : vq.followupTime
+				};
+			}
+		},
+
 		'initialize' : function ( options ) {
 			_.bindAll( this );
 			_.extend( this, options );
+
+			this.listenTo( this, 'before:item:added', this.handleUIChange );
 		},
 
 		'onShow' : function () {
@@ -62,26 +94,20 @@ define( function ( require ) {
 			this.ui.carouselCont.css( 'overflow-y', 'auto' );
 		},
 
+		'handleUIChange' : function () {
+			this.ui.header.toggle( !this.isEmpty() );
+			this.ui.pagination.toggle( !this.isEmpty() );
+		},
+
 		'showHeader' : function () {
 			var type = {
 				'1' : 'Reflection Questions',
 				'2' : 'Follow-up Questions'
 			};
-
-			if ( this.collection.isEmpty() ) {
-				this.ui.headerTitle.text( '' );
-				return;
-			}
-
 			this.ui.headerTitle.text( type[ this.collection.first().get( 'QuestionTypeId' ) ] );
 		},
 
 		'showPagination' : function () {
-			if ( this.collection.isEmpty() ) {
-				this.ui.pagination.hide();
-				return;
-			}
-
 			this.ui.currentPage.text( 1 );
 			this.ui.lastPage.text( this.collection.length );
 		},

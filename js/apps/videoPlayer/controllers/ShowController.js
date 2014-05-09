@@ -58,14 +58,7 @@ define( function ( require ) {
 					}
 				};
 
-				var questionsRequest = {
-					'path'   : 'com.schoolimprovement.pd360.dao.ContentService',
-					'method' : 'getQuestionsWithAnswers',
-					'args'   : {
-						'persId'    : Session.personnelId(),
-						'ContentId' : videoModel.id
-					}
-				};
+				var questionsRequest = App.request( 'vq:fetch', videoModel.id );
 
 				var queueContentsRequest = {
 					'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
@@ -85,19 +78,17 @@ define( function ( require ) {
 					}
 				};
 
-				var requests = [ questionsRequest, relatedVideosRequest, queueContentsRequest, segmentsRequest ];
+				var requests = [ relatedVideosRequest, queueContentsRequest, segmentsRequest ];
+				var videoEntities = Remoting.fetch( requests );
 
-				var fetchingData = Remoting.fetch( requests );
-
-				App.when( fetchingData ).done( function ( response ) {
+				App.when( questionsRequest, videoEntities ).done( function ( questions, entities ) {
 
 					var layout = new App.VideoPlayer.Views.PageLayout( { 'model' : videoModel } );
 					App.content.show( layout );
 
-					var questions     = response[ 0 ];
-					var relatedVideos = response[ 1 ].slice( 1 );
-					var queueContents = response[ 2 ];
-					var segments      = response[ 3 ];
+					var relatedVideos = entities[ 0 ].slice( 1 );
+					var queueContents = entities[ 1 ];
+					var segments      = entities[ 2 ];
 
 					// Videojs player view
 					var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( { 'model' : videoModel } );
@@ -108,8 +99,6 @@ define( function ( require ) {
 					layout.videoInfoRegion.show( videoInfoView );
 
 					// Questions view
-					// Determine what type of questions to show ( reflection/followup )
-					questions = App.VideoPlayer.Controller.Filter.setQuestions( questions );
 					var questionsCollection = new QuestionsCollection( questions );
 
 					// Set question ContentTypeId based on video ContentTypeId.
@@ -153,6 +142,8 @@ define( function ( require ) {
 					var videoTabsView = new App.VideoPlayer.Views.VideoTabsView();
 					layout.videoTabsRegion.show( videoTabsView );
 
+				} ).fail( function ( error ) {
+					App.content.show( new App.Common.ErrorView( { 'message' : 'Page error.' } ) );
 				} );
 
 			},

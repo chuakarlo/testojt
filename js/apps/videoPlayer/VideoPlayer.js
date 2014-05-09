@@ -7,8 +7,8 @@ define( function ( require ) {
 	App.module( 'VideoPlayer', function ( VideoPlayer ) {
 
 		require( 'common/views' );
+		require( 'videoPlayer/entities/Questions' );
 		require( 'videoPlayer/views/Views' );
-		require( 'videoPlayer/controllers/FilterController' );
 		require( 'videoPlayer/controllers/ShowController' );
 		require( 'videoPlayer/controllers/QueueController' );
 		require( 'videoPlayer/controllers/SearchController' );

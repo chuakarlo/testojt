@@ -2,7 +2,6 @@ define( function( require ) {
 	'use strict';
 
 	var $          = require( 'jquery' );
-	var moment     = require( 'moment' );
 	var Marionette = require( 'marionette' );
 	var Backbone   = require( 'backbone' );
 	var Remoting   = require( 'Remoting' );
@@ -71,21 +70,17 @@ define( function( require ) {
 			} );
 
 			it( '.showVideoResources should request for video resources and display layout', function () {
-				var fakeVideoInfo = { 'ContentId' : 123 };
-				var fakeQuestions = {
-					'QuestionText' : '',
-					'AnswerText' : ''
-				};
-				var fakeQueue = { 'ContentId' : 1 };
-				var fakeVideos = [ { }, { 'ContentId' : 123 } ];
-				var fakeSegments = [ ];
-				var fakeResources = {
+				var fakeVideoInfo = {
+					'ContentId'          : 123,
 					'GuidebookFileName'  : '',
 					'AudioFileName'      : '',
 					'TranscriptFileName' : ''
 				};
+				var fakeQueue = { 'ContentId' : 1 };
+				var fakeVideos = [ { }, { 'ContentId' : 123 } ];
+				var fakeSegments = [ ];
 
-				var fakeData = [ [ fakeQuestions ], fakeVideos, , [ fakeQueue ], fakeSegments, fakeResources ];
+				var fakeData = [ fakeVideos, , [ fakeQueue ], fakeSegments ];
 
 				var showStub = sinon.stub( App.content, 'show' );
 				var remotingStub = sinon.stub( Remoting, 'fetch').returns( fakeData );
@@ -106,7 +101,7 @@ define( function( require ) {
 				App.VideoPlayer.Controller.Show.showVideoResources( fakeVideoInfo );
 
 				// data have been requested
-				remotingStub.should.have.callCount( 1 );
+				remotingStub.should.have.callCount( 2 );
 
 				// should have created a new layout
 				layout.should.have.been.calledWithNew;
@@ -121,43 +116,6 @@ define( function( require ) {
 				Remoting.fetch.restore();
 				App.content.show.restore();
 				App.VideoPlayer.Views.PageLayout.restore();
-			} );
-
-		} );
-
-		describe( 'Filter Controller', function () {
-
-			it( 'is attached to `App`', function () {
-				App.VideoPlayer.should.have.property( 'Controller' );
-				App.VideoPlayer.Controller.should.have.property( 'Filter' );
-				App.VideoPlayer.Controller.Filter.should.have.property( 'setQuestions' );
-			 } );
-
-			 describe( '.filterQuestions', function () {
-
-				 it( 'should return followup questions after a specified time', function ( done ) {
-					 var options = {
-						'timezone' : 'MST7MDT',
-						'unit'     : 'seconds',
-						'duration' : 1
-					 };
-
-					 var fakeData = [ {
-						 'Created' : moment().tz( options.timezone ).format( 'MMMM, D YYYY H:mm:ss' ),
-						 'QuestionTypeId' : 1
-					 }, {
-						 'Created' : '',
-						 'QuestionTypeId' : 2
-					 } ];
-
-					 setTimeout( function () {
-						var questions = App.VideoPlayer.Controller.Filter.setQuestions( fakeData, options );
-						questions[ 0 ].QuestionTypeId.should.equal( 2 );
-						done();
-					 }, 1000 );
-
-				} );
-
 			} );
 
 		} );
