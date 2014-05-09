@@ -137,7 +137,15 @@ define( function ( require ) {
 			},
 
 			'showReports' : function () {
-				this.layout.content.show( new ReportsView() );
+
+				var pd360Loaded = App.request( 'pd360:loaded' );
+				this.layout.content.show( new App.Common.LoadingView() );
+
+				App.when( pd360Loaded ).done( function () {
+					this.layout.content.show( new ReportsView() );
+					App.request( 'pd360:navigate', 'home', 'homePersonalReports' );
+				}.bind( this ) );
+
 			},
 
 			'showLicenses' : function () {
