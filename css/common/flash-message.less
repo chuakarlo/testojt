@@ -5,27 +5,35 @@
 	width    : 100%;
 }
 
+.message-style(@color) {
+	border-top : 5px solid @color;
+
+	.flash-close {
+		background-color : @color;
+	}
+}
+
 .flash-message-container {
 
-	background : rgba( 0,0,0,0.75 );
+	background : rgba( 0,0,0,0.85 );
 	color      : #fff;
 	padding    : 15px;
 	text-align : center;
 
 	&.success {
-		border-top : 5px solid @brand-success;
-
-		.flash-close {
-			background-color : @brand-success;
-		}
+		.message-style( @brand-success );
 	}
 
-	&.error {
-		border-top : 5px solid @brand-danger;
+	&.info {
+		.message-style( @brand-info );
+	}
 
-		.flash-close {
-			background-color : @brand-danger;
-		}
+	&.warning {
+		.message-style( @brand-warning );
+	}
+
+	&.error, &.danger {
+		.message-style( @brand-danger );
 	}
 
 	.message {
@@ -41,7 +49,7 @@
 	width                   : 3em;
 	height                  : 1.5em;
 	text-align              : center;
-	line-height             : 1.5;
+	line-height             : 2;
 	border-top-left-radius  : 50%;
 	border-top-right-radius : 50%;
 	cursor                  : pointer;

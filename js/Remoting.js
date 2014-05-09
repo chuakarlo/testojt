@@ -13,7 +13,7 @@ define( function ( require ) {
 		var getSignature = function ( data, callback ) {
 
 			// if PD360 is available
-			if( App.request( 'pd360:available' ) ) {
+			if ( App.request( 'pd360:available' ) ) {
 				// get the signature from PD360
 				var signature = App.request( 'pd360:signature', data.method, data.args );
 
@@ -35,7 +35,7 @@ define( function ( require ) {
 				'method'      : 'cfJsonAPIMethod1',
 				'CFToken'     : Session.token(),
 				'personnelId' : Session.personnelId(),
-				'args' : {
+				'args'        : {
 					'method' : data.method,
 					'args'   : data.args
 				}
@@ -81,7 +81,7 @@ define( function ( require ) {
 				},
 
 				'error' : function ( xhr, status, errorThrown ) {
-					callback( errorThrown );
+					callback( 'Remoting AJAX Error' );
 				}
 			} );
 
