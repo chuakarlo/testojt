@@ -12,6 +12,7 @@ define( function ( require ) {
 	var template          = require( 'text!../templates/groupCommentCreateView.html' );
 	var path              = 'com.schoolimprovement.pd360.dao.groups.GroupMessagesGateway';
 	var objectPath        = 'com.schoolimprovement.pd360.dao.groups.GroupMessages';
+	var stripHtml         = require( 'common/helpers/stripHtml' );
 
 	return Marionette.ItemView.extend( {
 
@@ -39,7 +40,8 @@ define( function ( require ) {
 			message.MessageThreadId = 0;
 			message.MessageId       = 1;
 			message.LicenseId       = this.model.attributes.LicenseId;
-			message.Message         = String( this.ui.commentCreate.val() );
+			// strip html and new line characters
+			message.Message         = String( stripHtml( this.ui.commentCreate.val() ) );
 			message.Creator         = Session.personnelId();
 			message.Created         = '';
 			message.CreatorAvatar   = this.user.Avatar;
