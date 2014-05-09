@@ -48,6 +48,7 @@ define( function ( require ) {
 				var fetchingData = Remoting.fetch( requests );
 
 				App.when( fetchingData ).done( function ( results ) {
+
 					var groups = new GroupCollection( results[ 0 ] );
 					var userProfile = results[ 1 ];
 
@@ -61,6 +62,7 @@ define( function ( require ) {
 					var fetchingData = Remoting.fetch( groupInvitesRequest );
 
 					App.when( fetchingData ).done( function ( result ) {
+
 						var groupInvites = new GroupInviteCollection( result[ 0 ] );
 						groupInvites.each( function ( data ) {
 							data.set( { 'InviteeEmail' : userProfile.EmailAddress } );
@@ -72,11 +74,20 @@ define( function ( require ) {
 
 						var groupInvitesView = new App.Groups.Views.InvitesList( { 'collection' : groupInvites } );
 						this.layout.groupInvitesRegion.show( groupInvitesView );
+
 					}.bind( this ) ).fail( function ( error ) {
-						// TODO: error handling
+
+						App.vent.trigger( 'flash:message', {
+							'message' : 'An error occurred. Please try again later.'
+						} );
+
 					} );
 				}.bind( this ) ).fail( function ( error ) {
-					// TODO: error handling
+
+					App.vent.trigger( 'flash:message', {
+						'message' : 'An error occurred. Please try again later.'
+					} );
+
 				} );
 
 			}

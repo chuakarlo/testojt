@@ -4,6 +4,7 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var Backbone   = require( 'backbone' );
 	var App        = require( 'App' );
+	var Ladda      = require( 'ladda' );
 	var _          = require( 'underscore' );
 	var $          = require( 'jquery' );
 
@@ -133,25 +134,29 @@ define( function ( require ) {
 
 			if ( this.model.isValid( [ 'EmailAddress' ] ) ) {
 
-				var that = this;
+				this.ui.email.prop( 'disabled', true );
 
 				var usedRequest = App.request( 'user:byEmail', this.ui.email.val() );
 
-				this.ui.email.hide();
-				$( '.alert-warning.js-email' ).removeClass( 'hidden' );
+				this.showFlashMessage( 'checkingEmail' );
 
 				App.when( usedRequest ).done( function ( used ) {
 
+					App.flashMessage.close();
+
 					if ( used.length > 2 ) {
-						$( '.alert-danger.js-email' ).removeClass( 'hidden' );
-					} else {
-						$( '.alert-danger.js-email' ).addClass( 'hidden' );
+						this.showFlashMessage( 'emailUsed' );
 					}
 
-					that.ui.email.show();
-					$( '.alert-warning' ).addClass( 'hidden' );
+				}.bind( this ) ).fail( function () {
 
-				} );
+					this.showFlashMessage( 'fetchingEmailError' );
+
+				}.bind( this ) ).always( function () {
+
+					this.ui.email.prop( 'disabled', false );
+
+				}.bind( this ));
 
 			}
 
@@ -165,66 +170,67 @@ define( function ( require ) {
 			element.val( otherOption ).trigger( 'change' ).prop( 'disabled' , true );
 		},
 
-		'populateSelect' : function ( element, id ) {
+		'populateSelect' : function ( element ) {
 
-			var that = this;
+			App.flashMessage.close();
 
 			element.hide();
-
-			var name = element.attr( 'name' );
-
-			if ( name === 'DistrictName' ) {
-
-				var districtRequest = App.request( 'common:districts', id );
-
-				App.when( districtRequest ).done( function ( districts ) {
-
-					that.addBinding( null, {
-						'[name="DistrictName"]' : {
-							'observe'       : 'DistrictName',
-							'selectOptions' : {
-								'collection' : districts
-							},
-							'defaultOption' : {
-								'label' : 'Choose a district...',
-								'value' : null
-							}
-						}
-					} );
-
-					element.show();
-
-				} ).fail( function ( error ) {
-					// TODO: error handling
-				} );
-
-			} else if ( name === 'ClientId' ) {
-
-				var schoolsRequest = App.request( 'common:schools', id );
-
-				App.when( schoolsRequest ).done( function ( schools ) {
-
-					that.addBinding( null, {
-						'[name="ClientId"]' : {
-							'observe'       : 'ClientId',
-							'selectOptions' : {
-								'collection' : schools
-							}
-						}
-					} );
-
-					element.show();
-
-				} ).fail( function ( error ) {
-					// TODO: error handling
-				} );
-
-			} else {
-				element.show();
-			}
-
 			element.prop( 'disabled', false );
 
+		},
+
+		'populateDistricts' : function ( element, id ) {
+			this.populateSelect( element );
+
+			var districtRequest = App.request( 'common:districts', id );
+
+			App.when( districtRequest ).done( function ( districts ) {
+
+				this.addBinding( null, {
+					'[name="DistrictName"]' : {
+						'observe'       : 'DistrictName',
+						'selectOptions' : {
+							'collection' : districts
+						},
+						'defaultOption' : {
+							'label' : 'Choose a district...',
+							'value' : null
+						}
+					}
+				} );
+
+				this.ui.district.show();
+
+			}.bind( this ) ).fail( function ( error ) {
+
+				this.showFlashMessage( 'fetchingDistrictsError' );
+
+			}.bind( this ) );
+		},
+
+		'populateSchools' : function ( element, id ) {
+			this.populateSelect( element );
+
+			var schoolsRequest = App.request( 'common:schools', id );
+
+			App.when( schoolsRequest ).done( function ( schools ) {
+
+				this.addBinding( null, {
+					'[name="ClientId"]' : {
+						'observe'       : 'ClientId',
+						'selectOptions' : {
+							'collection' : schools
+						}
+					}
+				} );
+
+				this.ui.school.show();
+
+			}.bind ( this ) ).fail( function ( error ) {
+
+				this.showFlashMessage( 'fetchingSchoolsError' );
+
+			}.bind( this ) );
 		},
 
 		'updateStates' : function ( event ) {
@@ -236,6 +242,7 @@ define( function ( require ) {
 				this.forceOther( this.ui.state, this.other.state );
 			} else {
 				this.populateSelect( this.ui.state );
+				this.ui.state.show();
 			}
 
 			this.updateDistricts( event );
@@ -249,7 +256,7 @@ define( function ( require ) {
 			} else if ( stateOption === this.other.state ) {
 				this.forceOther( this.ui.district, this.other.district );
 			} else {
-				this.populateSelect( this.ui.district, this.ui.state.val() );
+				this.populateDistricts( this.ui.district, this.ui.state.val() );
 			}
 
 			this.updateSchools( event );
@@ -263,7 +270,7 @@ define( function ( require ) {
 			} else if ( districtOption === this.other.district ) {
 				this.forceOther( this.ui.school, this.other.school );
 			} else {
-				this.populateSelect( this.ui.school, this.ui.district.val() );
+				this.populateSchools( this.ui.school, this.ui.district.val() );
 			}
 
 		},
@@ -272,6 +279,8 @@ define( function ( require ) {
 			event.preventDefault();
 
 			if ( this.model.isValid( true ) ) {
+				var l = Ladda.create( document.querySelector( '#register-button' ) );
+				l.start();
 
 				// override element values since we save the label instead of the ID
 				this.model.attributes.State        = this.ui.state.find( 'option:selected' ).text();
@@ -280,32 +289,70 @@ define( function ( require ) {
 
 				var url = '/com/schoolimprovement/pd360/dao/RespondService.cfc?method=RespondCreateUser&' + $.param( this.model.attributes );
 
-				$( 'form' ).hide();
-				$( '.js-process' ).addClass( 'hidden' );
-				$( '.js-submitting' ).removeClass( 'hidden' );
-
 				$.ajax( {
 					'url' : url
 				} ).done( function ( data, textStatus, jqXHR ) {
 
-					if ( data === '\"email address already in use\"' ) {
-						$( 'form' ).show();
-						$( '.js-process' ).addClass( 'hidden' );
-						$( '.js-fail' ).removeClass( 'hidden' );
+					this.showFlashMessage( 'creationSuccess', { 'email' : this.model.get( 'EmailAddress' ) } );
 
-					} else {
-						$( '.js-process' ).addClass( 'hidden' );
-						$( '.js-complete' ).removeClass( 'hidden' );
+					if ( data === '\"email address already in use\"' ) {
+						this.showFlashMessage( 'emailUsed' );
 					}
 
-				} ).fail( function () {
-					// TODO: error handling
-					$( 'form' ).show();
-					$( '.js-process' ).addClass( 'hidden' );
-					$( '.js-fail' ).removeClass( 'hidden' );
-				} );
+				}.bind( this ) ).fail( function () {
+
+					this.showFlashMessage( 'creationError' );
+
+				}.bind( this ) ).always( function () {
+
+					l.stop();
+
+				});
 
 			}
+		},
+
+		'showFlashMessage' : function ( message, option ) {
+
+			option = option || { };
+
+			var messages = {
+
+				'emailUsed' : {
+					'message' : 'This e-mail is already in use. Your school / district may have already set up your account.<br>Please try to reset your <a href="/#forgotpassword">{password}</a>.'
+				},
+
+				'fetchingEmailError' : {
+					'message' : 'An error occurred checking email.'
+				},
+
+				'checkingEmail' : {
+					'message' : 'Checking for e-mail in use.',
+					'type'    : 'warning',
+					'timeout' : false
+				},
+
+				'creationError' : {
+					'message' : 'There has been an error creating your account. Please try again.'
+				},
+
+				'creationSuccess' : {
+					'message' : 'Before registration is complete you need to validate your account by following the instructions emailed to ' + option.email + '. After validation you will be able to <a href="/#login">login</a>.',
+					'type'    : 'success',
+					'timeout' : false
+				},
+
+				'fetchingDistrictsError' : {
+					'message' : 'An error occurred fetching districts. Please try again later.'
+				},
+
+				'fetchingSchoolsError' : {
+					'message' : 'An error occurred fetching schools. Please try again later.'
+				}
+
+			};
+
+			App.vent.trigger( 'flash:message' , messages[ message ] );
 		}
 
 	} );

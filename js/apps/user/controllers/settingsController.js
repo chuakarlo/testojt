@@ -64,6 +64,8 @@ define( function ( require ) {
 
 			'showPage' : function ( page ) {
 
+				App.flashMessage.close();
+
 				if ( page === 'personal-reports' ) {
 
 					this.showReports();
@@ -92,8 +94,8 @@ define( function ( require ) {
 			'showProfile' : function () {
 				this.showLoading();
 
-				var rolesRequest     = App.request( 'user:roles' );
 				var profileRequest   = App.request( 'user:profile' );
+				var rolesRequest     = App.request( 'user:roles' );
 				var subjectsRequest  = App.request( 'user:subjects' );
 				var personnelRequest = App.request( 'user:personnel' );
 				var gradesRequest    = App.request( 'user:grade-levels' );
@@ -113,7 +115,15 @@ define( function ( require ) {
 
 					this.layout.content.show( profileView );
 
-				}.bind( this ) ).fail( this.showProfileError.bind( this ) );
+				}.bind( this ) ).fail( function ( error ) {
+
+					this.showProfileError( error );
+
+					App.vent.trigger( 'flash:message', {
+						'message' : 'An error occurred. Please try again later.'
+					} );
+
+				}.bind( this ) );
 
 			},
 

@@ -4,9 +4,14 @@ define( function ( require ) {
 	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
 	var Ladda      = require( 'ladda' );
+	var Backbone   = require( 'backbone' );
 	var Marionette = require( 'marionette' );
 	var Session    = require( 'Session' );
 	var template   = require( 'text!user/templates/login/loginView.html' );
+	var App        = require( 'App' );
+
+	require( 'validation' );
+	require( 'backbone.stickit' );
 
 	return Marionette.ItemView.extend( {
 		'template' : _.template( template ),
@@ -17,9 +22,33 @@ define( function ( require ) {
 		},
 
 		'ui' : {
-			'username' : 'input[type=text]',
-			'password' : 'input[type=password]',
 			'remember' : 'input[type="checkbox"]'
+		},
+
+		'bindings' : {
+			'[name="Username"]' : 'Username',
+			'[name="Password"]' : 'Password'
+		},
+
+		'initialize' : function ( options ) {
+			this.model = new Backbone.Model( {
+				'Username' : '',
+				'Password' : ''
+			} );
+
+			this.model.validation = {
+
+				'Username' : {
+					'required' : true
+				},
+
+				'Password' : {
+					'required' : true
+				}
+
+			};
+
+			Backbone.Validation.bind( this );
 		},
 
 		onRender : function () {
@@ -27,8 +56,10 @@ define( function ( require ) {
 			// populate the username for them.
 			if ( $.cookie( 'remember' ) === 'true' ) {
 				this.ui.remember.prop( 'checked', 'checked' );
-				this.ui.username.val( $.cookie( 'UID' ) );
+				this.model.set( 'Username', $.cookie( 'UID' ) );
 			}
+
+			this.stickit();
 		},
 
 		'rememberMe' : function ( event ) {
@@ -42,35 +73,25 @@ define( function ( require ) {
 		},
 
 		'login' : function ( event ) {
-
-			var l = Ladda.create( document.querySelector( '#login-button' ) );
-			l.start();
-
-			$( '.js-invalid-message' ).addClass( 'hidden' );
-
 			event.preventDefault();
 
-			var username = this.ui.username.val();
-			var password = this.ui.password.val();
-
-			var valid = true;
-
-			if ( !username || !password ) {
-				valid = false;
-			}
-
-			if ( valid ) {
+			if ( this.model.isValid( true ) ) {
+				var l = Ladda.create( document.querySelector( '#login-button' ) );
+				l.start();
 
 				Session.login( {
-					'username' : username,
-					'password' : password,
+					'username' : this.model.get( 'Username' ),
+					'password' : this.model.get( 'Password' ),
 					'error'    : function ( jqXHR, status, error ) {
 						l.stop();
+
+						App.vent.trigger( 'flash:message', {
+							'message' : 'An error occurred. Please try again later.'
+						} );
 					}.bind( this )
 				} );
-
-			// else no input value, TODO: error handling
 			}
+
 		}
 
 	} );

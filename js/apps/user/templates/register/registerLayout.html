@@ -2,15 +2,6 @@
 	<h2>Create Account</h2>
 </div>
 <div class="form-container user-registration">
-	<div class="alert alert-success js-complete js-process hidden">
-		Before registration is complete you need to validate your account by following the instructions emailed to <span id="verify-email"></span>. After validation you will be able to <a href="/#login">login</a>.
-	</div>
-	<div class="alert alert-danger js-fail js-process hidden">
-		There has been an error. Please try again.
-	</div>
-	<div class="alert alert-info js-submitting js-process hidden">
-		Your account is being created.
-	</div>
 	<form role="form" class="form-horizontal">
 		<div class="form-group">
 			<label class="control-label col-sm-3" for="firstname">First Name</label>
@@ -27,8 +18,6 @@
 		<div class="form-group">
 			<label class="control-label col-sm-3" for="email">Email</label>
 			<div class="col-sm-9">
-				<div class="alert alert-danger js-email hidden">This e-mail is already in use. Your school / district may have already added it. Please try to reset your <a href="/#forgotpassword">{password}</a>.</div>
-				<div class="alert alert-warning js-email hidden">Checking for e-mail in use.</div>
 				<input type="email" class="form-control" id="email" name="EmailAddress" maxlength="128">
 			</div>
 		</div>
@@ -91,7 +80,7 @@
 		</div>
 		<div class="form-group">
 			<div class="col-sm-9 col-sm-offset-3">
-				<button type="submit" class="btn btn-primary" id="register-button">Create Account</button>
+				<button class="btn btn-primary ladda-button"  id="register-button" data-style="expand-right" type="submit">Create Account</button>
 			</div>
 		</div>
 	</form>
