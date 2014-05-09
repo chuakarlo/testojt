@@ -7,8 +7,6 @@ define( function ( require ) {
 
 	var NavCollectionView = require( 'user/views/settings/nav/NavCollectionView' );
 	var ProfileView       = require( 'user/views/settings/profile/ProfileView' );
-	var ReportsView       = require( 'user/views/settings/reports/ReportsView' );
-	var LicensesView      = require( 'user/views/settings/licenses/LicensesView' );
 
 	App.module( 'User.Settings', function ( Mod ) {
 
@@ -137,19 +135,26 @@ define( function ( require ) {
 			},
 
 			'showReports' : function () {
-
 				var pd360Loaded = App.request( 'pd360:loaded' );
-				this.layout.content.show( new App.Common.LoadingView() );
+				var loadingView = new App.Common.LoadingView();
+				this.layout.content.show( loadingView );
 
 				App.when( pd360Loaded ).done( function () {
-					this.layout.content.show( new ReportsView() );
+					loadingView.close();
 					App.request( 'pd360:navigate', 'home', 'homePersonalReports' );
 				}.bind( this ) );
 
 			},
 
 			'showLicenses' : function () {
-				this.layout.content.show( new LicensesView() );
+				var pd360Loaded = App.request( 'pd360:loaded' );
+				var loadingView = new App.Common.LoadingView();
+				this.layout.content.show( loadingView );
+
+				App.when( pd360Loaded ).done( function () {
+					loadingView.close();
+					App.request( 'pd360:navigate', 'home', 'homeLicenses' );
+				}.bind( this ) );
 			}
 
 		} );
