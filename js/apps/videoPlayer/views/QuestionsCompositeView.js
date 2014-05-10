@@ -5,14 +5,13 @@ define( function ( require ) {
 
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
-	var App        = require( 'App' );
 
 	var QuestionsItemView     = require( 'videoPlayer/views/QuestionItemView' );
+	var NoItemView            = require( 'videoPlayer/views/NoItemView');
 	var ReflectionSummaryView = require( 'videoPlayer/views/ReflectionSummaryView' );
 	var FollowupSummaryView   = require( 'videoPlayer/views/FollowupSummaryView' );
 
 	var template = require( 'text!videoPlayer/templates/questionsCompositeView.html' );
-	var vq       = App.VideoPlayer.Entities.VideoQuestions;
 
 	return Marionette.CompositeView.extend( {
 
@@ -32,66 +31,46 @@ define( function ( require ) {
 			'pagination'   : '#questions-pagination',
 			'currentPage'  : '#current-page',
 			'lastPage'     : '#last-page',
-			'submitButton' : '#submit-answers',
 			'next'         : '.right-control',
 			'prev'         : '.left-control'
 		},
 
 		'events' : {
-			'click @ui.next'         : 'nextQuestion',
-			'click @ui.prev'         : 'prevQuestion',
-			'click @ui.submitButton' : 'submitAnswers'
-		},
-
-		'isEmpty' : function () {
-			return ( this.collection.isEmpty() ||
-					vq.reflectionSummary ||
-					vq.followupSummary );
-		},
-
-		'getEmptyView' : function () {
-			if ( this.collection.isEmpty() ) {
-				this.remove();
-			} else if ( vq.reflectionSummary ) {
-				return ReflectionSummaryView;
-			} else if ( vq.followupSummary ) {
-				return FollowupSummaryView;
-			}
-		},
-
-		'itemViewOptions' : function () {
-			if ( vq.reflectionSummary ) {
-				return {
-					'diff' : vq.followupTime
-				};
-			}
+			'click @ui.next' : 'nextQuestion',
+			'click @ui.prev' : 'prevQuestion'
 		},
 
 		'initialize' : function ( options ) {
 			_.bindAll( this );
 			_.extend( this, options );
-
 			this.listenTo( this, 'before:item:added', this.handleUIChange );
 		},
 
-		'onShow' : function () {
-			this.ui.carousel.slick( {
-				'slidesToShow'   : 1,
-				'slidesToScroll' : 1,
-				'infinite'       : false,
-				'arrows'         : false,
-				'speed'          : 100,
-				'slide'          : 'li',
-				'onInit'         : this.onInit.bind( this ),
-				'onAfterChange'  : this.afterChange.bind( this )
-			} );
-
-			this.showHeader();
-			this.showPagination();
+		'isEmpty' : function () {
+			var questions = this.collection;
+			return ( questions.isEmpty() ||
+					questions.getState( 'reflectionSummary' ) ||
+					questions.getState( 'followupSummary' ) );
 		},
 
-		'onInit' : function () {
-			this.ui.carouselCont.css( 'overflow-y', 'auto' );
+		'getEmptyView' : function () {
+			var questions = this.collection;
+			if ( questions.getState( 'reflectionSummary' ) ) {
+				return ReflectionSummaryView;
+			} else if ( questions.getState( 'followupSummary' ) ) {
+				return FollowupSummaryView;
+			} else {
+				return NoItemView;
+			}
+		},
+
+		'itemViewOptions' : function () {
+			var questions = this.collection;
+			if ( questions.getState( 'reflectionSummary' ) ) {
+				return {
+					'diff' : questions.getFollowupTime()
+				};
+			}
 		},
 
 		'handleUIChange' : function () {
@@ -99,25 +78,46 @@ define( function ( require ) {
 			this.ui.pagination.toggle( !this.isEmpty() );
 		},
 
+		'onCompositeCollectionRendered' : function () {
+			// Reinitialized carousel after composite view is re-rendered.
+			var slick = this.ui.carousel.get( 0 ).slick;
+			if ( slick ) {
+				this.ui.carousel.unslick();
+				this.ui.carouselCont.css( 'overflow-y', 'hidden' );
+				this.showCarousel();
+			}
+		},
+
+		'onShow' : function () {
+			this.showCarousel();
+			this.showHeader();
+			this.showPagination();
+		},
+
+		'showCarousel' : function () {
+			this.ui.carousel.slick( {
+				'slidesToShow'   : 1,
+				'slidesToScroll' : 1,
+				'infinite'       : false,
+				'arrows'         : false,
+				'speed'          : 100,
+				'slide'          : 'li',
+				'onInit'         : this.onCarouselInit.bind( this ),
+				'onAfterChange'  : this.afterCarouselChange.bind( this )
+			} );
+		},
+
 		'showHeader' : function () {
-			var type = {
-				'1' : 'Reflection Questions',
-				'2' : 'Follow-up Questions'
+			var stateHeaders = {
+				'showReflection' : 'Reflection Questions',
+				'showFollowup'   : 'Follow-up Questions'
 			};
-			this.ui.headerTitle.text( type[ this.collection.first().get( 'QuestionTypeId' ) ] );
+			this.ui.headerTitle.text( stateHeaders[ this.collection.getCurrentState() ] );
 		},
 
 		'showPagination' : function () {
 			this.ui.currentPage.text( 1 );
 			this.ui.lastPage.text( this.collection.length );
-		},
-
-		'showSubmitButton' : function ( page ) {
-			if ( page === this.collection.length ) {
-				this.ui.submitButton.show();
-			} else {
-				this.ui.submitButton.hide();
-			}
 		},
 
 		'nextQuestion' : function () {
@@ -138,57 +138,12 @@ define( function ( require ) {
 			this.ui.currentPage.text( page );
 		},
 
-		'afterChange' : function ( elem, page ) {
+		'onCarouselInit' : function () {
+			this.ui.carouselCont.css( 'overflow-y', 'auto' );
+		},
+
+		'afterCarouselChange' : function ( elem, page ) {
 			this.updatePage( page + 1 );
-			this.showSubmitButton( page + 1 );
-		},
-
-		'submitAnswers' : function () {
-
-			// Filter out those models that don't have an answer
-			var unanswered = this.collection.filter( function ( model ) {
-				return model.get( 'AnswerText' ) === '' ||
-					!model.get( 'AnswerText' );
-			} );
-
-			if ( unanswered.length !== 0 ) {
-				return this.showUnanswered( unanswered );
-			}
-
-			this.saveAnswers();
-		},
-
-		'showUnanswered' : function ( unanswered ) {
-			var first = _.first( unanswered );
-			var page = this.collection.indexOf( first );
-			var view = this.children.findByModel( first );
-
-			this.ui.carousel.slickGoTo( page );
-			view.ui.textInput.addClass( 'error' ).focus();
-		},
-
-		'saveAnswers' : function () {
-			this.disableInputs();
-
-			this.collection.sync( {
-				'success' : this.removeContent.bind( this )
-			} );
-		},
-
-		'disableInputs' : function () {
-			this.children.each( function ( view ) {
-				view.ui.textInput.attr( 'disabled', 'disabled' );
-			} );
-
-			this.ui.submitButton.attr( 'disabled', 'disabled' )
-				.addClass( 'no-hover' );
-
-			this.$el.find( '#reflection-items' )
-				.addClass( 'disabled' );
-		},
-
-		'removeContent' : function () {
-			this.$el.find( '.content' ).remove();
 		}
 
 	} );

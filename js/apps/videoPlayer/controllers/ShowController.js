@@ -100,7 +100,7 @@ define( function ( require ) {
 
 					// Questions view
 					var questionsCollection = new QuestionsCollection( questions );
-
+					questionsCollection.setQuestionsState();
 					// Set question ContentTypeId based on video ContentTypeId.
 					// This is used to when saving the set of questions.
 					questionsCollection.map( function ( question ) {

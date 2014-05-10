@@ -8,8 +8,6 @@ define( function ( require )  {
 	var QuestionsView       = require( 'videoPlayer/views/QuestionsCompositeView' );
 	var QuestionsCollection = require( 'videoPlayer/collections/QuestionsCollection' );
 
-	require( 'videoPlayer/entities/Questions');
-
 	describe( 'QuestionsView', function () {
 
 		var questionsView, stub;
@@ -50,45 +48,8 @@ define( function ( require )  {
 			questionsView.ui.should.have.property( 'pagination' );
 			questionsView.ui.should.have.property( 'currentPage' );
 			questionsView.ui.should.have.property( 'lastPage' );
-			questionsView.ui.should.have.property( 'submitButton' );
 			questionsView.ui.should.have.property( 'next' );
 			questionsView.ui.should.have.property( 'prev' );
-		} );
-
-		describe( '.submitAnswers', function () {
-
-			before( function () {
-				sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
-				questionsView.ui.carousel.slickGoTo = sinon.spy();
-			} );
-
-			after( function () {
-				Remoting.fetch.restore();
-			} );
-
-			it( 'should not call Remoting.fetch if it has a question without an answer', function () {
-				questionsView.submitAnswers();
-				questionsView.ui.carousel.slickGoTo.should.have.callCount( 1 );
-				questionsView.ui.carousel.slickGoTo.should.have.been.calledWith( 1 );
-				Remoting.fetch.should.have.callCount( 0 );
-			} );
-
-			it( 'should call Remoting.fetch if all questions have answer', function () {
-				var testData = [ {
-					'QuestionId'   : 1,
-					'QuestionText' : '',
-					'AnswerText'   : 'Test'
-				},  {
-					'QuestionId'   : 2,
-					'QuestionText' : '',
-					'AnswerText'   : 'Test'
-				} ];
-
-				questionsView.collection.reset( testData );
-				questionsView.submitAnswers();
-				Remoting.fetch.should.have.callCount( 1 );
-			} );
-
 		} );
 
 		describe( '.nextQuestion', function () {

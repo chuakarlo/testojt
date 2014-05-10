@@ -32,7 +32,7 @@ define( function ( require ) {
 				url += this.SKU + '/';
 				url += folder + '/';
 				url += file + bitrates + extension;
-				console.log(url);
+
 				return url;
 			},
 
@@ -50,12 +50,12 @@ define( function ( require ) {
 				url += file + '.vtt';
 
 				return url;
-				// return 'js/apps/videoPlayer/utils/BPP_Segment_1.vtt';
 			}
 		},
 
 		'initialize' : function () {
 			videojs.options.flash.swf = 'js/libs/videojs/video-js.swf';
+
 			this.listenTo( this, 'show', this.initializePlayer );
 			this.listenTo( this, 'afterPlayerInit', this.startTracking );
 		},
@@ -105,9 +105,6 @@ define( function ( require ) {
 
 		// Tracked currentTime when video is paused and ended
 		'bindPlayerEvents' : function ( player ) {
-
-	// <track kind="captions" src="<%= ccUrl() %>"></track>
-	// console.log( this.getCC() );
 
 			player.on( 'pause', function () {
 				this.model.save();

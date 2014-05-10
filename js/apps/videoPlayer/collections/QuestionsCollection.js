@@ -1,65 +1,129 @@
 define( function ( require ) {
 	'use strict';
 
-	var Backbone = require( 'backbone' );
+	require( 'moment-timezone' );
+	require( 'timezone' );
 
-	var Remoting = require( 'Remoting' );
-	var Session  = require( 'Session' );
+	var moment   = require( 'moment' );
+	var _        = require( 'underscore' );
+	var Backbone = require( 'filterable.collection' );
 
 	var QuestionModel = require( 'videoPlayer/models/QuestionModel' );
 
-	return Backbone.Collection.extend( {
-		// Numbers corresponds to video ContentType
-		// 3 : core
-		// 6 : commoncore
-		'path' : {
-			'3' : 'com.schoolimprovement.pd360.dao.core.QuestionAnswersGateway',
-			'6' : 'com.schoolimprovement.pd360.dao.commoncore.CCQuestionAnswersGateway'
-		},
+	var config = require( 'config' ).questions;
 
-		'objectPath' : {
-			'3' : 'com.schoolimprovement.pd360.dao.core.QuestionAnswers',
-			'6' : 'com.schoolimprovement.pd360.dao.commoncore.CCQuestionAnswers'
-		},
-
-		'method' : 'getQuestionsWithAnswers',
+	return Backbone.FilterableCollection.extend( {
 
 		'model' : QuestionModel,
 
-		'buildRequests' : function () {
-
-			return this.map( function ( question ) {
-				var request = {
-					'path'       : this.path[ question.get( 'ContentTypeId' ) ],
-					'objectPath' : this.objectPath[ question.get( 'ContentTypeId' ) ],
-					'method'     : 'create',
-					'args'       : {
-						'PersonnelId' : Session.personnelId(),
-						'QuestionId'  : question.get( 'QuestionId' ),
-						'AnswerText'  : question.getSanitizedAnswer(),
-						'Created'     : '',
-						'Modified'    : ''
-					}
-				};
-				return request;
-			}.bind( this ) );
+		'initialize' : function () {
+			this.followupTime = 0;
+			this.states = {
+				'showReflection'    : true,
+				'showFollowup'      : false,
+				'reflectionSummary' : false,
+				'followupSummary'   : false
+			};
 		},
 
-		'sync' : function ( options ) {
-			options = options || { };
+		'getState' : function ( name ) {
+			return this.states[ name ];
+		},
 
-			var requests    = this.buildRequests();
-			var saveRequest = Remoting.fetch( requests );
+		'getCurrentState' : function () {
+			var currentState = '';
 
-			if ( options.success ) {
-				saveRequest.then( options.success );
+			_.each( Object.keys( this.states ), function ( state ) {
+				if ( this.states[ state ] ) {
+					currentState = state;
+				}
+			}.bind( this ) );
+
+			return currentState;
+		},
+
+		'setState' : function ( name ) {
+			_.each( Object.keys( this.states ), function ( state ) {
+				this.states[ state ] = false;
+			}.bind( this ) );
+
+			this.states[ name ] = true;
+		},
+
+		'setQuestions' : function () {
+			var questionType = 0;
+
+			if ( this.getState( 'showReflection' ) ) {
+				questionType = 1;
+			} else if ( this.getState( 'showFollowup' ) ) {
+				questionType = 2;
 			}
 
-			if ( options.error ) {
-				saveRequest.fail( options.error );
+			this.filter( function ( question ) {
+				if ( question.get( 'QuestionTypeId' ) === questionType ) {
+					return question;
+				}
+			} );
+		},
+
+		'setQuestionsState' : function ( options ) {
+			options = _.extend( config, options );
+
+			// get unanswered reflection question
+			var reflection = this.findWhere( { 'QuestionTypeId' : 1, 'Created' : '' } );
+			if ( reflection )  {
+				this.setState( 'showReflection' );
+				this.setQuestions();
+				return;
 			}
 
-			return saveRequest;
+			this.some( function ( question ) {
+				if ( question.get( 'QuestionTypeId' ) === 1 ) {
+					var followupTime = this.getTimeDiff( question.get( 'Created' ), options );
+					if ( followupTime >= options.duration ) {
+						this.setState( 'showFollowup' );
+					} else {
+						this.setState( 'reflectionSummary' );
+						// break the loop if we need to show reflection summary
+						return true;
+					}
+				}
+			}.bind( this ) );
+
+			// find unanswered follow-up question
+			var followup = this.findWhere( { 'QuestionTypeId' : 2, 'Created' : '' } );
+
+			// if we can show follow-up questions and all follow-up were answered
+			// then show follow-up summary
+			if ( !followup && this.getState( 'showFollowup' ) ) {
+				this.setState( 'followupSummary' );
+			}
+
+			this.setQuestions();
+		},
+
+		'getTimeDiff' : function ( time, options ) {
+			options = _.extend( config, options );
+
+			var now = moment().tz( options.timezone ).format( 'MMMM D, YYYY H:mm:ss' );
+			return moment( now ).diff( moment( time ), options.unit );
+		},
+
+		// get the largest diff time of submitted reflection questions
+		'getFollowupTime' : function () {
+			var largestDiff = 0;
+
+			_.each( this._original, function ( question ) {
+				if ( question.get( 'QuestionTypeId' ) === 1 &&
+					question.get( 'Created' ) !== '' ) {
+					var temp = this.getTimeDiff( question.get( 'Created' ) );
+					if ( temp > largestDiff ) {
+						largestDiff = temp;
+					}
+				}
+			}.bind( this ) );
+
+			return largestDiff;
 		}
 
 	} );
