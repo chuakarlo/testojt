@@ -6,6 +6,8 @@ define( function ( require ) {
 	var Session  = require( 'Session' );
 	var App      = require( 'App' );
 
+	var menuOptions = require( 'resources/data/menus' );
+
 	App.module( 'Entities', function ( Entities ) {
 
 		Entities.Resources = Backbone.Model.extend();
@@ -16,59 +18,7 @@ define( function ( require ) {
 		} );
 
 		var initializeResources = function () {
-
-			Entities.resources = new Entities.ResourcesCollection( [
-				{
-					'name' : 'Videos',
-					'url'  : '#resources/videos',
-					'icon' : 'fa-youtube-play',
-					'id'   : 'link-more-videos'
-				},
-				{
-					'name' : 'Learning Targets',
-					'url'  : '#resources/learning',
-					'icon' : 'fa-bullseye',
-					'id'   : 'link-more-targets'
-				},
-				{
-					'name' : 'Observation 360',
-					'url'  : '#resources/observation/me',
-					'icon' : 'fa-eye',
-					'id'   : 'link-more-observation'
-				},
-				{
-					'name' : 'Communities',
-					'url'  : '#resources/communities',
-					'icon' : 'fa-users',
-					'id'   : 'link-more-communities'
-				},
-				{
-					'name' : 'LumiBook',
-					'url'  : '#resources/lumibook',
-					'icon' : 'fa-book',
-					'id'   : 'link-more-lumibook'
-				},
-				{
-					'name' : '{User Video Uploader}',
-					'url'  : '#',
-					'icon' : 'fa-film',
-					'id'   : 'link-more-uploader'
-				},
-				{
-					'name' : 'PD 360 Training',
-					'url'  : 'http://help.schoolimprovement.com/training',
-					'icon' : 'fa-bullhorn',
-					'id'   : 'link-more-training'
-				},
-				{
-					'name' : 'Learning Progression',
-					'url'  : '#resources/learningProgression',
-					'icon' : 'fa-puzzle-piece',
-					'id'   : 'link-more-progression'
-				}
-
-			] );
-
+			Entities.resources = new Entities.ResourcesCollection( menuOptions.resources );
 		};
 
 		var API = {
@@ -83,19 +33,19 @@ define( function ( require ) {
 
 					var adminRequest    = App.request( 'user:isAdmin' );
 					var thereNowRequest = App.request( 'user:isThereNow' );
+					var obsRequest      = App.request( 'user:hasObsAccess' );
 
-					App.when( adminRequest, thereNowRequest ).done( function ( isAdmin, isThereNow ) {
+					App.when( adminRequest, thereNowRequest, obsRequest ).done( function ( isAdmin, isThereNow, hasObservation ) {
 
 						if ( isAdmin === true ) {
 
-							var adminModel = new Entities.Resources( {
-								'name' : 'Admin',
-								'icon' : 'fa-wrench',
-								'url'  : '#admin',
-								'id'   : 'link-more-admin'
-							} );
+							var adminModel = new Entities.Resources( menuOptions.admin );
 
 							Entities.resources.add( adminModel );
+						}
+
+						if ( hasObservation === true ) {
+							Entities.resources.add( new Entities.Resources( menuOptions.observation ) );
 						}
 
 						// only make request if they have access
@@ -143,7 +93,6 @@ define( function ( require ) {
 				}
 
 				return Entities.resources;
-
 			}
 
 		};

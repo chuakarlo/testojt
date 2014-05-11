@@ -6,21 +6,6 @@ define( function ( require ) {
 	var App      = require( 'App' );
 	var _        = require( 'underscore' );
 
-	var Author = Backbone.CFModel.extend( {
-
-		'getReadOptions' : function () {
-			return {
-				'method' : 'getByPersonnelId',
-				'args'   : {
-					'persId' : Session.personnelId()
-				}
-			};
-		},
-
-		'path' : 'livebook.AuthorGateway'
-
-	} );
-
 	var Privilege = Backbone.CFModel.extend( {
 
 		'getReadOptions' : function () {
@@ -52,6 +37,26 @@ define( function ( require ) {
 
 		'isCatalogAdmin' : function () {
 			return this.get( '4' ) > 0;
+		},
+
+		'isObservationAdmin' : function () {
+			return this.get( '5' ) > 0;
+		},
+
+		'isTemplateCreator' : function () {
+			return this.get( '6' ) > 0;
+		},
+
+		'isTemplateOwner' : function () {
+			return this.get( '7' ) > 0;
+		},
+
+		'isTemplateObserver' : function () {
+			return this.get( '8' ) > 0;
+		},
+
+		'isLumiBookAuthor' : function () {
+			return this.get( '9' ) > 0;
 		},
 
 		'isAdmin' : function () {
@@ -107,13 +112,12 @@ define( function ( require ) {
 
 			var privilegesResponse = this.getPrivileges();
 			var personnelRequest   = App.request( 'user:personnel' );
-			var lumibookRequest    = App.request( 'user:isAuthor' );
 
-			App.when( privilegesResponse, personnelRequest, lumibookRequest ).done( function ( privileges, personnel, isAuthor ) {
+			App.when( privilegesResponse, personnelRequest ).done( function ( privileges, personnel ) {
 				var hasPrivileges = privileges.isAdmin();
 				var isSinetAdmin  = personnel.isSinetAdmin();
 
-				var isAdmin = hasPrivileges || isSinetAdmin || isAuthor;
+				var isAdmin = hasPrivileges || isSinetAdmin || privileges.isLumiBookAuthor();
 
 				defer.resolve( isAdmin );
 			} );
@@ -138,25 +142,6 @@ define( function ( require ) {
 			} );
 
 			return defer.promise();
-		},
-
-		'isAuthor' : function () {
-			var defer = App.Deferred();
-
-			var author = new Author();
-
-			author.fetch( {
-
-				'success' : function ( model, lumibooks ) {
-					defer.resolve( lumibooks.length > 0 );
-				},
-
-				'error' : function () {
-					defer.reject( 'An error occurred while fetching authored LumiBooks' );
-				}
-			} );
-
-			return defer.promise();
 		}
 
 	};
@@ -171,10 +156,6 @@ define( function ( require ) {
 
 	App.reqres.setHandler( 'user:isThereNow', function () {
 		return API.isThereNow();
-	} );
-
-	App.reqres.setHandler( 'user:isAuthor', function () {
-		return API.isAuthor();
 	} );
 
 } );

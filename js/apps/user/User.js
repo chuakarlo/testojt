@@ -20,6 +20,7 @@ define( function ( require ) {
 	require( 'user/entities/Roles' );
 	require( 'user/entities/Subjects' );
 	require( 'user/entities/Nav' );
+	require( 'user/entities/Observation' );
 
 	var SettingsLayout = require( 'user/views/settings/SettingsLayout' );
 

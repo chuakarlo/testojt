@@ -4,7 +4,7 @@ define( function ( require ) {
 	var Backbone = require( 'backbone' );
 	var Session  = require( 'Session' );
 	var App      = require( 'App' );
-	var $        = require( 'jquery' );
+	var _        = require( 'underscore' );
 
 	App.module( 'Entities', function ( Entities ) {
 
@@ -22,7 +22,7 @@ define( function ( require ) {
 			'getReadOptions' : function () {
 				return {
 					'method' : 'getUsersLicenses',
-					'args' : {
+					'args'   : {
 						'id' : Session.personnelId()
 					}
 				};
@@ -30,24 +30,34 @@ define( function ( require ) {
 
 			'path' : 'SessionService',
 
-			'model' : Entities.License
+			'model' : Entities.License,
+
+			'hasObservationLicense' : function () {
+				return _.some( this.models, function ( license ) {
+					if ( license.get( 'LicenseTypeId' ) === 800 ) {
+						return true;
+					}
+
+					return false;
+				} );
+			}
 
 		} );
 
 		// the list of users licenses
 		var licenses;
 		var fetching = false;
-		var defer = new $.Deferred();
+		var defer    = App.Deferred();
 
 		var API = {
 
-			'getLicenses' : function() {
+			'getLicenses' : function () {
 
 				// Check to see if the defered is resolved or rejected so
 				// we don't run into any caching issues.
 				var state = defer.state();
 				if ( state === 'resolved' || state === 'rejected' ) {
-					defer = new $.Deferred();
+					defer = App.Deferred();
 				}
 
 				// if we aren't currently fetching licenses
@@ -63,8 +73,8 @@ define( function ( require ) {
 
 						licenses = new Entities.LicenseCollection();
 						licenses.fetch( {
-							
-							'success' : function( collection ) {
+
+							'success' : function ( collection ) {
 								fetching = false;
 								defer.resolve( licenses );
 							},
@@ -80,12 +90,28 @@ define( function ( require ) {
 				}
 
 				return defer.promise();
-
 			},
 
 			// clear a users list of licenses
 			'clear' : function () {
 				licenses = null;
+			},
+
+			'hasObservationLicense' : function () {
+				var defer           = App.Deferred();
+				var licensesRequest = this.getLicenses();
+
+				App.when( licensesRequest )
+
+				.done( function ( licenses ) {
+					return defer.resolve( licenses.hasObservationLicense() );
+				} )
+
+				.fail( function ( error ) {
+					return defer.reject( error );
+				} );
+
+				return defer.promise();
 			}
 
 		};
@@ -96,6 +122,10 @@ define( function ( require ) {
 
 		App.reqres.setHandler( 'user:licenses:reset', function () {
 			return API.clear();
+		} );
+
+		App.reqres.setHandler( 'user:licenses:hasObservation', function () {
+			return API.hasObservationLicense();
 		} );
 
 	} );

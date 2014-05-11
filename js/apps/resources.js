@@ -3,7 +3,6 @@ define( function ( require ) {
 
 	require( 'communities/Communities' );
 	require( 'search/Search' );
-	require( 'observation/Observation' );
 	require( 'lumibook/LumiBook' );
 	require( 'learningProgression/LearningProgression' );
 	require( 'learningTargets/LearningTargets' );

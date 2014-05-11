@@ -44,6 +44,10 @@ define( function ( require ) {
 			'hidden.bs.dropdown @ui.userMenu' : 'hideUserMenuAnimation'
 		},
 
+		'regions' : {
+			'icons' : '.yamm-content'
+		},
+
 		'templateHelpers' : function () {
 			return { 'helpUrl' : this.helpUrl };
 		},

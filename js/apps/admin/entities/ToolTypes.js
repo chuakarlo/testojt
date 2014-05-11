@@ -24,9 +24,8 @@ define( function ( require ) {
 		'getPrivileges' : function ( defer ) {
 			var fetchingPrivileges = App.request( 'user:privileges' );
 			var fetchingPersonnel  = App.request( 'user:personnel' );
-			var fetchingAuthor     = App.request( 'user:isAuthor' );
 
-			App.when( fetchingPrivileges, fetchingPersonnel, fetchingAuthor ).done( function ( privileges, personnel, isAuthor ) {
+			App.when( fetchingPrivileges, fetchingPersonnel ).done( function ( privileges, personnel ) {
 				var Tools = Backbone.Collection.extend( {
 					'comparator' : 'name'
 				} );
@@ -49,7 +48,7 @@ define( function ( require ) {
 					tools.add( toolTypes.sinet );
 				}
 
-				if ( isAuthor ) {
+				if ( privileges.isLumiBookAuthor() ) {
 					tools.add( toolTypes.lumibook );
 				}
 

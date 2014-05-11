@@ -13,7 +13,6 @@ define( function ( require ) {
 	window.pd360link = function ( link ) {
 
 		var url;
-		console.log( link );
 		//-----------------------
 		// COMMUNITIES LINKS
 		//-----------------------
