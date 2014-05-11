@@ -97,6 +97,10 @@ define( function ( require ) {
 			}.bind( this ) ).fail( function ( error ) {
 				this._hideLoadingIndicators();
 
+				App.vent.trigger( 'flash:message', {
+					'message' : 'An error occurred. Please try again later.'
+				} );
+
 				return this._fetchSegmentFailed.call( this, error );
 
 			}.bind( this ) );

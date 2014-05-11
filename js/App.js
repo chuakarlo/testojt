@@ -52,31 +52,12 @@ define( function ( require ) {
 
 	App.vent.on( 'flash:message', function ( options ) {
 
-		options.type = ( options.type || 'error' );
+		options.type      = ( options.type || 'error' );
+		options.className = 'flash-message-container ' + options.type;
 
-		var flashLayout = new FlashLayout( {
-			'message'   : options.message,
-			'className' : 'flash-message-container ' + options.type
-		} );
+		var flashLayout = new FlashLayout( options );
 
 		App.flashMessage.show( flashLayout );
-
-		var wordsPerSecond = options.message.split( ' ' ).length * 300;
-		var timeout        = options.timeout;
-
-		if ( typeof timeout === 'undefined' ) {
-			timeout = Math.max( wordsPerSecond, 3500 );
-		}
-
-		// Setup auto close for everything that's not an error message
-		if ( options.type !== 'error' && timeout !== false ) {
-
-			setTimeout( function () {
-
-				flashLayout.closeView();
-
-			}, timeout );
-		}
 
 	} );
 

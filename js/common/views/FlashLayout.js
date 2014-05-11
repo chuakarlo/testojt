@@ -19,12 +19,35 @@ define( function ( require ) {
 
 		'initialize' : function ( options ) {
 			this.message = options.message;
+			this.timeout = options.timeout;
+			this.type    = options.type;
 		},
 
 		'serializeData' : function () {
 			return {
 				'message' : this.message
 			};
+		},
+
+		'onShow' : function ( ) {
+
+			var wordsPerSecond = this.message.split( ' ' ).length * 300;
+			var timeout        = this.timeout;
+
+			if ( typeof timeout === 'undefined' ) {
+				timeout = Math.max( wordsPerSecond, 3500 );
+			}
+
+			// Setup auto close for everything that's not an error message
+			if ( this.type !== 'error' && timeout !== false ) {
+
+				setTimeout( function () {
+
+					this.closeView();
+
+				}.bind( this ), timeout );
+			}
+
 		},
 
 		'closeView' : function () {

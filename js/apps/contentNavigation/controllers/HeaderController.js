@@ -71,7 +71,14 @@ define( function ( require ) {
 			App.when( this.licences ).done( function ( models ) {
 				this._setLicensesCollection( models[ 0 ] );
 			}.bind( this ) ).fail( function ( error ) {
+
+				App.content.show( new App.Common.ErrorView( {
+					'message' : 'There was an error fetching licenses.',
+					'flash'   : 'An error occurred. Please try again later.'
+				} ) );
+
 				return this._fetchLicenseFailed.call( this, error );
+
 			}.bind( this ) );
 
 		},

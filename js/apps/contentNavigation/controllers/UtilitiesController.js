@@ -1,4 +1,4 @@
-define( function( require ) {
+define( function ( require ) {
 	'use strict';
 
 	var $ = require( 'jquery' );
@@ -26,7 +26,7 @@ define( function( require ) {
 
 				this.onCreate( onCreate );
 
-				scrollingEl.on( 'scroll' , function() {
+				scrollingEl.on( 'scroll' , function ( ) {
 					if ( scrollingEl.scrollTop() !== 0 ) {
 						this.show( boxShadowEl );
 					} else {
@@ -44,20 +44,20 @@ define( function( require ) {
 
 			'show' : function ( el ) {
 				if ( !el.hasClass( 'enable-scroll-indicator' ) ) {
-			        el.addClass( 'enable-scroll-indicator' );
-			    }
+					el.addClass( 'enable-scroll-indicator' );
+				}
 			},
 
 			'hide' : function ( el ) {
 				if ( el.hasClass( 'enable-scroll-indicator' ) ) {
-			        el.removeClass( 'enable-scroll-indicator' );
-			    }
+					el.removeClass( 'enable-scroll-indicator' );
+				}
 			}
 		},
 
 		'setWindowScrollOnTop' : function () {
 			$( 'html, body' ).scrollTop( 0 );
-	    }
+		}
 	};
 
 } );

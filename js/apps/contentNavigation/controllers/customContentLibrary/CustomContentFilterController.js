@@ -46,6 +46,11 @@ define( function ( require ) {
 			App.when( this.fetchingCategories ).done( function ( models ) {
 				this.createFilterComponents( models );
 			}.bind( this ) ).fail( function ( error ) {
+
+				App.vent.trigger( 'flash:message', {
+					'message' : 'An error occurred. Please try again later.'
+				} );
+
 			}.bind( this ) );
 		},
 

@@ -160,6 +160,11 @@ define( function ( require ) {
 
 			}.bind( this ) ).fail( function ( error ) {
 
+				App.content.show( new App.Common.ErrorView( {
+					'message' : 'There was an error fetching watch later segments.',
+					'flash'   : 'An error occurred. Please try again later.'
+				} ) );
+
 				return this._fetchWaterLaterSegmentFailed.call( this, error );
 
 			}.bind( this ) );
@@ -242,6 +247,10 @@ define( function ( require ) {
 				}
 
 			}.bind( this ) ).fail( function ( error ) {
+
+				App.vent.trigger( 'flash:message', {
+					'message' : 'Watch later toggle failed. Please try again later.'
+				} );
 
 				Utils.throwError( error, 'Click Watch Later' );
 
