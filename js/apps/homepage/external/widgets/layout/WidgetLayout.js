@@ -101,6 +101,9 @@ define( function ( require ) {
 
 		'closeWidgetSettingsPanel' : function ( e ) {
 			doCloseWidgetSettingsPanel( this, e );
+			if ( $( 'ul.active-widgets-container li' ).length === 0 ) {
+				this.initialize();
+			}
 		},
 
 		'changePanelStatus' : function ( btn, from, to ) {

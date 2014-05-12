@@ -30,7 +30,7 @@ define( function ( require ) {
 			return 'See In Observations';
 		},
 		'Description'     : function () {
-			return 'Have quick access to your Observation Items';
+			return 'Get a glance at observations you’ve recently received. See the dates as well as any related recommended PD units.';
 		},
 		'imgSrc'          : function () {
 			return 'http://i61.photobucket.com/albums/h72/l5x12w19/observationsOfMe.png';

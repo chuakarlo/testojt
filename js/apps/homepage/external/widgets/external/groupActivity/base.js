@@ -30,7 +30,7 @@ define( function ( require ) {
 			return 'See All Groups';
 		},
 		'Description'     : function () {
-			return 'Have quick access to your Group Activity';
+			return 'Get notified when there’s activity in one of your groups. Click on a group to go to that group’s activity wall.';
 		},
 		'imgSrc'          : function () {
 			return 'img/homepage-widgets/groupActivity.png';

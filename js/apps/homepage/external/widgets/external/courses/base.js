@@ -30,7 +30,7 @@ define( function ( require ) {
 			return 'See All Courses';
 		},
 		'Description'     : function () {
-			return 'Have quick access to your courses.';
+			return 'See the courses you haven’t completed. Click on an unfinished course to pick up right where you left off.';
 		},
 		'imgSrc'          : function () {
 			return 'img/homepage-widgets/courses.png';

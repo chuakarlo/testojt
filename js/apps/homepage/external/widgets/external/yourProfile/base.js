@@ -30,7 +30,7 @@ define( function ( require ) {
 			return 'Edit Settings';
 		},
 		'Description'     : function () {
-			return 'Have quick access to your Profile';
+			return 'Access your profile settings, licenses, and personal usage report. Plus, get a snapshot of how complete your profile is. Remember, the more complete your profile, the more useful PD 360 is for you.';
 		},
 		'imgSrc'          : function () {
 			return 'img/homepage-widgets/profile.png';

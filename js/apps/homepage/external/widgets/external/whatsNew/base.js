@@ -21,7 +21,7 @@ define( function ( require ) {
 			return 'See All What\'s New';
 		},
 		'Description'     : function () {
-			return 'Have quick access to all new feeds';
+			return 'Check out the newest videos as they become available. Click on a video to watch it.';
 		},
 		'imgSrc'          : function () {
 			return 'img/homepage-widgets/whatsNew.png';
