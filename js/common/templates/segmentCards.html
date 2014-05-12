@@ -1,0 +1,24 @@
+<div class="sc-segment-content-container" >
+    <div class="sc-segment-image-container">
+        <a href="#resources/videos/<%- ContentId %>" >
+            <img src="http://resources.pd360.com/PD360/media/thumb/<%- ImageURL %>" class="img-responsive">
+            <span class="sc-play-icon fa fa-play"></span>
+            <p class="sc-play-now">Play Now</p>
+        </a>
+    </div>
+    <p class="sc-segment-name" title="<%- ContentName %>" > <%- shortContentName() %></p>
+    <p class="sc-duration"><%- duration() %></p>
+</div>
+
+<a href="javascript:void(0);" class="sc-info-icon grayed fa fa-info-circle" ></a>
+<a href="javascript:void(0);" class="sc-watch-later-icon grayed fa fa-clock-o" ></a>
+
+<div class="sc-overlay-details" >
+    <p class="sc-overlay-segment-name" title="<%- ContentName %>" ><%- shortContentName() %></p>
+    <p class="sc-overlay-duration"><%- duration() %></p>
+    <p class='sc-overlay-content-description'><%- shortContentDescription() %></p>
+    <a href="#resources/videos/<%- ContentId %>" >
+        <span class="sc-overlay-play-icon fa fa-play"></span>
+        <span class="sc-overlay-play-now">Play Now</span>
+    </a>
+</div>
