@@ -18,7 +18,6 @@ define( function ( require ) {
 				App.content.show( new App.Common.LoadingView() );
 
 				App.when( resourcesRequest ).done( function ( resources ) {
-
 					var ResourcesView = new ResourcesCompositeView( {
 						'collection' : resources
 					} );
