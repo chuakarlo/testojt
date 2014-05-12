@@ -8,7 +8,7 @@ define( function ( require ) {
 
 	require( 'groups/Groups' );
 
-	describe ('Groups Module', function () {
+	describe( 'Groups Module', function () {
 
 		before( function () {
 			var stub = sinon.stub().returns(false);
@@ -310,20 +310,29 @@ define( function ( require ) {
 
 		describe( 'List controller', function () {
 
-			var remotingStub;
 			var appStub;
+			var groupSpy;
+			var inviteSpy;
 
 			beforeEach( function () {
-				remotingStub = sinon.stub( Remoting, 'fetch' ).returns( [ [] ] );
-				appStub      = sinon.stub( App.content, 'show' );
+				groupSpy  = sinon.spy();
+				inviteSpy = sinon.spy();
+
+				App.reqres.setHandler( 'user:groups', groupSpy );
+				App.reqres.setHandler( 'user:groups:invites', inviteSpy );
+
+				appStub = sinon.stub( App.content, 'show' );
 			} );
 
 			afterEach( function () {
-				Remoting.fetch.restore();
+				App.reqres.removeHandler( 'user:groups' );
+				App.reqres.removeHandler( 'user:groups:invites' );
+
 				App.content.show.restore();
 
-				remotingStub = null;
-				appStub      = null;
+				inviteSpy = null;
+				groupSpy  = null;
+				appStub   = null;
 			} );
 
 			it( 'should create submodule `List`', function () {
@@ -334,41 +343,15 @@ define( function ( require ) {
 
 			} );
 
-			it( '`listGroups` should call Remoting and show groups view', function () {
+			it( '`listGroups` should request groups and show groups view', function () {
 				// call method
 				App.Groups.List.Controller.listGroups();
 
-				// remoting should have been called
-				remotingStub.should.have.callCount( 2 );
+				// should make requests
+				groupSpy.should.have.callCount( 1 );
+				inviteSpy.should.have.callCount( 1 );
 
-				// verify properties sent to remoting
-				remotingStub.should.have.been.calledWith( sinon.match( function ( request ) {
-					request.should.be.an.instanceof( Array );
-					request.should.have.length( 2 );
-
-					var firstReq = request[ 0 ];
-					var secondReq = request[ 1 ];
-
-					firstReq.should.have.property( 'path' );
-					firstReq.path.should.equal( 'com.schoolimprovement.pd360.dao.GroupService' );
-
-					firstReq.should.have.property( 'method' );
-					firstReq.method.should.equal( 'getValidGroupsByPersonnelIdOrderedByRecentActivity' );
-
-					firstReq.should.have.property( 'args' );
-					firstReq.args.should.have.property( 'persId' );
-
-					secondReq.should.have.property( 'path' );
-					secondReq.path.should.equal( 'com.schoolimprovement.pd360.dao.core.ClientPersonnelGateway' );
-
-					secondReq.should.have.property( 'method' );
-					secondReq.method.should.equal( 'getById' );
-
-					secondReq.should.have.property( 'args' );
-					secondReq.args.should.have.property( 'id' );
-
-					return true;
-				} ) );
+				groupSpy.should.have.been.calledBefore( inviteSpy );
 
 				// app.content.show should have been called
 				appStub.should.have.callCount( 2 );

@@ -1,15 +1,36 @@
 define( function ( require ) {
 	'use strict';
 
-	var $                     = require( 'jquery' );
-	var Remoting              = require( 'Remoting' );
-	var App                   = require( 'App' );
-	var GroupCollection       = require( 'groups/collections/GroupCollection' );
-	var GroupInviteCollection = require( 'groups/collections/GroupInviteCollection' );
-	var Vent                  = require( 'Vent' );
-	var _                     = require( 'underscore' );
+	var App  = require( 'App' );
+	var Vent = require( 'Vent' );
 
 	App.module( 'Groups.List', function ( List ) {
+
+		var showGroups = function ( groups, invites ) {
+
+			var layout = new App.Groups.Views.GroupListLayout();
+			App.content.show( layout );
+
+			var groupsView  = new App.Groups.Views.List( { 'collection' : groups } );
+			var invitesView = new App.Groups.Views.InvitesList( { 'collection' : invites } );
+
+			Vent.on( 'group:removeGroupInvites', function ( invite ) {
+				invites.remove( invite );
+			} );
+
+			layout.groupsRegion.show( groupsView );
+			layout.groupInvitesRegion.show( invitesView );
+
+		};
+
+		var showError = function ( error ) {
+
+			App.content.show( new App.Common.ErrorView( {
+				'message' : error,
+				'flash'   : 'An error occurred. Please try again later.'
+			} ) );
+
+		};
 
 		List.Controller = {
 
@@ -18,77 +39,10 @@ define( function ( require ) {
 				// show a loading view while data is fetching
 				App.content.show( new App.Common.LoadingView() );
 
-				// get email address of user
-				var userProfileRequest = {
-					'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelGateway',
-					'method' : 'getById',
-					'args'   : {
-						'id' : $.cookie( 'PID' ) || null
-					}
-				};
+				var groupsRequest  = App.request( 'user:groups' );
+				var invitesRequest = App.request( 'user:groups:invites' );
 
-				// get general groups info
-				var groupsRequest = {
-					'path'   : 'com.schoolimprovement.pd360.dao.GroupService',
-					'method' : 'getValidGroupsByPersonnelIdOrderedByRecentActivity',
-					'args'   : {
-						'persId' : $.cookie( 'PID' ) || null
-					}
-				};
-				// get group invites info
-				var groupInvitesRequest = {
-					'path'   : 'com.schoolimprovement.pd360.dao.GroupService',
-					'method' : 'getGroupMembershipInvites',
-					'args'   : {
-						'emailAddress' : ''
-					}
-				};
-
-				var requests     = [ groupsRequest, userProfileRequest ];
-				var fetchingData = Remoting.fetch( requests );
-
-				App.when( fetchingData ).done( function ( results ) {
-
-					var groups = new GroupCollection( results[ 0 ] );
-					var userProfile = results[ 1 ];
-
-					this.layout = new App.Groups.Views.GroupListLayout();
-					App.content.show( this.layout );
-
-					var groupsView = new App.Groups.Views.List( { 'collection' : groups } );
-					this.layout.groupsRegion.show( groupsView );
-
-					groupInvitesRequest.args.emailAddress = _.values(_.pick(userProfile, 'EmailAddress'))[ 0 ];
-					var fetchingData = Remoting.fetch( groupInvitesRequest );
-
-					App.when( fetchingData ).done( function ( result ) {
-
-						var groupInvites = new GroupInviteCollection( result[ 0 ] );
-						groupInvites.each( function ( data ) {
-							data.set( { 'InviteeEmail' : userProfile.EmailAddress } );
-						} );
-
-						Vent.on( 'group:removeGroupInvites', function ( model ) {
-							groupInvites.remove( model );
-						}.bind( this ) );
-
-						var groupInvitesView = new App.Groups.Views.InvitesList( { 'collection' : groupInvites } );
-						this.layout.groupInvitesRegion.show( groupInvitesView );
-
-					}.bind( this ) ).fail( function ( error ) {
-
-						App.vent.trigger( 'flash:message', {
-							'message' : 'An error occurred. Please try again later.'
-						} );
-
-					} );
-				}.bind( this ) ).fail( function ( error ) {
-
-					App.vent.trigger( 'flash:message', {
-						'message' : 'An error occurred. Please try again later.'
-					} );
-
-				} );
+				App.when( groupsRequest, invitesRequest ).then( showGroups, showError );
 
 			}
 

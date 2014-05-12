@@ -13,6 +13,8 @@ define( function ( require ) {
 		require( 'groups/controllers/editController' );
 		require( 'groups/controllers/showController' );
 		require( 'groups/views/Views' );
+		require( 'groups/entities/GroupCollection' );
+		require( 'groups/entities/GroupInviteCollection' );
 
 		// configure groups routes
 		Groups.Router = AuthRouter.extend( {
