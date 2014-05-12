@@ -13,6 +13,7 @@ define( function ( require ) {
 			'spec/apps/groups/GroupsTest',
 			'spec/apps/header/HeaderTest',
 			'spec/apps/learningProgression/LearningProgressionTest',
+			'spec/apps/videoUploader/VideoUploaderTest',
 
 			// learningTargets
 			'spec/apps/learningTargets/LearningTargetsTest',
