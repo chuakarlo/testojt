@@ -5,7 +5,9 @@ define( function ( require ) {
 	var Remoting   = require( 'Remoting' );
 	var Session    = require( 'Session' );
 	var $          = require( 'jquery' );
+	var App        = require( 'App' );
 	var _          = require( 'underscore' );
+	var stripHtml  = require( 'common/helpers/stripHtml' );
 
 	var template   = require( 'text!../templates/groupResourceItemView.html' );
 
@@ -13,8 +15,11 @@ define( function ( require ) {
 
 		'template' : _.template( template ),
 		'tagName'  : 'li',
+		'ui'       : {
+			'resourceDownload' : '.resource-download'
+		},
 		'events'   : {
-			'click .resource-download' : 'downloadResource'
+			'click @ui.resourceDownload' : 'downloadResource'
 		},
 
 		'templateHelpers' : {
@@ -25,7 +30,7 @@ define( function ( require ) {
 
 			'getResourceDescription' : function () {
 				// remove html tags and return description
-				return ( this.FileDescription ) ? this.FileDescription.replace( /(<([^>]+)>)/ig, '' ) : this.LinkDescription.replace( /(<([^>]+)>)/ig, '' );
+				return ( this.FileDescription ) ? stripHtml ( this.FileDescription ) : stripHtml ( this.LinkDescription );
 			},
 
 			'getDownloadButtonStatus' : function () {
@@ -74,27 +79,50 @@ define( function ( require ) {
 				var fileName = this.model.attributes.FileName;
 				var ext      = fileName.substr( fileName.lastIndexOf( '.' ), fileName.length );
 				var url      = configData.fileStoragePathTrunc + 'file_' + this.model.attributes.FileId + '_' + $.cookie( 'PID' ) + ext;
+				var time     = ( new Date() ).getTime();
 
 				// generate timestamp
 				var getTimeStampRequest = {
 					'path'   : 'com.schoolimprovement.pd360.dao.AdminService',
 					'method' : 'akamaiTokenizer',
 					'args'   : {
-						'url' : url
+						'url'    : url,
+						'param'  : configData.akamaiParam,
+						'window' : configData.akamaiTTL,
+						'salt'   : '791kirk8686',
+						'time'   : time
 					}
 				};
 
 				var requests = [ getTimeStampRequest ];
 				var getData  = Remoting.fetch( requests );
 
-				$.when( getData ).done( function ( result ) {
+				$.when( getData ).done( function ( results ) {
+
+					var hashedUrl = results[ 0 ];
+
+					// POST request for file download
+					$.post( configData.FileURL, {
+						'FilePath'         : hashedUrl,
+						'OriginalFileName' : fileName
+					} )
+						.done( function ( data ) {
+							// process return data here
+						}  )
+						.fail( function () {
+							// error handling
+
+						} );
 
 				}.bind( this ) ).fail( function ( error ) {
+
+					App.content.show( new App.Common.ErrorView() );
 
 				}.bind( this ) );
 
 			}.bind( this ) ).fail( function ( error ) {
 				// TODO: error handling
+				App.content.show( new App.Common.ErrorView() );
 			}.bind( this ) );
 
 		}
