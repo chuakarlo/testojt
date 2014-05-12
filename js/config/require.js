@@ -40,6 +40,7 @@ require.config( {
 		'modernizr'             : 'libs/modernizr/modernizr',
 		'shim'                  : 'libs/es5-shim/es5-shim.min',
 		'slick'                 : 'libs/slick-carousel/slick/slick',
+		'flipclock'             : 'libs/flipclock/compiled/flipclock',
 		'text'                  : 'libs/requirejs-text/text',
 		'timezone'              : 'common/Timezone',
 		'videojs'               : 'libs/videojs/video.dev',
