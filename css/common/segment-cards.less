@@ -82,96 +82,96 @@ li {
 			display     : inline-block;
 			color       : @sc-gray-dark;
 		}
-	}
 
-	a.sc-info-icon {
-		top  : ~"calc(100% - 40px)";
-		left : ~"calc(100% - 70px)";
-	}
-
-	a.sc-watch-later-icon {
-		top  : ~"calc(100% - 40px)";
-		left : ~"calc(100% - 35px)";
-	}
-
-	a.sc-info-icon,
-	a.sc-watch-later-icon {
-		font-size       : 28px;
-		cursor          : pointer;
-		height          : 30px;
-		line-height     : 1.5;
-		text-decoration : none;
-		position        : absolute;
-		z-index         : 3;
-	}
-
-	.grayed {
-		color : @sc-gray-light;
-	}
-
-	a.sc-info-icon:hover,
-	a.sc-watch-later-icon:hover,
-	.blued {
-		color : @sc-blue-light;
-	}
-
-	div.sc-overlay-details {
-		background : rgba( 0, 0, 0, 0.70 );
-		position   : absolute;
-		top        : 0;
-		right      : 0;
-		left       : 0;
-		bottom     : 0;
-		height     : 100%;
-		width      : 100%;
-		overflow   : hidden;
-		display    : none;
-		z-index    : 2;
-		color      : @sc-white;
-		padding    : 15px 10px 5px 10px;
-
-		p.sc-overlay-segment-name {
-			font-size    : 16px;
-			line-height  : 1;
-			text-align   : justify;
-			text-justify : newspaper;
+		a.sc-info-icon {
+			top  : ~"calc(100% - 40px)";
+			left : ~"calc(100% - 70px)";
 		}
 
-		p.sc-overlay-content-description {
-			font-size     : 14px;
-			text-align    : justify;
-			text-justify  : newspaper;
-			line-height   : 1.2em;
+		a.sc-watch-later-icon {
+			top  : ~"calc(100% - 40px)";
+			left : ~"calc(100% - 35px)";
 		}
 
-		p.sc-overlay-duration {
-			font-size   : 14px;
-			z-index     : 3;
-			line-height : 1em;
-		}
-
-		a {
+		a.sc-info-icon,
+		a.sc-watch-later-icon {
+			font-size       : 28px;
+			cursor          : pointer;
+			height          : 30px;
+			line-height     : 1.5;
 			text-decoration : none;
-			display         : block;
 			position        : absolute;
-			bottom          : 12px;
-
-			span.sc-overlay-play-now {
-				color     : @sc-white;
-				font-size : 16px;
-			}
-
-			span.sc-overlay-play-icon {
-				font-size : 20px;
-				color     : @sc-white;
-			}
+			z-index         : 3;
 		}
 
-		a:hover {
-			span.sc-overlay-play-now, span.sc-overlay-play-icon {
-				color : @sc-blue-light;
-			}
+		.grayed {
+			color : @sc-gray-light;
 		}
 
+		a.sc-info-icon:hover,
+		a.sc-watch-later-icon:hover,
+		.blued {
+			color : @sc-blue-light;
+		}
+
+		div.sc-overlay-details {
+			background : rgba( 0, 0, 0, 0.70 );
+			position   : absolute;
+			top        : 0;
+			right      : 0;
+			left       : 0;
+			bottom     : 0;
+			height     : 100%;
+			width      : 100%;
+			overflow   : hidden;
+			display    : none;
+			z-index    : 2;
+			color      : @sc-white;
+			padding    : 15px 10px 5px 10px;
+
+			p.sc-overlay-segment-name {
+				font-size    : 16px;
+				line-height  : 1;
+				text-align   : justify;
+				text-justify : newspaper;
+			}
+
+			p.sc-overlay-content-description {
+				font-size     : 14px;
+				text-align    : justify;
+				text-justify  : newspaper;
+				line-height   : 1.2em;
+			}
+
+			p.sc-overlay-duration {
+				font-size   : 14px;
+				z-index     : 3;
+				line-height : 1em;
+			}
+
+			a {
+				text-decoration : none;
+				display         : block;
+				position        : absolute;
+				bottom          : 12px;
+
+				span.sc-overlay-play-now {
+					color     : @sc-white;
+					font-size : 16px;
+				}
+
+				span.sc-overlay-play-icon {
+					font-size : 20px;
+					color     : @sc-white;
+				}
+			}
+
+			a:hover {
+				span.sc-overlay-play-now, span.sc-overlay-play-icon {
+					color : @sc-blue-light;
+				}
+			}
+
+		}
 	}
 }
