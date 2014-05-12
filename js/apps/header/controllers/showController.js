@@ -18,7 +18,7 @@ define( function ( require ) {
 				var authenticated = App.request( 'session:authenticated' );
 
 				var generateLink = function ( params ) {
-					var url = 'http://training.schoolimprovement.com/';
+					var url = 'http://help.schoolimprovement.com/';
 
 					if ( params ) {
 						url += '#context/' + params;
