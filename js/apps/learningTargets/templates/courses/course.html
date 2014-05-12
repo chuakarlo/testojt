@@ -1,12 +1,15 @@
 <div class="lt-toggle-btn">
-	<div class="col-xs-8"><img class="icon" src="/img/eye.png" alt=""> <p><%- COURSENAME %></p></div>
-	<div class="col-xs-3">
+	<div class="col-xs-8 col-xs-8 col-md-8 row">
+		<img class="icon" src="/img/eye.png" alt="" class="col-xs-2 col-sm-2 col-md-2">
+		<div class="course-title col-xs-6 col-sm-10 col-md-10"><%- COURSENAME %></div>
+	</div>
+	<div class="col-xs-3 col-xs-3 col-md-3">
 		<div class="progress">
 			<div class="progress-bar" role="progressbar" aria-valuenow="<%- PERCENTCOMPLETE %>" aria-valuemin="0" aria-valuemax="100" style="width: <%- PERCENTCOMPLETE %>%;">
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-1">
+	<div class="col-xs-1 col-xs-1 col-md-1">
 		<div><%- PERCENTCOMPLETE %>%</div>
 	</div>
 </div>

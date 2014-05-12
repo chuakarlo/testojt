@@ -8,15 +8,17 @@ define( function ( require ) {
 		'parse' : function ( model ) {
 
 			if ( !model.ContentId ) {
-				model = this._setStateStandardTitleLength( model );
-				return model;
-			}
+				model.SSTitle = model.StateStandardTitle;
+				this._setStateStandardTitleLength( model );
+			} else {
+				model.CName      = model.ContentName;
+				model.VCompleted = '';
 
-			model = this._computeMinSec( model );
-			model = this._setContentNameLength( model );
-			model = this._setViewCompleted( model );
-			model = this._setImageUrl( model );
-			model = this._setContentDescriptionLength( model );
+				this._computeMinSec( model );
+				this._setContentNameLength( model );
+				this._setViewCompleted( model );
+				this._setImageUrl( model );
+			}
 
 			return model;
 		},
@@ -33,8 +35,7 @@ define( function ( require ) {
 		},
 
 		'_setContentNameLength' : function ( model ) {
-			model.CName = model.ContentName;
-			if ( model.ContentName.length > 35 ) {
+			if ( model.ContentName.length > 50 ) {
 				model.CName = model.ContentName.substr( 0, 35 ) + '...';
 			}
 
@@ -42,7 +43,6 @@ define( function ( require ) {
 		},
 
 		'_setStateStandardTitleLength' : function ( model ) {
-			model.SSTitle = model.StateStandardTitle;
 			if ( model.StateStandardTitle.length > 50 ) {
 				model.SSTitle = model.StateStandardTitle.substr( 0, 50 ) + '...';
 			}
@@ -51,7 +51,7 @@ define( function ( require ) {
 		},
 
 		'_setViewCompleted' : function ( model ) {
-			model.VCompleted = '';
+
 			if ( model.ViewingCompleted ) {
 				model.VCompleted = 'completed';
 			}
@@ -61,22 +61,7 @@ define( function ( require ) {
 
 		'_setImageUrl' : function ( model ) {
 
-			if ( model.ImageURL.length <= 0 ) {
-				model.ImageURL = 'http://resources.pd360.com/PD360/media/thumb/thumb_' + model.FileName.replace( /(.flv|.mov|.mp4)/, '.jpg' );
-			}
-
-			return model;
-		},
-
-		'_setContentDescriptionLength' : function ( model ) {
-			model.ContentDescription = model.ContentDescription.replace( /(<([^>]+)>)/ig, '' );
-			model.ContentDescription = model.ContentDescription;
-
-			if ( model.ContentDescription.length > 270 ) {
-				model.ContentDescription = model.ContentDescription.substr( 0, 270 ) + '...';
-			}
-
-			model.CDescription = model.ContentDescription.replace( /-/ig, '<br>-' );
+			model.ImageURL = 'http://resources.pd360.com/PD360/media/thumb/thumb_' + model.FileName.replace( /(.flv|.mov|.mp4)/, '.jpg' );
 
 			return model;
 		}

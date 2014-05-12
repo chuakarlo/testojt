@@ -21,7 +21,6 @@ define( function ( require ) {
 	App.module( 'LearningTargets.Main', function ( Main ) {
 		var mainView;
 		var contentRegion;
-		var titleRegion;
 
 		Main.regions = {
 			'Content' : Backbone.Marionette.Region.extend( { } )
@@ -31,12 +30,6 @@ define( function ( require ) {
 
 			'_showView' : function ( view ) {
 				contentRegion.show( view );
-			},
-
-			'_showTitleView' : function ( view, options ) {
-				titleRegion.show( view );
-
-				mainView.activateTab( 'focus-objectives', options );
 			},
 
 			'_convertToTimestamp' : function ( stringDate ) {
@@ -66,10 +59,6 @@ define( function ( require ) {
 
 				contentRegion = new Main.regions.Content( {
 					el : mainView.el.querySelector( '.lt-content' )
-				} );
-
-				titleRegion = new Main.regions.Content( {
-					el : mainView.el.querySelector( '.focus-objectives-title' )
 				} );
 
 				mainView.activateTab( content );
@@ -102,15 +91,10 @@ define( function ( require ) {
 			'redirectToLegacyPage' : function ( target, page, sub, opts ) {
 				var pd360Loaded = App.request( 'pd360:loaded' );
 
-				// Change documet hash without triggering event so clicking the back button issue
-				App.navigate( Backbone.history.fragment + '/legacy' );
-
-				// Display loading view
 				App.content.show( new App.Common.LoadingView() );
 
 				// navigate to legacy page
 				App.when( pd360Loaded ).done( function () {
-
 					App.content.show( new ProcessesView() );
 					App.request( 'pd360:navigate', page, sub, opts );
 				} );
