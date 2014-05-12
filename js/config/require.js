@@ -81,7 +81,8 @@ require.config( {
 		'contentNavigation'   : 'apps/contentNavigation',
 		'learningTargets'     : 'apps/learningTargets',
 		'resources'           : 'apps/resources',
-		'admin'               : 'apps/admin'
+		'admin'               : 'apps/admin',
+		'videoUploader'       : 'apps/videoUploader',
 	},
 
 	'shim' : {

@@ -7,5 +7,6 @@ define( function ( require ) {
 	require( 'learningProgression/LearningProgression' );
 	require( 'learningTargets/LearningTargets' );
 	require( 'resources/Resources' );
+	require( 'videoUploader/VideoUploader' );
 
 } );

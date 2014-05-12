@@ -22,7 +22,7 @@ define( function ( require ) {
 				this.ui.thereNow.attr( 'href', this.model.attributes.url );
 				this.ui.thereNow.attr( 'target', '_blank' );
 			} else if ( this.model.attributes.id === 'link-more-uploader' ) {
-				this.ui.videoUploader.attr( 'href', 'http://www.pd360.com/pd360.cfm#tab=videos&page=videosUserUploadedVideo' );
+				this.ui.videoUploader.attr( 'href', '#resources/videouploader' );
 			}
 
 		}
