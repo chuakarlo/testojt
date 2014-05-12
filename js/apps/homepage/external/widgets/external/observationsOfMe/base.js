@@ -35,6 +35,9 @@ define( function ( require ) {
 		'imgSrc'          : function () {
 			return 'http://i61.photobucket.com/albums/h72/l5x12w19/observationsOfMe.png';
 		},
+		'icon'            : function () {
+			return 'http://i61.photobucket.com/albums/h72/l5x12w19/observationsOfMe.png';
+		},
 		'em'              : 7,
 		'getExternalView' : WidgetItemView,
 		'getCollection'   : function ( callback, options ) {

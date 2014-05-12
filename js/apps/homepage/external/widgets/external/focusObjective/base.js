@@ -26,6 +26,9 @@ define( function ( require ) {
 		'imgSrc'          : function () {
 			return 'img/homepage-widgets/focusObjective.png';
 		},
+		'icon'            : function () {
+			return 'img/homepage-widgets/focusObjective.png';
+		},
 		'em'              : 7,
 		'getExternalView' : WidgetItemView, // items template
 		'getCollection'   : function ( callback, options ) {

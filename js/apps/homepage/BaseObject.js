@@ -29,6 +29,7 @@ define( function () {
 		dest.footer       = source.footer;
 		dest.Description  = source.Description;
 		dest.imgSrc       = source.imgSrc;
+		dest.icon         = source.icon;
 		dest.em           = source.em;
 		dest.EmptyMessage = source.EmptyMessage;
 	}

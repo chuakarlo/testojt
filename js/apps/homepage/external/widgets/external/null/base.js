@@ -23,6 +23,9 @@ define( function ( require ) {
 		'imgSrc'      : function () {
 			return '';
 		},
+		'icon'        : function () {
+			return '';
+		},
 		'em'          : 8.5
 	} );
 } );

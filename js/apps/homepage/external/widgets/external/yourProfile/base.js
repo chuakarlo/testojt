@@ -35,6 +35,9 @@ define( function ( require ) {
 		'imgSrc'          : function () {
 			return 'img/homepage-widgets/profile.png';
 		},
+		'icon'            : function () {
+			return 'img/homepage-widgets/profile.png';
+		},
 		'em'              : 8.5,
 		'getExternalView' : WidgetItemView,
 		'getCollection'   : function ( callback, options ) {

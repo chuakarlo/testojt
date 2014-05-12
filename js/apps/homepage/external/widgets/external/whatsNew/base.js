@@ -26,6 +26,9 @@ define( function ( require ) {
 		'imgSrc'          : function () {
 			return 'img/homepage-widgets/whatsNew.png';
 		},
+		'icon'            : function () {
+			return 'img/homepage-widgets/whatsNew.png';
+		},
 		'em'              : 8.5,
 		'getExternalView' : WidgetItemView, // items template
 		'getCollection'   : function ( callback, options ) {

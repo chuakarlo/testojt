@@ -35,6 +35,9 @@ define( function ( require ) {
 		'imgSrc'          : function () {
 			return 'img/homepage-widgets/groupActivity.png';
 		},
+		'icon'            : function () {
+			return 'img/homepage-widgets/groupActivity.png';
+		},
 		'em'              : 7,
 		'getExternalView' : WidgetItemView,
 		'getCollection'   : function ( callback, options ) {

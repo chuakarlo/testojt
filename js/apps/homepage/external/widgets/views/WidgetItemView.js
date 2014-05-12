@@ -19,7 +19,7 @@ define( function ( require ) {
 
 	function doOnRender ( view ) {
 		view.$el
-		.css('background-image', 'url(' + view.widgets.imgSrc() + ')')
+		.css('background-image', 'url(' + view.widgets.icon() + ')')
 		.css('background-size', '100%' );
 		var heading = view.$el.find('.setTop');
 		heading.css('top', view.$el.height - heading.height);
