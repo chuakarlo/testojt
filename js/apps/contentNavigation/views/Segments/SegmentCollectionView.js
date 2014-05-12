@@ -9,7 +9,7 @@ define( function ( require ) {
 
 		'tagName' : 'ul',
 
-		'className' : 'row cn-segments-container hello',
+		'className' : 'row cn-segments-container',
 
 		'emptyView' : segmentEmptyView,
 

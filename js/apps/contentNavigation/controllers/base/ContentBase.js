@@ -137,12 +137,15 @@ define( function ( require ) {
 
 			this._hideLoadingIndicators();
 
-			if ( models.length ) {
+			if ( models.length && this.collection.length > 0) {
 				this.fetchWhileScrolling();
+			} else if ( this.collection.length < 1 ) {
+				$( '.cn-no-results' ).html( 'There are no filter results.' );
 			} else {
 				this._showNoMoreVideosIndicator();
 			}
 
+			$( '.cn-no-results' ).html( 'There are no filter results.' );
 		},
 
 		'_segmentFilter' : function ( filters ) {
@@ -186,10 +189,7 @@ define( function ( require ) {
 		'_getStartingRow' : function () {
 			var startingRow = 0;
 
-			if ( this.currentPage ) {
-
-				startingRow = this.queryLimit * this.currentPage;
-			}
+			startingRow = this.queryLimit * this.currentPage;
 
 			return startingRow;
 		},
