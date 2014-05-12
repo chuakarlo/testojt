@@ -86,4 +86,59 @@
 		background-color : #cfcfcf;
 		color            : #000000;
 	}
+	#video-content{
+		#vjs-image-overlay-holder {
+		  position         : absolute;
+		  left             : 8%;
+		  top              : 4%;
+		  text-align       : center;
+		  color            : white;
+		  background-color : black;
+
+		   img {
+			    height           : 100%;
+			    width            : 100%;
+			    margin           : auto;
+			}
+
+			#vjs-p-overlay {
+			  position : absolute;
+			  bottom   : 11%;
+			  left     : 3%;
+			  font     : 12px arial,sans-serif;
+			}
+
+			#vjs-title-overlay{
+			  position      : absolute;
+			  bottom        : 3%;
+			  left          : 3%;
+			  font          : 21px arial,sans-serif;
+			  text-overflow : ellipsis;
+			  width         : 90%;
+			  white-space   : nowrap;
+			  overflow      : hidden;
+			  text-align    : left;
+			}
+
+			.play-button-circle{
+			  position              : absolute;
+			  top                   : 35%;
+			  left                  : 45%;
+			  width                 : 50px;
+			  height                : 50px;
+			  border-width          : 2px;
+			  border-style          : solid;
+			  border-color          : white;
+			  border-radius         : 50%;
+			}
+
+			#vjs-icon-play{
+			  position  : absolute;
+			  left      : 28%;
+			  top       : 15%;
+			  font-size : 35px;
+			  cursor    : pointer;
+			}
+		}
+	}
 }

@@ -7,6 +7,7 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 
 	require( 'videoPlayer/plugins/captionToggle' );
+	require( 'videoPlayer/plugins/nextVideoOverlay' );
 
 	var template = require( 'text!videoPlayer/templates/player/playerItemView.html' );
 
@@ -86,6 +87,11 @@ define( function ( require ) {
 			} );
 
 			player.ccToggle();
+			player.nextVideoOverlay( {
+				imageUrl  : 'http://resources.pd360.com/PD360/media/thumb/thumb_2205_PD_grouptask.jpg',
+				clickUrl  : 'http://localhost:8080/dev.html#resources/videos/5363',
+				startTime : this.model.attributes.SegmentLengthInSeconds
+			} );
 
 			this.trigger( 'afterPlayerInit', player );
 		},
