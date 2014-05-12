@@ -4,6 +4,7 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
 	var $          = require( 'jquery' );
+	var App        = require( 'App' );
 	var Session    = require( 'Session' );
 	var Backbone   = require( 'backbone' );
 
@@ -21,14 +22,10 @@ define( function ( require ) {
 		'className' : 'modal-dialog modal-md',
 
 		'ui' : {
-			'form'    : '.form-container',
 			'current' : '#current-password',
 			'updated' : '#update-password',
 			'verify'  : '#verify-password',
-			'save'    : '#save-password',
-
-			'invalid' : '.js-current',
-			'success' : '.js-success'
+			'save'    : '#save-password'
 		},
 
 		'events' : {
@@ -52,7 +49,7 @@ define( function ( require ) {
 		'savePassword' : function ( event ) {
 			event.preventDefault();
 
-			this.ui.invalid.addClass( 'hidden' );
+			App.flashMessage.close();
 
 			if ( this.model.isValid( true ) ) {
 
@@ -70,6 +67,7 @@ define( function ( require ) {
 				} );
 
 				$.ajax( {
+
 					'url'      : url,
 					'dataType' : 'json',
 
@@ -77,25 +75,35 @@ define( function ( require ) {
 						l.stop();
 
 						if ( data.success ) {
-							this.ui.form.addClass( 'hidden' );
-							this.ui.save.addClass( 'hidden' );
-							this.ui.success.removeClass( 'hidden' );
+							$( '#modal-content' ).modal( 'hide' );
+							this.close();
+
+							App.vent.trigger( 'flash:message', {
+								'message' : 'Your password has been changed.',
+								'type'    : 'success'
+							} );
 						} else {
-							this.ui.invalid.removeClass( 'hidden' );
+							App.vent.trigger( 'flash:message', {
+								'message' : 'Password does not match stored password. Please try again.'
+							} );
 						}
 
 					}.bind( this ),
 
 					'error' : function () {
-						// TODO: error handling
 						l.stop();
+
+						App.vent.trigger( 'flash:message', {
+							'message' : 'An error occurred. Please try again later.'
+						} );
 					}
+
 				} );
-				
+
 			}
 
 		}
 
 	} );
-	
+
 } );

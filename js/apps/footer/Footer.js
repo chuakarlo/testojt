@@ -32,7 +32,10 @@ define( function ( require ) {
 				'buildBranding' : function () {
 					if ( Session.authenticated() ) {
 						var licenses = App.request( 'user:licenses' );
-						App.when( licenses ).done( this.determineBranding );
+
+						App.when( licenses ).done( this.determineBranding ).fail( function ( ) {
+							this.defaultBranding();
+						}.bind( this ) );
 					} else {
 						this.defaultBranding();
 					}

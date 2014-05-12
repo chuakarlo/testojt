@@ -35,6 +35,7 @@ define( function ( require ) {
 					var thereNowRequest = App.request( 'user:isThereNow' );
 					var obsRequest      = App.request( 'user:hasObsAccess' );
 
+
 					App.when( adminRequest, thereNowRequest, obsRequest ).done( function ( isAdmin, isThereNow, hasObservation ) {
 
 						if ( isAdmin === true ) {
@@ -81,12 +82,16 @@ define( function ( require ) {
 
 								defer.resolve( Entities.resources );
 
+							} ).fail( function () {
+								defer.reject();
 							} );
 
 						} else {
 							defer.resolve( Entities.resources );
 						}
 
+					} ).fail( function () {
+						defer.reject();
 					} );
 
 					return defer.promise();

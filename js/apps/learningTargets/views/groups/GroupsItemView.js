@@ -42,6 +42,7 @@ define( function ( require ) {
 
 		'toggleDrawer' : function ( e ) {
 			e.preventDefault();
+			App.flashMessage.close();
 
 			var toggleBtn     = $( e.currentTarget );
 			var toggleContent = toggleBtn.siblings( '.lt-toggle-content' )[ 0 ];
@@ -49,7 +50,6 @@ define( function ( require ) {
 			$( toggleContent ).slideToggle( 300 );
 
 			var fetchingModels = Remoting.fetch( clientProfileParams( this.model.get( 'LICENSEID' ) ) );
-			var self = this;
 
 			App.when( fetchingModels ).done( function ( models ) {
 
@@ -58,11 +58,15 @@ define( function ( require ) {
 				// remove inline font face and size
 				var qt = questionsText
 									.replace( /face\="Verdana"/gi, '' )
-									.replace( /size\="10"|"12"/gi, '' );
+									.replace( /size\="\d+"/gi, '' );
 
-				$( '#data-' + self.model.get( 'LICENSEID' ) ).html( qt );
+				$( '#data-' + this.model.get( 'LICENSEID' ) ).html( qt );
 
-			} ).fail( function ( ) {
+			}.bind( this ) ).fail( function () {
+
+				App.vent.trigger( 'flash:message', {
+					'message' : 'An error occurred. Please try again later.'
+				} );
 
 			} );
 

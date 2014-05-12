@@ -18,19 +18,18 @@ define( function ( require ) {
 		// layout closes
 		Mod.BaseController = Marionette.Controller.extend( {
 
-			'initialize' : function( options ) {
+			'initialize' : function ( options ) {
 				this.layout = options.layout;
-				this.listenTo( this.layout, 'close', function() {
+				this.listenTo( this.layout, 'close', function () {
 					this.close();
 				} );
 			}
 
 		} );
 
-
 		Mod.NavController = Mod.BaseController.extend( {
 
-			'initialize' : function() {
+			'initialize' : function () {
 
 				// Call the parent init
 				Mod.BaseController.prototype.initialize.apply(this, arguments);
@@ -63,11 +62,11 @@ define( function ( require ) {
 				this.showNav();
 			},
 
-			'setFilter' : function( filter ) {
+			'setFilter' : function ( filter ) {
 				this.navCollection.setActive( filter );
 			},
 
-			'showNav' : function() {
+			'showNav' : function () {
 				// Build the Nav view
 				var searchNav = new SearchNavCollectionView( {
 					collection : this.navCollection
@@ -77,7 +76,7 @@ define( function ( require ) {
 				this.layout.nav.show( searchNav );
 			},
 
-			'updateResultCount' : function(model, val) {
+			'updateResultCount' : function (model, val) {
 				this.navCollection.setResultCount( val );
 			}
 
@@ -85,7 +84,7 @@ define( function ( require ) {
 
 		Mod.ResultController =  Mod.BaseController.extend( {
 
-			'initialize' : function() {
+			'initialize' : function () {
 
 				// Call the parent init
 				Mod.BaseController.prototype.initialize.apply(this, arguments);
@@ -100,7 +99,7 @@ define( function ( require ) {
 				this.searchCollection.queryModel = this.queryModel;
 			},
 
-			'setupInfiniteScroll' : function() {
+			'setupInfiniteScroll' : function () {
 				// When the window scroll bar gets to 200px from the bottom
 				// of the window, fetch the next set of results.
 				var that = this;
@@ -115,21 +114,23 @@ define( function ( require ) {
 					$( window ).smack( {
 						'threshold' : '200px'
 					} )
-						.done( function() {
+						.done( function () {
 							// Show Loading
 							that.showLoading();
 							// Reset starting point
 							that.searchCollection.fetch( {
 								'reset'   : false,
 								'remove'  : false,
-								'success' : function() {
+
+								'success' : function () {
 									that.searchCollection.queryModel.updateStart();
 									// TODO
 									// check length of queryModel results here.
 									that.setupInfiniteScroll();
 									that.closeLoading();
 								},
-								'error' : function() {
+
+								'error' : function () {
 									console.log('error');
 								}
 							});
@@ -148,7 +149,7 @@ define( function ( require ) {
 				// Set the query and reset the starting position
 				this.searchCollection.queryModel.set( {
 					'searchData' : query,
-					'start' : 0
+					'start'      : 0
 				} );
 
 				if ( !filter ) {
@@ -169,7 +170,7 @@ define( function ( require ) {
 				// Fetch the initial data
 				this.searchCollection.fetch( {
 					'remove'  : false,
-					'success' : _.bind( function() {
+					'success' : _.bind( function () {
 
 						// Update the count first so inifite scroll knows if it
 						// needs to setup
@@ -180,13 +181,21 @@ define( function ( require ) {
 						this.setupInfiniteScroll();
 
 					}, this),
-					'error' : function() {
-						console.log('error');
-					}
+
+					'error' : function () {
+						this.closeLoading();
+
+						App.vent.trigger( 'flash:message', {
+							'message' : 'An error occurred. Please try again later.'
+						} );
+					}.bind( this )
 				} );
 			},
 
-			'showLoading' : function() {
+			'showLoading' : function () {
+				// Hide any error message
+				App.flashMessage.close();
+
 				// Show a loading view
 				var loading = new App.Common.LoadingView( {
 					'size'       : 'small',
@@ -196,12 +205,12 @@ define( function ( require ) {
 				this.layout.loading.show(loading);
 			},
 
-			'closeLoading' : function() {
+			'closeLoading' : function () {
 				// Close the loading view
 				this.layout.loading.close();
 			},
 
-			'onClose' : function() {
+			'onClose' : function () {
 				// Make sure to stop the bum-smack
 				$( window ).off( 'scroll.smack' );
 			}

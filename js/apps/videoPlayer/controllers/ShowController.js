@@ -42,7 +42,12 @@ define( function ( require ) {
 					} else {
 						this.showVideoResources( _.first( videoContent ) );
 					}
-				}.bind( this ) );
+				}.bind( this ) ).fail( function () {
+					App.content.show( new App.Common.ErrorView( {
+						'message' : 'There was an error loading the page.',
+						'flash'   : 'An error occurred. Please try again later.'
+					} ) );
+				} );
 
 			},
 
@@ -143,7 +148,10 @@ define( function ( require ) {
 					layout.videoTabsRegion.show( videoTabsView );
 
 				} ).fail( function ( error ) {
-					App.content.show( new App.Common.ErrorView( { 'message' : 'Page error.' } ) );
+					App.content.show( new App.Common.ErrorView( {
+						'message' : 'There was an error loading the page.',
+						'flash'   : 'An error occurred. Please try again later.'
+					} ) );
 				} );
 
 			},

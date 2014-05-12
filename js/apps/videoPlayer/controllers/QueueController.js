@@ -31,6 +31,13 @@ define( function ( require ) {
 						'message' : 'Added to Watch Later'
 					} );
 
+				} ).fail( function () {
+
+					model.trigger( 'change:queued' );
+					App.vent.trigger( 'flash:message', {
+						'message' : 'An error occurred while trying to add video to Watch Later. Please try again later.'
+					} );
+
 				} );
 
 				// return promise so we can test execution of callbacks
@@ -57,6 +64,13 @@ define( function ( require ) {
 					App.vent.trigger( 'flash:message', {
 						'type'    : 'success',
 						'message' : 'Removed from Watch Later'
+					} );
+
+				} ).fail( function () {
+
+					model.trigger( 'change:queued' );
+					App.vent.trigger( 'flash:message', {
+						'message' : 'An error occurred while trying to remove video from Watch Later. Please try again later.'
 					} );
 
 				} );

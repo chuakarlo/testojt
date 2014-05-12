@@ -117,20 +117,13 @@ define( function ( require ) {
 
 				}.bind( this ) ).fail( function ( error ) {
 
-					this.showProfileError( error );
-
-					App.vent.trigger( 'flash:message', {
-						'message' : 'An error occurred. Please try again later.'
-					} );
+					this.layout.content.show( new App.Common.ErrorView( {
+						'message' : error.message,
+						'flash'   : 'An error occurred. Please try again later.'
+					} ) );
 
 				}.bind( this ) );
 
-			},
-
-			'showProfileError' : function ( error ) {
-				this.layout.content.show( new App.Common.ErrorView( {
-					'message' : error.message
-				} ) );
 			},
 
 			'showLoading' : function () {

@@ -45,6 +45,14 @@ define( function ( require ) {
 								'collection' : collection
 							} ) );
 
+						} ).fail( function () {
+
+							if ( authenticated ) {
+								menu.icons.show( new App.Common.ErrorView( {
+									'message' : 'There was error getting available resources.'
+								} ) );
+							}
+
 						} );
 
 					} );
@@ -66,7 +74,7 @@ define( function ( require ) {
 
 					init( generateLink( [ email, fname, lname, personnelid, url ].join( '&' ) ) );
 				}.bind( this ) ).fail( function () {
-					// TODO: error handling
+					init( generateLink() );
 				} );
 
 			}

@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	var Marionette = require( 'marionette' );
 	var template   = require( 'text!apps/learningTargets/templates/main.html' );
+	var App        = require( 'App' );
 	var _          = require( 'underscore' );
 	var $          = require( 'jquery' );
 
@@ -38,6 +39,7 @@ define( function ( require ) {
 		},
 
 		'activateTitleTab' : function ( e ) {
+			App.flashMessage.close();
 			// remove class from current active title li
 			$( '.nav-objectives' )
 				.find( '.active' )

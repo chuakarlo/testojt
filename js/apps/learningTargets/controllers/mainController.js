@@ -70,9 +70,13 @@ define( function ( require ) {
 				App.when( request ).done( function ( collections ) {
 					// run callback with collections
 					callback( collections );
-				} ).fail( function ( error ) {
-					// TODO: handle error
-					throw error;
+				} ).fail( function () {
+
+					Main.helper._showView( new App.Common.ErrorView( {
+						'message' : 'There was an error loading view.',
+						'flash'   : 'An error occurred. Please try again later.'
+					} ) );
+
 				} );
 			},
 
@@ -83,8 +87,11 @@ define( function ( require ) {
 					// run callback with collections
 					callback( collections );
 				} ).fail( function ( error ) {
-					// TODO: handle error
-					throw error;
+
+					App.vent.trigger( 'flash:message', {
+						'message' : 'An error occurred. Please try again later.'
+					} );
+
 				} );
 			},
 

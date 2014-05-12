@@ -110,20 +110,28 @@ define( function ( require ) {
 							// process return data here
 						}  )
 						.fail( function () {
-							// error handling
+
+							App.vent.trigger( 'flash:message', {
+								'message' : 'An error occurred. Please try again later.'
+							} );
 
 						} );
 
 				}.bind( this ) ).fail( function ( error ) {
 
-					App.content.show( new App.Common.ErrorView() );
+					App.vent.trigger( 'flash:message', {
+						'message' : 'An error occurred. Please try again later.'
+					} );
 
 				}.bind( this ) );
 
 			}.bind( this ) ).fail( function ( error ) {
-				// TODO: error handling
-				App.content.show( new App.Common.ErrorView() );
-			}.bind( this ) );
+
+				App.vent.trigger( 'flash:message', {
+					'message' : 'An error occurred. Please try again later.'
+				} );
+
+			} );
 
 		}
 	} );

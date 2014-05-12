@@ -4,6 +4,8 @@ define( function ( require ) {
 	var $ = require( 'jquery' );
 
 	return function ( text, num ) {
+		text = text || '';
+
 		var ellipsis = '...';
 
 		if ( text.length <= num ) {

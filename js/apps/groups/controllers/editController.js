@@ -32,7 +32,11 @@ define( function ( require ) {
 					App.navigate( 'groups', { 'trigger' : true } );
 
 				} ).fail( function ( error ) {
-					// TODO: error handling
+
+					App.vent.trigger( 'flash:message', {
+						'message' : 'An error occurred. Please try again later.'
+					} );
+
 				} );
 
 			},
@@ -58,7 +62,11 @@ define( function ( require ) {
 					App.navigate( 'groups', { 'trigger' : true } );
 
 				} ).fail( function ( error ) {
-					// TODO: error handling
+
+					App.vent.trigger( 'flash:message', {
+						'message' : 'An error occurred. Please try again later.'
+					} );
+
 				} );
 
 			},
@@ -82,7 +90,11 @@ define( function ( require ) {
 					Vent.trigger( 'group:removeGroupInvites', model );
 
 				} ).fail( function ( error ) {
-					// TODO: error handling
+
+					App.vent.trigger( 'flash:message', {
+						'message' : 'An error occurred. Please try again later.'
+					} );
+
 				} );
 			},
 
@@ -122,7 +134,6 @@ define( function ( require ) {
 
 				var requests     = [ checkLicenseRequest, getLicenseKeySingleUseObjectRequest ];
 				var fetchingData = Remoting.fetch( requests );
-
 				App.when( fetchingData ).done( function ( results ) {
 					var licenseKeySingleUseObject = results[ 1 ];
 					_.extend(redeemLicenseKeyRequest.args, licenseKeySingleUseObject);
@@ -139,16 +150,28 @@ define( function ( require ) {
 									Vent.trigger( 'group:show', model );
 
 								} ).fail( function ( error ) {
-									// TODO: error handling
+
+									App.vent.trigger( 'flash:message', {
+										'message' : 'An error occurred. Please try again later.'
+									} );
+
 								} );
 							}
 						} ).fail( function ( error ) {
-							// TODO: error handling
+
+							App.vent.trigger( 'flash:message', {
+								'message' : 'An error occurred. Please try again later.'
+							} );
+
 						} );
 					}
 
 				} ).fail( function ( error ) {
-					// TODO: error handling
+
+					App.vent.trigger( 'flash:message', {
+						'message' : 'An error occurred. Please try again later.'
+					} );
+
 				} );
 			}
 
