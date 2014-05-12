@@ -1,13 +1,14 @@
 define( function ( require ) {
 	'use strict';
 
-	var sinon = window.sinon;
 	var $     = require( 'jquery' );
+	var sinon = window.sinon;
 
 	var VideoCollectionView    = require( 'videoPlayer/views/tabs/VideoCollectionView' );
 	var RelatedVideoCollection = require( 'videoPlayer/collections/RelatedVideoCollection' );
 
 	describe( 'VideoCollectionView', function ( ) {
+
 		var videosCollectionView;
 		var testData;
 		var testCollection;
@@ -31,19 +32,18 @@ define( function ( require ) {
 			};
 
 			videosCollectionView = new VideoCollectionView( {
-				'collection': testCollection
+				'collection' : testCollection
 			} );
 
-			videosCollectionView.render();
 		} );
 
-		after( function() {
+		after( function () {
 			videosCollectionView.remove();
-			videosCollectionView = null;
+			videosCollectionView = undefined;
 		} );
-
 
 		describe( '#videosCollectionView', function ( ) {
+
 			it( 'is an instance', function ( ) {
 				videosCollectionView.should.be.an.instanceof( VideoCollectionView );
 			} );
@@ -57,13 +57,15 @@ define( function ( require ) {
 				videosCollectionView.className.should.be.equal( 'slick' );
 			} );
 
-			it( 'has a `tagName` property with value `div`', function ( ) {
+			it( 'has a `tagName` property with value `ul`', function ( ) {
 				videosCollectionView.should.have.property( 'tagName' );
-				videosCollectionView.tagName.should.be.equal( 'div' );
+				videosCollectionView.tagName.should.be.equal( 'ul' );
 			} );
+
 		} );
 
 		describe( '.onShow', function ( ) {
+
 			var slickSpy;
 
 			before( function () {
@@ -79,13 +81,16 @@ define( function ( require ) {
 			it( 'will call .slick' , function ( ) {
 				slickSpy.callCount.should.be.at.least( 1 );
 			} );
+
 		} );
 
 		describe( '.onClose', function ( ) {
+
 			it( 'will reset the collection' , function ( ) {
 				videosCollectionView.onClose();
 				videosCollectionView.collection.length.should.be.equal( 0 );
 			} );
+
 		} );
 
 	} );

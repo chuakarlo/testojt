@@ -1,10 +1,8 @@
 define( function ( require ) {
 	'use strict';
 
-	var _ = require( 'underscore' );
-
+	var _        = require( 'underscore' );
 	var App      = require( 'App' );
-	var Session  = require( 'Session' );
 	var Remoting = require( 'Remoting' );
 
 	var ContentModel           = require( 'videoPlayer/models/ContentModel' );
@@ -63,16 +61,6 @@ define( function ( require ) {
 					}
 				};
 
-				var questionsRequest = App.request( 'vq:fetch', videoModel.id );
-
-				var queueContentsRequest = {
-					'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelBookmarkGateway',
-					'method' : 'getContentAbbrevListByPersonnelId',
-					'args'   : {
-						'personnelId' : Session.personnelId()
-					}
-				};
-
 				var segmentsRequest = {
 					'path'   : 'com.schoolimprovement.pd360.dao.ContentService',
 					'method' : 'getProgramFromSegment',
@@ -83,17 +71,19 @@ define( function ( require ) {
 					}
 				};
 
-				var requests = [ relatedVideosRequest, queueContentsRequest, segmentsRequest ];
+				var questionsRequest     = App.request( 'vq:fetch', videoModel.id );
+				var queueContentsRequest = App.request( 'common:getQueueContents' );
+
+				var requests = [ relatedVideosRequest, segmentsRequest ];
 				var videoEntities = Remoting.fetch( requests );
 
-				App.when( questionsRequest, videoEntities ).done( function ( questions, entities ) {
+				App.when( questionsRequest, queueContentsRequest, videoEntities ).done( function ( questions, queueContents, entities ) {
 
 					var layout = new App.VideoPlayer.Views.PageLayout( { 'model' : videoModel } );
 					App.content.show( layout );
 
 					var relatedVideos = entities[ 0 ].slice( 1 );
-					var queueContents = entities[ 1 ];
-					var segments      = entities[ 2 ];
+					var segments      = entities[ 1 ];
 
 					// Videojs player view
 					var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( { 'model' : videoModel } );
@@ -117,7 +107,7 @@ define( function ( require ) {
 					layout.questionsRegion.show( questionsView );
 
 					// set video model queued flag
-					videoModel.set( 'queued', _.contains( _.pluck( queueContents, 'ContentId' ), videoModel.id ) );
+					videoModel.set( 'queued', _.contains( queueContents.pluck( 'ContentId' ), videoModel.id ) );
 
 					// show video buttons view
 					var videoButtonsView = new App.VideoPlayer.Views.VideoButtonsView( { 'model' : videoModel } );

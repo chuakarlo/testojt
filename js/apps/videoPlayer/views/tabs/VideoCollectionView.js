@@ -1,18 +1,16 @@
 define( function ( require ) {
 	'use strict';
 
+	var App           = require( 'App' );
+	var Marionette    = require( 'marionette' );
+
 	require( 'slick' );
-
-	var Marionette = require( 'marionette' );
-
-	var VideoItemView = require( 'videoPlayer/views/tabs/VideoItemView' );
+	require( 'common/views' );
 
 	return Marionette.CollectionView.extend( {
 
-		'itemView'  : VideoItemView,
-
-		'tagName'   : 'div',
-
+		'itemView'  : App.Common.SegmentCardsView,
+		'tagName'   : 'ul',
 		'className' : 'slick',
 
 		'ui' : {

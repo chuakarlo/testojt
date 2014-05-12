@@ -6,6 +6,8 @@ define( function ( require ) {
 
 	App.module( 'VideoPlayer', function ( VideoPlayer ) {
 
+		require( 'common/entities/Queue' );
+		require( 'common/controllers/QueueController' );
 		require( 'videoPlayer/entities/Questions' );
 		require( 'videoPlayer/views/Views' );
 		require( 'videoPlayer/controllers/ShowController' );
