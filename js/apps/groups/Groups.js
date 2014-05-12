@@ -15,13 +15,15 @@ define( function ( require ) {
 		require( 'groups/views/Views' );
 		require( 'groups/entities/GroupCollection' );
 		require( 'groups/entities/GroupInviteCollection' );
+		require( 'groups/entities/GroupAdmin' );
 
 		// configure groups routes
 		Groups.Router = AuthRouter.extend( {
 
 			'appRoutes' : {
-				'groups'          : 'listGroups',
-				'groups/:groupId' : 'showGroup'
+				'groups'                 : 'listGroups',
+				'groups/:groupId'        : 'showGroup',
+				'groups/:groupId/leader' : 'showLeaderTools'
 			}
 
 		} );
@@ -40,6 +42,35 @@ define( function ( require ) {
 			'showGroup' : function ( groupID ) {
 				App.request( 'pd360:hide' );
 				Groups.Show.Controller.showGroup( groupID );
+			},
+
+			'showLeaderTools' : function ( groupID ) {
+
+				var userIsGroupAdmin   = App.request( 'groups:isGroupAdmin', groupID );
+				var userIsGroupCreator = App.request( 'groups:isGroupCreator', groupID );
+
+				App.when( userIsGroupAdmin, userIsGroupCreator ).done( function ( groupAdmin, groupCreator ) {
+
+					if ( groupAdmin === true || groupCreator === true ) {
+
+						var pd360Loaded = App.request( 'pd360:loaded' );
+
+						App.content.show( new App.Common.LoadingView() );
+
+						App.when( pd360Loaded ).done( function () {
+							App.content.close();
+							App.request( 'pd360:navigate', 'communities', 'groupsBrowse', {
+								'LicenseId' : groupID
+							} );
+						} );
+
+					} else {
+						App.navigate( 'home', { 'trigger' : true } );
+						return false;
+					}
+
+				} );
+
 			},
 
 			'leaveGroup' : function ( model ) {
@@ -70,20 +101,6 @@ define( function ( require ) {
 		// set handler to navigate to group forums through communities app
 		App.reqres.setHandler( 'group:showForums', function ( LicenseId ) {
 			App.navigate( 'resources/communities/5/' + LicenseId, { 'trigger' : true } );
-		} );
-
-		// set handler to navigate to group leader tools
-		App.reqres.setHandler( 'group:showLeaderTools', function ( LicenseId ) {
-			var pd360Loaded = App.request( 'pd360:loaded' );
-
-			App.content.show( new App.Common.LoadingView() );
-
-			App.when( pd360Loaded ).done( function () {
-				App.content.close();
-				App.request( 'pd360:navigate', 'communities', 'groupsBrowse', {
-					'LicenseId' : LicenseId
-				} );
-			} );
 		} );
 
 		Vent.on( 'group:leaveGroup', function ( model ) {

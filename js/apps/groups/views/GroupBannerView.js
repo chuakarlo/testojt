@@ -43,7 +43,7 @@ define( function ( require ) {
 		'showLeaderTools' : function ( e ) {
 
 			e.preventDefault();
-			App.request( 'group:showLeaderTools', this.model.attributes.LicenseId );
+			App.navigate( 'groups/' + this.model.attributes.LicenseId + '/leader', { 'trigger' : true } );
 
 		},
 
