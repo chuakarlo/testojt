@@ -71,9 +71,10 @@ define( function ( require ) {
 			doInitialize( this );
 		},
 		'events' : {
-			'click div#widget-settings.closed' : 'showWidgetSettingsPanel',
-			'click div#widget-settings.opened' : 'closeWidgetSettingsPanel',
-			'click div.actions .cancel'        : 'closeWidgetSettingsPanel'
+			'click div#widget-settings.closed'         : 'showWidgetSettingsPanel',
+			'click div#widget-settings.opened'         : 'closeWidgetSettingsPanel',
+			'click div.actions .cancel'                : 'closeWidgetSettingsPanel',
+			'focusout #widgets-settings-panel-wrapper' : 'blurAction'
 		},
 		'className' : 'widget-container',
 		'template'  : _.template( template ),
@@ -84,6 +85,7 @@ define( function ( require ) {
 
 		'showWidgetSettingsPanel' : function ( e ) {
 			doShowWidgetSettingsPanel( this, e );
+			$( '#widgets-settings-panel-wrapper' ).focus().css('outline', 'none');
 		},
 
 		'closeWidgetSettingsPanel' : function ( e ) {
@@ -96,7 +98,17 @@ define( function ( require ) {
 
 		'getUserWidgetCollection' : function ( userWidgets ) {
 			return getUserWidgetCollection( this, userWidgets );
+		},
+
+		'blurAction' : function ( e ) {
+			var isIn = $.contains( $(':focus'), $( '#widgets-settings-panel-wrapper' ) ) || $(':focus') === $( '#widgets-settings-panel-wrapper' );
+			if ( !isIn ) {
+				$( 'div#widget-settings.opened' ).click();
+			} else {
+				$( '#widgets-settings-panel-wrapper' ).focus().css('outline', 'none');
+			}
 		}
+
 	} );
 
 } );
