@@ -33,10 +33,10 @@ define( function ( require ) {
 			return 'See the courses you haven’t completed. Click on an unfinished course to pick up right where you left off.';
 		},
 		'imgSrc'          : function () {
-			return 'img/homepage-widgets/courses.png';
+			return 'http://i1032.photobucket.com/albums/a405/shinjiescorido/src_courses_zps2b594805.png';
 		},
 		'icon'            : function () {
-			return 'img/homepage-widgets/courses.png';
+			return 'http://i1032.photobucket.com/albums/a405/shinjiescorido/src_courses_zps2b594805.png';
 		},
 		'em'              : 8.5,
 		'getExternalView' : WidgetItemView,

@@ -33,10 +33,10 @@ define( function ( require ) {
 			return 'Get a glance at observations you’ve recently received. See the dates as well as any related recommended PD units.';
 		},
 		'imgSrc'          : function () {
-			return 'http://i61.photobucket.com/albums/h72/l5x12w19/observationsOfMe.png';
+			return 'http://i1032.photobucket.com/albums/a405/shinjiescorido/src_Observations_zps8bc3f1ab.png';
 		},
 		'icon'            : function () {
-			return 'http://i61.photobucket.com/albums/h72/l5x12w19/observationsOfMe.png';
+			return 'http://i1032.photobucket.com/albums/a405/shinjiescorido/src_Observations_zps8bc3f1ab.png';
 		},
 		'em'              : 7,
 		'getExternalView' : WidgetItemView,

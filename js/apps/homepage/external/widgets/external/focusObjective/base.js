@@ -24,10 +24,10 @@ define( function ( require ) {
 			return 'See a list of videos that are in your focus objectives folders. Click on a video to watch it.';
 		},
 		'imgSrc'          : function () {
-			return 'img/homepage-widgets/focusObjective.png';
+			return 'http://i1032.photobucket.com/albums/a405/shinjiescorido/src_focusObjectives_zpsfa2cacc5.png';
 		},
 		'icon'            : function () {
-			return 'img/homepage-widgets/focusObjective.png';
+			return 'http://i1032.photobucket.com/albums/a405/shinjiescorido/src_focusObjectives_zpsfa2cacc5.png';
 		},
 		'em'              : 7,
 		'getExternalView' : WidgetItemView, // items template
