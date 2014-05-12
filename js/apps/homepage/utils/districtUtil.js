@@ -29,6 +29,13 @@ define( function ( require ) {
 					}
 				} );
 
+			} ).fail( function ( error ) {
+
+				layout.messageRegion.show( new App.Common.ErrorView( {
+					'message' : 'There was an error getting district message.',
+					'flash'   : 'An error occurred. Please try again later.'
+				} ) );
+
 			} );
 		}
 	};

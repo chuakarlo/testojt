@@ -31,8 +31,11 @@ define( function ( require ) {
 				options.success( new Collection( models[ 0 ] ) );
 
 			} ).fail( function ( error ) {
-				// TODO: error handling
-				options.fail( error );
+
+				App.vent.trigger( 'flash:message', {
+					'message' : 'An error occurred getting queue. Please try again later.'
+				} );
+
 			} );
 
 		},

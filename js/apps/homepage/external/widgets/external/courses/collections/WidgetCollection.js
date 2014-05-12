@@ -39,7 +39,11 @@ define ( function ( require ) {
 				options.success( new Collection( models[ 0 ] ) );
 
 			} ).fail( function ( error ) {
-				// TODO: error handling
+
+				App.vent.trigger( 'flash:message', {
+					'message' : 'An error occurred getting courses. Please try again later.'
+				} );
+
 			} );
 		}
 

@@ -3,6 +3,7 @@ define( function ( require ) {
 	'use strict';
 
 	var $                          = require( 'jquery' );
+	var App                        = require( 'App' );
 	var EmptyContentCollectionView = require( 'apps/homepage/external/content/views/EmptyContentCollectionView' );
 
 	var UIManager          = require( 'apps/homepage/external/content/external/agents/UIManager' );
@@ -10,7 +11,7 @@ define( function ( require ) {
 	var queueSelector      = '#your-queue-wrapper';
 	var queueCountSelector = '#your-queue-count';
 
-	function doMessage( type, message ) {
+	function doMessage ( type, message ) {
 		//decide later what to do with messages
 	}
 
@@ -41,7 +42,6 @@ define( function ( require ) {
 			UIManager.applyCircularScroll( view.$el, id, view, base, count );
 		}
 	}
-
 
 	return {
 		'doError' : function ( message ) {
@@ -78,8 +78,13 @@ define( function ( require ) {
 				'success' : function ( collection, response ) {
 					injectAttributes ( view, base, collection, data, callback );
 				},
+
 				'error' : function () {
-					//todo
+
+					App.vent.trigger ( 'flash:message', {
+						'message' : 'An error occurred. Please try again later.'
+					} );
+
 				}
 			} );
 		},

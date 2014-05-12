@@ -6,6 +6,7 @@ define ( function (require ) {
 	var Remoting    = require( 'Remoting' );
 	var $           = require( 'jquery' );
 	var Session     = require( 'Session' );
+	var App         = require( 'App' );
 
 	function widgetRequest ( personnelId ) {
 		return {
@@ -31,7 +32,11 @@ define ( function (require ) {
 				options.success( new Collection( models[ 0 ] ) );
 
 			} ).fail( function ( error ) {
-				// TODO: error handling
+
+				App.vent.trigger( 'flash:message', {
+					'message' : 'An error occurred. Please try again later.'
+				} );
+
 			} );
 		}
 	} );

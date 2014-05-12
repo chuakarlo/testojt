@@ -40,6 +40,12 @@ define( function ( require ) {
 
 			var userWidgetCollectionView = new UserWidgetCollectionView( { 'collection' : view.userWidgetCollection } );
 			view.userWidgets.show( userWidgetCollectionView );
+		} ).fail( function ( error ) {
+
+			App.vent.trigger( 'flash:message', {
+				'message' : 'An error occurred setting up widgets. Please try again later.'
+			} );
+
 		} );
 	}
 

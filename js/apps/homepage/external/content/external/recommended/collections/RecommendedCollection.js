@@ -49,7 +49,11 @@ define( function ( require ) {
 				options.success( innerModel );
 
 			} ).fail( function ( ) {
-				// TODO: error handling
+
+				App.vent.trigger( 'flash:message', {
+					'message' : 'An error occurred getting recommended videos. Please try again later.'
+				} );
+
 			} );
 		},
 

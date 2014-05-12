@@ -2,8 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var App      = require( 'App' );
-
-	var HomeView              = require( 'apps/homepage/views/BaseItemView' );
+	var HomeView = require( 'apps/homepage/views/BaseItemView' );
 
 	var districtUtils = require( 'apps/homepage/utils/districtUtil' );
 	var homepageUtils = require( 'apps/homepage/utils/homepageUtil' );

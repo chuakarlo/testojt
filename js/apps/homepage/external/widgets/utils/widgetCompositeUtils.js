@@ -26,6 +26,12 @@ define( function ( require ) {
 	var doUpdateUserWidgets = function ( personnelId, widgetIds ) {
 		App.when( Remoting.fetch( fetchingModels( personnelId, widgetIds ) ) ).done( function ( ) {
 			//do something
+		} ).fail( function ( error ) {
+
+			App.vent.trigger( 'flash:message', {
+				'message' : 'An error occurred. Please try again later.'
+			} );
+
 		} );
 	};
 

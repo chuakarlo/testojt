@@ -7,7 +7,6 @@ define( function ( require ) {
 	var Session  = require( 'Session' );
 	var Backbone = require( 'backbone' );
 
-	var NullView              = require( 'apps/homepage/views/BaseEmptyView' );
 	var manifest              = require( 'apps/homepage/manifest' );
 	var SectionCollectionView = require( 'apps/homepage/views/SectionCollectionView' );
 
@@ -46,6 +45,9 @@ define( function ( require ) {
 
 	return {
 		'loadHomepage' : function ( layout ) {
+
+			layout.contentRegion.show( new App.Common.LoadingView() );
+
 			var fetchingModels = Remoting.fetch( clientProfileParams( Session.personnelId() ) );
 
 			App.when( fetchingModels ).done( function ( models ) {
@@ -59,10 +61,15 @@ define( function ( require ) {
 					'collection' : collection
 				} );
 
-				layout.contentRegion.show(sectionView);
+				layout.contentRegion.show( sectionView );
 
 			} ).fail( function ( ) {
-				App.content.show( new NullView() );
+
+				App.content.show( new App.Common.ErrorView( {
+					'message' : 'There was an error setting up homepage.',
+					'flash'   : 'An error occurred. Please try again later.'
+				} ) );
+
 			} );
 		}
 	};
