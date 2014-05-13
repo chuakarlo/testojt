@@ -1,6 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
+	require( 'common/views' );
 	require( 'apps/user/User' );
 	require( 'Pd360Link' );
 	require( 'apps/resources' );
@@ -12,7 +13,5 @@ define( function ( require ) {
 	require( 'apps/videoPlayer/VideoPlayer');
 	require( 'apps/homepage/Homepage' );
 	require( 'apps/admin/Admin' );
-
-	require( 'common/views' );
 
 } );
