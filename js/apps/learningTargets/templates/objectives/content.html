@@ -1,8 +1,11 @@
 <div class="fo-content">
-	<a href="#resources/videos/<%- ContentId %>">
-		<div class="hover play"></div>
-	</a>
-	<img src="<%- ImageURL %>">
+	<div class="fo-content-image">
+		<a href="#resources/videos/<%- ContentId %>" >
+            <img src="<%- ImageURL %>" class="img-responsive">
+            <span class="fa fa-play cn-play-icon"></span>
+            <p class="cn-play-now">Play Now</p>
+        </a>
+	</div>
 </div>
 <div class="fo-info">
 	<h3 title="<%- ContentName %>"><%- CName %></h3>
