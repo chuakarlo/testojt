@@ -28,13 +28,6 @@ define( function ( require ) {
 		};
 	}
 
-	function closeMessage () {
-		var err = $( '.flash-close' );
-		if ( err ) {
-			err.click();
-		}
-	}
-
 	function doInitialize ( view ) {
 		App.when( Remoting.fetch( fetchingModels( Session.personnelId() ) ) ).done( function ( models ) {
 
@@ -122,12 +115,16 @@ define( function ( require ) {
 		},
 
 		'blurAction' : function ( e ) {
-			var isIn = $.contains( $(':focus'), $( '#widgets-settings-panel-wrapper' ) ) || $(':focus') === $( '#widgets-settings-panel-wrapper' );
-			if ( !isIn ) {
-				$( 'div#widget-settings.opened' ).click();
-				closeMessage();
-			} else {
+			var elem = e.currentTarget.ownerDocument.activeElement;
+			var parent = $( elem ).closest( '#widgets-settings-panel-wrapper' );
+
+			//using jquery to get focus doesn't work in IE
+			if ( parent.length === 1 ) {
 				$( '#widgets-settings-panel-wrapper' ).focus().css('outline', 'none');
+
+			} else {
+				$( 'div#widget-settings.opened' ).click();
+
 			}
 		}
 
