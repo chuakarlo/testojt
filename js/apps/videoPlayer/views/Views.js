@@ -14,11 +14,6 @@ define( function ( require ) {
 		Views.VideoCollectionView   = require( 'videoPlayer/views/tabs/VideoCollectionView' );
 		Views.ResourcesView         = require( 'videoPlayer/views/tabs/VideoResourcesCollectionView' );
 		Views.VideoInfoView         = require( 'videoPlayer/views/VideoInfoItemView' );
-		// Views.ShareVideoLayout      = require( 'videoPlayer/views/share/ShareVideoLayout' );
-		// Views.SharedVideoView       = require( 'videoPlayer/views/share/SharedVideoItemView' );
-		// Views.SearchResultsTreeView = require( 'videoPlayer/views/share/SearchResultsTreeView' );
-		// Views.SearchResultsTreeRoot = require( 'videoPlayer/views/share/SearchResultsTreeRoot' );
-		// Views.SelectedItemView      = require( 'videoPlayer/views/share/SelectedItemView' );
 
 	} );
 
