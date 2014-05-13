@@ -3,11 +3,12 @@ define( function ( require ) {
 
 	require( 'bootstrap' );
 
-	var sinon    = window.sinon;
-	var App      = require( 'App' );
-	var Backbone = require( 'backbone' );
+	var sinon = window.sinon;
+	var App   = require( 'App' );
 
-	require( 'videoPlayer/VideoPlayer' );
+	var SelectedItemView = require( 'videoPlayer/views/share/SelectedItemView' );
+
+	require( 'videoPlayer/entities/Entities' );
 
 	describe( 'SelectedItemView', function () {
 		var selectedItemView;
@@ -16,7 +17,7 @@ define( function ( require ) {
 		before( function () {
 			Person = App.VideoPlayer.Entities.TreeNodeModel.extend();
 
-			selectedItemView = new App.VideoPlayer.Views.SelectedItemView( {
+			selectedItemView = new SelectedItemView( {
 				'model' : new Person( {
 					'PersonnelId'  : 12345,
 					'FirstName'    : 'John',
@@ -29,7 +30,7 @@ define( function ( require ) {
 		} );
 
 		it( 'does be an instance of `SelectedItemView`', function () {
-			selectedItemView.should.be.an.instanceof( App.VideoPlayer.Views.SelectedItemView );
+			selectedItemView.should.be.an.instanceof( SelectedItemView );
 		} );
 
 		it( 'does have a `template` property', function () {

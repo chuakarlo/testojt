@@ -2,19 +2,18 @@ define( function ( require ) {
 	'use strict';
 
 	// test libraries
-	var sinon         = window.sinon;
-	var Backbone      = require( 'backbone' );
-	var App           = require( 'App' );
-	var SelectedItems = require( 'videoPlayer/collections/SelectedItemsCollection' );
+	var sinon    = window.sinon;
+	var Backbone = require( 'backbone' );
 
-	require( 'videoPlayer/VideoPlayer' );
+	var SelectedItemsView = require( 'videoPlayer/views/share/SelectedItemsCollectionView' );
+	var SelectedItems     = require( 'videoPlayer/collections/SelectedItemsCollection' );
 
 	describe( 'SelectedItemsCollectionView', function () {
 
 		var selectedItemsView;
 
 		before( function () {
-			selectedItemsView = new App.VideoPlayer.Views.SelectedItemsView( {
+			selectedItemsView = new SelectedItemsView( {
 				'collection' : new SelectedItems()
 			} );
 		} );

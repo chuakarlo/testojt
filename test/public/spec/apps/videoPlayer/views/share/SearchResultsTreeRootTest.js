@@ -1,17 +1,15 @@
 define( function ( require ) {
 	'use strict';
 
-	var sinon = window.sinon;
-	var App   = require( 'App' );
-
-	require( 'videoPlayer/VideoPlayer' );
+	var sinon    = window.sinon;
+	var TreeRoot = require( 'videoPlayer/views/share/SearchResultsTreeRoot' );
 
 	describe( 'description', function () {
 
 		var searchResultsTreeRoot;
 
 		before( function () {
-			searchResultsTreeRoot = new App.VideoPlayer.Views.SearchResultsTreeRoot();
+			searchResultsTreeRoot = new TreeRoot();
 		} );
 
 		after( function () {

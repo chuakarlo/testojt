@@ -7,14 +7,11 @@ define( function ( require ) {
 	App.module( 'VideoPlayer', function ( VideoPlayer ) {
 
 		require( 'common/entities/Queue' );
-		require( 'common/controllers/QueueController' );
-		require( 'videoPlayer/entities/Questions' );
-		require( 'videoPlayer/entities/Segments' );
+		require( 'videoPlayer/entities/Entities' );
 		require( 'videoPlayer/views/Views' );
 		require( 'videoPlayer/controllers/ShowController' );
 		require( 'videoPlayer/controllers/QueueController' );
 		require( 'videoPlayer/controllers/ShareController' );
-		require( 'videoPlayer/entities/SearchResults' );
 
 		VideoPlayer.Router = AuthRouter.extend( {
 			'appRoutes' : {

@@ -4,8 +4,7 @@ define( function ( require ) {
 	var sinon    = window.sinon;
 	var App      = require( 'App' );
 	var Backbone = require( 'backbone' );
-
-	require( 'videoPlayer/VideoPlayer' );
+	var TreeView = require( 'videoPlayer/views/share/SearchResultsTreeView' );
 
 	describe( 'SearchResultsTreeView', function () {
 
@@ -15,7 +14,7 @@ define( function ( require ) {
 		} );
 
 		before( function () {
-			searchResultsTreeView = new App.VideoPlayer.Views.SearchResultsTreeView( {
+			searchResultsTreeView = new TreeView( {
 				'model' : model
 			} );
 		} );

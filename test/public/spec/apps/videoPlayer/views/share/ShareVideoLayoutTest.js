@@ -5,9 +5,11 @@ define( function ( require ) {
 	var Backbone     = require( 'backbone' );
 	var App          = require( 'App' );
 	var Remoting     = require( 'Remoting' );
-	var ContentModel = require( 'videoPlayer/models/ContentModel' );
 
-	require( 'videoPlayer/VideoPlayer' );
+	var ShareVideoLayout = require( 'videoPlayer/views/share/ShareVideoLayout' );
+	var ContentModel     = require( 'videoPlayer/models/ContentModel' );
+
+	require( 'videoPlayer/entities/SearchResults' );
 	require( 'jquery.spin' );
 
 	describe( 'VideoPlayer ShareVideoLayout Layout View', function () {
@@ -17,7 +19,7 @@ define( function ( require ) {
 
 		before( function () {
 			contentModel     = new ContentModel();
-			shareVideoLayout = new App.VideoPlayer.Views.ShareVideoLayout( { 'model' : contentModel } );
+			shareVideoLayout = new ShareVideoLayout( { 'model' : contentModel } );
 		} );
 
 		after( function () {

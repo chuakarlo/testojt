@@ -106,14 +106,9 @@ define( function ( require ) {
 			// VideoPlayer test specs
 			'spec/apps/videoPlayer/VideoPlayerTest.js',
 			// models
-			'spec/apps/videoPlayer/models/ContentModelTest.js',
 			'spec/apps/videoPlayer/models/QuestionModelTest.js',
-			'spec/apps/videoPlayer/models/RelatedVideoModelTest.js',
 			// collection
 			'spec/apps/videoPlayer/collections/QuestionsCollectionTest.js',
-			'spec/apps/videoPlayer/collections/VideoResourcesCollectionTest.js',
-			'spec/apps/videoPlayer/collections/RelatedVideoCollectionTest.js',
-			'spec/apps/videoPlayer/collections/SelectedItemsCollectionTest.js',
 			// views/player
 			'spec/apps/videoPlayer/views/player/VideoPlayerViewTest.js',
 			// views/questions
@@ -139,8 +134,11 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/utils/selectTextTest.js',
 			'spec/apps/videoPlayer/utils/toHHMMSSFormatTest.js',
 			// entities
+			'spec/apps/videoPlayer/entities/ContentTest.js',
+			'spec/apps/videoPlayer/entities/RelatedVideosTest.js',
 			'spec/apps/videoPlayer/entities/SearchResultsTest.js',
 			'spec/apps/videoPlayer/entities/SegmentsTest.js',
+			'spec/apps/videoPlayer/entities/VideoResourcesTest.js',
 
 			//Homepage
 			'spec/apps/homepage/external/content/controllers/contentCompositeControllerTest.js',

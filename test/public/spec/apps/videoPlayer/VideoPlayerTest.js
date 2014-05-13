@@ -43,64 +43,79 @@ define( function( require ) {
 				App.VideoPlayer.Controller.Show.should.have.property( 'showVideoResources' );
 			} );
 
-			it( '.showVideo should make call for video info and call .showVideoResources', function () {
-				var fakeVideoInfo = [ { 'ContentId' : 123 } ];
-				var showVideoResources = sinon.stub( App.VideoPlayer.Controller.Show, 'showVideoResources' );
-				var remotingStub = sinon.stub( Remoting, 'fetch' ).returns( fakeVideoInfo );
-				var showStub = sinon.stub( App.content, 'show' );
+			describe( '.showVideo', function () {
 
-				App.VideoPlayer.Controller.Show.showVideo( 123 );
+				var model = new Backbone.CFCollection();
 
-				// App should have shown layout
-				showStub.should.have.callCount( 1 );
+				before(function () {
+					var stub = sinon.stub().returns( model );
+					App.reqres.setHandler( 'videoPlayer:getVideoContent', stub );
+				} );
 
-				// data have been fetched
-				remotingStub.should.have.callCount( 1 );
+				after( function () {
+					App.reqres.removeHandler( 'videoPlayer:getVideoContent' );
+				} );
 
-				// showVideoResources have been called
-				showVideoResources.should.have.callCount( 1 );
+				it( 'should make call for video info and call .showVideoResources', function () {
+					var fakeVideoInfo      = [ { 'ContentId' : 123 } ];
+					var showVideoResources = sinon.stub( App.VideoPlayer.Controller.Show, 'showVideoResources' );
+					var showStub           = sinon.stub( App.content, 'show' );
 
-				// showVideoResources have been called with data
-				showVideoResources.should.have.been.calledWith( fakeVideoInfo[ 0 ] );
+					App.VideoPlayer.Controller.Show.showVideo( 123 );
 
-				// restore stubs
-				App.VideoPlayer.Controller.Show.showVideoResources.restore();
-				Remoting.fetch.restore();
-				App.content.show.restore();
+					// App should have shown layout
+					showStub.should.have.callCount( 1 );
+
+					// showVideoResources have been called
+					showVideoResources.should.have.callCount( 1 );
+
+					// showVideoResources have been called with data
+					showVideoResources.should.have.been.calledWith( model );
+
+					// restore stubs
+					App.VideoPlayer.Controller.Show.showVideoResources.restore();
+					App.content.show.restore();
+				} );
+
 			} );
-
 
 			describe( '.showVideoResources', function () {
 
+				var Model = Backbone.CFModel.extend( {
+
+					'getResources' : function () {
+						return [ ];
+					}
+
+				} );
+				var model = new Model();
+				model.set( 'ContentTypeId', 1 );
+
+				var collection = new Backbone.CFCollection();
+
 				before( function () {
-					var stub = sinon.stub().returns( new Backbone.CFCollection() );
+					var stub = sinon.stub().returns( collection );
+					App.reqres.setHandler( 'common:getQueueContents', stub );
+					App.reqres.setHandler( 'vq:fetch', stub );
+					App.reqres.setHandler( 'videoPlayer:getRelatedVideos', stub );
 					App.reqres.setHandler( 'common:getQueueContents', stub );
 					App.reqres.setHandler( 'vq:segment', stub );
 				} );
 
 				after( function () {
 					App.reqres.removeHandler( 'common:getQueueContents' );
+					App.reqres.removeHandler( 'common:getQueueContents' );
+					App.reqres.removeHandler( 'vq:fetch' );
+					App.reqres.removeHandler( 'videoPlayer:getRelatedVideos' );
+					App.reqres.removeHandler( 'common:getQueueContents' );
 					App.reqres.removeHandler( 'vq:segment' );
 				} );
 
 
 				it( 'should request for video resources and display layout', function () {
-					var fakeVideoInfo = {
-						'ContentId'          : 123,
-						'GuidebookFileName'  : '',
-						'AudioFileName'      : '',
-						'TranscriptFileName' : ''
-					};
-
-					var fakeVideos   = [ { }, { 'ContentId' : 123 } ];
-
-					var fakeData = [ fakeVideos ];
-
 					var showStub = sinon.stub( App.content, 'show' );
-					var remotingStub = sinon.stub( Remoting, 'fetch').returns( fakeData );
-
-					var showSpy = sinon.spy();
-					var layout = sinon.stub( App.VideoPlayer.Views, 'PageLayout' ).returns( {
+					var showSpy  = sinon.spy();
+					var layout   = sinon.stub( App.VideoPlayer.Views, 'PageLayout' ).returns( {
 						'playerRegion'         : { 'show' : showSpy },
 						'questionsRegion'      : { 'show' : showSpy },
 						'videoButtonsRegion'   : { 'show' : showSpy },
@@ -112,10 +127,7 @@ define( function( require ) {
 					} );
 
 					// Call showVideoResources
-					App.VideoPlayer.Controller.Show.showVideoResources( fakeVideoInfo );
-
-					// data have been requested
-					remotingStub.should.have.callCount( 2 );
+					App.VideoPlayer.Controller.Show.showVideoResources( model );
 
 					// should have created a new layout
 					layout.should.have.been.calledWithNew;
@@ -127,7 +139,6 @@ define( function( require ) {
 					showSpy.should.have.callCount( 8 );
 
 					// Restoring stubs
-					Remoting.fetch.restore();
 					App.content.show.restore();
 					App.VideoPlayer.Views.PageLayout.restore();
 				} );

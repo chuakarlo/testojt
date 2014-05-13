@@ -1,14 +1,12 @@
 define( function ( require ) {
 	'use strict';
 
-	var _        = require( 'underscore' );
-	var App      = require( 'App' );
-	var Remoting = require( 'Remoting' );
+	var _   = require( 'underscore' );
+	var App = require( 'App' );
 
-	var ContentModel           = require( 'videoPlayer/models/ContentModel' );
-	var QuestionsCollection    = require( 'videoPlayer/collections/QuestionsCollection' );
-	var ResourcesCollection    = require( 'videoPlayer/collections/VideoResourcesCollection' );
-	var RelatedVideoCollection = require( 'videoPlayer/collections/RelatedVideoCollection' );
+	var QuestionsCollection = require( 'videoPlayer/collections/QuestionsCollection' );
+	var ShareVideoLayout    = require( 'videoPlayer/views/share/ShareVideoLayout' );
+	var SharedVideoItemView = require( 'videoPlayer/views/share/SharedVideoItemView' );
 
 	App.module( 'VideoPlayer.Controller', function ( Controller ) {
 
@@ -21,66 +19,57 @@ define( function ( require ) {
 				var getLicenses = App.request( 'user:licenses' );
 
 				App.when( getLicenses ).then( function ( licenses ) {
-					var licenseType =  _.unique( licenses.pluck( 'LicenseContentTypeId' ) );
 
-					var videoContentRequests = {
-						'path'   : 'com.schoolimprovement.pd360.dao.ContentService',
-						'method' : 'getContentByContentIdAndLicenseTypes',
-						'args'   : {
-							'contId'   : videoId,
-							'licTypes' : licenseType
-						}
-					};
+					var licenseType = _.unique( licenses.pluck( 'LicenseContentTypeId' ) );
 
-					return Remoting.fetch( videoContentRequests );
+					return App.request( 'videoPlayer:getVideoContent', {
+						'videoId'     : videoId ,
+						'licenseType' : licenseType
+					} );
 
 				} ).then( function ( videoContent ) {
-					if ( _.isEmpty( videoContent ) || _.first( videoContent ) === '' ) {
+
+					if ( !videoContent ) {
 						App.content.show( new App.Common.NotFoundView() );
 					} else {
-						this.showVideoResources( _.first( videoContent ) );
+						this.showVideoResources( videoContent );
 					}
+
 				}.bind( this ) ).fail( function () {
+
 					App.content.show( new App.Common.ErrorView( {
 						'message' : 'There was an error loading the page.',
 						'flash'   : 'An error occurred. Please try again later.'
 					} ) );
+
 				} );
 
 			},
 
-			'showVideoResources' : function ( videoInfo ) {
-
-				var videoModel = new ContentModel( videoInfo );
-
-				var relatedVideosRequest = {
-					'path'   : 'com.schoolimprovement.pd360.dao.RespondService',
-					'method' : 'relatedVideos',
-					'args'   : {
-						'ContentId' : videoModel.id
-					}
-				};
+			'showVideoResources' : function ( videoModel ) {
 
 				var questionsRequest     = App.request( 'vq:fetch', videoModel.id );
+				var relatedVideosRequest = App.request( 'videoPlayer:getRelatedVideos', videoModel.id );
 				var queueContentsRequest = App.request( 'common:getQueueContents' );
-				var segmentsRequest = App.request( 'vq:segment', videoModel );
+				var segmentsRequest      = App.request( 'vq:segment', videoModel );
 
-				var requests = [ relatedVideosRequest ];
-				var videoEntities = Remoting.fetch( requests );
+				App.when( questionsRequest, queueContentsRequest, segmentsRequest, relatedVideosRequest ).done( function ( questions, queueContents, segments, relatedVideos ) {
 
-				App.when( questionsRequest, queueContentsRequest, segmentsRequest, videoEntities ).done( function ( questions, queueContents, segments, entities ) {
-
-					var layout = new App.VideoPlayer.Views.PageLayout( { 'model' : videoModel } );
+					var layout = new App.VideoPlayer.Views.PageLayout( {
+						'model' : videoModel
+					} );
 					App.content.show( layout );
 
-					var relatedVideos = entities[ 0 ].slice( 1 );
-
 					// Videojs player view
-					var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( { 'model' : videoModel } );
+					var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( {
+						'model' : videoModel
+					} );
 					layout.playerRegion.show( videoPlayerView );
 
 					//Video info view
-					var videoInfoView = new App.VideoPlayer.Views.VideoInfoView( { 'model' : videoModel } );
+					var videoInfoView = new App.VideoPlayer.Views.VideoInfoView( {
+						'model' : videoModel
+					} );
 					layout.videoInfoRegion.show( videoInfoView );
 
 					// Questions view
@@ -100,7 +89,9 @@ define( function ( require ) {
 					videoModel.set( 'queued', _.contains( queueContents.pluck( 'ContentId' ), videoModel.id ) );
 
 					// show video buttons view
-					var videoButtonsView = new App.VideoPlayer.Views.VideoButtonsView( { 'model' : videoModel } );
+					var videoButtonsView = new App.VideoPlayer.Views.VideoButtonsView( {
+						'model' : videoModel
+					} );
 					layout.videoButtonsRegion.show( videoButtonsView );
 
 					// show video segments
@@ -110,15 +101,15 @@ define( function ( require ) {
 					layout.videoSegmentsRegion.show( segmentsView );
 
 					// show video resources
-					var resourcesCollection = new ResourcesCollection();
+					var resources = App.request( 'videoPlayer:getVideoResources', videoModel );
 					var resourcesView = new App.VideoPlayer.Views.ResourcesView( {
-						'collection' : resourcesCollection.resetCollection( videoModel.toJSON() )
+						'collection' : resources
 					} );
 					layout.videoResourcesRegion.show( resourcesView );
 
 					//show related vids
 					var relatedView = new App.VideoPlayer.Views.VideoCollectionView( {
-						'collection' : new RelatedVideoCollection( relatedVideos )
+						'collection' : relatedVideos
 					} );
 					layout.relatedVideosRegion.show( relatedView );
 
@@ -127,22 +118,26 @@ define( function ( require ) {
 					layout.videoTabsRegion.show( videoTabsView );
 
 				} ).fail( function ( error ) {
+
 					App.content.show( new App.Common.ErrorView( {
 						'message' : 'There was an error loading the page.',
 						'flash'   : 'An error occurred. Please try again later.'
 					} ) );
+
 				} );
 
 			},
 
 			'showShareVideoDialog' : function ( model ) {
+
 				// show share video dialog
-				var shareVideoLayout = new App.VideoPlayer.Views.ShareVideoLayout( { 'model' : model } );
+				var shareVideoLayout = new ShareVideoLayout( { 'model' : model } );
 				App.modalRegion.show( shareVideoLayout, { 'className' : 'share-modal' } );
 
 				// show shared video on the share dialog
-				var sharedVideoView = new App.VideoPlayer.Views.SharedVideoView( { 'model' : model } );
+				var sharedVideoView = new SharedVideoItemView( { 'model' : model } );
 				shareVideoLayout.sharedVideoRegion.show( sharedVideoView );
+
 			}
 
 		};

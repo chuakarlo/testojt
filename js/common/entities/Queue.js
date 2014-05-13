@@ -5,7 +5,7 @@ define( function ( require ) {
 	var App      = require( 'App' );
 	var Backbone = require( 'backbone' );
 
-	App.module( 'VideoPlayer.Entities', function ( Entities ) {
+	App.module( 'Entities', function ( Entities ) {
 
 		Entities.QueueContent = Backbone.CFModel.extend( {
 

@@ -6,6 +6,8 @@ define( function ( require ) {
 	var App      = require( 'App' );
 	var Backbone = require( 'backbone' );
 
+	var SearchResultsTreeRoot = require( 'videoPlayer/views/share/SearchResultsTreeRoot' );
+
 	App.module( 'VideoPlayer.Entities', function ( Entities ) {
 
 		Entities.TreeNodeModel = Backbone.CFModel.extend( {
@@ -114,7 +116,7 @@ define( function ( require ) {
 				var search = API.getSearchResults( filter );
 
 				App.when( search ).done( function ( results ) {
-					var treeRoot = new App.VideoPlayer.Views.SearchResultsTreeRoot( {
+					var treeRoot = new SearchResultsTreeRoot( {
 						'collection' : results
 					} );
 

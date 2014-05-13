@@ -7,6 +7,8 @@ define( function ( require ) {
 	var VideoCollectionView    = require( 'videoPlayer/views/tabs/VideoCollectionView' );
 	var RelatedVideoCollection = require( 'videoPlayer/collections/RelatedVideoCollection' );
 
+	require( 'common/views' );
+
 	describe( 'VideoCollectionView', function ( ) {
 
 		var videosCollectionView;

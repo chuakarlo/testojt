@@ -2,17 +2,16 @@ define( function ( require ) {
 	'use strict';
 
 	// libraries
-	var $          = require( 'jquery' );
-	var _          = require( 'underscore' );
-	var Marionette = require( 'marionette' );
-	var App        = require( 'App' );
-	var Ladda      = require( 'ladda' );
+	var $                 = require( 'jquery' );
+	var _                 = require( 'underscore' );
+	var Backbone          = require( 'backbone' );
+	var Marionette        = require( 'marionette' );
+	var App               = require( 'App' );
+	var Ladda             = require( 'ladda' );
+	var SelectedItemsView = require( 'videoPlayer/views/share/SelectedItemsCollectionView' );
 
 	// view template
 	var template = require( 'text!videoPlayer/templates/share/shareVideoLayout.html' );
-
-	// collections
-	var SelectedItems = require( 'videoPlayer/collections/SelectedItemsCollection' );
 
 	return Marionette.Layout.extend( {
 
@@ -41,7 +40,7 @@ define( function ( require ) {
 			_.bindAll( this );
 			_.extend( this, options );
 
-			this.selectedItems = new SelectedItems();
+			this.selectedItems = new Backbone.CFCollection();
 
 			// common loading instance
 			this.loadingView = new App.Common.LoadingView( {
@@ -50,7 +49,7 @@ define( function ( require ) {
 			} );
 
 			// selected search items view
-			this.selectedItemsView = new App.VideoPlayer.Views.SelectedItemsView( {
+			this.selectedItemsView = new SelectedItemsView( {
 				'collection' : this.selectedItems
 			} );
 
