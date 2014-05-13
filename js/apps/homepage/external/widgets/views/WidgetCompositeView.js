@@ -4,6 +4,7 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
+	var App        = require( 'App' );
 
 	var WidgetCompositeView          = require( 'apps/homepage/external/widgets/views/WidgetItemView' );
 	var template                     = require( 'text!apps/homepage/external/widgets/templates/widgetCompositeView.html' );
@@ -12,6 +13,18 @@ define( function ( require ) {
 
 	var panelStatuses     = [ 'opened', 'closed' ];
 	var widgetSettingsBtn = $( '#widget-settings' );
+
+	var messages           = {
+		'widgetLimitError' : 'You have reached the amount of widgets to be displayed on your homepage.',
+		'widgetMinError'   : 'Action not allowed. You must have at least one active widget'
+	};
+
+	function closeMessage () {
+		var err = $( '.flash-close' );
+		if ( err ) {
+			err.click();
+		}
+	}
 
 	return Marionette.CompositeView.extend( {
 		'events' : {
@@ -42,14 +55,17 @@ define( function ( require ) {
 		},
 
 		'showAllWidgets' : function ( e ) {
+			closeMessage();
 			utils.doShowAllWidgets( this, e );
 		},
 
 		'showActiveWidgets' : function ( e ) {
+			closeMessage();
 			utils.doShowActiveWidgets( this, e );
 		},
 
 		'showInactiveWidgets' : function ( e ) {
+			closeMessage();
 			utils.doShowInactiveWidgets( this, e );
 		},
 
@@ -79,7 +95,7 @@ define( function ( require ) {
 		},
 
 		'deactivateWidget' : function ( e ) {
-			this.hidePreviewErrorMsg( e );
+			e.stopPropagation();
 			utils.doDeactivateWidget( this, e );
 		},
 
@@ -112,7 +128,9 @@ define( function ( require ) {
 		},
 
 		'displayLimitError' : function ( e ) {
-			utils.doDisplayLimitError( this, e );
+			App.vent.trigger( 'flash:message', {
+				'message' : messages.widgetLimitError
+			} );
 		},
 
 		'changeButtonAttr' : function ( from, to ) {

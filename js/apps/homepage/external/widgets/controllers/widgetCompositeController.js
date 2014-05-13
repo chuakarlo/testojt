@@ -1,7 +1,8 @@
 define( function ( require ) {
 	'use strict';
 
-	var $ = require( 'jquery' );
+	var $   = require( 'jquery' );
+	var App = require( 'App' );
 
 	var WidgetCollection      = require( 'apps/homepage/external/widgets/collections/WidgetCollection' );
 	var utils                 = require( 'apps/homepage/external/widgets/utils/widgetCompositeUtils' );
@@ -14,8 +15,17 @@ define( function ( require ) {
 	var btnActions       = [ 'save', 'remove' ];
 
 	var widgetDisplayLimit = 3;
+
+	function closeMessage () {
+		var err = $( '.flash-close' );
+		if ( err ) {
+			err.click();
+		}
+	}
+
 	var messages           = {
-		'widgetLimitError' : 'You have reached the amount of widgets to be displayed on your homepage.'
+		'widgetLimitError' : 'You have reached the amount of widgets to be displayed on your homepage.',
+		'widgetMinError'   : 'Action not allowed. You must have at least one active widget'
 	};
 
 	return {
@@ -35,6 +45,7 @@ define( function ( require ) {
 			view.widgetPreviewItemView = utils.newPreviewItem( view, e );
 			if ( view.widgetPreviewItemView ) {
 				view.ui.widgetPreview.html( view.widgetPreviewItemView.render().el );
+				closeMessage();
 			}
 		},
 
@@ -57,19 +68,26 @@ define( function ( require ) {
 		},
 
 		'doDeactivateWidget' : function ( view, e ) {
-			var widgetModel      = view.getModelByClickEvent( e );
-			var widgetModelId    = widgetModel.id;
-			var widgetCurrentTab = view.$el.find( 'li.selected' ).attr( 'id' );
+			if ( view.options.userWidgetCollection.length !== 1 ) {
+				var widgetModel      = view.getModelByClickEvent( e );
+				var widgetModelId    = widgetModel.id;
+				var widgetCurrentTab = view.$el.find( 'li.selected' ).attr( 'id' );
 
-			view.removeToWidgetCollection( widgetModel );
-			view.$el.find( '#widget-settings-header li#' + widgetCurrentTab ).trigger( 'click' );
+				view.removeToWidgetCollection( widgetModel );
+				view.$el.find( '#widget-settings-header li#' + widgetCurrentTab ).trigger( 'click' );
 
-			view.changeWidgetSelectedTab( widgetCurrentTab );
-			if ( view.onTab( 'all' ) ) {
-				view.changeButtonAttr( btnActions[ 1 ], btnActions[ 0 ] );
-				view.changeWidgetIconBtnAttr( widgetModelId, iconBtnActions[ 0 ], iconBtnActions[ 1 ] );
+				view.changeWidgetSelectedTab( widgetCurrentTab );
+				if ( view.onTab( 'all' ) ) {
+					view.changeButtonAttr( btnActions[ 1 ], btnActions[ 0 ] );
+					view.changeWidgetIconBtnAttr( widgetModelId, iconBtnActions[ 0 ], iconBtnActions[ 1 ] );
+					view.showWidgetPreview( e );
+					view.hidePreviewErrorMsg( e );
+				}
+			} else {
 				view.showWidgetPreview( e );
-				view.hidePreviewErrorMsg( e );
+				App.vent.trigger( 'flash:message', {
+					'message' : messages.widgetMinError
+				} );
 			}
 		},
 
@@ -83,11 +101,7 @@ define( function ( require ) {
 
 		'doHidePreviewErrorMsg' : function ( view, e ) {
 			view.showWidgetPreview( e );
-			view.widgetPreviewItemView.ui.widgetMessage.hide();
-		},
-
-		'doDisplayLimitError' : function ( view ) {
-			view.widgetPreviewItemView.ui.widgetMessage.html( messages.widgetLimitError ).show();
+			closeMessage();
 		},
 
 		'doChangeButtonAttr' : function ( view, from, to ) {
