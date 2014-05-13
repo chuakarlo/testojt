@@ -15,7 +15,7 @@ suite( function( env ) {
 			'observationsOfMe' : 'observationsOfMe'
 		};
 
-		
+
 		describe( 'Default Widgets Display', function () {
 
 			before( function() {
@@ -55,13 +55,13 @@ suite( function( env ) {
 				browser
 
 					.elementById( 'widget-settings' ).click()
-					.elementByClassName( 'opened' )
 					.nodeify( done );
 			});
 
 			it( 'should be able to add/remove all available widgets in configuration settings', function ( done ) {
 				browser
 
+					.elementById( 'widget-settings' ).click()
 					.elementById( 'widget-settings-selection' )
 					.elementByCssSelector( '#widget-settings-selection > li:nth-child(1)' ).text().then( function ( text ) {
 						text.should.equal( 'Courses' );
@@ -80,17 +80,25 @@ suite( function( env ) {
 					} )
 
 					//remove default widget in What To Do Next section
-					.elementByCssSelector( '#widget-settings-selection > li:nth-child(2) > div.active.widget-icon-btn.img-circle.fa.fa-minus' ).click()
+					.elementById( 'widget-settings' ).click()
+					.elementById( 'widget-settings-selection' )
+					.elementByCssSelector( '#widget-settings-selection > li:nth-child(2) > div.widget-icon-btn.img-circle.fa' ).click()
 
 					//add another widget in What To Do Next section
-					.elementByCssSelector( '#widget-settings-selection > li:nth-child(1) > div.inactive.widget-icon-btn.img-circle.fa.fa-plus' ).click()
+					.elementById( 'widget-settings' ).click()
+					.elementById( 'widget-settings-selection' )
+					.elementByCssSelector( '#widget-settings-selection > li:nth-child(1) > div.widget-icon-btn.img-circle.fa' ).click()
 
 					//display back the three default widgets
-					.elementByCssSelector( '#widget-settings-selection > li:nth-child(1) > div.active.widget-icon-btn.img-circle.fa.fa-minus' ).click()
+					.elementById( 'widget-settings' ).click()
+					.elementById( 'widget-settings-selection' )
+					.elementByCssSelector( '#widget-settings-selection > li:nth-child(1) > div.widget-icon-btn.img-circle.fa' ).click()
 
-					.elementByCssSelector( '#widget-settings-selection > li:nth-child(2) > div.inactive.widget-icon-btn.img-circle.fa-plus.fa' ).click()
-					
-					
+					.elementById( 'widget-settings' ).click()
+					.elementById( 'widget-settings-selection' )
+					.elementByCssSelector( '#widget-settings-selection > li:nth-child(2) > div.widget-icon-btn.img-circle.fa' ).click()
+
+
 					.elementById( 'widget-settings' ).click()
 					.nodeify( done );
 			} );
