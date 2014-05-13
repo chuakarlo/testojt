@@ -3,11 +3,11 @@
 	<div class="col-xs-2 <%- txtColor %>"><%- ProcessStatus %></div>
 </div>
 <div class="lt-toggle-content drawer steps" style="display: none;">
-	<div class="steps-indention">
+	<div>
 		<% _.each( Tasks, function ( tasksObj ) { %>
-			<div class="col-xs-4 step-item">Next Step <%- tasksObj.ProcessTaskId %></div>
-			<div class="col-xs-6 step-item"><%- tasksObj.CompleteByDate %></div>
-			<div class="col-xs-2 step-item <%- tasksObj.txtColor %>">
+			<div class="col-xs-3 step-item">Next Step <%- tasksObj.ProcessTaskId %></div>
+			<div class="col-xs-5 step-item"><%- tasksObj.CompleteByDate %></div>
+			<div class="col-xs-4 step-item <%- tasksObj.txtColor %>">
 				<%- tasksObj.status %>
 			</div>
 			<br class="clearfix">
