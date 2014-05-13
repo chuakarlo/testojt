@@ -6,6 +6,7 @@ define ( function ( require ) {
 	var Remoting    = require( 'Remoting' );
 	var Session     = require( 'Session' );
 	var App         = require( 'App' );
+	var $           = require( 'jquery' );
 
 	function widgetRequest ( personnelId ) {
 		return {
@@ -16,6 +17,34 @@ define ( function ( require ) {
 			}
 		};
 	}
+
+	function widgetRequestSecondary ( personnelId ) {
+		return {
+			'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelGateway',
+			'method' : 'getById',
+			'args'   : {
+				'id' : personnelId
+			}
+		};
+	}
+
+	function chopDataToNewModel ( model ) {
+		return {
+			'Avatar'                : model.Avatar,
+			'ProfessionalStartDate' : model.ProfessionalStartDate,
+			'CCSubjectId'           : model.CCSubjectId,
+			'GradeLevelId'          : model.GradeLevelId,
+			'State'                 : model.State,
+			'FirstName'             : model.FirstName,
+			'EmailAddress'          : model.EmailAddress,
+			'Country'               : model.Country,
+			'RoleTypeId'            : model.RoleTypeId,
+			'DistrictName'          : model.DistrictName,
+			'Title'                 : model.Title,
+			'LastName'              : model.LastName
+		};
+	}
+
 	var Collection = Backbone.Collection.extend( {
 		'model'      : WidgetModel,
 		'comparator' : function ( model ) {
@@ -26,12 +55,12 @@ define ( function ( require ) {
 		return Backbone.Collection.extend( {
 			'fetch' : function ( options ) {
 
-				var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId() ) ] );
+				var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId() ),widgetRequestSecondary( Session.personnelId() ) ] );
 
 				App.when( fetchingModels ).done( function ( models ) {
-
-					options.success( new Collection( models[ 0 ] ) );
-
+					var mergedModels    = $.extend( {}, models[ 0 ] , models[ 1 ] );
+					var newMergedModels = chopDataToNewModel ( mergedModels );
+					options.success( new Collection( newMergedModels ) );
 				} ).fail( function ( error ) {
 
 					App.vent.trigger( 'flash:message', {

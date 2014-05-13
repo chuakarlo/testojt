@@ -31,7 +31,7 @@ define( function ( require ) {
 			var kCount   = 0;
 			for ( var k in m.attributes ) {
 				kCount++;
-				if ( m.attributes[k] === '' ) {
+				if ( m.attributes[k] === '' || m.attributes[k] === 'default.png' || m.attributes[k] === 0 ) {
 					cntEmpty++;
 				}
 			}
@@ -53,13 +53,17 @@ define( function ( require ) {
 				$(eCircle).progressCircle( {
 					'nPercent'        : nPercent,
 					'showPercentText' : true,
-					'circleSize'      : 80,
-					'thickness'       : 2
+					'circleSize'      : 90,
+					'thickness'       : 3
 				} );
 
 				$(eCircle).find( '.fill' )
 					.css( 'width', '0.99em' )
 					.css( 'height', '0.99em' );
+				$(eCircle).find( '.bar' )
+					.css( 'width', '0.99em' )
+					.css( 'height', '0.99em' );
+
 			} );
 		}
 	} );
