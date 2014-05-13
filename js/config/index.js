@@ -8,6 +8,7 @@ define( function ( require, exports, module ) {
 		'method'    : 'cfJsonAPIMethod1',
 		// Settings for switching reflections to followup questions.
 		'questions' : {
+			'message'  : 'Follow-up questions are available 72 hours after completion of reflection questions.',
 			'duration' : 72,
 			'timezone' : 'MST7MDT',
 			'unit'     : 'hours'

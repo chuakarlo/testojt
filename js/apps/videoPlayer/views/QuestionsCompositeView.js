@@ -6,10 +6,8 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 
-	var QuestionsItemView     = require( 'videoPlayer/views/QuestionItemView' );
-	var NoItemView            = require( 'videoPlayer/views/NoItemView');
-	var ReflectionSummaryView = require( 'videoPlayer/views/ReflectionSummaryView' );
-	var FollowupSummaryView   = require( 'videoPlayer/views/FollowupSummaryView' );
+	var QuestionsItemView = require( 'videoPlayer/views/QuestionItemView' );
+	var NoItemView        = require( 'videoPlayer/views/NoItemView');
 
 	var template = require( 'text!videoPlayer/templates/questionsCompositeView.html' );
 
@@ -20,6 +18,16 @@ define( function ( require ) {
 		'template' : _.template( template ),
 
 		'itemView' : QuestionsItemView,
+
+		'itemViewOptions' : function () {
+			if ( !this.collection.showFollowup() ) {
+				return {
+					'textLock' : true
+				};
+			}
+		},
+
+		'emptyView' : NoItemView,
 
 		'itemViewContainer' : '#questions-item-region',
 
@@ -46,33 +54,6 @@ define( function ( require ) {
 			this.listenTo( this, 'before:item:added', this.handleUIChange );
 		},
 
-		'isEmpty' : function () {
-			var questions = this.collection;
-			return ( questions.isEmpty() ||
-					questions.getState( 'reflectionSummary' ) ||
-					questions.getState( 'followupSummary' ) );
-		},
-
-		'getEmptyView' : function () {
-			var questions = this.collection;
-			if ( questions.getState( 'reflectionSummary' ) ) {
-				return ReflectionSummaryView;
-			} else if ( questions.getState( 'followupSummary' ) ) {
-				return FollowupSummaryView;
-			} else {
-				return NoItemView;
-			}
-		},
-
-		'itemViewOptions' : function () {
-			var questions = this.collection;
-			if ( questions.getState( 'reflectionSummary' ) ) {
-				return {
-					'diff' : questions.getFollowupTime()
-				};
-			}
-		},
-
 		'handleUIChange' : function () {
 			this.ui.header.toggle( !this.isEmpty() );
 			this.ui.pagination.toggle( !this.isEmpty() );
@@ -90,7 +71,6 @@ define( function ( require ) {
 
 		'onShow' : function () {
 			this.showCarousel();
-			this.showHeader();
 			this.showPagination();
 		},
 
@@ -107,12 +87,14 @@ define( function ( require ) {
 			} );
 		},
 
-		'showHeader' : function () {
-			var stateHeaders = {
-				'showReflection' : 'Reflection Questions',
-				'showFollowup'   : 'Follow-up Questions'
+		'updateHeader' : function ( index ) {
+			var header = {
+				'1' : 'Reflection Questions',
+				'2' : 'Follow-up Questions'
 			};
-			this.ui.headerTitle.text( stateHeaders[ this.collection.getCurrentState() ] );
+
+			var model = this.collection.at( index );
+			this.ui.headerTitle.text( header[ model.get( 'QuestionTypeId') ] );
 		},
 
 		'showPagination' : function () {
@@ -134,7 +116,7 @@ define( function ( require ) {
 			}
 		},
 
-		'updatePage' : function ( page ) {
+		'updatePagination' : function ( page ) {
 			this.ui.currentPage.text( page );
 		},
 
@@ -143,7 +125,8 @@ define( function ( require ) {
 		},
 
 		'afterCarouselChange' : function ( elem, page ) {
-			this.updatePage( page + 1 );
+			this.updatePagination( page + 1 );
+			this.updateHeader( page );
 		}
 
 	} );

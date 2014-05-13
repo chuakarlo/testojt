@@ -3,10 +3,10 @@ define( function ( require ) {
 
 	require( 'jquery.autogrow' );
 
-	var _ = require( 'underscore' );
+	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
-
-	var template = require( 'text!videoPlayer/templates/questionItemView.html' );
+	var template   = require( 'text!videoPlayer/templates/questionItemView.html' );
+	var config     = require( 'config' ).questions;
 
 	return Marionette.ItemView.extend( {
 
@@ -24,9 +24,18 @@ define( function ( require ) {
 			'keyup @ui.textInput' : 'onKeyUp'
 		},
 
-		'initialize' : function () {},
+		'initialize' : function ( options ) {
+			_.bindAll( this );
+			_.extend( this, options );
+		},
 
 		'onShow' : function () {
+			if ( this.model.get( 'QuestionTypeId') === 2 && this.textLock ) {
+				this.ui.textInput.val( config.message ).
+					addClass( 'video-question-lock' ).
+					attr( 'disabled', 'disabled' );
+
+			}
 			this.ui.textInput.css( 'overflow', 'hidden' ).autogrow();
 		},
 
