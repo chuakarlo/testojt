@@ -58,7 +58,7 @@ define ( function ( require ) {
 				var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId() ),widgetRequestSecondary( Session.personnelId() ) ] );
 
 				App.when( fetchingModels ).done( function ( models ) {
-					var mergedModels    = $.extend( {}, models[ 0 ] , models[ 1 ] );
+					var mergedModels    = $.extend( { }, models[ 0 ] , models[ 1 ] );
 					var newMergedModels = chopDataToNewModel ( mergedModels );
 					options.success( new Collection( newMergedModels ) );
 				} ).fail( function ( error ) {

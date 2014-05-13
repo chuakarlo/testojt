@@ -31,7 +31,7 @@ define( function ( require ) {
 			var kCount   = 0;
 			for ( var k in m.attributes ) {
 				kCount++;
-				if ( m.attributes[k] === '' || m.attributes[k] === 'default.png' || m.attributes[k] === 0 ) {
+				if ( m.attributes[ k ] === '' || m.attributes[ k ] === 'default.png' || m.attributes[ k ] === 0 ) {
 					cntEmpty++;
 				}
 			}
