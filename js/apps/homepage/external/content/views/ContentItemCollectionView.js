@@ -2,7 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette       = require( 'marionette' );
-	var EmptyContentView = require( 'apps/homepage/external/content/views/EmptyContentView' );
+	var LoadingView          = require('common/views/LoadingView');
 	var ContentItemView  = require( 'apps/homepage/external/content/views/ContentItemView' );
 	var controller       = require( 'apps/homepage/external/content/controllers/contentItemCollectionController' );
 
@@ -15,7 +15,7 @@ define( function ( require ) {
 		},
 		'tagName'         : 'ul',
 		'className'       : 'row',
-		'emptyView'       : EmptyContentView,
+		'emptyView'       : LoadingView,
 		'itemView'        : ContentItemView,
 
 		'initialize' : function () {

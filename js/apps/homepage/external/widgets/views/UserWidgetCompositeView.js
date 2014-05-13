@@ -9,6 +9,7 @@ define( function ( require ) {
 	var footerTemplate       = require( 'text!apps/homepage/external/widgets/templates/widgetFooterTemplate.html' );
 	var widgetLookup         = require( 'apps/homepage/external/widgets/manifest' );
 	var WidgetItemCollection = require( 'apps/homepage/external/widgets/collections/WidgetItemCollection' );
+	var LoadingView           = require('common/views/LoadingView');
 
 	function returnCollection ( view, collection, widgets ) {
 		return collection;
@@ -51,7 +52,6 @@ define( function ( require ) {
 
 	function doInitialize ( view ) {
 		var widgets = widgetLookup()[ view.model.get( 'WidgetId' ) ];
-
 		view.itemView   = widgets.getExternalView;
 		view.collection = new WidgetItemCollection();
 
@@ -70,6 +70,8 @@ define( function ( require ) {
 		'tagName'           : 'li',
 		'className'         : 'widget-specific no-padding',
 		'itemViewContainer' : '.item-container',
+		'emptyView'         : LoadingView,
+
 		'templateHelpers'   : function () {
 			return setTemplateHelpers( this );
 		},

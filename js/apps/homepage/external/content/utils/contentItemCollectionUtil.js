@@ -2,11 +2,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var $                          = require( 'jquery' );
-	var App                        = require( 'App' );
-	var EmptyContentCollectionView = require( 'apps/homepage/external/content/views/EmptyContentCollectionView' );
+	var $   = require( 'jquery' );
+	var App = require( 'App' );
 
-	var UIManager          = require( 'apps/homepage/external/content/external/agents/UIManager' );
+	var EmptyContentCollectionView = require( 'apps/homepage/external/content/views/EmptyContentCollectionView' );
+	var UIManager                  = require( 'apps/homepage/external/content/external/agents/UIManager' );
 
 	var queueSelector      = '#your-queue-wrapper';
 	var queueCountSelector = '#your-queue-count';
@@ -15,30 +15,34 @@ define( function ( require ) {
 		//decide later what to do with messages
 	}
 
-	function injectAttributes ( view, base, collection, data , callback ) {
+	function injectAttributes ( view, base, collection, data, callback ) {
 
 		require( [ 'pc-linq' ], function () {
 
 			var col = Enumerable.From( collection.models )
-			.Select( function ( obj ) {
-				obj.attributes.renderToggle = base.renderToggle;
-				obj.attributes.sharedData   = data;
-				return obj;
-			} )
-			.ToArray();
-			collection.models = col;
+				.Select( function ( obj ) {
+					obj.attributes.renderToggle = base.renderToggle;
+					obj.attributes.sharedData   = data;
+					return obj;
+				} )
+				.ToArray();
+			collection.models     = col;
 			collection.sharedData = data;
 
-			callback( base.getFetchLogic( collection ) );
+			callback( base.getFetchLogic ( collection ) );
 		} );
 	}
 
-	function applyScroll ( view, id , base, count) {
+	function applyScroll ( view, id, base, count ) {
 
 		// Check if collection is empty to render the emptyContentCollectionView
 		if ( !view.collection.length ) {
-			view.emptyView = EmptyContentCollectionView;
+			view.emptyView.onRender();
 		} else {
+			if ( view.collection.length === 0 ) {
+				view.emptyView = EmptyContentCollectionView;
+				view.emptyView.onRender();
+			}
 			UIManager.applyCircularScroll( view.$el, id, view, base, count );
 		}
 	}
@@ -59,7 +63,12 @@ define( function ( require ) {
 			$( queueSelector + ' ul li' ).trigger( 'removeQueueElements', recommendedItemView.model );
 
 			if ( !view.collection.length ) {
-				view.emptyView = EmptyContentCollectionView;
+				view.emptyView.onRender();
+			} else {
+				if ( view.collection.length === 0 ) {
+					view.emptyView = EmptyContentCollectionView;
+					view.emptyView.onRender();
+				}
 			}
 			view.render();
 
@@ -71,33 +80,29 @@ define( function ( require ) {
 		},
 
 		'collectionFetch' : function ( view, base, data, start, callback ) {
-			var collection     = new ( base._items )( data );
+			var collection = new( base._items )( data );
 
 			collection.alterData( start );
 			collection.fetch( {
 				'success' : function ( collection, response ) {
-					injectAttributes ( view, base, collection, data, callback );
+					injectAttributes( view, base, collection, data, callback );
 				},
-
-				'error' : function () {
-
+				'error'   : function () {
 					App.vent.trigger ( 'flash:message', {
 						'message' : 'An error occurred. Please try again later.'
 					} );
-
 				}
 			} );
 		},
 
-		'processFetchedCollection' : function ( view, base, collection, data) {
+		'processFetchedCollection' : function ( view, base, collection, data ) {
 			$( '#' + base._id + '-count' ).html( collection.count );
 			view.collection = collection.collection;
 
-			applyScroll( view, base._id, base, collection.count);
+			applyScroll( view, base._id, base, collection.count );
 
 			view.render();
-			// $( '#' + base._id + '-count' ).html( collection.count );
-			base.getCarouselCustomAction( view , data );
+			base.getCarouselCustomAction( view, data );
 		}
 
 	};
