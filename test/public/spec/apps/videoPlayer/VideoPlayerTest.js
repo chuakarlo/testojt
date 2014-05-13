@@ -69,16 +69,20 @@ define( function( require ) {
 				App.content.show.restore();
 			} );
 
+
 			describe( '.showVideoResources', function () {
 
 				before( function () {
 					var stub = sinon.stub().returns( new Backbone.CFCollection() );
 					App.reqres.setHandler( 'common:getQueueContents', stub );
+					App.reqres.setHandler( 'vq:segment', stub );
 				} );
 
 				after( function () {
 					App.reqres.removeHandler( 'common:getQueueContents' );
+					App.reqres.removeHandler( 'vq:segment' );
 				} );
+
 
 				it( 'should request for video resources and display layout', function () {
 					var fakeVideoInfo = {
@@ -89,9 +93,8 @@ define( function( require ) {
 					};
 
 					var fakeVideos   = [ { }, { 'ContentId' : 123 } ];
-					var fakeSegments = [ ];
 
-					var fakeData = [ fakeVideos, fakeSegments ];
+					var fakeData = [ fakeVideos ];
 
 					var showStub = sinon.stub( App.content, 'show' );
 					var remotingStub = sinon.stub( Remoting, 'fetch').returns( fakeData );

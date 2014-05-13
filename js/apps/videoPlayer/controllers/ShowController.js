@@ -61,29 +61,19 @@ define( function ( require ) {
 					}
 				};
 
-				var segmentsRequest = {
-					'path'   : 'com.schoolimprovement.pd360.dao.ContentService',
-					'method' : 'getProgramFromSegment',
-					'args'   : {
-						'ContentId'       : videoModel.get( 'ContentId' ),
-						'ContentParentId' : videoModel.get( 'ContentParentId' ),
-						'ContentTypeId'   : videoModel.get( 'ContentTypeId' )
-					}
-				};
-
 				var questionsRequest     = App.request( 'vq:fetch', videoModel.id );
 				var queueContentsRequest = App.request( 'common:getQueueContents' );
+				var segmentsRequest = App.request( 'vq:segment', videoModel );
 
-				var requests = [ relatedVideosRequest, segmentsRequest ];
+				var requests = [ relatedVideosRequest ];
 				var videoEntities = Remoting.fetch( requests );
 
-				App.when( questionsRequest, queueContentsRequest, videoEntities ).done( function ( questions, queueContents, entities ) {
+				App.when( questionsRequest, queueContentsRequest, segmentsRequest, videoEntities ).done( function ( questions, queueContents, segments, entities ) {
 
 					var layout = new App.VideoPlayer.Views.PageLayout( { 'model' : videoModel } );
 					App.content.show( layout );
 
 					var relatedVideos = entities[ 0 ].slice( 1 );
-					var segments      = entities[ 1 ];
 
 					// Videojs player view
 					var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( { 'model' : videoModel } );
@@ -115,7 +105,7 @@ define( function ( require ) {
 
 					// show video segments
 					var segmentsView = new App.VideoPlayer.Views.VideoCollectionView( {
-						'collection' : new RelatedVideoCollection( segments )
+						'collection' : segments
 					} );
 					layout.videoSegmentsRegion.show( segmentsView );
 

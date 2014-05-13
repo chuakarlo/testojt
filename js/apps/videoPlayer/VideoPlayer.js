@@ -9,6 +9,7 @@ define( function ( require ) {
 		require( 'common/entities/Queue' );
 		require( 'common/controllers/QueueController' );
 		require( 'videoPlayer/entities/Questions' );
+		require( 'videoPlayer/entities/Segments' );
 		require( 'videoPlayer/views/Views' );
 		require( 'videoPlayer/controllers/ShowController' );
 		require( 'videoPlayer/controllers/QueueController' );

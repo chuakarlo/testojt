@@ -140,6 +140,7 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/utils/toHHMMSSFormatTest.js',
 			// entities
 			'spec/apps/videoPlayer/entities/SearchResultsTest.js',
+			'spec/apps/videoPlayer/entities/SegmentsTest.js',
 
 			//Homepage
 			'spec/apps/homepage/external/content/controllers/contentCompositeControllerTest.js',
