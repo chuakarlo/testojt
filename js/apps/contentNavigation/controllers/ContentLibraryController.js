@@ -49,11 +49,6 @@ define( function ( require ) {
 
 			}
 
-			/*setTimeout( function () {
-				$( '.cn-library-menu .cn-license-item' ).removeClass( 'fa fa-check' );
-				$( '.cn-library-menu .cn-license-item:contains("' + libraryLabel + '")' ).addClass( 'fa fa-check' );
-			}, 0);*/
-
 		},
 
 		'_showLibrary' : function ( ) {
