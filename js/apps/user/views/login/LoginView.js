@@ -17,8 +17,9 @@ define( function ( require ) {
 		'template' : _.template( template ),
 
 		'events' : {
-			'submit'             : 'login',
-			'click @ui.remember' : 'rememberMe'
+			'submit'                      : 'login',
+			'click @ui.remember'          : 'rememberMe',
+			'click .forgot-password-link' : 'forgotPassword'
 		},
 
 		'ui' : {
@@ -28,6 +29,10 @@ define( function ( require ) {
 		'bindings' : {
 			'[name="Username"]' : 'Username',
 			'[name="Password"]' : 'Password'
+		},
+
+		'forgotPassword' : function ( ) {
+			App.navigate( 'forgotPassword', true );
 		},
 
 		'initialize' : function ( options ) {
