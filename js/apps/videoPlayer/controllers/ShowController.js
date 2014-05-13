@@ -53,6 +53,18 @@ define( function ( require ) {
 					} );
 					App.content.show( layout );
 
+					//if there are other segments available
+					if ( segments.models.length !== 0 ) {
+						//get all segments Ids of other segments
+						var segmentIds = _.pluck( _.pluck( segments.models, 'attributes') , 'ContentId');
+						//find where is the id of next segment in segmentsIds
+						var index = _.sortedIndex( segmentIds , videoModel.id );
+						if ( index < segmentIds.length ) {
+							//add the next segment to video model for overlay at the end of vid
+							videoModel.nextSegment = segments.models[ index ];
+						}
+					}
+
 					// Videojs player view
 					var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( {
 						'model' : videoModel

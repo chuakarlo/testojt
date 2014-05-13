@@ -77,6 +77,51 @@
 					display : inline-block;
 				}
 		}
+
+		#video-content{
+			#vjs-image-overlay-holder {
+				height : 70% !important;
+
+				#vjs-p-overlay {
+				  position : absolute;
+				  bottom   : 20%;
+				  left     : 3%;
+				  font     : 8px arial,sans-serif;
+				}
+
+				#vjs-title-overlay{
+				  position      : absolute;
+				  bottom        : 9%;
+				  left          : 3%;
+				  font          : 10px arial,sans-serif;
+				  text-overflow : ellipsis;
+				  width         : 90%;
+				  white-space   : nowrap;
+				  overflow      : hidden;
+				  text-align    : left;
+				}
+
+				.play-button-circle{
+				  position              : absolute;
+				  top                   : 15%;
+				  left                  : 40%;
+				  width                 : 35px;
+				  height                : 35px;
+				  border-width          : 2px;
+				  border-style          : solid;
+				  border-color          : white;
+				  border-radius         : 50%;
+				}
+
+				#vjs-icon-play{
+				  position  : absolute;
+				  left      : 25%;
+				  top       : 15%;
+				  font-size : 25px;
+				  cursor    : pointer;
+				}
+			}
+		}
 	}
 }
 

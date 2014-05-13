@@ -61,6 +61,10 @@ define( function ( require ) {
 				overlayImage.src           = settings.imageUrl;
 				overlayImage.style.opacity = settings.opacity;
 
+				overlayImage.onclick = function ( ) {
+					window.open( settings.clickUrl, '_self' );
+				};
+
 				holderDiv.appendChild( overlayImage );
 
 				var overlaySpanHolder = document.createElement( 'div' );
@@ -71,7 +75,6 @@ define( function ( require ) {
 				overlaySpan.className = 'fa fa-play';
 
 				overlaySpan.onclick = function ( ) {
-					self.pause();
 					window.open( settings.clickUrl, '_self' );
 				};
 				overlaySpanHolder.appendChild( overlaySpan );

@@ -49,7 +49,7 @@ define( function ( require ) {
 				url += this.SKU + '/';
 				url += folder + '/';
 				url += file + '.vtt';
-
+				console.log( url );
 				return url;
 			}
 		},
@@ -86,11 +86,8 @@ define( function ( require ) {
 			} );
 
 			player.ccToggle();
-			player.nextVideoOverlay( {
-				imageUrl  : 'http://resources.pd360.com/PD360/media/thumb/thumb_2205_PD_grouptask.jpg',
-				clickUrl  : 'http://localhost:8080/dev.html#resources/videos/5363',
-				startTime : this.model.attributes.SegmentLengthInSeconds
-			} );
+
+			this.addOverlay( player );
 
 			this.trigger( 'afterPlayerInit', player );
 		},
@@ -132,6 +129,17 @@ define( function ( require ) {
 				player.dispose();
 				$( element ).off( 'hashchange.videoPlayer' );
 			}.bind( this ) );
+		},
+
+		'addOverlay' : function ( player ) {
+			if ( this.model.nextSegment ) {
+				player.nextVideoOverlay( {
+					imageUrl  : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.nextSegment.attributes.ImageURL,
+					clickUrl  : '#resources/videos/' + this.model.nextSegment.attributes.ContentId,
+					startTime : this.model.attributes.SegmentLengthInSeconds - 5,
+					text      : this.model.nextSegment.attributes.ContentName
+				} );
+			}
 		}
 
 	} );
