@@ -60,6 +60,7 @@ define ( function ( require ) {
 				App.when( fetchingModels ).done( function ( models ) {
 					var mergedModels    = $.extend( { }, models[ 0 ] , models[ 1 ] );
 					var newMergedModels = chopDataToNewModel ( mergedModels );
+					console.log(newMergedModels);
 					options.success( new Collection( newMergedModels ) );
 				} ).fail( function ( error ) {
 
