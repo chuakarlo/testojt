@@ -1,23 +1,35 @@
+// Variables
+@flash-message-padding : 30px;
+@flash-border-width    : 5px;
+@flash-close-height    : 25px;
+
 #flash-message {
-	position : fixed;
-	bottom   : 0px;
-	z-index  : 99999;
-	width    : 100%;
+	position   : absolute;
+	z-index    : 100;
+	width      : 100%;
+	margin-top : -20px;
+
+	&.affix {
+		top      : 20px;
+		position : fixed;
+	}
 }
 
+
 .message-style(@color) {
-	border-top : 5px solid @color;
+	border-bottom : @flash-border-width solid @color;
 
 	.flash-close {
 		background-color : @color;
 	}
 }
 
+
 .flash-message-container {
 
 	background : rgba( 0,0,0,0.85 );
 	color      : #fff;
-	padding    : 15px;
+	padding    : @flash-message-padding 15px;
 	text-align : center;
 
 	&.success {
@@ -45,12 +57,13 @@
 }
 
 .flash-close {
-	margin                  : -41px auto 20px;
-	width                   : 3em;
-	height                  : 1.5em;
-	text-align              : center;
-	line-height             : 2;
-	border-top-left-radius  : 50%;
-	border-top-right-radius : 50%;
-	cursor                  : pointer;
+	margin                     : @flash-message-padding auto -(@flash-message-padding + @flash-border-width + @flash-close-height);
+	height                     : @flash-close-height;
+	width                      : @flash-close-height * 1.6;
+	text-align                 : center;
+	line-height                : 1.3;
+	position                   : relative;
+	border-bottom-left-radius  : 50%;
+	border-bottom-right-radius : 50%;
+	cursor                     : pointer;
 }

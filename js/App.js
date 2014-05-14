@@ -64,14 +64,16 @@ define( function ( require ) {
 	// error handler, to create flash messages, and optional error view
 	App.errorHandler = function ( options, callback ) {
 
-		// overwrite message if it was passed in an error
-		if ( Object.prototype.toString.call( options ) === '[object Error]' ) {
+		// reset if passed in an error or caught window.error where typeof option !== 'object'
+		if ( Object.prototype.toString.call( options ) === '[object Error]' || typeof options !== 'object' ) {
 			options = { };
 		}
 
 		// setup defaults
 		options  = options || { };
-		callback = callback || function () {};
+		if ( typeof callback !== 'function' ) {
+			callback = function () {};
+		}
 
 		// create default message if undefined
 		if ( typeof options.message === 'undefined' ) {
@@ -97,6 +99,8 @@ define( function ( require ) {
 		callback();
 
 	};
+
+	window.onerror = App.errorHandler;
 
 	// convenience access for jquery methods
 	App.when     = $.when;
