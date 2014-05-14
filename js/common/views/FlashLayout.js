@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
+	var $          = require( 'jquery' );
 	var template   = require( 'text!../templates/flashMessage.html' );
 
 	return Marionette.ItemView.extend( {
@@ -47,6 +48,17 @@ define( function ( require ) {
 
 				}.bind( this ), timeout );
 			}
+
+			// affix with jquery as data-* didn't work in IE
+			$( '#flash-message' ).affix( {
+				'offset' : {
+					'top' : 50
+				}
+			} );
+
+			// slide the error message down
+			this.$el.hide();
+			this.$el.slideDown();
 
 		},
 
