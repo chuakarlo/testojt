@@ -8,7 +8,7 @@ module.exports = {
 	},
 
 	'mode': {
-	  'dev' : 'http://localhost:8080'
+	  'dev' : 'http://localhost:8080/dev.html'
 	},
 
 	'mocha': {
