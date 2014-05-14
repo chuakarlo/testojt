@@ -28,7 +28,7 @@ define( function ( require ) {
 			return limitCharacters( text, 18 );
 		},
 		'timeDiff'        : function ( time ) {
-			var now = moment( this.model.get( 'OBSERVATIONDATE' ) ).format( 'M-D-YYYY' );
+			var now = moment( time ).format( 'M-D-YYYY' );
 			return now;
 		}
 	} );

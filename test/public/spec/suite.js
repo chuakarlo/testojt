@@ -168,6 +168,10 @@ define( function ( require ) {
 			'spec/apps/homepage/external/widgets/external/groupActivity/baseTest.js',
 			'spec/apps/homepage/external/widgets/external/groupActivity/views/WidgetItemViewTest.js',
 
+			//HomePage - Observation of Me
+			'spec/apps/homepage/external/widgets/external/observationsOfMe/baseTest.js',
+			'spec/apps/homepage/external/widgets/external/observationsOfMe/views/WidgetItemViewTest.js',
+
 			// Homepage - Your Queue
 			'spec/apps/homepage/external/content/external/your-queue/baseTest.js'
 
