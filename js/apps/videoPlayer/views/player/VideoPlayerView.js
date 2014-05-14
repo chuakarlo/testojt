@@ -62,7 +62,6 @@ define( function ( require ) {
 		},
 
 		'initializePlayer' : function () {
-
 			var player = videojs( 'video-content', {
 				'controls'  : true,
 				'autoplay'  : true,
@@ -97,6 +96,12 @@ define( function ( require ) {
 		},
 
 		'startTracking' : function ( player ) {
+			this.trackPlayer( player );
+			this.trackHashchange( player, window );
+		},
+
+		// Tracked currentTime when video is paused and ended
+		'trackPlayer' : function ( player ) {
 			// Here we'll track the player time manually
 			// so we won't depend on the player element
 			// being available in reporting video progress
@@ -105,13 +110,6 @@ define( function ( require ) {
 				this.model.set( 'currentTime' , player.currentTime() );
 			}.bind( this ) );
 
-			this.bindPlayerEvents( player );
-			this.bindPlayerCleanup( player, window );
-		},
-
-		// Tracked currentTime when video is paused and ended
-		'bindPlayerEvents' : function ( player ) {
-
 			player.on( 'pause', function () {
 				this.model.save();
 			}.bind( this ) );
@@ -119,13 +117,12 @@ define( function ( require ) {
 			player.on( 'ended', function () {
 				this.model.save();
 			}.bind( this ) );
-
 		},
 
 		// Destroys player instance when page navigates to a different route
-		'bindPlayerCleanup' : function ( player, element ) {
-
-			$( element ).on( 'hashchange.bindPlayerCleanup', function () {
+		'trackHashchange' : function ( player, element ) {
+			$( element ).on( 'hashchange.videoPlayer', function () {
+				player.off( 'timeupdate' );
 				// If currentTime is not equal 0 that means video was played, then
 				// update progress before disposing player instance.
 				if ( this.model.get( 'currentTime' ) !== 0) {
@@ -133,7 +130,7 @@ define( function ( require ) {
 					this.model.set( 'currentTime', 0 );
 				}
 				player.dispose();
-				$( element ).off( 'hashchange.bindPlayerCleanup' );
+				$( element ).off( 'hashchange.videoPlayer' );
 			}.bind( this ) );
 		}
 
