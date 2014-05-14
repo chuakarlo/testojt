@@ -5,47 +5,51 @@ define( function ( require ) {
 	require( 'timezone' );
 
 	var moment   = require( 'moment' );
-	var _        = require( 'underscore' );
 	var Backbone = require( 'filterable.collection' );
 
+	var App           = require( 'App' );
 	var QuestionModel = require( 'videoPlayer/models/QuestionModel' );
-	var config        = require( 'config' ).questions;
+
+	var config = App.request( 'videoPlayer:config' ).questions;
 
 	return Backbone.Collection.extend( {
 
 		'model' : QuestionModel,
 
-		'initialize' : function ( options ) {
-			config = _.extend( config, options );
-			this.timeDiff = this.getLargestDiff();
+		'initialize' : function () {
+			this.listenTo( this, 'reset', this.setTimeDiff );
+		},
+
+		'setTimeDiff' : function () {
+			this.timeDiff = this.getLatestDiff();
 		},
 
 		'showFollowup' : function () {
-			if ( this.timeDiff > config.durations ) {
-				return true;
+			return ( this.timeDiff > config.duration );
+		},
+
+		// get the latest diff time of submitted reflection questions
+		'getLatestDiff' : function () {
+			// gets the time difference from submission/creation till 'now'
+			function timeDiff ( time ) {
+				var now = moment().tz( config.timezone ).format( 'MMMM D, YYYY H:mm:ss' );
+				return moment( now ).diff( moment( time ), config.unit );
 			}
-		},
 
-		'getTimeDiff' : function ( time ) {
-			var now = moment().tz( config.timezone ).format( 'MMMM D, YYYY H:mm:ss' );
-			return moment( now ).diff( moment( time ), config.unit );
-		},
-
-		// get the largest diff time of submitted reflection questions
-		'getLargestDiff' : function () {
-			var largestDiff = 0;
-
+			var latestDiff = 0;
+			// get latest diff for reflection questions date of submission
 			this.each( function ( question ) {
 				if ( question.get( 'QuestionTypeId' ) === 1 &&
 					question.get( 'Created' ) !== '' ) {
-					var temp = this.getTimeDiff( question.get( 'Created' ) );
-					if ( temp > largestDiff ) {
-						largestDiff = temp;
+
+					var temp = timeDiff( question.get( 'Created' ) );
+					if ( temp < latestDiff || latestDiff === 0 ) {
+						latestDiff = temp;
 					}
 				}
 			}.bind( this ) );
 
-			return largestDiff;
+			return latestDiff;
 		}
 
 	} );

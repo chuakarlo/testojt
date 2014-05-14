@@ -9,7 +9,16 @@ define( function ( require ) {
 
 		'idAttribute' : 'QuestionId',
 
-		'initialize' : function () {
+		'initialize' : function ( options ) {
+			_.bindAll( this );
+			_.extend( this, options );
+		},
+
+		'isNew' : function () {
+			return this.get( 'Created' ) === '';
+		},
+
+		'requestObject' : function () {
 			var paths = {
 				'3' : 'core.QuestionAnswersGateway',
 				'6' : 'commoncore.CCQuestionAnswersGateway'
@@ -18,21 +27,16 @@ define( function ( require ) {
 				'3' : 'core.QuestionAnswers',
 				'6' : 'commoncore.CCQuestionAnswers'
 			};
+
 			this.path = paths[ this.get( 'ContentTypeId' ) ];
-			this.objectPath = objectPaths[ this.get( 'ContentTypeId' ) ];
-		},
 
-		'isNew' : function () {
-			return this.get( 'Created' ) === '';
-		},
-
-		'requestObject' : function () {
 			return {
-				'args' : {
+				'objectPath' : objectPaths[ this.get( 'ContentTypeId' ) ],
+				'args'       : {
 					'PersonnelId' : Session.personnelId(),
 					'QuestionId'  : this.id,
 					'AnswerText'  : this.getSanitizedAnswer(),
-					'Created'     : '',
+					'Created'     : this.get( 'Created' ),
 					'Modified'    : ''
 				}
 			};
@@ -49,8 +53,8 @@ define( function ( require ) {
 		'getSanitizedAnswer' : function () {
 			function safeString ( unsafe ) {
 				return String( unsafe )
-				.replace( /<\/script/g, '<\\/script' )
-				.replace( /<!--/g, '<\\!--' );
+					.replace( /<\/script/g, '<\\/script' )
+					.replace( /<!--/g, '<\\!--' );
 			}
 
 			return _.escape( safeString( this.get( 'AnswerText' ) ) );

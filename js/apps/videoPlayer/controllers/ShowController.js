@@ -66,7 +66,8 @@ define( function ( require ) {
 					layout.videoInfoRegion.show( videoInfoView );
 
 					// Questions view
-					var questionsCollection = new QuestionsCollection( questions );
+					var questionsCollection = new QuestionsCollection();
+					questionsCollection.reset( questions );
 					// Set question ContentTypeId based on video ContentTypeId.
 					// This is used to when saving the set of questions.
 					questionsCollection.map( function ( question ) {

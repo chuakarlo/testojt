@@ -20,11 +20,9 @@ define( function ( require ) {
 		'itemView' : QuestionsItemView,
 
 		'itemViewOptions' : function () {
-			if ( !this.collection.showFollowup() ) {
-				return {
-					'textLock' : true
-				};
-			}
+			return {
+				'textLock' : !this.collection.showFollowup()
+			};
 		},
 
 		'emptyView' : NoItemView,
@@ -51,12 +49,6 @@ define( function ( require ) {
 		'initialize' : function ( options ) {
 			_.bindAll( this );
 			_.extend( this, options );
-			this.listenTo( this, 'before:item:added', this.handleUIChange );
-		},
-
-		'handleUIChange' : function () {
-			this.ui.header.toggle( !this.isEmpty() );
-			this.ui.pagination.toggle( !this.isEmpty() );
 		},
 
 		'onCompositeCollectionRendered' : function () {
@@ -92,7 +84,6 @@ define( function ( require ) {
 				'1' : 'Reflection Questions',
 				'2' : 'Follow-up Questions'
 			};
-
 			var model = this.collection.at( index );
 			this.ui.headerTitle.text( header[ model.get( 'QuestionTypeId') ] );
 		},

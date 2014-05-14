@@ -6,7 +6,8 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 	var template   = require( 'text!videoPlayer/templates/questionItemView.html' );
-	var config     = require( 'config' ).questions;
+	var App        = require( 'App' );
+	var config     = App.request( 'videoPlayer:config' ).questions;
 
 	return Marionette.ItemView.extend( {
 
@@ -16,12 +17,21 @@ define( function ( require ) {
 
 		'template' : _.template( template ),
 
+		'saveSuccess' : '<i class="fa fa-check"></i> Auto-saved',
+
+		'saveError' : '<i class="fa fa-times"></i> Auto-save interrupted. Check your internet connection.',
+
+		'saveProgress' : 'Saving...',
+
 		'ui' : {
-			'textInput' : 'textarea'
+			'textInput' : 'textarea',
+			'notifier'  : '.as-notifier'
 		},
 
 		'events' : {
-			'keyup @ui.textInput' : 'onKeyUp'
+			'keyup @ui.textInput' : 'onKeyUp',
+			'focus @ui.textInput' : 'onFocus',
+			'blur @ui.textInput'  : 'onBlur'
 		},
 
 		'initialize' : function ( options ) {
@@ -31,23 +41,61 @@ define( function ( require ) {
 
 		'onShow' : function () {
 			if ( this.model.get( 'QuestionTypeId') === 2 && this.textLock ) {
-				this.ui.textInput.val( config.message ).
-					addClass( 'video-question-lock' ).
-					attr( 'disabled', 'disabled' );
+				this.ui.textInput.val( config.message )
+					.addClass( 'video-question-lock' )
+					.attr( 'disabled', 'disabled' );
 
 			}
 			this.ui.textInput.css( 'overflow', 'hidden' ).autogrow();
 		},
 
 		'onKeyUp' : function () {
-			this.ui.textInput.removeClass( 'error' );
-
-			// Sane check if model has this attribute.
-			// We may be mistakenly setting a model attribute
-			// which isn't present.
-			if ( this.model.has( 'AnswerText' ) ) {
-				this.model.set( 'AnswerText', this.ui.textInput.val().trim() );
+			this.trackActivity();
+			if ( !this.autosaving ) {
+				this.startAutosave();
 			}
+		},
+
+		'saveModel' : function () {
+			var answerText = this.ui.textInput.val().trim();
+			var prevAnswer = this.model.get( 'AnswerText' );
+			if ( answerText === '' || answerText === prevAnswer ) {
+				return;
+			}
+			this.ui.notifier.html( this.saveProgress );
+			this.model.set( 'AnswerText', answerText );
+			this.model.save( null, {
+				'success' : function ( model ) {
+					this.ui.notifier.html( this.saveSuccess );
+				}.bind( this ),
+				'error'   : function () {
+					this.ui.notifier.html( this.saveError );
+				}.bind( this )
+			} );
+		},
+
+		'trackActivity' : function () {
+			clearTimeout( this.activityTimeout );
+			this.activityTimeout = setTimeout( function () {
+				clearInterval( this.interval );
+				this.autosaving = false;
+			}.bind( this ), config.autosaveInactive );
+		},
+
+		'startAutosave' : function () {
+			this.autosaving = true;
+			this.interval = setInterval( this.saveModel.bind( this ), config.autosaveInterval );
+		},
+
+		'onFocus' : function () {
+			this.trackActivity();
+			this.startAutosave();
+		},
+
+		'onBlur' : function () {
+			this.autosaving = false;
+			this.saveModel();
+			clearInterval( this.interval );
 		}
 
 	} );
