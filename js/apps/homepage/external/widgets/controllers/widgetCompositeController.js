@@ -72,6 +72,7 @@ define( function ( require ) {
 				var widgetModel      = view.getModelByClickEvent( e );
 				var widgetModelId    = widgetModel.id;
 				var widgetCurrentTab = view.$el.find( 'li.selected' ).attr( 'id' );
+				var hasRemoveCloseClass   = $( e.currentTarget ).hasClass( 'remove-and-close' );
 
 				view.removeToWidgetCollection( widgetModel );
 				view.$el.find( '#widget-settings-header li#' + widgetCurrentTab ).trigger( 'click' );
@@ -84,6 +85,11 @@ define( function ( require ) {
 					view.hidePreviewErrorMsg( e );
 				}
 				view.showWidgetPlaceholder();
+
+				if ( hasRemoveCloseClass ) {
+					view.closeWidgetPanel();
+				}
+
 			} else {
 				view.showWidgetPreview( e );
 				App.vent.trigger( 'flash:message', {

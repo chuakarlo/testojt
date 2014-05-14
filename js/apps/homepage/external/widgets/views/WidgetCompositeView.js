@@ -103,7 +103,6 @@ define( function ( require ) {
 
 		'deactivateWidgetAndClose' : function ( e ) {
 			utils.doDeactivateWidget( this, e );
-			this.closeWidgetPanel();
 		},
 
 		'showWidgetPlaceholder' : function () {
@@ -120,6 +119,7 @@ define( function ( require ) {
 			this.close();
 			widgetSettingsBtn.removeClass( panelStatuses[ 0 ] );
 			widgetSettingsBtn.addClass( panelStatuses[ 1 ] );
+			closeMessage();
 		},
 
 		'addToWidgetCollection' : function ( model ) {

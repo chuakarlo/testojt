@@ -18,6 +18,13 @@ define( function ( require ) {
 	var panelStatuses = [ 'opened', 'closed' ];
 	var widgets       = require( 'apps/homepage/external/widgets/manifest' )().splice(1);
 
+	function closeMessage () {
+		var err = $( '.flash-close' );
+		if ( err ) {
+			err.click();
+		}
+	}
+
 	function fetchingModels ( personnelId ) {
 		return {
 			'path'   : 'com.schoolimprovement.pd360.dao.core.WidgetGateway',
@@ -105,6 +112,7 @@ define( function ( require ) {
 			if ( $( 'ul.active-widgets-container li' ).length === 0 ) {
 				this.initialize();
 			}
+			closeMessage();
 		},
 
 		'changePanelStatus' : function ( btn, from, to ) {
