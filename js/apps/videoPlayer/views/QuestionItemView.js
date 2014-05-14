@@ -45,6 +45,7 @@ define( function ( require ) {
 					.addClass( 'video-question-lock' )
 					.attr( 'disabled', 'disabled' );
 
+				this.ui.notifier.html( '' );
 			}
 			this.ui.textInput.css( 'overflow', 'hidden' ).autogrow();
 		},

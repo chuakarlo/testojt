@@ -2,6 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	require( 'slick' );
+	require( 'jquery.pscrollbar' );
 
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
@@ -56,7 +57,6 @@ define( function ( require ) {
 			var slick = this.ui.carousel.get( 0 ).slick;
 			if ( slick ) {
 				this.ui.carousel.unslick();
-				this.ui.carouselCont.css( 'overflow-y', 'hidden' );
 				this.showCarousel();
 			}
 		},
@@ -64,18 +64,26 @@ define( function ( require ) {
 		'onShow' : function () {
 			this.showCarousel();
 			this.showPagination();
+			this.initScrollbar();
 		},
 
 		'showCarousel' : function () {
 			this.ui.carousel.slick( {
+				'accessibility'  : false,
+				'draggable'      : false,
 				'slidesToShow'   : 1,
 				'slidesToScroll' : 1,
 				'infinite'       : false,
 				'arrows'         : false,
 				'speed'          : 100,
 				'slide'          : 'li',
-				'onInit'         : this.onCarouselInit.bind( this ),
 				'onAfterChange'  : this.afterCarouselChange.bind( this )
+			} );
+		},
+
+		'initScrollbar' : function () {
+			this.ui.carouselCont.perfectScrollbar( {
+				'suppressScrollX' : true
 			} );
 		},
 
@@ -109,10 +117,6 @@ define( function ( require ) {
 
 		'updatePagination' : function ( page ) {
 			this.ui.currentPage.text( page );
-		},
-
-		'onCarouselInit' : function () {
-			this.ui.carouselCont.css( 'overflow-y', 'auto' );
 		},
 
 		'afterCarouselChange' : function ( elem, page ) {
