@@ -6,9 +6,21 @@
 	width : 273px;
 
 	.cn-sidebar-container {
-			margin-left : 0 !important;
-			position    : relative !important;
-			overflow    : hidden !important;
+		margin-left : 0 !important;
+		position    : relative !important;
+		overflow    : hidden !important;
+
+		.cn-library-control {
+			.cn-header {
+				ul {
+					li {
+						h2 {
+							margin-left : -26px;
+						}
+					}
+				}
+			}
+		}
 
 		.cn-filter {
 
@@ -28,7 +40,7 @@
 				}
 
 				.cn-collapse-btn {
-					margin : @cn-custom-margin2 @cn-base-margin 0 -( ( @cn-base-margin * 2 ) + 3  );
+					margin : 5px @cn-base-margin 0 -( ( @cn-base-margin * 2 ) + 3  );
 					.border-radius( @cn-base-radius / 3 );
 
 					label {
@@ -40,12 +52,12 @@
 				}
 
 				h2 {
-					margin-top	: @cn-custom-margin2 + 8;
+					margin-top	: 13px;
 					font-size	: 18px;
 				}
 
 				.cn-clr-filter-btn {
-					margin  : @cn-custom-margin2 0 0 0;
+					margin  : 5px 0 0 0;
 					padding : @cn-base-padding / 2;
 					color   : @cn-blue-link;
 
@@ -56,7 +68,7 @@
 
 			.cn-header {
 				border-top : @border-top;
-				height     : 70px;
+				height     : 44px;
 				background : @cn-gray-light;
 			}
 
@@ -161,7 +173,7 @@
 
 
 @media ( min-width : @screen-xs-max ) {
-	.cn-library-control, .cn-responsive-button-panel {
+	.cn-responsive-button-panel {
 		display : none;
 	}
 }
