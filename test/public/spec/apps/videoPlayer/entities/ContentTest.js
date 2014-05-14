@@ -100,11 +100,25 @@ define( function ( require ) {
 			} );
 
 			describe( '.getResources', function () {
+				var fakeData;
+
+				before( function () {
+					fakeData = {
+							'GuidebookFileName' : 'test'
+					};
+
+					model = new App.VideoPlayer.Entities.Content();
+					model.set( fakeData );
+				} );
+
+				after( function () {
+					model = null;
+				} );
 
 				it( 'does return array of model resources', function () {
 					var resources = model.getResources();
 					resources.should.be.a( 'array' );
-					resources.should.have.length( 3 );
+					resources.should.have.length( 1 );
 				} );
 
 			} );

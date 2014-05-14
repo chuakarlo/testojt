@@ -44,8 +44,7 @@
     "nivo-slider": "3.2",
     "jquery.browser": "~0.0.6",
     "validator-js": "~3.11.0",
-    "bootstro.js": "https://github.com/raohuaming/bootstro.js.git",
-    "flipclock": "https://github.com/danswater/FlipClock.git"
+    "bootstro.js": "https://github.com/raohuaming/bootstro.js.git"
   },
   "devDependencies": {
     "chai": "1.8.x",

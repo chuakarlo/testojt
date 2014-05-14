@@ -57,7 +57,7 @@ define( function ( require ) {
 			},
 
 			'getResources' : function () {
-				return [
+				var results = [
 					{
 						'previewPath'  : this.previewUrl + 'gb/' + this.get( 'GuidebookFileName' ),
 						'downloadPath' : '/gb/' + this.get( 'GuidebookFileName' ),
@@ -72,6 +72,16 @@ define( function ( require ) {
 						'thumbnail'    : '/img/transcribe.jpg'
 					}
 				];
+
+				results = _.filter( results, function ( result ) {
+					var arrPath = result.downloadPath.split( '/' );
+
+					if ( _.last( arrPath ) !== '' ) {
+						return result;
+					}
+				} );
+
+				return results;
 			}
 
 		} );
