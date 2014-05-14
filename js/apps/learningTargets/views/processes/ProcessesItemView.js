@@ -44,7 +44,7 @@ define( function ( require ) {
 			e.preventDefault();
 			var self          = this;
 			var processId     = self.model.get( 'ProcessId' );
-			var processTaskId = e.currentTarget.attributes[0].nodeValue;
+			var processTaskId = e.currentTarget.attributes[ 0 ].nodeValue;
 
 			self.trigger( 'lt:redirect', 'observation', 'observationProcessesOfMe', { 'processId' : processId, 'processTaskId' : processTaskId } );
 		}
