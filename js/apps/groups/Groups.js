@@ -23,7 +23,8 @@ define( function ( require ) {
 			'appRoutes' : {
 				'groups'                 : 'listGroups',
 				'groups/:groupId'        : 'showGroup',
-				'groups/:groupId/leader' : 'showLeaderTools'
+				'groups/:groupId/leader' : 'showLeaderTools',
+				'groups.create'          : 'showCreateGroup'
 			}
 
 		} );
@@ -73,6 +74,16 @@ define( function ( require ) {
 
 			},
 
+			'createGroup' : function ( model ) {
+				App.request( 'pd360:hide' );
+				Groups.Show.Controller.createGroup( model );
+			},
+
+			'showCreateGroup' : function () {
+				App.request( 'pd360:hide' );
+				Groups.Show.Controller.showCreateGroup();
+			},
+
 			'leaveGroup' : function ( model ) {
 				Groups.Edit.Controller.leaveGroup( model );
 			},
@@ -98,9 +109,21 @@ define( function ( require ) {
 			App.navigate( 'groups/' + model.attributes.LicenseId, { 'trigger' : true } );
 		} );
 
+		Vent.on( 'group:showCreateGroup', function () {
+			App.navigate( 'groups.create', { 'trigger' : true } );
+		} );
+
+		Vent.on( 'group:listGroups', function () {
+			App.navigate( 'groups', { 'trigger' : true } );
+		} );
+
 		// set handler to navigate to group forums through communities app
 		App.reqres.setHandler( 'group:showForums', function ( LicenseId ) {
 			App.navigate( 'resources/communities/5/' + LicenseId, { 'trigger' : true } );
+		} );
+
+		Vent.on( 'group:createGroup', function ( model ) {
+			return API.createGroup( model );
 		} );
 
 		Vent.on( 'group:leaveGroup', function ( model ) {

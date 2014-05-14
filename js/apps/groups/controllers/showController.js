@@ -24,6 +24,81 @@ define( function ( require ) {
 				this.listenTo( App.vent, 'groups:newCommentFetch', this.newCommentFetch );
 			},
 
+			'showCreateGroup' : function () {
+				App.content.show( new App.Common.LoadingView() );
+				this.layout = new App.Groups.Views.GroupCreate();
+				App.content.show( this.layout );
+			},
+
+			'createGroup' : function ( model ) {
+				var creageGroupRequest = {
+					'path'       : 'com.schoolimprovement.pd360.dao.core.LicensesGateway',
+					'objectPath' : 'com.schoolimprovement.pd360.dao.core.Licenses',
+					'method'     : 'save',
+					'args'       : {
+						'LicenseId'            : 0,
+						'LicenseTypeId'        : 300,
+						'LicenseContentTypeId' : 0,
+						'LicenseName'          : model.LicenseName,
+						'OrganizationName'     : '',
+						'State'                : '',
+						'EmailDomain'          : '',
+						'TemplateId'           : 0,
+						'LicenseKey'           : '',
+						'NumberOfSeats'        : -1,
+						'SyllabusFileName'     : '',
+						'SyllabusURL'          : '',
+						'CertificateFileName'  : '',
+						'MoreInfoURL'          : '',
+						'UserPrintCert'        : 0,
+						'Misc'                 : model.Misc,
+						'Objectives'           : '',
+						'ContactName'          : '',
+						'ContactPhone'         : '',
+						'ContactEmailAddress'  : '',
+						'WelcomeMessage'       : '',
+						'StartDate'            : '',
+						'ExpireDate'           : '',
+						'MembershipLength'     : 0,
+						'AdminPersonnelId'     : 0,
+						'UseGuidebooks'        : 0,
+						'UseVJEServer'         : 0,
+						'SharedAccounts'       : 0,
+						'Activated'            : 0,
+						'Hidden'               : 0,
+						'CanVerify'            : 0,
+						'AllowCustomCourse'    : 0,
+						'PrivateGroup'         : parseInt( model.PrivateGroup ),
+						'BrandingImage'        : '',
+						'Avatar'               : '',
+						'GroupLeaderLabel'     : '',
+						'LiveBookId'           : 0,
+						'Created'              : '',
+						'Creator'              : $.cookie( 'PID' ) || null,
+						'Modified'             : '',
+						'Modifier'             : 0,
+						'Removed'              : '',
+						'Remover'              : 0
+					}
+				};
+
+				var requests     = [ creageGroupRequest ];
+				var fetchingData = Remoting.fetch( requests );
+
+				App.when( fetchingData ).done( function ( results ) {
+					var licenseId = {
+						'attributes' : {
+							'LicenseId' : results[ 0 ].LicenseId
+						}
+					};
+					Vent.trigger( 'group:show', licenseId );
+
+				} ).fail( function ( error ) {
+					// TODO: error handling
+				} );
+
+			},
+
 			'newCommentFetch' : function ( options ) {
 				// This is a fun function that handles when a new comment was
 				// added. Allows you to specify a specific location to query

@@ -19,6 +19,7 @@ define( function ( require ) {
 		Views.Members            = require( './MembersView' );
 		Views.Resources          = require( './GroupResourcesView' );
 		Views.ResourcesMembers   = require( './GroupResourcesMembersView' );
+		Views.GroupCreate        = require( './GroupCreateView' );
 
 	} );
 

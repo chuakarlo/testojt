@@ -461,3 +461,117 @@
 		}
 	}
 }
+
+/************************************************************\
+						Groups Form 
+\************************************************************/
+
+.groups-form-content {
+	background : @cn-gray-light;	
+	padding-bottom : 10px;
+	padding-top : 10px;
+
+	.upload-form {
+		position    : relative;
+		left        : 36%;
+		top         : 10%;
+		width       : 30%;
+		line-height : 1.5;
+	}
+
+	span {
+		color : @gray-light;
+	}
+
+	.upload-resource-type {
+		margin-top : 6%;
+	}
+
+	.radio-upload {
+		height : 20px;
+		width  : 17px;
+	}
+
+	.upload-content-file {
+		margin-top : 3%;
+	}
+
+	.upload-content-link {
+		display    : none;
+		margin-top : 3%
+	}
+
+
+	.fileinput-button {
+		position : relative;
+		overflow : hidden;
+		background : @cn-gray-light;
+	}
+	.fileinput-button input {
+		position   : absolute;
+		top        : 0;
+		right      : 0;
+		margin     : 0;
+		opacity    : 0;
+		direction  : ltr;
+		cursor     : pointer;
+	}
+
+	.resource-description {
+		margin-top : 6%;
+
+		textarea {
+			margin-top : 4%;
+		}
+	}
+
+	.input-validation:valid {
+		border: 1px solid @cn-green!important;		
+	}
+
+	.input-validation:invalid {
+		border: 1px solid red!important;		
+	}			
+
+	input[type="text"]:invalid ~ .group-name-validation::before {
+		color : red;
+		content: 'Group Name is a required field.';		
+	}
+
+	textarea[type="text"]:invalid ~ .group-description-validation::before {
+		color : red;
+		content: 'Group Description is a required field.';		
+	}		
+
+	input[type="text"]:valid ~ .group-name-validation::before {
+		content: 'This is a valid name. \2713';
+		color : @cn-green;		
+	}	
+
+	textarea[type="text"]:valid ~ .group-description-validation::before {
+		content: 'This is a valid description. \2713';
+		color : @cn-green;		
+	}		
+}
+
+
+.groups-form-content-bottom {
+	background : @gray-dark;
+	height     : 70px;
+
+	.upload-actions {
+		width       : 24%;
+		height      : 82%;
+		margin-left : 74%;
+
+		button {
+			width      : 49%;
+			margin-top : 6.5%;
+		}
+		.cancel-btn {
+			background   : @gray-dark;
+			color        : @gray-light;
+			border-color : @gray-light;
+		}
+	}
+}
