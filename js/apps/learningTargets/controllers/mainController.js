@@ -269,21 +269,6 @@ define( function ( require ) {
 
 				helper._apiRequest( 'lt:catalogs', function ( collection ) {
 
-					collection.add ( {
-						'CatalogId'             : '255',
-						'CatalogResourceId'     : '88',
-						'CatalogResourceTypeId' : 2,
-						'CreditHours'           : '5',
-						'Modified'              : 'February, 21 2014 15:52:42',
-						'Modifier'              : '13778',
-						'Removed'               : '',
-						'Remover'               : '0',
-						'ResourceDesc'          : 'Description 1',
-						'ResourceId'            : '3067',
-						'ResourceName'          : 'Course 1',
-						'Visible'               : '1'
-					});
-
 					var catalogsView = new CatalogsView ( {
 						collection : collection
 					} );

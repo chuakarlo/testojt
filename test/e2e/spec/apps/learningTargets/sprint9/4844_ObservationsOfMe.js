@@ -6,7 +6,7 @@ suite( function ( env ) {
 
 	var browser;
 
-	describe( 'Video Uploader', function () {
+	describe( 'Observations of Me', function () {
 
 
 		beforeEach( function () {
@@ -32,20 +32,29 @@ suite( function ( env ) {
 
 		} );
 
-		it( 'should click more resources', function ( done ) {
+		it( 'should click learning targets', function ( done ) {
 
 			browser
 				.elementByClassName( 'dropdown-menu' )
-				.elementByCssSelector( '.resources-list > li > a[href="#resources/more"]' ).click()
+				.elementByCssSelector( '.resources-list > li > a[href="#resources/learning"]' ).click()
 				.nodeify( done );
 
 		} );
 
-		it( 'should click video uploader tool', function ( done ) {
+		it( 'should click observations', function ( done ) {
 
 			browser
-				.waitForElementById( 'PD360' )
-				.elementById( 'link-more-uploader' ).click()
+				.elementByCssSelector( '.learning-targets > .row > .lt-left-nav > .nav > li.observations > a' ).click()
+				.waitForElementByClassName( 'lt-content' )
+				.nodeify( done );
+
+		} );
+
+		it( 'should redirect to flex page', function ( done ) {
+
+			browser
+				.elementByCssSelector( '.lt-toggle-btn .lt-link' ).click()
+				.waitForElement( 'id', 'PD360' )
 				.nodeify( done );
 
 		} );
