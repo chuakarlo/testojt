@@ -55,6 +55,7 @@ define( function ( require ) {
 
 		'onShow' : function () {
 			this.ui.infoIcon.tooltip( { 'title' : 'Description' } );
+			this.matchedSegmentsToQueue();
 		},
 
 		'onClose' : function () {
@@ -62,7 +63,9 @@ define( function ( require ) {
 			this.ui.watchIcon.tooltip( 'destroy' );
 		},
 
-		'showDetails' : function ( ) {
+		'showDetails' : function ( ev ) {
+			ev.preventDefault();
+
 			if ( !this.ui.infoIcon.hasClass( 'blued' ) ) {
 				this.ui.infoIcon
 					.addClass( 'blued fa-times-circle')
@@ -84,7 +87,8 @@ define( function ( require ) {
 			}
 		},
 
-		'watchLaterQueue' : function () {
+		'watchLaterQueue' : function ( ev ) {
+			ev.preventDefault();
 
 			if ( this.model.get( 'queued' ) ) {
 				App.request( 'common:removeFromQueue' , this.model );
