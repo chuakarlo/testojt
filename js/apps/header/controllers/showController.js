@@ -30,32 +30,35 @@ define( function ( require ) {
 				var init = function ( helpUrl ) {
 					var menu = new Menu( { 'authenticated' : authenticated, 'helpUrl' : helpUrl } );
 
-					this.listenTo( menu, 'show', function () {
+					if ( authenticated ) {
 
-						App.when( App.request( 'user:hasObsAccess' ) ).done( function ( hasAccess ) {
-							var collection = new Backbone.Collection( menuOptions.nav );
+						this.listenToOnce( menu, 'show', function () {
 
-							if ( hasAccess ) {
-								collection.add( menuOptions.observation, { 'at' : 2 } );
-							} else {
-								collection.add( menuOptions.training, { 'at' : 4 } );
-							}
+							App.when( App.request( 'user:hasObsAccess' ) )
 
-							menu.icons.show( new IconsCollectionView( {
-								'collection' : collection
-							} ) );
+							.done( function ( hasAccess ) {
+								var collection = new Backbone.Collection( menuOptions.nav );
 
-						} ).fail( function () {
+								if ( hasAccess ) {
+									collection.add( menuOptions.observation, { 'at' : 2 } );
+								} else {
+									collection.add( menuOptions.training, { 'at' : 4 } );
+								}
 
-							if ( authenticated ) {
-								menu.icons.show( new App.Common.ErrorView( {
-									'message' : 'There was error getting available resources.'
+								menu.icons.show( new IconsCollectionView( {
+									'collection' : collection
 								} ) );
-							}
+
+							} )
+
+							.fail( App.errorHandler.bind( App, {
+								'region'  : menu.icons,
+								'message' : 'There was an error getting available resources'
+							} ) );
 
 						} );
 
-					} );
+					}
 
 					App.menu.show( menu );
 
