@@ -241,9 +241,11 @@ define( function ( require ) {
 				helper._showView( new App.Common.LoadingView() );
 
 				helper._apiRequest( 'lt:observations', function ( collection ) {
+
 					var observationsView = new ObservationsView( {
 						collection : collection
 					} );
+
 					// bind to redirect event
 					observationsView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
 

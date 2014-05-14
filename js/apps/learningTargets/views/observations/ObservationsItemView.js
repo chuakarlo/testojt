@@ -19,7 +19,7 @@ define( function ( require ) {
 		'showLegacyApp' : function ( e ) {
 			e.preventDefault();
 			var self = this;
-			self.trigger( 'lt:redirect', 'observation', 'observationOfMe' );
+			self.trigger( 'lt:redirect', 'observation', 'observationOfMe', { 'showPerFocus' : self.model.get( 'OBSERVATIONID' ) } );
 		}
 
 	} );
