@@ -24,6 +24,8 @@ define( function ( require ) {
 				_.bindAll( options );
 				_.extend( this, options );
 
+				this.setVideoTypeId();
+
 				return this;
 			},
 
@@ -82,6 +84,14 @@ define( function ( require ) {
 				} );
 
 				return results;
+			},
+
+			'setVideoTypeId' : function () {
+				this.set( 'VideoTypeId', 1 );
+			},
+
+			'setQueue' : function ( queueContents ) {
+				this.set( 'queued', _.contains( queueContents.pluck( 'ContentId' ), this.id ) );
 			}
 
 		} );

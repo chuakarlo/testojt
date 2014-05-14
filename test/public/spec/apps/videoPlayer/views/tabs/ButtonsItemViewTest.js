@@ -8,7 +8,8 @@ define( function ( require ) {
 	var Remoting        = require( 'Remoting' );
 	var App             = require( 'App' );
 	var ButtonsItemView = require( 'videoPlayer/views/tabs/ButtonsItemView' );
-	var ContentModel    = require( 'videoPlayer/models/ContentModel' );
+
+	require( 'videoPlayer/entities/Entities' );
 
 	describe( 'ButtonsItemView', function () {
 
@@ -16,7 +17,7 @@ define( function ( require ) {
 		var contentModel;
 
 		before( function () {
-			contentModel = new ContentModel( {
+			contentModel = new App.VideoPlayer.Entities.Content( {
 				'ContentId'   : 7652,
 				'ContentName' : '',
 				'ImageURL'    : 'thumb_2182_CC_OR_6ELA_DDeLapp_CCC.jpg',
@@ -26,9 +27,13 @@ define( function ( require ) {
 			buttonsItemView = new ButtonsItemView( {
 				'model' : contentModel
 			} );
+
+			var stub = sinon.stub().returns( false );
+			App.reqres.setHandler( 'pd360:available', stub );
 		} );
 
 		after( function () {
+			App.reqres.removeHandler( 'pd360:available' );
 			buttonsItemView = undefined;
 		} );
 
@@ -115,7 +120,7 @@ define( function ( require ) {
 			before( function () {
 				sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
 
-				contentModel       = new ContentModel( { 'queued' : true } );
+				contentModel       = new App.VideoPlayer.Entities.Content( { 'queued' : true } );
 				buttonsItemView    = new ButtonsItemView( { 'model' : contentModel } );
 				evt                = { 'preventDefault' : function () {} };
 				removeFromQueueSpy = sinon.spy( buttonsItemView, 'removeContentFromQueue' );
@@ -148,19 +153,15 @@ define( function ( require ) {
 		describe( '.addContentToQueue', function () {
 
 			before( function () {
-				sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
+				var stub = sinon.stub().returns( App.Deferred() );
+				App.reqres.setHandler( 'common:addToQueue', stub );
 			} );
 
 			after( function () {
-				Remoting.fetch.restore();
+				App.reqres.removeHandler( 'common:addToQueue' );
 			} );
 
-			it( 'does fire `videoPlayer:addContentToQueue` event', function ( done ) {
-				App.vent.on( 'videoPlayer:addContentToQueue', function () {
-					Remoting.fetch.should.have.callCount( 1 );
-					done();
-				} );
-
+			it( 'does add content to queue', function () {
 				buttonsItemView.addContentToQueue();
 			} );
 
@@ -169,19 +170,15 @@ define( function ( require ) {
 		describe( '.removeContentFromQueue', function () {
 
 			before( function () {
-				sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
+				var stub = sinon.stub().returns( App.Deferred() );
+				App.reqres.setHandler( 'common:removeFromQueue', stub );
 			} );
 
 			after( function () {
-				Remoting.fetch.restore();
+				App.reqres.removeHandler( 'common:removeFromQueue' );
 			} );
 
-			it( 'does fire `videoPlayer:removeContentFromQueue` event', function ( done ) {
-				App.vent.on( 'videoPlayer:removeContentFromQueue', function () {
-					Remoting.fetch.should.have.callCount( 1 );
-					done();
-				} );
-
+			it( 'does remove content from queue', function () {
 				buttonsItemView.removeContentFromQueue();
 			} );
 

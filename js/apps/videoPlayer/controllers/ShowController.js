@@ -65,6 +65,19 @@ define( function ( require ) {
 						}
 					}
 
+					// set content queued attribute
+					videoModel.setQueue( queueContents );
+
+					// set video segments queued attribute
+					segments.each( function ( model ) {
+						model.setQueue( queueContents );
+					} );
+
+					// set related videos queued attribute
+					relatedVideos.each( function ( model ) {
+						model.setQueue( queueContents );
+					} );
+
 					// Videojs player view
 					var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( {
 						'model' : videoModel
@@ -90,9 +103,6 @@ define( function ( require ) {
 						'collection' : questionsCollection
 					} );
 					layout.questionsRegion.show( questionsView );
-
-					// set video model queued flag
-					videoModel.set( 'queued', _.contains( queueContents.pluck( 'ContentId' ), videoModel.id ) );
 
 					// show video buttons view
 					var videoButtonsView = new App.VideoPlayer.Views.VideoButtonsView( {

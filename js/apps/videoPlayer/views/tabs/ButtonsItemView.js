@@ -47,11 +47,11 @@ define( function ( require ) {
 		},
 
 		'addContentToQueue' : function () {
-			App.vent.trigger( 'videoPlayer:addContentToQueue', this.model );
+			App.request( 'common:addToQueue', this.model );
 		},
 
 		'removeContentFromQueue' : function () {
-			App.vent.trigger( 'videoPlayer:removeContentFromQueue', this.model );
+			App.request( 'common:removeFromQueue', this.model );
 		},
 
 		'setQueueBtnUI' : function () {

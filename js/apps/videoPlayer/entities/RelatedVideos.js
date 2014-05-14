@@ -9,7 +9,19 @@ define( function ( require ) {
 
 		Entities.RelatedVideo = Backbone.CFModel.extend( {
 
-			'idAttribute' : 'ContentId'
+			'idAttribute' : 'ContentId',
+
+			'initialize' : function () {
+				this.setVideoTypeId();
+			},
+
+			'setVideoTypeId' : function () {
+				this.set( 'VideoTypeId', 1 );
+			},
+
+			'setQueue' : function ( queueContents ) {
+				this.set( 'queued', _.contains( queueContents.pluck( 'ContentId' ), this.id ) );
+			}
 
 		} );
 

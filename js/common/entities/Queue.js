@@ -1,9 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var Session  = require( 'Session' );
-	var App      = require( 'App' );
+	var _        = require( 'underscore' );
 	var Backbone = require( 'backbone' );
+	var App      = require( 'App' );
+	var Session  = require( 'Session' );
 
 	App.module( 'Entities', function ( Entities ) {
 
@@ -15,21 +16,8 @@ define( function ( require ) {
 
 		Entities.QueueContents = Backbone.CFCollection.extend( {
 
-			'path'       : 'core.ClientPersonnelBookmarkGateway',
-			'objectPath' : 'core.ClientPersonnelBookmark',
-			'model'      : Entities.QueueContent,
-
-			'getCreateOptions' : function ( model ) {
-				return {
-					'objectPath' : this.objectPath,
-					'method'     : 'create',
-					'args'       : {
-						'PersonnelId' : Session.personnelId(),
-						'ContentId'   : model.id,
-						'Created'     : ''
-					}
-				};
-			},
+			'path'  : 'core.ClientPersonnelBookmarkGateway',
+			'model' : Entities.QueueContent,
 
 			'getReadOptions' : function () {
 				return {
@@ -38,15 +26,55 @@ define( function ( require ) {
 						'personnelId' : Session.personnelId()
 					}
 				};
+			}
+
+		} );
+
+		Entities.QueueAddContent = Backbone.CFModel.extend( {
+
+			'path' : 'core.ClientPersonnelBookmarkGateway',
+
+			'initialize' : function ( options ) {
+				_.bindAll( this );
+				_.extend( this, options );
+
+				return this;
 			},
 
-			'getDeleteOptions' : function ( model ) {
+			'getCreateOptions' : function () {
 				return {
-					'objectPath' : this.objectPath,
+					'objectPath' : 'core.ClientPersonnelBookmark',
+					'method'     : 'create',
+					'args'       : {
+						'PersonnelId' : Session.personnelId(),
+						'ContentId'   : this.content.id,
+						'VideoTypeId' : this.content.get( 'VideoTypeId' ),
+						'Created'     : ''
+					}
+				};
+			}
+
+		} );
+
+		Entities.QueueRemoveContent = Backbone.CFModel.extend( {
+
+			'path' : 'core.ClientPersonnelBookmarkGateway',
+
+			'initialize' : function ( options ) {
+				_.bindAll( this );
+				_.extend( this, options );
+
+				return this;
+			},
+
+			'getCreateOptions' : function () {
+				return {
+					'objectPath' : 'core.ClientPersonnelBookmark',
 					'method'     : 'deleteByObj',
 					'args'       : {
 						'PersonnelId' : Session.personnelId(),
-						'ContentId'   : model.id,
+						'ContentId'   : this.content.id,
+						'VideoTypeId' : this.content.get( 'VideoTypeId' ),
 						'Created'     : ''
 					}
 				};
@@ -72,11 +100,102 @@ define( function ( require ) {
 				} );
 
 				return defer.promise();
+			},
+
+			'addContent' : function ( model ) {
+				var defer   = App.Deferred();
+				var content = new Entities.QueueAddContent( { 'content' : model } );
+
+				content.save( null, {
+
+					'success' : function ( model ) {
+						defer.resolve( model );
+					},
+
+					'error' : function () {
+						defer.reject( new Error( 'Error adding queue content' ) );
+					}
+
+				} );
+
+				return defer.promise();
+			},
+
+			'removeContent' : function ( model ) {
+				var defer   = App.Deferred();
+				var content = new Entities.QueueRemoveContent( { 'content' : model } );
+
+				content.save( null, {
+
+					'success' : function ( model ) {
+						defer.resolve( model );
+					},
+
+					'error' : function () {
+						defer.reject( new Error( 'Error removing queue content' ) );
+					}
+
+				} );
+
+				return defer.promise();
 			}
+
 		};
 
 		App.reqres.setHandler( 'common:getQueueContents', function () {
 			return API.getContents();
+		} );
+
+		App.reqres.setHandler( 'common:addToQueue', function ( model ) {
+
+			var addToQueue = API.addContent( model );
+
+			App.when( addToQueue ).done( function () {
+
+				model.set( 'queued', true );
+				App.vent.trigger( 'common:queued', model );
+				App.vent.trigger( 'flash:message', {
+					'type'    : 'success',
+					'timeout' : 1000,
+					'message' : 'Added to Watch Later'
+				} );
+
+			} ).fail( function () {
+
+				App.vent.trigger( 'flash:message', {
+					'message' : 'An error occurred while trying to add video to Watch Later. Please try again later.'
+				} );
+
+			} );
+
+			return addToQueue;
+
+		} );
+
+		App.reqres.setHandler( 'common:removeFromQueue', function ( model ) {
+
+			var removeFromQueue = API.removeContent( model );
+
+			App.when( removeFromQueue ).done( function () {
+
+				model.set( 'queued', false );
+				App.vent.trigger( 'common:dequeued', model );
+				App.vent.trigger( 'flash:message', {
+					'type'    : 'success',
+					'timeout' : 1000,
+					'message' : 'Removed from Watch Later'
+				} );
+
+			} ).fail( function () {
+
+				App.vent.trigger( 'flash:message', {
+					'message' : 'An error occurred while trying to remove video from Watch Later. Please try again later.'
+				} );
+
+			} );
+
+			return removeFromQueue;
+
 		} );
 
 	} );

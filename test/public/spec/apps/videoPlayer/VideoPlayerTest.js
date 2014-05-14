@@ -81,16 +81,7 @@ define( function( require ) {
 
 			describe( '.showVideoResources', function () {
 
-				var Model = Backbone.CFModel.extend( {
-
-					'getResources' : function () {
-						return [ ];
-					}
-
-				} );
-				var model = new Model();
-				model.set( 'ContentTypeId', 1 );
-
+				var model      = new App.VideoPlayer.Entities.Content();
 				var collection = new Backbone.CFCollection();
 
 				before( function () {
@@ -141,57 +132,6 @@ define( function( require ) {
 					// Restoring stubs
 					App.content.show.restore();
 					App.VideoPlayer.Views.PageLayout.restore();
-				} );
-
-			} );
-
-		} );
-
-		describe( 'Queue Controller', function () {
-
-			it( 'it attached to `App`', function () {
-				App.VideoPlayer.should.have.property( 'Controller' );
-				App.VideoPlayer.Controller.should.have.property( 'Queue' );
-				App.VideoPlayer.Controller.Queue.should.have.property( 'addContent' );
-				App.VideoPlayer.Controller.Queue.should.have.property( 'removeContent' );
-			} );
-
-			describe( '.addContent', function () {
-
-				it( 'does add the content to queue', function () {
-					var model = new Content( {
-						'queued' : false
-					} );
-
-					var remotingFetchStub = sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
-
-					App.VideoPlayer.Controller.Queue.addContent( model ).resolve();
-
-					// content should be added to queue
-					model.get( 'queued' ).should.be.true;
-					remotingFetchStub.should.have.callCount( 1 );
-
-					Remoting.fetch.restore();
-				} );
-
-			} );
-
-			describe( '.removeContent', function () {
-
-				it( 'does remove the content from queue', function () {
-					var model = new Content( {
-						'queued' : true
-					} );
-
-					var remotingFetchStub = sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
-
-					App.VideoPlayer.Controller.Queue.removeContent( model ).resolve();
-
-					// content should be added to queue
-					model.get( 'queued' ).should.be.false;
-					remotingFetchStub.should.have.callCount( 1 );
-
-					Remoting.fetch.restore();
 				} );
 
 			} );
