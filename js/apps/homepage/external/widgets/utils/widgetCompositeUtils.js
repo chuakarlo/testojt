@@ -82,9 +82,9 @@ define( function ( require ) {
 
 		'doActivateWidgetCheck' : {
 			'true'  : function ( view, e ) {
-				var widgetModel      = view.getModelByClickEvent( e );
-				var widgetCurrentTab = view.$el.find( 'li.selected' ).attr( 'id' );
-				var hasRemoveCloseClass   = $( e.currentTarget ).hasClass( 'save-and-close' );
+				var widgetModel         = view.getModelByClickEvent( e );
+				var widgetCurrentTab    = view.$el.find( 'li.selected' ).attr( 'id' );
+				var hasRemoveCloseClass = $( e.currentTarget ).hasClass( 'save-and-close' );
 
 				view.hidePreviewErrorMsg( e );
 				view.addToWidgetCollection( widgetModel );
@@ -92,13 +92,14 @@ define( function ( require ) {
 
 				view.changeWidgetSelectedTab( widgetCurrentTab );
 				if ( view.onTab( 'all' ) ) {
+					view.showWidgetPreview( e );
 					view.changeButtonAttr( e, btnActions[ 0 ], btnActions[ 1 ] );
 					view.changeWidgetIconBtnAttr( widgetModel, iconBtnActions[ 1 ], iconBtnActions[ 0 ] );
-					view.showWidgetPreview( e );
 				}
 				if ( hasRemoveCloseClass ) {
 					view.closeWidgetPanel();
 				}
+				view.showWidgetPlaceholder();
 			},
 			'false' : function ( view, e ) {
 				view.showWidgetPreview( e );

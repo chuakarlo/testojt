@@ -9,7 +9,7 @@ define( function ( require ) {
 	var footerTemplate       = require( 'text!apps/homepage/external/widgets/templates/widgetFooterTemplate.html' );
 	var widgetLookup         = require( 'apps/homepage/external/widgets/manifest' );
 	var WidgetItemCollection = require( 'apps/homepage/external/widgets/collections/WidgetItemCollection' );
-	var LoadingView           = require('common/views/LoadingView');
+	var LoadingView          = require('common/views/LoadingView');
 
 	function returnCollection ( view, collection, widgets ) {
 		return collection;

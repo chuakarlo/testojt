@@ -5,8 +5,8 @@
 	// *
 
 	.three-box-container( @height ) {
-		position    : relative;
-		min-height      : @height;
+		position   : relative;
+		min-height : @height;
 	}
 
 	.widget-wrapper {
@@ -14,6 +14,43 @@
 		border                : 1px solid @pc-gray-lighter;
 		height                : inherit;
 		.pc-border-radius ( 5px );
+	}
+	.widget-wrapper.widget-placeholder {
+		position : relative;
+		.widget-placeholder-icon {
+			background-image : url( 'http://i1292.photobucket.com/albums/b563/blabbermouth2011/widget-placeholder_zpse9626e25.png' );
+			width            : 121px;
+			height           : 132px;
+			position         : absolute;
+			top              : 33%;
+			z-index          : 1;
+			left             : 31%;
+		}
+		.widget-placeholder-title {
+			background-color : #dedfe0;
+			height           : 200px;
+			color            : #FFF;
+			text-align       : center;
+			font-size        : 40px;
+		}
+		.widget-placeholder-desc {
+			background-color : #eceeee;
+			height           : 200px;
+			position         : relative;
+			text-align       : center;
+			div {
+				position : absolute;
+				bottom   : 27%;
+				left     : 9%;
+				color    : #cccccc;
+				p#awesomeness {
+					cursor : pointer;
+				}
+				p#awesomeness:hover {
+					color : #5abef9;
+				}
+			}
+		}
 	}
 
 	div.widget-item:hover{

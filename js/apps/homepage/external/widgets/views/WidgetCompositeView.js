@@ -6,13 +6,15 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var App        = require( 'App' );
 
-	var WidgetCompositeView          = require( 'apps/homepage/external/widgets/views/WidgetItemView' );
-	var template                     = require( 'text!apps/homepage/external/widgets/templates/widgetCompositeView.html' );
-	var utils                        = require( 'apps/homepage/external/widgets/controllers/widgetCompositeController' );
-	var utilsUpperFirstLetter        = require( 'apps/homepage/utils/upperFirstLetter' );
+	var WidgetCompositeView     = require( 'apps/homepage/external/widgets/views/WidgetItemView' );
+	var EmptyUserWidgetItemView = require( 'apps/homepage/external/widgets/views/EmptyUserWidgetItemView' );
+	var template                = require( 'text!apps/homepage/external/widgets/templates/widgetCompositeView.html' );
+	var utils                   = require( 'apps/homepage/external/widgets/controllers/widgetCompositeController' );
+	var utilsUpperFirstLetter   = require( 'apps/homepage/utils/upperFirstLetter' );
 
 	var panelStatuses     = [ 'opened', 'closed' ];
 	var widgetSettingsBtn = $( '#widget-settings' );
+	var maxWidget         = 3;
 
 	var messages           = {
 		'widgetLimitError' : 'You have reached the amount of widgets to be displayed on your homepage.',
@@ -102,6 +104,16 @@ define( function ( require ) {
 		'deactivateWidgetAndClose' : function ( e ) {
 			utils.doDeactivateWidget( this, e );
 			this.closeWidgetPanel();
+		},
+
+		'showWidgetPlaceholder' : function () {
+			$( '.widget-placeholder-wrapper' ).remove();
+			var count = maxWidget - $( 'ul.active-widgets-container li' ).length;
+
+			for ( var i = 0; i < count; i ++ ) {
+				var emptyUserWidgetItemView = new EmptyUserWidgetItemView();
+				$( 'ul.active-widgets-container' ).append( emptyUserWidgetItemView.render().el );
+			}
 		},
 
 		'closeWidgetPanel' : function () {

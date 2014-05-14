@@ -50,7 +50,7 @@ define( function ( require ) {
 	}
 
 	function doShowWidgetSettingsPanel ( view, e ) {
-		var panelBtn            = $( e.currentTarget );
+		var panelBtn            = $( '#widget-settings' );
 		var widgetCompositeView = new WidgetCompositeView( {
 			'collection'           : view.widgetCollection,
 			'widgetCollection'     : view.widgetCollection,
@@ -83,6 +83,7 @@ define( function ( require ) {
 		},
 		'events' : {
 			'click div#widget-settings.closed'         : 'showWidgetSettingsPanel',
+			'click p#awesomeness'                      : 'showWidgetSettingsPanel',
 			'click div#widget-settings.opened'         : 'closeWidgetSettingsPanel',
 			'click div.actions .cancel'                : 'closeWidgetSettingsPanel',
 			'focusout #widgets-settings-panel-wrapper' : 'blurAction'
@@ -121,13 +122,10 @@ define( function ( require ) {
 			//using jquery to get focus doesn't work in IE
 			if ( parent.length === 1 ) {
 				$( '#widgets-settings-panel-wrapper' ).focus().css('outline', 'none');
-
 			} else {
 				$( 'div#widget-settings.opened' ).click();
-
 			}
 		}
 
 	} );
-
 } );

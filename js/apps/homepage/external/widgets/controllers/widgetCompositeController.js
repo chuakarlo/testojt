@@ -78,11 +78,12 @@ define( function ( require ) {
 
 				view.changeWidgetSelectedTab( widgetCurrentTab );
 				if ( view.onTab( 'all' ) ) {
+					view.showWidgetPreview( e );
 					view.changeButtonAttr( btnActions[ 1 ], btnActions[ 0 ] );
 					view.changeWidgetIconBtnAttr( widgetModelId, iconBtnActions[ 0 ], iconBtnActions[ 1 ] );
-					view.showWidgetPreview( e );
 					view.hidePreviewErrorMsg( e );
 				}
+				view.showWidgetPlaceholder();
 			} else {
 				view.showWidgetPreview( e );
 				App.vent.trigger( 'flash:message', {
