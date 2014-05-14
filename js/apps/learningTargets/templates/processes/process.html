@@ -5,7 +5,7 @@
 <div class="lt-toggle-content drawer steps" style="display: none;">
 	<div>
 		<% _.each( Tasks, function ( tasksObj ) { %>
-			<div class="col-xs-3 step-item">Next Step <%- tasksObj.ProcessTaskId %></div>
+			<div class="col-xs-3 step-item"><a id="<%- tasksObj.ProcessTaskId %>" href="#" class="lt-process-step" title="more info">Next Step <%- tasksObj.ProcessTaskId %></a></div>
 			<div class="col-xs-5 step-item"><%- tasksObj.CompleteByDate %></div>
 			<div class="col-xs-4 step-item <%- tasksObj.txtColor %>">
 				<%- tasksObj.status %>

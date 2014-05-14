@@ -11,12 +11,14 @@ define( function ( require ) {
 		'tagName'  : 'li',
 		'ui'       : {
 			'drawerToggleButton' : '.lt-toggle-btn',
-			'linkBtn'            : '.lt-link'
+			'linkBtn'            : '.lt-link',
+			'processStep'        : '.lt-process-step'
 		},
 
 		'events' : {
 			'click @ui.drawerToggleButton' : 'toggleDrawer',
-			'click @ui.linkBtn'            : 'showLegacyApp'
+			'click @ui.linkBtn'            : 'showLegacyApp',
+			'click @ui.processStep'        : 'showProcessStep'
 		},
 
 		'toggleDrawer' : function ( e ) {
@@ -36,6 +38,15 @@ define( function ( require ) {
 			self.trigger( 'lt:redirect', 'observation', 'observationProcessesOfMe', {
 				'soughtProcessId' : self.model.get( 'ProcessId' )
 			} );
+		},
+
+		'showProcessStep' : function ( e ) {
+			e.preventDefault();
+			var self          = this;
+			var processId     = self.model.get( 'ProcessId' );
+			var processTaskId = e.currentTarget.attributes[0].nodeValue;
+
+			self.trigger( 'lt:redirect', 'observation', 'observationProcessesOfMe', { 'processId' : processId, 'processTaskId' : processTaskId } );
 		}
 
 	} );
