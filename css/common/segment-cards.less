@@ -7,13 +7,13 @@
 
 li {
 	div.sc-segment-content-container {
-		background : @sc-gray-lightest;
-		position   : relative;
-		height: 242px;
-		word-wrap: break-word;
-		-webkit-box-shadow: 1px 1px 7px 0px rgba( 50, 50, 50, 0.5 );
-		-moz-box-shadow: 1px 1px 7px 0px rgba( 50, 50, 50, 0.5 );
-		box-shadow: 1px 1px 7px 0px rgba( 50, 50, 50, 0.5 );
+		background         : @sc-white;
+		position           : relative;
+		height             : 242px;
+		word-wrap          : break-word;
+		-webkit-box-shadow : 1px 1px 7px 0px rgba( 50, 50, 50, 0.5 );
+		-moz-box-shadow    : 1px 1px 7px 0px rgba( 50, 50, 50, 0.5 );
+		box-shadow         : 1px 1px 7px 0px rgba( 50, 50, 50, 0.5 );
 
 		div.sc-segment-image-container {
 			position   : relative;
@@ -32,10 +32,11 @@ li {
 				}
 
 				p.sc-play-now {
-					display  : none;
-					top      : 50%;
-					left     : ~"calc(50% - 35px)";
-					position : absolute;
+					display   : none;
+					top       : 50%;
+					left      : ~"calc(50% - 60px)";
+					position  : absolute;
+					font-size : 28px;
 				}
 
 				img {
@@ -57,13 +58,13 @@ li {
 				img {
 					background          : @sc-charcoal;
 					opacity             : .5;
-					transition-duration : .3s;
+					transition-duration : .2s;
 				}
 			}
 		}
 
 		p.sc-segment-name {
-			font-size      : 16px;
+			font-size      : 15px;
 			margin         : 10px 10px 0 10px;
 			color          : @sc-charcoal;
 			text-align     : left;
@@ -74,10 +75,11 @@ li {
 			text-justify   : newspaper;
 			white-space    : normal;
 			letter-spacing : 0;
+			font-weight    : 500;
 		}
 
 		p.sc-duration {
-			font-size   : 15px;
+			font-size   : 12px;
 			margin      : 5px 10px 10px 10px;
 			display     : inline-block;
 			color       : @sc-gray-dark;
@@ -102,6 +104,7 @@ li {
 			text-decoration : none;
 			position        : absolute;
 			z-index         : 3;
+			white-space     : nowrap;
 		}
 
 		.grayed {
@@ -112,6 +115,19 @@ li {
 		a.sc-watch-later-icon:hover,
 		.blued {
 			color : @sc-blue-light;
+		}
+
+		i.sc-watch-later-loading-icon {
+			font-size       : 24px;
+			cursor          : auto;
+			height          : 30px;
+			line-height     : 1.5;
+			text-decoration : none;
+			position        : absolute;
+			z-index         : 3;
+			top             : ~"calc(100% - 35px)";
+			left            : ~"calc(100% - 31px)";
+			display         : none;
 		}
 
 		div.sc-overlay-details {
@@ -130,10 +146,11 @@ li {
 			padding    : 15px 10px 5px 10px;
 
 			p.sc-overlay-segment-name {
-				font-size    : 16px;
+				font-size    : 15px;
 				line-height  : 1;
 				text-align   : justify;
 				text-justify : newspaper;
+				font-weight  : 500;
 			}
 
 			p.sc-overlay-content-description {
@@ -144,7 +161,7 @@ li {
 			}
 
 			p.sc-overlay-duration {
-				font-size   : 14px;
+				font-size   : 12px;
 				z-index     : 3;
 				line-height : 1em;
 			}

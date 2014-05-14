@@ -1,7 +1,7 @@
 <div class="sc-segment-content-container" >
     <div class="sc-segment-image-container">
         <a href="#resources/videos/<%- ContentId %>" >
-            <img src="http://resources.pd360.com/PD360/media/thumb/<%- ImageURL %>" class="img-responsive">
+            <img src="http://resources.pd360.com/PD360/media/thumb/<%- ImageURL %>" class="img-responsive" alt="pd360">
             <span class="sc-play-icon fa fa-play"></span>
             <p class="sc-play-now">Play Now</p>
         </a>
@@ -9,8 +9,9 @@
     <p class="sc-segment-name" title="<%- ContentName %>" > <%- shortContentName() %></p>
     <p class="sc-duration"><%- duration() %></p>
 
-    <a href="javascript:void(0);" class="sc-info-icon grayed fa fa-info-circle" ></a>
-    <a href="javascript:void(0);" class="sc-watch-later-icon grayed fa fa-clock-o" ></a>
+    <a href="javascript:void(0);" class="sc-info-icon grayed fa fa-info-circle"></a>
+    <a href="javascript:void(0);" class="sc-watch-later-icon grayed fa fa-clock-o"></a>
+    <i  class="sc-watch-later-loading-icon grayed fa fa-refresh fa-spin"></i>
 
     <div class="sc-overlay-details" >
         <p class="sc-overlay-segment-name" title="<%- ContentName %>" ><%- shortContentName() %></p>

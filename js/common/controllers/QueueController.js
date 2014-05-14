@@ -17,6 +17,7 @@ define( function ( require ) {
 					'args'       : {
 						'PersonnelId' : Session.personnelId(),
 						'ContentId'   : model.id,
+						'VideoTypeId' : model.get( 'VideoTypeId' ),
 						'Created'     : ''
 					}
 				};
@@ -40,6 +41,7 @@ define( function ( require ) {
 					'args'       : {
 						'PersonnelId' : Session.personnelId(),
 						'ContentId'   : model.id,
+						'VideoTypeId' : model.get( 'VideoTypeId' ),
 						'Created'     : ''
 					}
 				};

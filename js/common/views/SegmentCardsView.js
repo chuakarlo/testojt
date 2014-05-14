@@ -11,15 +11,17 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 
-		'className' : 'col-xs-12 col-sm-6 col-md-4',
+		'className' : 'col-xs-12 col-sm-6 col-md-4 col-lg-4',
 
 		'template' : _.template( template ),
 
 		'tagName' : 'li',
 
 		'ui' : {
-			'infoIcon'  : '.sc-info-icon',
-			'watchIcon' : '.sc-watch-later-icon'
+			'infoIcon'    : 'a.sc-info-icon',
+			'watchIcon'   : 'a.sc-watch-later-icon',
+			'infoOverlay' : 'div.sc-overlay-details',
+			'loadingIcon' : 'i.sc-watch-later-loading-icon'
 		},
 
 		'events' : {
@@ -30,11 +32,11 @@ define( function ( require ) {
 		'templateHelpers' : {
 
 			'shortContentName' : function () {
-				return getAbbreviation( this.ContentName , 60 );
+				return getAbbreviation( this.ContentName ||  this.Name, 60 );
 			},
 
 			'shortContentDescription' : function () {
-				return getAbbreviation( stripHtml( this.ContentDescription ) , 180 );
+				return getAbbreviation( stripHtml( this.ContentDescription || this.Description ) , 180 );
 			},
 
 			duration : function () {
@@ -46,37 +48,74 @@ define( function ( require ) {
 			_.bindAll( this );
 			_.extend( this, options );
 
+			this.model.set( 'VideoTypeId', this.model.attributes.UUVideoId  ? 1 : 2 );
+
 			this.listenTo( this.model, 'change:queued', this.matchedSegmentsToQueue );
+		},
+
+		'onShow' : function () {
+			this.ui.infoIcon.tooltip( { 'title' : 'Description' } );
+		},
+
+		'onClose' : function () {
+			this.ui.infoIcon.tooltip( 'destroy' );
+			this.ui.watchIcon.tooltip( 'destroy' );
 		},
 
 		'showDetails' : function ( ) {
 			if ( !this.ui.infoIcon.hasClass( 'blued' ) ) {
 				this.ui.infoIcon
-					.addClass( 'blued' )
-					.removeClass( 'grayed' )
-					.siblings( 'div.sc-overlay-details' ).fadeIn();
+					.addClass( 'blued fa-times-circle')
+						.removeClass( 'grayed fa-info-circle' )
+							.tooltip( 'destroy' )
+								.attr( 'title' , 'Close' )
+									.tooltip( 'show' );
+
+				this.ui.infoOverlay.fadeIn();
 			} else {
 				this.ui.infoIcon
-					.removeClass( 'blued' )
-					.addClass( 'grayed' )
-					.siblings( 'div.sc-overlay-details' ).fadeOut();
+					.addClass( 'grayed fa-info-circle' )
+						.removeClass( 'blued fa-times-circle' )
+							.tooltip( 'destroy' )
+								.attr( 'title' , 'Description' )
+									.tooltip( 'show' );
+
+				this.ui.infoOverlay.fadeOut();
 			}
 		},
 
 		'watchLaterQueue' : function () {
+
 			if ( this.model.get( 'queued' ) ) {
 				App.request( 'common:removeFromQueue' , this.model );
 			} else {
 				App.request( 'common:addToQueue' , this.model );
 			}
+
+			this.ui.watchIcon.tooltip( 'destroy' );
+			this.ui.watchIcon.hide();
+			this.ui.loadingIcon.show();
 		},
 
 		'matchedSegmentsToQueue' : function () {
 			if ( this.model.get( 'queued' ) ) {
-				this.ui.watchIcon.removeClass( 'grayed' ).addClass( 'blued' );
+				this.ui.watchIcon
+					.removeClass( 'grayed' )
+						.addClass( 'blued' )
+							.tooltip( {
+								'title' : 'Remove from Watch Later List'
+							} );
 			} else {
-				this.ui.watchIcon.removeClass( 'blued' ).addClass( 'grayed' );
+				this.ui.watchIcon
+					.removeClass( 'blued' )
+						.addClass( 'grayed' )
+							.tooltip( {
+								'title' : 'Add to Watch Later List'
+							} );
 			}
+
+			this.ui.loadingIcon.hide();
+			this.ui.watchIcon.show();
 		}
 
 	} );
