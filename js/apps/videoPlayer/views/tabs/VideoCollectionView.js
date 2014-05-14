@@ -4,8 +4,8 @@ define( function ( require ) {
 	var App           = require( 'App' );
 	var Marionette    = require( 'marionette' );
 
-	require( 'slick' );
 	require( 'common/views' );
+	require( 'slick' );
 
 	return Marionette.CollectionView.extend( {
 

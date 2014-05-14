@@ -12,31 +12,7 @@ define( function ( require ) {
 		it( 'should exist on `App.VideoPlayer`', function () {
 			App.should.have.property( 'VideoPlayer' );
 			App.VideoPlayer.should.have.property( 'Entities' );
-			App.VideoPlayer.Entities.should.have.property( 'RelatedVideo' );
 			App.VideoPlayer.Entities.should.have.property( 'RelatedVideos' );
-		} );
-
-		describe( 'RelatedVideo Entity', function () {
-
-			var model;
-
-			before( function () {
-				model = new App.VideoPlayer.Entities.RelatedVideo();
-			} );
-
-			after( function () {
-				model = null;
-			} );
-
-			it( 'should be an instance of CFModel', function () {
-				model.should.be.an.instanceof( Backbone.CFModel );
-			} );
-
-			it( 'does have an `idAttribute`', function () {
-				model.should.have.property( 'idAttribute' );
-				model.idAttribute.should.eql( 'ContentId' );
-			} );
-
 		} );
 
 		describe( 'RelatedVideos Entity', function () {

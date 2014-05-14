@@ -5,7 +5,6 @@ define( function ( require ) {
 
 	var $               = require( 'jquery' );
 	var sinon           = window.sinon;
-	var Remoting        = require( 'Remoting' );
 	var App             = require( 'App' );
 	var ButtonsItemView = require( 'videoPlayer/views/tabs/ButtonsItemView' );
 
@@ -75,33 +74,6 @@ define( function ( require ) {
 
 		describe( 'when the video is not in queue', function () {
 
-			var evt;
-			var removeFromQueueSpy;
-			var addToQueueSpy;
-
-			before( function () {
-				sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
-
-				evt                = { 'preventDefault' : function () {} };
-				removeFromQueueSpy = sinon.spy( buttonsItemView, 'removeContentFromQueue' );
-				addToQueueSpy      = sinon.spy( buttonsItemView, 'addContentToQueue' );
-			} );
-
-			after( function () {
-				Remoting.fetch.restore();
-				buttonsItemView.removeContentFromQueue.restore();
-				buttonsItemView.addContentToQueue.restore();
-			} );
-
-			it( 'does add call .addContentToQueue', function () {
-				removeFromQueueSpy.should.have.callCount( 0 );
-				addToQueueSpy.should.have.callCount( 0 );
-				buttonsItemView.render();
-				buttonsItemView.setUserQueue( evt );
-				removeFromQueueSpy.should.have.callCount( 0 );
-				addToQueueSpy.should.have.callCount( 1 );
-			} );
-
 			it( 'does set the button text to `Add to Queue`', function () {
 				buttonsItemView.setQueueBtnUI();
 				buttonsItemView.ui.userQueue.text().should.eql( 'Add to Queue' );
@@ -118,68 +90,19 @@ define( function ( require ) {
 			var contentModel;
 
 			before( function () {
-				sinon.stub( Remoting, 'fetch' ).returns( $.Deferred() );
-
-				contentModel       = new App.VideoPlayer.Entities.Content( { 'queued' : true } );
-				buttonsItemView    = new ButtonsItemView( { 'model' : contentModel } );
-				evt                = { 'preventDefault' : function () {} };
-				removeFromQueueSpy = sinon.spy( buttonsItemView, 'removeContentFromQueue' );
-				addToQueueSpy      = sinon.spy( buttonsItemView, 'addContentToQueue' );
+				contentModel    = new App.VideoPlayer.Entities.Content( { 'queued' : true } );
+				buttonsItemView = new ButtonsItemView( { 'model' : contentModel } );
+				evt             = { 'preventDefault' : function () {} };
 			} );
 
 			after( function () {
-				Remoting.fetch.restore();
-				buttonsItemView.removeContentFromQueue.restore();
-				buttonsItemView.addContentToQueue.restore();
 				buttonsItemView = undefined;
 			} );
 
-			it( 'does add call .removeContentFromQueue', function () {
-				removeFromQueueSpy.should.have.callCount( 0 );
-				addToQueueSpy.should.have.callCount( 0 );
-				buttonsItemView.render();
-				buttonsItemView.setUserQueue( evt );
-				removeFromQueueSpy.should.have.callCount( 1 );
-				addToQueueSpy.should.have.callCount( 0 );
-			} );
-
 			it( 'does set the button text to `Remove from Queue`', function () {
+				buttonsItemView.render();
 				buttonsItemView.setQueueBtnUI();
 				buttonsItemView.ui.userQueue.text().should.eql( 'Remove from Queue' );
-			} );
-
-		} );
-
-		describe( '.addContentToQueue', function () {
-
-			before( function () {
-				var stub = sinon.stub().returns( App.Deferred() );
-				App.reqres.setHandler( 'common:addToQueue', stub );
-			} );
-
-			after( function () {
-				App.reqres.removeHandler( 'common:addToQueue' );
-			} );
-
-			it( 'does add content to queue', function () {
-				buttonsItemView.addContentToQueue();
-			} );
-
-		} );
-
-		describe( '.removeContentFromQueue', function () {
-
-			before( function () {
-				var stub = sinon.stub().returns( App.Deferred() );
-				App.reqres.setHandler( 'common:removeFromQueue', stub );
-			} );
-
-			after( function () {
-				App.reqres.removeHandler( 'common:removeFromQueue' );
-			} );
-
-			it( 'does remove content from queue', function () {
-				buttonsItemView.removeContentFromQueue();
 			} );
 
 		} );

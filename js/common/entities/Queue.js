@@ -156,12 +156,12 @@ define( function ( require ) {
 				App.vent.trigger( 'common:queued', model );
 				App.vent.trigger( 'flash:message', {
 					'type'    : 'success',
-					'timeout' : 1000,
 					'message' : 'Added to Watch Later'
 				} );
 
 			} ).fail( function () {
 
+				App.vent.trigger( 'common:queueFailed' );
 				App.vent.trigger( 'flash:message', {
 					'message' : 'An error occurred while trying to add video to Watch Later. Please try again later.'
 				} );
@@ -182,12 +182,12 @@ define( function ( require ) {
 				App.vent.trigger( 'common:dequeued', model );
 				App.vent.trigger( 'flash:message', {
 					'type'    : 'success',
-					'timeout' : 1000,
 					'message' : 'Removed from Watch Later'
 				} );
 
 			} ).fail( function () {
 
+				App.vent.trigger( 'common:queueFailed' );
 				App.vent.trigger( 'flash:message', {
 					'message' : 'An error occurred while trying to remove video from Watch Later. Please try again later.'
 				} );

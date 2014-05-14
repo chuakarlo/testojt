@@ -91,9 +91,9 @@ define( function ( require ) {
 			ev.preventDefault();
 
 			if ( this.model.get( 'queued' ) ) {
-				App.request( 'common:removeFromQueue' , this.model );
+				App.request( 'common:removeFromQueue', this.model );
 			} else {
-				App.request( 'common:addToQueue' , this.model );
+				App.request( 'common:addToQueue', this.model );
 			}
 
 			this.ui.watchIcon.tooltip( 'destroy' );

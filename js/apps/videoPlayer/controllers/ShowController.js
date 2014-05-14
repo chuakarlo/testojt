@@ -65,17 +65,20 @@ define( function ( require ) {
 						}
 					}
 
+					// get all queue contents ids
+					var queueContentsIds = queueContents.pluck( 'ContentId' );
+
 					// set content queued attribute
-					videoModel.setQueue( queueContents );
+					videoModel.setQueue( queueContentsIds );
 
 					// set video segments queued attribute
 					segments.each( function ( model ) {
-						model.setQueue( queueContents );
+						model.setQueue( queueContentsIds );
 					} );
 
 					// set related videos queued attribute
 					relatedVideos.each( function ( model ) {
-						model.setQueue( queueContents );
+						model.setQueue( queueContentsIds );
 					} );
 
 					// Videojs player view

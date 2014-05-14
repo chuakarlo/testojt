@@ -87,11 +87,15 @@ define( function ( require ) {
 			},
 
 			'setVideoTypeId' : function () {
-				this.set( 'VideoTypeId', 1 );
+				if ( this.get( 'ContentId' ) ) {
+					this.set( 'VideoTypeId', 1 );
+				} else {
+					this.set( 'VideoTypeId', 2 );
+				}
 			},
 
-			'setQueue' : function ( queueContents ) {
-				this.set( 'queued', _.contains( queueContents.pluck( 'ContentId' ), this.id ) );
+			'setQueue' : function ( queueContentsIds ) {
+				this.set( 'queued', _.contains( queueContentsIds, this.id ) );
 			}
 
 		} );

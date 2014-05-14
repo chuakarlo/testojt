@@ -40,18 +40,10 @@ define( function ( require ) {
 			this.ui.userQueue.button( 'loading' );
 
 			if ( this.model.get( 'queued' ) ) {
-				this.removeContentFromQueue();
+				App.request( 'common:removeFromQueue', this.model );
 			} else {
-				this.addContentToQueue();
+				App.request( 'common:addToQueue', this.model );
 			}
-		},
-
-		'addContentToQueue' : function () {
-			App.request( 'common:addToQueue', this.model );
-		},
-
-		'removeContentFromQueue' : function () {
-			App.request( 'common:removeFromQueue', this.model );
 		},
 
 		'setQueueBtnUI' : function () {

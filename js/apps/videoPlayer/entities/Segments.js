@@ -4,32 +4,15 @@ define( function ( require ) {
 	var $        = require( 'jquery' );
 	var _        = require( 'underscore' );
 	var Backbone = require( 'backbone' );
-
 	var App      = require( 'App' );
+
+	require( 'videoPlayer/entities/Content' );
 
 	App.module( 'VideoPlayer.Entities', function ( Entities ) {
 
-		Entities.Segment = Backbone.CFModel.extend( {
-
-			'idAttribute' : 'ContentId',
-
-			'initialize' : function () {
-				this.setVideoTypeId();
-			},
-
-			'setVideoTypeId' : function () {
-				this.set( 'VideoTypeId', 1 );
-			},
-
-			'setQueue' : function ( queueContents ) {
-				this.set( 'queued', _.contains( queueContents.pluck( 'ContentId' ), this.id ) );
-			}
-
-		} );
-
 		Entities.Segments = Backbone.CFCollection.extend( {
 
-			'model' : Entities.Segment,
+			'model' : Entities.Content,
 			'path'  : 'ContentService',
 
 			'initialize' : function ( options ) {
