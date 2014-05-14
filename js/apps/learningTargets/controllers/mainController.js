@@ -15,7 +15,7 @@ define( function ( require ) {
 	var PortfoliosView        = require( 'apps/learningTargets/views/portfolios/PortfoliosView' );
 	var DescriptionView       = require( 'apps/learningTargets/views/catalogs/DescriptionView' );
 	var ObservationsView      = require( 'apps/learningTargets/views/observations/ObservationsView' );
-	var ObjectivesTitleView   = require( 'apps/learningTargets/views/objectives/titles/TitleView' );
+	var ObjectivesFolderView  = require( 'apps/learningTargets/views/objectives/focusfolders/FocusFolderView' );
 	var ObjectivesContentView = require( 'apps/learningTargets/views/objectives/contents/ContentView' );
 
 	App.module( 'LearningTargets.Main', function ( Main ) {
@@ -152,6 +152,9 @@ define( function ( require ) {
 					var coursesView = new CoursesView( {
 						collection : collection
 					} );
+
+					// bind to redirect event
+					coursesView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
 
 					// display Courses
 					helper._showView( coursesView );
@@ -317,12 +320,12 @@ define( function ( require ) {
 
 				helper._apiRequest( 'lt:objectivestitle', function ( collection ) {
 
-					var objectivesTitleView = new ObjectivesTitleView ( {
+					var objectivesFolderView = new ObjectivesFolderView ( {
 						collection : collection
 					} );
 
 					// display Focus Objectives Title
-					helper._showView( objectivesTitleView );
+					helper._showView( objectivesFolderView );
 
 				} );
 			},
@@ -351,7 +354,7 @@ define( function ( require ) {
 
 					// change view to focus folder
 					if ( collection.length > 0 && !collection.models[ 0 ].get( 'ContentId' ) ) {
-						objectivesContentView = new ObjectivesTitleView ( {
+						objectivesContentView = new ObjectivesFolderView ( {
 							collection : collection,
 							data       : options
 						} );

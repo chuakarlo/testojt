@@ -3,8 +3,8 @@ define( function ( require ) {
 
 	var Marionette    = require( 'marionette' );
 	var _             = require( 'underscore' );
-	var template      = require( 'text!apps/learningTargets/templates/objectives/titles.html' );
-	var TitleItemView = require( 'apps/learningTargets/views/objectives/titles/TitleItemView' );
+	var template      = require( 'text!apps/learningTargets/templates/objectives/focustitles.html' );
+	var TitleItemView = require( 'apps/learningTargets/views/objectives/focusfolders/FocusFolderItemView' );
 	var EmptyView     = require( 'apps/learningTargets/views/objectives/EmptyView' );
 
 	return Marionette.CompositeView.extend( {
@@ -16,6 +16,14 @@ define( function ( require ) {
 		'itemView'          : TitleItemView,
 		'className'         : 'objectives-folder',
 
+		'ui' : {
+			'BackButton' : '.back-button'
+		},
+
+		'events' : {
+			'click @ui.BackButton' : 'previousFolder'
+		},
+
 		initialize : function ( ) {
 			this.FocusTitle     = '';
 			this.showFocusTitle = 'hide';
@@ -24,6 +32,10 @@ define( function ( require ) {
 				this.FocusTitle     = this.options.data.focustitle;
 				this.showFocusTitle = '';
 			}
+		},
+
+		previousFolder : function () {
+			window.history.back();
 		},
 
 		templateHelpers : function ( ) {

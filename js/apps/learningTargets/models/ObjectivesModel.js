@@ -6,6 +6,7 @@ define( function ( require ) {
 	return Backbone.Model.extend( {
 
 		'parse' : function ( model ) {
+			model.FolderTitle = '';
 
 			if ( !model.ContentId ) {
 				model.SSTitle = model.StateStandardTitle;

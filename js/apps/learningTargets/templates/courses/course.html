@@ -1,16 +1,24 @@
 <div class="lt-toggle-btn">
-	<div class="col-xs-8 col-xs-8 col-md-8 row">
-		<img class="icon" src="/img/eye.png" alt="" class="col-xs-2 col-sm-2 col-md-2">
-		<div class="course-title col-xs-6 col-sm-10 col-md-10"><%- COURSENAME %></div>
-	</div>
-	<div class="col-xs-3 col-xs-3 col-md-3">
-		<div class="progress">
-			<div class="progress-bar" role="progressbar" aria-valuenow="<%- PERCENTCOMPLETE %>" aria-valuemin="0" aria-valuemax="100" style="width: <%- PERCENTCOMPLETE %>%;">
-			</div>
+    <div class="courses row">
+	<img class="icon-img" src="/img/eye.png">
+	<span class="title-wrapper course-title col-xs-7 col-sm-8 col-md-8">
+	    <%- COURSENAME %>
+	</span>
+	<div class="progress-wrapper col-xs-2 col-sm-3 col-md-3">
+	    <div class="hidden-xs col-sm-12 col-md-12">
+		<div class="progress col-sm-10 col-md-10">
+		    <div class="progress-bar" role="progressbar" aria-valuenow="<%- PERCENTCOMPLETE %>" aria-valuemin="0" aria-valuemax="100" style="width: <%- PERCENTCOMPLETE %>%;">
+		    </div>
 		</div>
+		<p>
+		    <%- PERCENTCOMPLETE %>%</p>
+	    </div>
+	    <div class="col-xs-12 percent-holder visible-xs">
+		<div class="profile-percent">
+		    <%- PERCENTCOMPLETE %>
+		</div>
+	    </div>
 	</div>
-	<div class="col-xs-1 col-xs-1 col-md-1">
-		<div><%- PERCENTCOMPLETE %>%</div>
-	</div>
+    </div>
 </div>
 <br class="clearfix">

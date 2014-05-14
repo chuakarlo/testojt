@@ -6,24 +6,48 @@ define( function ( require ) {
 	var _               = require( 'underscore' );
 	var $               = require( 'jquery' );
 
+	require( 'pc-progressCircle' );
+
 	return Marionette.ItemView.extend( {
 		'template' : _.template( template ),
 		'tagName'  : 'li',
+
 		'ui'       : {
-			'drawerToggleButton' : '.lt-toggle-btn'
+			'courseLinkBtn' : '.course-title'
 		},
 
 		'events' : {
-			'click @ui.drawerToggleButton' : 'toggleDrawer'
+			'click @ui.courseLinkBtn' : 'showLegacyApp'
 		},
 
-		'toggleDrawer' : function ( e ) {
+		'showLegacyApp' : function ( e ) {
 			e.preventDefault();
+			var self = this;
 
-			var toggleBtn     = $( e.currentTarget );
-			var toggleContent = toggleBtn.siblings( '.lt-toggle-content' )[ 0 ];
+			self.trigger( 'lt:redirect', 'courses', 'coursesBrowse', self.model.get( 'COURSEID' ) );
+		},
 
-			$( toggleContent ).slideToggle( 300 );
+		'onRender'          : function ( parent ) {
+			var eCircle  = parent.$( '.profile-percent' );
+			var nPercent = parseInt( eCircle.html(), 10 );
+
+			eCircle.html( '' );
+
+			if ( isNaN( nPercent ) ) {
+				nPercent = 25;
+			}
+
+			$(eCircle).progressCircle( {
+				'nPercent'        : nPercent,
+				'showPercentText' : true,
+				'circleSize'      : 50,
+				'thickness'       : 3
+			} );
+
+			$(eCircle).find( '.fill' )
+				.css( 'width', '0.99em' )
+				.css( 'height', '0.99em' );
+
 		}
 
 	} );
