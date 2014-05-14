@@ -35,14 +35,7 @@ define( function ( require ) {
 						this.showVideoResources( videoContent );
 					}
 
-				}.bind( this ) ).fail( function () {
-
-					App.content.show( new App.Common.ErrorView( {
-						'message' : 'There was an error loading the page.',
-						'flash'   : 'An error occurred. Please try again later.'
-					} ) );
-
-				} );
+				}.bind( this ) ).fail( App.errorHandler.bind( App, { 'region' : App.content } ) );
 
 			},
 
@@ -117,14 +110,7 @@ define( function ( require ) {
 					var videoTabsView = new App.VideoPlayer.Views.VideoTabsView();
 					layout.videoTabsRegion.show( videoTabsView );
 
-				} ).fail( function ( error ) {
-
-					App.content.show( new App.Common.ErrorView( {
-						'message' : 'There was an error loading the page.',
-						'flash'   : 'An error occurred. Please try again later.'
-					} ) );
-
-				} );
+				} ).fail( App.errorHandler.bind( App, { 'region' : App.content } ) );
 
 			},
 

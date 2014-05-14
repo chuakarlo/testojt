@@ -61,6 +61,43 @@ define( function ( require ) {
 
 	} );
 
+	// error handler, to create flash messages, and optional error view
+	App.errorHandler = function ( options, callback ) {
+
+		// overwrite message if it was passed in an error
+		if ( Object.prototype.toString.call( options ) === '[object Error]' ) {
+			options = { };
+		}
+
+		// setup defaults
+		options  = options || { };
+		callback = callback || function () {};
+
+		// create default message if undefined
+		if ( typeof options.message === 'undefined' ) {
+			options.message = 'An error occurred. Please try again later.';
+		}
+
+		// Pass a region if you want an error view to show up in that region
+		if ( options.region ) {
+			options.viewText = options.viewText || 'There was an error loading view.';
+
+			options.region.show( new App.Common.ErrorView( {
+				'message' : options.viewText
+			} ) );
+		}
+
+		// Set option.message = false to suppress flash message
+		if ( options.message ) {
+			App.vent.trigger( 'flash:message', {
+				'message' : options.message
+			} );
+		}
+
+		callback();
+
+	};
+
 	// convenience access for jquery methods
 	App.when     = $.when;
 	App.Deferred = $.Deferred;

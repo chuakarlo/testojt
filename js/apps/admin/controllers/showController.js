@@ -42,7 +42,7 @@ define( function ( require ) {
 						this.layout.content.show( new NonAdminView() );
 					}
 
-				}.bind( this ) );
+				}.bind( this ) ).fail( App.errorHandler.bind( App, { 'region' : this.layout.content } ) );
 
 			}
 

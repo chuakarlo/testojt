@@ -62,13 +62,7 @@ define( function ( require ) {
 
 				$( '#data-' + this.model.get( 'LICENSEID' ) ).html( qt );
 
-			}.bind( this ) ).fail( function () {
-
-				App.vent.trigger( 'flash:message', {
-					'message' : 'An error occurred. Please try again later.'
-				} );
-
-			} );
+			}.bind( this ) ).fail( App.errorHandler );
 
 		},
 

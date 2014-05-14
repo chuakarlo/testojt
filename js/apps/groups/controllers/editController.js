@@ -31,13 +31,7 @@ define( function ( require ) {
 
 					App.navigate( 'groups', { 'trigger' : true } );
 
-				} ).fail( function ( error ) {
-
-					App.vent.trigger( 'flash:message', {
-						'message' : 'An error occurred. Please try again later.'
-					} );
-
-				} );
+				} ).fail( App.errorHandler );
 
 			},
 
@@ -61,13 +55,7 @@ define( function ( require ) {
 
 					App.navigate( 'groups', { 'trigger' : true } );
 
-				} ).fail( function ( error ) {
-
-					App.vent.trigger( 'flash:message', {
-						'message' : 'An error occurred. Please try again later.'
-					} );
-
-				} );
+				} ).fail( App.errorHandler );
 
 			},
 
@@ -89,13 +77,7 @@ define( function ( require ) {
 
 					Vent.trigger( 'group:removeGroupInvites', model );
 
-				} ).fail( function ( error ) {
-
-					App.vent.trigger( 'flash:message', {
-						'message' : 'An error occurred. Please try again later.'
-					} );
-
-				} );
+				} ).fail( App.errorHandler );
 			},
 
 			'acceptGroup' : function (model) {
@@ -149,30 +131,13 @@ define( function ( require ) {
 
 									Vent.trigger( 'group:show', model );
 
-								} ).fail( function ( error ) {
-
-									App.vent.trigger( 'flash:message', {
-										'message' : 'An error occurred. Please try again later.'
-									} );
-
-								} );
+								} ).fail( App.errorHandler );
 							}
-						} ).fail( function ( error ) {
-
-							App.vent.trigger( 'flash:message', {
-								'message' : 'An error occurred. Please try again later.'
-							} );
-
-						} );
+						} ).fail( App.errorHandler );
 					}
 
-				} ).fail( function ( error ) {
+				} ).fail( App.errorHandler );
 
-					App.vent.trigger( 'flash:message', {
-						'message' : 'An error occurred. Please try again later.'
-					} );
-
-				} );
 			}
 
 		};

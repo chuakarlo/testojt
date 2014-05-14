@@ -115,14 +115,7 @@ define( function ( require ) {
 
 					this.layout.content.show( profileView );
 
-				}.bind( this ) ).fail( function ( error ) {
-
-					this.layout.content.show( new App.Common.ErrorView( {
-						'message' : error.message,
-						'flash'   : 'An error occurred. Please try again later.'
-					} ) );
-
-				}.bind( this ) );
+				}.bind( this ) ).fail( App.errorHandler.bind( App, { 'region' : this.layout.content } ) );
 
 			},
 

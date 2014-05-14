@@ -23,21 +23,21 @@ define( function ( require ) {
 
 				var share = Remoting.fetch( shareRequest );
 
-				App.when( share ).done( function () {
+				App.when( share )
+				.done( function () {
 
 					App.vent.trigger( 'flash:message', {
 						'type'    : 'success',
 						'message' : 'Video successfully shared.'
 					} );
 
-				} ).fail( function () {
+				} )
+				.fail(
 
-					App.vent.trigger( 'flash:message', {
-						'type'    : 'error',
-						'message' : 'Failed to share video.'
-					} );
+					App.errorHandler.bind( App, { 'message' : 'Failed to share video.' } )
 
-				} ).always( function () {
+				)
+				.always( function () {
 
 					App.modalRegion.close();
 

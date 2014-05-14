@@ -24,14 +24,7 @@ define( function ( require ) {
 
 					App.content.show( ResourcesView );
 
-				} ).fail( function () {
-
-					App.content.show( new App.Common.ErrorView( {
-						'message' : 'There was an error getting resources.',
-						'flash'   : 'An error occurred. Please try again later.'
-					} ) );
-
-				} );
+				} ).fail( App.errorHandler( { 'region' : App.content } ) );
 
 			}
 

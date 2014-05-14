@@ -24,7 +24,7 @@ define( function ( require ) {
 				}
 
 				defer.resolve( Pages );
-			} );
+			} ).fail( App.errorHandler );
 
 			return defer.promise();
 		}

@@ -86,13 +86,7 @@ define( function ( require ) {
 				App.when( request ).done( function ( collections ) {
 					// run callback with collections
 					callback( collections );
-				} ).fail( function ( error ) {
-
-					App.vent.trigger( 'flash:message', {
-						'message' : 'An error occurred. Please try again later.'
-					} );
-
-				} );
+				} ).fail( App.errorHandler );
 			},
 
 			'redirectToLegacyPage' : function ( target, page, sub, opts ) {

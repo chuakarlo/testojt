@@ -31,14 +31,7 @@ define( function ( require ) {
 						'type'    : 'error'
 					} );
 
-				} ).fail( function () {
-
-					App.content.show( new App.Common.ErrorView( {
-						'message' : 'There was an error loading the license agreement.',
-						'flash'   : 'An error occurred. Please try again later.'
-					} ) );
-
-				} );
+				} ).fail( App.errorHandler.bind( App, { 'region' : App.content } ) );
 
 			}
 

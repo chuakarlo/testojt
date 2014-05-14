@@ -109,29 +109,11 @@ define( function ( require ) {
 						.done( function ( data ) {
 							// process return data here
 						}  )
-						.fail( function () {
+						.fail( App.errorHandler );
 
-							App.vent.trigger( 'flash:message', {
-								'message' : 'An error occurred. Please try again later.'
-							} );
+				}.bind( this ) ).fail( App.errorHandler );
 
-						} );
-
-				}.bind( this ) ).fail( function ( error ) {
-
-					App.vent.trigger( 'flash:message', {
-						'message' : 'An error occurred. Please try again later.'
-					} );
-
-				}.bind( this ) );
-
-			}.bind( this ) ).fail( function ( error ) {
-
-				App.vent.trigger( 'flash:message', {
-					'message' : 'An error occurred. Please try again later.'
-				} );
-
-			} );
+			}.bind( this ) ).fail( App.errorHandler );
 
 		}
 	} );
