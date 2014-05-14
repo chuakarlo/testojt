@@ -93,7 +93,8 @@ define( function ( require ) {
 			'click p#awesomeness'                      : 'showWidgetSettingsPanel',
 			'click div#widget-settings.opened'         : 'closeWidgetSettingsPanel',
 			'click div.actions .cancel'                : 'closeWidgetSettingsPanel',
-			'focusout #widgets-settings-panel-wrapper' : 'blurAction'
+			'focusout #widgets-settings-panel-wrapper' : 'blurAction',
+			'click #widgets-settings-panel-wrapper'    : 'focusAction'
 		},
 		'className' : 'widget-container',
 		'template'  : _.template( template ),
@@ -124,15 +125,11 @@ define( function ( require ) {
 		},
 
 		'blurAction' : function ( e ) {
-			var elem = e.currentTarget.ownerDocument.activeElement;
-			var parent = $( elem ).closest( '#widgets-settings-panel-wrapper' );
+			$( 'div#widget-settings.opened' ).click();
+		},
 
-			//using jquery to get focus doesn't work in IE
-			if ( parent.length === 1 ) {
-				$( '#widgets-settings-panel-wrapper' ).focus().css('outline', 'none');
-			} else {
-				$( 'div#widget-settings.opened' ).click();
-			}
+		'focusAction' : function ( e ) {
+			$( '#widgets-settings-panel-wrapper' ).focus().css('outline', 'none');
 		}
 
 	} );

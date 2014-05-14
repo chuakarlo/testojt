@@ -88,7 +88,6 @@ define( function ( require ) {
 		},
 
 		'activateWidget' : function ( e ) {
-			e.stopPropagation();
 			utils.doActivateWidget( this, e );
 		},
 
@@ -97,7 +96,6 @@ define( function ( require ) {
 		},
 
 		'deactivateWidget' : function ( e ) {
-			e.stopPropagation();
 			utils.doDeactivateWidget( this, e );
 		},
 
