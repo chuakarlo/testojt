@@ -26,6 +26,7 @@ define( function ( require ) {
 			_.extend( this, options );
 
 			this.listenTo( this.model, 'change:queued', this.setQueueBtnUI );
+			this.listenTo( App.vent, 'common:queueFailed', this.setQueueBtnUI );
 
 			return this;
 		},

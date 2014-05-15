@@ -53,6 +53,7 @@ define( function ( require ) {
 			_.extend( this, options );
 
 			this.listenTo( this.model, 'change:queued', this.matchedSegmentsToQueue );
+			this.listenTo( App.vent, 'common:queueFailed', this.matchedSegmentsToQueue );
 		},
 
 		'onShow' : function () {
@@ -99,22 +100,6 @@ define( function ( require ) {
 			this.ui.watchIcon.tooltip( 'destroy' );
 			this.ui.watchIcon.hide();
 			this.ui.loadingIcon.show();
-
-			App.vent.on( 'common:dequeueFailed' , function () {
-				if ( this.ui.loadingIcon.is( ':visible' ) ) {
-					this.ui.loadingIcon.hide();
-					this.ui.watchIcon.show()
-						.tooltip( { title : 'Remove from Watch Later List' } );
-				}
-			}.bind( this ) );
-
-			App.vent.on( 'common:queueFailed' , function () {
-				if ( this.ui.loadingIcon.is( ':visible' ) ) {
-					this.ui.loadingIcon.hide();
-					this.ui.watchIcon.show()
-						.tooltip( { title : 'Add to Watch Later List' } );
-				}
-			}.bind( this ) );
 		},
 
 		'matchedSegmentsToQueue' : function () {
@@ -140,4 +125,5 @@ define( function ( require ) {
 		}
 
 	} );
+
 } );
