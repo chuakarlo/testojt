@@ -102,14 +102,19 @@ define( function ( require ) {
 					var hashedUrl = results[ 0 ];
 
 					// POST request for file download
-					$.post( configData.FileURL, {
+					// TODO: modify code below for the downloading of resource
+					// use configData.FileURL instead of hardcoded postURL
+					var postURL = 'http://cebudev.pd360.com/FileServer.cfm';
+
+					$.post( postURL, {
 						'FilePath'         : hashedUrl,
 						'OriginalFileName' : fileName
 					} )
-						.done( function ( data ) {
-							// process return data here
-						}  )
-						.fail( App.errorHandler );
+					.done( function ( data ) {
+						// process return data here
+
+					}  )
+					.fail( App.errorHandler );
 
 				}.bind( this ) ).fail( App.errorHandler );
 
