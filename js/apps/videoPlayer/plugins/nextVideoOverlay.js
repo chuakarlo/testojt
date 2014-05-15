@@ -33,9 +33,12 @@ define( function ( require ) {
 		var showingImage = false;
 
 		var overlay = {
-
-			showImage : function ( ) {
-
+			checkOverlay : function ( ) {
+				if (  self.currentTime() < self.duration() - 3 ) {
+					overlay.hideImage();
+				}
+			},
+			showImage    : function ( ) {
 				if ( showingImage ) {
 					return;
 				}
@@ -85,10 +88,18 @@ define( function ( require ) {
 
 				self.el().appendChild( holderDiv );
 				self.pause();
+			},
+			hideImage    : function ( ) {
+				if ( !showingImage ) {
+					return;
+				}
+				showingImage = false;
+				self.el().removeChild( document.getElementById( 'vjs-image-overlay-holder' ) );
 			}
 		};
 
 		self.on( 'ended', overlay.showImage );
+		self.on( 'timeupdate', overlay.checkOverlay );
 	};
 
 	videojs.plugin( 'nextVideoOverlay', nextVideoOverlay );
