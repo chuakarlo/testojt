@@ -1,6 +1,20 @@
 <div class="lt-toggle-btn">
-	<div class="col-md-1 col-xs-3"><img src="/img/eye.png" class="icon" alt=""></div>
-	<div class="col-md-4 col-xs-9"><p><a href="#" class="lt-link"><%- OBSERVATIONNAME %></a></p></div>
-	<div class="col-md-4 col-xs-6"><p><%- OBSERVATIONDATE %></p></div>
-	<div class="col-md-3 col-xs-6"><p><%- NUMBEROFPRESCRIBEDPD %> Assigned PD</p></div>
+    <div class="row">
+        <img class="icon-img" src="/img/eye.png">
+        <span class="title-wrapper col-sm-4 col-md-4 hidden-xs">
+            <a href="#" class="lt-link">
+                <%- OBSERVATIONNAME %>
+            </a>
+        </span>
+        <span class="title-wrapper col-sm-4 col-md-4 hidden-xs"><%- OBSERVATIONDATE %></span>
+        <span class="title-wrapper col-sm-3 col-md-3 hidden-xs"><%- NUMBEROFPRESCRIBEDPD %> Assigned PD</span>
+        <span class="title-wrapper col-wrapper visible-xs col-xs-9">
+        	<span class="col-xs-12">
+		        <a href="#" class="lt-link"><%- OBSERVATIONNAME %></a>
+		    </span>
+            <span class="col-xs-12"><%- OBSERVATIONDATE %></span>
+            <span class="col-xs-12"><%- NUMBEROFPRESCRIBEDPD %> Assigned PD</span>
+        </span>
+    </div>
 </div>
+<br class="clearfix">
