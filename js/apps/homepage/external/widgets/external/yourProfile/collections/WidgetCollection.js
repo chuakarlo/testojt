@@ -1,4 +1,4 @@
-define ( function ( require ) {
+define( function ( require ) {
 	'use strict';
 
 	var Backbone    = require( 'backbone' );
@@ -48,27 +48,27 @@ define ( function ( require ) {
 	var Collection = Backbone.Collection.extend( {
 		'model'      : WidgetModel,
 		'comparator' : function ( model ) {
-			var date = new Date( model.get( 'EXPIREDATE' ) ).getTime();
+			var date = new Date( model.get( 'EXPIREDATE' ) ).getTime( );
 			return -date;
-		}	} );
-
-		return Backbone.Collection.extend( {
-			'fetch' : function ( options ) {
-
-				var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId() ),widgetRequestSecondary( Session.personnelId() ) ] );
-
-				App.when( fetchingModels ).done( function ( models ) {
-					var mergedModels    = $.extend( { }, models[ 0 ] , models[ 1 ] );
-					var newMergedModels = chopDataToNewModel ( mergedModels );
-					console.log(newMergedModels);
-					options.success( new Collection( newMergedModels ) );
-				} ).fail( function ( error ) {
-
-					App.vent.trigger( 'flash:message', {
-						'message' : 'An error occurred getting your profile. Please try again later.'
-					} );
-
-				} );
-			}
-		} );
+		}
 	} );
+
+	return Backbone.Collection.extend( {
+		'fetch' : function ( options ) {
+
+			var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId( ) ), widgetRequestSecondary( Session.personnelId( ) ) ] );
+
+			App.when( fetchingModels ).done( function ( models ) {
+				var mergedModels    = $.extend( { }, models[ 0 ], models[ 1 ]);
+				var newMergedModels = chopDataToNewModel( mergedModels );
+				options.success( new Collection( newMergedModels ) );
+			}).fail( function ( error ) {
+
+				App.vent.trigger( 'flash:message', {
+					'message' : 'An error occurred getting your profile. Please try again later.'
+				} );
+
+			} );
+		}
+	} );
+} );
