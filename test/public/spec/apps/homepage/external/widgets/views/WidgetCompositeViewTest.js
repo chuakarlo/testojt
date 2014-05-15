@@ -352,16 +352,6 @@ define( function ( require ) {
 
 		} );
 
-		it( 'should be able to call .displayLimitError', function () {
-			var evt       = document.createEvent( 'Event' );
-			var errorStub = sinon.stub( controllers, 'doDisplayLimitError' );
-
-			widgetComposite.displayLimitError( evt );
-			errorStub.callCount.should.be.at.least( 1 );
-
-			controllers.doDisplayLimitError.restore();
-		} );
-
 		it( 'should be able to call .changeButtonAttr', function () {
 			var evt        = document.createEvent( 'Event' );
 			var changeStub = sinon.stub( utils, 'changeButtonAttr' );
