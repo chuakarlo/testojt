@@ -6,8 +6,6 @@ define( function ( require ) {
 	var _               = require( 'underscore' );
 	var $               = require( 'jquery' );
 
-	require( 'pc-progressCircle' );
-
 	return Marionette.ItemView.extend( {
 		'template' : _.template( template ),
 		'tagName'  : 'li',
@@ -27,7 +25,7 @@ define( function ( require ) {
 			self.trigger( 'lt:redirect', 'courses', 'coursesBrowse', self.model.get( 'COURSEID' ) );
 		},
 
-		'onRender'          : function ( parent ) {
+		'onRender' : function ( parent ) {
 			var eCircle  = parent.$( '.profile-percent' );
 			var nPercent = parseInt( eCircle.html(), 10 );
 

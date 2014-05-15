@@ -1,6 +1,7 @@
 /************************************************************\
 						LEARNING TARGETS
 \************************************************************/
+@import "../common/progressCircle.less";
 .learning-targets {
     @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
         .lt-courses-header {
@@ -18,7 +19,6 @@
             border-bottom: 1px solid #ebebeb;
         }
 	.lt-content {
-
 	}
     }
     @media (max-width: @screen-xs-max) {
@@ -39,131 +39,58 @@
                 margin: 0;
                 padding: 0;
 		li {
-			margin : 0 0 10px;
-			list-style : none;
-			max-height : 300px;
-			overflow : visible;
-
-			& > .fo-content {
-			    div.fo-content-image {
-				a {
-					color : @cn-white;
-				    .cn-play-now, .cn-play-icon {
-					display: block !important;
-					color : @cn-white;
-				    }
+		    margin : 0 0 10px;
+		    list-style : none;
+		    max-height : 300px;
+		    overflow : visible;
+		    & > .fo-content {
+			div.fo-content-image {
+			    a {
+				color : @cn-white;
+				.cn-play-now, .cn-play-icon {
+				    display: block !important;
+				    color : @cn-white;
 				}
 			    }
 			}
 		    }
+		}
             }
             li {
                 & > .lt-toggle-btn {
 		    & > .courses {
-						display: block;
-						.icon-img {
-							vertical-align: middle;
-						}
-						.title-wrapper {
-							padding: 0 0 0 10px !important;
-							margin-left: 0 !important;
-							display: inline-block;
-							vertical-align: middle;
-						}
-						.progress-wrapper {
-							float: right !important;
-						}
+			display: block;
+			.icon-img {
+			    vertical-align: middle;
 			}
+			.title-wrapper {
+			    padding: 0 0 0 10px !important;
+			    margin-left: 0 !important;
+			    display: inline-block;
+			    vertical-align: middle;
+			}
+			.progress-wrapper {
+			    float: right !important;
+			}
+		    }
 		}
 		img.icon {
-			margin-right: 10px !important;
-                }
-            }
+		    margin-right: 10px !important;
+		}
+	    }
 	    .fo-callout-info {
 		h4 {
-					min-height: 55px;
-					padding-top: 10px;
+		    min-height: 55px;
+		    padding-top: 10px;
 		}
 		.back-button {
-					display: block;
-					padding-top: 17px;
-					padding-right: 0;
-				}
+		    display: block;
+		    padding-top: 17px;
+		    padding-right: 0;
 		}
+	    }
         }
     }
-
-	/* progress circle style */
-    .prog-circle {
-		position              : relative;
-		font-size             : 120px;
-		width                 : @padd;
-		height                : @padd;
-		float                 : left;
-		margin                : 0 0.1em 0.1em 0;
-		background-color      : @pc-yellow-light;
-
-		.pc-border-radius( 50% );
-
-		.slice {
-			position : absolute;
-			width    : @padd;
-			height   : @padd;
-			clip     : rect(0em, @padd, @padd, 0.5em);
-		}
-		.slice.clipauto {
-			clip : rect(auto, auto, auto, auto);
-		}
-		.fill, .bar {
-			position              : absolute;
-			border                : 0.08em solid @pc-blue-light;
-			width                 : 0.84em;
-			height                : 0.84em;
-			clip                  : rect(0em, .5em, @padd, 0em);
-			-webkit-transform     : rotate(20deg);
-			-moz-transform        : rotate(20deg);
-			-ms-transform         : rotate(20deg);
-			-o-transform          : rotate(20deg);
-			transform             : rotate(20deg);
-			.pc-border-radius( 50% );
-		}
-		.percenttext {
-			position                           : absolute;
-			width                              : 100%;
-			height                             : @padd;
-			z-index                            : 1;
-			margin                             : auto;
-			top                                : 0;
-			left                               : 0;
-			right                              : 0;
-			bottom                             : 0;
-			font-size                          : 0.3em;
-			color                              : @pc-blue-light;
-			display                            : block;
-			text-align                         : center;
-			white-space                        : nowrap;
-			line-height                        : 100%;
-			-webkit-transition-duration        : 0.2s;
-			-moz-transition-duration           : 0.2s;
-			-o-transition-duration             : 0.2s;
-			transition-duration                : 0.2s;
-			-webkit-transition-timing-function : ease-out;
-			-moz-transition-timing-function    : ease-out;
-			-o-transition-timing-function      : ease-out;
-			transition-timing-function         : ease-out;
-		}
-		.after {
-			position              : absolute;
-			top                   : 0.08em;
-			left                  : 0.08em;
-			display               : block;
-			background-color      : @pc-white;
-			width                 : 0.84em;
-			height                : 0.84em;
-			.pc-border-radius( 50% );
-		}
-	}
-
     .search-pd-catalog {
         padding-top: 20px;
         padding-left: 25px;
@@ -300,46 +227,46 @@
                 }
                 .course-title {
 		    cursor: pointer;
-			color: #1188ce;
+		    color: #1188ce;
 		    font-weight: 500;
-                }
+		}
 		.course-title:hover {
-			text-decoration: underline;
+		    text-decoration: underline;
 		}
 		& > .courses {
-			margin: 0;
-					display: block;
+		    margin: 0;
+		    display: block;
 		}
-				.icon-img, .title-wrapper, .progress-wrapper {
-					display: inline-block;
-					vertical-align: middle;
-				}
-				.title-wrapper {
-					float: none;
-					text-align: left;
-					padding: 0 20px;
-				}
-				.progress-wrapper {
-					padding: 0;
-					float: none;
-					text-align: right;
-					overflow: visible;
-					div {
-						padding: inherit;
-					}
-					.progress {
-						width: 75%;
-					}
-					.progress, p {
-						margin: 0;
-						padding: 0;
-						display: inline-block;
-						vertical-align: middle;
-					}
-					p {
-						min-width: 40px;
-					}
-				}
+		.icon-img, .title-wrapper, .progress-wrapper {
+		    display: inline-block;
+		    vertical-align: middle;
+		}
+		.title-wrapper {
+		    float: none;
+		    text-align: left;
+		    padding: 0 20px;
+		}
+		.progress-wrapper {
+		    padding: 0;
+		    float: none;
+		    text-align: right;
+		    overflow: visible;
+		    div {
+			padding: inherit;
+		    }
+		    .progress {
+			width: 75%;
+		    }
+		    .progress, p {
+			margin: 0;
+			padding: 0;
+			display: inline-block;
+			vertical-align: middle;
+		    }
+		    p {
+			min-width: 40px;
+		    }
+		}
             }
             img.icon {
                 float:left;
@@ -380,7 +307,7 @@
             }
 	    .back-button {
 		cursor: pointer;
-				text-align: right;
+		text-align: right;
 	    }
         }
         ul.nav-objectives {
@@ -390,7 +317,6 @@
                 list-style : none;
                 max-height : 300px;
                 overflow : visible;
-
                 & > .fo-content {
                     max-height: 187px;
                     div.fo-content-image {
@@ -423,7 +349,7 @@
                             padding : 0;
                             margin : 0;
 			    -webkit-user-select: none;
-							-webkit-touch-callout: none;
+			    -webkit-touch-callout: none;
                             .cn-play-now, .cn-play-icon {
                                 display : block;
                                 color : @cn-white;
@@ -442,8 +368,8 @@
                     max-height: 100px;
                     h3 {
                         min-height: 35px;
-						padding-bottom: 0;
-						margin: 2px 0;
+			padding-bottom: 0;
+			margin: 2px 0;
                     }
                     p {
                         line-height: 1em;
@@ -466,8 +392,8 @@
             .title-folder {
                 min-height: 75px;
                 h3 {
-                	padding-top: 20px !important;
-                	min-height: auto !important;
+		    padding-top: 20px !important;
+		    min-height: auto !important;
                     padding-bottom: 0;
                     text-align: center;
                 }

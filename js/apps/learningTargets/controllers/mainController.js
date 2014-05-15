@@ -91,6 +91,10 @@ define( function ( require ) {
 			'redirectToLegacyPage' : function ( target, page, sub, opts ) {
 				var pd360Loaded = App.request( 'pd360:loaded' );
 
+				// Change document hash without triggering event so clicking the back button issue
+				App.navigate( Backbone.history.fragment + '/legacy' );
+
+				// Display loading view
 				App.content.show( new App.Common.LoadingView() );
 
 				// navigate to legacy page

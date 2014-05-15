@@ -12,6 +12,7 @@
 		require( 'rotate' );
 		require( 'modules' );
 		require( 'analytics' );
+		require( 'pc-progressCircle' );
 
 		App.start();
 	} );
