@@ -6,6 +6,8 @@
 @sc-blue-light    : #5ABEF9;
 
 li {
+	list-style: none;
+
 	div.sc-segment-content-container {
 		background         : @sc-white;
 		position           : relative;
@@ -85,18 +87,18 @@ li {
 			color       : @sc-gray-dark;
 		}
 
-		a.sc-info-icon {
+		i.sc-info-icon {
 			top  : ~"calc(100% - 40px)";
 			left : ~"calc(100% - 70px)";
 		}
 
-		a.sc-watch-later-icon {
+		i.sc-watch-later-icon {
 			top  : ~"calc(100% - 40px)";
 			left : ~"calc(100% - 35px)";
 		}
 
-		a.sc-info-icon,
-		a.sc-watch-later-icon {
+		i.sc-info-icon,
+		i.sc-watch-later-icon {
 			font-size       : 28px;
 			cursor          : pointer;
 			height          : 30px;
@@ -111,8 +113,8 @@ li {
 			color : @sc-gray-light;
 		}
 
-		a.sc-info-icon:hover,
-		a.sc-watch-later-icon:hover,
+		i.sc-info-icon:hover,
+		i.sc-watch-later-icon:hover,
 		.blued {
 			color : @sc-blue-light;
 		}

@@ -18,10 +18,10 @@ define( function ( require ) {
 		'tagName' : 'li',
 
 		'ui' : {
-			'infoIcon'    : 'a.sc-info-icon',
-			'watchIcon'   : 'a.sc-watch-later-icon',
-			'infoOverlay' : 'div.sc-overlay-details',
-			'loadingIcon' : 'i.sc-watch-later-loading-icon'
+			'infoIcon'    : 'i.sc-info-icon',
+			'watchIcon'   : 'i.sc-watch-later-icon',
+			'loadingIcon' : 'i.sc-watch-later-loading-icon',
+			'infoOverlay' : 'div.sc-overlay-details'
 		},
 
 		'events' : {
@@ -32,7 +32,11 @@ define( function ( require ) {
 		'templateHelpers' : {
 
 			'shortContentName' : function () {
-				return getAbbreviation( this.ContentName ||  this.Name, 60 );
+				return getAbbreviation( this.ContentName || this.Name, 60 );
+			},
+
+			'fullContentName' : function () {
+				return this.ContentName || this.Name;
 			},
 
 			'shortContentDescription' : function () {
@@ -48,8 +52,6 @@ define( function ( require ) {
 			_.bindAll( this );
 			_.extend( this, options );
 
-			this.model.set( 'VideoTypeId', this.model.attributes.UUVideoId  ? 1 : 2 );
-
 			this.listenTo( this.model, 'change:queued', this.matchedSegmentsToQueue );
 		},
 
@@ -63,8 +65,7 @@ define( function ( require ) {
 			this.ui.watchIcon.tooltip( 'destroy' );
 		},
 
-		'showDetails' : function ( ev ) {
-			ev.preventDefault();
+		'showDetails' : function () {
 
 			if ( !this.ui.infoIcon.hasClass( 'blued' ) ) {
 				this.ui.infoIcon
@@ -87,8 +88,7 @@ define( function ( require ) {
 			}
 		},
 
-		'watchLaterQueue' : function ( ev ) {
-			ev.preventDefault();
+		'watchLaterQueue' : function () {
 
 			if ( this.model.get( 'queued' ) ) {
 				App.request( 'common:removeFromQueue', this.model );
@@ -99,9 +99,26 @@ define( function ( require ) {
 			this.ui.watchIcon.tooltip( 'destroy' );
 			this.ui.watchIcon.hide();
 			this.ui.loadingIcon.show();
+
+			App.vent.on( 'common:dequeueFailed' , function () {
+				if ( this.ui.loadingIcon.is( ':visible' ) ) {
+					this.ui.loadingIcon.hide();
+					this.ui.watchIcon.show()
+						.tooltip( { title : 'Remove from Watch Later List' } );
+				}
+			}.bind( this ) );
+
+			App.vent.on( 'common:queueFailed' , function () {
+				if ( this.ui.loadingIcon.is( ':visible' ) ) {
+					this.ui.loadingIcon.hide();
+					this.ui.watchIcon.show()
+						.tooltip( { title : 'Add to Watch Later List' } );
+				}
+			}.bind( this ) );
 		},
 
 		'matchedSegmentsToQueue' : function () {
+
 			if ( this.model.get( 'queued' ) ) {
 				this.ui.watchIcon
 					.removeClass( 'grayed' )

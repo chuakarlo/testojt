@@ -187,7 +187,7 @@ define( function ( require ) {
 
 			} ).fail( function () {
 
-				App.vent.trigger( 'common:queueFailed' );
+				App.vent.trigger( 'common:dequeueFailed' );
 				App.vent.trigger( 'flash:message', {
 					'message' : 'An error occurred while trying to remove video from Watch Later. Please try again later.'
 				} );

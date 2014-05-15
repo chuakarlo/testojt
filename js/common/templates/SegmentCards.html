@@ -6,15 +6,15 @@
             <p class="sc-play-now">Play Now</p>
         </a>
     </div>
-    <p class="sc-segment-name" title="<%- ContentName %>" > <%- shortContentName() %></p>
+    <p class="sc-segment-name" title="<%- fullContentName() %>" > <%- shortContentName() %></p>
     <p class="sc-duration"><%- duration() %></p>
 
-    <a href="javascript:void(0);" class="sc-info-icon grayed fa fa-info-circle"></a>
-    <a href="javascript:void(0);" class="sc-watch-later-icon grayed fa fa-clock-o"></a>
+    <i  class="sc-info-icon grayed fa fa-info-circle"></i>
+    <i  class="sc-watch-later-icon grayed fa fa-clock-o"></i>
     <i  class="sc-watch-later-loading-icon grayed fa fa-refresh fa-spin"></i>
 
     <div class="sc-overlay-details" >
-        <p class="sc-overlay-segment-name" title="<%- ContentName %>" ><%- shortContentName() %></p>
+        <p class="sc-overlay-segment-name" title="<%- fullContentName() %>" ><%- shortContentName() %></p>
         <p class="sc-overlay-duration"><%- duration() %></p>
         <p class='sc-overlay-content-description'><%- shortContentDescription() %></p>
         <a href="#resources/videos/<%- ContentId %>" >
