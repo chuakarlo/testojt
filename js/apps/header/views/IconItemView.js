@@ -8,11 +8,23 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 
-		'template' : _.template( template ),
+		'template'  : _.template( template ),
+		'tagName'   : 'li',
+		'className' : 'col-xs-12 col-sm-4 col-md-2',
 
-		'tagName' : 'li',
+		'getTarget' : function () {
+			if ( this.model.get( 'target' ) ) {
+				return 'target="' + this.model.get( 'target' ) + '"';
+			}
 
-		'className' : 'col-xs-12 col-sm-4 col-md-2'
+			return '';
+		},
+
+		'templateHelpers' : function () {
+			return {
+				'target' : this.getTarget()
+			};
+		}
 
 	} );
 

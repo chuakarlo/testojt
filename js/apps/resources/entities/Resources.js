@@ -72,10 +72,11 @@ define( function ( require ) {
 
 								// create link in more resources menu
 								var adminModel = new Entities.Resources( {
-									'name' : 'ThereNow',
-									'icon' : 'fa-hand-o-right',
-									'url'  : thereNowUrl,
-									'id'   : 'link-more-thereNow'
+									'name'   : 'ThereNow',
+									'icon'   : 'fa-hand-o-right',
+									'url'    : thereNowUrl,
+									'id'     : 'link-more-thereNow',
+									'target' : '_blank'
 								} );
 
 								Entities.resources.add( adminModel );

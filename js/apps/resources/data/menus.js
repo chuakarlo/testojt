@@ -30,15 +30,16 @@ define( function ( require ) {
 	};
 
 	var observation = {
-		'name' : 'Observation 360',
-		'url'  : 'https://www.pd360.com/Observation360Web/index.cfm',
-		'icon' : 'fa-eye',
-		'id'   : 'link-more-observation'
+		'name'   : 'Observation 360',
+		'url'    : 'https://www.pd360.com/Observation360Web/index.cfm',
+		'icon'   : 'fa-eye',
+		'id'     : 'link-more-observation',
+		'target' : '_blank'
 	};
 
 	var userUploaded = {
-		'name' : '{User Video Uploader}',
-		'url'  : '#',
+		'name' : 'User Video Uploader',
+		'url'  : '#resources/videouploader',
 		'icon' : 'fa-film',
 		'id'   : 'link-more-uploader'
 	};
@@ -51,10 +52,11 @@ define( function ( require ) {
 	};
 
 	var training = {
-		'name' : 'PD 360 Training',
-		'url'  : 'http://help.schoolimprovement.com/training',
-		'icon' : 'fa-bullhorn',
-		'id'   : 'link-more-training'
+		'name'   : 'PD 360 Training',
+		'url'    : 'http://help.schoolimprovement.com/training',
+		'icon'   : 'fa-bullhorn',
+		'id'     : 'link-more-training',
+		'target' : '_blank'
 	};
 
 	var learningProgression = {
