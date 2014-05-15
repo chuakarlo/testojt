@@ -18,18 +18,22 @@
 			}
 			#video-info {
 				.popover {
-					width            : auto;
+					max-width            : 100% !important;
 					background-color : white;
 					color            : black;
 				}
 				#info-icon {
 						cursor         : pointer;
-						color          : #3dadef;
+						color          : @vp-gray;
 						vertical-align : middle;
 						font-size      : 25px;
 						float          : right;
 						margin-top     : 10px;
 					}
+
+				.clicked-icon {
+					color : @vp-blue !important;
+				}
 			}
 	}
 
@@ -38,6 +42,12 @@
 			float            : left;
 			padding          : 0px;
 			background-color : #000;
+			#message-overlay {
+				display : none;
+			}
+			:hover + #message-overlay  {
+				display : inline-block;
+			}
 		}
 	}
 

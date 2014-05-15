@@ -40,7 +40,6 @@ require.config( {
 		'modernizr'             : 'libs/modernizr/modernizr',
 		'shim'                  : 'libs/es5-shim/es5-shim.min',
 		'slick'                 : 'libs/slick-carousel/slick/slick',
-		'flipclock'             : 'libs/flipclock/compiled/flipclock',
 		'text'                  : 'libs/requirejs-text/text',
 		'timezone'              : 'common/Timezone',
 		'videojs'               : 'libs/videojs/video.dev',
@@ -54,7 +53,7 @@ require.config( {
 		'ladda-jquery'          : 'libs/ladda/dist/ladda.jquery.min',
 		'jquery-browser'        : 'libs/jquery.browser/dist/jquery.browser.min',
 		'validator-js'          : 'libs/validator-js/validator.min',
-		'tab-collapse'          : 'libs/tab-collapse/bootstrap-tabcollapse',
+		'backbone.touch'        : 'libs/backbone.touch/backbone.touch',
 
 		'pc-linq'               : 'libs/nakautot.linq/linq.min',
 		'pc-nivo'               : 'libs/nivo-slider/jquery.nivo.slider',
@@ -83,7 +82,7 @@ require.config( {
 		'learningTargets'     : 'apps/learningTargets',
 		'resources'           : 'apps/resources',
 		'admin'               : 'apps/admin',
-		'videoUploader'       : 'apps/videoUploader',
+		'videoUploader'       : 'apps/videoUploader'
 	},
 
 	'shim' : {
@@ -203,6 +202,10 @@ require.config( {
 		'bootstro' : {
 			'exports' : 'bootstro',
 			'deps'    : [ 'jquery', 'bootstrap' ]
+		},
+
+		'backbone.touch' : {
+			'deps'   : [ 'jquery', 'backbone', 'underscore' ]
 		}
 
 	}

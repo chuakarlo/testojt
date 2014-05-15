@@ -1,10 +1,12 @@
 define( function ( require ) {
 	'use strict';
 
+	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 	var template   = require( 'text!videoPlayer/templates/videoInfoItemView.html' );
 	var utils      = require( 'videoPlayer/utils/utils' );
+	var stripHtml  = require( 'common/helpers/stripHtml' );
 
 	return Marionette.ItemView.extend( {
 
@@ -23,18 +25,24 @@ define( function ( require ) {
 
 			'duration' : function () {
 				return utils.formatTime( this.SegmentLengthInSeconds );
-			}
+			},
 
+			'description' : function () {
+				return stripHtml( this.ContentDescription );
+			}
 		},
 
 		'showVideoInfo' : function () {
 			var self = this;
-
+			this.ui.videoInfo.toggleClass( 'clicked-icon' );
 			this.ui.videoInfo.popover( {
 				'html'      : true,
 				'trigger'   : 'manual',
 				'title'     : this.model.get( 'ContentName' ),
-				'placement' : 'bottom',
+				'placement' : function () {
+					var width = $( window ).width();
+					return width <= 600 ? 'left' : 'bottom';
+				},
 				'content'   : function () {
 					return self.ui.infoContent.html();
 				}

@@ -1,12 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 	var template   = require( 'text!videoPlayer/templates/tabs/tabsItemView.html' );
-
-	require( 'tab-collapse' );
 
 	return Marionette.ItemView.extend( {
 
@@ -15,8 +12,6 @@ define( function ( require ) {
 		'tagName'   : 'ul',
 
 		'className' : 'nav nav-tabs tab-container',
-
-		'id' : 'my-tab',
 
 		'ui' : {
 			'videoResources' : 'a[href="#video-resources"]',
@@ -28,31 +23,22 @@ define( function ( require ) {
 			'click @ui.relatedVideos'  : 'showRelated'
 		},
 
-		'onShow' : function () {
-			$( '#my-tab' ).tabCollapse();
-		},
-
 		'showResources' : function ( e ) {
 			e.preventDefault();
 
 			this.ui.videoResources.tab( 'show' );
-			this._toggleActiveTab( e.target );
+
+			this.$el.find( '.active' ).removeClass( 'active' );
+			this.ui.videoResources.parent().addClass( 'active' );
 		},
 
 		'showRelated' : function ( e ) {
 			e.preventDefault();
 
 			this.ui.relatedVideos.tab( 'show' );
-			this._toggleActiveTab( e.target );
-		},
 
-		// toggle active tab
-		'_toggleActiveTab' : function ( target ) {
-			// remove class from all
-			this.$el.children( 'li' ).removeClass( 'active' );
-
-			// add class to the clicked element
-			$( target ).parent().addClass( 'active' );
+			this.$el.find( '.active' ).removeClass( 'active' );
+			this.ui.relatedVideos.parent().addClass( 'active' );
 		}
 
 	} );

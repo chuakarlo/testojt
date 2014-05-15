@@ -17,148 +17,74 @@
 			height     : auto;
 		}
 
-		.tab-pane #video-resource,
-		.tab-pane #video-segment {
-			height  : 0;
-			padding : 0 !important
+		#video-resource:hover .prevNext.active,
+		#video-segment:hover .prevNext.active,
+		#related-videos:hover .prevNext.active {
+			visibility : visible;
+		}
+
+		#video-resource,
+		#video-segment,
+		#related-videos {
+			padding  : 0 !important;
+			overflow : hidden;
+			position : relative;
+
+			.prevNext {
+				cursor      : pointer;
+				width       : 50px;
+				height      : 55px;
+				background  : url('../img/left-arrow.png') no-repeat center center rgba(0, 0, 0, 0.1);
+				text-indent : -9999px;
+				border      : 0;
+				z-index     : 10000;
+				position    : absolute;
+				bottom      : 150px;
+				left        : 0;
+				margin-top  : @prev-next-margin-top;
+				visibility  : hidden;
+			}
+			.nextLink {
+				background : url('../img/left-arrow-right.png') no-repeat center center rgba(0,0,0,.1);
+				right      : 0px;
+				left       : auto;
+			}
 		}
 
 		.tab-pane.active #video-resource,
 		.tab-pane.active #video-segment {
-			height         : auto;
-			padding-bottom : 4% !important;
+			height   : auto;
+			padding  : 0 !important;
+			overflow : hidden;
+			position : relative;
 		}
 
-		.tab-pane:not(.active)#related-videos .slick .slick-list {
+		.tab-pane:not(.active)#related-videos {
+			height  : 0;
+			display : none;
+		}
+		.tab-pane:not(.active)#video-resources {
 			height: 0;
+			display : none;
+		}
+	}
+
+		//carousel snap
+		ul.row {
+			height          : 290px;
+			overflow-y      : hidden;
+			list-style-type : none;
+			padding         : 0;
+
+			li {
+				min-height : 290px;
+				width      : 285px;
+				max-height : 290px;
+			}
 		}
 
-		//videos thumbnail for video-segments and related-videos
-		.videos-thumb {
-			cursor     : pointer;
-			position   : relative;
-			display    : block;
-			color      : @vp-white;
-			min-height : 125px;
-			padding    : 0 5%;
-
-
-			#icon-play,
-			a > span {
-				position  : absolute;
-				display   : none;
-				top       : 35%;
-				left      : ~"calc(50% - 17.5px)";
-				font-size : 35px;
-			}
-
-			img{
-				height    : 140px;
-				width     : 266px;
-			}
-
-			#word-play,
-			a > p {
-				display  : none;
-				top      : 62%;
-				left     : 37%;
-				position : absolute;
-			}
-
-			:hover {
-				#image {
-					color               : @vp-white;
-					opacity             : .5;
-					transition-duration : .5s;
-				}
-				#icon-play, #word-play {
-					display : inline-block;
-					z-index : 1;
-					color   : @vp-white;
-				}
-			}
-		}
-		//videos information for video-segments and related-videos
-		.videos-info {
-			max-width                  : 276px;
-			padding-top                : 20px;
-			margin-right               : 5%;
-			margin-left                : 5%;
-			background                 : @whitesmoke;
-			border-bottom-left-radius  : 3px;
-			border-bottom-right-radius : 3px;
-			display                    : block;
-			height                     : 132px;
-
-			h3.video-name {
-				width         : 85%;
-				white-space   : nowrap;
-				overflow      : hidden;
-				text-overflow : ellipsis;
-				font-size     : 16px;
-				margin-top    : 2%;
-				padding-left  : 5%;
-			}
-
-			p {
-					line-height  : 30px;
-					font-size    : 15px;
-					display      : inline-block;
-					margin-top   : 10px;
-					padding-left : 5%;
-			}
-
-			.watch-later {
-				display    : inline-block;
-				width      : 35px;
-				height     : 35px;
-				padding    : 5px;
-				position   : absolute;
-				top        : 207px; //220
-				right      : 20px; // left 70%
-				text-align : center;
-
-				.flag {
-					display : none;
-				}
-
-				.watch-later-icon {
-					font-size : 25px;
-					color     : @vp-gray;
-					cursor    : pointer;
-				}
-
-				.watch-later-icon:hover {
-					color : @vp-blue-light;
-				}
-
-				.remove {
-					display : none;
-				}
-
-				.flag:checked ~ .watch-later-icon {
-					color :	@vp-blue-dark;
-
-					.add {
-						display : none;
-					}
-
-					.remove {
-						display : block;
-					}
-
-				}
-			}
-			.watch-later:hover {
-				padding : ( ( @vp-base-padding / 5 ) * 2 );
-				border  : @border;
-
-				.border-radius( @cn-base-radius / 3 );
-
-				.watch-later-icon {
-					color :	@vp-blue-light;
-				}
-			}
+		.mobile {
+			display : none !important;
 		}
 
 		#video-resources {
@@ -166,20 +92,14 @@
 			.additional-resources {
 				i#icon {
 					font-size : 16px;
-					padding   : 1% 0;
+					padding   : 2% 0;
 				}
 				span#video-programs {
 					font-size : 18px;
 				}
 				#video-resource {
-					padding       : 0;
 					border-bottom : 1px solid #EBEBEB;
-					.slick {
-						margin  : 0px;
-						padding : 0px;
-						ul {
-							padding : 0 !important;
-						}
+					padding       : 0;
 						.video-resources-thumb {
 								overflow                : hidden;
 								border-top-left-radius  : 3px;
@@ -189,9 +109,9 @@
 								width                   : 100%;
 
 								img {
-									width        : 94%;
-									margin-left  : 5%;
-									margin-right : 5%;
+									width      : 100%;
+									min-height : 181px;
+									background : @vp-black;
 								}
 
 								span {
@@ -200,18 +120,15 @@
 									border-bottom-left-radius  : 3px;
 									border-bottom-right-radius : 3px;
 									display                    : inline-block;
-									width                      : 94%;
+									width                      : 100%;
 									height                     : 70px;
-									margin-left                : 5%;
-									margin-right               : 5%;
-
-									.watch-later {
-										display    : inline-block;
-										background : none !important;
-										padding    : 5px;
-										position   : absolute;
-										z-index    : 1000;
-										left       : 43%;
+									.download-container {
+										display     : inline-block;
+										background  : none repeat scroll 0% 0% transparent !important;
+										padding     : 5px;
+										position    : relative;
+										z-index     : 1;
+										margin-left : 40%;
 
 										.cn-tool-tip {
 												font-size : 15px;
@@ -219,7 +136,7 @@
 
 										.download-icon {
 											font-size : 25px;
-											color     : @gray;
+											color     : @vp-gray;
 											cursor    : pointer;
 										}
 
@@ -227,7 +144,7 @@
 											color : @vp-blue-light;
 										}
 									}
-									.watch-later:hover {
+									.download-container:hover {
 										padding : ( ( @vp-base-padding / 5 ) * 2 );
 										border  : @border;
 										.border-radius( @cn-base-radius / 3 );
@@ -237,9 +154,7 @@
 									}
 							}
 						}
-					}
 				}
 			}
 		}
-	}
 }

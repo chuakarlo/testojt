@@ -1,6 +1,9 @@
-<video id="video-content" class="video-js vjs-default-skin vjs-big-play-centered" preload="none" width="auto" height="450">
+<video id="video-content" class="video-js vjs-default-skin vjs-big-play-centered" preload="none" width="auto" height="auto">
 	<source src="<%- videoUrl() %>" type="application/x-mpegURL" />
 	<source src="<%- videoUrl() %>" type='video/mp4' />
 
 	<track kind="captions" src="<%- getCC() %>"></track>
 </video>
+<!-- <div id="message-overlay">
+	<p>test</p>
+</div> -->

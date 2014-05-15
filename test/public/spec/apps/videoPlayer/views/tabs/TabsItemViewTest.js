@@ -44,48 +44,6 @@ define( function ( require ) {
 			tabsItemView.should.have.property( 'events' );
 		} );
 
-		describe( '.showResources', function () {
-
-			var _toggleActiveTabSpy;
-
-			before( function () {
-				_toggleActiveTabSpy = sinon.spy( tabsItemView, '_toggleActiveTab' );
-			} );
-
-			after( function () {
-				tabsItemView._toggleActiveTab.restore();
-			} );
-
-			it( 'does activate Additional Resources tab', function () {
-				var evt = { 'preventDefault' : function () {} };
-				tabsItemView.render();
-				tabsItemView.showResources( evt );
-				_toggleActiveTabSpy.should.have.callCount( 1 );
-			} );
-
-		} );
-
-		describe( '.showRelated', function () {
-
-			var _toggleActiveTabSpy;
-
-			before( function () {
-				_toggleActiveTabSpy = sinon.spy( tabsItemView, '_toggleActiveTab' );
-			} );
-
-			after( function () {
-				tabsItemView._toggleActiveTab.restore();
-			} );
-
-			it( 'does activate Additional Resources tab', function () {
-				var evt = { 'preventDefault' : function () {} };
-				tabsItemView.render();
-				tabsItemView.showRelated( evt );
-				_toggleActiveTabSpy.should.have.callCount( 1 );
-			} );
-
-		} );
-
 	} );
 
 } );

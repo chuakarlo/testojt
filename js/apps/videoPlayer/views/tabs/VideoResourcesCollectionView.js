@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	require( 'slick' );
+	require( 'pc-carouselSnap' );
 
 	var Marionette = require( 'marionette' );
 
@@ -11,9 +11,9 @@ define( function ( require ) {
 
 		'itemView'  : VideoResourceItemView,
 
-		'tagName'   : 'div',
+		'tagName'   : 'ul',
 
-		'className' : 'slick',
+		'className' : 'row',
 
 		'ui' : {
 			'next' : 'button.slick-next',
@@ -21,27 +21,11 @@ define( function ( require ) {
 		},
 
 		'onShow' : function () {
-			this.$el.slick( {
-				'slidesToShow'   : 4,
-				'slidesToScroll' : 4,
-				'dots'           : true,
-				'responsive'     : [ {
-					'breakpoint' : 804,
-					'settings'   : {
-						'slidesToShow'   : 3,
-						'slidesToScroll' : 3,
-						'arrows'         : false,
-						'centerMode'     : true
-					}
-				},  {
-					'breakpoint' : 490,
-					'settings'   : {
-						'slidesToShow'   : 1,
-						'slidesToScroll' : 1,
-						'arrows'         : false,
-						'centerMode'     : true
-					}
-				}  ]
+			this.$el.carouselSnap( {
+				nextID                : 'next-slide',
+				prevID                : 'previous-slide',
+				elementsToMoveOnClick : 4,
+				startOnCenter         : true
 			} );
 		},
 

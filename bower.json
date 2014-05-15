@@ -34,7 +34,6 @@
     "backbone.filterable-collection": "0.1.4",
     "backbone.validation": "https://github.com/thedersen/backbone.validation.git#~0.9.x",
     "slick-carousel": "https://github.com/School-Improvement-Network/slick.git#master",
-    "tab-collapse": "https://github.com/okendoken/bootstrap-tabcollapse.git",
     "momentjs": "~2.5.1",
     "moment-timezone": "0.0.3",
     "htmlConcat": "~1.0.4",
@@ -44,7 +43,8 @@
     "nivo-slider": "3.2",
     "jquery.browser": "~0.0.6",
     "validator-js": "~3.11.0",
-    "bootstro.js": "https://github.com/raohuaming/bootstro.js.git"
+    "bootstro.js": "https://github.com/raohuaming/bootstro.js.git",
+    "backbone.touch": "~0.4.0"
   },
   "devDependencies": {
     "chai": "1.8.x",

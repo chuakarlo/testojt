@@ -1,47 +1,27 @@
 define( function ( require ) {
 	'use strict';
 
+	require( 'pc-carouselSnap' );
+
 	var App           = require( 'App' );
 	var Marionette    = require( 'marionette' );
 
 	require( 'common/views' );
-	require( 'slick' );
 
 	return Marionette.CollectionView.extend( {
 
 		'itemView'  : App.Common.SegmentCardsView,
 
 		'tagName'   : 'ul',
-
-		'className' : 'slick',
-
-		'ui' : {
-			'next' : 'button.slick-next',
-			'prev' : 'button.slick-prev'
-		},
+		'className' : 'row',
 
 		'onShow' : function () {
-			this.$el.slick( {
-				'slidesToShow'   : 4,
-				'slidesToScroll' : 4,
-				'dots'           : true,
-				'responsive'     : [ {
-					'breakpoint' : 804,
-					'settings'   : {
-						'slidesToShow'   : 3,
-						'slidesToScroll' : 3,
-						'arrows'         : false,
-						'centerMode'     : true
-					}
-				},  {
-					'breakpoint' : 490,
-					'settings'   : {
-						'slidesToShow'   : 1,
-						'slidesToScroll' : 1,
-						'arrows'         : false,
-						'centerMode'     : true
-					}
-				} ]
+			var pID = this.$el.parent()[ 0 ].id;
+			this.$el.carouselSnap( {
+				nextID                : 'next-slide-' + pID,
+				prevID                : 'previous-slide-' + pID,
+				elementsToMoveOnClick : 4,
+				startOnCenter         : true
 			} );
 		},
 

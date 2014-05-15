@@ -14,7 +14,7 @@ define( function ( require ) {
 
 	return Marionette.CompositeView.extend( {
 
-		'className' : 'col-xs-11 right-bar',
+		'className' : 'col-xs-12 col-sm-12 right-bar',
 
 		'template' : _.template( template ),
 
