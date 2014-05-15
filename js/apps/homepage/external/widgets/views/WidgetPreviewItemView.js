@@ -34,7 +34,7 @@ define( function ( require ) {
 		'getWidgetAction' : function () {
 			var widgetAction = '';
 			if ( this.model ) {
-				widgetAction = this.options.userWidgetCollection.get( this.model.get( 'WidgetId' ) ) ? 'remove' : 'save';
+				widgetAction =  'save';
 			}
 			return widgetAction;
 		}
