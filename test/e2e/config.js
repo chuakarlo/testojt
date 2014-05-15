@@ -1,6 +1,5 @@
 module.exports = {
-	//'src'           : 'test/e2e/spec/**/*.js',
-	'src'           : 'test/e2e/spec/apps/learningTargets/sprint9/4849_ProcessesOfMe.js',
+	'src'           : 'test/e2e/spec/**/*.js',
 	'localBrowsers' : [ 'firefox', 'chrome', 'safari' ],
 	'platforms'     : 'test/e2e/platforms.json',
 
