@@ -1,10 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var App                = require( 'App' );
-	var ForgotPasswordView = require( 'user/views/login/ForgotPasswordView' );
+	var App                    = require( 'App' );
+	var ForgotPasswordView     = require( 'user/views/login/ForgotPasswordView' );
 
-	App.module( 'User.ForgotPassword', function ( ForgotPassword ) {
+	App.module( 'User.ForgotPassword', function ( ForgotPassword, App ) {
 
 		ForgotPassword.Controller = {
 

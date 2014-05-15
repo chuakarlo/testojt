@@ -13,6 +13,7 @@ define( function ( require ) {
 	require( 'user/controllers/registerController' );
 	require( 'user/controllers/eulaController' );
 	require( 'user/controllers/forgotPasswordController' );
+	require( 'user/controllers/successController' );
 	require( 'user/entities/License' );
 	require( 'user/entities/Profile' );
 	require( 'user/entities/Personnel' );
@@ -38,7 +39,8 @@ define( function ( require ) {
 				'register'         : 'showRegister',
 				'settings(/:page)' : 'showSettings',
 				'sso(/:params)'    : 'ssoSignIn',
-				'forgotPassword'   : 'showForgotPassword'
+				'forgotPassword'   : 'showForgotPassword',
+				'success'          : 'showSucces'
 			}
 
 		} );
@@ -143,6 +145,10 @@ define( function ( require ) {
 				this.navController     = null;
 				this.contentController = null;
 				this.layout            = null;
+			},
+
+			'showSucces' : function () {
+				User.Success.Controller.showSuccess();
 			}
 
 		} );
@@ -163,6 +169,10 @@ define( function ( require ) {
 			} else {
 				App.navigate( 'home', { 'trigger' : true } );
 			}
+		} );
+
+		App.vent.on( 'forgotpassword:success', function () {
+			App.navigate( 'success', { 'trigger' : true } );
 		} );
 
 		App.reqres.setHandler( 'login:error', function ( error ) {
