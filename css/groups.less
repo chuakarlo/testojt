@@ -531,7 +531,64 @@
 
 	.input-validation:invalid {
 		border: 1px solid red!important;		
-	}			
+	}	
+
+	.logo-upload-drop{
+		background : @cn-white;
+		width       : 60%;
+		height : 200px;
+		margin-bottom: 15px;
+
+		span {
+			margin-left : 41%;
+			margin-top : 38%;
+			font-size : 3.5em;
+		}
+	}
+
+	.banner-upload-drop{
+		background : @cn-white;
+		width       : 100%;
+		height : 200px;
+
+		span {
+			margin-left : 44%;
+			margin-top : 24%;
+			font-size : 3.5em;
+		}		
+	}
+
+	.tooltip2 {
+	    display: inline;
+	    position: relative;
+	}
+
+	.tooltip2:hover:after {
+	    background: #333;
+	    background: rgba(0,0,0,.8);
+	    border-radius: 5px;
+	    bottom: 26px;
+	    color: #fff;
+	    content: attr(name);
+	    left: 20%;
+	    padding: 10px 20px;
+	    position: absolute;
+	    z-index: 98;
+	    width: 220px;
+	    font-size : 0.5em;
+	    text-align: left;
+	}
+
+	.tooltip2:hover:before{
+	    border: solid;
+	    border-color: #333 transparent;
+	    border-width: 6px 6px 0 6px;
+	    bottom: 20px;
+	    content: "";
+	    left: 50%;
+	    position: absolute;
+	    z-index: 99;
+	}					
 
 	input[type="text"]:invalid ~ .group-name-validation::before {
 		color : red;
