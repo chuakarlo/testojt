@@ -38,9 +38,9 @@ define( function ( require ) {
 			},
 
 			'getCC' : function () {
-				var url    = 'http://schoolimp-vh.akamaihd.net/i/PD360/media/video/';
+				var url    = 'http://resources.pd360.com/PD360/media/video/';
 				var folder = this.FileName.split( '.' )[ 0 ];
-				var file   = folder + '_';
+				var file   = folder;
 				if ( this.ContentTypeId === 3 ) {
 					url += 'PD360/';
 				} else if ( this.ContentTypeId === 6 ) {
@@ -96,10 +96,9 @@ define( function ( require ) {
 			if ( this.model.next ) {
 				// Next video overlay plugin
 				player.nextVideoOverlay( {
-					imageUrl  : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.next.get( 'ImageURL' ),
-					clickUrl  : '#resources/videos/' + this.model.next.get( 'ContentId' ),
-					startTime : this.model.get( 'SegmentLengthInSeconds' ) - 5,
-					text      : this.model.next.get( 'ContentName' )
+					imageUrl : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.next.get( 'ImageURL' ),
+					clickUrl : '#resources/videos/' + this.model.next.get( 'ContentId' ),
+					text     : this.model.next.get( 'ContentName' )
 				} );
 			}
 		},

@@ -19,14 +19,12 @@ define( function ( require ) {
 	} ;
 
 	var defaults = {
-		imageUrl  : '' ,
-		clickUrl  : '' ,
-		startTime : 0 ,
-		endTime   : 0 ,
-		opacity   : 0.8 ,
-		height    : '80%' ,
-		width     : '85%' ,
-		text      : 'another video'
+		imageUrl : '' ,
+		clickUrl : '' ,
+		opacity  : 0.8 ,
+		height   : '80%' ,
+		width    : '85%' ,
+		text     : 'another video'
 	} ;
 
 	var nextVideoOverlay = function ( options ) {
@@ -34,19 +32,10 @@ define( function ( require ) {
 		var settings     = extend( { }, defaults, options || { } );
 		var showingImage = false;
 
-		if ( settings.endTime === 0 ) {
-			settings.endTime = settings.startTime  + 60;
-		}
-
 		var overlay = {
-			checkOverlay : function ( ) {
-				if ( ( self.currentTime() >= settings.startTime ) && ( self.currentTime() < settings.endTime ) ) {
-					overlay.showImage();
-				} else {
-					overlay.hideImage();
-				}
-			},
-			showImage    : function ( ) {
+
+			showImage : function ( ) {
+
 				if ( showingImage ) {
 					return;
 				}
@@ -96,17 +85,10 @@ define( function ( require ) {
 
 				self.el().appendChild( holderDiv );
 				self.pause();
-			},
-			hideImage    : function ( ) {
-				if ( !showingImage ) {
-					return;
-				}
-				showingImage = false;
-				self.el().removeChild( document.getElementById( 'vjs-image-overlay-holder' ) );
 			}
 		};
 
-		self.on( 'timeupdate', overlay.checkOverlay );
+		self.on( 'ended', overlay.showImage );
 	};
 
 	videojs.plugin( 'nextVideoOverlay', nextVideoOverlay );
