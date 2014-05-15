@@ -17,7 +17,6 @@ define( function ( require ) {
 
 		'events' : {
 			'click @ui.drawerToggleButton' : 'toggleDrawer',
-			'click @ui.linkBtn'            : 'showLegacyApp',
 			'click @ui.processStep'        : 'showProcessStep'
 		},
 
@@ -28,16 +27,6 @@ define( function ( require ) {
 			var toggleContent = toggleBtn.siblings( '.lt-toggle-content' )[ 0 ];
 
 			$( toggleContent ).slideToggle( 300 );
-
-		},
-
-		'showLegacyApp' : function ( e ) {
-			e.preventDefault();
-			var self = this;
-
-			self.trigger( 'lt:redirect', 'observation', 'observationProcessesOfMe', {
-				'soughtProcessId' : self.model.get( 'ProcessId' )
-			} );
 		},
 
 		'showProcessStep' : function ( e ) {
