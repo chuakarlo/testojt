@@ -24,7 +24,7 @@ define( function ( require ) {
 
 					App.content.show( ResourcesView );
 
-				} ).fail( App.errorHandler( { 'region' : App.content } ) );
+				} ).fail( App.errorHandler.bind( App, { 'region' : App.content } ) );
 
 			}
 
