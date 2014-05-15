@@ -87,11 +87,7 @@ define( function ( require ) {
 			},
 
 			'setVideoTypeId' : function () {
-				if ( this.get( 'ContentId' ) ) {
-					this.set( 'VideoTypeId', 1 );
-				} else {
-					this.set( 'VideoTypeId', 2 );
-				}
+				this.set( 'VideoTypeId', 1 );
 			},
 
 			'setQueue' : function ( queueContentsIds ) {
