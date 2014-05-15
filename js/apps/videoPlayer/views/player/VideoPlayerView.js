@@ -49,7 +49,7 @@ define( function ( require ) {
 				url += this.SKU + '/';
 				url += folder + '/';
 				url += file + '.vtt';
-				console.log( url );
+
 				return url;
 			}
 		},
@@ -59,6 +59,7 @@ define( function ( require ) {
 
 			this.listenTo( this, 'show', this.initializePlayer );
 			this.listenTo( this, 'afterPlayerInit', this.startTracking );
+			this.listenTo( this, 'afterPlayerInit', this.addPlugins );
 		},
 
 		'initializePlayer' : function () {
@@ -85,11 +86,22 @@ define( function ( require ) {
 				}
 			} );
 
+			this.trigger( 'afterPlayerInit', player );
+		},
+
+		'addPlugins' : function ( player ) {
+			// Closed caption plugin
 			player.ccToggle();
 
-			this.addOverlay( player );
-
-			this.trigger( 'afterPlayerInit', player );
+			if ( this.model.next ) {
+				// Next video overlay plugin
+				player.nextVideoOverlay( {
+					imageUrl  : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.next.get( 'ImageURL' ),
+					clickUrl  : '#resources/videos/' + this.model.next.get( 'ContentId' ),
+					startTime : this.model.get( 'SegmentLengthInSeconds' ) - 5,
+					text      : this.model.next.get( 'ContentName' )
+				} );
+			}
 		},
 
 		'startTracking' : function ( player ) {
@@ -129,17 +141,6 @@ define( function ( require ) {
 				player.dispose();
 				$( element ).off( 'hashchange.videoPlayer' );
 			}.bind( this ) );
-		},
-
-		'addOverlay' : function ( player ) {
-			if ( this.model.nextSegment ) {
-				player.nextVideoOverlay( {
-					imageUrl  : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.nextSegment.attributes.ImageURL,
-					clickUrl  : '#resources/videos/' + this.model.nextSegment.attributes.ContentId,
-					startTime : this.model.attributes.SegmentLengthInSeconds - 5,
-					text      : this.model.nextSegment.attributes.ContentName
-				} );
-			}
 		}
 
 	} );

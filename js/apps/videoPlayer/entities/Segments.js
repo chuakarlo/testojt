@@ -13,6 +13,7 @@ define( function ( require ) {
 		Entities.Segments = Backbone.CFCollection.extend( {
 
 			'model' : Entities.Content,
+
 			'path'  : 'ContentService',
 
 			'initialize' : function ( options ) {
@@ -31,15 +32,6 @@ define( function ( require ) {
 						'ContentTypeId'   : this.ContentTypeId
 					}
 				};
-			},
-
-			'parse' : function ( response ) {
-				var newSegments = _.filter( response, function ( model ) {
-					if ( this.ContentId !== model.ContentId ) {
-						return model;
-					}
-				}.bind( this ) );
-				return newSegments;
 			}
 
 		} );
@@ -71,7 +63,7 @@ define( function ( require ) {
 			}
 		};
 
-		App.reqres.setHandler( 'vq:segment', function ( videoModel ) {
+		App.reqres.setHandler( 'videoPlayer:segments', function ( videoModel ) {
 			return API.getSegments( videoModel );
 		} );
 

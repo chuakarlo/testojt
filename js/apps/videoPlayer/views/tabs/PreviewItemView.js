@@ -10,9 +10,12 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 
-		'template'        : _.template( template ),
-		'className'       : 'modal-dialog modal-lg',
+		'template' : _.template( template ),
+
+		'className' : 'modal-dialog modal-lg',
+
 		'templateHelpers' : {
+
 			'getContent' : function () {
 				// Chrome pdf in iframe has issues with displaying
 				// pdf files. Use `embed` tag instead.
@@ -22,6 +25,7 @@ define( function ( require ) {
 					return '<iframe id="modal-iframe" src=' + this.previewPath + '></iframe>';
 				}
 			}
+
 		}
 
 	} );

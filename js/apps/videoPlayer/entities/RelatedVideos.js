@@ -12,6 +12,7 @@ define( function ( require ) {
 		Entities.RelatedVideos = Backbone.CFCollection.extend( {
 
 			'model' : Entities.Content,
+
 			'path'  : 'RespondService',
 
 			'initialize' : function ( options ) {
@@ -31,6 +32,8 @@ define( function ( require ) {
 			},
 
 			'parse' : function ( response ) {
+				// Removed first index in the array which is
+				// not part of the data.
 				return _.rest( response );
 			}
 

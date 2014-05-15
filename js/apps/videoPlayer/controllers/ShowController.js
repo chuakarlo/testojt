@@ -41,10 +41,10 @@ define( function ( require ) {
 
 			'showVideoResources' : function ( videoModel ) {
 
-				var questionsRequest     = App.request( 'vq:fetch', videoModel.id );
+				var questionsRequest     = App.request( 'videoPlayer:questions', videoModel.id );
 				var relatedVideosRequest = App.request( 'videoPlayer:getRelatedVideos', videoModel.id );
 				var queueContentsRequest = App.request( 'common:getQueueContents' );
-				var segmentsRequest      = App.request( 'vq:segment', videoModel );
+				var segmentsRequest      = App.request( 'videoPlayer:segments', videoModel );
 
 				App.when( questionsRequest, queueContentsRequest, segmentsRequest, relatedVideosRequest ).done( function ( questions, queueContents, segments, relatedVideos ) {
 
@@ -53,15 +53,15 @@ define( function ( require ) {
 					} );
 					App.content.show( layout );
 
-					//if there are other segments available
-					if ( segments.models.length !== 0 ) {
-						//get all segments Ids of other segments
-						var segmentIds = _.pluck( _.pluck( segments.models, 'attributes') , 'ContentId');
-						//find where is the id of next segment in segmentsIds
-						var index = _.sortedIndex( segmentIds , videoModel.id );
+					// if there are other segments available
+					if ( !segments.isEmpty() ) {
+						// get all segments ids of other segments
+						var segmentIds = segments.pluck( 'ContentId' );
+						// find where is the id of next segment in segmentsIds
+						var index = _.indexOf( segmentIds , videoModel.id ) + 1;
 						if ( index < segmentIds.length ) {
-							//add the next segment to video model for overlay at the end of vid
-							videoModel.nextSegment = segments.models[ index ];
+							// add the next segment to video model for overlay at the end of vid
+							videoModel.next = segments.at( index );
 						}
 					}
 

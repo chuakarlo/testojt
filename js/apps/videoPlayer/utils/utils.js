@@ -3,13 +3,6 @@ define( function ( require, exports, module ) {
 
 	module.exports = {
 
-		'clean' : function ( data ) {
-			if ( !data || !( data instanceof Array ) ) {
-				return [ ];
-			}
-			return data;
-		},
-
 		'formatTime' : function ( time ) {
 			var hours   = Math.floor( time / 3600 );
 			var minutes = Math.floor( ( time - ( hours * 3600 ) ) / 60 );

@@ -36,7 +36,7 @@ define( function ( require ) {
 
 		};
 
-		App.reqres.setHandler( 'vq:fetch', function ( videoId ) {
+		App.reqres.setHandler( 'videoPlayer:questions', function ( videoId ) {
 			return API.getQuestions( videoId );
 		} );
 

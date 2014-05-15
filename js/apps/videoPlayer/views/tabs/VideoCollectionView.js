@@ -10,7 +10,9 @@ define( function ( require ) {
 	return Marionette.CollectionView.extend( {
 
 		'itemView'  : App.Common.SegmentCardsView,
+
 		'tagName'   : 'ul',
+
 		'className' : 'slick',
 
 		'ui' : {

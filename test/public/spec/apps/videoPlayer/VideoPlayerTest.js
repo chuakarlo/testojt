@@ -87,19 +87,19 @@ define( function( require ) {
 				before( function () {
 					var stub = sinon.stub().returns( collection );
 					App.reqres.setHandler( 'common:getQueueContents', stub );
-					App.reqres.setHandler( 'vq:fetch', stub );
-					App.reqres.setHandler( 'videoPlayer:getRelatedVideos', stub );
 					App.reqres.setHandler( 'common:getQueueContents', stub );
-					App.reqres.setHandler( 'vq:segment', stub );
+					App.reqres.setHandler( 'videoPlayer:questions', stub );
+					App.reqres.setHandler( 'videoPlayer:getRelatedVideos', stub );
+					App.reqres.setHandler( 'videoPlayer:segments', stub );
 				} );
 
 				after( function () {
 					App.reqres.removeHandler( 'common:getQueueContents' );
 					App.reqres.removeHandler( 'common:getQueueContents' );
-					App.reqres.removeHandler( 'vq:fetch' );
-					App.reqres.removeHandler( 'videoPlayer:getRelatedVideos' );
 					App.reqres.removeHandler( 'common:getQueueContents' );
-					App.reqres.removeHandler( 'vq:segment' );
+					App.reqres.removeHandler( 'videoPlayer:questions' );
+					App.reqres.removeHandler( 'videoPlayer:getRelatedVideos' );
+					App.reqres.removeHandler( 'videoPlayer:segments' );
 				} );
 
 
