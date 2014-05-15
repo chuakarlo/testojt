@@ -11,7 +11,6 @@ define( function ( require ) {
 	var CoursesView           = require( 'apps/learningTargets/views/courses/CoursesView' );
 	var CatalogsView          = require( 'apps/learningTargets/views/catalogs/CatalogsView' );
 	var ProcessesView         = require( 'apps/learningTargets/views/processes/ProcessesView' );
-	var QuestionsView         = require( 'apps/learningTargets/views/questions/QuestionsView' );
 	var PortfoliosView        = require( 'apps/learningTargets/views/portfolios/PortfoliosView' );
 	var DescriptionView       = require( 'apps/learningTargets/views/catalogs/DescriptionView' );
 	var ObservationsView      = require( 'apps/learningTargets/views/observations/ObservationsView' );
@@ -248,17 +247,6 @@ define( function ( require ) {
 
 					helper._showView( observationsView );
 				} );
-			},
-
-			'showQuestions' : function () {
-				var helper = Main.helper;
-				helper._setContent( 'questions' );
-
-				var questionsView = new QuestionsView( {
-					collection : new Backbone.Collection( [ { }, { }, { } ] ) // temporary implementation
-				} );
-
-				helper._showView( questionsView );
 			},
 
 			'showCatalogs' : function () {

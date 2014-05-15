@@ -25,7 +25,6 @@ define( function ( require ) {
 				'resources/learning/processes'    : 'showProcesses',
 				'resources/learning/observations' : 'showObservations',
 				'resources/learning/portfolio'    : 'showPortfolio',
-				'resources/learning/questions'    : 'showQuestions',
 				'resources/learning/catalogs'     : 'showCatalogs',
 				'resources/learning/groups'       : 'showGroups',
 				'resources/learning/objectives'   : 'showFocusObjectivesTitle',

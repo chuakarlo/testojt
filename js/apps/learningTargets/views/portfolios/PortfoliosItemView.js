@@ -19,9 +19,7 @@ define( function ( require ) {
 		'showLegacyApp' : function ( e ) {
 			e.preventDefault();
 			var self = this;
-			self.trigger( 'lt:redirect', 'home', 'homePortfolio', {
-				'soughtPortfolioId' : self.model.get( 'LEARNINGPLANID' )
-			} );
+			self.trigger( 'lt:redirect', 'home', 'homePortfolio', self.model.get( 'LEARNINGPLANID' ) );
 		}
 
 	} );

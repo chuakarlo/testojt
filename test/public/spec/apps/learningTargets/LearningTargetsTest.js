@@ -157,17 +157,6 @@
 
 			} );
 
-			describe( 'method `showQuestions`', function () {
-				before( function () {
-					App.LearningTargets.Main.controller.showQuestions();
-				} );
-
-				it( 'should setup content for `questions`', function () {
-					setContent.should.have.been.calledWith( 'questions' );
-				} );
-
-			} );
-
 			describe( 'method `showObservations`', function () {
 				before( function () {
 					App.LearningTargets.Main.controller.showObservations();
