@@ -11,9 +11,12 @@
 
 	describe( 'Learning Targets Module', function () {
 
+		var loadingView;
+
 		before( function () {
 			// creates a dummy COMMON submodule
 			App.module( 'Common', function ( common, App ) {
+				loadingView = common.LoadingView;
 				common.LoadingView = function() {
 					return {
 						'loading' : 'view'
@@ -25,6 +28,9 @@
 		after( function () {
 			App.module( 'Common' ).stop();
 			App.module( 'LearningTargets' ).stop();
+			App.module( 'Common', function ( common, App ) {
+				common.LoadingView = loadingView;
+			} );
 		} );
 
 		it( 'should create a submodule called `LearningTargets`', function () {
@@ -47,9 +53,10 @@
 			} );
 
 			after( function () {
-				setContent.restore();
-				showView.restore();
-				request.restore();
+
+				helper._setContent.restore();
+				helper._showView.restore();
+				helper._apiRequest.restore();
 
 				helper     = undefined;
 				setContent = undefined;

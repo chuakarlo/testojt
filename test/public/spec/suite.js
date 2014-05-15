@@ -28,8 +28,6 @@ define( function ( require ) {
 			'spec/apps/learningTargets/entities/PortfoliosTest',
 			'spec/apps/learningTargets/entities/ProcessesTest',
 
-			'spec/apps/user/UserTest',
-
 			//Start contentNavigation
 
 			//main
