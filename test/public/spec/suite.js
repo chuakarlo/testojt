@@ -170,6 +170,10 @@ define( function ( require ) {
 			'spec/apps/homepage/external/widgets/external/observationsOfMe/baseTest.js',
 			'spec/apps/homepage/external/widgets/external/observationsOfMe/views/WidgetItemViewTest.js',
 
+			//HomePage - User Settings
+			'spec/apps/homepage/external/widgets/external/yourProfile/baseTest.js',
+			'spec/apps/homepage/external/widgets/external/yourProfile/views/WidgetItemViewTest.js',
+
 			// Homepage - Your Queue
 			'spec/apps/homepage/external/content/external/your-queue/baseTest.js',
 			'spec/apps/homepage/external/content/external/your-queue/collections/QueueCollectionTest.js',
