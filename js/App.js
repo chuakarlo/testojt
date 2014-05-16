@@ -8,6 +8,9 @@ define( function ( require ) {
 	var FlashLayout = require( 'common/views/FlashLayout' );
 	var $           = require( 'jquery' );
 
+	// extends the marionette application
+	require( 'plugins/Application');
+
 	// main app
 	var App = new Marionette.Application();
 
@@ -44,6 +47,16 @@ define( function ( require ) {
 				Vent.trigger( 'login:show' );
 			}
 		}
+	} );
+
+	// Allows us to keep track of the controllers created and the ones not
+	// getting destroyed properly. This leads to memory leaks.
+	App.commands.setHandler( 'register:instance', function ( instance, id ) {
+		App.register( instance, id );
+	} );
+
+	App.commands.setHandler( 'unregister:instance', function ( instance, id ) {
+		App.unregister( instance, id );
 	} );
 
 	App.content.on( 'before:show', function ( view ) {

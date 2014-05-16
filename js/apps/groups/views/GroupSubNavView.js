@@ -20,16 +20,63 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'click @ui.infoTab'     : 'showInfo',
-			'click @ui.wallTab'     : 'resetInfoClass',
-			'click @ui.resourceTab' : 'resetInfoClass',
-			'click @ui.forumTab'    : 'navigateForums',
-			'click @ui.membersTab'  : 'resetInfoClass'
+			'click a' : 'navigate'
 		},
 
 		'phone' : false,
 
-		'onRender' : function () {
+		'navigate' : function ( event ) {
+			event.preventDefault();
+			var link = $( event.currentTarget ).attr( 'href' );
+			App.navigate( link, {
+				'trigger' : true
+			} );
+
+			if ( link.indexOf( 'communities' ) === -1 ) {
+				var query = this.getCurrentQuery();
+				this.setActiveTab( query );
+			}
+
+		},
+
+		'getCurrentQuery' : function () {
+			var current = App.getCurrentRoute();
+			var query = _.last( current.split( '/' ) );
+			return query;
+		},
+
+		'setActiveTab' : function ( query ) {
+			var regex = new RegExp(/^\d+$/);
+			if ( regex.test( query ) ) {
+				query = 'wall';
+			}
+
+			$('li', this.el).removeClass( 'active' );
+			switch ( query ) {
+
+				case 'wall' :
+					this.ui.wallTab.parent().addClass( 'active' );
+					break;
+
+				case 'resources' :
+					this.ui.resourceTab.parent().addClass( 'active' );
+					break;
+
+				case 'info' :
+					this.ui.infoTab.parent().addClass( 'active' );
+					break;
+
+				case 'members' :
+					this.ui.membersTab.parent().addClass( 'active' );
+					break;
+
+			}
+		},
+
+		'onShow' : function () {
+			var query = this.getCurrentQuery();
+			this.setActiveTab( query );
+
 			// add handler
 			$( window ).on( 'resize', this.resizeHandler.bind( this ) );
 		},
@@ -67,14 +114,6 @@ define( function ( require ) {
 			$( '.right-side' ).hide();
 			$( '.left-side' ).removeClass( 'hidden-xs' );
 			this.phone = true;
-
-		},
-
-		'navigateForums' : function ( event ) {
-			// This doesn't belong here
-			event.preventDefault();
-
-			App.request( 'group:showForums', this.model.attributes.LicenseId );
 
 		}
 

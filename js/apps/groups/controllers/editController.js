@@ -129,7 +129,9 @@ define( function ( require ) {
 
 								App.when( fetchingData ).done( function ( results ) {
 
-									Vent.trigger( 'group:show', model );
+									App.navigate( 'groups/' + model.get( 'LicenseId' ), {
+										'trigger' : true
+									} );
 
 								} ).fail( App.errorHandler );
 							}

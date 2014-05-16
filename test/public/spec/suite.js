@@ -10,10 +10,19 @@ define( function ( require ) {
 			'spec/FilteredRouterTest',
 
 			'spec/apps/communities/CommunitiesTest',
-			'spec/apps/groups/GroupsTest',
 			'spec/apps/header/HeaderTest',
 			'spec/apps/learningProgression/LearningProgressionTest',
 			'spec/apps/videoUploader/VideoUploaderTest',
+
+			// Groups Test
+			'spec/apps/groups/GroupsTest',
+			'spec/apps/groups/entities/GroupModelTest',
+			'spec/apps/groups/entities/WallCommentModelTest',
+			'spec/apps/groups/entities/WallCommentCollectionTest',
+			'spec/apps/groups/entities/GroupResourcesCollectionTest',
+			'spec/apps/groups/entities/GroupMemberCollectionTest',
+			'spec/apps/groups/entities/GroupLinksCollectionTest',
+
 
 			// learningTargets
 			'spec/apps/learningTargets/LearningTargetsTest',

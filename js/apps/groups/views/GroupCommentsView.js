@@ -13,7 +13,6 @@ define( function ( require ) {
 	var newsTemplate = require( 'text!../templates/NewsItemView.html');
 
 	var GroupCommentView   = require( '../views/GroupCommentView' );
-	// var GroupCommentModel  = require( '../models/CommentModel' );
 	var MiniPersonnelModel = require('../../common/entities/MiniPersonnel');
 	var MiniPersonnelView  = require('../../common/views/MiniPersonnel');
 	var stripHtml          = require( 'common/helpers/stripHtml' );
@@ -189,7 +188,7 @@ define( function ( require ) {
 						'successCb' : successCb
 					};
 
-					App.vent.trigger( 'groups:newCommentFetch', options );
+					this.model.collection.newCommentFetch( options );
 
 				}, this)
 			} );

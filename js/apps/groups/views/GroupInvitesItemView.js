@@ -12,16 +12,8 @@ define( function ( require ) {
 		'tagName'   : 'li',
 		'className' : 'col-xs-12 col-sm-6 col-md-4 col-lg-3',
 		'events'    : {
-			'click a.js-group-details' : 'groupClicked',
-			'click a.js-group-ignore'  : 'ignoreGroupClicked',
-			'click a.js-group-accept'  : 'acceptGroupClicked'
-		},
-
-		'groupClicked' : function ( e ) {
-
-			e.preventDefault();
-			Vent.trigger( 'group:show', this.model );
-
+			'click a.js-group-ignore' : 'ignoreGroupClicked',
+			'click a.js-group-accept' : 'acceptGroupClicked'
 		},
 
 		'ignoreGroupClicked' : function ( e ) {

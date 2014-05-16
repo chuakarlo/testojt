@@ -5,7 +5,6 @@ define( function ( require ) {
 	var Marionette      = require( 'marionette' );
 	var Vent            = require( 'Vent' );
 	var Session         = require( 'Session' );
-	var App             = require( 'App' );
 	var template        = require( 'text!../templates/groupBannerView.html' );
 	var leaderTemplate  = require( 'text!../templates/groupLeaderBannerView.html' );
 	var creatorTemplate = require( 'text!../templates/groupCreatorBannerView.html' );
@@ -16,14 +15,12 @@ define( function ( require ) {
 		'className' : 'container-smooth',
 
 		'events'   : {
-			'click button.Leave'            : 'leaveGroup',
-			'click button.Join'             : 'joinGroup',
-			'click button#btn-leader-tools' : 'showLeaderTools'
+			'click button.Leave' : 'leaveGroup',
+			'click button.Join'  : 'joinGroup'
 		},
 
 		'initialize' : function ( options ) {
 			this.isGroupAdmin = options.userGroupAdmin;
-
 		},
 
 		'leaveGroup' : function ( e ) {
@@ -40,21 +37,16 @@ define( function ( require ) {
 
 		},
 
-		'showLeaderTools' : function ( e ) {
-
-			e.preventDefault();
-			App.navigate( 'groups/' + this.model.attributes.LicenseId + '/leader', { 'trigger' : true } );
-
-		},
-
 		'getTemplate' : function () {
 
 			// displays group leader tools, but not leave option for creator
-			if ( String( this.model.attributes.Creator ) === String( Session.personnelId() ) ) {
+			var persId = Session.personnelId();
+
+			if ( String( this.model.get( 'Creator' ) ) === persId ) {
 				return _.template( creatorTemplate );
 
 			// leaders that are not the creator should be allowed to leave group
-			} else if ( this.isGroupAdmin && ( String( this.model.attributes.Creator ) !== String( Session.personnelId() ) ) ) {
+			} else if ( this.isGroupAdmin && this.model.get( 'Creator' ) !== persId ) {
 				return _.template( leaderTemplate );
 
 			} else {
@@ -68,10 +60,8 @@ define( function ( require ) {
 
 				getMemberStatus : function () {
 
-					var membership = _.find( this.model.attributes.groups, { 'LicenseId' : this.model.attributes.LicenseId } );
-
-					if ( !membership ) {
-						if ( this.model.attributes.PrivateGroup !== 0 ) {
+					if ( !this.model.isMember ) {
+						if ( this.model.get( 'PrivateGroup' ) !== 0 ) {
 							return 'Join';
 						} else {
 							return 'Request';

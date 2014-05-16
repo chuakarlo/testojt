@@ -1,4 +1,4 @@
-define( function( require ) {
+define( function ( require ) {
 	'use strict';
 
 	var _        = require( 'underscore' );
@@ -6,7 +6,7 @@ define( function( require ) {
 	var App      = require( 'App' );
 	var Session  = require( 'Session' );
 
-	App.module( 'Entities', function( Mod ) {
+	App.module( 'Entities', function ( Mod ) {
 
 		//------------------------------------
 		// Search Navigation Entities
@@ -17,9 +17,9 @@ define( function( require ) {
 				'results' : 0
 			},
 
-			'initialize' : function() {
+			'initialize' : function () {
 				// Set the results to 0 if they change tabs
-				this.on('change:activer', function( model, val ) {
+				this.on('change:activer', function ( model, val ) {
 					if (!val) {
 						this.set('results', 0);
 					}
@@ -31,10 +31,10 @@ define( function( require ) {
 
 			'model' : Mod.SearchNavModel,
 
-			'setActive' : function( filter ) {
+			'setActive' : function ( filter ) {
 				this.deactivateAll();
 				// If we have a filter, set it
-				if( filter ) {
+				if ( filter ) {
 					this.findWhere( { 'filter' : filter } )
 						.set( 'active', true );
 				} else {
@@ -43,13 +43,13 @@ define( function( require ) {
 				}
 			},
 
-			'deactivateAll' : function() {
-				_.each(this.models, function( model ) {
+			'deactivateAll' : function () {
+				_.each(this.models, function ( model ) {
 					model.set( 'active', false );
 				} );
 			},
 
-			'setResultCount' : function( count ) {
+			'setResultCount' : function ( count ) {
 				var active = this.findWhere( { 'active' : true } );
 				active.set( 'results', count );
 			}
@@ -63,7 +63,7 @@ define( function( require ) {
 
 		Mod.CommunityModel = Backbone.Model.extend();
 
-		Mod.GroupModel = Backbone.Model.extend();
+		Mod.SearchGroupModel = Backbone.Model.extend();
 
 		Mod.VideoModel = Backbone.Model.extend();
 
@@ -78,14 +78,14 @@ define( function( require ) {
 				'searchData' : ''
 			},
 
-			'updateStart' : function() {
+			'updateStart' : function () {
 				// do we need to take into account the numFound here?
 				var start = this.get( 'start' );
 				var rows  = this.get( 'rows' );
 				//var found = this.get( 'numFound' );
 
 				this.set( 'start', rows + start);
-			},
+			}
 
 		});
 
@@ -95,11 +95,11 @@ define( function( require ) {
 			'path' : 'SearchService',
 
 			// Required function for CF models
-			'getReadOptions' :  function() {
+			'getReadOptions' :  function () {
 				return {
 					'method' : 'RespondSearchAPI',
-					'args' : {
-						'persId' : Session.personnelId(),
+					'args'   : {
+						'persId'     : Session.personnelId(),
 						'start'      : this.queryModel.get( 'start' ),
 						'rows'       : this.queryModel.get( 'rows' ),
 						'searchType' : this.queryModel.get( 'searchType' ),
@@ -109,9 +109,9 @@ define( function( require ) {
 				};
 			},
 
-			'createModels' : function( results, ModelType, type ) {
-				var temp = [];
-				_.each(results, function( result ) {
+			'createModels' : function ( results, ModelType, type ) {
+				var temp = [ ];
+				_.each(results, function ( result ) {
 					var m = new ModelType( result );
 					// I'm setting this incase we need this later
 					m.set( 'frontend-type', type );
@@ -120,7 +120,7 @@ define( function( require ) {
 				return temp;
 			},
 
-			'parse' : function( res, options ) {
+			'parse' : function ( res, options ) {
 
 				var searchType = this.queryModel.get( 'searchType' );
 
@@ -139,7 +139,7 @@ define( function( require ) {
 
 					// store all the models so we can shuffle them before
 					// we add them
-					var parsedModels = [];
+					var parsedModels = [ ];
 
 					parsedModels.push(
 						this.createModels( res.COLLEAGUES, Mod.ColleagueModel, 'users')
@@ -150,7 +150,7 @@ define( function( require ) {
 					);
 
 					parsedModels.push(
-						this.createModels( res.GROUPS, Mod.GroupModel, 'groups' )
+						this.createModels( res.GROUPS, Mod.SearchGroupModel, 'groups' )
 					);
 
 					parsedModels.push(
@@ -173,26 +173,30 @@ define( function( require ) {
 					} else {
 						// Set the results which keeps track of how many
 						// results we get. Magic number alert
-						this.queryModel.set( res[0] );
+						this.queryModel.set( res[ 0 ] );
 					}
 
 					// Get rid of the result object / message
 					res.shift();
 
-					var models = [];
+					var models = [ ];
 					switch (searchType) {
 						case 'VideosCore' :
 							models = this.createModels( res, Mod.VideoModel, 'videos');
 							break;
+
 						case 'Groups' :
-							models = this.createModels( res, Mod.GroupModel, 'groups' );
+							models = this.createModels( res, Mod.SearchGroupModel, 'groups' );
 							break;
+
 						case 'Communities' :
 							models = this.createModels( res, Mod.CommunityModel, 'communities');
 							break;
+
 						case 'People' :
 							models = this.createModels( res, Mod.ColleagueModel, 'users');
 							break;
+
 					}
 					// Just add it to the collection instead of returning
 					this.add(models);

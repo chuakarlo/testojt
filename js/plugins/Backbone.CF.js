@@ -7,7 +7,7 @@ define( function ( require ) {
 	var _        = require( 'underscore' );
 	var config   = require( 'config' );
 
-	var urlError = function() {
+	var urlError = function () {
 		throw new Error('A "url" property or function must be specified');
 	};
 
@@ -36,12 +36,12 @@ define( function ( require ) {
 		};
 
 		if ( !options.url ) {
-		  params.url = config.url || urlError();
+			params.url = config.url || urlError();
 		}
 
 		params.processData = false;
 		params.contentType = 'application/json';
-		
+
 		var syncOptions = model.getSyncOptions( method ) || syncOptionsError();
 
 		if ( !_.has( syncOptions, 'method' ) ) {
@@ -67,7 +67,7 @@ define( function ( require ) {
 		_.extend( data, syncOptions );
 
 		if ( App.request( 'pd360:available' ) ) {
-			
+
 			_.extend( data, {
 				'signature' : App.request( 'pd360:signature', data.method, data.args )
 			} );
@@ -94,15 +94,26 @@ define( function ( require ) {
 			}
 		} );
 
+		// PD360 isn't available so we have to return a deferred which will be
+		// resolved once we get the second request back
+		var def = new Backbone.$.Deferred();
+
 		var success = options.success;
 
 		var done = function ( data, status, jqXHR ) {
-			if ( success ) {
-				success( data, status, jqXHR );
-			}
+			// Since parent call wraps the success, and handles parsing of
+			// the data, we need to resolve the deferred after fetch
+			// updates the model. This allows us to pass the model with the
+			// updated attributes
+			success = _.wrap( success, function ( func ) {
+				func( data, status, jqXHR );
+				def.resolve( data, status, jqXHR );
+			} );
+			success( data, status, jqXHR );
 		};
 
 		options.success = function ( sig ) {
+
 			_.extend( data, {
 				'signature' : sig
 			} );
@@ -111,15 +122,18 @@ define( function ( require ) {
 			if ( syncOptions.objectPath ) {
 				params.url = config.objectUrl;
 			}
-			
+
 			params.data = JSON.stringify( data );
 
 			options.success = done;
 
 			Backbone.ajax( _.extend( params, options ) );
+			model.trigger( 'request', model, xhr, options );
 		};
 
 		Backbone.ajax( _.extend( params, options ) );
+		// Return the deferred since we don't care about the first request
+		return def.promise();
 	};
 
 	var defaults = {

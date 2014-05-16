@@ -10,35 +10,36 @@ define( function ( require ) {
 
 	App.module( 'Entities', function ( Mod ) {
 
+		var groupIdError = function () {
+			throw new Error( 'The groupId option is required' );
+		};
+
 		Mod.WallCommentCollection = Backbone.CFCollection.extend( {
 
 			'model' : Mod.WallCommentModel,
 
 			'path'   : 'groups.GroupMessagesGateway',
 
-			'initialize' : function ( options ) {
+			'initialize' : function ( models, options ) {
+				options = options || { };
+
+				if ( !options.groupId ) {
+					groupIdError();
+				}
+
+				this.wallQueryModel = new Mod.WallQueryModel( {
+					'licId' : options.groupId
+				} );
+
 				// This lets us know when we've reached the end
 				this.maxResults = false;
 
-				// query model keeps track of our infinite scrolling position
-				if ( options.queryModel ) {
-					this.wallQueryModel = options.queryModel;
-				} else {
-					this.wallQueryModel = new Mod.WallQueryModel();
-				}
 			},
 
 			'getReadOptions' : function () {
 				return {
 					'method' : 'getGroupWall',
-					'args'   : {
-						'licId'     : this.wallQueryModel.get('licId'),
-						'startRow'  : this.wallQueryModel.get( 'startRow' ),
-						'numRows'   : this.wallQueryModel.get( 'numRows' ),
-						'totalRows' : this.wallQueryModel.get( 'totalRows' ),
-						'msgFlag'   : this.wallQueryModel.get( 'msgFlag' ),
-						'newsFlag'  : this.wallQueryModel.get( 'newsFlag' )
-					}
+					'args'   : this.wallQueryModel.toJSON()
 				};
 			},
 
@@ -49,7 +50,6 @@ define( function ( require ) {
 			},
 
 			'parse' : function ( res ) {
-
 				// XXX I don't like this
 				// This should happen when it's got no more results
 				if ( res.length < this.wallQueryModel.get( 'numRows' ) ) {
@@ -150,7 +150,50 @@ define( function ( require ) {
 				} );
 
 				this.wallQueryModel.set( 'startRow', startRow );
+			},
+
+			'newCommentFetch' : function ( options ) {
+				// This is a fun function that handles when a new comment was
+				// added. Allows you to specify a specific location to query
+				// against the server to get just a specific comment ( parent
+				// comments only ). Also allows a success and error cb function
+				// to be passed and called.
+				options = options || { };
+
+				// The last starting point for the query
+				var oldStart = this.wallQueryModel.get( 'startRow' );
+				var oldNum = this.wallQueryModel.get( 'numRows' );
+
+				this.wallQueryModel.set( {
+					'startRow' : options.startRow,
+					'numRows'  : options.numRows
+				} );
+
+				this.fetch( {
+					'reset'   : false,
+					'remove'  : false,
+					'success' : _.bind( function () {
+						// Once we've fetched just that post and it's
+						// children, set the queryModel back to what it was
+						this.wallQueryModel.set( {
+							'startRow' : oldStart,
+							'numRows'  : oldNum
+						} );
+
+						if ( options.successCb ) {
+							options.successCb();
+						}
+
+					}, this ),
+
+					'error' : function () {
+						if ( options.errorCb ) {
+							options.errorCb();
+						}
+					}
+				} );
 			}
+
 		} );
 
 		// Defined so each model in the collection is set as the
