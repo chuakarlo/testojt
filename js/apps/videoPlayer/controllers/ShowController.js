@@ -58,7 +58,7 @@ define( function ( require ) {
 						// get all segments ids of other segments
 						var segmentIds = segments.pluck( 'ContentId' );
 						// find where is the id of next segment in segmentsIds
-						var index = _.indexOf( segmentIds , videoModel.id ) + 1;
+						var index = _.sortedIndex(  segmentIds , videoModel.id );
 						if ( index < segmentIds.length ) {
 							// add the next segment to video model for overlay at the end of vid
 							videoModel.next = segments.at( index );
