@@ -9,7 +9,7 @@ define( function ( require ) {
 	var QueueModel      = require( 'apps/homepage/external/content/external/your-queue/models/QueueModel' );
 
 	var queueClasses = [ 'add-to-queue', 'recommended-remove-from-queue', 'remove-from-queue' ];
-	var defaultImage = 'http://builtbyhq.com/projects/school/CORE/v1/img/vid-9.png';
+	var defaultImage = '/img/vid-9.png';
 
 	var imageBaseURL = 'http://resources.pd360.com/PD360/media/thumb/';
 
@@ -46,18 +46,19 @@ define( function ( require ) {
 		'addItemToQueue' : function ( view, e ) {
 			var newQueue = new QueueModel();
 			newQueue.save( view.model.attributes, {
-					'success'  : function () {
-						addSuccess( view );
-					},
-					'error' : function () {
-						addError( e );
-					}
-				} );
+				'success'  : function () {
+					addSuccess( view );
+				},
+
+				'error' : function () {
+					addError( e );
+				}
+			} );
 		},
 
 		'changeIconOnRemove' : function ( view ) {
 			var recommendedUL = $( recommendedWrapperSelector + ' ul' );
-			var contentBtn    = recommendedUL.find( '#content-button-'+ view.model.get( 'ContentId' ) );
+			var contentBtn    = recommendedUL.find( '#content-button-' + view.model.get( 'ContentId' ) );
 			switchClassRaw( contentBtn, queueClasses[ 0 ], queueClasses[ 1 ] );
 
 			view.model.attributes.renderToggle = function () {

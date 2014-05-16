@@ -15,12 +15,18 @@ define( function ( require ) {
 			'watchLater' : 'label.cn-watch-later-icon'
 		},
 
-		'onRender' : function() {
+		'onRender' : function () {
 			this.$el.fadeIn( 'normal' );
 
 			if ( this.model.get( 'inWatchLaterQueue') ) {
 				this.$el.find( 'label.cn-watch-later-icon' ).addClass( 'add' );
 			}
+		},
+
+		'templateHelpers' : {
+
+			'getConfig' : require( 'common/helpers/getConfig' )
+
 		}
 
 	} );

@@ -1,8 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	var _          = require( 'underscore' );
-	var template   = require( 'text!../templates/VideoItemView.html' );
+	var _         = require( 'underscore' );
+	var template  = require( 'text!../templates/VideoItemView.html' );
+	var getConfig = require( 'common/helpers/getConfig' );
 
 	var SearchResultItemView = require( './SearchResultItemView' );
 
@@ -20,7 +21,7 @@ define( function ( require ) {
 				'time'        : this.getFormattedTime(),
 				'ContentId'   : this.model.get('ContentId'),
 				'ContentName' : this.shortenTitle( this.model.get( 'ContentName' ) ),
-				'ImageURL'    : this.model.get( 'ImageURL' )
+				'ImageURL'    : getConfig( 'contentThumbnailPath' ) + this.model.get( 'ImageURL' )
 			};
 			return data;
 		},

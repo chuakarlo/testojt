@@ -5,6 +5,7 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 	var utils      = require( 'videoPlayer/utils/utils' );
+	var getConfig  = require( 'common/helpers/getConfig' );
 
 	require( 'videoPlayer/plugins/selectText' );
 
@@ -32,7 +33,7 @@ define( function ( require ) {
 		'templateHelpers' : {
 
 			'getImageUrl' : function () {
-				return 'http://resources.pd360.com/PD360/media/thumb/' + this.ImageURL;
+				return getConfig( 'contentThumbnailPath' ) + this.ImageURL;
 			},
 
 			'getSegmentLength' : function () {

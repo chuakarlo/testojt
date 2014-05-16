@@ -1,18 +1,17 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette      = require( 'marionette' );
-	var _               = require( 'underscore' );
-	var template        = require( 'text!apps/homepage/external/widgets/external/yourProfile/templates/widgetItemView.html' );
-	var $               = require( 'jquery' );
-
-	var podUrl = 'http://resources.pd360.com/PD360/uploads/avatars/profile/';
+	var Marionette = require( 'marionette' );
+	var _          = require( 'underscore' );
+	var template   = require( 'text!apps/homepage/external/widgets/external/yourProfile/templates/widgetItemView.html' );
+	var $          = require( 'jquery' );
+	var getConfig  = require( 'common/helpers/getConfig' );
 
 	return Marionette.ItemView.extend( {
 		'template'          : _.template( template ),
 		'className'         : 'col-md-12 no-padding user-settings',
 		'replaceSrc'        : function ( e ) {
-			$( e.currentTarget ).attr( 'src', podUrl + 'default.png' );
+			$( e.currentTarget ).attr( 'src', getConfig( 'profileAvatarWebPath' ) + 'default.png' );
 		},
 		'templateHelpers'   : function ( ) {
 			return {
@@ -22,7 +21,7 @@ define( function ( require ) {
 			};
 		},
 		'getAvatarWithLink' : function ( a ) {
-			return podUrl + a;
+			return getConfig( 'profileAvatarWebPath' ) + a;
 		},
 		'getDescription'    : function ( d ) {
 			var Description = 'Your profile is almost complete! The more we know about you, the better the content.';
@@ -74,7 +73,7 @@ define( function ( require ) {
 			var avatarImg = parent.$( '#avatarSrc' );
 
 			avatarImg.error( function ( e ) {
-				$( e.currentTarget ).attr( 'src', podUrl + 'default.png' );
+				$( e.currentTarget ).attr( 'src', getConfig( 'profileAvatarWebPath' ) + 'default.png' );
 			});
 
 			avatarImg.attr( 'src', avatarImg.attr( 'data-src' ) );

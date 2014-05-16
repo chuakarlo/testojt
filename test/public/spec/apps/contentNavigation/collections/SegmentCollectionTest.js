@@ -17,21 +17,21 @@ define( function ( require ) {
 				'ContentParentId'		: 101,
 				'ContentName'			: 'Assessment for Learning (Segment 1)',
 				'ContentDescription'	: 'Lorem ipsum dolor sit amet',
-				'ImageURL'				: 'http://builtbyhq.com/projects/respond/2/img/video-bg-2.png',
+				'ImageURL'				: '/img/video-bg-2.png',
 				'VideoURL'				: 'http://www.youtube.com/embed/9g8_-LoCdKI'
 			} ), new SegmentModel( {
 				'ContentId'				: 10102,
 				'ContentParentId'		: 101,
 				'ContentName'			: 'Assessment for Learning (Segment 2)',
 				'ContentDescription'	: 'Lorem ipsum dolor sit amet',
-				'ImageURL'				: 'http://builtbyhq.com/projects/respond/2/img/video-bg-3.png',
+				'ImageURL'				: '/img/video-bg-3.png',
 				'VideoURL'				: 'http://www.youtube.com/embed/9g8_-LoCdKI'
 			} ), new SegmentModel( {
 				'ContentId'				: 10103,
 				'ContentParentId'		: 101,
 				'ContentName'			: 'Assessment for Learning (Segment 3)',
 				'ContentDescription'	: 'Lorem ipsum dolor sit amet3',
-				'ImageURL'				: 'http://builtbyhq.com/projects/respond/2/img/video-bg-4.png',
+				'ImageURL'				: '/img/video-bg-4.png',
 				'VideoURL'				: 'http://www.youtube.com/embed/9g8_-LoCdKI'
 			} )
 		];

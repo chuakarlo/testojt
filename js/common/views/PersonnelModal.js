@@ -15,10 +15,9 @@ define( function ( require ) {
 		'templateHelpers' : {
 
 			'BuildAvatar' : function () {
-				if ( this.Avatar === '' ) {
-					return 'Default.png';
-				}
-				return this.Avatar;
+				var getUserAvatarPath = require( 'common/helpers/getUserAvatarPath' );
+
+				return getUserAvatarPath( this.Avatar );
 			}
 
 		}

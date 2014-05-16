@@ -211,6 +211,10 @@ define( function ( require ) {
 		'clearInputError' : function () {
 			var valid = Backbone.Validation.callbacks.valid;
 			valid( this, 'comment-reply', 'name' );
+		},
+
+		'templateHelpers' : {
+			'getUserAvatarPath' : require( 'common/helpers/getUserAvatarPath' )
 		}
 
 	} );

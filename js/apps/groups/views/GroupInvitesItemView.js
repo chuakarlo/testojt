@@ -33,8 +33,8 @@ define( function ( require ) {
 		'templateHelpers' : {
 
 			'getAbbreviation' : require( 'common/helpers/getAbbreviation' ),
-			'getAvatarPath'   : require( '../helpers/getAvatarPath' ),
-			'getBrandingPath' : require( '../helpers/getBrandingPath' )
+			'getAvatarPath'   : require( 'common/helpers/getAvatarPath' ),
+			'getBrandingPath' : require( 'common/helpers/getBrandingPath' )
 
 		}
 

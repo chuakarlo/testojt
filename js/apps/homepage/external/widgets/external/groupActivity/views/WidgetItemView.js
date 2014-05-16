@@ -17,7 +17,8 @@ define( function ( require ) {
 		},
 		'templateHelpers' : function () {
 			return {
-				'creatorName' : this.limitCharacters( this.model.get( 'LicenseName' ) )
+				'creatorName' : this.limitCharacters( this.model.get( 'LicenseName' ) ),
+				'getConfig'   : require( 'common/helpers/getConfig' )
 			};
 		},
 		'limitCharacters' : function ( text ) {

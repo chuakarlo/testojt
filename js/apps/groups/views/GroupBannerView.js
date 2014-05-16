@@ -23,6 +23,11 @@ define( function ( require ) {
 			this.isGroupAdmin = options.userGroupAdmin;
 		},
 
+		'onRender' : function () {
+			var getBrandingPath = require( 'common/helpers/getBrandingPath' );
+			this.$el.css( 'background-image', 'url(\'' + getBrandingPath( this.model.get( 'BrandingImage' ), 'lg' ) + '\')' );
+		},
+
 		'leaveGroup' : function ( e ) {
 
 			e.preventDefault();

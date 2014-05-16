@@ -1,7 +1,7 @@
 <div class="cn-segment-content">
     <div class="cn-segment-image">
         <a href="#resources/videos/<%- ContentId %>" >
-            <img src="http://resources.pd360.com/PD360/media/thumb/<%- ImageURL %>" class="img-responsive">
+            <img src="<%- getConfig( 'contentThumbnailPath' ) %><%- ImageURL %>" class="img-responsive">
             <span class="fa fa-play cn-play-icon"></span>
             <p class="cn-play-now">Play Now</p>
         </a>

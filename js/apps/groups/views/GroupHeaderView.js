@@ -13,7 +13,7 @@ define( function ( require ) {
 
 		'templateHelpers' : {
 
-			'getAvatarPath' : require( '../helpers/getAvatarPath' )
+			'getAvatarPath' : require( 'common/helpers/getAvatarPath' )
 
 		}
 

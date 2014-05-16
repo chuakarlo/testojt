@@ -95,9 +95,11 @@ define( function ( require ) {
 		},
 
 		'removeReply' : function ( e ) {
-
 			this.model.destroy();
+		},
 
+		'templateHelpers' : {
+			'getUserAvatarPath' : require( 'common/helpers/getUserAvatarPath' )
 		}
 
 	} );

@@ -68,6 +68,10 @@ define( function ( require ) {
 			// hide popover
 			this.ui.member.popover( 'hide' );
 
+		},
+
+		'templateHelpers' : {
+			'getUserAvatarPath' : require( 'common/helpers/getUserAvatarPath' )
 		}
 
 	} );

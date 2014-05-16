@@ -13,7 +13,7 @@ define ( function ( require ) {
 			'Featured'       : 0,
 			'FileName'       : '1729.mp4',
 			'FirstName'      : 'Bruce ',
-			'ImageURL'       : 'http://localhost:8080/img/pd-360.png',
+			'ImageURL'       : '/img/pd-360.png',
 			'LastName'       : 'Wathen',
 			'Name'           : 'Default Name',
 			'Private'        : 0,

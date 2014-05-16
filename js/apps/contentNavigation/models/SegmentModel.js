@@ -16,7 +16,7 @@ define ( function ( require ) {
 			'SegmentLengthInSeconds' : 1800,
 			'SKU'                    : '',
 			'FileName'               : '',
-			'ImageURL'               : 'http://builtbyhq.com/projects/respond/2/img/video-bg-2.png',
+			'ImageURL'               : '/img/video-bg-2.png',
 			'GuidebookFileName'      : '',
 			'AudioFileName'          : '',
 			'TranscriptFileName'     : '',

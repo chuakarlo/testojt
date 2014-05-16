@@ -5,6 +5,7 @@ define( function ( require ) {
 	var _               = require( 'underscore' );
 	var template        = require( 'text!apps/homepage/external/widgets/external/focusObjective/templates/widgetItemView.html' );
 	var limitCharacters = require( 'apps/homepage/utils/limitCharacters' );
+	var getConfig       = require( 'common/helpers/getConfig' );
 
 	return Marionette.ItemView.extend( {
 		'template'        : _.template( template ),
@@ -13,7 +14,7 @@ define( function ( require ) {
 			return {
 				'content' : this.limitCharacter( this.model.get( 'ContentName' ) ),
 				'url'     : '/#resources/videos/' + this.model.get( 'ContentId' ),
-				'imgIcon' : this.model.get( 'ImageURL' )
+				'imgIcon' : getConfig( 'contentThumbnailPath' ) + this.model.get( 'ImageURL' )
 			};
 		},
 		'limitCharacter'  : function ( text ) {

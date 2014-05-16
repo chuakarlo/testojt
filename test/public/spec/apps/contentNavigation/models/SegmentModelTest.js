@@ -86,7 +86,7 @@ define( function ( require ) {
                 it( 'should be inherited from SegmentModel object', function( ) {
                     expect( segmentModel.attributes.ContentName ).to.equal( 'Content Name' );
                     expect( segmentModel.attributes.ContentDescription ).to.equal( 'Content Description' );
-                    expect( segmentModel.attributes.ImageURL ).to.equal( 'http://builtbyhq.com/projects/respond/2/img/video-bg-2.png' );
+                    expect( segmentModel.attributes.ImageURL ).to.equal( '/img/video-bg-2.png' );
                 } );
 
             } );

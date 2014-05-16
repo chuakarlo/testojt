@@ -1,4 +1,4 @@
-define( function( require ) {
+define( function ( require ) {
 	'use strict';
 
 	var _          = require( 'underscore' );
@@ -7,8 +7,12 @@ define( function( require ) {
 	var SearchResultItemView = require( './SearchResultItemView' );
 
 	return SearchResultItemView.extend( {
-		
+
 		'template'  : _.template( template ),
+
+		'templateHelpers' : {
+			'getConfig' : require( 'common/helpers/getConfig' )
+		}
 
 	} );
 } );

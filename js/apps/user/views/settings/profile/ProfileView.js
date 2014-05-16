@@ -325,6 +325,10 @@ define( function ( require ) {
 				}.bind( this ) );
 
 			}
+		},
+
+		'templateHelpers' : {
+			'getConfig' : require( 'common/helpers/getConfig' )
 		}
 
 	} );
