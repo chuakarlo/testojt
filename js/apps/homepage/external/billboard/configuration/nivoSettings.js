@@ -3,10 +3,12 @@ define( function ( require ) {
 
 	var $               = require( 'jquery' );
 	var captionSelector = '.nivo-caption';
+	var billboardHolder = '#billboard-container';
 
 	var hideDirectionNav = function () {
 		var collectionLength = $( '.nivo-controlNav' ).children().length;
 		var hidden           = false;
+		$( billboardHolder ).hide().fadeIn( 500 );
 		if ( collectionLength < 2 ) {
 			$( '.nivo-directionNav' ).hide();
 			hidden = true;
