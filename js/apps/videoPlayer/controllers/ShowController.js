@@ -16,26 +16,20 @@ define( function ( require ) {
 
 				App.content.show( new App.Common.LoadingView() );
 
-				var getLicenses = App.request( 'user:licenses' );
+				var getVideoContent = App.request( 'videoPlayer:getVideoContent', videoId );
 
-				App.when( getLicenses ).then( function ( licenses ) {
+				App.when( getVideoContent ).done( function ( videoContent ) {
 
-					var licenseType = _.unique( licenses.pluck( 'LicenseContentTypeId' ) );
+					this.showVideoResources( videoContent );
 
-					return App.request( 'videoPlayer:getVideoContent', {
-						'videoId'     : videoId ,
-						'licenseType' : licenseType
+				}.bind( this ) ).fail( function ( error ) {
+
+					App.errorHandler( {
+						'region'   : App.content,
+						'viewText' : error.message
 					} );
 
-				} ).then( function ( videoContent ) {
-
-					if ( !videoContent ) {
-						App.content.show( new App.Common.NotFoundView() );
-					} else {
-						this.showVideoResources( videoContent );
-					}
-
-				}.bind( this ) ).fail( App.errorHandler.bind( App, { 'region' : App.content } ) );
+				} );
 
 			},
 

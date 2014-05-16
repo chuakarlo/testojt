@@ -61,6 +61,8 @@ define( function ( require ) {
 
 			// listen for selected items add/remove events
 			this.listenTo( this.selectedItems, 'add remove', this.setShareBtnState );
+
+			this.listenTo( App.vent, 'error:searchPeopleAndGroups', this.hideSearchResults );
 		},
 
 		'onShow' : function () {

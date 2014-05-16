@@ -20,7 +20,10 @@ define( function ( require ) {
 			var model;
 
 			before( function () {
-				model = new App.VideoPlayer.Entities.Content();
+				model = new App.VideoPlayer.Entities.Content( [ ], {
+					'videoId'     : 7652,
+					'licenseType' : [ '1' ]
+				} );
 			} );
 
 			after( function () {
@@ -39,11 +42,6 @@ define( function ( require ) {
 			it( 'does have a `path`', function () {
 				model.should.have.property( 'path' );
 				model.path.should.eql( 'ContentService' );
-			} );
-
-			it( 'does have a `previewUrl`', function () {
-				model.should.have.property( 'previewUrl' );
-				model.previewUrl.should.eql( 'http://upload.content.pd360.com/PD360/media/' );
 			} );
 
 			it( 'does have `defaults`', function () {

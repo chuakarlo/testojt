@@ -13,6 +13,10 @@ define( function ( require ) {
 
 			'autosaveInterval' : 5000, // in milliseconds
 			'autosaveInactive' : 9000 // when user is not editing
+		},
+
+		'video' : {
+			'previewUrl' : 'http://upload.content.pd360.com/PD360/media/'
 		}
 	};
 

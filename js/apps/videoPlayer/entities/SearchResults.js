@@ -54,11 +54,8 @@ define( function ( require ) {
 			'model' : Entities.TreeNodeModel,
 			'path'  : 'RespondService',
 
-			'initialize' : function ( options ) {
-				_.bindAll( this );
+			'initialize' : function ( models, options ) {
 				_.extend( this, options );
-
-				return this;
 			},
 
 			'getReadOptions' : function () {
@@ -89,9 +86,9 @@ define( function ( require ) {
 		} );
 
 		var API = {
-			'getSearchResults' : function ( filter ) {
+			'getSearchResults' : function ( options ) {
 				var defer   = App.Deferred();
-				var results = new Entities.TreeNodeCollection( { 'filter' : filter } );
+				var results = new Entities.TreeNodeCollection( [ ], options );
 
 				results.fetch( {
 
@@ -113,15 +110,24 @@ define( function ( require ) {
 			var filter = shareVideoView.ui.searchInput.val().trim();
 
 			var debouncedSearch = _.debounce( function () {
-				var search = API.getSearchResults( filter );
+				var search = API.getSearchResults( { 'filter' : filter } );
 
 				App.when( search ).done( function ( results ) {
+
 					var treeRoot = new SearchResultsTreeRoot( {
 						'collection' : results
 					} );
 
 					// show search results
 					return shareVideoView.searchResultsRegion.show( treeRoot );
+
+				} ).fail( function ( error ) {
+
+					App.vent.trigger( 'error:searchPeopleAndGroups' );
+					return App.errorHandler( {
+						'message' : error.message
+					} );
+
 				} );
 			}, 250 );
 

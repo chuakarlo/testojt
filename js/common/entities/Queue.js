@@ -34,7 +34,7 @@ define( function ( require ) {
 
 			'path' : 'core.ClientPersonnelBookmarkGateway',
 
-			'initialize' : function ( options ) {
+			'initialize' : function ( attr, options ) {
 				_.bindAll( this );
 				_.extend( this, options );
 
@@ -60,7 +60,7 @@ define( function ( require ) {
 
 			'path' : 'core.ClientPersonnelBookmarkGateway',
 
-			'initialize' : function ( options ) {
+			'initialize' : function ( attr, options ) {
 				_.bindAll( this );
 				_.extend( this, options );
 
@@ -102,9 +102,9 @@ define( function ( require ) {
 				return defer.promise();
 			},
 
-			'addContent' : function ( model ) {
+			'addContent' : function ( options ) {
 				var defer   = App.Deferred();
-				var content = new Entities.QueueAddContent( { 'content' : model } );
+				var content = new Entities.QueueAddContent( { }, options );
 
 				content.save( null, {
 
@@ -113,7 +113,7 @@ define( function ( require ) {
 					},
 
 					'error' : function () {
-						defer.reject( new Error( 'Error adding queue content' ) );
+						return defer.reject( new Error( 'An error occurred while trying to add video to Watch Later. Please try again later.' ) );
 					}
 
 				} );
@@ -121,9 +121,9 @@ define( function ( require ) {
 				return defer.promise();
 			},
 
-			'removeContent' : function ( model ) {
+			'removeContent' : function ( options ) {
 				var defer   = App.Deferred();
-				var content = new Entities.QueueRemoveContent( { 'content' : model } );
+				var content = new Entities.QueueRemoveContent( { }, options );
 
 				content.save( null, {
 
@@ -132,7 +132,7 @@ define( function ( require ) {
 					},
 
 					'error' : function () {
-						defer.reject( new Error( 'Error removing queue content' ) );
+						return defer.reject( new Error( 'An error occurred while trying to remove video from Watch Later. Please try again later.' ) );
 					}
 
 				} );
@@ -148,7 +148,7 @@ define( function ( require ) {
 
 		App.reqres.setHandler( 'common:addToQueue', function ( model ) {
 
-			var addToQueue = API.addContent( model );
+			var addToQueue = API.addContent( { 'content' : model } );
 
 			App.when( addToQueue ).done( function () {
 
@@ -159,11 +159,12 @@ define( function ( require ) {
 					'message' : 'Added to Watch Later'
 				} );
 
-			} ).fail( function () {
+			} ).fail( function ( error ) {
 
 				App.vent.trigger( 'common:queueFailed' );
-				App.vent.trigger( 'flash:message', {
-					'message' : 'An error occurred while trying to add video to Watch Later. Please try again later.'
+
+				return App.errorHandler( {
+					'message' : error.message
 				} );
 
 			} );
@@ -174,7 +175,7 @@ define( function ( require ) {
 
 		App.reqres.setHandler( 'common:removeFromQueue', function ( model ) {
 
-			var removeFromQueue = API.removeContent( model );
+			var removeFromQueue = API.removeContent( { 'content' : model } );
 
 			App.when( removeFromQueue ).done( function () {
 
@@ -185,11 +186,12 @@ define( function ( require ) {
 					'message' : 'Removed from Watch Later'
 				} );
 
-			} ).fail( function () {
+			} ).fail( function ( error ) {
 
 				App.vent.trigger( 'common:queueFailed' );
-				App.vent.trigger( 'flash:message', {
-					'message' : 'An error occurred while trying to remove video from Watch Later. Please try again later.'
+
+				return App.errorHandler( {
+					'message' : error.message
 				} );
 
 			} );
