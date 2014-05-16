@@ -171,8 +171,11 @@ define( function ( require ) {
 			'spec/apps/homepage/external/widgets/external/observationsOfMe/views/WidgetItemViewTest.js',
 
 			// Homepage - Your Queue
-			'spec/apps/homepage/external/content/external/your-queue/baseTest.js'
-
+			'spec/apps/homepage/external/content/external/your-queue/baseTest.js',
+			'spec/apps/homepage/external/content/external/your-queue/collections/QueueCollectionTest.js',
+			'spec/apps/homepage/external/content/external/your-queue/controllers/baseControllerTest.js',
+			'spec/apps/homepage/external/content/external/your-queue/controllers/queueControllerTest.js',
+			'spec/apps/homepage/external/content/external/your-queue/models/QueueModelTest.js',
 
 		]
 
