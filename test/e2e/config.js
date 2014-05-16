@@ -7,14 +7,13 @@ module.exports = {
 		'hostName' : 'dev-linux-01.pd360.com'
 	},
 
-	'mode': {
-	  //'dev' : 'http://localhost:8080',
-	  'dev' : 'http://localhost:8080/dev.html'
+	'mode' : {
+		'dev' : 'http://localhost:8080'
 	},
 
-	'mocha': {
-		'reporter': 'spec',
-		'ui': 'bdd'
+	'mocha' : {
+		'reporter' : 'spec',
+		'ui'       : 'bdd'
 	}
 
 };
