@@ -11,7 +11,6 @@ define( function ( require ) {
 	var App        = require( 'App' );
 
 	require( 'validation' );
-	require( 'backbone.stickit' );
 
 	return Marionette.ItemView.extend( {
 		'template' : _.template( template ),
@@ -26,11 +25,6 @@ define( function ( require ) {
 			'username' : '[name="Username"]',
 			'password' : '[name="Password"]',
 			'remember' : 'input[type="checkbox"]'
-		},
-
-		'bindings' : {
-			'[name="Username"]' : 'Username',
-			'[name="Password"]' : 'Password'
 		},
 
 		'forgotPassword' : function ( ) {
@@ -65,20 +59,6 @@ define( function ( require ) {
 				this.ui.remember.prop( 'checked', 'checked' );
 				this.model.set( 'Username', $.cookie( 'UID' ) );
 			}
-
-			this.stickit();
-		},
-
-		'onShow' : function () {
-
-			// hack to support browsers filling in the username and password field
-			setTimeout( function () {
-				if ( this.ui.username.val().length ) {
-					this.ui.password.trigger( 'change' );
-					this.ui.username.trigger( 'change' );
-				}
-			}.bind( this ), 500 );
-
 		},
 
 		'rememberMe' : function ( event ) {
@@ -93,6 +73,10 @@ define( function ( require ) {
 
 		'login' : function ( event ) {
 			event.preventDefault();
+
+			// manually set because stickit won't work when some browsers auto fill in information
+			this.model.set( 'Password', this.ui.password.val() );
+			this.model.set( 'Username', this.ui.username.val() );
 
 			if ( this.model.isValid( true ) ) {
 				var l = Ladda.create( document.querySelector( '#login-button' ) );
