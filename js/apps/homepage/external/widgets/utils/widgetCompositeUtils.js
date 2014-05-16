@@ -3,45 +3,10 @@ define( function ( require ) {
 
 	var $ = require( 'jquery' );
 
-	var Remoting = require( 'Remoting' );
-	var Session  = require( 'Session' );
-	var App      = require( 'App' );
-
 	var WidgetPreviewItemView = require( 'apps/homepage/external/widgets/views/WidgetPreviewItemView' );
 
 	var iconBtnActions = [ 'active', 'inactive' ];
 	var btnActions     = [ 'save', 'remove' ];
-
-	var fetchingModels = function ( personnelId, widgetIds ) {
-		return {
-			'path'   : 'com.schoolimprovement.pd360.dao.core.WidgetGateway',
-			'method' : 'addWidgetsByPersonnelId',
-			'args'   : {
-				'personnelId' : personnelId,
-				'widgetIds'   : widgetIds
-			}
-		};
-	};
-
-	var doUpdateUserWidgets = function ( personnelId, widgetIds ) {
-		App.when( Remoting.fetch( fetchingModels( personnelId, widgetIds ) ) ).done( function ( ) {
-			//do something
-		} ).fail( function ( error ) {
-
-			App.vent.trigger( 'flash:message', {
-				'message' : 'An error occurred. Please try again later.'
-			} );
-
-		} );
-	};
-
-	var pushWidgetIds = function ( userWidgets ) {
-		var widgetIds = [ ];
-		for ( var index in userWidgets ) {
-			widgetIds.push( userWidgets[ index ].get( 'WidgetId' ) );
-		}
-		return widgetIds;
-	};
 
 	return {
 
@@ -74,10 +39,12 @@ define( function ( require ) {
 		},
 
 		'doProcessWidgetCollection' : function ( view, model, mode ) {
+			model.isFinal = false;
 			view.options.userWidgetCollection[ mode ]( model );
-			var userWidgets = view.options.userWidgetCollection.models;
-			var widgetIds   = pushWidgetIds( userWidgets );
-			doUpdateUserWidgets( Session.personnelId(), widgetIds );
+			//view.options.actualUserWidgetCollection[ mode ]( model );
+			//var userWidgets = view.options.userWidgetCollection.models;
+			//var widgetIds   = pushWidgetIds( userWidgets );
+			//doUpdateUserWidgets( Session.personnelId(), widgetIds );
 		},
 
 		'doActivateWidgetCheck' : {
@@ -99,7 +66,6 @@ define( function ( require ) {
 				if ( hasRemoveCloseClass ) {
 					view.closeWidgetPanel();
 				}
-				view.showWidgetPlaceholder();
 			},
 			'false' : function ( view, e ) {
 				view.showWidgetPreview( e );

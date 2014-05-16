@@ -4,8 +4,12 @@ define( function ( require ) {
 	var $   = require( 'jquery' );
 	var App = require( 'App' );
 
-	var WidgetCollection      = require( 'apps/homepage/external/widgets/collections/WidgetCollection' );
-	var utils                 = require( 'apps/homepage/external/widgets/utils/widgetCompositeUtils' );
+	var WidgetCollection        = require( 'apps/homepage/external/widgets/collections/WidgetCollection' );
+	var EmptyUserWidgetItemView = require( 'apps/homepage/external/widgets/views/EmptyUserWidgetItemView' );
+	var utils                   = require( 'apps/homepage/external/widgets/utils/widgetCompositeUtils' );
+
+	var Remoting = require( 'Remoting' );
+	var Session  = require( 'Session' );
 
 	var iconBtnActions    = [ 'active', 'inactive' ];
 	var iconBtnWithGlyphs = {
@@ -28,6 +32,37 @@ define( function ( require ) {
 		'widgetMinError'   : 'Action not allowed. You must have at least one active widget'
 	};
 
+	var fetchingModels = function ( personnelId, widgetIds ) {
+		return {
+			'path'   : 'com.schoolimprovement.pd360.dao.core.WidgetGateway',
+			'method' : 'addWidgetsByPersonnelId',
+			'args'   : {
+				'personnelId' : personnelId,
+				'widgetIds'   : widgetIds
+			}
+		};
+	};
+
+	var doUpdateUserWidgets = function ( personnelId, widgetIds ) {
+		App.when( Remoting.fetch( fetchingModels( personnelId, widgetIds ) ) ).done( function ( ) {
+			//do something
+		} ).fail( function ( error ) {
+
+			App.vent.trigger( 'flash:message', {
+				'message' : 'An error occurred. Please try again later.'
+			} );
+
+		} );
+	};
+
+	function pushWidgetIds ( userWidgets ) {
+		var widgetIds = [ ];
+		for ( var index in userWidgets ) {
+			widgetIds.push( userWidgets[ index ].get( 'WidgetId' ) );
+		}
+		return widgetIds;
+	}
+
 	return {
 		'doShowAllWidgets' : function ( view, e ) {
 			utils.doShow( view.options.widgetCollection, view, e );
@@ -47,6 +82,35 @@ define( function ( require ) {
 				view.ui.widgetPreview.html( view.widgetPreviewItemView.render().el );
 				closeMessage();
 			}
+		},
+
+		'doResetAll' : function ( view ) {
+			view.options.userWidgetCollection.reset();
+
+			view.options.actualUserWidgetCollection.models.forEach( function ( model ) {
+				view.options.userWidgetCollection.add( model );
+			} );
+		},
+
+		'doSaveAll' : function ( view ) {
+			view.options.actualUserWidgetCollection.reset();
+
+			$( '.active-widgets-container' ).html( '' );
+
+			view.options.userWidgetCollection.models.forEach( function ( model ) {
+				view.options.actualUserWidgetCollection.add( model );
+			} );
+
+			var count = 3 - view.options.actualUserWidgetCollection.length;
+
+			for ( var i = 0; i < count; i ++ ) {
+				var emptyUserWidgetItemView = new EmptyUserWidgetItemView();
+				$( '.active-widgets-container' ).append( emptyUserWidgetItemView.render().el );
+			}
+
+			var userWidgets = view.options.actualUserWidgetCollection.models;
+			var widgetIds   = pushWidgetIds( userWidgets );
+			doUpdateUserWidgets( Session.personnelId(), widgetIds );
 		},
 
 		'doGetActiveWidgets' : function ( view ) {
@@ -84,7 +148,6 @@ define( function ( require ) {
 					view.changeWidgetIconBtnAttr( widgetModelId, iconBtnActions[ 0 ], iconBtnActions[ 1 ] );
 					view.hidePreviewErrorMsg( e );
 				}
-				view.showWidgetPlaceholder();
 
 				if ( hasRemoveCloseClass ) {
 					view.closeWidgetPanel();
@@ -93,7 +156,8 @@ define( function ( require ) {
 			} else {
 				view.showWidgetPreview( e );
 				App.vent.trigger( 'flash:message', {
-					'message' : messages.widgetMinError
+					'message' : messages.widgetMinError,
+					'type'    : 'error'
 				} );
 			}
 		},

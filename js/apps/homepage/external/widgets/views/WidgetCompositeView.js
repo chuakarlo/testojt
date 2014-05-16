@@ -7,14 +7,12 @@ define( function ( require ) {
 	var App        = require( 'App' );
 
 	var WidgetCompositeView     = require( 'apps/homepage/external/widgets/views/WidgetItemView' );
-	var EmptyUserWidgetItemView = require( 'apps/homepage/external/widgets/views/EmptyUserWidgetItemView' );
 	var template                = require( 'text!apps/homepage/external/widgets/templates/widgetCompositeView.html' );
 	var utils                   = require( 'apps/homepage/external/widgets/controllers/widgetCompositeController' );
 	var utilsUpperFirstLetter   = require( 'apps/homepage/utils/upperFirstLetter' );
 
 	var panelStatuses     = [ 'opened', 'closed' ];
 	var widgetSettingsBtn = $( '#widget-settings' );
-	var maxWidget         = 3;
 
 	var messages           = {
 		'widgetLimitError' : 'You have reached the amount of widgets to be displayed on your homepage.',
@@ -34,11 +32,10 @@ define( function ( require ) {
 			'click #widget-settings-header li#all'      : 'showAllWidgets',
 			'click #widget-settings-header li#active'   : 'showActiveWidgets',
 			'click #widget-settings-header li#inactive' : 'showInactiveWidgets',
-			'click .actions .save'                      : 'activateWidget',
-			'click .actions .save-and-close'            : 'activateWidgetAndClose',
+			'mousedown .actions .save'                  : 'saveAll',
+			'mousedown .actions .save-and-close'        : 'saveAllClose',
+			'mousedown .actions .cancel'                : 'resetAll',
 			'click .widget-icon-btn.inactive'           : 'activateWidget',
-			'click .actions .remove'                    : 'deactivateWidget',
-			'click .actions .remove-and-close'          : 'deactivateWidgetAndClose',
 			'click .widget-icon-btn.active'             : 'deactivateWidget'
 		},
 		'id'              : 'widgets-settings-panel',
@@ -46,7 +43,8 @@ define( function ( require ) {
 		'itemView'        : WidgetCompositeView,
 		'itemViewOptions' : function () {
 			return {
-				'userWidgetCollection' : this.options.userWidgetCollection
+				'userWidgetCollection'       : this.options.userWidgetCollection,
+				'actualUserWidgetCollection' : this.options.actualUserWidgetCollection
 			};
 		},
 		'itemViewContainer' : '#widget-settings-selection',
@@ -54,6 +52,23 @@ define( function ( require ) {
 		'ui' : {
 			'widgetSettingsHeader' : '#widget-settings-header ul',
 			'widgetPreview'        : '#widget-settings-preview'
+		},
+
+		'saveAll' : function ( e ) {
+			utils.doSaveAll( this );
+			return false;
+		},
+
+		'saveAllClose' : function ( e ) {
+			utils.doSaveAll( this );
+			$( 'div#widget-settings.opened' ).click();
+			return false;
+		},
+
+		'resetAll' : function ( e ) {
+			utils.doResetAll( this );
+			$( 'div#widget-settings.opened' ).click();
+			return false;
 		},
 
 		'showAllWidgets' : function ( e ) {
@@ -89,6 +104,7 @@ define( function ( require ) {
 
 		'activateWidget' : function ( e ) {
 			utils.doActivateWidget( this, e );
+			return false;
 		},
 
 		'activateWidgetAndClose' : function ( e ) {
@@ -97,20 +113,11 @@ define( function ( require ) {
 
 		'deactivateWidget' : function ( e ) {
 			utils.doDeactivateWidget( this, e );
+			return false;
 		},
 
 		'deactivateWidgetAndClose' : function ( e ) {
 			utils.doDeactivateWidget( this, e );
-		},
-
-		'showWidgetPlaceholder' : function () {
-			$( '.widget-placeholder-wrapper' ).remove();
-			var count = maxWidget - $( 'ul.active-widgets-container li' ).length;
-
-			for ( var i = 0; i < count; i ++ ) {
-				var emptyUserWidgetItemView = new EmptyUserWidgetItemView();
-				$( 'ul.active-widgets-container' ).append( emptyUserWidgetItemView.render().el );
-			}
 		},
 
 		'closeWidgetPanel' : function () {
@@ -139,7 +146,8 @@ define( function ( require ) {
 
 		'displayLimitError' : function ( e ) {
 			App.vent.trigger( 'flash:message', {
-				'message' : messages.widgetLimitError
+				'message' : messages.widgetLimitError,
+				'type'    : 'error'
 			} );
 		},
 

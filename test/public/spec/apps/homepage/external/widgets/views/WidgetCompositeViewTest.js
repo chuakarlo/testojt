@@ -305,53 +305,6 @@ define( function ( require ) {
 			hidePreviewStub.restore();
 		} );
 
-		it( 'should be able to call .addToWidgetCollection', function () {
-
-			var focusObjectives = {
-				'Description'  : function () { return 'focusObjectives'; },
-				'EmptyMessage' : function () { return 'focusObjectives'; },
-				'WidgetId'     : 6,
-				'WidgetName'   : function () { return 'focusObjectives'; },
-				'_footer'      : function () { return 'focusObjectives'; },
-				'_header'      : function () { return 'Your Profile'; },
-				'_id'          : 'focusObjectives',
-				'_items'       : [],
-				'_mainUrl'     : '/dev.html#resources/learning/your-profile',
-				'em'           : 8.5
-			};
-
-			var remoteStub = sinon.stub( Remoting, 'fetch' );
-
-			widgetComposite.addToWidgetCollection( focusObjectives );
-
-			remoteStub.callCount.should.be.at.least( 1 );
-			Remoting.fetch.restore();
-
-		} );
-
-		it( 'should be able to call .removeToWidgetCollection', function () {
-			var focusObjectives = {
-				'Description'  : function () { return 'focusObjectives'; },
-				'EmptyMessage' : function () { return 'focusObjectives'; },
-				'WidgetId'     : 6,
-				'WidgetName'   : function () { return 'focusObjectives'; },
-				'_footer'      : function () { return 'focusObjectives'; },
-				'_header'      : function () { return 'Your Profile'; },
-				'_id'          : 'focusObjectives',
-				'_items'       : [],
-				'_mainUrl'     : '/dev.html#resources/learning/your-profile',
-				'em'           : 8.5
-			};
-
-			var remoteStub = sinon.stub( Remoting, 'fetch' );
-
-			widgetComposite.removeToWidgetCollection( focusObjectives );
-
-			remoteStub.callCount.should.be.at.least( 1 );
-			Remoting.fetch.restore();
-
-		} );
-
 		it( 'should be able to call .changeButtonAttr', function () {
 			var evt        = document.createEvent( 'Event' );
 			var changeStub = sinon.stub( utils, 'changeButtonAttr' );

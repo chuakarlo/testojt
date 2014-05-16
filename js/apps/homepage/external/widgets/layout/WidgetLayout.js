@@ -42,10 +42,11 @@ define( function ( require ) {
 				models[ 0 ] = [ { WidgetId : 5 }, { WidgetId : 4 }, { WidgetId : 2 } ];
 			}
 
-			view.widgetCollection     = new WidgetCollection( widgets );
-			view.userWidgetCollection = new WidgetCollection( view.getUserWidgetCollection( models[ 0 ] ) );
+			view.widgetCollection           = new WidgetCollection( widgets );
+			view.userWidgetCollection       = new WidgetCollection( view.getUserWidgetCollection( models[ 0 ] ) );
+			view.actualUserWidgetCollection = new WidgetCollection( view.getUserWidgetCollection( models[ 0 ] ) );
 
-			var userWidgetCollectionView = new UserWidgetCollectionView( { 'collection' : view.userWidgetCollection } );
+			var userWidgetCollectionView = new UserWidgetCollectionView( { 'collection' : view.actualUserWidgetCollection } );
 			view.userWidgets.show( userWidgetCollectionView );
 		} ).fail( function ( error ) {
 
@@ -59,9 +60,10 @@ define( function ( require ) {
 	function doShowWidgetSettingsPanel ( view, e ) {
 		var panelBtn            = $( '#widget-settings' );
 		var widgetCompositeView = new WidgetCompositeView( {
-			'collection'           : view.widgetCollection,
-			'widgetCollection'     : view.widgetCollection,
-			'userWidgetCollection' : view.userWidgetCollection
+			'collection'                 : view.widgetCollection,
+			'widgetCollection'           : view.widgetCollection,
+			'userWidgetCollection'       : view.userWidgetCollection,
+			'actualUserWidgetCollection' : view.actualUserWidgetCollection
 		} );
 		view.widgetSettings.show( widgetCompositeView );
 		view.changePanelStatus( panelBtn, panelStatuses[ 1 ], panelStatuses[ 0 ] );
@@ -92,7 +94,6 @@ define( function ( require ) {
 			'click div#widget-settings.closed'         : 'showWidgetSettingsPanel',
 			'click p#awesomeness'                      : 'showWidgetSettingsPanel',
 			'click div#widget-settings.opened'         : 'closeWidgetSettingsPanel',
-			'click div.actions .cancel'                : 'closeWidgetSettingsPanel',
 			'focusout #widgets-settings-panel-wrapper' : 'blurAction',
 			'click #widgets-settings-panel-wrapper'    : 'focusAction'
 		},
@@ -125,7 +126,22 @@ define( function ( require ) {
 		},
 
 		'blurAction' : function ( e ) {
-			$( 'div#widget-settings.opened' ).click();
+			if ( $( '#widgets-settings-panel-wrapper' ).attr( 'data-bypass'  ) === 'off' ) {
+
+				var elem = e.currentTarget.ownerDocument.activeElement;
+				var parent = $( elem ).closest( '#widgets-settings-panel-wrapper' );
+
+				//using jquery to get focus doesn't work in IE
+				if ( parent.length === 1 ) {
+					$( '#widgets-settings-panel-wrapper' ).focus().css('outline', 'none');
+				} else {
+					$( 'div#widget-settings.opened' ).click();
+				}
+
+			} else {
+				$( '#widgets-settings-panel-wrapper' ).attr( 'data-bypass', 'off' );
+				$( '#widgets-settings-panel-wrapper' ).focus().css('outline', 'none');
+			}
 		},
 
 		'focusAction' : function ( e ) {
