@@ -16,11 +16,8 @@ define( function ( require ) {
 
 			'path'  : 'ContentService',
 
-			'initialize' : function ( options ) {
-				_.bindAll( this );
+			'initialize' : function ( models, options ) {
 				_.extend( this, options );
-
-				return this;
 			},
 
 			'getReadOptions' : function () {
@@ -32,25 +29,33 @@ define( function ( require ) {
 						'ContentTypeId'   : this.ContentTypeId
 					}
 				};
+			},
+
+			'parse' : function ( response ) {
+				return _.filter( response, function ( segment ) {
+					if ( segment.ContentId !== this.ContentId ) {
+						return segment;
+					}
+				}.bind( this ) );
 			}
 
 		} );
 
 		var API = {
 
-			'getSegments' : function ( videoModel ) {
+			'getSegments' : function ( content ) {
 				var defer = $.Deferred();
 
-				var results = new Entities.Segments( {
-					'ContentId'       : videoModel.get( 'ContentId' ),
-					'ContentParentId' : videoModel.get( 'ContentParentId' ),
-					'ContentTypeId'   : videoModel.get( 'ContentTypeId' )
+				var segments = new Entities.Segments( [ ], {
+					'ContentId'       : content.ContentId,
+					'ContentParentId' : content.ContentParentId,
+					'ContentTypeId'   : content.ContentTypeId
 				} );
 
-				results.fetch( {
+				segments.fetch( {
 
 					'success' : function () {
-						defer.resolve( results );
+						defer.resolve( segments );
 					},
 
 					'error' : function () {
@@ -61,10 +66,11 @@ define( function ( require ) {
 
 				return defer.promise();
 			}
+
 		};
 
-		App.reqres.setHandler( 'videoPlayer:segments', function ( videoModel ) {
-			return API.getSegments( videoModel );
+		App.reqres.setHandler( 'videoPlayer:segments', function ( content ) {
+			return API.getSegments( content );
 		} );
 
 	} );

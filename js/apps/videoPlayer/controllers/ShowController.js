@@ -44,7 +44,7 @@ define( function ( require ) {
 				var questionsRequest     = App.request( 'videoPlayer:questions', videoModel.id );
 				var relatedVideosRequest = App.request( 'videoPlayer:getRelatedVideos', videoModel.id );
 				var queueContentsRequest = App.request( 'common:getQueueContents' );
-				var segmentsRequest      = App.request( 'videoPlayer:segments', videoModel );
+				var segmentsRequest      = App.request( 'videoPlayer:segments', videoModel.toJSON() );
 
 				App.when( questionsRequest, queueContentsRequest, segmentsRequest, relatedVideosRequest ).done( function ( questions, queueContents, segments, relatedVideos ) {
 

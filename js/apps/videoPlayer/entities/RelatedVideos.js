@@ -15,18 +15,15 @@ define( function ( require ) {
 
 			'path'  : 'RespondService',
 
-			'initialize' : function ( options ) {
-				_.bindAll( this );
+			'initialize' : function ( models, options ) {
 				_.extend( this, options );
-
-				return this;
 			},
 
 			'getReadOptions' : function () {
 				return {
 					'method' : 'relatedVideos',
 					'args'   : {
-						'ContentId' : this.contentId
+						'ContentId' : this.ContentId
 					}
 				};
 			},
@@ -40,9 +37,13 @@ define( function ( require ) {
 		} );
 
 		var API = {
+
 			'getRelatedVideos' : function ( contentId ) {
-				var defer         = App.Deferred();
-				var relatedVideos = new Entities.RelatedVideos( { 'contentId' : contentId } );
+				var defer = App.Deferred();
+
+				var relatedVideos = new Entities.RelatedVideos( [ ], {
+					'ContentId' : contentId
+				} );
 
 				relatedVideos.fetch( {
 
@@ -58,6 +59,7 @@ define( function ( require ) {
 
 				return defer.promise();
 			}
+
 		};
 
 		App.reqres.setHandler( 'videoPlayer:getRelatedVideos', function ( contentId ) {

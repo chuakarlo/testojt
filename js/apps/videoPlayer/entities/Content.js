@@ -11,8 +11,11 @@ define( function ( require ) {
 		Entities.Content = Backbone.CFModel.extend( {
 
 			'idAttribute' : 'ContentId',
+
 			'path'        : 'ContentService',
+
 			'previewUrl'  : 'http://upload.content.pd360.com/PD360/media/',
+
 			'defaults'    : {
 				'currentTime'        : 0,
 				'GuidebookFileName'  : '',
@@ -20,8 +23,7 @@ define( function ( require ) {
 				'TranscriptFileName' : ''
 			},
 
-			'initialize' : function ( options ) {
-				_.bindAll( options );
+			'initialize' : function ( attr, options ) {
 				_.extend( this, options );
 
 				this.setVideoTypeId();
@@ -97,14 +99,16 @@ define( function ( require ) {
 		} );
 
 		var API  = {
-			'getContent' : function ( options ) {
-				var defer   = App.Deferred();
-				var results = new Entities.Content( options );
 
-				results.fetch( {
+			'getContent' : function ( options ) {
+				var defer = App.Deferred();
+
+				var videoContent = new Entities.Content( { }, options );
+
+				videoContent.fetch( {
 
 					'success' : function () {
-						defer.resolve( results );
+						defer.resolve( videoContent );
 					},
 
 					'error' : function () {
@@ -115,6 +119,7 @@ define( function ( require ) {
 
 				return defer.promise();
 			}
+
 		};
 
 		App.reqres.setHandler( 'videoPlayer:getVideoContent', function ( options ) {
