@@ -5,7 +5,7 @@ var resolutions = require( '../../resolutions' );
 
 suite( function ( env ) {
 
-	describe.only( 'Group Phone View', function() {
+	describe( 'Group Phone View', function() {
 		var browser;
 
 		before( function ( done ) {
