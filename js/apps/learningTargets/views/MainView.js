@@ -1,27 +1,34 @@
 define( function ( require ) {
 	'use strict';
 
+	var App        = require( 'App' );
 	var Marionette = require( 'marionette' );
 	var template   = require( 'text!apps/learningTargets/templates/main.html' );
-	var App        = require( 'App' );
 	var _          = require( 'underscore' );
 	var $          = require( 'jquery' );
+
+	require( 'bootstrap-select' );
 
 	return Marionette.ItemView.extend( {
 		'template'  : _.template( template ),
 		'className' : 'learning-targets',
 
 		'ui' : {
-			'nav'        : '.lt-left-nav',
-			'focusTitle' : '.nav-subtitle a'
+			'nav'       : '.lt-left-nav',
+			'selectNav' : 'select.selectpicker'
 		},
 
 		'events' : {
-			'click @ui.focusTitle' : 'activateTitleTab'
+			'change @ui.selectNav' : 'onSelect'
+		},
+
+		'onSelect' : function ( e ) {
+			App.navigate( 'resources/learning/' + e.currentTarget.value, true );
 		},
 
 		'activateTab' : function ( content, options ) {
-			var self = this;
+			var self                = this;
+			var learningTargetsMenu = self.$( '.selectpicker' );
 
 			// remove class from current active li
 			$( self.ui.nav )
@@ -31,22 +38,10 @@ define( function ( require ) {
 			// activate selected tab
 			$( '.' + content ).addClass( 'active' );
 
-			if ( options ) {
-				$( '.nav-objectives' )
-					.find( '.focus-title-' +  options.statestdid )
-					.addClass( 'active' );
-			}
-		},
-
-		'activateTitleTab' : function ( e ) {
-			App.flashMessage.close();
-			// remove class from current active title li
-			$( '.nav-objectives' )
-				.find( '.active' )
-				.removeClass( 'active' );
-
-			// activate title selected tab
-			$( e.target.parentElement ).addClass( 'active' );
+			// render bootstrap selectbox
+			$( learningTargetsMenu ).addClass('col-xs-12').selectpicker('setStyle');
+			$( learningTargetsMenu ).val( content );
+			$( learningTargetsMenu ).selectpicker('render');
 		}
 
 	} );

@@ -2,6 +2,7 @@
 						LEARNING TARGETS
 \************************************************************/
  @import "../common/progressCircle.less";
+ @import "../common/bootstrap-select.less";
  .learning-targets {
 	@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
 		.lt-courses-header {
@@ -95,6 +96,32 @@
 			}
 		}
 	}
+	.bootstrap-select {
+		padding : 0;
+	}
+	.dropdown {
+		& > div {
+			border: 1px solid #cccccc;
+		}
+		.dropdown-menu {
+			background : #f5f5f5;
+
+			li {
+				& > a {
+					color : #3dadef;
+				}
+				& > a:hover, & > a:focus {
+					background : #ebebeb;
+					outline : none;
+				}
+				& > a:focus {
+					border-top: 1px solid #cccccc;
+					border-bottom: 1px solid #cccccc;
+				}
+			}
+		}
+	}
+
 	.search-pd-catalog {
 		padding-top: 20px;
 		padding-left: 25px;
@@ -146,6 +173,11 @@
 	}
 	.lt-left-nav {
 		position : relative;
+		span.visible-xs {
+			border-bottom: 1px solid #ebebeb;
+			padding-bottom: 10px;
+			margin-bottom: 10px;
+		}
 		h2 {
 			border-bottom : 1px solid #ebebeb;
 			text-align : center;

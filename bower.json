@@ -44,7 +44,8 @@
     "jquery.browser": "~0.0.6",
     "validator-js": "~3.11.0",
     "bootstro.js": "https://github.com/raohuaming/bootstro.js.git",
-    "backbone.touch": "~0.4.0"
+    "backbone.touch": "~0.4.0",
+    "bootstrap-select-3" : "https://github.com/silviomoreto/bootstrap-select.git"
   },
   "devDependencies": {
     "chai": "1.8.x",

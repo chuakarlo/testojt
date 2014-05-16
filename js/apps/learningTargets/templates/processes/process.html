@@ -1,9 +1,12 @@
 <div class="lt-toggle-btn">
-	<div class="col-xs-10"><img src="/img/eye.png" class="icon" alt=""><p><%- ProcessName %></p></div>
-	<div class="col-xs-2 <%- txtColor %>"><%- ProcessStatus %></div>
+    <div class="row">
+        <img class="icon-img" src="/img/eye.png">
+        <span class="title-wrapper group-title col-xs-6 col-sm-6 col-md-6"><%- ProcessName %></span>
+        <span class="title-wrapper col-xs-4 col-sm-4 col-md-4 <%- txtColor %>"><%- ProcessStatus %></span>
+    </div>
 </div>
-<div class="lt-toggle-content drawer steps" style="display: none;">
-	<div>
+<div class="lt-toggle-content drawer" style="display: none;">
+	 <div>
 		<% _.each( Tasks, function ( tasksObj ) { %>
 			<div class="col-xs-3 step-item"><a id="<%- tasksObj.ProcessTaskId %>" href="#" class="lt-process-step" title="more info">Next Step <%- tasksObj.ProcessTaskId %></a></div>
 			<div class="col-xs-5 step-item"><%- tasksObj.CompleteByDate %></div>
@@ -14,5 +17,4 @@
 		<% } ); %>
 	</div>
 </div>
-
 <br class="clearfix">

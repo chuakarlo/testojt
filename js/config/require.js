@@ -63,6 +63,7 @@ require.config( {
 		'pc-swipe'              : 'libs/circular-snap-carousel/jquery.touchSwipe',
 		'pc-htmlconcat'         : 'libs/htmlConcat/htmlconcat',
 		'bootstro'              : 'libs/bootstro.js/bootstro',
+		'bootstrap-select'      : 'libs/bootstrap-select-3/bootstrap-select',
 
 		// Base application level classes
 		'Session' : 'apps/user/models/SessionModel',

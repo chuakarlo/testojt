@@ -31,21 +31,8 @@ define( function ( require ) {
 				contentRegion.show( view );
 			},
 
-			'_convertToTimestamp' : function ( stringDate ) {
-				var date = new Date( stringDate );
-				return date.getTime() / 100;
-			},
-
-			'_isProcessStatusCurrent' : function ( model ) {
-				return ( ( model.get( 'ProcessStatus' ) === 'Current' ) || ( model.get( 'ProcessStatus' ) === '' ) );
-			},
-
-			'_isTaskStatusCurrent' : function ( taskCompleteDateTimestamp, mainCompletedDateTimestamp ) {
-				return ( taskCompleteDateTimestamp <= mainCompletedDateTimestamp ) || ( mainCompletedDateTimestamp === '' );
-			},
-
 			'_setContent' : function ( content, options ) {
-
+				//var self = this;
 				// hide pd360 flash
 				App.request( 'pd360:hide' );
 
@@ -61,6 +48,19 @@ define( function ( require ) {
 				} );
 
 				mainView.activateTab( content );
+			},
+
+			'_convertToTimestamp' : function ( stringDate ) {
+				var date = new Date( stringDate );
+				return date.getTime() / 100;
+			},
+
+			'_isProcessStatusCurrent' : function ( model ) {
+				return ( ( model.get( 'ProcessStatus' ) === 'Current' ) || ( model.get( 'ProcessStatus' ) === '' ) );
+			},
+
+			'_isTaskStatusCurrent' : function ( taskCompleteDateTimestamp, mainCompletedDateTimestamp ) {
+				return ( taskCompleteDateTimestamp <= mainCompletedDateTimestamp ) || ( mainCompletedDateTimestamp === '' );
 			},
 
 			'_apiRequest' : function ( type, callback, options ) {
