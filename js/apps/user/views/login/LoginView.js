@@ -23,6 +23,8 @@ define( function ( require ) {
 		},
 
 		'ui' : {
+			'username' : '[name="Username"]',
+			'password' : '[name="Password"]',
 			'remember' : 'input[type="checkbox"]'
 		},
 
@@ -56,7 +58,7 @@ define( function ( require ) {
 			Backbone.Validation.bind( this );
 		},
 
-		onRender : function () {
+		'onRender' : function () {
 			// If the user selected the remember me option,
 			// populate the username for them.
 			if ( $.cookie( 'remember' ) === 'true' ) {
@@ -65,6 +67,18 @@ define( function ( require ) {
 			}
 
 			this.stickit();
+		},
+
+		'onShow' : function () {
+
+			// hack to support browsers filling in the username and password field
+			setTimeout( function () {
+				if ( this.ui.username.val().length ) {
+					this.ui.password.trigger( 'change' );
+					this.ui.username.trigger( 'change' );
+				}
+			}.bind( this ), 500 );
+
 		},
 
 		'rememberMe' : function ( event ) {
