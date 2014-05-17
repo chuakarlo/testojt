@@ -13,6 +13,12 @@ define( function ( require ) {
 		},
 
 		'doFetchLogic' : function ( collectionParam ) {
+
+			collectionParam.models.forEach( function ( model ) {
+				model.set( 'queued', true );
+				model.set( 'VideoTypeId', 1 );
+			} );
+
 			return {
 				'collection' : collectionParam,
 				'count'      : collectionParam.length

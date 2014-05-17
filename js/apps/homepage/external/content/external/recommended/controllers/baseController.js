@@ -4,6 +4,7 @@ define( function ( require ) {
 
 	var utils = require( 'apps/homepage/external/content/utils/contentItemCollectionUtil' );
 	var $ = require( 'jquery' );
+	var _ = require( 'underscore' );
 
 	return {
 		'doFetchLogic' : function ( collectionParam ) {
@@ -11,6 +12,13 @@ define( function ( require ) {
 			var count = collectionParam.models[ 0 ].get( 'numFound' );
 
 			collectionParam.models = collectionParam.models.slice( 1 );
+
+			var qContentsIds = _.pluck( collectionParam.queueCollection, 'ContentId' );
+
+			collectionParam.models.forEach( function ( model ) {
+				model.set( 'queued', _.contains( qContentsIds, model.id ) );
+				model.set( 'VideoTypeId', 1 );
+			} );
 
 			return {
 				'collection' : collectionParam,
@@ -22,18 +30,6 @@ define( function ( require ) {
 			callback( options );
 		},
 
-		'doRenderToggle' : function ( collection, model ) {
-			var toggleClass = 'add-to-queue';
-
-			for ( var item in collection.queueCollection ) {
-				if ( collection.queueCollection[ item ].ContentId === model.get( 'ContentId' ) ) {
-					toggleClass = 'recommended-remove-from-queue';
-					break;
-				}
-			}
-
-			return toggleClass;
-		},
 		'doCarouselCustomAction' : function ( view, data, start, base ) {
 			if ( start ) {
 				$( '#recommended-wrapper .lazyload' ).append( '<div id="lazyload"><img src="img/loading-bar.gif"/></div>' );

@@ -1,10 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette       = require( 'marionette' );
-	var LoadingView          = require('common/views/LoadingView');
-	var ContentItemView  = require( 'apps/homepage/external/content/views/ContentItemView' );
-	var controller       = require( 'apps/homepage/external/content/controllers/contentItemCollectionController' );
+	var Marionette      = require( 'marionette' );
+	var LoadingView     = require('common/views/LoadingView');
+	var controller      = require( 'apps/homepage/external/content/controllers/contentItemCollectionController' );
+	var App             = require( 'App' );
+	require( 'common/entities/Queue' );
 
 	return Marionette.CollectionView.extend( {
 		'events' : {
@@ -16,7 +17,7 @@ define( function ( require ) {
 		'tagName'         : 'ul',
 		'className'       : 'row',
 		'emptyView'       : LoadingView,
-		'itemView'        : ContentItemView,
+		'itemView'        : App.Common.SegmentCardsView,
 
 		'initialize' : function () {
 			controller.doInitialize( this );
