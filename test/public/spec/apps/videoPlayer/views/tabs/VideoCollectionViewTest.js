@@ -54,14 +54,14 @@ define( function ( require ) {
 				videosCollectionView.should.have.property( 'itemView' );
 			} );
 
-			it( 'has a `className` property with value `row`', function ( ) {
+			it( 'has a `className` property with value `slick`', function ( ) {
 				videosCollectionView.should.have.property( 'className' );
-				videosCollectionView.className.should.be.equal( 'row' );
+				videosCollectionView.className.should.be.equal( 'slick' );
 			} );
 
-			it( 'has a `tagName` property with value `ul`', function ( ) {
+			it( 'has a `tagName` property with value `div`', function ( ) {
 				videosCollectionView.should.have.property( 'tagName' );
-				videosCollectionView.tagName.should.be.equal( 'ul' );
+				videosCollectionView.tagName.should.be.equal( 'div' );
 			} );
 
 		} );

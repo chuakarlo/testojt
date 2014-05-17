@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	require( 'pc-carouselSnap' );
+	require( 'slick' );
 
 	var App           = require( 'App' );
 	var Marionette    = require( 'marionette' );
@@ -12,16 +12,53 @@ define( function ( require ) {
 
 		'itemView'  : App.Common.SegmentCardsView,
 
-		'tagName'   : 'ul',
-		'className' : 'row',
+		'tagName'   : 'div',
+
+		'className' : 'slick',
+
+		'ui' : {
+			'next' : 'button.slick-next',
+			'prev' : 'button.slick-prev'
+		},
 
 		'onShow' : function () {
-			var pID = this.$el.parent()[ 0 ].id;
-			this.$el.carouselSnap( {
-				nextID                : 'next-slide-' + pID,
-				prevID                : 'previous-slide-' + pID,
-				elementsToMoveOnClick : 4,
-				startOnCenter         : true
+			this.$el.slick( {
+				'slidesToShow'   : 4,
+				'slidesToScroll' : 4,
+				'arrows'         : true,
+				'slide'          : 'li',
+				'slickWidth'     : 1140,
+				'responsive'     : [ {
+					'breakpoint' : 1100,
+					'settings'   : {
+						'slidesToShow'   : 4,
+						'slidesToScroll' : 3,
+						'touchThreshold' : 10,
+						'slide'          : 'li',
+						'arrows'         : false,
+						'slickWidth'     : 1140
+					}
+				}, {
+					'breakpoint' : 780,
+					'settings'   : {
+						'slidesToShow'   : 4,
+						'slidesToScroll' : 2,
+						'touchThreshold' : 10,
+						'slide'          : 'li',
+						'arrows'         : false,
+						'slickWidth'     : 1140
+					}
+				}, {
+					'breakpoint' : 450,
+					'settings'   : {
+						'slidesToShow'   : 4,
+						'slidesToScroll' : 1,
+						'touchThreshold' : 10,
+						'slide'          : 'li',
+						'arrows'         : false,
+						'slickWidth'     : 1140
+					}
+				} ]
 			} );
 		},
 

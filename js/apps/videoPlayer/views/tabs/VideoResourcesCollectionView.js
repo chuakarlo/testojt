@@ -15,11 +15,6 @@ define( function ( require ) {
 
 		'className' : 'row',
 
-		'ui' : {
-			'next' : 'button.slick-next',
-			'prev' : 'button.slick-prev'
-		},
-
 		'onShow' : function () {
 			this.$el.carouselSnap( {
 				nextID                : 'next-slide',

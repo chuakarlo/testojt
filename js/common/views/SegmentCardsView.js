@@ -71,19 +71,19 @@ define( function ( require ) {
 			if ( !this.ui.infoIcon.hasClass( 'blued' ) ) {
 				this.ui.infoIcon
 					.addClass( 'blued fa-times-circle')
-						.removeClass( 'grayed fa-info-circle' )
-							.tooltip( 'destroy' )
-								.attr( 'title' , 'Close' )
-									.tooltip( 'show' );
+					.removeClass( 'grayed fa-info-circle' )
+					.tooltip( 'destroy' )
+					.attr( 'title' , 'Close' )
+					.tooltip( 'show' );
 
 				this.ui.infoOverlay.fadeIn();
 			} else {
 				this.ui.infoIcon
 					.addClass( 'grayed fa-info-circle' )
-						.removeClass( 'blued fa-times-circle' )
-							.tooltip( 'destroy' )
-								.attr( 'title' , 'Description' )
-									.tooltip( 'show' );
+					.removeClass( 'blued fa-times-circle' )
+					.tooltip( 'destroy' )
+					.attr( 'title' , 'Description' )
+					.tooltip( 'show' );
 
 				this.ui.infoOverlay.fadeOut();
 			}
