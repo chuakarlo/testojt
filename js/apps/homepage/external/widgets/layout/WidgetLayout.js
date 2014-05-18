@@ -135,6 +135,12 @@ define( function ( require ) {
 				if ( parent.length === 1 ) {
 					$( '#widgets-settings-panel-wrapper' ).focus().css('outline', 'none');
 				} else {
+					var self = this;
+					self.userWidgetCollection.reset();
+
+					self.actualUserWidgetCollection.models.forEach( function ( model ) {
+						self.userWidgetCollection.add( model );
+					} );
 					$( 'div#widget-settings.opened' ).click();
 				}
 
