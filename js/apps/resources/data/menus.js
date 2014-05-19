@@ -54,7 +54,7 @@ define( function ( require ) {
 	var training = {
 		'name'   : 'PD 360 Training',
 		'url'    : 'http://help.schoolimprovement.com/training',
-		'icon'   : 'fa-bullhorn',
+		'icon'   : 'fa-question-circle',
 		'id'     : 'link-more-training',
 		'target' : '_blank'
 	};
