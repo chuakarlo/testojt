@@ -8,12 +8,13 @@ define( function ( require ) {
 	var EmptyView     = require ( 'apps/learningTargets/views/objectives/EmptyView' );
 
 	return Marionette.CompositeView.extend ( {
-		'template'  : _.template ( template ),
-		'itemView'  : TitleItemView,
-		'emptyView' : EmptyView,
+		'template'          : _.template ( template ),
+		'itemView'          : TitleItemView,
+		'emptyView'         : EmptyView,
 
-		'tagName'   : 'ul',
-		'className' : 'nav-objectives',
+		'tagName'           : 'div',
+		'className'         : 'objectives-content',
+		'itemViewContainer' : 'ul.nav-objectives',
 
 		'ui' : {
 			'BackButton' : '.back-button'
@@ -45,5 +46,5 @@ define( function ( require ) {
 			};
 		}
 
-	});
-});
+	} );
+} );
