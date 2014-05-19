@@ -5,6 +5,8 @@
 @sc-gray-light    : #E1E1E1;
 @sc-blue-light    : #5ABEF9;
 
+@sc-image-height  : 148px;
+
 li {
 	list-style: none;
 
@@ -21,115 +23,115 @@ li {
 			position   : relative;
 			color      : @sc-white;
 			background : @sc-charcoal;
+			height     : @sc-image-height;
+			overflow   : hidden;
 
 			a {
-				text-decoration : none;
+				padding : 0;
+				margin  : 0;
+			    text-decoration : none;
 
-				span.sc-play-icon {
-					position  : absolute;
-					display   : none;
-					top       : ~"calc(50% - 35px)";
-					left      : ~"calc(50% - 17.5px)";
-					font-size : 35px;
-				}
+				span.sc-play-container {
+					top        : 45px;
+					position   : absolute;
+					text-align : center;
+					display    : none;
+					width      : 100%;
+					height     : 100%;
+					z-index    : 1;
 
-				p.sc-play-now {
-					display   : none;
-					top       : 50%;
-					left      : ~"calc(50% - 60px)";
-					position  : absolute;
-					font-size : 28px;
+					span.sc-play-icon {
+						font-size : 25px;
+					}
+
+					p.sc-play-now {
+						font-size : 25px;
+					}
 				}
 
 				img {
 					width      : 100%;
-					max-height : 140px;
+					min-height : @sc-image-height;
 				}
 			}
 
 			a:hover {
 				color   : @sc-white;
-				padding : 0;
-				margin  : 0;
 
-				.sc-play-now, .sc-play-icon {
+				span.sc-play-container {
 					display : block;
-					color   : @sc-white;
 				}
 
 				img {
-					background          : @sc-charcoal;
 					opacity             : .5;
 					transition-duration : .2s;
 				}
 			}
 		}
 
-		p.sc-segment-name {
-			font-size      : 15px;
-			margin         : 10px 10px 0 10px;
-			color          : @sc-charcoal;
-			text-align     : left;
-			line-height    : 1;
-			cursor         : default;
-			word-spacing   : -2px;
-			text-align     : justify;
-			text-justify   : newspaper;
-			white-space    : normal;
-			letter-spacing : 0;
-			font-weight    : 500;
-		}
+		div.sc-footer-details {
+			padding  : 5px 10px;
+			position : relative;
 
-		p.sc-duration {
-			font-size   : 12px;
-			margin      : 5px 10px 10px 10px;
-			display     : inline-block;
-			color       : @sc-gray-dark;
-		}
+			h5.sc-segment-name {
+				font-size      : 15px;
+				color          : @sc-charcoal;
+				text-align     : left;
+				line-height    : 1.1;
+				cursor         : default;
+				font-weight    : 500;
+				margin-bottom  : 2px;
+			}
 
-		i.sc-info-icon {
-			top  : ~"calc(100% - 40px)";
-			left : ~"calc(100% - 70px)";
-		}
+			p.sc-duration {
+				font-size   : 12px;
+				line-height : 20px;
+				color       : @sc-gray-dark;
+			}
 
-		i.sc-watch-later-icon {
-			top  : ~"calc(100% - 40px)";
-			left : ~"calc(100% - 35px)";
-		}
+			span.sc-info-icon {
+				right : 55px;
+			}
 
-		i.sc-info-icon,
-		i.sc-watch-later-icon {
-			font-size       : 28px;
-			cursor          : pointer;
-			height          : 30px;
-			line-height     : 1.5;
-			text-decoration : none;
-			position        : absolute;
-			z-index         : 3;
-			white-space     : nowrap;
-		}
+			span.sc-watch-later-icon {
+				right : 15px;
+			}
 
-		.grayed {
-			color : @sc-gray-light;
-		}
+			span.sc-info-icon,
+			span.sc-watch-later-icon {
+				top             : 50px;
+				font-size       : 28px;
+				cursor          : pointer;
+				height          : 30px;
+				line-height     : 1.5;
+				text-decoration : none;
+				position        : absolute;
+				z-index         : 3;
+				display         : block;
+			}
 
-		i.sc-info-icon:hover,
-		i.sc-watch-later-icon:hover,
-		.blued {
-			color : @sc-blue-light;
-		}
+			.grayed {
+				color : @sc-gray-light;
+			}
 
-		i.sc-watch-later-loading-icon {
-			font-size       : 24px;
-			cursor          : auto;
-			height          : 30px;
-			line-height     : 1.5;
-			text-decoration : none;
-			position        : absolute;
-			z-index         : 3;
-			top             : ~"calc(100% - 35px)";
-			left            : ~"calc(100% - 31px)";
-			display         : none;
+			span.sc-info-icon:hover,
+			i.sc-watch-later-icon:hover,
+			.blued {
+				color : @sc-blue-light;
+			}
+
+			span.sc-watch-later-loading-icon {
+				font-size       : 25px;
+				cursor          : auto;
+				height          : 30px;
+				line-height     : 1.5;
+				text-decoration : none;
+				position        : absolute;
+				z-index         : 3;
+				top             : 56px;
+				right           : 16px;
+				display         : none;
+			}
 		}
 
 		div.sc-overlay-details {
@@ -192,5 +194,16 @@ li {
 			}
 
 		}
+	}
+}
+
+html.touch {
+	span.grayed:hover {
+		color                : @sc-gray-light !important;
+		-webkit-user-select  : none;
+	    -moz-user-select     : none;
+	    -ms-user-select      : none;
+	    user-select          : none;
+       -webkit-touch-callout : none;
 	}
 }

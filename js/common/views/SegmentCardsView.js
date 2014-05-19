@@ -8,6 +8,7 @@ define( function ( require ) {
 	var getAbbreviation   = require( '../helpers/getAbbreviation' );
 	var stripHtml         = require( '../helpers/stripHtml' );
 	var convertSecsToMins = require( '../helpers/convertSecsToMins' );
+	var modernizr         = window.Modernizr;
 
 	return Marionette.ItemView.extend( {
 
@@ -18,21 +19,23 @@ define( function ( require ) {
 		'tagName' : 'li',
 
 		'ui' : {
-			'infoIcon'    : 'i.sc-info-icon',
-			'watchIcon'   : 'i.sc-watch-later-icon',
-			'loadingIcon' : 'i.sc-watch-later-loading-icon',
-			'infoOverlay' : 'div.sc-overlay-details'
+			'infoIcon'    : 'span.sc-info-icon',
+			'watchIcon'   : 'span.sc-watch-later-icon',
+			'loadingIcon' : 'span.sc-watch-later-loading-icon',
+			'infoOverlay' : 'div.sc-overlay-details',
+			'playNowLink' : 'a.sc-play-link'
 		},
 
 		'events' : {
-			'click @ui.infoIcon'  : 'showDetails',
-			'click @ui.watchIcon' : 'watchLaterQueue'
+			'click @ui.infoIcon'    : 'showDetails',
+			'click @ui.watchIcon'   : 'watchLaterQueue',
+			'click @ui.playNowLink' : 'navigateToVideoPage'
 		},
 
 		'templateHelpers' : {
 
 			'shortContentName' : function () {
-				return getAbbreviation( this.ContentName || this.Name, 60 );
+				return getAbbreviation( this.ContentName || this.Name, 43 );
 			},
 
 			'fullContentName' : function () {
@@ -43,7 +46,7 @@ define( function ( require ) {
 				return getAbbreviation( stripHtml( this.ContentDescription || this.Description ) , 180 );
 			},
 
-			duration : function () {
+			'duration' : function () {
 				return convertSecsToMins( this.SegmentLengthInSeconds );
 			}
 		},
@@ -56,41 +59,44 @@ define( function ( require ) {
 			this.listenTo( App.vent, 'common:queueFailed', this.matchedSegmentsToQueue );
 		},
 
+		'onRender' : function () {
+			this.$el.fadeIn( 'normal' );
+		},
+
 		'onShow' : function () {
-			this.ui.infoIcon.tooltip( { 'title' : 'Description' } );
+			this.addTooltip( this.ui.infoIcon , { 'title' : 'Description' } );
 			this.matchedSegmentsToQueue();
 		},
 
 		'onClose' : function () {
-			this.ui.infoIcon.tooltip( 'destroy' );
-			this.ui.watchIcon.tooltip( 'destroy' );
+			this.removeTooltip( this.ui.infoIcon );
+			this.removeTooltip( this.ui.watchIcon );
+		},
+
+		'navigateToVideoPage' : function ( ev ) {
+			ev.preventDefault();
+			App.navigate( '#resources/videos/' + this.model.id , { trigger : true } );
 		},
 
 		'showDetails' : function () {
+			this.removeTooltip( this.ui.infoIcon );
 
 			if ( !this.ui.infoIcon.hasClass( 'blued' ) ) {
-				this.ui.infoIcon
-					.addClass( 'blued fa-times-circle')
-					.removeClass( 'grayed fa-info-circle' )
-					.tooltip( 'destroy' )
-					.attr( 'title' , 'Close' )
-					.tooltip( 'show' );
-
-				this.ui.infoOverlay.fadeIn();
+				this.ui.infoOverlay.fadeIn( function () {
+					this.ui.infoIcon.addClass( 'blued fa-times-circle').removeClass( 'grayed fa-info-circle' );
+					this.addTooltip( this.ui.infoIcon , { 'title' : 'Close' }  );
+					this.showTooltip( this.ui.infoIcon );
+				}.bind( this ) );
 			} else {
-				this.ui.infoIcon
-					.addClass( 'grayed fa-info-circle' )
-					.removeClass( 'blued fa-times-circle' )
-					.tooltip( 'destroy' )
-					.attr( 'title' , 'Description' )
-					.tooltip( 'show' );
-
-				this.ui.infoOverlay.fadeOut();
+				this.ui.infoOverlay.fadeOut( function () {
+					this.ui.infoIcon.addClass( 'grayed fa-info-circle' ).removeClass( 'blued fa-times-circle' );
+					this.addTooltip( this.ui.infoIcon , { 'title' : 'Description' } );
+					this.showTooltip( this.ui.infoIcon );
+				}.bind( this ) );
 			}
 		},
 
 		'watchLaterQueue' : function () {
-
 			if ( this.model.get( 'queued' ) ) {
 				App.request( 'common:removeFromQueue', this.model );
 			} else {
@@ -103,25 +109,34 @@ define( function ( require ) {
 		},
 
 		'matchedSegmentsToQueue' : function () {
-
 			if ( this.model.get( 'queued' ) ) {
-				this.ui.watchIcon
-					.removeClass( 'grayed' )
-						.addClass( 'blued' )
-							.tooltip( {
-								'title' : 'Remove from Watch Later List'
-							} );
+				this.ui.watchIcon.removeClass( 'grayed' ).addClass( 'blued' );
+				this.addTooltip( this.ui.watchIcon ,  { 'title' :  'Remove from Watch Later List' } );
 			} else {
-				this.ui.watchIcon
-					.removeClass( 'blued' )
-						.addClass( 'grayed' )
-							.tooltip( {
-								'title' : 'Add to Watch Later List'
-							} );
+				this.ui.watchIcon.removeClass( 'blued' ).addClass( 'grayed' );
+				this.addTooltip( this.ui.watchIcon , { 'title' : 'Add to Watch Later List' } );
 			}
 
 			this.ui.loadingIcon.hide();
 			this.ui.watchIcon.show();
+		},
+
+		'addTooltip' : function ( elem , options ) {
+			if ( !modernizr.touch ) {
+				elem.attr( 'title' , options.title || '' ).tooltip( options );
+			}
+		},
+
+		'removeTooltip' : function ( elem ) {
+			if ( !modernizr.touch ) {
+				elem.tooltip( 'destroy' );
+			}
+		},
+
+		'showTooltip' : function ( elem ) {
+			if ( !modernizr.touch ) {
+				elem.tooltip( 'show' );
+			}
 		}
 
 	} );
