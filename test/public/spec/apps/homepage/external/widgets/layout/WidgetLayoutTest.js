@@ -3,6 +3,8 @@ define(function(require) {
 
 	describe('Widget Layout - Test', function() {
 
+		require( 'jquery.spin' );
+
 		var sinon        = window.sinon;
 		var $            = require( 'jquery' );
 		var WidgetLayout = require('apps/homepage/external/widgets/layout/WidgetLayout');
