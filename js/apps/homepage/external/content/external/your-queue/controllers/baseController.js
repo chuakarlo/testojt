@@ -15,8 +15,14 @@ define( function ( require ) {
 		'doFetchLogic' : function ( collectionParam ) {
 
 			collectionParam.models.forEach( function ( model ) {
+				var contentId    = model.get( 'ContentId' );
+				var hasContentId = ( contentId && contentId !== 0 );
+
+				model.set( 'id', hasContentId ? contentId : 0 );
+				model.set( 'ContentId', hasContentId ? contentId : 0  );
+
 				model.set( 'queued', true );
-				model.set( 'VideoTypeId', 1 );
+				model.set( 'VideoTypeId', hasContentId ? 1 : 2 );
 			} );
 
 			return {

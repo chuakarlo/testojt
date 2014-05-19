@@ -12,12 +12,17 @@ define( function ( require ) {
 			var count = collectionParam.models[ 0 ].get( 'numFound' );
 
 			collectionParam.models = collectionParam.models.slice( 1 );
-
 			var qContentsIds = _.pluck( collectionParam.queueCollection, 'ContentId' );
 
 			collectionParam.models.forEach( function ( model ) {
+				var contentId    = model.get( 'ContentId' );
+				var hasContentId = ( contentId && contentId !== 0 );
+
+				model.set( 'id', hasContentId ? contentId : 0 );
+				model.set( 'ContentId', hasContentId ? contentId : 0  );
+
 				model.set( 'queued', _.contains( qContentsIds, model.id ) );
-				model.set( 'VideoTypeId', 1 );
+				model.set( 'VideoTypeId', hasContentId ? 1 : 2 );
 			} );
 
 			return {
