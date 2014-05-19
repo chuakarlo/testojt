@@ -112,7 +112,7 @@ define( function ( require ) {
 						defer.resolve( model );
 					},
 
-					'error' : function () {
+					'error' : function ( e ) {
 						return defer.reject( new Error( 'An error occurred while trying to add video to Watch Later. Please try again later.' ) );
 					}
 

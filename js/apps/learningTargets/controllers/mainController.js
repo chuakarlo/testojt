@@ -234,6 +234,10 @@ define( function ( require ) {
 			},
 
 			'showObservations' : function () {
+				this.showObservationsWithId( 0 );
+			},
+
+			'showObservationsWithId' : function ( id ) {
 				var helper = Main.helper;
 				helper._setContent( 'observations' );
 
@@ -243,7 +247,8 @@ define( function ( require ) {
 				helper._apiRequest( 'lt:observations', function ( collection ) {
 
 					var observationsView = new ObservationsView( {
-						collection : collection
+						collection             : collection,
+						selectedObeservationId : parseInt( id, 10 )
 					} );
 
 					// bind to redirect event

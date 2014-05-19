@@ -7,6 +7,9 @@ define( function ( require ) {
 	var _                    = require( 'underscore' );
 
 	return Marionette.CompositeView.extend( {
+		'initialize'        : function () {
+			this.collection.selectedObeservationId = this.options.selectedObeservationId;
+		},
 		'template'          : _.template( template ),
 		'itemView'          : observationsItemView,
 		'itemViewContainer' : '.lt-list'
