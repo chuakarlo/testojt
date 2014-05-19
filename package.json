@@ -36,6 +36,7 @@
     "colors": "~0.6.2",
     "eslint": "~0.5.1",
     "escomplex-js": "~0.1.1",
+    "istextorbinary": "~1.0.0",
     "grunt-blanket-mocha": "~0.4.0",
     "minimist": "0.0.8",
     "readdirp": "^1.0.1",

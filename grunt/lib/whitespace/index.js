@@ -1,8 +1,9 @@
 'use strict';
 
 // Load core modules
-var fs   = require( 'fs' );
-var path = require( 'path' );
+var fs             = require( 'fs' );
+var path           = require( 'path' );
+var isTextOrBinary = require('istextorbinary');
 
 // Load other modules
 var diff = require( '../diff' );
@@ -25,16 +26,20 @@ function trailing ( files, callback ) {
 	files.forEach( function ( file, index ) {
 		var filePath = path.join( process.cwd(), file );
 
-		try {
-			var contents = fs.readFileSync( filePath, 'utf8' );
-			var match    = new RegExp( /[\t ]+$/m ).test( contents );
+		// Only check text files
+		if ( isTextOrBinary.isTextSync( filePath ) ) {
+			try {
+				var contents = fs.readFileSync( filePath, 'utf8' );
+				var match    = new RegExp( /[\t ]+$/m ).test( contents );
 
-			if ( match ) {
-				errors.push( file );
+				if ( match ) {
+					errors.push( file );
+				}
+			} catch ( error ) {
+				return console.log( ( '  Could not read file ' + filePath ).red );
 			}
-		} catch ( error ) {
-			return console.log( ( '  Could not read file ' + filePath ).red );
 		}
+
 	} );
 
 	if ( errors.length ) {
