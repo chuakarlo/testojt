@@ -17,8 +17,8 @@ define( function ( require ) {
 		'template' : _.template( template ),
 
 		'regions' : {
-			'formRegion'  : '.forgot-password-form-holder',
-			'errorRegion' : '.error-holder'
+			'formRegion'   : '.forgot-password-form-holder',
+			'helperRegion' : '.helper-holder'
 		},
 
 		'onShow' : function () {
@@ -45,13 +45,29 @@ define( function ( require ) {
 			userModel.bind( 'validated' , function ( isValid, model, errors ) {
 
 				if ( isValid ) {
+					var userRequest = App.request( 'user:byEmail', model.get( 'email' ) );
+					self.helperRegion.show( new App.Common.LoadingView( {
+						'size' : 'small'
+					} ) );
 
-					App.vent.trigger( 'forgotpassword:success' );
+					App.when( userRequest ).done( function ( user ) {
+
+						var userObj = JSON.parse( user );
+
+						if ( userObj.length ) {
+
+							App.vent.trigger( 'forgotpassword:success' );
+
+						} else {
+							errorView.model.set( 'error', 'Sorry, we don\'t have an account using that email address.' );
+							self.helperRegion.show( errorView );
+						}
+					} );
 
 				} else {
 
 					errorView.model.set( 'error', errors.email );
-					self.errorRegion.show( errorView );
+					self.helperRegion.show( errorView );
 
 				}
 
