@@ -36,27 +36,6 @@ define( function ( require ) {
 		it( 'renderToggle should return remove-from-queue' , function () {
 			expect( base.renderToggle() ).to.be.equal( 'remove-from-queue' );
 		} );
-
-		it( 'getFetchLogic should return an object ', function () {
-			var collection = [ {
-				'id'  : 1,
-				'url' : 'content/1'
-			},
-			{
-				'id'  : 2,
-				'url' : 'content/2'
-			},
-			{
-				'id'  : 3,
-				'url' : 'content/3'
-			} ];
-
-			var fetchLogic = base.getFetchLogic( collection );
-
-			expect( fetchLogic ).to.have.keys( 'collection', 'count' );
-			expect( fetchLogic ).to.have.property( 'collection' , collection );
-			expect( fetchLogic ).to.have.property( 'count', collection.length );
-		} );
 	} );
 
 } );

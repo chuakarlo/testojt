@@ -19,19 +19,6 @@ define ( function ( require ) {
 
 			App.request.restore();
 		} );
-
-		it( 'doFetchLogic should return a object', function () {
-			var collection = [1, 2, 3];
-
-			var fetchedLogic = controller.doFetchLogic( collection );
-			expect( fetchedLogic ).to.be.an( 'object' ).and
-														.to.have.keys( 'collection', 'count' ).and
-														.to.have.property( 'collection', collection );
-
-			expect( fetchedLogic ).to.have.property( 'collection', collection );
-			expect( fetchedLogic ).to.have.property( 'count', collection.length );
-
-		} );
 	} );
 
 } );

@@ -54,6 +54,6 @@ define( function ( require ) {
 		'_footer'         : function ( ) {
 			return 'See In Observations';
 		},
-		'_mainUrl'        : '#resources/observation/me'
+		'_mainUrl'        : '#resources/learning/observations'
 	} );
 } );
