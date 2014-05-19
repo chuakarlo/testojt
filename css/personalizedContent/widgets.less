@@ -119,24 +119,18 @@
 		height:70%;
 
 		.avatar-holder {
-
-			float:left;
-			width:45%;
 			padding:0px;
 
 				img {
 
 				border:1px solid #ccc;
-				max-width:100px;
-				float:none;
+				width:100px;
+				margin-left:15px;
 
 			}
 		}
 
 		.percent-holder {
-
-			float:left;
-			width:55%;
 
 			#your-profile-circle {
 
@@ -160,10 +154,9 @@
 }
 
 #profile-icons-holder{
-	padding: 10px;
-	width: 265px;
-	text-align: center;
-	margin: auto 10px auto 10px;
+	margin      : auto;
+	padding-top : 42px;
+	text-align  : center;
 	.your-profile-icons{
 		position : relative;
 	span{
@@ -176,28 +169,37 @@
 		}
 	}
 	a{
- 	  border : 1px solid #CCCCCC;
-    float  : left;
-    height : 50px;
-    margin : 30px 15px;
-    width  : 50px;
-    color  : #3DADEF;
+	  border      : 1px solid #CCCCCC;
+    float       : left;
+    height      : 50px;
+    margin-left : 43px;
+    width       : 50px;
+    color       : #3DADEF;
   }
 	a:hover{
-		background-position : -12px -88px;
-		color               : #005580;
+		color : #005580;
 	}
 	.user{
-		background : #ccc url('../img/icon-users.png') no-repeat -12px -13px;
+		background : #ccc url('../img/icon-users.png') no-repeat -13px -14px;
+	}
+	.user:hover{
+		background-position : -13px -89px;
 	}
 	.setting{
-		background : #ccc url('../img/icon-settings.png') no-repeat -12px -13px;
-		span{
-		left: 0px !important;
+		background : #ccc url('../img/icon-settings.png') no-repeat -14px -14px;
+		span {
+			left   : 0px !important;
+			bottom : -44px;
 		}
+	}
+	.setting:hover{
+		background-position : -14px -89px;
 	}
 	.content{
 		background : #ccc url('../img/icon-contents.png') no-repeat -12px -13px;
+	}
+	.content:hover{
+		background-position : -13px -88px;
 	}
 	.the-clearer{
 		clear : both;
