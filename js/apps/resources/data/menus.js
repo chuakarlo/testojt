@@ -10,7 +10,7 @@ define( function ( require ) {
 
 	var learningTargets = {
 		'name' : 'Learning Targets',
-		'url'  : '#resources/learning',
+		'url'  : '#resources/learning/processes',
 		'icon' : 'fa-bullseye',
 		'id'   : 'link-more-targets'
 	};
