@@ -6,12 +6,12 @@ module.exports = function ( grunt ) {
 
 	grunt.config.set( 'blanket_mocha', {
 		'test' : {
-			'src' : [ 'test/public/index.html' ],
+			'src' : [ 'test/public/coverage.html' ],
 
-			'options': {
+			'options' : {
 				'threshold' : 80,
 				'log'       : true,
-				'logErrors' : true,
+				'logErrors' : true
 			}
 		}
 

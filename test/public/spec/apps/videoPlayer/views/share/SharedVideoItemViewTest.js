@@ -1,13 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	// test libraries
-	var sinon = window.sinon;
-
 	// dependency modules
-	var $     = require( 'jquery' );
 	var SharedVideoItemView = require( 'videoPlayer/views/share/SharedVideoItemView' );
-	var ContentModel        = require( 'videoPlayer/models/ContentModel' );
+	var Backbone            = require( 'backbone' );
 
 	require( 'videoPlayer/utils/selectText' );
 
@@ -16,12 +12,7 @@ define( function ( require ) {
 
 		before( function () {
 			sharedVideoItemView = new SharedVideoItemView( {
-				'model' : new ContentModel( {
-					'ImageURL'               : '',
-					'ContentName'            : '',
-					'SegmentLengthInSeconds' : '',
-					'ContentId'              : ''
-				} )
+				'model' : new Backbone.Model()
 			} );
 		} );
 

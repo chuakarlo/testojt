@@ -4,10 +4,8 @@ define( function ( require ) {
 	var sinon        = window.sinon;
 	var Backbone     = require( 'backbone' );
 	var App          = require( 'App' );
-	var Remoting     = require( 'Remoting' );
 
 	var ShareVideoLayout = require( 'videoPlayer/views/share/ShareVideoLayout' );
-	var ContentModel     = require( 'videoPlayer/models/ContentModel' );
 
 	require( 'videoPlayer/entities/SearchResults' );
 	require( 'jquery.spin' );
@@ -18,7 +16,7 @@ define( function ( require ) {
 		var contentModel;
 
 		before( function () {
-			contentModel     = new ContentModel();
+			contentModel     = new Backbone.Model();
 			shareVideoLayout = new ShareVideoLayout( { 'model' : contentModel } );
 		} );
 

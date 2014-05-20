@@ -1,8 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-
-	var Content   = require( 'videoPlayer/models/ContentModel' );
+	var Backbone  = require( 'backbone' );
 	var VideoView = require( 'videoPlayer/views/VideoInfoItemView' );
 
 	describe( 'VideoInfoItemView', function () {
@@ -15,8 +14,7 @@ define( function ( require ) {
 				'SegmentLengthInSeconds' : '',
 				'ContentDescription'     : ''
 			};
-			content = new Content();
-			content.set( fakeData );
+			content = new Backbone.Model( fakeData );
 
 			videoView = new VideoView( {
 				'model': content

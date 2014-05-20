@@ -70,7 +70,6 @@ define( function ( require ) {
 			//Controllers
 			'spec/apps/contentNavigation/controllers/HeaderControllerTest',
 			'spec/apps/contentNavigation/controllers/UtilitiesControllerTest',
-			'spec/apps/contentNavigation/controllers/base/FilterBaseTest',
 			'spec/apps/contentNavigation/controllers/base/ContentBaseTest',
 
 			// 'spec/apps/contentNavigation/controllers/pd360Library/PD360ContentControllerTest',
@@ -130,7 +129,7 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/views/tabs/PreviewItemViewTest.js',
 			// utils
 			'spec/apps/videoPlayer/utils/selectTextTest.js',
-			'spec/apps/videoPlayer/utils/toHHMMSSFormatTest.js',
+			'spec/apps/videoPlayer/utils/UtilsTest.js',
 			// entities
 			'spec/apps/videoPlayer/entities/ContentTest.js',
 			'spec/apps/videoPlayer/entities/RelatedVideosTest.js',

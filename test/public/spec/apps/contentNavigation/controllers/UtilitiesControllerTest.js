@@ -1,25 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var sinon      = window.sinon;
-    var Utils      = require( 'contentNavigation/controllers/UtilitiesController' );
-    var Controller = require( 'contentNavigation/controllers/GridController' );
+	var sinon = window.sinon;
+	var Utils = require( 'contentNavigation/controllers/UtilitiesController' );
 
-    describe( 'CN-Utilities Controller Test', function () {
-
-		var gridController;
-		var view;
-
-		before( function () {
-            gridController = new Controller();
-            view           = gridController.getView();
-            view.render();
-        } );
-
-       after( function () {
-            gridController = undefined;
-            view           = undefined;
-        } );
+	describe( 'CN-Utilities Controller Test', function () {
 
 		it( 'should be an object', function () {
 			Utils.should.be.an( 'Object' );
@@ -135,6 +120,6 @@ define( function ( require ) {
 
 		} );
 
-    } );
+	} );
 
 } );

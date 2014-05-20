@@ -25,7 +25,7 @@ define( function ( require ) {
 			App.Groups.should.have.property( 'Router' );
 		} );
 
-		describe( 'Show controller', function () {
+		describe.skip( 'Show controller', function () {
 
 			after( function () {
 				Remoting.fetch.restore();

@@ -1,0 +1,49 @@
+<!doctype html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Mocha Spec Runner</title>
+	<link rel="stylesheet" href="../../js/libs/mocha/mocha.css">
+</head>
+<body>
+
+	<div id="fixtures" style="display: none; visibility: hidden;"></div>
+	<div id="mocha"></div>
+
+	<script src="../../js/libs/mocha/mocha.js"></script>
+	<script>
+		mocha.setup( 'bdd' );
+	</script>
+	<script src="../../js/libs/chai/chai.js"></script>
+	<script src="../../js/libs/sinonjs/sinon.js"></script>
+	<script src="../../js/libs/requirejs/require.js"></script>
+
+	<script src="../../js/libs/blanket/dist/qunit/blanket.js"
+			data-cover-only="//js/"
+			data-cover-never="[ /js/libs/, /test/, /js/config/require ]"
+			data-cover-flags="branchTracking"></script>
+
+	<script src="../../js/libs/grunt-blanket-mocha/support/mocha-blanket.js"></script>
+
+	<script>
+
+        if ( window.PHANTOMJS ) {
+           blanket.options( 'reporter', '../../node_modules/grunt-blanket-mocha/support/grunt-reporter.js' );
+        }
+
+        // load require-config before loading tests
+        require( [ '../../js/config/require' ], function () {
+
+	        // configure correct path relative to this file
+			require.config( {
+				'baseUrl' : '../../js'
+			} );
+
+			// load spec runner and run tests/coverage
+			require( [ 'SpecRunner' ] );
+
+		} );
+
+	</script>
+</body>
+</html>

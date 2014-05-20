@@ -2,11 +2,8 @@ define( function ( require ) {
 	'use strict';
 
 	// test libraries
-	var sinon    = window.sinon;
-	var Backbone = require( 'backbone' );
-
+	var Backbone          = require( 'backbone' );
 	var SelectedItemsView = require( 'videoPlayer/views/share/SelectedItemsCollectionView' );
-	var SelectedItems     = require( 'videoPlayer/collections/SelectedItemsCollection' );
 
 	describe( 'SelectedItemsCollectionView', function () {
 
@@ -14,7 +11,7 @@ define( function ( require ) {
 
 		before( function () {
 			selectedItemsView = new SelectedItemsView( {
-				'collection' : new SelectedItems()
+				'collection' : new Backbone.Collection()
 			} );
 		} );
 

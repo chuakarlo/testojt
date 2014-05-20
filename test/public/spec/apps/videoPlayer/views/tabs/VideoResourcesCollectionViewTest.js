@@ -1,16 +1,16 @@
 define( function ( require ) {
 	'use strict';
 
+	var Backbone = require( 'backbone' );
+
 	var ResourcesCollectionView = require( 'videoPlayer/views/tabs/VideoResourcesCollectionView' );
-	var ResourcesCollection = require( 'videoPlayer/collections/VideoResourcesCollection' );
-	
+
 	describe( 'VideoResourcesCollectionView', function () {
 		var resourcesView;
 		var resources;
 		var fakeData;
 
 		before( function () {
-			resources = new ResourcesCollection();
 			fakeData = [
 				{
 					'url'          : '',
@@ -20,8 +20,7 @@ define( function ( require ) {
 					'downloadPath' : ''
 				}
 			];
-			resources.reset( fakeData );
-
+			resources = new Backbone.Collection( fakeData );
 
 			resourcesView = new ResourcesCollectionView( {
 				'collection' : resources
