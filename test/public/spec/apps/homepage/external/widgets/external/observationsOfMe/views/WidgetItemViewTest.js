@@ -3,7 +3,7 @@ define( function ( require ) {
 
 	var sinon          = window.sinon;
 	var $              = require( 'jquery' );
-	var expect         = require( 'chai' ).expect;
+	var moment          = require( 'moment' );
 	var Remoting       = require( 'Remoting' );
 	var Backbone       = require( 'backbone' );
 	var CompositeView  = require( 'apps/homepage/external/widgets/views/UserWidgetCompositeView' );
@@ -21,7 +21,7 @@ define( function ( require ) {
 				'NUMBEROFPRESCRIBEDPD' : 1,
 				'OBSERVATIONDATE' : 'January, 30 2014 15:11:54',
 				'OBSERVATIONID' : 664979,
-				'OBSERVATIONNAME' : 'Foo, Test on Jan-30-2014'
+				'OBSERVATIONNAME' : 'Fee Foo, Test on Jan-30-2014'
 			}, {
 				'NUMBEROFPRESCRIBEDPD' : 3,
 				'OBSERVATIONDATE' : 'January, 29 2014 15:11:54',
@@ -48,17 +48,18 @@ define( function ( require ) {
 
 		it( 'should be an instance of ItemView', function() {
 			UserWidgetCompositeViewInstance = new UserWidgetCompositeView.itemView();
-			expect( UserWidgetCompositeViewInstance ).to.be.an.instanceof( WidgetItemView );
+			UserWidgetCompositeViewInstance.should.be.an.instanceof( WidgetItemView );
 		} );
 
-		it( 'should limit the number of characters to 18 with elipses', function () {
+		it( 'should limit the number of characters to 26 with elipses', function () {
 			var observationsOfMe = UserWidgetCompositeViewInstance.limitCharacters( modelData[0].OBSERVATIONNAME );
-			expect( observationsOfMe ).to.be.equal( 'Foo, Test on Jan-3...' );
+			observationsOfMe.should.be.equal( 'Fee Foo, Test on Jan-30-20...' );
 		} );
 
-		it( 'should display date in M-D-YYYY format', function() {
+		it( 'should display time difference from now', function() {
+			var diff = moment( modelData[0].OBSERVATIONDATE ).fromNow();
 			var observationsOfMeDate = UserWidgetCompositeViewInstance.timeDiff( modelData[0].OBSERVATIONDATE );
-			expect( observationsOfMeDate ).to.be.equal( '1-30-2014' );
+			observationsOfMeDate.should.be.equal( diff );
 		} );
 
 	});

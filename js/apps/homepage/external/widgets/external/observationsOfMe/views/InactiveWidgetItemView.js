@@ -10,7 +10,7 @@ define ( function ( require ) {
 			return _.template( template );
 		},
 		'className' : function () {
-			return 'widget-wrapper row';
+			return 'widget-wrapper';
 		}
 	} );
 

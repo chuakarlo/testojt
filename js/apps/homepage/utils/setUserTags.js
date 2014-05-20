@@ -1,4 +1,4 @@
-define( function( require ) {
+define( function ( require ) {
 	'use strict';
 
 	var userData = require( 'apps/homepage/configuration/userDataLookup' );
@@ -9,8 +9,10 @@ define( function( require ) {
 
 	function pushTags ( targetArray, sourceArray, model, keyStr, comparison ) {
 		var key = hasOwnProperty( model, keyStr, comparison );
-		if( key !== comparison ) {
-			targetArray.push( sourceArray[ key ] );
+		if ( key !== comparison ) {
+			if ( sourceArray[ key ] ) {
+				targetArray.push( sourceArray[ key ] );
+			}
 		}
 	}
 

@@ -19,7 +19,7 @@ define( function ( require ) {
 				'_header'      : function () { return 'Observation'; },
 				'_id'          : 'observation',
 				'_items'       : [],
-				'_mainUrl'     : '/dev.html#resources/learning/courses',
+				'_mainUrl'     : '/#resources/learning/courses',
 				'imgSrc'       : function () { return 'link'; },
 				'em'           : 8.5
 			};

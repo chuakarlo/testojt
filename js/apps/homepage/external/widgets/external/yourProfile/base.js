@@ -51,6 +51,9 @@ define( function ( require ) {
 		'EmptyMessage'    : function () {
 			return '';
 		},
+		'EmptyType'       : function () {
+			return 'fa-user';
+		},
 		'_footer'         : function ( ) {
 			return 'Edit Settings';
 		},

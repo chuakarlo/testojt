@@ -1,10 +1,11 @@
 define( function ( require ) {
-
 	'use strict';
 
+	var App   = require( 'App' );
+
 	var utils = require( 'apps/homepage/external/content/utils/contentItemCollectionUtil' );
-	var $ = require( 'jquery' );
-	var _ = require( 'underscore' );
+	var $     = require( 'jquery' );
+	var _     = require( 'underscore' );
 
 	return {
 		'doFetchLogic' : function ( collectionParam ) {
@@ -17,12 +18,24 @@ define( function ( require ) {
 			collectionParam.models.forEach( function ( model ) {
 				var contentId    = model.get( 'ContentId' );
 				var hasContentId = ( contentId && contentId !== 0 );
+				var newContentId = hasContentId ? contentId : model.get( 'UUVideoTopicId' );
 
-				model.set( 'id', hasContentId ? contentId : 0 );
-				model.set( 'ContentId', hasContentId ? contentId : 0  );
+				model.set( 'id', newContentId );
+				model.set( 'ContentId', newContentId  );
 
 				model.set( 'queued', _.contains( qContentsIds, model.id ) );
 				model.set( 'VideoTypeId', hasContentId ? 1 : 2 );
+
+				if ( !hasContentId ) {
+					model.set( 'ContentName', model.get( 'Name' ) );
+					model.set( 'ContentDescription', model.get( 'Name' ) );
+					model.set( 'SegmentLengthInSeconds', 0 );
+					model.set( 'ImageURL', 0 );
+				}
+			} );
+
+			App.reqres.setHandler( 'homepage:recommendedCollection', function () {
+				return collectionParam;
 			} );
 
 			return {

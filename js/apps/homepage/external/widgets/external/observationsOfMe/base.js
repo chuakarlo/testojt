@@ -49,7 +49,10 @@ define( function ( require ) {
 			return 'Group Activity';
 		},
 		'EmptyMessage'    : function () {
-			return 'No Observation items!';
+			return 'No observation items to show.';
+		},
+		'EmptyType'       : function () {
+			return 'fa-eye-slash';
 		},
 		'_footer'         : function ( ) {
 			return 'See In Observations';

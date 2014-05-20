@@ -16,7 +16,7 @@ define(function(require) {
 		var WidgetCollectionStub;
 		var modelData;
 
-		before(function() {
+		before( function() {
 			modelData = [{
 				'PERCENTCOMPLETE': 0,
 				'COURSEID': 7313,
@@ -107,24 +107,27 @@ define(function(require) {
 			dfd.resolve( modelData );
 
 			WidgetCollectionStub = sinon.stub(Remoting, 'fetch').returns( dfd.promise() );
-			UserWidgetCompositeView = new CompositeView({
-				model: new Backbone.Model({
+			UserWidgetCompositeView = new CompositeView( {
+				model: new Backbone.Model( {
 					WidgetId: 1
-				}),
+				} ),
 				_isRendered : true
-			});
+			} );
 			UserWidgetCompositeView.render();
-		});
+		} );
 
-		after(function() {
+		after( function() {
 			Remoting.fetch.restore();
-		});
+		} );
 
 		it( 'should be an instance of ItemView', function() {
-			UserWidgetCompositeViewInstance = new UserWidgetCompositeView.itemView();
+			var Model     = Backbone.Model.extend();
+			var itemModel = new Model( modelData[0] );
+
+			UserWidgetCompositeViewInstance = new UserWidgetCompositeView.itemView( { 'model' : itemModel } );
 			expect( UserWidgetCompositeViewInstance ).to.be.an.instanceof( WidgetItemView );
 			UserWidgetCompositeViewInstance.render();
-		});
+		} );
 
 		it( 'should limit the number of characters to 37 with elipses', function () {
 			var courseName = UserWidgetCompositeViewInstance.limitCharacter( modelData[5].COURSENAME );

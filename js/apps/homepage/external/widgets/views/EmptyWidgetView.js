@@ -5,7 +5,7 @@ define( function ( require ) {
 	var _               = require( 'underscore' );
 	var template        = require( 'text!apps/homepage/external/widgets/templates/EmptyWidgetView.html' );
 
-	var className = 'col-md-12 no-padding';
+	var className = 'col-md-12 no-padding empty-widget-holder';
 
 	return Marionette.ItemView.extend( {
 		'template'        : _.template( template ),
@@ -14,7 +14,8 @@ define( function ( require ) {
 		},
 		'templateHelpers' : function () {
 			return {
-				'content' : this.EmptyMessage
+				'content' : this.EmptyMessage,
+				'icon'    : this.EmptyType
 			};
 		}
 	} );

@@ -190,6 +190,10 @@ define( function ( require ) {
 			'spec/apps/homepage/external/content/external/your-queue/controllers/queueControllerTest.js',
 			'spec/apps/homepage/external/content/external/your-queue/models/QueueModelTest.js',
 
+			//Homepage - Recommended Content
+			'spec/apps/homepage/external/content/external/recommended/baseTest.js',
+			'spec/apps/homepage/external/content/external/recommended/collections/RecommendedCollectionTest.js'
+
 		]
 
 	};

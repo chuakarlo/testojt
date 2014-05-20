@@ -28,7 +28,14 @@ define( function ( require ) {
 			preInitialize( this );
 			controller.doInitialize( this );
 		},
+		'events' : {
+			'click #next-slide-recommended' : function ( evt ) {
 
+				$( '.sc-segment-image-container a' ).each( function ( ) {
+
+				} );
+			}
+		},
 		'itemViewOptions' : function () {
 			return controller.doItemViewOptions( this );
 		},

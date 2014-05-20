@@ -9,6 +9,6 @@ define( function ( require ) {
 	return Marionette.ItemView.extend( {
 		'tagName'   : 'li',
 		'template'  : _.template( template ),
-		'className' : 'widget-specific widget-placeholder-wrapper no-padding'
+		'className' : 'widget-specific widget-placeholder-wrapper'
 	} );
 } );

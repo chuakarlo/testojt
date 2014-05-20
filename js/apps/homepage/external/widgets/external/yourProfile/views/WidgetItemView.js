@@ -4,10 +4,16 @@ define( function ( require ) {
 	var Marionette      = require( 'marionette' );
 	var _               = require( 'underscore' );
 	var template        = require( 'text!apps/homepage/external/widgets/external/yourProfile/templates/widgetItemView.html' );
+	var $               = require( 'jquery' );
+
+	var podUrl = 'http://resources.pd360.com/PD360/uploads/avatars/profile/';
 
 	return Marionette.ItemView.extend( {
 		'template'          : _.template( template ),
-		'className'         : 'col-md-12 no-padding',
+		'className'         : 'col-md-12 no-padding user-settings',
+		'replaceSrc'        : function ( e ) {
+			$( e.currentTarget ).attr( 'src', podUrl + 'default.png' );
+		},
 		'templateHelpers'   : function ( ) {
 			return {
 				'avatar'      : this.getAvatarWithLink( this.model.attributes.Avatar ),
@@ -16,7 +22,6 @@ define( function ( require ) {
 			};
 		},
 		'getAvatarWithLink' : function ( a ) {
-			var podUrl = 'http://resources.pd360.com/PD360/uploads/avatars/profile/';
 			return podUrl + a;
 		},
 		'getDescription'    : function ( d ) {
@@ -31,7 +36,7 @@ define( function ( require ) {
 			var kCount   = 0;
 			for ( var k in m.attributes ) {
 				kCount++;
-				if ( m.attributes[ k ] === '' || m.attributes[ k ] === 'default.png' || m.attributes[ k ] === 0 || m.attributes[k] === '0001-01-01' ) {
+				if ( m.attributes[ k ] === '' || m.attributes[ k ] === 'default.png' || m.attributes[ k ] === 0 || m.attributes[ k ] === '0001-01-01' ) {
 					cntEmpty++;
 				}
 			}
@@ -58,13 +63,21 @@ define( function ( require ) {
 				} );
 
 				$(eCircle).find( '.fill' )
-					.css( 'width', '0.99em' )
-					.css( 'height', '0.99em' );
+					.css( 'width', '1em' )
+					.css( 'height', '1em' );
 				$(eCircle).find( '.bar' )
-					.css( 'width', '0.99em' )
-					.css( 'height', '0.99em' );
+					.css( 'width', '1em' )
+					.css( 'height', '1em' );
 
 			} );
+
+			var avatarImg = parent.$( '#avatarSrc' );
+
+			avatarImg.error( function ( e ) {
+				$( e.currentTarget ).attr( 'src', podUrl + 'default.png' );
+			});
+
+			avatarImg.attr( 'src', avatarImg.attr( 'data-src' ) );
 		}
 	} );
 } );

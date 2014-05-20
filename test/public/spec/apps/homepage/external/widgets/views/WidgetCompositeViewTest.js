@@ -28,7 +28,7 @@ define( function ( require ) {
 			'_header'      : function () { return 'Your Profile'; },
 			'_id'          : 'yourprofile',
 			'_items'       : [],
-			'_mainUrl'     : '/dev.html#resources/learning/your-profile',
+			'_mainUrl'     : '/#resources/learning/your-profile',
 			'em'           : 8.5
 		};
 
@@ -41,7 +41,7 @@ define( function ( require ) {
 			'_header'      : function () { return 'Observation'; },
 			'_id'          : 'observation',
 			'_items'       : [],
-			'_mainUrl'     : '/dev.html#resources/learning/courses',
+			'_mainUrl'     : '/#resources/learning/courses',
 			'em'           : 8.5
 		};
 
@@ -54,7 +54,7 @@ define( function ( require ) {
 			'_header'      : function () { return 'Courses'; },
 			'_id'          : 'courses',
 			'_items'       : [],
-			'_mainUrl'     : '/dev.html#resources/learning/groupactivity',
+			'_mainUrl'     : '/#resources/learning/groupactivity',
 			'em'           : 8.5
 		};
 
@@ -67,7 +67,7 @@ define( function ( require ) {
 			'_header'      : function () { return 'See Group Activity'; },
 			'_id'          : 'groupactivity',
 			'_items'       : [],
-			'_mainUrl'     : '/dev.html#resources/learning/groupactivity',
+			'_mainUrl'     : '/#resources/learning/groupactivity',
 			'em'           : 8.5
 		};
 
@@ -76,9 +76,10 @@ define( function ( require ) {
 			var userWidgetCollection = [ yourProfile, observation ];
 
 			var widgetComposite = new WidgetComposite ( {
-				'collection'           : new WidgetCollection( widgets ),
-				'widgetCollection'     : new WidgetCollection( collection ),
-				'userWidgetCollection' : new UserWidgetCollection( userWidgetCollection ),
+				'collection'                 : new WidgetCollection( widgets ),
+				'widgetCollection'           : new WidgetCollection( collection ),
+				'actualUserWidgetCollection' : new UserWidgetCollection( userWidgetCollection ),
+				'userWidgetCollection'       : new UserWidgetCollection( userWidgetCollection ),
 			} );
 			return widgetComposite;
 		}
@@ -104,6 +105,8 @@ define( function ( require ) {
 		describe( 'Events', function () {
 			var widgetPreviewSpy, allWidgetsSpy, activeWidgetSpy, inactiveWidgetSpy;
 			var activateWidgetSpy, deactivateWidgetSpy;
+			var saveAllSpy, saveAllCloseSpy, resetAllSpy;
+
 			var widgetCompositeEvt;
 
 			before( function () {
@@ -113,6 +116,9 @@ define( function ( require ) {
 				inactiveWidgetSpy   = sinon.spy( WidgetComposite.prototype, 'showInactiveWidgets');
 				activateWidgetSpy   = sinon.spy( WidgetComposite.prototype, 'activateWidget' );
 				deactivateWidgetSpy = sinon.spy( WidgetComposite.prototype, 'deactivateWidget' );
+				saveAllSpy          = sinon.spy( WidgetComposite.prototype, 'saveAll' );
+				saveAllCloseSpy     = sinon.spy( WidgetComposite.prototype, 'saveAllClose' );
+				resetAllSpy         = sinon.spy( WidgetComposite.prototype, 'resetAll' );
 
 				widgetCompositeEvt = createWidgetCompositeObj();
 				widgetCompositeEvt.render();
@@ -125,6 +131,10 @@ define( function ( require ) {
 				WidgetComposite.prototype.showActiveWidgets.restore();
 				WidgetComposite.prototype.showInactiveWidgets.restore();
 				WidgetComposite.prototype.activateWidget.restore();
+				WidgetComposite.prototype.saveAll.restore();
+				WidgetComposite.prototype.saveAllClose.restore();
+				WidgetComposite.prototype.resetAll.restore();
+
 				Remoting.fetch.restore();
 			} );
 
@@ -160,39 +170,12 @@ define( function ( require ) {
 
 			} );
 
-			it( 'activateWidget : click .actions .save', function () {
-
-				widgetCompositeEvt.$el.find('#widget-settings-selection li .inactive').first().trigger( 'click' );
-
-				widgetCompositeEvt.$el.find('.actions .save').first().trigger( 'click' );
-				activateWidgetSpy.called.should.equal( true );
-				activateWidgetSpy.callCount.should.be.at.least( 1 );
-				activateWidgetSpy.reset();
-			} );
-
-			it( 'activateWidget : click .actions .save-and-close', function () {
-
-				widgetCompositeEvt.$el.find('#widget-settings-selection li .inactive').first().trigger( 'click' );
-				widgetCompositeEvt.$el.find('.actions .save-and-close').first().trigger( 'click' );
-				activateWidgetSpy.called.should.equal( true );
-				activateWidgetSpy.callCount.should.be.at.least( 1 );
-				activateWidgetSpy.reset();
-			} );
-
 			it( 'activateWidget : click .widget-icon-btn.inactive', function () {
 
 				widgetCompositeEvt.$el.find('.widget-icon-btn.inactive').first().trigger( 'click' );
 				activateWidgetSpy.called.should.equal( true );
 				activateWidgetSpy.callCount.should.be.at.least( 1 );
 				activateWidgetSpy.reset();
-			} );
-
-			it( 'deactivateWidget : click .actions .remove', function () {
-				widgetCompositeEvt.$el.find('#widget-settings-selection li .active').first().trigger( 'click' );
-				widgetCompositeEvt.$el.find('.actions .remove').first().trigger( 'click' );
-				deactivateWidgetSpy.called.should.equal( true );
-				deactivateWidgetSpy.callCount.should.be.at.least( 1 );
-				deactivateWidgetSpy.reset();
 			} );
 
 			it( 'deactivateWidget : click .widget-icon-btn.active', function () {
@@ -203,14 +186,27 @@ define( function ( require ) {
 				deactivateWidgetSpy.reset();
 			} );
 
-			it( 'deactivateWidget : click .remove-and-close', function () {
-				widgetCompositeEvt.$el.find('#widget-settings-selection li .active').first().trigger( 'click' );
-				widgetCompositeEvt.$el.find('.remove-and-close').first().trigger( 'click' );
-				deactivateWidgetSpy.called.should.equal( true );
-				deactivateWidgetSpy.callCount.should.be.at.least( 1 );
-				deactivateWidgetSpy.reset();
+			it( 'saveAll : mousedown .actions .save', function () {
+				widgetCompositeEvt.$el.find('.actions .save').first().trigger( 'mousedown' );
+
+				saveAllSpy.called.should.equal( true );
+				saveAllSpy.callCount.should.be.at.least( 1 );
 			} );
 
+			it( 'saveAllClose : mousedown .actions .save-and-close', function () {
+				widgetCompositeEvt.$el.find('.actions .save-and-close').first().trigger( 'mousedown' );
+
+				saveAllCloseSpy.called.should.equal( true );
+				saveAllCloseSpy.callCount.should.be.at.least( 1 );
+			} );
+
+
+			it( 'resetAll : mousedown .actions .cancel', function () {
+				widgetCompositeEvt.$el.find('.actions .cancel').first().trigger( 'mousedown' );
+
+				resetAllSpy.called.should.equal( true );
+				resetAllSpy.callCount.should.be.at.least( 1 );
+			} );
 		} );
 
 		it( 'should be able to call .showAllWidgets', function () {

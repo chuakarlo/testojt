@@ -32,6 +32,7 @@ define( function () {
 		dest.icon         = source.icon;
 		dest.em           = source.em;
 		dest.EmptyMessage = source.EmptyMessage;
+		dest.EmptyType    = source.EmptyType;
 	}
 
 	function setlegacyData ( dest, source ) {

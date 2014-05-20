@@ -1,5 +1,18 @@
-<a href="#resources/learning/observations/<%- observationId %>">
-	<p class="col-md-7"><%- observationName %> (<%- numPd %>)</p>
-	<p class="col-md-4"><%- observationDate %></p>
-	<img src="img/arrow-play.png" class="col-md-1 no-padding">
-</a>
+<div class="observation-of-me">
+	<a href="#resources/learning/observations/<%- observationId %>">
+		<div class="notify">
+			<div class="label label-sm label-default"><i class="fa fa-eye fa-lg"></i></div>
+			<span class="badge badge-success"><%- numPd %></span>
+		</div>
+		<div class="observation-name">
+			<p>
+				<%- observationName %>
+			</p>
+		</div>
+		<div class="observation-date">
+			<p>
+				<%- observationDate %>
+			</p>
+		</div>
+	</a>
+</div>

@@ -52,8 +52,11 @@ define( function ( require ) {
 			return 'See All Courses';
 		},
 		'EmptyMessage'    : function () {
-			return 'No available courses!';
+			return 'No available courses to show.';
 		},
-		'_mainUrl'        : '/dev.html#resources/learning/courses'
+		'EmptyType'       : function () {
+			return 'fa-list-ol';
+		},
+		'_mainUrl'        : '#resources/learning/courses'
 	} );
 } );

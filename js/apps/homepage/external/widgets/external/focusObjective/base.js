@@ -40,14 +40,17 @@ define( function ( require ) {
 				}
 			} );
 		},
-		'_mainUrl'        : '/index.html#resources/learning/processes',
+		'_mainUrl'        : '#resources/learning/processes',
 		'getTemplate'     : InactiveWidgetItemView,
 		'_id'             : 'focusObjective',
 		'_header'         : function () {
 			return 'Focus Objectives';
 		},
 		'EmptyMessage'    : function () {
-			return 'No available videos!';
+			return 'No available videos to show.';
+		},
+		'EmptyType'       : function () {
+			return 'fa-video-camera';
 		},
 		'_footer'         : function ( ) {
 			return 'See All Focus Objectives';

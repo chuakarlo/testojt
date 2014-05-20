@@ -29,7 +29,7 @@ define( function ( require ) {
 		'className'       : 'widget-item',
 		'templateHelpers' : function () {
 			return {
-				'url'        : '/dev.html#resources/learning/courses',
+				'url'        : '#resources/learning/courses/' + this.model.get( 'COURSEID' ),
 				'content'    : this.model ? this.limitCharacter( this.model.get( 'COURSENAME' ) ) : '',
 				'completion' : this.model ? this.model.get( 'PERCENTCOMPLETE' ) : ''
 			};

@@ -47,7 +47,10 @@ define( function ( require ) {
 			return 'What\'s New';
 		},
 		'EmptyMessage'    : function () {
-			return 'No new activities!';
+			return 'No new activities to show.';
+		},
+		'EmptyType'       : function () {
+			return 'fa-magic';
 		},
 		'_footer'         : function ( ) {
 			return 'See All What\'s New';

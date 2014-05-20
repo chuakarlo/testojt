@@ -93,6 +93,7 @@ define( function ( require ) {
 		'events' : {
 			'click div#widget-settings.closed'         : 'showWidgetSettingsPanel',
 			'click p#awesomeness'                      : 'showWidgetSettingsPanel',
+			'click #placeholder-icon'                  : 'showWidgetSettingsPanel',
 			'click div#widget-settings.opened'         : 'closeWidgetSettingsPanel',
 			'focusout #widgets-settings-panel-wrapper' : 'blurAction',
 			'click #widgets-settings-panel-wrapper'    : 'focusAction'

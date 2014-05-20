@@ -8,7 +8,7 @@ define( function ( require ) {
 	var template        = require( 'text!apps/homepage/external/widgets/external/observationsOfMe/templates/widgetItemView.html' );
 	var limitCharacters = require( 'apps/homepage/utils/limitCharacters' );
 
-	var className    = 'col-md-12 no-padding widget-item';
+	var className    = 'widget-item';
 	var templateBind = _.template( template );
 
 	return Marionette.ItemView.extend( {
@@ -25,10 +25,10 @@ define( function ( require ) {
 			};
 		},
 		'limitCharacters' : function ( text ) {
-			return limitCharacters( text, 18 );
+			return limitCharacters( text, 26 );
 		},
 		'timeDiff'        : function ( time ) {
-			var now = moment( time ).format( 'M-D-YYYY' );
+			var now = moment( time ).fromNow();
 			return now;
 		}
 	} );

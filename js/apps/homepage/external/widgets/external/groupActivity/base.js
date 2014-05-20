@@ -49,11 +49,14 @@ define( function ( require ) {
 			return 'Group Activity';
 		},
 		'EmptyMessage'    : function () {
-			return 'No groups shared recent activities!';
+			return 'No recent group activities.';
+		},
+		'EmptyType'       : function () {
+			return 'fa-group';
 		},
 		'_footer'         : function ( ) {
 			return 'See All Groups';
 		},
-		'_mainUrl'        : '/dev.html#groups'
+		'_mainUrl'        : '#groups'
 	} );
 } );

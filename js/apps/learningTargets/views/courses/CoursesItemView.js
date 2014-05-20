@@ -46,6 +46,10 @@ define( function ( require ) {
 				.css( 'width', '0.99em' )
 				.css( 'height', '0.99em' );
 
+			var self = this;
+			if ( self.model.get( 'COURSEID' ) === self.model.collection.selectedCourseId ) {
+				self.$el.find( '.course-title' ).trigger( 'click' );
+			}
 		}
 
 	} );

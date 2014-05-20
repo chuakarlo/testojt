@@ -1,27 +1,31 @@
 <div class="your-profile-container">
 	<div class="row">
-		<div class="avatar-holder col-md-4">
-			<img src="<%= avatar %>" />
+		<div class="avatar-holder col-xs-5">
+			<img id="avatarSrc" data-src="<%= avatar %>" src="" />
 		</div>
-		<div class="percent-holder col-md-8">
-			<div id="your-profile-circle" class="profile-percent">
-				<%- percentage %>
+		<div class="percent-holder col-xs-7">
+			<div class="percent-holder">
+				<div id="your-profile-circle" class="profile-percent">
+					<%- percentage %>
+				</div>
 			</div>
 			<div class="profile-str">
 				<%- description %>
 			</div>
 		</div>
 	</div>
-
 	<div id="profile-icons-holder">
-		<a href="#settings/profile" id="profile-icon" class="img-circle your-profile-icons user">
-			<span>Profile</span>
+		<a href="#settings/profile" id="profile-icon" class="col-xs-3">
+			<i class="fa fa-user"></i>
+			<div>Profile</div>
 		</a>
-		<a href="#settings/personal-reports" id="setting-icon" class="img-circle your-profile-icons setting">
-			<span>Personal Reports</span>
+		<a href="#settings/personal-reports" id="setting-icon" class="col-xs-6">
+			<i class="fa fa-signal"></i>
+			<div>Personal Reports</div>
 		</a>
-		<a href="#settings/licenses" id="license-icon" class="img-circle your-profile-icons content">
-			<span>Licenses</span>
+		<a href="#settings/licenses" id="license-icon" class="col-xs-3">
+			<i class="fa fa-file-o"></i>
+			<div>Licenses</div>
 		</a>
 	</div>
 </div>

@@ -102,7 +102,7 @@ define( function ( require ) {
 				App.navigate( 'resources/learning/processes', true );
 			},
 
-			'showCourses' : function () {
+			'showCoursesWithId' : function ( id ) {
 				var helper = Main.helper;
 
 				// set content
@@ -113,7 +113,8 @@ define( function ( require ) {
 
 				helper._apiRequest( 'lt:courses', function ( collection ) {
 					var coursesView = new CoursesView( {
-						collection : collection
+						collection       : collection,
+						selectedCourseId : parseInt( id, 10 )
 					} );
 
 					// bind to redirect event
@@ -122,6 +123,10 @@ define( function ( require ) {
 					// display Courses
 					helper._showView( coursesView );
 				} );
+			},
+
+			'showCourses' : function () {
+				this.showCoursesWithId( 0 );
 			},
 
 			'showProcesses' : function () {

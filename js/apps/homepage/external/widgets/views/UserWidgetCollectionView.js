@@ -6,6 +6,19 @@ define( function ( require ) {
 	var UserWidgetItemView      = require( 'apps/homepage/external/widgets/views/UserWidgetCompositeView' );
 	var EmptyUserWidgetItemView = require( 'apps/homepage/external/widgets/views/EmptyUserWidgetItemView' );
 
+	function addCarousel ( container, appendToID ) {
+		require( [ 'pc-carouselSnap' ], function ( $ ) {
+			$( container ).carouselSnap ( {
+				nextID        : 'next-slide-' + appendToID,
+				prevID        : 'previous-slide-' + appendToID,
+				startOnCenter : false,
+				rotate        : true,
+				beforeShift   : function () {},
+				afterShift    : function () {}
+			} );
+		} );
+	}
+
 	return Marionette.CollectionView.extend( {
 		'tagName'   : 'ul',
 		'itemView'  : UserWidgetItemView,
@@ -18,6 +31,7 @@ define( function ( require ) {
 				var emptyUserWidgetItemView = new EmptyUserWidgetItemView();
 				self.$el.append( emptyUserWidgetItemView.render().el );
 			}
+			addCarousel( self.$el, 'active-widgets' );
 		}
 	} );
 } );

@@ -12,7 +12,7 @@ define( function ( require ) {
 		'templateHelpers' : function () {
 			return {
 				'content' : this.limitCharacter( this.model.get( 'ContentName' ) ),
-				'url'     : '/dev.html#resources/videos/' + this.model.get( 'ContentId' ),
+				'url'     : '/#resources/videos/' + this.model.get( 'ContentId' ),
 				'imgIcon' : this.model.get( 'ImageURL' )
 			};
 		},

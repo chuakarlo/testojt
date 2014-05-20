@@ -1,6 +1,7 @@
  define( function ( require ) {
 	'use strict';
 
+	var Backbone   = require( 'backbone' );
 	var Marionette = require( 'marionette' );
 	var App        = require( 'App' );
 	var sinon      = window.sinon;
@@ -46,7 +47,10 @@
 			var helper = App.LearningTargets.Main.helper;
 
 			before( function () {
-				courseView = new CoursesView();
+				courseView = new CoursesView( {
+					collection : new Backbone.Collection.extend(),
+					selectedCourseId : 0
+				} );
 				setContent = sinon.stub( helper, '_setContent' );
 				showView   = sinon.stub( helper, '_showView' );
 				request    = sinon.stub( helper, '_apiRequest' );

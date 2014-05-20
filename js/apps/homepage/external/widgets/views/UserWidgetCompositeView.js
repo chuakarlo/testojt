@@ -9,7 +9,7 @@ define( function ( require ) {
 	var footerTemplate       = require( 'text!apps/homepage/external/widgets/templates/widgetFooterTemplate.html' );
 	var widgetLookup         = require( 'apps/homepage/external/widgets/manifest' );
 	var WidgetItemCollection = require( 'apps/homepage/external/widgets/collections/WidgetItemCollection' );
-	var LoadingView          = require('common/views/LoadingView');
+	var App                  = require('App');
 
 	function returnCollection ( view, collection, widgets ) {
 		return collection;
@@ -18,6 +18,7 @@ define( function ( require ) {
 	function replaceCollection ( view, collection, widgets ) {
 		view.itemView                        = ItemView;
 		view.itemView.prototype.EmptyMessage = widgets.EmptyMessage();
+		view.itemView.prototype.EmptyType    = widgets.EmptyType();
 		return new Backbone.Collection( [ { } ] );
 	}
 
@@ -68,9 +69,9 @@ define( function ( require ) {
 	return Marionette.CompositeView.extend( {
 		'template'          : _.template( template ),
 		'tagName'           : 'li',
-		'className'         : 'widget-specific no-padding',
+		'className'         : 'widget-specific',
 		'itemViewContainer' : '.item-container',
-		'emptyView'         : LoadingView,
+		'emptyView'         : App.Common.LoadingView,
 
 		'templateHelpers'   : function () {
 			return setTemplateHelpers( this );

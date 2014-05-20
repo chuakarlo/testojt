@@ -2,9 +2,10 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette      = require( 'marionette' );
-	var LoadingView     = require('common/views/LoadingView');
 	var controller      = require( 'apps/homepage/external/content/controllers/contentItemCollectionController' );
 	var App             = require( 'App' );
+
+	require( 'apps/homepage/external/content/agents/Listener' );
 	require( 'common/entities/Queue' );
 
 	return Marionette.CollectionView.extend( {
@@ -16,7 +17,7 @@ define( function ( require ) {
 		},
 		'tagName'         : 'ul',
 		'className'       : 'row',
-		'emptyView'       : LoadingView,
+		'emptyView'       : App.Common.LoadingView,
 		'itemView'        : App.Common.SegmentCardsView,
 
 		'initialize' : function () {

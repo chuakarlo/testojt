@@ -7,6 +7,9 @@ define( function ( require ) {
 	var _               = require( 'underscore' );
 
 	return Marionette.CompositeView.extend( {
+		'initialize'        : function () {
+			this.collection.selectedCourseId = this.options.selectedCourseId;
+		},
 		'tagName'           : 'div',
 		'className'         : 'lt-content-courses',
 		'template'          : _.template( template ),

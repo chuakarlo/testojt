@@ -37,14 +37,9 @@ define( function ( require ) {
 
 		// Check if collection is empty to render the emptyContentCollectionView
 		if ( !view.collection.length ) {
-			view.emptyView.onRender();
-		} else {
-			if ( view.collection.length === 0 ) {
-				view.emptyView = EmptyContentCollectionView;
-				view.emptyView.onRender();
-			}
-			UIManager.applyCircularScroll( view.$el, id, view, base, count );
+			view.emptyView = EmptyContentCollectionView;
 		}
+		UIManager.applyCircularScroll( view.$el, id, view, base, count );
 	}
 
 	return {
@@ -62,13 +57,8 @@ define( function ( require ) {
 			$( queueCountSelector ).text( view.collection.length );
 			$( queueSelector + ' ul li' ).trigger( 'removeQueueElements', recommendedItemView.model );
 
-			if ( !view.collection.length ) {
-				view.emptyView.onRender();
-			} else {
-				if ( view.collection.length === 0 ) {
-					view.emptyView = EmptyContentCollectionView;
-					view.emptyView.onRender();
-				}
+			if ( view.collection.length === 0 ) {
+				view.emptyView = EmptyContentCollectionView;
 			}
 			view.render();
 
