@@ -25,6 +25,15 @@ define( function ( require ) {
 	require( 'user/entities/Observation' );
 	require( 'user/entities/SendPassword' );
 
+	require( 'apps/applications' );
+	require( 'user/SessionHelper' );
+
+	if ( App.request( 'session:authenticated' ) && App.request( 'session:personnel' ) === false ) {
+		// show a loading view while we wait
+		App.content.show( new App.Common.LoadingView() );
+		App.request( 'session:refresh' );
+	}
+
 	var SettingsLayout = require( 'user/views/settings/SettingsLayout' );
 
 	App.module( 'User', function ( User, App ) {
@@ -177,11 +186,6 @@ define( function ( require ) {
 
 		App.reqres.setHandler( 'login:error', function ( error ) {
 			User.Login.Controller.showLoginError( error );
-		} );
-
-		// set handler when requesting if session is authenticated
-		App.reqres.setHandler( 'session:authenticated', function () {
-			return Session.authenticated();
 		} );
 
 		App.reqres.setHandler( 'session:username', function () {

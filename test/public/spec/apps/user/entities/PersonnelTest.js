@@ -1,3 +1,4 @@
+/* eslint max-nested-callbacks: [2, 5] */
 define( function ( require ) {
 	'use strict';
 
@@ -5,6 +6,8 @@ define( function ( require ) {
 	var sinon    = window.sinon;
 	var App      = require( 'App' );
 	var $        = require( 'jquery' );
+
+	require( 'user/entities/Personnel' );
 
 	describe( 'User Personnel Model Test', function () {
 
@@ -21,7 +24,7 @@ define( function ( require ) {
 				model = new App.Entities.Personnel();
 			} );
 
-			after( function() {
+			after( function () {
 				model = null;
 			} );
 
@@ -48,7 +51,7 @@ define( function ( require ) {
 
 				var options = model.getUpdateOptions();
 
-				options.should.be.ok;
+				options.should.be.ok; // jshint ignore:line
 
 				options.should.have.property( 'method' );
 				options.method.should.equal( 'update' );
@@ -78,7 +81,8 @@ define( function ( require ) {
 
 		describe( 'when requesting `user:personnel`', function () {
 
-			var result, ajax;
+			var result;
+			var ajax;
 
 			var fetch = function ( done ) {
 				var fetching = App.request( 'user:personnel' );
@@ -99,7 +103,9 @@ define( function ( require ) {
 			describe( 'and an error occurs', function () {
 
 				before( function ( done ) {
-					App.reqres.setHandler( 'pd360:available', function () { return false; } );
+					App.reqres.setHandler( 'pd360:available', function () {
+						return false;
+					} );
 					var err = new Error();
 
 					ajax = sinon.stub( $, 'ajax' );
@@ -120,7 +126,9 @@ define( function ( require ) {
 			describe( 'and returns successfully', function () {
 
 				before( function ( done ) {
-					App.reqres.setHandler( 'pd360:available', function () { return false; } );
+					App.reqres.setHandler( 'pd360:available', function () {
+						return false;
+					} );
 					ajax = sinon.stub( $, 'ajax' );
 					ajax.yieldsToAsync( 'success', { 'test' : true } );
 

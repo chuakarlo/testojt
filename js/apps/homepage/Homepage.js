@@ -1,33 +1,39 @@
 define( function ( require ) {
 	'use strict';
 
-	var App        = require( 'App' );
-	var AuthRouter = require( 'AuthRouter' );
+	return function () {
 
-	// ## Homepage App
-	App.module( 'Homepage', function ( Homepage, App ) {
+		var App        = require( 'App' );
+		var AuthRouter = require( 'AuthRouter' );
 
-		// load homepage
-		require( './controllers/homeController' );
+		// ## Homepage App
+		App.module( 'Homepage', function ( Homepage, App ) {
 
-		// configure groups routes
-		Homepage.Router = AuthRouter.extend( {
-			'appRoutes' : {
-				'home' : 'showHomepage'
-			}
-		} );
+			// load homepage
+			require( './controllers/homeController' );
 
-		var API = {
-			'showHomepage' : function ( error, results, args ) {
-				App.request( 'pd360:hide' );
-				Homepage.Show.Controller.showHomepage();
-			}
-		};
-
-		App.addInitializer( function () {
-			new Homepage.Router( {
-				'controller' : API
+			// configure groups routes
+			Homepage.Router = AuthRouter.extend( {
+				'appRoutes' : {
+					'home' : 'showHomepage'
+				}
 			} );
+
+			var API = {
+				'showHomepage' : function ( error, results, args ) {
+					App.request( 'pd360:hide' );
+					Homepage.Show.Controller.showHomepage();
+				}
+			};
+
+			App.addInitializer( function () {
+				new Homepage.Router( {
+					'controller' : API
+				} );
+			} );
+
 		} );
-	} );
+
+	};
+
 } );

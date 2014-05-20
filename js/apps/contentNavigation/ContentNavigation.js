@@ -1,33 +1,36 @@
 define( function ( require ) {
-
 	'use strict';
 
-	var App               = require( 'App' );
-	var ContentController = require( './main' );
-	var AuthRouter        = require( 'AuthRouter');
+	return function () {
 
-	App.module( 'ContentNavigation', function ( ContentNavigation ) {
+		var App               = require( 'App' );
+		var ContentController = require( './main' );
+		var AuthRouter        = require( 'AuthRouter');
 
-		ContentNavigation.Router = AuthRouter.extend( {
-			'appRoutes' : {
-				'resources/videos' : 'showContentNavigation'
-			}
-		} );
+		App.module( 'ContentNavigation', function ( ContentNavigation ) {
 
-		var API = {
-			'showContentNavigation' : function ( args ) {
-				App.request( 'pd360:hide' );
-				var contentNavigation = new ContentController( { 'init' : true } );
-				App.content.show( contentNavigation.MainView );
-			}
-		};
-
-		App.addInitializer( function () {
-			new ContentNavigation.Router( {
-				'controller' : API
+			ContentNavigation.Router = AuthRouter.extend( {
+				'appRoutes' : {
+					'resources/videos' : 'showContentNavigation'
+				}
 			} );
+
+			var API = {
+				'showContentNavigation' : function ( args ) {
+					App.request( 'pd360:hide' );
+					var contentNavigation = new ContentController( { 'init' : true } );
+					App.content.show( contentNavigation.MainView );
+				}
+			};
+
+			App.addInitializer( function () {
+				new ContentNavigation.Router( {
+					'controller' : API
+				} );
+			} );
+
 		} );
 
-	} );
+	};
 
 } );

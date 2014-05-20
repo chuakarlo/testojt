@@ -5,11 +5,12 @@ define( function ( require ) {
 	var sinon      = window.sinon;
 	var App        = require( 'App' );
 
-	require( 'videoUploader/VideoUploader' );
+	require( 'videoUploader/VideoUploader' )();
 
 	describe( 'VideoUploader Module', function () {
 
-		var navigateSpy, loadedSpy;
+		var navigateSpy;
+		var loadedSpy;
 
 		before( function () {
 			navigateSpy = sinon.spy();

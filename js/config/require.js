@@ -71,20 +71,22 @@ require.config( {
 		'Session' : 'apps/user/models/SessionModel',
 
 		// app base folders
+		'admin'               : 'apps/admin',
 		'communities'         : 'apps/communities',
+		'contentNavigation'   : 'apps/contentNavigation',
+		'footer'              : 'apps/footer',
+		'groups'              : 'apps/groups',
 		'header'              : 'apps/header',
+		'homepage'            : 'apps/homepage',
 		'learningProgression' : 'apps/learningProgression',
+		'learningTargets'     : 'apps/learningTargets',
 		'lumibook'            : 'apps/lumibook',
 		'observation'         : 'apps/observation',
 		'pd360'               : 'apps/pd360',
+		'resources'           : 'apps/resources',
 		'search'              : 'apps/search',
 		'user'                : 'apps/user',
-		'groups'              : 'apps/groups',
 		'videoPlayer'         : 'apps/videoPlayer',
-		'contentNavigation'   : 'apps/contentNavigation',
-		'learningTargets'     : 'apps/learningTargets',
-		'resources'           : 'apps/resources',
-		'admin'               : 'apps/admin',
 		'videoUploader'       : 'apps/videoUploader'
 	},
 
@@ -129,7 +131,7 @@ require.config( {
 		},
 
 		'jquery' : {
-			'exports': '$'
+			'exports' : '$'
 		},
 
 		'jquery-cookie' : {
@@ -165,7 +167,7 @@ require.config( {
 		},
 
 		'underscore' : {
-			'deps' : [ 'jquery' ],
+			'deps'    : [ 'jquery' ],
 			'exports' : '_'
 		},
 
@@ -212,7 +214,7 @@ require.config( {
 		},
 
 		'backbone.touch' : {
-			'deps'   : [ 'jquery', 'backbone', 'underscore' ]
+			'deps' : [ 'jquery', 'backbone', 'underscore' ]
 		},
 
 		'tipsy' : {

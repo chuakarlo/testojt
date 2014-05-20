@@ -1,3 +1,4 @@
+/* eslint max-nested-callbacks: [2, 5] */
 define( function ( require ) {
 	'use strict';
 
@@ -6,7 +7,7 @@ define( function ( require ) {
 	var sinon      = window.sinon;
 	var App        = require( 'App' );
 
-	require( 'groups/Groups' );
+	require( 'groups/Groups' )();
 
 	describe( 'Groups Module', function () {
 
@@ -75,7 +76,7 @@ define( function ( require ) {
 				remotingStub.should.have.callCount( 1 );
 
 				// should have created a new layout
-				layout.should.have.been.calledWithNew;
+				layout.should.have.been.calledWithNew; // jshint ignore:line
 
 				// App should have shown layout
 				showStub.should.have.callCount( 2 );
@@ -92,7 +93,7 @@ define( function ( require ) {
 			var navigate;
 
 			beforeEach( function () {
-				remotingStub = sinon.stub( Remoting, 'fetch' ).returns( [] );
+				remotingStub = sinon.stub( Remoting, 'fetch' ).returns( [ ] );
 				navigate     = sinon.stub( App, 'navigate' );
 			} );
 
@@ -215,9 +216,9 @@ define( function ( require ) {
 
 				var fakeModel = {
 					'attributes' : {
-						'LicenseId'   : expectedLicenseId,
-						'Creator'   : expectedCreatorId,
-						'InviteeEmail': expectedInviteeEmail
+						'LicenseId'    : expectedLicenseId,
+						'Creator'      : expectedCreatorId,
+						'InviteeEmail' : expectedInviteeEmail
 					}
 				};
 
@@ -261,8 +262,8 @@ define( function ( require ) {
 
 				var fakeModel = {
 					'attributes' : {
-						'LicenseId'   : expectedLicenseId,
-						'SingleUseKey'   : expectedSingleUseKey
+						'LicenseId'    : expectedLicenseId,
+						'SingleUseKey' : expectedSingleUseKey
 					}
 				};
 

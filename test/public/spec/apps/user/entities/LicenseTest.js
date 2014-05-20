@@ -6,6 +6,8 @@ define( function ( require ) {
 	var App      = require( 'App' );
 	var $        = require( 'jquery' );
 
+	require( 'user/entities/License' );
+
 	describe( 'User License Collection Test', function () {
 
 		var stub;
@@ -32,7 +34,7 @@ define( function ( require ) {
 				collection = new App.Entities.LicenseCollection();
 			} );
 
-			after( function() {
+			after( function () {
 				collection = null;
 			} );
 
@@ -82,7 +84,8 @@ define( function ( require ) {
 
 		describe( 'when requesting `user:licenses`', function () {
 
-			var result, ajax;
+			var result;
+			var ajax;
 
 			var fetch = function ( done ) {
 				App.request( 'user:licenses:reset' );

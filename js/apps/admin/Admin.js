@@ -1,62 +1,66 @@
 define( function ( require ) {
 	'use strict';
 
-	var App        = require( 'App' );
-	var Marionette = require( 'marionette' );
+	return function () {
 
-	var AuthRouter  = require( 'AuthRouter' );
-	var AdminLayout = require( 'admin/views/AdminLayout' );
+		var App        = require( 'App' );
+		var Marionette = require( 'marionette' );
 
-	require( 'admin/controllers/showController' );
-	require( 'admin/entities/OnDemand' );
-	require( 'admin/entities/Sinet' );
-	require( 'admin/entities/ToolTypes' );
+		var AuthRouter  = require( 'AuthRouter' );
+		var AdminLayout = require( 'admin/views/AdminLayout' );
 
-	App.module( 'Admin', function ( Admin ) {
+		require( 'admin/controllers/showController' );
+		require( 'admin/entities/OnDemand' );
+		require( 'admin/entities/Sinet' );
+		require( 'admin/entities/ToolTypes' );
 
-		Admin.Router = AuthRouter.extend( {
+		App.module( 'Admin', function ( Admin ) {
 
-			'appRoutes' : {
-				'admin' : 'showAdmin'
-			}
+			Admin.Router = AuthRouter.extend( {
 
-		} );
-
-		var AdminController = Marionette.Controller.extend( {
-
-			'showAdmin' : function () {
-				App.request( 'pd360:hide' );
-
-				if ( !this.layout ) {
-					this.layout = new AdminLayout();
-					App.content.show( this.layout );
-
-					this.listenTo( this.layout, 'close', this.destroyControllers );
+				'appRoutes' : {
+					'admin' : 'showAdmin'
 				}
 
-				if ( !this.contentController ) {
-					this.contentController = new Admin.Show.ContentController( {
-						'layout' : this.layout
-					} );
-				}
-
-				this.contentController.showPage();
-
-			},
-
-			'destroyControllers' : function () {
-				this.contentController = null;
-				this.layout            = null;
-			}
-
-		} );
-
-		App.addInitializer( function () {
-			new Admin.Router( {
-				'controller' : new AdminController()
 			} );
+
+			var AdminController = Marionette.Controller.extend( {
+
+				'showAdmin' : function () {
+					App.request( 'pd360:hide' );
+
+					if ( !this.layout ) {
+						this.layout = new AdminLayout();
+						App.content.show( this.layout );
+
+						this.listenTo( this.layout, 'close', this.destroyControllers );
+					}
+
+					if ( !this.contentController ) {
+						this.contentController = new Admin.Show.ContentController( {
+							'layout' : this.layout
+						} );
+					}
+
+					this.contentController.showPage();
+
+				},
+
+				'destroyControllers' : function () {
+					this.contentController = null;
+					this.layout            = null;
+				}
+
+			} );
+
+			App.addInitializer( function () {
+				new Admin.Router( {
+					'controller' : new AdminController()
+				} );
+			} );
+
 		} );
 
-	} );
+	};
 
 } );

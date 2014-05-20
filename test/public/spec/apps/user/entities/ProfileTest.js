@@ -1,3 +1,4 @@
+/* eslint max-nested-callbacks: [2, 5] */
 define( function ( require ) {
 	'use strict';
 
@@ -5,6 +6,8 @@ define( function ( require ) {
 	var sinon    = window.sinon;
 	var App      = require( 'App' );
 	var $        = require( 'jquery' );
+
+	require( 'user/entities/Profile' );
 
 	describe( 'User Profile Model Test', function () {
 
@@ -21,7 +24,7 @@ define( function ( require ) {
 				model = new App.Entities.Profile();
 			} );
 
-			after( function() {
+			after( function () {
 				model = null;
 			} );
 
@@ -76,7 +79,8 @@ define( function ( require ) {
 
 		describe( 'when requesting `user:profile`', function () {
 
-			var result, ajax;
+			var result;
+			var ajax;
 
 			var fetch = function ( done ) {
 				var fetching = App.request( 'user:profile' );
@@ -97,7 +101,9 @@ define( function ( require ) {
 			describe( 'and an error occurs', function () {
 
 				before( function ( done ) {
-					App.reqres.setHandler( 'pd360:available', function () { return false; } );
+					App.reqres.setHandler( 'pd360:available', function () {
+						return false;
+					} );
 					var err = new Error();
 
 					ajax = sinon.stub( $, 'ajax' );
@@ -118,7 +124,9 @@ define( function ( require ) {
 			describe( 'and returns successfully', function () {
 
 				before( function ( done ) {
-					App.reqres.setHandler( 'pd360:available', function () { return false; } );
+					App.reqres.setHandler( 'pd360:available', function () {
+						return false;
+					} );
 					ajax = sinon.stub( $, 'ajax' );
 					ajax.yieldsToAsync( 'success', { 'test' : true } );
 

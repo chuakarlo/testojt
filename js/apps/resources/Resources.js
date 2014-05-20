@@ -1,37 +1,41 @@
 define( function ( require ) {
 	'use strict';
 
-	var App = require( 'App' );
+	return function () {
 
-	App.module( 'Resources', function ( Resources ) {
+		var App = require( 'App' );
 
-		var AuthRouter = require( 'AuthRouter' );
+		App.module( 'Resources', function ( Resources ) {
 
-		require( 'resources/controllers/listController' );
+			var AuthRouter = require( 'AuthRouter' );
 
-		Resources.Router = AuthRouter.extend( {
+			require( 'resources/controllers/listController' );
 
-			'appRoutes' : {
-				'resources/more' : 'listResources'
-			}
+			Resources.Router = AuthRouter.extend( {
 
-		} );
+				'appRoutes' : {
+					'resources/more' : 'listResources'
+				}
 
-		var API = {
-
-			'listResources' : function() {
-				App.request( 'pd360:hide' );
-				Resources.List.Controller.listResources();
-			}
-
-		};
-
-		App.addInitializer( function () {
-			new Resources.Router( {
-				'controller' : API
 			} );
+
+			var API = {
+
+				'listResources' : function () {
+					App.request( 'pd360:hide' );
+					Resources.List.Controller.listResources();
+				}
+
+			};
+
+			App.addInitializer( function () {
+				new Resources.Router( {
+					'controller' : API
+				} );
+			} );
+
 		} );
 
-	} );
+	};
 
 } );

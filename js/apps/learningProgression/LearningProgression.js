@@ -1,57 +1,61 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette = require( 'marionette' );
-	var App        = require( 'App' );
+	return function () {
 
-	var LearningProgressionLayout = require( 'learningProgression/views/LearningProgressionLayout' );
+		var Marionette = require( 'marionette' );
+		var App        = require( 'App' );
 
-	require( 'learningProgression/controllers/showController' );
+		var LearningProgressionLayout = require( 'learningProgression/views/LearningProgressionLayout' );
 
-	App.module( 'LearningProgression', function ( LearningProgression ) {
+		require( 'learningProgression/controllers/showController' );
 
-		var Router = Marionette.AppRouter.extend( {
+		App.module( 'LearningProgression', function ( LearningProgression ) {
 
-			'appRoutes' : {
-				'resources/learningProgression' : 'showLearningProgession'
-			}
+			var Router = Marionette.AppRouter.extend( {
 
-		} );
-
-		var Controller = Marionette.Controller.extend( {
-
-			'showLearningProgession' : function () {
-				if ( !this.layout ) {
-					this.layout = new LearningProgressionLayout();
-					App.content.show( this.layout );
-
-					this.listenTo( this.layout, 'close', this.destroyControllers );
+				'appRoutes' : {
+					'resources/learningProgression' : 'showLearningProgession'
 				}
 
-				if ( !this.contentController ) {
-					this.contentController = new LearningProgression.Show.ContentController( {
-						'layout' : this.layout
-					} );
+			} );
+
+			var Controller = Marionette.Controller.extend( {
+
+				'showLearningProgession' : function () {
+					if ( !this.layout ) {
+						this.layout = new LearningProgressionLayout();
+						App.content.show( this.layout );
+
+						this.listenTo( this.layout, 'close', this.destroyControllers );
+					}
+
+					if ( !this.contentController ) {
+						this.contentController = new LearningProgression.Show.ContentController( {
+							'layout' : this.layout
+						} );
+					}
+
+					this.contentController.showLearningProgession();
+				},
+
+				'destroyControllers' : function () {
+					this.contentController = null;
+					this.layout            = null;
 				}
 
-				this.contentController.showLearningProgession();
-			},
+			} );
 
-			'destroyControllers' : function () {
-				this.contentController = null;
-				this.layout            = null;
-			}
+			App.addInitializer( function () {
 
-		} );
+				new Router( {
+					'controller' : new Controller()
+				} );
 
-		App.addInitializer( function () {
-
-			new Router( {
-				'controller' : new Controller()
 			} );
 
 		} );
 
-	} );
+	};
 
 } );

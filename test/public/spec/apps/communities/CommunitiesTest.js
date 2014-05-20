@@ -5,11 +5,12 @@ define( function ( require ) {
 	var sinon      = window.sinon;
 	var App        = require( 'App' );
 
-	require( 'communities/Communities' );
+	require( 'communities/Communities' )();
 
 	describe( 'Communities Module', function () {
 
-		var navigateSpy, loadedSpy;
+		var navigateSpy;
+		var loadedSpy;
 
 		before( function () {
 			navigateSpy = sinon.spy();
@@ -50,7 +51,7 @@ define( function ( require ) {
 				loadedSpy.should.have.been.calledBefore( navigateSpy );
 
 				navigateSpy.should.have.callCount( 1 );
-				navigateSpy.should.have.been.calledWithExactly( 'communities', 'communitiesBrowse', {} );
+				navigateSpy.should.have.been.calledWithExactly( 'communities', 'communitiesBrowse', { } );
 			} );
 
 		} );

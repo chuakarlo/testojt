@@ -8,12 +8,15 @@ define( function ( require ) {
 	var App      = require( 'App' );
 
 	require( 'jquery-cookie' );
+	require( 'user/SessionHelper' );
 
-	var usernameCookie   = 'UID';
-	var personnelCookie  = 'PID';
-	var eulaCookie       = 'EULA';
-	var cfCookie         = 'CFAUTHORIZATION_PD360';
-	var useWizardsCookie = 'USEWIZARDS';
+	var cookies = App.request( 'session:cookies' );
+
+	var usernameCookie   = cookies.username;
+	var personnelCookie  = cookies.personnel;
+	var eulaCookie       = cookies.eula;
+	var cfCookie         = cookies.cf;
+	var useWizardsCookie = cookies.useWizards;
 	var cookieOptions    = { 'path' : '/' };
 
 	var Session = Backbone.Model.extend( {
@@ -39,18 +42,21 @@ define( function ( require ) {
 
 				this.setCookie( useWizardsCookie, jqXHR.UseWizards );
 
-				if ( jqXHR.PersonnelId ) {
+				if ( jqXHR.personnel.PersonnelId ) {
 					// Set the cookies before we trigger success
 					if ( this.username ) {
 						this.setCookie( usernameCookie, this.username );
 					}
 
-					this.setCookie( personnelCookie, jqXHR.PersonnelId );
-					this.setCookie( eulaCookie, jqXHR.LicenseAccepted );
+					this.setCookie( personnelCookie, jqXHR.personnel.PersonnelId );
+					this.setCookie( eulaCookie, jqXHR.personnel.LicenseAccepted );
 
+					App.vent.trigger( 'session:deferredResources' );
 					Vent.trigger( 'login:success' );
 					Vent.trigger( 'session:change' );
 					App.request( 'pd360:login', this.username, this.password );
+
+					App.request( 'session:initialize', jqXHR );
 
 					if ( done ) {
 						done( jqXHR, status, error );
@@ -65,7 +71,7 @@ define( function ( require ) {
 
 		'login' : function ( options ) {
 			this.url = function () {
-				return '/com/schoolimprovement/pd360/dao/RespondService.cfc?method=rspndLogin&loginNm=' + this.username + '&passwrd=' + this.password + '&returnformat=json';
+				return '/com/schoolimprovement/pd360/dao/RespondService.cfc?method=rspndLoginTest&loginNm=' + this.username + '&passwrd=' + this.password + '&returnformat=json';
 			};
 
 			if ( options.username && options.password ) {

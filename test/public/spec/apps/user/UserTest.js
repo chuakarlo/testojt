@@ -1,3 +1,4 @@
+/* eslint max-nested-callbacks: [2, 5] */
 define( function ( require ) {
 	'use strict';
 
@@ -23,7 +24,8 @@ define( function ( require ) {
 
 			var settingsContentController;
 			var SettingsLayout;
-			var reqLoadedSpy, closeSpy;
+			var reqLoadedSpy;
+			var closeSpy;
 			var deferred;
 			var loadingView;
 
@@ -32,7 +34,7 @@ define( function ( require ) {
 				closeSpy            = sinon.spy();
 				var LoadingItemView = Marionette.ItemView.extend( {
 					'close'    : closeSpy,
-					'template' : _.template( '<div> Item</div> ' ),
+					'template' : _.template( '<div> Item</div> ' )
 				} );
 
 				App.module( 'Common', function ( common, App ) {

@@ -10,7 +10,7 @@ define( function ( require ) {
 	var App        = require( 'App' );
 
 	require( 'common/views' );
-	require( 'videoPlayer/VideoPlayer' );
+	require( 'videoPlayer/VideoPlayer' )();
 	require( 'videoPlayer/entities/Entities' );
 
 	describe( 'VideoPlayer Module', function () {
