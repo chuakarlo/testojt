@@ -20,11 +20,44 @@ define( function ( require ) {
 			'click @ui.processStep'        : 'showProcessStep'
 		},
 
+		'_convertToTimeStamp' : function ( date ) {
+			var newDate = new Date( date );
+			return ( newDate.getTime() / 100 );
+		},
+
+		'setTaskStatus' : function ( model ) {
+			var taskCompletedDate = this._convertToTimeStamp( model.get( 'CompleteByDate' ) );
+			var mainCompletedDate = this._convertToTimeStamp( model.get( 'Tasks' )[ 0 ].CompleteByDate );
+
+			model.get( 'Tasks' )[ 0 ].status      = 'Not Current';
+			model.get( 'Tasks' )[ 0 ].statusColor = 'step-not-current';
+
+			if ( taskCompletedDate <= mainCompletedDate || mainCompletedDate ) {
+				model.get( 'Tasks' )[ 0 ].status   = 'Current';
+				model.get( 'Tasks' )[ 0 ].statusColor   = 'step-current';
+			}
+
+			return model;
+		},
+
+		'setProcessStatusColor' : function ( model ) {
+			model.statusColor = 'step-not-current';
+			if ( model.get( 'ProcessStatus' ) === 'Current' || model.get( 'ProcessStatus' ) === '' ) {
+				model.statusColor  = 'step-current';
+			}
+
+			return model;
+		},
+
 		'toggleDrawer' : function ( e ) {
 			e.preventDefault();
 
 			var toggleBtn     = $( e.currentTarget );
 			var toggleContent = toggleBtn.siblings( '.lt-toggle-content' )[ 0 ];
+
+			$( toggleBtn )
+				.find( '.hide' )
+				.removeClass( 'hide' );
 
 			$( toggleContent ).slideToggle( 300 );
 		},
@@ -36,6 +69,15 @@ define( function ( require ) {
 			var processTaskId = e.currentTarget.attributes[ 0 ].nodeValue;
 
 			self.trigger( 'lt:redirect', 'observation', 'observationProcessesOfMe', { 'processId' : processId, 'processTaskId' : processTaskId } );
+		},
+
+		templateHelpers : function () {
+			var self = this;
+
+			self.setProcessStatusColor ( self.model );
+			self.setTaskStatus ( self.model );
+
+			return self.model;
 		}
 
 	} );

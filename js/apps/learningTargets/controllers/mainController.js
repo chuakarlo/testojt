@@ -1,9 +1,6 @@
 define( function ( require ) {
 	'use strict';
 
-	var _                     = require( 'underscore' );
-	var async                 = require( 'async' );
-
 	var App                   = require( 'App' );
 	var Backbone              = require( 'backbone' );
 	var MainView              = require( 'apps/learningTargets/views/MainView' );
@@ -50,19 +47,6 @@ define( function ( require ) {
 				mainView.activateTab( content );
 			},
 
-			'_convertToTimestamp' : function ( stringDate ) {
-				var date = new Date( stringDate );
-				return date.getTime() / 100;
-			},
-
-			'_isProcessStatusCurrent' : function ( model ) {
-				return ( ( model.get( 'ProcessStatus' ) === 'Current' ) || ( model.get( 'ProcessStatus' ) === '' ) );
-			},
-
-			'_isTaskStatusCurrent' : function ( taskCompleteDateTimestamp, mainCompletedDateTimestamp ) {
-				return ( taskCompleteDateTimestamp <= mainCompletedDateTimestamp ) || ( mainCompletedDateTimestamp === '' );
-			},
-
 			'_apiRequest' : function ( type, callback, options ) {
 				var request = App.request( type, options );
 
@@ -77,15 +61,6 @@ define( function ( require ) {
 					} ) );
 
 				} );
-			},
-
-			'_apiRequestWithArgs' : function ( type, model, callback ) {
-				var request = App.request( type, model );
-
-				App.when( request ).done( function ( collections ) {
-					// run callback with collections
-					callback( collections );
-				} ).fail( App.errorHandler );
 			},
 
 			'redirectToLegacyPage' : function ( target, page, sub, opts ) {
@@ -104,32 +79,17 @@ define( function ( require ) {
 				} );
 			},
 
-			'performEvent' : function ( view ) {
-				if ( view.model.get( 'CatalogResourceTypeId' ) === 1 ) {
-					window.location.assign( 'dev.html#resources/videos/' + view.model.get( 'ResourceId' ) );
-				} else if ( view.model.get( 'CatalogResourceTypeId' ) === 2 ) {
-					window.location.assign( 'https://www.pd360.com/pd360.cfm#tab=courses&page=coursesBrowse' );
-				} else if ( view.model.get( 'CatalogResourceTypeId' ) === 3 ) {
-					async.waterfall( [
+			'showTrainingCatalog' : function ( view ) {
+				if ( view.model.get( 'CatalogResourceTypeId' ) === 3 ) {
 
-						function ( callback ) {
-
-							Main.helper._apiRequestWithArgs ( 'lt:description', view.model, function ( data ) {
-								var model = data.models[ 0 ];
-								callback ( null, model );
-							} );
-
-						}
-
-					], function ( err, model ) {
-
+					Main.helper._apiRequest( 'lt:description', function ( collection ) {
 						var descriptionView = new DescriptionView( {
-							model : model
+							model : collection.models[ 0 ]
 						} );
 
 						App.modalRegion.show( descriptionView );
+					}, view.model );
 
-					});
 				}
 
 			}
@@ -174,30 +134,6 @@ define( function ( require ) {
 				helper._showView( new App.Common.LoadingView() );
 
 				helper._apiRequest( 'lt:processes', function ( collection ) {
-					_.each( collection.models, function ( model, index ) {
-						var mainCompletedDateTimestamp = helper._convertToTimestamp( model.get( 'CompleteByDate' ) );
-						var tasks                      = model.get( 'Tasks' );
-
-						if ( helper._isProcessStatusCurrent( model ) === true ) {
-							collection.models[ index ].attributes.txtColor = 'step-current';
-						} else {
-							collection.models[ index ].attributes.txtColor = 'step-not-current';
-						}
-
-						_.each( tasks, function ( taskObj ) {
-							var taskCompleteDateTimestamp = helper._convertToTimestamp( taskObj.CompleteByDate );
-
-							if ( helper._isTaskStatusCurrent( taskCompleteDateTimestamp, mainCompletedDateTimestamp ) === true ) {
-								taskObj.status   = 'Current';
-								taskObj.txtColor = 'step-current';
-							} else {
-								taskObj.status   = 'Not Current';
-								taskObj.txtColor = 'step-not-current';
-							}
-
-						} );
-
-					} );
 
 					var processesView = new ProcessesView( {
 						collection : collection
@@ -273,7 +209,7 @@ define( function ( require ) {
 						collection : collection
 					} );
 
-					catalogsView.on( 'itemview:lt:performevent', helper.performEvent );
+					catalogsView.on( 'itemview:lt:training', helper.showTrainingCatalog );
 
 					// display Catalogs
 					helper._showView( catalogsView );
