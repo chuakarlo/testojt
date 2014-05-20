@@ -5,16 +5,6 @@ define( function ( require ) {
 
 	return Backbone.Model.extend( {
 
-		validation : {
-
-			email : {
-
-				required : true,
-				pattern  : 'email',
-				msg      : 'Invalid email address. Please enter a valid email address to continue (e.g. johnsmith@email.com)'
-			}
-		}
-
 	} );
 
 } );

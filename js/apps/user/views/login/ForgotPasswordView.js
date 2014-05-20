@@ -7,7 +7,6 @@ define( function ( require ) {
 	var template               = require( 'text!user/templates/login/forgotPasswordView.html' );
 	var ForgotPasswordFormView = require( 'user/views/login/ForgotPasswordFormView' );
 	var ErrorView              = require( 'apps/user/views/login/ErrorView' );
-	var UserModel              = require( 'apps/user/models/UserModel' );
 	var Backbone               = require( 'backbone' );
 
 	require( 'validation' );
@@ -24,11 +23,14 @@ define( function ( require ) {
 		'onShow' : function () {
 
 			var self      = this;
-			var userModel = new UserModel();
+
+			var personnelModel = new App.Entities.Personnel();
+
+			personnelModel.setupForgotPasswordValidation();
 
 			var forgotPasswordFormView = new ForgotPasswordFormView( {
 
-				model : userModel
+				model : personnelModel
 
 			} );
 
@@ -36,28 +38,31 @@ define( function ( require ) {
 
 			var errorView = new ErrorView( {
 
-				model : userModel
+				model : personnelModel
 
 			} );
 
 			Backbone.Validation.bind( forgotPasswordFormView );
 
-			userModel.bind( 'validated' , function ( isValid, model, errors ) {
+			personnelModel.bind( 'validated' , function ( isValid, model, errors ) {
 
 				if ( isValid ) {
-					var userRequest = App.request( 'user:byEmail', model.get( 'email' ) );
+
+					var personnelRequest = App.request( 'user:byEmail', model.get( 'email' ) );
 					self.helperRegion.show( new App.Common.LoadingView( {
 						'size' : 'small'
 					} ) );
 
-					App.when( userRequest ).done( function ( user ) {
+					App.when( personnelRequest ).done( function ( personnel ) {
 
-						var userObj = JSON.parse( user );
+						var personnelObj = personnel;
 
-						if ( userObj.length ) {
+						if ( typeof personnel === 'string' ) {
+							personnelObj = JSON.parse ( personnel );
+						}
 
+						if ( personnelObj.length ) {
 							App.vent.trigger( 'forgotpassword:success' );
-
 						} else {
 							errorView.model.set( 'error', 'Sorry, we don\'t have an account using that email address.' );
 							self.helperRegion.show( errorView );
