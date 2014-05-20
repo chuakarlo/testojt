@@ -7,7 +7,6 @@ define( function( require ) {
 	var Remoting   = require( 'Remoting' );
 	var sinon      = window.sinon;
 	var App        = require( 'App' );
-	var Content    = require( 'videoPlayer/models/ContentModel' );
 
 	require( 'common/views' );
 	require( 'videoPlayer/VideoPlayer' );

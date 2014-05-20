@@ -14,7 +14,7 @@ define( function ( require ) {
 		} );
 
 		describe( 'when initialized', function () {
-			
+
 			var model;
 
 			before( function () {
@@ -77,7 +77,7 @@ define( function ( require ) {
 		} );
 
 		describe( 'when requesting `user:personnel`', function () {
-			
+
 			var result, ajax;
 
 			var fetch = function ( done ) {
@@ -90,6 +90,7 @@ define( function ( require ) {
 			};
 
 			afterEach( function () {
+				App.reqres.removeHandler( 'pd360:available' );
 				$.ajax.restore();
 				result = null;
 				ajax   = null;
@@ -98,6 +99,7 @@ define( function ( require ) {
 			describe( 'and an error occurs', function () {
 
 				before( function ( done ) {
+					App.reqres.setHandler( 'pd360:available', function () { return false; } );
 					var err = new Error();
 
 					ajax = sinon.stub( $, 'ajax' );
@@ -118,6 +120,7 @@ define( function ( require ) {
 			describe( 'and returns successfully', function () {
 
 				before( function ( done ) {
+					App.reqres.setHandler( 'pd360:available', function () { return false; } );
 					ajax = sinon.stub( $, 'ajax' );
 					ajax.yieldsToAsync( 'success', { 'test' : true } );
 
@@ -136,5 +139,5 @@ define( function ( require ) {
 		} );
 
 	} );
-	
+
 } );

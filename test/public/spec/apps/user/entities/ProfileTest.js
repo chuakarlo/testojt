@@ -88,6 +88,7 @@ define( function ( require ) {
 			};
 
 			afterEach( function () {
+				App.reqres.removeHandler( 'pd360:available' );
 				$.ajax.restore();
 				result = null;
 				ajax   = null;
@@ -96,6 +97,7 @@ define( function ( require ) {
 			describe( 'and an error occurs', function () {
 
 				before( function ( done ) {
+					App.reqres.setHandler( 'pd360:available', function () { return false; } );
 					var err = new Error();
 
 					ajax = sinon.stub( $, 'ajax' );
@@ -116,6 +118,7 @@ define( function ( require ) {
 			describe( 'and returns successfully', function () {
 
 				before( function ( done ) {
+					App.reqres.setHandler( 'pd360:available', function () { return false; } );
 					ajax = sinon.stub( $, 'ajax' );
 					ajax.yieldsToAsync( 'success', { 'test' : true } );
 

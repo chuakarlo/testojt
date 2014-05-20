@@ -6,10 +6,8 @@ define( function ( require ) {
 	var App      = require( 'App' );
 	var $        = require( 'jquery' );
 
-	require( 'apps/pd360/PD360' );
-
 	describe( 'User License Collection Test', function () {
-		
+
 		var stub;
 
 		before( function () {
@@ -27,7 +25,7 @@ define( function ( require ) {
 		} );
 
 		describe( 'when initialized', function () {
-			
+
 			var collection;
 
 			before( function () {
@@ -83,7 +81,7 @@ define( function ( require ) {
 		} );
 
 		describe( 'when requesting `user:licenses`', function () {
-			
+
 			var result, ajax;
 
 			var fetch = function ( done ) {
@@ -114,7 +112,7 @@ define( function ( require ) {
 				} );
 
 				it( 'should return an error message', function () {
-					
+
 					result.should.be.an.instanceof( Error );
 					result.message.should.equal( 'Error fetching licenses' );
 
@@ -144,5 +142,5 @@ define( function ( require ) {
 		} );
 
 	} );
-			
+
 } );

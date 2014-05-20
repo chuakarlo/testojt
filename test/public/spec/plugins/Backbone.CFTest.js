@@ -4,6 +4,7 @@ define( function ( require ) {
 	var Backbone = require( 'backbone' );
 	var sinon    = window.sinon;
 	var $        = require( 'jquery' );
+	var App      = require( 'App' );
 
 	describe( 'Backbone.CF', function () {
 
@@ -18,6 +19,7 @@ define( function ( require ) {
 				var request, model, stub, mock;
 
 				beforeEach( function () {
+					App.reqres.setHandler( 'pd360:available', function () { return false; } );
 					model      = new Backbone.CFModel();
 					model.path = 'testPath';
 
@@ -31,12 +33,13 @@ define( function ( require ) {
 				} );
 
 				afterEach( function () {
+					App.reqres.removeHandler( 'pd360:available' );
 					request = null;
 					mock    = null;
 					model   = null;
 					stub    = null;
 				} );
-				
+
 				it( 'should call ajax with contentType', function () {
 					mock.expects( 'ajax' ).withArgs( sinon.match( function ( data ) {
 						data.should.have.property( 'contentType' );
@@ -120,7 +123,7 @@ define( function ( require ) {
 				afterEach( function () {
 					model = null;
 				} );
-				
+
 				it( 'should throw an error for no options returned', function () {
 					( function () { model.save(); } ).should.throw( 'A "getSyncOptions" function must return a value' );
 				} );
@@ -159,7 +162,7 @@ define( function ( require ) {
 				afterEach( function () {
 					model = null;
 				} );
-				
+
 				it( 'should throw an error for no options returned', function () {
 					( function () { model.save(); } ).should.throw( 'A "getSyncOptions" function must return a value' );
 				} );
@@ -198,7 +201,7 @@ define( function ( require ) {
 				afterEach( function () {
 					model = null;
 				} );
-				
+
 				it( 'should throw an error for no options returned', function () {
 					( function () { model.fetch(); } ).should.throw( 'A "getSyncOptions" function must return a value' );
 				} );
@@ -237,7 +240,7 @@ define( function ( require ) {
 				afterEach( function () {
 					model = null;
 				} );
-				
+
 				it( 'should throw an error for no options returned', function () {
 					( function () { model.destroy(); } ).should.throw( 'A "getSyncOptions" function must return a value' );
 				} );
@@ -278,6 +281,7 @@ define( function ( require ) {
 				var request, collection, stub, mock;
 
 				beforeEach( function () {
+					App.reqres.setHandler( 'pd360:available', function () { return false; } );
 					collection      = new Backbone.CFCollection();
 					collection.path = 'testPath';
 
@@ -291,12 +295,13 @@ define( function ( require ) {
 				} );
 
 				afterEach( function () {
+					App.reqres.removeHandler( 'pd360:available' );
 					request = null;
 					mock    = null;
 					collection   = null;
 					stub    = null;
 				} );
-				
+
 				it( 'should call ajax with contentType', function () {
 					mock.expects( 'ajax' ).withArgs( sinon.match( function ( data ) {
 						data.should.have.property( 'contentType' );
@@ -380,7 +385,7 @@ define( function ( require ) {
 				afterEach( function () {
 					collection = null;
 				} );
-				
+
 				it( 'should throw an error for no options returned', function () {
 					( function () { collection.save(); } ).should.throw( 'A "getSyncOptions" function must return a value' );
 				} );
@@ -419,7 +424,7 @@ define( function ( require ) {
 				afterEach( function () {
 					collection = null;
 				} );
-				
+
 				it( 'should throw an error for no options returned', function () {
 					( function () { collection.save(); } ).should.throw( 'A "getSyncOptions" function must return a value' );
 				} );
@@ -458,7 +463,7 @@ define( function ( require ) {
 				afterEach( function () {
 					collection = null;
 				} );
-				
+
 				it( 'should throw an error for no options returned', function () {
 					( function () { collection.fetch(); } ).should.throw( 'A "getSyncOptions" function must return a value' );
 				} );
@@ -497,7 +502,7 @@ define( function ( require ) {
 				afterEach( function () {
 					collection = null;
 				} );
-				
+
 				it( 'should throw an error for no options returned', function () {
 					( function () { collection.destroy(); } ).should.throw( 'A "getSyncOptions" function must return a value' );
 				} );
@@ -528,5 +533,5 @@ define( function ( require ) {
 		} );
 
 	} );
-	
+
 } );

@@ -5,7 +5,7 @@ define( function ( require ) {
 	var SharedVideoItemView = require( 'videoPlayer/views/share/SharedVideoItemView' );
 	var Backbone            = require( 'backbone' );
 
-	require( 'videoPlayer/utils/selectText' );
+	require( 'videoPlayer/plugins/selectText' );
 
 	describe( 'SharedVideoItemView', function () {
 		var sharedVideoItemView;

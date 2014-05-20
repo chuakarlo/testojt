@@ -6,6 +6,8 @@ define( function ( require ) {
 	var $          = require( 'jquery' );
 	var template   = require( 'text!../templates/flashMessage.html' );
 
+	require( 'bootstrap' );
+
 	return Marionette.ItemView.extend( {
 
 		'template' : _.template( template ),

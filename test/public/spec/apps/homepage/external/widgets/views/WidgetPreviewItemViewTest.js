@@ -1,8 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-
-	describe ( 'WidgetPreviewItemView Test', function () {
+	describe( 'WidgetPreviewItemView Test', function () {
 
 		var Marionette = require( 'marionette' );
 		var Backbone = require( 'backbone' );
@@ -29,8 +28,7 @@ define( function ( require ) {
 
 		it( 'should be an instance of CompositeView', function (  ) {
 			var WidgetItemView = require( 'apps/homepage/external/widgets/views/WidgetPreviewItemView' );
-			var model = new ( Backbone.Model )();
-			model.attributes = observation;
+			var model = new Backbone.Model( observation );
 
 			var models = [
 				{
@@ -45,15 +43,10 @@ define( function ( require ) {
 				}
 			];
 
-			var userWidget  = new ( Backbone.Collection )( models );
+			var userWidget  = new Backbone.Collection( models );
 			widgetItemView  = new WidgetItemView( { 'model' : model, 'userWidgetCollection' : userWidget } );
 
 			widgetItemView.should.be.an.instanceof( Marionette.ItemView );
-		} );
-
-		it( 'should render ', function ( ) {
-			widgetItemView.render();
-			widgetItemView._isRendered.should.equal( true );
 		} );
 
 	} );

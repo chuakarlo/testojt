@@ -8,7 +8,7 @@ define( function ( require ) {
 
 	var $ = require( 'jquery' );
 
-	require( 'videoPlayer/utils/selectText' );
+	require( 'videoPlayer/plugins/selectText' );
 
 	describe( '.selectText', function () {
 		var $element = $( '<p>test</p>' );

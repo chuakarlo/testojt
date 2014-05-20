@@ -8,6 +8,8 @@ define( function ( require ) {
 	var mediumTemplate = require( 'text!../templates/mediumLoading.html' );
 	var smallTemplate  = require( 'text!../templates/smallLoading.html' );
 
+	require( 'jquery.spin' );
+
 	// If we want to change the spinner for the different sizes, update the map
 	// and create a new hash of options
 	var spinnerMediumOptions = {
@@ -41,7 +43,7 @@ define( function ( require ) {
 
 		'className' : 'spinner-container',
 
-		'initialize' : function( options ) {
+		'initialize' : function ( options ) {
 
 			this.options = options || { };
 
@@ -53,37 +55,40 @@ define( function ( require ) {
 
 		},
 
-		'getTemplate' : function() {
-			switch (this.options.size) {
-				case 'large':
-					return _.template( largeTemplate );
-				case 'medium':
-					return _.template( mediumTemplate );
-				case 'small':
-					return _.template( smallTemplate );
+		'getTemplate' : function () {
+			var template;
+
+			if ( this.options.size === 'large' ) {
+				template = largeTemplate;
+			} else if ( this.options.size === 'medium' ) {
+				template = mediumTemplate;
+			} else {
+				template = smallTemplate;
 			}
+
+			return _.template( template );
 		},
 
-		'serializeData' : function() {
+		'serializeData' : function () {
 			return {
 				'size' : this.options.size,
 				'text' : this.options.text
 			};
 		},
 
-		'onShow' : function() {
+		'onShow' : function () {
 			// check the background
 			if ( this.options.background ) {
-				this.$el.addClass('spinner-background');
+				this.$el.addClass( 'spinner-background' );
 				// update the spinner color
-				spinnerMap[ this.options.size ][ 'color' ] = '#FFF';
+				spinnerMap[ this.options.size ].color = '#FFF';
 			}
 
 			// Show the spinner
 			this.ui.spinner.spin( spinnerMap[ this.options.size ] );
 		},
 
-		'onClose' : function() {
+		'onClose' : function () {
 			this.ui.spinner.stop();
 		}
 	} );
