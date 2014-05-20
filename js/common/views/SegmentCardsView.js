@@ -35,7 +35,11 @@ define( function ( require ) {
 		'templateHelpers' : {
 
 			'shortContentName' : function () {
-				return getAbbreviation( this.ContentName || this.Name, 43 );
+				return getAbbreviation( this.ContentName || this.Name, 50 );
+			},
+
+			'longContentName' : function () {
+				return getAbbreviation( this.ContentName || this.Name, 126 );
 			},
 
 			'fullContentName' : function () {
@@ -43,7 +47,7 @@ define( function ( require ) {
 			},
 
 			'shortContentDescription' : function () {
-				return getAbbreviation( stripHtml( this.ContentDescription || this.Description ) , 180 );
+				return getAbbreviation( stripHtml( this.ContentDescription || this.Description ) , 250 );
 			},
 
 			'duration' : function () {

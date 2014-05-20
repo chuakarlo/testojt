@@ -6,29 +6,36 @@
 @sc-blue-light    : #5ABEF9;
 
 @sc-image-height  : 148px;
+@sc-card-height   : 270px;
 
 li {
-	list-style: none;
+	list-style : none;
 
 	div.sc-segment-content-container {
-		background         : @sc-white;
-		position           : relative;
-		height             : 242px;
-		word-wrap          : break-word;
-		-webkit-box-shadow : 1px 1px 7px 0px rgba( 50, 50, 50, 0.5 );
-		-moz-box-shadow    : 1px 1px 7px 0px rgba( 50, 50, 50, 0.5 );
-		box-shadow         : 1px 1px 7px 0px rgba( 50, 50, 50, 0.5 );
+		background            : @sc-gray-lightest;
+		position              : relative;
+		height                : @sc-card-height;
+		word-wrap             : break-word;
+		border-radius         : 3px;
+		-moz-border-radius    : 3px;
+		-webkit-border-radius : 3px;
+        -webkit-box-shadow    : 0 0px 2px rgba(32, 37, 35, 0.3);
+        -moz-box-shadow       : 0 0px 2px rgba(32, 37, 35, 0.3);
+        box-shadow            : 0 0px 2px rgba(32, 37, 35, 0.3);
 
 		div.sc-segment-image-container {
-			position   : relative;
-			color      : @sc-white;
-			background : @sc-charcoal;
-			height     : @sc-image-height;
-			overflow   : hidden;
+			position      		  : relative;
+			color                 : @sc-white;
+			background            : @sc-charcoal;
+			height                : @sc-image-height;
+			overflow              : hidden;
+			border-radius         : 3px 3px 0 0;
+		    -moz-border-radius    : 3px 3px 0 0;
+		    -webkit-border-radius : 3px 3px 0 0;
 
 			a {
-				padding : 0;
-				margin  : 0;
+				padding         : 0;
+				margin          : 0;
 			    text-decoration : none;
 
 				span.sc-play-container {
@@ -50,8 +57,11 @@ li {
 				}
 
 				img {
-					width      : 100%;
-					min-height : @sc-image-height;
+					width                 : 100%;
+					min-height            : @sc-image-height;
+					border-radius         : 3px 3px 0 0;
+		            -moz-border-radius    : 3px 3px 0 0;
+		            -webkit-border-radius : 3px 3px 0 0;
 				}
 			}
 
@@ -70,21 +80,20 @@ li {
 		}
 
 		div.sc-footer-details {
-			padding  : 5px 10px;
+			padding  : 0px 10px;
 			position : relative;
 
 			h5.sc-segment-name {
-				font-size      : 15px;
+				font-size      : 14px;
 				color          : @sc-charcoal;
 				text-align     : left;
-				line-height    : 1.1;
+				line-height    : 1.3;
 				cursor         : default;
-				font-weight    : 500;
 				margin-bottom  : 2px;
 			}
 
 			p.sc-duration {
-				font-size   : 12px;
+				font-size   : 13px;
 				line-height : 20px;
 				color       : @sc-gray-dark;
 			}
@@ -99,7 +108,7 @@ li {
 
 			span.sc-info-icon,
 			span.sc-watch-later-icon {
-				top             : 50px;
+				top             : 70px;
 				font-size       : 28px;
 				cursor          : pointer;
 				height          : 30px;
@@ -128,40 +137,39 @@ li {
 				text-decoration : none;
 				position        : absolute;
 				z-index         : 3;
-				top             : 56px;
-				right           : 16px;
+				top             : 76px;
+				right           : 15px;
 				display         : none;
 			}
 		}
 
 		div.sc-overlay-details {
-			background : rgba( 0, 0, 0, 0.70 );
-			position   : absolute;
-			top        : 0;
-			right      : 0;
-			left       : 0;
-			bottom     : 0;
-			height     : 100%;
-			width      : 100%;
-			overflow   : hidden;
-			display    : none;
-			z-index    : 2;
-			color      : @sc-white;
-			padding    : 15px 10px 5px 10px;
+			background           : rgba( 0, 0, 0, 0.70 );
+			position             : absolute;
+			top                  : 0;
+			right                : 0;
+			left                 : 0;
+			bottom        		 : 0;
+			height        		 : 100%;
+			width         		 : 100%;
+			overflow      		 : hidden;
+			display       		 : none;
+			z-index       		 : 2;
+			color       		 : @sc-white;
+			padding      		 : 15px 10px 5px 10px;
+			border-radius 		 : 3px;
+		    -moz-border-radius   : 3px;
+		   -webkit-border-radius : 3px;
 
 			p.sc-overlay-segment-name {
 				font-size    : 15px;
 				line-height  : 1;
-				text-align   : justify;
-				text-justify : newspaper;
 				font-weight  : 500;
 			}
 
 			p.sc-overlay-content-description {
 				font-size     : 14px;
-				text-align    : justify;
-				text-justify  : newspaper;
-				line-height   : 1.2em;
+				line-height   : 1.3em;
 			}
 
 			p.sc-overlay-duration {
@@ -174,7 +182,7 @@ li {
 				text-decoration : none;
 				display         : block;
 				position        : absolute;
-				bottom          : 12px;
+				bottom          : 10px;
 
 				span.sc-overlay-play-now {
 					color     : @sc-white;
