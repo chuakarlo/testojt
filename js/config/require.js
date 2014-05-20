@@ -21,7 +21,6 @@ require.config( {
 		'backbone.babysitter'   : 'libs/backbone.babysitter/lib/backbone.babysitter',
 		'backbone.validation'   : 'libs/backbone.validation/dist/backbone-validation-amd',
 		'backbone.stickit'      : 'libs/backbone.stickit/backbone.stickit',
-		'backbone.syphon'       : 'libs/backbone.syphon/lib/backbone.syphon',
 		'carouselSnap'          : 'libs/carouselSnap/js/carousel-snap',
 		'backbone.wreqr'        : 'libs/backbone.wreqr/lib/amd/backbone.wreqr',
 		'bootstrap'             : 'libs/bootstrap/dist/js/bootstrap.min',
@@ -106,16 +105,12 @@ require.config( {
 			'deps' : [ 'backbone' ]
 		},
 
-		'backbone.syphon' :{
-			'deps' : [ 'backbone' ]
-		},
-
 		'backbone.validation' : {
 			'deps' : [ 'backbone' ]
 		},
 
 		'marionette' : {
-			'deps'    : [ 'backbone', 'backbone.babysitter', 'backbone.wreqr', 'backbone.syphon' ],
+			'deps'    : [ 'backbone', 'backbone.babysitter', 'backbone.wreqr' ],
 			'exports' : 'Backbone.Marionette'
 		},
 
