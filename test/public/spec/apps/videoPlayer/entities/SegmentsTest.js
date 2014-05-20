@@ -24,7 +24,7 @@ define( function ( require ) {
 			var collection;
 
 			before( function () {
-				collection = new App.VideoPlayer.Entities.Segments( fakeVideo );
+				collection = new App.VideoPlayer.Entities.Segments( [ ], fakeVideo );
 			} );
 
 			after( function () {
