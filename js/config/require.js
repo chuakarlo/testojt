@@ -65,6 +65,7 @@ require.config( {
 		'pc-htmlconcat'         : 'libs/htmlConcat/htmlconcat',
 		'bootstro'              : 'libs/bootstro.js/bootstro',
 		'bootstrap-select'      : 'libs/bootstrap-select-3/bootstrap-select',
+		'tipsy'                 : 'libs/tipsy/src/javascripts/jquery.tipsy',
 
 		// Base application level classes
 		'Session' : 'apps/user/models/SessionModel',
@@ -212,6 +213,10 @@ require.config( {
 
 		'backbone.touch' : {
 			'deps'   : [ 'jquery', 'backbone', 'underscore' ]
+		},
+
+		'tipsy' : {
+			'deps' : [ 'jquery' ]
 		}
 
 	}

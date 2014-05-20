@@ -49,20 +49,6 @@ define( function ( require ) {
 			selectedItemView.should.have.property( 'triggers' );
 		} );
 
-		describe( '`.onShow`', function () {
-
-			before( function () {
-				selectedItemView.render().onShow();
-			} );
-
-			it( 'does show a tooltip', function () {
-				selectedItemView.ui.selectedItem.tooltip( 'show' );
-				var $tooltip = selectedItemView.$el.find( '.tooltip' );
-				$tooltip.should.have.length( 1 );
-			} );
-
-		} );
-
 	} );
 
 } );

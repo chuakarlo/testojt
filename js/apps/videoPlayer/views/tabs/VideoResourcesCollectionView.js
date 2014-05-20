@@ -2,7 +2,9 @@ define( function ( require ) {
 	'use strict';
 
 	require( 'pc-carouselSnap' );
+	require( 'jquery-browser' );
 
+	var $          = require( 'jquery' );
 	var Marionette = require( 'marionette' );
 
 	var VideoResourceItemView = require( 'videoPlayer/views/tabs/VideoResourceItemView' );
@@ -16,6 +18,9 @@ define( function ( require ) {
 		'className' : 'row',
 
 		'onShow' : function () {
+			if ( $.browser.mobile ||  $.browser.ipad ) {
+				this.$el.addClass( 'mobile' );
+			}
 			this.$el.carouselSnap( {
 				nextID                : 'next-slide',
 				prevID                : 'previous-slide',

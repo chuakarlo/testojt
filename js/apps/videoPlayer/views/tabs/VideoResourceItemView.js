@@ -19,11 +19,13 @@ define( function ( require ) {
 		'className' : 'col-md-3',
 
 		'ui' : {
-			'thumbnail' : '.video-resources-thumb > img'
+			'thumbnail' : '.video-resources-thumb > img',
+			'download'  : '.download-icon'
 		},
 
 		'events' : {
-			'click @ui.thumbnail' : 'previewFile'
+			'click @ui.thumbnail' : 'previewFile',
+			'click @ui.download'  : 'downloadFile'
 		},
 
 		'initialize' : function () {
@@ -39,16 +41,15 @@ define( function ( require ) {
 				return false;
 			}
 
-			var previewPath = this.model.get( 'previewPath' );
 			var pdfPreview  = new PreviewView( { 'model' : this.model } );
 
-			if ( previewPath === '') {
-				return false;
-			} else {
-				App.modalRegion.show( pdfPreview, {
-					'className' : 'pdf-preview-modal'
-				} );
-			}
+			App.modalRegion.show( pdfPreview, {
+				'className' : 'pdf-preview-modal'
+			} );
+		},
+
+		'downloadFile' : function () {
+			//to do
 		}
 
 	} );

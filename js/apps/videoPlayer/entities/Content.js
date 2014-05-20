@@ -79,7 +79,7 @@ define( function ( require ) {
 						'downloadPath' : '/gb/' + this.get( 'GuidebookFileName' ),
 						'thumbnail'    : '/img/guidebook.jpg'
 					}, {
-						'previewPath'  : '',
+						'previewPath'  : config.video.previewUrl + 'gb/' + this.get( 'AudioFileName' ),
 						'downloadPath' : '/mp3/' + this.get( 'AudioFileName' ),
 						'thumbnail'    : '/img/audio.jpg'
 					}, {
