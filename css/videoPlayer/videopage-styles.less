@@ -10,31 +10,31 @@
 		padding-right : 0;
 	}
 	#video-player-header {
-			h2 {
-				width         : auto;
-				white-space   : nowrap;
-				overflow      : hidden;
-				text-overflow : ellipsis;
+		h2 {
+			width         : auto;
+			white-space   : nowrap;
+			overflow      : hidden;
+			text-overflow : ellipsis;
+		}
+		#video-info {
+			.popover {
+				max-width        : 100% !important;
+				background-color : white;
+				color            : black;
 			}
-			#video-info {
-				.popover {
-					max-width            : 100% !important;
-					background-color : white;
-					color            : black;
-				}
-				#info-icon {
-						cursor         : pointer;
-						color          : @vp-gray;
-						vertical-align : middle;
-						font-size      : 25px;
-						float          : right;
-						margin-top     : 10px;
-					}
+			#info-icon {
+				cursor         : pointer;
+				color          : @vp-gray;
+				vertical-align : middle;
+				font-size      : 25px;
+				float          : right;
+				margin-top     : 10px;
+			}
 
-				.clicked-icon {
-					color : @vp-blue !important;
-				}
+			.clicked-icon {
+				color : @vp-blue !important;
 			}
+		}
 	}
 
 	#video-container {
@@ -48,6 +48,9 @@
 			:hover + #message-overlay  {
 				display : inline-block;
 			}
+		}
+		#vjs-cont {
+			position : relative;
 		}
 	}
 
@@ -96,14 +99,40 @@
 		background-color : #cfcfcf;
 		color            : #000000;
 	}
+	// Replay plugin CSS
+	.vjs-replay.vjs-control-bar .vjs-play-control {
+		visibility : hidden !important;
+	}
+	.vjs-control-bar .vjs-replay-control {
+		display : none;
+	}
+	.vjs-default-skin .vjs-replay-control {
+		width    : 5em;
+		cursor   : pointer;
+		position : absolute;
+	}
+	.vjs-default-skin .vjs-replay-control:before {
+		font-family : FontAwesome;
+		content     : @fa-var-undo;
+	}
+	// end Replay CSS
+	// Static display
+	#vjs-static-text-overlay {
+		position  : absolute;
+		left      : 5%;
+		top       : 10%;
+		width     : 90%;
+		font-size : 2em;
+		color     : white;
+	}
+
 	#video-content{
 		#vjs-image-overlay-holder {
 		  position         : absolute;
-		  left             : 8%;
-		  top              : 4%;
+		  left             : 7%;
+		  top              : 5%;
 		  text-align       : center;
 		  color            : white;
-		  background-color : black;
 
 		   img {
 			    height : 100%;
@@ -112,42 +141,43 @@
 			    cursor : pointer;
 			}
 
+			#video-up-next {
+				position   : absolute;
+				bottom     : 0%;
+				left       : 3%;
+				width      : 95%;
+				overflow   : hidden;
+				text-align : left;
+			}
+
 			#vjs-p-overlay {
-			  position : absolute;
-			  bottom   : 11%;
-			  left     : 3%;
-			  font     : 12px arial,sans-serif;
+				font : 12px arial,sans-serif;
 			}
 
 			#vjs-title-overlay{
-			  position      : absolute;
-			  bottom        : 3%;
-			  left          : 3%;
-			  font          : 21px arial,sans-serif;
-			  text-overflow : ellipsis;
-			  width         : 90%;
-			  white-space   : nowrap;
-			  overflow      : hidden;
-			  text-align    : left;
+				font          : 21px arial,sans-serif;
+				text-overflow : ellipsis;
+				white-space   : nowrap;
+				overflow      : hidden;
 			}
 
 			.play-button-circle{
-			  position              : absolute;
-			  top                   : 35%;
-			  left                  : 45%;
-			  width                 : 50px;
-			  height                : 50px;
-			  border-width          : 2px;
-			  border-style          : solid;
-			  border-color          : white;
-			  border-radius         : 50%;
+				position      : absolute;
+				top           : 40%;
+				left          : 45%;
+				width         : 80px;
+				height        : 80px;
+				border-width  : 2px;
+				border-style  : solid;
+				border-color  : white;
+				border-radius : 50%;
 			}
 
 			#vjs-icon-play{
 			  position  : absolute;
-			  left      : 28%;
-			  top       : 15%;
-			  font-size : 35px;
+			  left      : 30%;
+			  top       : 20%;
+			  font-size : 50px;
 			  cursor    : pointer;
 			}
 		}

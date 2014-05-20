@@ -16,7 +16,9 @@ define( function ( require ) {
 		},
 
 		'video' : {
-			'previewUrl' : 'http://upload.content.pd360.com/PD360/media/'
+			'previewUrl' : 'http://upload.content.pd360.com/PD360/media/',
+
+			'previewLimit' : 45 // in seconds,
 		}
 	};
 

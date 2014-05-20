@@ -212,7 +212,7 @@ define( function ( require ) {
 						if ( contentInCore.get( 'isInCore' ) ) {
 							content.set( 'limited', true );
 						} else {
-							if ( content.get( 'ContentType' ) === 6 ) {
+							if ( content.get( 'ContentTypeId' ) === 6 ) {
 								content.set( 'limited', true );
 							} else {
 								// show an error message, the content needs special license

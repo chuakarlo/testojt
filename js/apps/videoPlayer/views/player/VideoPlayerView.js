@@ -6,14 +6,22 @@ define( function ( require ) {
 	var videojs    = require( 'videojs' );
 	var Marionette = require( 'marionette' );
 
+	// Video player plugins
 	require( 'videoPlayer/plugins/captionToggle' );
-	require( 'videoPlayer/plugins/nextVideoOverlay' );
+	require( 'videoPlayer/plugins/videoOverlay' );
+	require( 'videoPlayer/plugins/videoReplay' );
+	require( 'videoPlayer/plugins/staticDisplay' );
+
+	var App    = require( 'App' );
+	var config = App.request( 'videoPlayer:config' );
 
 	var template = require( 'text!videoPlayer/templates/player/playerItemView.html' );
 
 	return Marionette.ItemView.extend( {
 
 		'template' : _.template( template ),
+
+		'id' : 'vjs-cont',
 
 		'templateHelpers' : {
 
@@ -52,17 +60,20 @@ define( function ( require ) {
 
 				return url;
 			}
+
 		},
 
 		'initialize' : function () {
 			videojs.options.flash.swf = 'js/libs/videojs/video-js.swf';
 
 			this.listenTo( this, 'show', this.initializePlayer );
+			this.listenTo( this, 'afterPlayerInit', this.initPlugins );
 			this.listenTo( this, 'afterPlayerInit', this.startTracking );
-			this.listenTo( this, 'afterPlayerInit', this.addPlugins );
 		},
 
 		'initializePlayer' : function () {
+			var self = this;
+
 			var player = videojs( 'video-content', {
 				'controls'  : true,
 				'autoplay'  : true,
@@ -75,37 +86,55 @@ define( function ( require ) {
 					// but actual video has sound and ui shown is minimum.
 					// Manually set player volume to correct volume ui.
 					this.volume( 0.5 );
-					this.loadingSpinner.show();
-					this.controlBar.show();
 				}
-				// Make sure custom control is hidden in mobile devices
-				if ( videojs.IS_IOS ||
-					videojs.IS_ANDROID ||
-					videojs.IS_OLD_ANDROID ) {
+				this.loadingSpinner.show();
+				this.controlBar.show();
+				this.controlBar.addChild( 'videoReplay' );
+
+				// Make sure custom control is hidden in mobile devices.
+				if ( self.isMobile() ) {
 					this.controlBar.hide();
+					// Removing spinner due to bug in IOS/Android
+					// where spinner doesn't hide after first play.
+					this.removeChild( 'loadingSpinner' );
 				}
+
 			} );
 
 			this.trigger( 'afterPlayerInit', player );
 		},
 
-		'addPlugins' : function ( player ) {
+		'initPlugins' : function ( player ) {
 			// Closed caption plugin
 			player.ccToggle();
 
-			if ( this.model.next ) {
-				// Next video overlay plugin
-				player.nextVideoOverlay( {
-					imageUrl : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.next.get( 'ImageURL' ),
-					clickUrl : '#resources/videos/' + this.model.next.get( 'ContentId' ),
-					text     : this.model.next.get( 'ContentName' )
+			if ( !this.model.get( 'limited' ) && this.model.next ) {
+				// Show replay button at end of video
+				player.videoReplay();
+				// Next video overlay
+				player.videoOverlay( {
+					'imageUrl'    : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.next.get( 'ImageURL' ),
+					'clickUrl'    : '#resources/videos/' + this.model.next.get( 'ContentId' ),
+					'overlayText' : '<div id="video-up-next"><p id="vjs-p-overlay">Up Next:</p><p id="vjs-title-overlay">' + this.model.next.get( 'ContentName' ) + '</p></div>'
+				} );
+			} else {
+				player.staticDisplay( {
+					'timeToShow'   : config.video.previewLimit,
+					'imageUrl'     : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.get( 'ImageURL' ),
+					'imageOpacity' : 0.5,
+					'imageHeight'  : '100%',
+					'imageWidth'   : '100%',
+					'overlayText'  : 'In order to watch the entire video segment, you must have an active content license.<br>For assistance or to learn more, please call 855-337-7500.'
 				} );
 			}
 		},
 
 		'startTracking' : function ( player ) {
-			this.trackPlayer( player );
 			this.trackHashchange( player, window );
+
+			if ( !this.model.get( 'limited' ) ) {
+				this.trackPlayer( player );
+			}
 		},
 
 		// Tracked currentTime when video is paused and ended
@@ -140,6 +169,12 @@ define( function ( require ) {
 				player.dispose();
 				$( element ).off( 'hashchange.videoPlayer' );
 			}.bind( this ) );
+		},
+
+		'isMobile' : function () {
+			return videojs.IS_IOS ||
+				videojs.IS_ANDROID ||
+				videojs.IS_OLD_ANDROID;
 		}
 
 	} );
