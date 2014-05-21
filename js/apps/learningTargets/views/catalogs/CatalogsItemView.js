@@ -15,7 +15,7 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'click .catalog-training' : 'showTraining'
+			'click .catalog-training' : 'showTrainingCatalog'
 		},
 
 		'showTrainingCatalog' : function ( e ) {
