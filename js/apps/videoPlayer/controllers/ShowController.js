@@ -108,17 +108,21 @@ define( function ( require ) {
 					layout.videoButtonsRegion.show( videoButtonsView );
 
 					// show video segments
-					var segmentsView = new App.VideoPlayer.Views.VideoCollectionView( {
-						'collection' : segments
-					} );
-					layout.videoSegmentsRegion.show( segmentsView );
+					if ( !segments.isEmpty() ) {
+						var segmentsView = new App.VideoPlayer.Views.VideoCollectionView( {
+							'collection' : segments
+						} );
+						layout.videoSegmentsRegion.show( segmentsView );
+					}
 
 					// show video resources
 					var resources = App.request( 'videoPlayer:getVideoResources', videoModel );
-					var resourcesView = new App.VideoPlayer.Views.ResourcesView( {
-						'collection' : resources
-					} );
-					layout.videoResourcesRegion.show( resourcesView );
+					if ( !resources.isEmpty() ) {
+						var resourcesView = new App.VideoPlayer.Views.ResourcesView( {
+							'collection' : resources
+						} );
+						layout.videoResourcesRegion.show( resourcesView );
+					}
 
 					//show related vids
 					var relatedView = new App.VideoPlayer.Views.VideoCollectionView( {

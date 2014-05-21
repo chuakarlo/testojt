@@ -10,6 +10,7 @@ define( function( require ) {
 
 	require( 'common/views' );
 	require( 'videoPlayer/VideoPlayer' );
+	require( 'videoPlayer/entities/Entities' );
 
 	describe( 'VideoPlayer Module', function () {
 
@@ -81,23 +82,23 @@ define( function( require ) {
 			describe( '.showVideoResources', function () {
 
 				var model      = new App.VideoPlayer.Entities.Content();
-				var collection = new Backbone.CFCollection();
+				var collection = new App.VideoPlayer.Entities.RelatedVideos();
 
 				before( function () {
+					collection.reset( [ { }, { } ] );
 					var stub = sinon.stub().returns( collection );
-					App.reqres.setHandler( 'common:getQueueContents', stub );
 					App.reqres.setHandler( 'common:getQueueContents', stub );
 					App.reqres.setHandler( 'videoPlayer:questions', stub );
 					App.reqres.setHandler( 'videoPlayer:getRelatedVideos', stub );
+					App.reqres.setHandler( 'videoPlayer:getVideoResources', stub );
 					App.reqres.setHandler( 'videoPlayer:segments', stub );
 				} );
 
 				after( function () {
 					App.reqres.removeHandler( 'common:getQueueContents' );
-					App.reqres.removeHandler( 'common:getQueueContents' );
-					App.reqres.removeHandler( 'common:getQueueContents' );
 					App.reqres.removeHandler( 'videoPlayer:questions' );
 					App.reqres.removeHandler( 'videoPlayer:getRelatedVideos' );
+					App.reqres.removeHandler( 'videoPlayer:getVideoResources' );
 					App.reqres.removeHandler( 'videoPlayer:segments' );
 				} );
 
