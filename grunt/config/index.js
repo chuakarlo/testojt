@@ -5,8 +5,9 @@ var fs   = require( 'fs' );
 var path = require( 'path' );
 
 module.exports = {
-	'ignoredPaths' : [ 'public/connect', 'public/js/libs/', 'js/libs/', 'node_modules/', 'test/', 'migrate/', 'resources/', 'data/', 'config/' ],
-	'jshintrc'     : JSON.parse( fs.readFileSync( path.join( process.cwd(), '.jshintrc' ), 'utf8' ) ),
+	'ignoredPathsForComplexity' : [ 'public/js/libs/', 'js/libs/', 'node_modules/', 'test/', 'resources/', 'data/', 'config/' ],
+	'ignoredPathsForLinting'    : [ 'public/js/libs/', 'js/libs/', 'node_modules/', 'resources/' ],
+	'jshintrc'                  : JSON.parse( fs.readFileSync( path.join( process.cwd(), '.jshintrc' ), 'utf8' ) ),
 
 	'github' : {
 		'username' : 'AWESOM-O',

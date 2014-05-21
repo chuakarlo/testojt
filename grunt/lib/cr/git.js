@@ -12,7 +12,7 @@ function git ( callback ) {
 			return callback();
 		}
 
-		report( filter( files ), callback );
+		report( filter( files, 'ignoredPathsForComplexity' ), callback );
 	} );
 
 }

@@ -13,7 +13,7 @@ module.exports = function ( done, type ) {
 	console.log( 'running code complexity code' );
 
 	getFiles[ type ]( function ( paths ) {
-		var files = filter( paths );
+		var files = filter( paths, 'ignoredPathsForComplexity' );
 
 		report( files );
 
