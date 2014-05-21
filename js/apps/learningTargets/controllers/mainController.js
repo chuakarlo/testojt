@@ -204,7 +204,7 @@ define( function ( require ) {
 				helper._showView( new App.Common.LoadingView() );
 
 				helper._apiRequest( 'lt:catalogs', function ( collection ) {
-
+					console.log(collection);
 					var catalogsView = new CatalogsView ( {
 						collection : collection
 					} );

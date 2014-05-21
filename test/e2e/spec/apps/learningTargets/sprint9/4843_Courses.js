@@ -36,7 +36,7 @@ suite( function ( env ) {
 
 			browser
 				.elementByClassName( 'dropdown-menu' )
-				.elementByCssSelector( '.resources-list > li > a[href="#resources/learning"]' ).click()
+				.elementByCssSelector( '.resources-list > li > a[href="#resources/learning/processes"]' ).click()
 				.nodeify( done );
 
 		} );

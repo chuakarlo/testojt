@@ -6,7 +6,7 @@ suite( function ( env ) {
 
 	var browser;
 
-	describe( 'Observations of Me', function () {
+	describe( 'Group Tasks', function () {
 
 
 		beforeEach( function () {
@@ -41,20 +41,19 @@ suite( function ( env ) {
 
 		} );
 
-		it( 'should click observations', function ( done ) {
+		it( 'should click group tasks', function ( done ) {
 
 			browser
-				.elementByCssSelector( '.learning-targets > .row > .lt-left-nav > .nav > li.observations > a' ).click()
+				.elementByCssSelector( '.learning-targets > .row > .lt-left-nav > .nav > li.group-task > a' ).click()
 				.waitForElementByClassName( 'lt-content' )
 				.nodeify( done );
 
 		} );
 
-		it( 'should redirect to flex page', function ( done ) {
+		it( 'should show content', function ( done ) {
 
 			browser
-				.elementByCssSelector( '.lt-toggle-btn .lt-link' ).click()
-				.waitForElement( 'id', 'PD360' )
+				.elementByCssSelector( '.lt-toggle-btn' ).click()
 				.nodeify( done );
 
 		} );
