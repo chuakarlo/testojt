@@ -57,7 +57,7 @@ define( function ( require ) {
 			// populate the username for them.
 			if ( $.cookie( 'remember' ) === 'true' ) {
 				this.ui.remember.prop( 'checked', 'checked' );
-				this.model.set( 'Username', $.cookie( 'UID' ) );
+				this.ui.username.val( $.cookie( 'UID' ) );
 			}
 		},
 
