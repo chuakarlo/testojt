@@ -11,6 +11,10 @@
 	}
 
 	#your-queue-wrapper, #recommended-wrapper {
+
+		&:hover .active.prevNext {
+			display : inline-block;
+		}
 		position : relative;
 		overflow : hidden;
 
@@ -24,8 +28,10 @@
 		}
 
 		.img-responsive {
-			max-width  : none;
-			max-height : 148px;
+
+			width     : auto;
+			height    : 148px;
+			max-width : none;
 		}
 
 		ul {
@@ -36,9 +42,9 @@
 		}
 
 		li {
-			min-height : @pc-content-box;
+			// min-height : @pc-content-box;
 			width      : 285px;
-			max-height : @pc-content-box;
+			// max-height : @pc-content-box;
 			h4 {
 				font-size   : 18px;
 				line-height : 24px;
@@ -47,37 +53,15 @@
 				overflow    : hidden;
 				margin: 10px 15px 0;
 			}
-		}
-
-		.prevNext {
-			display     : none;
-		}
-		.prevNext.active {
-			cursor      : pointer;
-			width       : 50px;
-			height      : 55px;
-			background  : url('../img/left-arrow.png') no-repeat center center rgba(0, 0, 0, 0.1);
-			text-indent : -9999px;
-			border      : 0;
-			z-index     : 10000;
-			position    : absolute;
-			bottom      : 150px;
-			left        : 0;
-			display     : none;
-			margin-top: 150px;
-		}
-		.nextLink.active {
-			background  : url('../img/left-arrow-right.png') no-repeat center center rgba(0, 0, 0, 0.1);
-			right               : @pc-min;
-			left                : auto;
-			margin-top: 150px;
+			.sc-segment-image-container {
+				overflow : hidden;
+			}
 		}
 
 		.pc-watch-later {
 			float         : right;
 			margin        : 5px 15px;
 		}
-
 
 		.watch-later-icon {
 			font-size : 25px;
@@ -168,11 +152,11 @@
 			text-align : center;
 		}
 		p {
-			color      : #fff;
+			color      : @pc-white;
 			width      : 100%;
 			text-align : center;
-			margin : 10px 0 0 0;
-			font-size: 14px;
+			margin     : 10px 0 0 0;
+			font-size  : 14px;
 		}
 	}
 

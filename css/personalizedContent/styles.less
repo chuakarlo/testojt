@@ -41,27 +41,63 @@
 	// ** What-to-do-next  & Content(Recommended  & My Queue)
 	// ** for carousel
 	#user-widgets, #content-display{
+		.prevNext-holder {
+			height   : 100%;
+			position : absolute;
+			&.next {
+				right : 0;
+			}
+			&.swipe-enabled {
+				.active.prevNext {
+					display : block;
+					&:before {
+						padding    : 5px 8px;
+						color      : @pc-white;
+						font-size  : 14px;
+					}
+				}
+			}
+		}
 		.prevNext {
-			background  : url("../img/left-arrow.png") no-repeat scroll center center rgba(0, 0, 0, 0.1);
-			border      : 0 none;
-			cursor      : pointer;
-			display     : none;
-			height      : @fifty-px;
-			left        : 0;
-			margin-top  : @prev-next-margin-top;
-			position    : absolute;
-			text-indent : -9999px;
-			top         : 0;
-			width       : @fifty-px;
-			z-index     : 10000;
+			border   : 0 none;
+			cursor   : pointer;
+			display  : none;
+			position : absolute;
+			top      : 49%;
+			z-index  : 10000;
+			color    : @pc-gray-light;
+			&:before {
+				background : rgba(110,110,110,.3);
+				padding    : 10px 12px;
+				color      : @pc-white;
+				font-size  : 20px;
+				text-shadow : -1px 0px 0px @pc-gray-dark;
+			}
 		}
 		.nextLink {
-			background : url('../img/left-arrow-right.png') no-repeat center center rgba(0,0,0,.1);
-			right      : 0;
-			left       : auto;
+			right : 0;
+			left  : auto;
+		}
+		.container-touch {
+			.sc-play-container {
+				display : none !important;
+			}
+			.sc-play-link img {
+				opacity : 1 !important;
+			}
 		}
 	}
 
+	#content-display {
+		.prevNext-holder {
+			position : initial;
+		}
+	}
+	#recommended-wrapper {
+		.prevNext {
+			top : 40%;
+		}
+	}
 	/**
 	 * GENERAL
 	 */

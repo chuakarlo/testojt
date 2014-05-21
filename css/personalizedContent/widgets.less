@@ -4,6 +4,33 @@
 	//  Widgets
 	// *
 
+	// Color Declaration
+	@widgetblue     : #3DADEF;
+	@widgetdarkblue : #005580;
+
+	// Variable declaration
+	.bg-img-trans() {
+		-webkit-transition : background-image 0.2s ease-in-out;
+		-moz-transition    : background-image 0.2s ease-in-out;
+		-ms-transition     : background-image 0.2s ease-in-out;
+		-o-transition      : background-image 0.2s ease-in-out;
+		transition         : background-image 0.2s ease-in-out;
+	}
+	.bg-color-trans() {
+		-webkit-transition : background-color 500ms linear;
+		-moz-transition    : background-color 500ms linear;
+		-o-transition      : background-color 500ms linear;
+		-ms-transition     : background-color 500ms linear;
+		transition         : background-color 500ms linear;
+	}
+	.color-trans() {
+		-webkit-transition : color 300ms linear;
+		-moz-transition    : color 300ms linear;
+		-o-transition      : color 300ms linear;
+		-ms-transition     : color 300ms linear;
+		transition         : color 300ms linear;
+	}
+
 	.three-box-container( @height ) {
 		position   : relative;
 		min-height : @height;
@@ -15,30 +42,27 @@
 		height   : inherit;
 		.pc-border-radius ( 5px );
 	}
+
 	#active-widgets li > .widget-wrapper.widget-placeholder {
 		position : relative;
 		.widget-placeholder-icon {
-			background-image   : url( 'http://i1292.photobucket.com/albums/b563/blabbermouth2011/widget-placeholder_zpse9626e25.png' );
-			width              : 121px;
-			height             : 132px;
-			position           : absolute;
-			top                : 134px;
-			z-index            : 1;
-			left               : 108px;
-			cursor             : pointer;
-			-webkit-transition : background-image 0.2s ease-in-out;
-			-moz-transition    : background-image 0.2s ease-in-out;
-			-ms-transition     : background-image 0.2s ease-in-out;
-			-o-transition      : background-image 0.2s ease-in-out;
-			transition         : background-image 0.2s ease-in-out;
-		}
-		.widget-placeholder-icon:hover {
-			opacity: .8;
+			background-image : url( 'http://i1292.photobucket.com/albums/b563/blabbermouth2011/widget-placeholder_zpse9626e25.png' );
+			width            : 121px;
+			height           : 132px;
+			position         : absolute;
+			top              : 134px;
+			z-index          : 1;
+			left             : 108px;
+			cursor           : pointer;
+			.bg-img-trans;
+			&:hover {
+				opacity: .8;
+			}
 		}
 		.widget-placeholder-title {
 			background-color : #dedfe0;
 			height           : 200px;
-			color            : #FFF;
+			color            : @pc-white;
 			text-align       : center;
 			font-size        : 40px;
 			padding-top      : 45px;
@@ -52,7 +76,7 @@
 				position   : absolute;
 				bottom     : 27%;
 				width      : 100%;
-				color      : #cccccc;
+				color      : @pc-gray-dark;
 				text-align : center;
 				p {
 					font-size   : 16px;
@@ -62,20 +86,25 @@
 					cursor : pointer;
 				}
 				#awesomeness:hover {
-					color : #5abef9;
+					color : @pc-gray-darker;
 				}
 			}
 		}
 	}
 
-	div.widget-item:hover{
-		background-color: @pc-gray-lightest;
+	div.widget-item {
+		.bg-color-trans
+		&:hover{
+			background-color: @pc-gray-lightest;
+		}
 	}
+
 	#active-holder {
 		overflow : hidden;
 
 		.three-box-container {
-			.three-box-container( 433px );
+			.three-box-container( 410px );
+			margin-bottom : 40px;
 		}
 	}
 
@@ -222,8 +251,6 @@
 		ul {
 			width       : inherit;
 			height      : inherit;
-			margin-top  : 20px;
-			margin-left : -4px;
 			list-style  : none;
 		}
 
@@ -246,7 +273,7 @@
 			height : 279px;
 			.empty-widget-holder {
 				font-size : 16px;
-				color     : #ccc;
+				color     : @pc-gray-dark;
 				top       : 25%;
 				border    : none;
 				.fa {
@@ -279,12 +306,14 @@
 		.footer {
 			padding    : 14px 0 14px 14px;
 			border-top : 1px solid #ebebeb;
+			a:hover {
+				color: @widgetdarkblue;
+			}
 		}
 	}
 
 	#active-widgets {
 		ul {
-			margin-left : 0px;
 			li {
 				width          : 380px;
 				padding-bottom : 20px;
@@ -319,7 +348,7 @@
 		}
 		i.fa-play {
 			font-size     : 11px;
-			color         : #FFFFFF;
+			color         : @pc-white;
 			background    : #00A8FF;
 			padding       : 8px 0 0 10px;
 			height        : 26px;
@@ -336,20 +365,17 @@
 
 		#profile-icons-holder{
 			.fa {
-				background         : #FCFCFC;
-				color              : #CCC;
+				background         : @pc-gray-lightest;
+				color              : @pc-gray-dark;
 				border-radius      : 25px;
-				border             : 1px solid #ccc;
+				border             : 1px solid @pc-gray-dark;
 				padding            : 12px;
 				width              : 50px;
 				font-size          : 24px;
 				display            : block;
 				margin             : 0 auto 6px;
-				-webkit-transition : background-color 500ms linear, color 300ms linear;
-				-moz-transition    : background-color 500ms linear, color 300ms linear;
-				-o-transition      : background-color 500ms linear, color 300ms linear;
-				-ms-transition     : background-color 500ms linear, color 300ms linear;
-				transition         : background-color 500ms linear, color 300ms linear;
+				.bg-color-trans;
+				.color-trans;
 			}
 			margin      : auto;
 			padding-top : 15px;
@@ -366,23 +392,23 @@
 				}
 			}
 			a{
-		    color : #3DADEF;
+		    color : @widgetblue;
 		  }
 			a:hover{
-				color : #005580;
+				color : @widgetdarkblue;
 				.fa {
-					background         : #3DADEF;
-					color              : #FFF;
+					background         : @widgetblue;
+					color              : @pc-white;
 				}
 			}
 			.user{
-				background : #ccc url('../img/icon-users.png') no-repeat -13px -14px;
+				background : @pc-gray-dark url('../img/icon-users.png') no-repeat -13px -14px;
 			}
 			.user:hover{
 				background-position : -13px -89px;
 			}
 			.setting{
-				background : #ccc url('../img/icon-settings.png') no-repeat -14px -14px;
+				background : @pc-gray-dark url('../img/icon-settings.png') no-repeat -14px -14px;
 				span {
 					left   : 0px !important;
 					bottom : -44px;
@@ -392,7 +418,7 @@
 				background-position : -14px -89px;
 			}
 			.content{
-				background : #ccc url('../img/icon-contents.png') no-repeat -12px -13px;
+				background : @pc-gray-dark url('../img/icon-contents.png') no-repeat -12px -13px;
 			}
 			.content:hover{
 				background-position : -13px -88px;
@@ -407,6 +433,7 @@
 	#inactive-holder > div:hover .prevNext,
 	#active-holder > div:hover .prevNext {
 		display : inline-block;
+
 	}
 
 	.block-hide{
@@ -437,7 +464,7 @@
 		height        : 0px;
 		border-left   : 20px solid transparent;
 		border-right  : 20px solid transparent;
-		border-bottom : 20px solid #fff;
+		border-bottom : 20px solid @pc-white;
 		position      : relative;
 		display       : none;
 	}
@@ -473,36 +500,43 @@
 	#widgets-settings-panel {
 		background-color : #2b2d30;
 		margin           : auto;
-		color            : #FFF;
+		color            : @pc-white;
 		padding-bottom   : 5px;
 		padding-top      : 1px;
 	}
 	#widget-settings-header {
 		margin     : auto;
 		margin-top : 12px;
+		ul {
+			border-bottom : 1px solid;
+			padding       : 0px 40px;
+			li {
+				padding-bottom : 15px;
+				margin-right   : -5px;
+				cursor         : pointer;
+				&:hover {
+					color : @widgetblue;
+				}
+			}
+		}
+		.main:hover {
+			border : none;
+			color  : @pc-white;
+			cursor : auto;
+		}
+
+		// start #widget-settings-header .selected
+		.selected {
+			color         : @widgetblue;
+			border-bottom : 5px solid @widgetblue;
+		}
+		// end #widget-settings-header .selected
 	}
-	#widget-settings-header ul {
-		border-bottom : 1px solid;
-	}
-	#widget-settings-header .main:hover {
-		border : none;
-		color  : #FFF;
-		cursor : auto;
-	}
-	#widget-settings-header ul {
-		padding : 0px 40px;
-	}
-	#widget-settings-header ul li {
-		padding-bottom : 15px;
-		margin-right   : -5px;
-		cursor         : pointer;
-	}
-	#widget-settings-header ul li:hover {
-		color : #3dadef;
-	}
+
+
 	#widget-settings-header .selected {
-		color         : #3dadef;
-		border-bottom : 5px solid #3dadef;
+		color         : @widgetblue;
+		border-bottom : 5px solid @widgetblue;
 	}
 	#widget-settings-content {
 		padding-top : 20px;
@@ -526,7 +560,7 @@
 		position   : relative;
 	}
 	#widget-settings-selection li .widget-icon-btn {
-		border           : 3px solid #FFF;
+		border           : 3px solid @pc-white;
 		background-color : #3cacee;
 		font-weight      : bold;
 		padding          : 4px;
@@ -542,7 +576,7 @@
 		margin-top : 0px;
 	}
 	#widget-settings-selection li #widget-sequence-overlay {
-		background-color : #3dadef;
+		background-color : @widgetblue;
 		opacity          : 0.3;
 		font-size        : 100px;
 		position         : absolute;
@@ -568,18 +602,25 @@
 	#widget-settings-preview {
 		padding    : 0 30px;
 		height     : 380px;
+
+		// start #widgetsetting .img-thumbnail
+			.img-thumbnail {
+				width         : 180px;
+				height        : 180px;
+				margin-bottom : 28px;
+				float         : left;
+			}
+		// end #widgetsetting .img-thumbnail
+
+		// start #widget-limit-message
+			#widget-limit-message {
+				display    : none;
+				width      : 423px;
+				text-align : center;
+			}
+		// end #widget-limit-message
 	}
-	#widget-settings-preview .img-thumbnail {
-		width         : 180px;
-		height        : 180px;
-		margin-bottom : 28px;
-		float         : left;
-	}
-	#widget-settings-preview #widget-limit-message {
-		display    : none;
-		width      : 423px;
-		text-align : center;
-	}
+
 	#widget-settings-preview .description {
 		float  : left;
 		margin : 0px 30px;
@@ -594,7 +635,7 @@
 		width   : 130px;
 		padding : 10px;
 		margin  : 10px 5px;
-		color   : #FFF;
+		color   : @pc-white;
 	}
 	#widget-settings-preview .actions button.cancel {
 		background-color : transparent;
@@ -609,19 +650,7 @@
 
 }
 
-@media (max-width: 340px) {
-
-	#Home-page-view {
-
-		#active-widgets {
-
-
-			}
-
-	}
-
-}
-@media (max-width: 340px) {
+@media (max-width: 390px) {
 
 	#Home-page-view {
 
@@ -651,8 +680,8 @@
 
 			ul {
 				li {
-					width : 285px;
-					padding: 0 5px;
+					width : 290px;
+					padding: 0 5px 0 5px;
 
 					.widget-wrapper {
 						margin: 0;
@@ -705,4 +734,18 @@
 
 	}
 
+}
+
+@media (min-width: 370px) and (max-width:390px) {
+	#Home-page-view {
+
+		#active-widgets {
+			ul {
+				li {
+					width : 350px;
+					padding: 0;
+				}
+			}
+		}
+	}
 }
