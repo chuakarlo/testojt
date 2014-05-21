@@ -10,6 +10,8 @@ define( function ( require ) {
 	var convertSecsToMins = require( '../helpers/convertSecsToMins' );
 	var modernizr         = window.Modernizr;
 
+	require( 'jquery.spin' );
+
 	return Marionette.ItemView.extend( {
 
 		'className' : 'col-xs-12 col-sm-6 col-md-4 col-lg-4',
@@ -52,6 +54,10 @@ define( function ( require ) {
 
 			'duration' : function () {
 				return convertSecsToMins( this.SegmentLengthInSeconds );
+			},
+
+			'imageUrl' : function () {
+				return 'http://resources.pd360.com/PD360/media/thumb/' + this.ImageURL;
 			}
 		},
 
@@ -75,6 +81,7 @@ define( function ( require ) {
 		'onClose' : function () {
 			this.removeTooltip( this.ui.infoIcon );
 			this.removeTooltip( this.ui.watchIcon );
+			this.ui.loadingIcon.spin( false );
 		},
 
 		'navigateToVideoPage' : function ( ev ) {
@@ -83,21 +90,22 @@ define( function ( require ) {
 		},
 
 		'showDetails' : function () {
+			var tooltipText = '';
+
 			this.removeTooltip( this.ui.infoIcon );
 
 			if ( !this.ui.infoIcon.hasClass( 'blued' ) ) {
-				this.ui.infoOverlay.fadeIn( function () {
-					this.ui.infoIcon.addClass( 'blued fa-times-circle').removeClass( 'grayed fa-info-circle' );
-					this.addTooltip( this.ui.infoIcon , { 'title' : 'Close' }  );
-					this.showTooltip( this.ui.infoIcon );
-				}.bind( this ) );
+				this.ui.infoIcon.addClass( 'blued fa-times-circle').removeClass( 'grayed fa-info-circle' );
+				tooltipText = 'Close';
+				this.ui.infoOverlay.fadeIn();
 			} else {
-				this.ui.infoOverlay.fadeOut( function () {
-					this.ui.infoIcon.addClass( 'grayed fa-info-circle' ).removeClass( 'blued fa-times-circle' );
-					this.addTooltip( this.ui.infoIcon , { 'title' : 'Description' } );
-					this.showTooltip( this.ui.infoIcon );
-				}.bind( this ) );
+				this.ui.infoIcon.addClass( 'grayed fa-info-circle' ).removeClass( 'blued fa-times-circle' );
+				tooltipText = 'Description';
+				this.ui.infoOverlay.fadeOut();
 			}
+
+			this.addTooltip( this.ui.infoIcon , { 'title' : tooltipText  }  );
+			this.showTooltip( this.ui.infoIcon );
 		},
 
 		'watchLaterQueue' : function () {
@@ -109,7 +117,7 @@ define( function ( require ) {
 
 			this.ui.watchIcon.tooltip( 'destroy' );
 			this.ui.watchIcon.hide();
-			this.ui.loadingIcon.show();
+			this.ui.loadingIcon.show().spin( 'small' );
 		},
 
 		'matchedSegmentsToQueue' : function () {
@@ -121,7 +129,7 @@ define( function ( require ) {
 				this.addTooltip( this.ui.watchIcon , { 'title' : 'Add to Watch Later List' } );
 			}
 
-			this.ui.loadingIcon.hide();
+			this.ui.loadingIcon.hide().spin( false );
 			this.ui.watchIcon.show();
 		},
 
