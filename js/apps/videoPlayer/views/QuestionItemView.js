@@ -34,6 +34,21 @@ define( function ( require ) {
 			'blur @ui.textInput'  : 'onBlur'
 		},
 
+		'templateHelpers' : {
+
+			'sanitizedAnswer' : function () {
+				function safeString ( unsafe ) {
+					return String( unsafe )
+						.replace( /<\/script/g, '<\\/script' )
+						.replace( /<!--/g, '<\\!--' );
+				}
+
+				// Replacing /%nl%/ string pattern to make newline
+				return _.unescape( safeString( this.AnswerText.replace( /%nl%/g, '\n' ) ) );
+			}
+
+		},
+
 		'initialize' : function ( options ) {
 			_.bindAll( this );
 			_.extend( this, options );

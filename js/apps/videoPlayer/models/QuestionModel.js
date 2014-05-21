@@ -57,7 +57,8 @@ define( function ( require ) {
 					.replace( /<!--/g, '<\\!--' );
 			}
 
-			return _.escape( safeString( this.get( 'AnswerText' ) ) );
+			// Replacing \n to another string pattern to prevent server authorization error
+			return _.escape( safeString( this.get( 'AnswerText' ).replace( /\n/g, '%nl%' ) ) );
 		}
 
 	} );
