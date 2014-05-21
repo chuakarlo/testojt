@@ -28,32 +28,25 @@ define( function ( require ) {
 				'arrows'         : true,
 				'slide'          : 'li',
 				'slickWidth'     : 1140,
+				'useCSS'         : false,
 				'responsive'     : [ {
 					'breakpoint' : 1100,
 					'settings'   : {
 						'slidesToShow'   : 4,
-						'slidesToScroll' : 3,
-						'touchThreshold' : 10,
-						'slide'          : 'li',
-						'arrows'         : false,
-						'slickWidth'     : 1140
-					}
-				}, {
-					'breakpoint' : 780,
-					'settings'   : {
-						'slidesToShow'   : 4,
 						'slidesToScroll' : 2,
 						'touchThreshold' : 10,
+						'useCSS'         : false,
 						'slide'          : 'li',
 						'arrows'         : false,
 						'slickWidth'     : 1140
 					}
 				}, {
-					'breakpoint' : 450,
+					'breakpoint' : 550,
 					'settings'   : {
 						'slidesToShow'   : 4,
 						'slidesToScroll' : 1,
 						'touchThreshold' : 10,
+						'useCSS'         : false,
 						'slide'          : 'li',
 						'arrows'         : false,
 						'slickWidth'     : 1140
