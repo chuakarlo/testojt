@@ -26,16 +26,17 @@ define( function ( require ) {
 		},
 
 		'ui' : {
-			'userMenu'    : '.user-menu',
-			'menuBar'     : '.menu-bar',
-			'drawer'      : '#menu',
-			'ddLink'      : '.navbar-collapse.in a:not(.dropdown-toggle)',
-			'bar1'        : '#bar1',
-			'bar2'        : '#bar2',
-			'bar3'        : '#bar3',
-			'search'      : '#nav-search',
-			'smallSearch' : '#nav-search-small',
-			'help'        : '#help'
+			'userMenu'     : '.user-menu',
+			'menuBar'      : '.menu-bar',
+			'drawer'       : '#menu',
+			'ddLink'       : '.navbar-collapse.in a : not(.dropdown-toggle)',
+			'bar1'         : '#bar1',
+			'bar2'         : '#bar2',
+			'bar3'         : '#bar3',
+			'search'       : '#nav-search',
+			'smallSearch'  : '#nav-search-small',
+			'help'         : '#help',
+			'messageCount' : '.message-count'
 		},
 
 		'events' : {
@@ -57,6 +58,23 @@ define( function ( require ) {
 		'initialize' : function ( options ) {
 			this.authenticated = options.authenticated;
 			this.helpUrl       = options.helpUrl;
+
+			// custome message count update implementation to prevent glitchy layout when using
+			// this.render
+			this.listenTo( this.model, 'change:messageCount', this.updateMessageCount );
+		},
+
+		'updateMessageCount' : function () {
+			var model = this.model;
+
+			if ( model.get( 'messageCount' ) === 0 ) {
+				return this.ui.messageCount.addClass( 'hidden-message' );
+			}
+
+			this.ui.messageCount
+				.text( model.get( 'messageCount' ) )
+				.removeClass( 'hidden-message' );
+
 		},
 
 		'getTemplate' : function () {

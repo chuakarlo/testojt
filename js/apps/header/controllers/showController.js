@@ -8,6 +8,8 @@ define( function ( require ) {
 	var Menu                = require( 'header/views/NavLayout' );
 	var IconsCollectionView = require( 'header/views/IconsCollectionView' );
 
+	require( 'apps/messages/entities/Messages' );
+
 	var menuOptions = require( 'resources/data/menus' );
 
 	App.module( 'Header.Show', function ( Show ) {
@@ -18,9 +20,18 @@ define( function ( require ) {
 				var authenticated = App.request( 'session:authenticated' );
 
 				var init = function ( helpUrl ) {
-					var menu = new Menu( { 'authenticated' : authenticated } );
+					var messageCount = new Backbone.Model( { 'messageCount' : 0 } );
+					var menu = new Menu( { 'authenticated' : authenticated, 'model' : messageCount } );
 
 					if ( authenticated ) {
+
+						App.when( App.request( 'messages:count' ) )
+
+						.done( function ( count ) {
+
+							menu.model.set( 'messageCount', count );
+
+						} );
 
 						this.listenToOnce( menu, 'show', function () {
 

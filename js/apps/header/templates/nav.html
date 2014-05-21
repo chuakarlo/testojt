@@ -61,9 +61,9 @@
 				</li>
 
 				<li class="hidden-xs">
-					<a href="#">
+					<a href="#messages" class="message-count-btn">
 						<img class="js-notifications notification-icon" src="img/bell.png" alt="bell">
-						<span class="badge badge-info notifications">{8}</span>
+						<span class="badge badge-info message-count hidden-message"><%- messageCount %></span>
 					</a>
 				</li>
 
@@ -81,7 +81,7 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="#settings/profile">User Settings</a></li>
-						<li class="visible-xs"><a href="#">{Notifications} <span class="badge badge-info">{8}</span></a></li>
+						<li class="visible-xs"><a href="#messages" class="message-count-btn">Notifications <span class="badge badge-info message-count hidden-message"><%- messageCount %></span></a></li>
 						<li class="divider"></li>
 						<li><a href="#logout">Log Out</a></li>
 					</ul>
