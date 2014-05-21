@@ -62,7 +62,10 @@ define( function ( require ) {
 						}
 
 						if ( personnelObj.length ) {
-							App.vent.trigger( 'forgotpassword:success' );
+							//TODO email password to user
+							// App.request( 'sendpassword:success', personnelObj[0]  );
+							App.vent.trigger( 'sendpassword:success' );
+
 						} else {
 							errorView.model.set( 'error', 'Sorry, we don\'t have an account using that email address.' );
 							self.helperRegion.show( errorView );

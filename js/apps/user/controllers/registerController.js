@@ -20,7 +20,7 @@ define( function ( require ) {
 				App.content.show( loadingView );
 
 				var registerLayout = new RegisterLayout( {
-					'model'  : new App.Entities.Personnel()
+					'model' : new App.Entities.Personnel()
 				} );
 
 				App.content.show( registerLayout );

@@ -23,7 +23,7 @@ define( function ( require ) {
 			'getReadOptions' : function () {
 				return {
 					'method' : 'getAll',
-					'args' : {
+					'args'   : {
 						'id' : ''
 					}
 				};

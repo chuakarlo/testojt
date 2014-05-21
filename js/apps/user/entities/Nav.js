@@ -30,7 +30,7 @@ define( function ( require ) {
 					} else {
 						App.content.show( new App.Common.NotFoundView() );
 					}
-					
+
 				} else {
 					this.get( 'Profile' ).set( 'active', true );
 				}
@@ -45,5 +45,5 @@ define( function ( require ) {
 		} );
 
 	} );
-	
+
 } );

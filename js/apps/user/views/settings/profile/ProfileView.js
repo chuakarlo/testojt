@@ -56,8 +56,8 @@ define( function ( require ) {
 
 					'Updated' : [
 						{
-							'required'  : true,
-							'msg'       : 'New password is required'
+							'required' : true,
+							'msg'      : 'New password is required'
 						},
 						{
 							'minLength' : 4,
@@ -128,26 +128,26 @@ define( function ( require ) {
 				'#title' : 'Position',
 
 				'#role-type' : {
-					'observe' : 'EducatorType',
+					'observe'       : 'EducatorType',
 					'selectOptions' : {
-						'collection' : this.roleTypes,
-						'labelPath'  : 'EducatorTypeName',
-						'valuePath'  : 'EducatorType',
+						'collection'    : this.roleTypes,
+						'labelPath'     : 'EducatorTypeName',
+						'valuePath'     : 'EducatorType',
 						'defaultOption' : {
 							'label' : 'Choose a role...',
 							'value' : ''
 						}
 					}
 				},
-				
+
 				'#career-start' : {
 					'observe'       : 'ProfessionalStartDate',
 					'onSet'         : 'setCareerStart',
 					'onGet'         : 'getCareerStart',
 					'selectOptions' : {
-						'collection' : this.careerDates,
-						'labelPath'  : 'year',
-						'valuePath'  : 'year',
+						'collection'    : this.careerDates,
+						'labelPath'     : 'year',
+						'valuePath'     : 'year',
 						'defaultOption' : {
 							'label' : 'Choose a year...',
 							'value' : 0
@@ -156,11 +156,11 @@ define( function ( require ) {
 				},
 
 				'#grade-level' : {
-					'observe' : 'GradeLevelId',
+					'observe'       : 'GradeLevelId',
 					'selectOptions' : {
-						'collection' : this.gradeLevels,
-						'labelPath'  : 'GradeLevelName',
-						'valuePath'  : 'GradeLevelId',
+						'collection'    : this.gradeLevels,
+						'labelPath'     : 'GradeLevelName',
+						'valuePath'     : 'GradeLevelId',
 						'defaultOption' : {
 							'label' : 'Choose a grade level...',
 							'value' : 0
@@ -169,11 +169,11 @@ define( function ( require ) {
 				},
 
 				'#subject' : {
-					'observe' : 'CCSubjectId',
+					'observe'       : 'CCSubjectId',
 					'selectOptions' : {
-						'collection' : this.subjectTypes,
-						'labelPath'  : 'CCSubjectName',
-						'valuePath'  : 'CCSubjectId',
+						'collection'    : this.subjectTypes,
+						'labelPath'     : 'CCSubjectName',
+						'valuePath'     : 'CCSubjectId',
 						'defaultOption' : {
 							'label' : 'Choose a subject...',
 							'value' : 0
@@ -215,7 +215,6 @@ define( function ( require ) {
 				'text' : {
 					'uploadButton' : '<a>Edit</a>'
 				},
-
 
 				'request' : {
 					'params' : {
@@ -268,7 +267,7 @@ define( function ( require ) {
 				l.start();
 
 				async.series( [
-				
+
 					// save personnel model
 					function ( callback ) {
 
@@ -285,7 +284,7 @@ define( function ( require ) {
 						} );
 
 					}.bind( this ),
-				
+
 					// save profile model
 					function ( callback ) {
 
@@ -302,7 +301,7 @@ define( function ( require ) {
 						} );
 
 					}.bind( this )
-				
+
 				], function ( error, results ) {
 					l.stop();
 
@@ -319,7 +318,7 @@ define( function ( require ) {
 						'message' : 'Your profile information has been saved',
 						'type'    : 'success'
 					} );
-					
+
 					// update any changes to name, etc
 					this.render();
 

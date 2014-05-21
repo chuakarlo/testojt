@@ -23,7 +23,7 @@ define( function ( require ) {
 	require( 'user/entities/Subjects' );
 	require( 'user/entities/Nav' );
 	require( 'user/entities/Observation' );
-	// require( 'user/entities/forgotPassword' );
+	require( 'user/entities/SendPassword' );
 
 	var SettingsLayout = require( 'user/views/settings/SettingsLayout' );
 
@@ -171,7 +171,7 @@ define( function ( require ) {
 			}
 		} );
 
-		App.vent.on( 'forgotpassword:success', function () {
+		App.vent.on( 'sendpassword:success', function () {
 			App.navigate( 'success', { 'trigger' : true } );
 		} );
 
