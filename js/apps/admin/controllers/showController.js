@@ -23,26 +23,18 @@ define( function ( require ) {
 		Mod.ContentController = Mod.BaseController.extend( {
 
 			'showPage' : function () {
-				var adminRequest = App.request( 'user:isAdmin' );
-				var toolsRequest = App.request( 'admin:tools' );
 
-				// show a loading view while we wait
-				this.layout.content.show( new App.Common.LoadingView() );
+				if ( App.request( 'user:isAdmin' ) ) {
 
-				App.when( adminRequest, toolsRequest ).done( function ( isAdmin, tools ) {
+					this.layout.content.show( new NavView( {
+						'tools' : App.request( 'admin:tools' )
+					} ) );
 
-					if ( isAdmin ) {
+				} else {
 
-						// show the admin view with a dropdown list of tools
-						this.layout.content.show( new NavView( {
-							'tools' : tools
-						} ) );
+					this.layout.content.show( new NonAdminView() );
 
-					} else {
-						this.layout.content.show( new NonAdminView() );
-					}
-
-				}.bind( this ) ).fail( App.errorHandler.bind( App, { 'region' : this.layout.content } ) );
+				}
 
 			}
 

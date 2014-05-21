@@ -6,7 +6,6 @@ define( function ( require ) {
 	var Vent       = require( 'Vent' );
 	var Marionette = require( 'marionette' );
 	var Backbone   = require( 'backbone' );
-	var Session    = require( 'Session' );
 
 	var FooterView = require( 'apps/footer/views/FooterView' );
 	var ImageView  = require( 'apps/footer/views/ImageView' );
@@ -19,7 +18,7 @@ define( function ( require ) {
 
 				'initialize' : function () {
 					_.bindAll( this, 'determineBranding' );
-					this.listenTo(Vent, 'login:success', this.buildBranding);
+					this.listenTo(Vent, 'session:initialized', this.buildBranding);
 					this.listenTo(Vent, 'pd360:logout', this.buildBranding);
 				},
 
@@ -30,7 +29,7 @@ define( function ( require ) {
 				},
 
 				'buildBranding' : function () {
-					if ( Session.authenticated() ) {
+					if ( App.request( 'session:personnel' ) ) {
 						var licenses = App.request( 'user:licenses' );
 
 						App.when( licenses ).done( this.determineBranding ).fail( function ( ) {

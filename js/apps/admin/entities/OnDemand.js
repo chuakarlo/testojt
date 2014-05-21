@@ -13,20 +13,16 @@ define( function ( require ) {
 
 	var API = {
 		'getPages' : function () {
-			var defer = App.Deferred();
 
-			var fetchingPrivileges = App.request( 'user:privileges' );
+			var privileges = App.request( 'user:privileges' );
 
-			App.when( fetchingPrivileges ).done( function ( privileges ) {
-				if ( privileges.isCatalogAdmin() ) {
-					Pages.add( OnDemand.CatalogTranscript );
-					Pages.add( OnDemand.CatalogCreation );
-				}
+			if ( privileges.isCatalogAdmin() ) {
+				Pages.add( OnDemand.CatalogTranscript );
+				Pages.add( OnDemand.CatalogCreation );
+			}
 
-				defer.resolve( Pages );
-			} ).fail( App.errorHandler );
+			return Pages;
 
-			return defer.promise();
 		}
 	};
 

@@ -128,21 +128,6 @@ define( function ( require ) {
 
 		},
 
-		// check to see if the user is logged in
-		'authenticated' : function () {
-			var cookies = [
-				'CFID',
-				'CFTOKEN',
-				cfCookie,
-				usernameCookie,
-				personnelCookie
-			];
-			// IE9 + supports array.every but why not use underscore
-			return _.every( cookies, function ( cookie ) {
-				return Boolean( $.cookie( cookie ) );
-			} ) ;
-		},
-
 		'eulaAccepted' : function () {
 			return $.cookie( eulaCookie );
 		},

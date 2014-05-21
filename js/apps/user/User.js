@@ -199,7 +199,7 @@ define( function ( require ) {
 
 		// set handler when requesting if session is authenticated
 		App.reqres.setHandler( 'session:checkSession', function () {
-			if ( !Session.authenticated() ) {
+			if ( !App.request( 'session:authenticated' ) ) {
 				return false;
 			}
 			return true;

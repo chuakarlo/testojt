@@ -157,10 +157,6 @@ define( function ( require ) {
 
 				};
 
-			},
-
-			'isSinetAdmin' : function () {
-				return this.get( 'RoleTypeId' ) === 3;
 			}
 
 		} );
