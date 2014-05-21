@@ -20,7 +20,9 @@ define( function ( require ) {
 		describe( 'Missing group ID', function () {
 
 			it( 'should throw an error if you did not provide a group id', function () {
-				( function () { new App.Entities.GroupResourcesCollection(); } ).should.throw(/groupId/);
+				( function () {
+					new App.Entities.GroupLinkCollection();
+				} ).should.throw(/groupId/);
 			} );
 		} );
 
@@ -56,7 +58,7 @@ define( function ( require ) {
 				it( 'should send the proper arguments when fetching the links', function () {
 					links.fetch();
 					var call = ajaxStub.getCall( 1 );
-					var callData = JSON.parse( call[ 'args' ][ 0 ][ 'data' ]);
+					var callData = JSON.parse( call.args[ 0 ].data );
 
 					callData.path.should.contain( 'CommunityService' );
 					callData.method.should.equal( 'getLinkUploadsByTypeAndLocationAndLinkType' );
@@ -86,7 +88,7 @@ define( function ( require ) {
 				ajaxStub.onFirstCall().yieldsTo('success', 'fakeSignature');
 			} );
 
-			after( function() {
+			after( function () {
 				$.ajax.restore();
 			} );
 
@@ -98,7 +100,7 @@ define( function ( require ) {
 
 				links.fetch();
 				var call = ajaxStub.getCall( 1 );
-				var callData = JSON.parse( call[ 'args' ][ 0 ][ 'data' ]);
+				var callData = JSON.parse( call.args[ 0 ].data);
 
 				callData.args.linkTypeId.should.equal( 7 );
 			} );

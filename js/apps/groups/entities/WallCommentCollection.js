@@ -50,11 +50,9 @@ define( function ( require ) {
 			},
 
 			'parse' : function ( res ) {
-				// XXX I don't like this
 				// This should happen when it's got no more results
 				if ( res.length < this.wallQueryModel.get( 'numRows' ) ) {
 					this.maxResults = true;
-					// this.wallQueryModel.set( 'startRow', 0 );
 				} else if ( this.models.length >= this.wallQueryModel.get( 'totalRows' ) ) {
 					this.maxResults = true;
 				}

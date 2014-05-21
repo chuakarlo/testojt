@@ -15,6 +15,7 @@ define( function ( require ) {
 				this.layout = options.layout || null;
 				this.model = options.model;
 				this.lastGroupId = null;
+				this.displayLocation = options.displayLocation || 'side';
 
 				_.bindAll( this, 'showGroup');
 			},
@@ -37,7 +38,11 @@ define( function ( require ) {
 					'collection' : collection
 				} );
 
-				this.layout.groupInfoRegion.show( infoView );
+				if ( this.displayLocation === 'side' ) {
+					this.layout.groupInfoRegion.show( infoView );
+				} else {
+					this.layout.groupsContentRegion.show( infoView );
+				}
 
 			}
 

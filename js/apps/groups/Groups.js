@@ -38,6 +38,7 @@ define( function ( require ) {
 				'groups/:groupId/forums'    : 'showGroupForums',
 				'groups/:groupId/resources' : 'showGroupResources',
 				'groups/:groupId/members'   : 'showGroupMembers',
+				'groups/:groupId/info'      : 'showGroupInfo',
 				'groups/:groupId/leader'    : 'showGroupLeaderTools',
 				'groups.create'             : 'showCreateGroup'
 			}
@@ -80,8 +81,6 @@ define( function ( require ) {
 
 				App.when( this.getData( groupId ) ).done( _.bind( function () {
 
-					// fetch is the backbone success arguments
-					// Model, response, options
 					if ( !this.layout ) {
 						this.layout = new App.Groups.Views.Layout();
 
@@ -164,6 +163,33 @@ define( function ( require ) {
 						}
 					} );
 
+				}, this ) );
+			},
+
+			'showGroupInfo' : function ( groupId ) {
+				groupId = parseInt( groupId );
+
+				App.when( this.setup( groupId ) ).done( _.bind( function () {
+
+					if ( !this.infoController ) {
+						this.infoController = new Groups.Show.SideController( {
+							'layout'          : this.layout,
+							'model'           : this.model,
+							'displayLocation' : 'tab'
+						} );
+					}
+
+					var controllers = [
+						this.headerController,
+						this.sideController,
+						this.infoController
+					];
+
+					_.each( controllers, function ( ctrl ) {
+						if ( ctrl.lastGroupId !== groupId ) {
+							ctrl.getData( groupId );
+						}
+					} );
 				}, this ) );
 			},
 

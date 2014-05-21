@@ -23,7 +23,9 @@ define( function ( require ) {
 		describe( 'Missing group ID', function () {
 
 			it( 'should throw an error if you did not provide a group id', function () {
-				( function () { new App.Entities.WallCommentCollection(); } ).should.throw(/groupId/);
+				( function () {
+					new App.Entities.WallCommentCollection();
+				} ).should.throw(/groupId/);
 			} );
 		} );
 
@@ -78,7 +80,7 @@ define( function ( require ) {
 			it( 'should pass in the right arguments when fetch the comments', function () {
 				comments.fetch();
 				var call = ajaxStub.getCall( 1 );
-				var callData = JSON.parse( call[ 'args' ][ 0 ][ 'data' ]);
+				var callData = JSON.parse( call.args[ 0 ].data);
 
 				callData.path.should.contain( 'groups.GroupMessagesGateway' );
 				callData.method.should.equal( 'getGroupWall' );
@@ -116,7 +118,7 @@ define( function ( require ) {
 		describe( '.parse', function () {
 			var ajaxStub;
 
-			before( function () {
+			beforeEach( function () {
 				comments = new App.Entities.WallCommentCollection( [ ], {
 					'groupId' : 123
 				} );
@@ -128,14 +130,32 @@ define( function ( require ) {
 				comments.fetch();
 			} );
 
-			after( function () {
+			afterEach( function () {
 				$.ajax.restore();
 			} );
 
-			it( 'should set the maxResults to true', function() {
+			it( 'should set the maxResults to true as there is less results than our max', function () {
 				comments.maxResults.should.equal( true );
 			} );
 
+			it( 'should set the maxResults to true when there are more models than our totalRows', function () {
+				// set the maxResults back since we only have 7 mondels. Also
+				// update the query model to expect less models
+				comments.maxResults = false;
+				comments.wallQueryModel.set( {
+					'totalRows' : 2,
+					'numRows'   : 2
+				} );
+
+				ajaxStub.onCall( 2 ).yieldsTo('success', 'fakeSignature');
+				// fakeData has 7 comments
+				ajaxStub.onCall( 3 ).yieldsTo( 'success', fakeData );
+
+				comments.fetch();
+
+				comments.maxResults.should.equal( true );
+
+			} );
 			it( 'should parse the children and remove comments that are replies', function () {
 				// MessageId !== 1 means it's a reply
 				comments.models.length.should.equal( 4 );
@@ -236,7 +256,7 @@ define( function ( require ) {
 				$.ajax.restore();
 			} );
 
-			it( 'should update the queryModel with the provided arguments', function() {
+			it( 'should update the queryModel with the provided arguments', function () {
 
 				comments.newCommentFetch( {
 					'startRow' : 10,
@@ -244,7 +264,7 @@ define( function ( require ) {
 				} );
 
 				var call = ajaxStub.getCall( 3 );
-				var callData = JSON.parse( call[ 'args' ][ 0 ][ 'data' ]);
+				var callData = JSON.parse( call.args[ 0 ].data);
 
 				callData.args.numRows.should.equal( 1 );
 				callData.args.startRow.should.equal( 10 );
@@ -269,10 +289,10 @@ define( function ( require ) {
 				var errorSpy = sinon.spy();
 
 				comments.newCommentFetch( {
-					'startRow' : 9,
-					'numRows'  : 2,
+					'startRow'  : 9,
+					'numRows'   : 2,
 					'successCb' : successSpy,
-					'errorCb' : errorSpy
+					'errorCb'   : errorSpy
 				} );
 
 				successSpy.callCount.should.equal( 1 );
@@ -287,10 +307,10 @@ define( function ( require ) {
 				var errorSpy = sinon.spy();
 
 				comments.newCommentFetch( {
-					'startRow' : 9,
-					'numRows'  : 2,
+					'startRow'  : 9,
+					'numRows'   : 2,
 					'successCb' : successSpy,
-					'errorCb' : errorSpy
+					'errorCb'   : errorSpy
 				} );
 
 				successSpy.callCount.should.equal( 0 );

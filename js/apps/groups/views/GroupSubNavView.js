@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	var _          = require( 'underscore' );
 	var $          = require( 'jquery' );
+	var Backbone   = require( 'backbone');
 	var Marionette = require( 'marionette' );
 	var App        = require( 'App' );
 	var template   = require( 'text!../templates/groupSubNavView.html' );
@@ -19,24 +20,15 @@ define( function ( require ) {
 			'membersTab'  : '#tab-members'
 		},
 
-		'events' : {
-			'click a' : 'navigate'
-		},
-
 		'phone' : false,
 
-		'navigate' : function ( event ) {
-			event.preventDefault();
-			var link = $( event.currentTarget ).attr( 'href' );
-			App.navigate( link, {
-				'trigger' : true
-			} );
-
-			if ( link.indexOf( 'communities' ) === -1 ) {
+		'initialize' : function () {
+			// While this view is active, listen to navigation events so we
+			// can display the active tab correctly
+			this.listenTo( Backbone.history, 'route', _.bind( function () {
 				var query = this.getCurrentQuery();
 				this.setActiveTab( query );
-			}
-
+			}, this ) );
 		},
 
 		'getCurrentQuery' : function () {
@@ -69,7 +61,6 @@ define( function ( require ) {
 				case 'members' :
 					this.ui.membersTab.parent().addClass( 'active' );
 					break;
-
 			}
 		},
 
