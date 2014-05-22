@@ -2,6 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var $        = require( 'jquery' );
+	var _        = require( 'underscore' );
 	var Backbone = require( 'backbone' );
 	var sinon    = window.sinon;
 	var App      = require( 'App' );
@@ -48,12 +49,24 @@ define( function ( require ) {
 			it( 'should return the return the correct method and args', function () {
 				var data = {
 					'method' : 'getGroupByLicenseId',
-					'args' : {
+					'args'   : {
 						'licId' : 123
 					}
 				};
 				var options = group.getReadOptions();
 				options.should.eql( data );
+			} );
+		} );
+
+		describe( '.getCreateOptions', function () {
+
+			it( 'should return the correct method and args to create a group', function () {
+				var options = group.getCreateOptions();
+
+				options.path.should.equal( 'LicensesGateway' );
+				options.objectPath.should.equal( 'Licenses' );
+				options.method.should.equal( 'save' );
+				options.args.should.have.keys( _.keys( group.defaults ) );
 			} );
 		} );
 
@@ -80,7 +93,7 @@ define( function ( require ) {
 
 				var call = ajaxStub.getCall( 1 );
 
-				var callData = JSON.parse( call[ 'args' ][ 0 ][ 'data' ]);
+				var callData = JSON.parse( call.args[ 0 ].data );
 
 				callData.path.should.equal( 'GroupService' );
 				callData.method.should.equal( 'userIsGroupMember' );
@@ -92,7 +105,7 @@ define( function ( require ) {
 			} );
 
 			it( 'should update the isMember attribute', function () {
-				group.isMember.should.be.true;
+				group.isMember.should.equal( true );
 			} );
 
 		} );
@@ -101,12 +114,12 @@ define( function ( require ) {
 
 			it( 'should return true if you are the group creator', function () {
 				group.set( 'Creator', 9 );
-				group.userIsCreator( 9 ).should.be.true;
+				group.userIsCreator( 9 ).should.equal( true );
 			} );
 
 			it( 'should return false if you are not the group creator', function () {
 				group.set( 'Creator', 10 );
-				group.userIsCreator( 9 ).should.be.false;
+				group.userIsCreator( 9 ).should.equal( false );
 			} );
 
 		} );
@@ -130,7 +143,7 @@ define( function ( require ) {
 
 				var call = ajaxStub.getCall( 1 );
 
-				var callData = JSON.parse( call[ 'args' ][ 0 ][ 'data' ]);
+				var callData = JSON.parse( call.args[ 0 ].data );
 
 				callData.path.should.equal( 'GroupService' );
 				callData.method.should.equal( 'userIsGroupAdmin' );
@@ -159,13 +172,12 @@ define( function ( require ) {
 
 				ajaxStub.onSecondCall().yieldsTo(
 					'success',
-					[ {'FirstName' : 'foo' },{ 'FirstName' : 'bar' } ]
+					[ { 'FirstName' : 'foo' },{ 'FirstName' : 'bar' } ]
 				);
 
 				var def = group.getMembers();
 				var t = typeof def.then;
 				t.should.equal( 'function' );
-
 
 				App.when( def ).done( function ( collection ) {
 					collection.should.be.instanceof( App.Entities.GroupMemberCollection );
@@ -175,7 +187,6 @@ define( function ( require ) {
 			} );
 
 		} );
-
 
 		describe( '.getLastUpdate', function () {
 			var ajaxStub;
@@ -195,12 +206,12 @@ define( function ( require ) {
 
 				var call = ajaxStub.getCall( 1 );
 
-				var callData = JSON.parse( call[ 'args' ][ 0 ][ 'data' ]);
+				var callData = JSON.parse( call.args[ 0 ].data );
 
 				callData.path.should.equal( 'GroupService' );
 				callData.method.should.equal( 'getMostRecentActivityDateForGroup' );
 				callData.args.should.eql( {
-					'licId'  : 123,
+					'licId' : 123
 				});
 
 			} );
@@ -234,7 +245,7 @@ define( function ( require ) {
 				// second
 				ajaxStub.onSecondCall().yieldsTo(
 					'success',
-					[ {'resource' : 'r1' },{ 'resource' : 'r2' } ]
+					[ { 'resource' : 'r1' },{ 'resource' : 'r2' } ]
 				);
 
 				var d = group.getResources();
@@ -288,7 +299,7 @@ define( function ( require ) {
 				// second
 				ajaxStub.onSecondCall().yieldsTo(
 					'success',
-					[ {'resource' : 'r1' },{ 'resource' : 'r2' } ]
+					[ { 'resource' : 'r1' },{ 'resource' : 'r2' } ]
 				);
 
 				var d = group.getLinks( 'leader' );

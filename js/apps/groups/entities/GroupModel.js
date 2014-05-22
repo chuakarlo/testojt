@@ -24,14 +24,64 @@ define( function ( require ) {
 			'path' : 'GroupService',
 
 			/**
+			* The default attributes that represent a group
+			* @member {Object} defaults
+			*/
+			'defaults' : {
+				'LicenseId'            : 0,
+				'LicenseTypeId'        : 300,
+				'LicenseContentTypeId' : 0,
+				'LicenseName'          : '',
+				'OrganizationName'     : '',
+				'State'                : '',
+				'EmailDomain'          : '',
+				'TemplateId'           : 0,
+				'LicenseKey'           : '',
+				'NumberOfSeats'        : -1,
+				'SyllabusFileName'     : '',
+				'SyllabusURL'          : '',
+				'CertificateFileName'  : '',
+				'MoreInfoURL'          : '',
+				'UserPrintCert'        : 0,
+				'Misc'                 : '',
+				'Objectives'           : '',
+				'ContactName'          : '',
+				'ContactPhone'         : '',
+				'ContactEmailAddress'  : '',
+				'WelcomeMessage'       : '',
+				'StartDate'            : '',
+				'ExpireDate'           : '',
+				'MembershipLength'     : 0,
+				'AdminPersonnelId'     : 0,
+				'UseGuidebooks'        : 0,
+				'UseVJEServer'         : 0,
+				'SharedAccounts'       : 0,
+				'Activated'            : 0,
+				'Hidden'               : 0,
+				'CanVerify'            : 0,
+				'AllowCustomCourse'    : 0,
+				'PrivateGroup'         : 0,
+				'BrandingImage'        : '',
+				'Avatar'               : '',
+				'GroupLeaderLabel'     : '',
+				'LiveBookId'           : 0,
+				'Created'              : '',
+				'Creator'              : '',
+				'Modified'             : '',
+				'Modifier'             : 0,
+				'Removed'              : '',
+				'Remover'              : 0
+			},
+
+			/**
 			* A property to track the value of the last call to {userIsGroupMember}
 			* @member {Boolean} isMember
 			*/
 			'isMember' : false,
 
 			/**
-			* Determine the method called on the server and the arguments
-			* required for the supplied method.
+			* Define the method called on the server to fetch a group and the
+			* arguments required for the supplied method.
 			* @returns {Object}
 			*/
 			'getReadOptions' : function () {
@@ -40,6 +90,20 @@ define( function ( require ) {
 					'args'   : {
 						'licId' : this.get( 'LicenseId' )
 					}
+				};
+			},
+
+			/**
+			* Define the method called on the server to create a group and the
+			* arguments required for the supplied method.
+			* @returns {Object}
+			*/
+			'getCreateOptions' : function () {
+				return {
+					'path'       : 'LicensesGateway',
+					'objectPath' : 'Licenses',
+					'method'     : 'save',
+					'args'       : this.toJSON()
 				};
 			},
 
