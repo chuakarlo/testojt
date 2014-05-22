@@ -10,6 +10,21 @@ define( function ( require ) {
 		var model;
 		var attributes;
 		var contStub;
+		var options = {
+			'success' : sinon.spy(),
+			'fail'    : sinon.spy()
+		};
+
+		var updateCheck = function () {
+			var newAttr = {
+				id        : 1,
+				ContentId : 1,
+				module    : 'homepage view'
+			};
+
+			model.save( newAttr, options );
+			expect( contStub.callCount ).to.have.length.equal( 1 );
+		};
 
 		before( function () {
 
@@ -31,29 +46,11 @@ define( function ( require ) {
 		} );
 
 		describe( 'sync model functions', function () {
-			var options;
-			before( function () {
-				options = {
-					success : sinon.spy(),
-					fail : sinon.spy()
-				};
-
-			} );
-
 			it( 'update', function () {
-
-				var newAttr = {
-					id        : 1,
-					ContentId : 1,
-					module    : 'homepage view'
-				};
-
-				model.save( newAttr, options );
-				expect( contStub.callCount ).to.have.length.equal( 1 );
+				updateCheck();
 			} );
 
-
-			it( 'destory', function () {
+			it( 'destroy', function () {
 				model.destroy( options );
 				expect( contStub.callCount ).to.have.length.equal( 2 );
 			} );

@@ -36,7 +36,14 @@ define( function ( require ) {
 						} );
 					}
 				},
-				afterShift            : function () {},
+				afterShift            : function () {
+					$( container ).find( '.active-view .sc-segment-image-container .sc-play-link' ).each( function ( ) {
+						var hovered = $( this ).is( ':hover' );
+						if ( hovered ) {
+							$( this ).closest( 'li' );
+						}
+					} );
+				},
 				lastPaneEvent         : function () {
 					if ( view.collection.length && count !== view.collection.length - 1 ) {
 						base.getCarouselCustomAction( view, view.collection, 1, base );

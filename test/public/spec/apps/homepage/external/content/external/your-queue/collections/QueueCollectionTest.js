@@ -6,19 +6,35 @@ define( function ( require ) {
 	var Remoting = require( 'Remoting' );
 	var $        = require( 'jquery' );
 
-
 	describe ( 'QueueCollection Collection', function () {
 
 		var collection;
+		var remotingStub;
+
+		var fetchCheck = function () {
+			var options      = {
+				'success' : sinon.spy(),
+				'fail'    : sinon.spy()
+			};
+			$.when( collection.fetch( options ) ).done( function () {
+
+				expect( remotingStub.callCount ).to.be.equal( 1 );
+				expect( options.success.callCount ).to.be.equal( 1 );
+
+			} );
+		};
 
 		before ( function () {
+
 			var Collection = require ( 'apps/homepage/external/content/external/your-queue/collections/QueueCollection' );
-			collection = new Collection();
+			collection   = new Collection();
+			remotingStub = sinon.stub( Remoting , 'fetch' ).returns( [ { id : 1 } ] );
 		} );
 
 		after ( function () {
+
 			collection = null;
-			Remoting.fetch.restore();
+			remotingStub.restore();
 		} );
 
 		it ( 'should be an instance of Backbone Collection', function () {
@@ -27,21 +43,8 @@ define( function ( require ) {
 		} );
 
 		it( 'collection should be fetched' , function ( done ) {
-			var remotingStub = sinon.stub( Remoting , 'fetch' ).returns( [ { id : 1 }] );
-
-			var options      = {
-				'success' : sinon.spy(),
-				'fail'    : sinon.spy()
-			};
-
-			$.when( collection.fetch( options ) ).done( function () {
-
-				expect( remotingStub.callCount ).to.be.equal( 1 );
-				expect( options.success.callCount ).to.be.equal( 1 );
-				done();
-
-			} );
-
+			fetchCheck();
+			done();
 		} );
 	} );
 } );

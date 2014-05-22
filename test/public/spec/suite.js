@@ -192,8 +192,10 @@ define( function ( require ) {
 
 			//Homepage - Recommended Content
 			'spec/apps/homepage/external/content/external/recommended/baseTest.js',
-			'spec/apps/homepage/external/content/external/recommended/collections/RecommendedCollectionTest.js'
+			'spec/apps/homepage/external/content/external/recommended/collections/RecommendedCollectionTest.js',
 
+			//Homepage - null
+			'spec/apps/homepage/external/widgets/external/null/baseTest.js'
 		]
 
 	};

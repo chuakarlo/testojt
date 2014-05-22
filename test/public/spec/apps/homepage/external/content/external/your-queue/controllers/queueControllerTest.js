@@ -8,44 +8,69 @@ define( function ( require ) {
 	var controller = require( 'apps/homepage/external/content/external/your-queue/controllers/queueController' );
 
 	describe( 'queueController - Your Queue' , function () {
-
 		var options;
-		before( function () {
+		var remoteStub;
+		var arModel;
+
+		var stubCheck = function () {
 			options = {
 				'success' : sinon.spy(),
-				'error'    : sinon.spy()
+				'error'   : sinon.spy()
 			};
-		} );
+			arModel    = [ { 'id' : 1 } ];
+			remoteStub = sinon.stub( Remoting, 'fetch' ).returns ( arModel );
+		};
 
-		it( ' doFetch() success', function ( done ) {
-			var arModel = [ { 'id' : 1 } ];
-			var remoteStub = sinon.stub( Remoting, 'fetch' ).returns ( arModel );
-
-			$.when( controller.doFetch( [], options ) ).done ( function () {
+		var doFetchCheck = function () {
+			$.when( controller.doFetch( [ ], options ) ).done ( function () {
 				expect( remoteStub.callCount ).to.be.equal( 1 );
 				expect( Remoting.fetch( 'request' ) ).to.equal( arModel );
 				expect( options.success.callCount ).to.be.equal( 1 );
+			} );
+		};
 
-				Remoting.fetch.restore();
-				done();
+		describe( 'doFetch() success', function () {
+
+			before( function () {
+				stubCheck();
 			} );
 
+			after( function () {
+				remoteStub.restore();
+			} );
+
+			it( ' doFetch() should call success', function ( done ) {
+				doFetchCheck();
+				done();
+			} );
 		} );
 
-		it( ' doFetch() fail', function ( done ) {
-			var remoteStub = sinon.stub( Remoting, 'fetch' ).returns ( $.Deferred().reject( 'err' ) );
+		describe( 'doFetch() Fail', function () {
+			var options;
+			var remoteStub;
 
-			$.when( controller.doFetch( [], options ) ).done ( function () {
-				expect( remoteStub.callCount ).to.be.equal( 1 );
-				expect( options.error.callCount ).to.be.equal( 1 );
-
-				Remoting.fetch.restore();
-				done();
+			before( function () {
+				options = {
+					'success' : sinon.spy(),
+					'error'   : sinon.spy()
+				};
+				remoteStub = sinon.stub( Remoting, 'fetch' ).returns ( $.Deferred().reject( 'err' ) );
+			} );
+			after( function () {
+				remoteStub.restore();
 			} );
 
+			it( ' doFetch() should call error', function ( done ) {
+				$.when( controller.doFetch( [ ], options ) ).done ( function () {
+					expect( remoteStub.callCount ).to.be.equal( 1 );
+					expect( options.error.callCount ).to.be.equal( 1 );
+
+					done();
+				} );
+
+			} );
 		} );
 
 	} );
 
 } );
-

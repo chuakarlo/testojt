@@ -10,12 +10,14 @@ define ( function ( require ) {
 	describe( 'Your Queue - baseController', function () {
 
 		var models;
+		var headerStub;
+		var sFirstName;
 
 		before( function () {
 
 			models = [ {
 				'AudioFileName'          : '',
-				'Children'               : Array[0],
+				'Children'               : Array[ 0 ],
 				'ContentDescription'     : '<i>Segment 1 of 1 of this program.</i>',
 				'ContentId'              : 7652,
 				'ContentName'            : '6th Grade: RI.6.1 & 4 - Critical Reading in Elective Classes',
@@ -29,7 +31,7 @@ define ( function ( require ) {
 				'queued'                 : true
 			}, {
 				'AudioFileName'          : '',
-				'Children'               : Array[0],
+				'Children'               : Array[ 0 ],
 				'ContentDescription'     : '<i>Segment 1 of 1 of this program.</i>',
 				'ContentId'              : 0,
 				'ContentName'            : '6th Grade: RI.6.1 & 4 - Critical Reading in Elective Classes',
@@ -42,23 +44,27 @@ define ( function ( require ) {
 				'contentType'            : 'queue',
 				'queued'                 : false
 			} ];
+
+			sFirstName     = 'Rosana';
+			headerStub     = sinon.stub( App, 'request' ).returns( { 'FirstName' : sFirstName } );
+		} );
+
+		after( function () {
+
+			headerStub.restore();
 		} );
 
 		it( 'doSetHeader should return a template', function () {
-			var sFirstName     = 'Rosana';
-			var headerStub     = sinon.stub( App, 'request' ).returns( { 'FirstName' : sFirstName } );
 			var templateHeader = controller.doSetHeader();
 
 			expect( templateHeader ).to.be.a( 'string' ).and
 															.to.contain( sFirstName );
 			expect( headerStub.callCount ).to.have.length.equal( 1 );
-
 			App.request.restore();
 		} );
 
-		it( 'doFetchLogic ' , function ( ) {
-			var collection = new ( Backbone.Collection.extend() ) ( models );
-
+		it( 'doFetchLogic ' , function () {
+			var collection      = new ( Backbone.Collection.extend() ) ( models );
 			var collectionParam = controller.doFetchLogic( collection );
 			collectionParam.should.have.property( 'collection' );
 			collectionParam.should.have.property( 'count' );

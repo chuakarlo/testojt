@@ -7,6 +7,19 @@ define( function ( require ) {
 	var sinon      = window.sinon;
 
 	describe ( 'Base Test for Your Queue', function () {
+		var sStub;
+		var setHeaderStub;
+
+		before( function () {
+
+			sStub         = 'Rosana\'s Queue';
+			setHeaderStub = sinon.stub( controller, 'doSetHeader' ).returns( sStub );
+		} );
+
+		after( function () {
+
+			controller.doSetHeader.restore();
+		} );
 
 		it ( 'should be an instance of BaseObject', function () {
 			var BaseObj  = require( 'apps/homepage/BaseObject' );
@@ -23,14 +36,8 @@ define( function ( require ) {
 		} );
 
 		it( 'should have a header that contains Queue', function () {
-
-			var sStub = 'Rosana\'s Queue';
-			var setHeaderStub = sinon.stub( controller, 'doSetHeader' ).returns( sStub );
-
 			expect( base._header() ).to.be.equal( sStub );
 			setHeaderStub.should.have.callCount( 1 );
-
-			controller.doSetHeader.restore();
 		} );
 
 		it( 'renderToggle should return remove-from-queue' , function () {

@@ -5,7 +5,6 @@ define( function ( require ) {
 	var instance               = new BaseObj();
 	var WidgetItemView         = require( 'apps/homepage/external/widgets/external/groupActivity/views/WidgetItemView' );
 	var CollectionItems        = require( 'apps/homepage/external/widgets/external/groupActivity/collections/WidgetCollection' );
-	var InactiveWidgetItemView = require( 'apps/homepage/external/widgets/external/groupActivity/views/InactiveWidgetItemView' );
 
 	instance._id = 'widgets';
 
@@ -43,7 +42,6 @@ define( function ( require ) {
 		'getCollection'   : function ( callback, options ) {
 			doGetCollection ( callback, options );
 		},
-		'getTemplate'     : InactiveWidgetItemView,
 		'_id'             : 'groupActivity',
 		'_header'         : function () {
 			return 'Group Activity';

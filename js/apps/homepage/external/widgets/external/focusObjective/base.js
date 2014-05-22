@@ -5,7 +5,6 @@ define( function ( require ) {
 	var instance               = new BaseObj();
 	var WidgetItemView         = require( 'apps/homepage/external/widgets/external/focusObjective/views/WidgetItemView' );
 	var CollectionItems        = require( 'apps/homepage/external/widgets/external/focusObjective/collections/WidgetCollection' );
-	var InactiveWidgetItemView = require( 'apps/homepage/external/widgets/external/focusObjective/views/InactiveWidgetItemView' );
 
 	instance._id = 'widgets';
 
@@ -41,7 +40,6 @@ define( function ( require ) {
 			} );
 		},
 		'_mainUrl'        : '#resources/learning/processes',
-		'getTemplate'     : InactiveWidgetItemView,
 		'_id'             : 'focusObjective',
 		'_header'         : function () {
 			return 'Focus Objectives';

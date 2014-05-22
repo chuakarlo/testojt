@@ -5,7 +5,6 @@ define( function ( require ) {
 	var instance               = new BaseObj();
 	var WidgetItemView         = require( 'apps/homepage/external/widgets/external/whatsNew/views/WidgetItemView' );
 	var CollectionItems        = require( 'apps/homepage/external/widgets/external/whatsNew/collections/WidgetCollection' );
-	var InactiveWidgetItemView = require( 'apps/homepage/external/widgets/external/whatsNew/views/InactiveWidgetItemView' );
 
 	instance._id = 'widgets';
 
@@ -41,7 +40,6 @@ define( function ( require ) {
 			} );
 		},
 		'_mainUrl'        : '#',
-		'getTemplate'     : InactiveWidgetItemView,
 		'_id'             : 'whatsNew',
 		'_header'         : function () {
 			return 'What\'s New';

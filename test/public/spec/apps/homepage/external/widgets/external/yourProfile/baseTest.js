@@ -1,4 +1,4 @@
-define ( function( require ) {
+define ( function ( require ) {
 	'use strict';
 
 	var sinon           = window.sinon;
@@ -9,13 +9,40 @@ define ( function( require ) {
 	var itemView        = require( 'apps/homepage/external/widgets/external/yourProfile/views/WidgetItemView' );
 	var CollectionItems = require( 'apps/homepage/external/widgets/external/yourProfile/collections/WidgetCollection' );
 
-
 	describe( '[Widgets] User Settings : base - Test ', function () {
 		var collection;
+		var fetchStub;
+		var sampleModel;
 
-		before( function() {
+		before ( function () {
+
+			sampleModel = [ {
+				'id' : 1
+			} ];
+
 			collection = new CollectionItems();
+			fetchStub  = sinon.stub( Remoting, 'fetch' ).returns( sampleModel );
 		} );
+
+		after ( function () {
+			Remoting.fetch.restore();
+		} );
+
+		//functions
+		function getCollectionFetch ( doneCall ) {
+			var fetchOptions = {
+				'success' : sinon.spy()
+			};
+
+			App.when( collection.fetch( fetchOptions ) ).done( function () {
+				fetchStub.callCount.should.be.above( 0 );
+				fetchOptions.success.callCount.should.be.above( 0 );
+				Remoting.fetch( 'request' ).should.be.equal( sampleModel );
+
+				doneCall();
+			} );
+		}
+
 		it( 'should be an instance of BaseObject', function () {
 			base.should.be.an.instanceof( BaseObject );
 		} );
@@ -39,11 +66,11 @@ define ( function( require ) {
 		} );
 
 		it( 'should have property Description', function () {
-			base.Description().should.not.be.empty;
+			base.Description().length.should.be.above( 0 );
 		} );
 
 		it( 'should have property imgSrc', function () {
-			base.imgSrc().should.not.be.empty;
+			base.imgSrc().length.should.be.above( 0 );
 		} );
 
 		it( 'should have property icon', function () {
@@ -58,33 +85,16 @@ define ( function( require ) {
 			base.should.have.property( 'getExternalView' );
 		} );
 
-		it( 'should have property getCollection', function () {
+		it( 'should have property getCollection', function ( done ) {
+
 			base.should.have.property( '_items' );
-			var options  = {};
+			var options  = { };
 			var callback = sinon.spy();
-
-			var fetchOptions = {
-				'success' : sinon.spy()
-			};
-			var sampleModel = [ {
-				'id' : 1
-			} ];
-
-			var fetchStub = sinon.stub( Remoting, 'fetch' ).returns( sampleModel );
-
-			App.when( collection.fetch( fetchOptions ) ).done( function() {
-				fetchStub.callCount.should.be.equal( 1 );
-				fetchOptions.success.callCount.should.be.equal( 1 );
-				Remoting.fetch( 'request' ).should.be.equal( sampleModel );
-			} );
 
 			base._items( callback, options );
 
-			Remoting.fetch.restore();
-		} );
+			getCollectionFetch( done );
 
-		it( 'should have property getTemplate', function () {
-			base.should.have.property( 'getTemplate' );
 		} );
 
 		it( 'should have property _id', function () {
@@ -92,10 +102,10 @@ define ( function( require ) {
 		} );
 
 		it( 'should have property EmptyMessage', function () {
-			base.EmptyMessage().should.be.empty;
+			base.EmptyMessage().length.should.be.below( 1 );
 		} );
 
-		it( 'should have property EmptyType', function() {
+		it( 'should have property EmptyType', function () {
 			base.should.have.property( 'EmptyType' );
 			base.EmptyType().should.be.equal( 'fa-user' );
 		} );
