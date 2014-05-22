@@ -23,6 +23,10 @@ define( function ( require ) {
 			'spec/apps/groups/entities/GroupMemberCollectionTest',
 			'spec/apps/groups/entities/GroupLinksCollectionTest',
 
+			// messages
+			'spec/apps/messages/MessagesTest',
+			'spec/apps/messages/entities/MessagesTest',
+
 			// learningTargets
 			'spec/apps/learningTargets/LearningTargetsTest',
 			'spec/apps/learningTargets/views/MainViewTest',
