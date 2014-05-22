@@ -119,7 +119,11 @@ define( function ( require ) {
 					} );
 
 					// show search results
-					return shareVideoView.searchResultsRegion.show( treeRoot );
+					if ( !_.isUndefined( shareVideoView.searchResultsRegion ) ) {
+						return shareVideoView.searchResultsRegion.show( treeRoot );
+					} else {
+						return false;
+					}
 
 				} ).fail( function ( error ) {
 
