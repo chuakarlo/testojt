@@ -158,15 +158,28 @@ define( function ( require ) {
 
 		// Destroys player instance when page navigates to a different route
 		'trackHashchange' : function ( player, element ) {
+			// Listen to window hashchange. Namespaced as .videoPlayer
+			// to avoid conflicts with Backbone.Router.
 			$( element ).on( 'hashchange.videoPlayer', function () {
-				player.off( 'timeupdate' );
+				// Remove listeners
+				if ( player.el() ) {
+					player.off( 'timeupdate' );
+					player.stopTrackingProgress();
+				}
 				// If currentTime is not equal 0 that means video was played, then
 				// update progress before disposing player instance.
 				if ( this.model.get( 'currentTime' ) !== 0) {
 					this.model.save();
 					this.model.set( 'currentTime', 0 );
 				}
-				player.dispose();
+				// Let video.js finish queued callback before
+				// disposing the player object.
+				setTimeout( function () {
+					// Check if player.el is still available.
+					if ( player.el() ) {
+						player.dispose();
+					}
+				}, 500 );
 				$( element ).off( 'hashchange.videoPlayer' );
 			}.bind( this ) );
 		},

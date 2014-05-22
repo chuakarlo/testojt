@@ -53,9 +53,13 @@ define( function ( require ) {
 				var parentNode = self.el().parentNode;
 
 				self.off( 'timeupdate' );
-				self.dispose();
+				self.stopTrackingProgress();
 
-				parentNode.appendChild( holderDiv );
+				setTimeout( function () {
+					self.dispose();
+					parentNode.appendChild( holderDiv );
+				}, 500 );
+
 			}
 
 		};

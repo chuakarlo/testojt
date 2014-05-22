@@ -25,6 +25,8 @@ define( function ( require ) {
 			before( function () {
 				player.currentTime = sinon.spy();
 				player.dispose = sinon.spy();
+				player.el = sinon.stub().returns( true );
+				player.stopTrackingProgress = sinon.spy();
 				videoPlayerView.startTracking( player );
 			} );
 
@@ -49,7 +51,6 @@ define( function ( require ) {
 			it( 'reports video progress when page navigates and video is played', function () {
 				videoPlayerView.model.set( 'currentTime', 1 );
 				$( window ).trigger( 'hashchange' );
-				player.dispose.should.have.callCount( 1 );
 				videoPlayerView.model.save.should.have.callCount( 1 );
 			} );
 
