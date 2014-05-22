@@ -17,6 +17,7 @@ define( function ( require ) {
 	var videoPlayer         = require( 'videoPlayer/VideoPlayer');
 	var videoUploader       = require( 'videoUploader/VideoUploader' );
 	var share               = require( 'share/Share' );
+	var messages            = require( 'apps/messages/Messages' );
 
 	App.vent.on( 'session:deferredResources', function () {
 		admin();
@@ -33,6 +34,7 @@ define( function ( require ) {
 		videoPlayer();
 		videoUploader();
 		share();
+		messages();
 	} );
 
 } );

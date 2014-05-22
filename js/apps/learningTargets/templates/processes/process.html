@@ -7,14 +7,16 @@
 </div>
 <div class="lt-toggle-content drawer" style="display: none;">
 	<% _.each( Tasks, function ( tasksObj ) { %>
-		<div class="col-xs-3 step-item">
-			<a id="<%- tasksObj.ProcessTaskId %>" href="#" class="lt-process-step" title="more info">Next Step <%- tasksObj.ProcessTaskId %></a>
+		<div class="row">
+			<div class="col-xs-3 step-item">
+				<a id="<%- tasksObj.ProcessTaskId %>" href="#" class="lt-process-step" title="more info">Next Step <%- tasksObj.ProcessTaskId %></a>
+			</div>
+			<div class="col-xs-5 step-item"><%- tasksObj.CompleteByDate %></div>
+			<div class="col-xs-4 step-item <%- tasksObj.statusColor %>">
+				<%- tasksObj.status %>
+			</div>
+			<br class="clearfix">
 		</div>
-		<div class="col-xs-5 step-item"><%- tasksObj.CompleteByDate %></div>
-		<div class="col-xs-4 step-item <%- tasksObj.statusColor %>">
-			<%- tasksObj.status %>
-		</div>
-		<br class="clearfix">
 	<% } ); %>
 </div>
 <br class="clearfix">

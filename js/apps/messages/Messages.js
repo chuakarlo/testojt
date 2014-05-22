@@ -1,29 +1,34 @@
 define( function ( require ) {
 	'use strict';
 
-	var App        = require ( 'App' );
-	var AuthRouter = require ( 'AuthRouter' );
+	return function () {
 
-	require ( 'apps/messages/controllers/mainController' );
-	require ( 'apps/messages/entities/Messages' );
+		var App        = require ( 'App' );
+		var AuthRouter = require ( 'AuthRouter' );
 
-	App.module( 'Messages', function ( Messages, App ) {
+		require ( 'apps/messages/controllers/mainController' );
+		require ( 'apps/messages/entities/Messages' );
 
-		// configure routes
-		Messages.Router = AuthRouter.extend ( {
+		App.module( 'Messages', function ( Messages, App ) {
 
-			'appRoutes' : {
-				'messages' : 'showMessages'
-			}
-		} );
+			// configure routes
+			Messages.Router = AuthRouter.extend ( {
 
-		App.addInitializer ( function () {
+				'appRoutes' : {
+					'messages' : 'showMessages'
+				}
+			} );
 
-			new Messages.Router( {
-				'controller' : Messages.Main.controller
+			App.addInitializer ( function () {
+
+				new Messages.Router( {
+					'controller' : Messages.Main.controller
+				} );
+
 			} );
 
 		} );
 
-	} );
+	};
+
 } );

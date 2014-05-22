@@ -29,7 +29,7 @@ define( function ( require ) {
 			'userMenu'     : '.user-menu',
 			'menuBar'      : '.menu-bar',
 			'drawer'       : '#menu',
-			'ddLink'       : '.navbar-collapse.in a : not(.dropdown-toggle)',
+			'ddLink'       : '.navbar-collapse.in a:not(.dropdown-toggle)',
 			'bar1'         : '#bar1',
 			'bar2'         : '#bar2',
 			'bar3'         : '#bar3',

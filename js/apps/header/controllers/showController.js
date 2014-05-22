@@ -20,8 +20,9 @@ define( function ( require ) {
 				var authenticated = App.request( 'session:authenticated' );
 
 				var init = function ( helpUrl ) {
+
 					var messageCount = new Backbone.Model( { 'messageCount' : 0 } );
-					var menu = new Menu( { 'authenticated' : authenticated, 'model' : messageCount } );
+					var menu         = new Menu( { 'authenticated' : authenticated, 'model' : messageCount } );
 
 					if ( authenticated ) {
 
