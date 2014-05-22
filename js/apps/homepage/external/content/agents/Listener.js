@@ -34,6 +34,8 @@ define( function ( require ) {
 		queueCollection.remove( model.id );
 
 		App.vent.trigger( 'homepage:your-queueRender' );
+
+		$( '#your-queue-count' ).text( queueCollection.length );
 	} );
 
 	App.vent.on( 'common:dequeueFailed', function ( model ) {
