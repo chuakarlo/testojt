@@ -87,7 +87,7 @@ define( function ( require ) {
 		params.data = JSON.stringify( {
 			'method'      : config.method,
 			'CFToken'     : Session.token(),
-			'personnelId' : Session.personnelId(),
+			'personnelId' : data.personnelId || Session.personnelId(), // allows unathenticated request to use personnelId (i.e: reset password)
 			'args'        : {
 				'method' : data.method,
 				'args'   : data.args
@@ -136,25 +136,29 @@ define( function ( require ) {
 		return def.promise();
 	};
 
+	var syncOptions = {
+		'create' : function () {
+			return this.getCreateOptions();
+		},
+
+		'read' : function () {
+			return this.getReadOptions();
+		},
+
+		'update' : function () {
+			return this.getUpdateOptions();
+		},
+
+		'delete' : function () {
+			return this.getDeleteOptions();
+		}
+	};
+
 	var defaults = {
 		'sync' : sync,
 
 		'getSyncOptions' : function ( method ) {
-			if ( method === 'create' ) {
-				return this.getCreateOptions();
-			}
-
-			if ( method === 'read' ) {
-				return this.getReadOptions();
-			}
-
-			if ( method === 'update' ) {
-				return this.getUpdateOptions();
-			}
-
-			if ( method === 'delete' ) {
-				return this.getDeleteOptions();
-			}
+			return syncOptions[ method ].call( this );
 		},
 
 		'getCreateOptions' : function () {},

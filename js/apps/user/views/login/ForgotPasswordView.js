@@ -62,13 +62,15 @@ define( function ( require ) {
 						}
 
 						if ( personnelObj.length ) {
-							//TODO email password to user
-							// App.request( 'sendpassword:success', personnelObj[0]  );
-							App.vent.trigger( 'sendpassword:success' );
+
+							var resetRequest = App.request( 'sendpassword:success', personnelObj[ 0 ] );
+							App.when( resetRequest ).done( self.showSuccessView );
 
 						} else {
+
 							errorView.model.set( 'error', 'Sorry, we don\'t have an account using that email address.' );
 							self.helperRegion.show( errorView );
+
 						}
 					} );
 
@@ -85,6 +87,10 @@ define( function ( require ) {
 
 		'onRender' : function () {
 
+		},
+
+		'showSuccessView' : function () {
+			App.vent.trigger( 'sendpassword:success' );
 		},
 
 		'initialize' : function ( options ) {

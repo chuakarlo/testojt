@@ -6,7 +6,7 @@ define( function ( require ) {
 	var App      = require( 'App' );
 	var $        = require( 'jquery' );
 
-	var userInfo   = '';
+	var userInfo;
 
 	App.module( 'Entities', function ( Entities ) {
 
@@ -17,10 +17,10 @@ define( function ( require ) {
 			'getReadOptions' : function () {
 
 				return {
-					'method' : 'sendPasswordEmail',
-					'args'   : {
-						'emailTo' : 'userInfo.EmailAddress'
-						// 'personnelId' : userInfo.persId
+					'method'      : 'sendPasswordEmail',
+					'personnelId' : userInfo.persId,
+					'args'        : {
+						'emailTo' : userInfo.email
 					}
 				};
 			}
@@ -34,11 +34,12 @@ define( function ( require ) {
 		'getPassword' : function ( options ) {
 			var defer = $.Deferred();
 
-			var password = new App.Entities.SendPassword();
 			userInfo = {
 				email  : options.EmailAddress,
 				persId : options.PersonnelId
 			};
+
+			var password = new App.Entities.SendPassword();
 
 			password.fetch( {
 
