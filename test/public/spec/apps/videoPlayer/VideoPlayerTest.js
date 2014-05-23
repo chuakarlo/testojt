@@ -113,6 +113,7 @@ define( function ( require ) {
 						'questionsRegion'      : { 'show' : showSpy },
 						'videoButtonsRegion'   : { 'show' : showSpy },
 						'videoTabsRegion'      : { 'show' : showSpy },
+						'segmentLabelRegion'   : { 'show' : showSpy },
 						'videoSegmentsRegion'  : { 'show' : showSpy },
 						'videoResourcesRegion' : { 'show' : showSpy },
 						'relatedVideosRegion'  : { 'show' : showSpy },
@@ -130,7 +131,7 @@ define( function ( require ) {
 					showStub.should.have.callCount( 1 );
 
 					// regions should have called show
-					showSpy.should.have.callCount( 8 );
+					showSpy.should.have.callCount( 9 );
 
 					// Restoring stubs
 					App.content.show.restore();

@@ -115,6 +115,7 @@ define( function ( require ) {
 						var segmentsView = new App.VideoPlayer.Views.VideoCollectionView( {
 							'collection' : segments
 						} );
+						layout.segmentLabelRegion.show( new App.VideoPlayer.Views.SegmentLabelItemView() );
 						layout.videoSegmentsRegion.show( segmentsView );
 					}
 

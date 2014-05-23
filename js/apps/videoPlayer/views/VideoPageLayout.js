@@ -18,6 +18,7 @@ define( function ( require ) {
 			'videoButtonsRegion'   : '#video-buttons',
 			'videoTabsRegion'      : '#video-tabs',
 			'videoResourcesRegion' : '#video-resource',
+			'segmentLabelRegion'   : '#segment-label',
 			'videoSegmentsRegion'  : '#video-segment',
 			'relatedVideosRegion'  : '#related-videos',
 			'videoInfoRegion'      : '#video-info'
