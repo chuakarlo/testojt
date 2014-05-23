@@ -1,4 +1,5 @@
-define( function( require ) {
+/* eslint max-nested-callbacks: [2, 5] */
+define( function ( require ) {
 	'use strict';
 
 	var $          = require( 'jquery' );
@@ -20,11 +21,15 @@ define( function( require ) {
 
 			var licenseStub = sinon.stub().returns( new Backbone.Collection() );
 			App.reqres.setHandler( 'user:licenses', licenseStub );
+
+			var truthStub = sinon.stub().returns( true );
+			App.reqres.setHandler( 'videoPlayer:isVideosRoute', truthStub );
 		} );
 
 		after( function () {
 			App.reqres.removeHandler( 'pd360:available' );
 			App.reqres.removeHandler( 'user:licenses' );
+			App.reqres.removeHandler( 'videoPlayer:isVideosRoute' );
 			App.module( 'VideoPlayer' ).stop();
 		} );
 
@@ -44,7 +49,6 @@ define( function( require ) {
 			} );
 
 			describe( '.showVideo', function () {
-
 				var model = new Backbone.CFCollection();
 
 				before(function () {
@@ -57,7 +61,6 @@ define( function( require ) {
 				} );
 
 				it( 'should make call for video info and call .showVideoResources', function () {
-					var fakeVideoInfo      = [ { 'ContentId' : 123 } ];
 					var showVideoResources = sinon.stub( App.VideoPlayer.Controller.Show, 'showVideoResources' );
 					var showStub           = sinon.stub( App.content, 'show' );
 
@@ -102,7 +105,6 @@ define( function( require ) {
 					App.reqres.removeHandler( 'videoPlayer:segments' );
 				} );
 
-
 				it( 'should request for video resources and display layout', function () {
 					var showStub = sinon.stub( App.content, 'show' );
 					var showSpy  = sinon.spy();
@@ -121,6 +123,7 @@ define( function( require ) {
 					App.VideoPlayer.Controller.Show.showVideoResources( model );
 
 					// should have created a new layout
+					/*jshint -W030*/
 					layout.should.have.been.calledWithNew;
 
 					// App should have shown layout

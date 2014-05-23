@@ -1,6 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
+	var Backbone   = require( 'backbone' );
 	var App        = require( 'App' );
 	var AuthRouter = require( 'AuthRouter' );
 
@@ -43,6 +44,39 @@ define( function ( require ) {
 
 		App.reqres.setHandler( 'videoPlayer:share:video', function ( shareTargets ) {
 			return API.shareVideo( shareTargets );
+		} );
+
+		App.reqres.setHandler( 'videoPlayer:isVideosRoute', function () {
+			return Backbone.history.fragment.match( /resources\/videos\/\d+$/g );
+		} );
+
+		var videos = [ ];
+
+		App.vent.on( 'videoPlayer:playerView:init', function ( data ) {
+			videos.push( data );
+		} );
+
+		// Videojs isn't single-page-app friendly.
+		// When navigating away from video player page, dispose the
+		// videojs instance to avoid errors on 'undefined' variables
+		// after the video DOM element is removed.
+		Backbone.history.on( 'route', function () {
+			videos.forEach( function ( data, index ) {
+				if ( data.player && data.player.el() ) {
+					data.player.off( 'timeupdate' );
+					data.player.stopTrackingProgress();
+
+					if ( data.model.get( 'currentTime' ) > 0 ) {
+						data.model.save();
+					}
+
+					setTimeout( function () {
+						this.player.dispose();
+
+						videos.splice( index );
+					}.bind( data ), 500 );
+				}
+			} );
 		} );
 
 		App.addInitializer( function () {

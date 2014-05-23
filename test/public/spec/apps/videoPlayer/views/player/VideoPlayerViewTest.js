@@ -1,7 +1,6 @@
 define( function ( require ) {
 	'use strict';
 
-	var $               = require( 'jquery' );
 	var sinon           = window.sinon;
 	var Backbone        = require( 'backbone' );
 	var VideoPlayerView = require( 'videoPlayer/views/player/VideoPlayerView' );
@@ -46,12 +45,6 @@ define( function ( require ) {
 				videoPlayerView.model.save.should.have.callCount( 2 );
 
 				videoPlayerView.model.save.reset();
-			} );
-
-			it( 'reports video progress when page navigates and video is played', function () {
-				videoPlayerView.model.set( 'currentTime', 1 );
-				$( window ).trigger( 'hashchange' );
-				videoPlayerView.model.save.should.have.callCount( 1 );
 			} );
 
 		} );

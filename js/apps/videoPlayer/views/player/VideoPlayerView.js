@@ -1,7 +1,6 @@
 define( function ( require ) {
 	'use strict';
 
-	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
 	var videojs    = require( 'videojs' );
 	var Marionette = require( 'marionette' );
@@ -102,6 +101,13 @@ define( function ( require ) {
 			} );
 
 			this.trigger( 'afterPlayerInit', player );
+
+			var data = {
+				'player' : player,
+				'model'  : this.model
+			};
+
+			App.vent.trigger( 'videoPlayer:playerView:init', data );
 		},
 
 		'initPlugins' : function ( player ) {
@@ -113,9 +119,10 @@ define( function ( require ) {
 				player.videoReplay();
 				// Next video overlay
 				player.videoOverlay( {
-					'imageUrl'    : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.next.get( 'ImageURL' ),
-					'clickUrl'    : '#resources/videos/' + this.model.next.get( 'ContentId' ),
-					'overlayText' : '<div id="video-up-next"><p id="vjs-p-overlay">Up Next:</p><p id="vjs-title-overlay">' + this.model.next.get( 'ContentName' ) + '</p></div>'
+					'imageUrl'     : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.next.get( 'ImageURL' ),
+					'imageOpacity' : 0.75,
+					'clickUrl'     : '#resources/videos/' + this.model.next.get( 'ContentId' ),
+					'overlayText'  : '<div id="video-up-next"><p id="vjs-p-overlay">Up Next:</p><p id="vjs-title-overlay">' + this.model.next.get( 'ContentName' ) + '</p></div>'
 				} );
 			} else {
 				player.staticDisplay( {
@@ -130,58 +137,23 @@ define( function ( require ) {
 		},
 
 		'startTracking' : function ( player ) {
-			this.trackHashchange( player, window );
-
 			if ( !this.model.get( 'limited' ) ) {
-				this.trackPlayer( player );
-			}
-		},
+				// Here we'll track the player time manually
+				// so we won't depend on the player element
+				// being available in reporting video progress
+				// when page navigates to a different route.
+				player.on( 'timeupdate', function () {
+					this.model.set( 'currentTime' , player.currentTime() );
+				}.bind( this ) );
 
-		// Tracked currentTime when video is paused and ended
-		'trackPlayer' : function ( player ) {
-			// Here we'll track the player time manually
-			// so we won't depend on the player element
-			// being available in reporting video progress
-			// when page navigates to a different route.
-			player.on( 'timeupdate', function () {
-				this.model.set( 'currentTime' , player.currentTime() );
-			}.bind( this ) );
-
-			player.on( 'pause', function () {
-				this.model.save();
-			}.bind( this ) );
-
-			player.on( 'ended', function () {
-				this.model.save();
-			}.bind( this ) );
-		},
-
-		// Destroys player instance when page navigates to a different route
-		'trackHashchange' : function ( player, element ) {
-			// Listen to window hashchange. Namespaced as .videoPlayer
-			// to avoid conflicts with Backbone.Router.
-			$( element ).on( 'hashchange.videoPlayer', function () {
-				// Remove listeners
-				if ( player.el() ) {
-					player.off( 'timeupdate' );
-					player.stopTrackingProgress();
-				}
-				// If currentTime is not equal 0 that means video was played, then
-				// update progress before disposing player instance.
-				if ( this.model.get( 'currentTime' ) !== 0) {
+				player.on( 'pause', function () {
 					this.model.save();
-					this.model.set( 'currentTime', 0 );
-				}
-				// Let video.js finish queued callback before
-				// disposing the player object.
-				setTimeout( function () {
-					// Check if player.el is still available.
-					if ( player.el() ) {
-						player.dispose();
-					}
-				}, 500 );
-				$( element ).off( 'hashchange.videoPlayer' );
-			}.bind( this ) );
+				}.bind( this ) );
+
+				player.on( 'ended', function () {
+					this.model.save();
+				}.bind( this ) );
+			}
 		},
 
 		'isMobile' : function () {
