@@ -34,14 +34,16 @@ define( function ( require ) {
 			'bar2'        : '#bar2',
 			'bar3'        : '#bar3',
 			'search'      : '#nav-search',
-			'smallSearch' : '#nav-search-small'
+			'smallSearch' : '#nav-search-small',
+			'help'        : '#help'
 		},
 
 		'events' : {
 			'click @ui.userMenu'              : 'toggleUserMenu',
 			'click @ui.ddLink'                : 'hideCollapsibleMenu',
 			'submit form'                     : 'showSearchResults',
-			'hidden.bs.dropdown @ui.userMenu' : 'hideUserMenuAnimation'
+			'hidden.bs.dropdown @ui.userMenu' : 'hideUserMenuAnimation',
+			'click @ui.help'                  : 'showHelp'
 		},
 
 		'regions' : {
@@ -152,6 +154,22 @@ define( function ( require ) {
 				var url = 'search/All/' + val;
 				App.navigate( url, { 'trigger' : true } );
 			}
+		},
+
+		'showHelp' : function ( event ) {
+			if ( !App.request( 'session:authenticated' ) ) {
+				return;
+			}
+
+			var personnel   = App.request( 'session:personnel' );
+			var email       = 'email='       + personnel.EmailAddress;
+			var fname       = 'fname='       + personnel.FirstName;
+			var lname       = 'lname='       + personnel.LastName;
+			var personnelid = 'personnelid=' + personnel.PersonnelId;
+			var location    = 'url='         + window.location;
+			var url         = 'http://help.schoolimprovement.com/#context/' + [ email, fname, lname, personnelid, location ].join( '&' );
+
+			this.ui.help.attr( 'href', url );
 		}
 
 	} );

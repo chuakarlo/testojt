@@ -17,18 +17,8 @@ define( function ( require ) {
 			'showHeader' : function () {
 				var authenticated = App.request( 'session:authenticated' );
 
-				var generateLink = function ( params ) {
-					var url = 'http://help.schoolimprovement.com/';
-
-					if ( params ) {
-						url += '#context/' + params;
-					}
-
-					return url;
-				};
-
 				var init = function ( helpUrl ) {
-					var menu = new Menu( { 'authenticated' : authenticated, 'helpUrl' : helpUrl } );
+					var menu = new Menu( { 'authenticated' : authenticated } );
 
 					if ( authenticated ) {
 
@@ -65,20 +55,10 @@ define( function ( require ) {
 				}.bind( this );
 
 				if ( !authenticated ) {
-					return init( generateLink() );
+					return init();
 				}
 
-				App.when( App.request( 'user:personnel' ) ).done( function ( personnel ) {
-					var email       = 'email='       + personnel.attributes.EmailAddress;
-					var fname       = 'fname='       + personnel.attributes.FirstName;
-					var lname       = 'lname='       + personnel.attributes.LastName;
-					var personnelid = 'personnelid=' + personnel.attributes.PersonnelId;
-					var url         = 'url='         + window.location;
-
-					init( generateLink( [ email, fname, lname, personnelid, url ].join( '&' ) ) );
-				}.bind( this ) ).fail( function () {
-					init( generateLink() );
-				} );
+				App.when( App.request( 'user:personnel' ) ).done( init ).fail( init );
 
 			}
 
