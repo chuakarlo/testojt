@@ -26,6 +26,8 @@ define( function ( require ) {
 				model.set( 'queued', _.contains( qContentsIds, model.id ) );
 				model.set( 'VideoTypeId', hasContentId ? 1 : 2 );
 
+				model.set( 'fromHomepage', true );
+
 				if ( !hasContentId ) {
 					model.set( 'ContentName', model.get( 'Name' ) );
 					model.set( 'ContentDescription', model.get( 'Name' ) );
