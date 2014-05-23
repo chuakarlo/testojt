@@ -37,10 +37,6 @@ define( function ( require ) {
 
 			'getSegmentLength' : function () {
 				return utils.formatTime( this.SegmentLengthInSeconds );
-			},
-
-			'getVideoUrl' : function () {
-				return 'http://www.pd360.com/index.cfm?ContentId=' + this.ContentId;
 			}
 		}
 

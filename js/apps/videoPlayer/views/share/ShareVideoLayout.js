@@ -119,9 +119,6 @@ define( function ( require ) {
 		},
 
 		'getShareObject' : function () {
-			// url of video to be shared
-			var videoUrl = 'http://www.pd360.com/index.cfm?ContentId=' + this.model.id;
-
 			// object for holding personnels, groups and message for sharing
 			var shareTargets = {
 				'personnels' : [ ],
@@ -130,7 +127,7 @@ define( function ( require ) {
 			};
 
 			// share object message
-			shareTargets.message = this.ui.message.val() + ' ' + videoUrl;
+			shareTargets.message = this.ui.message.val() + ' ' + this.model.get( 'VideoUrl' );
 
 			// share object personnels and groups
 			_.each( this.selectedItems.models, function ( model ) {

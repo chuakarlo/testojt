@@ -25,6 +25,7 @@ define( function ( require ) {
 				_.extend( this, options );
 
 				this.setVideoTypeId();
+				this.setVideoUrl();
 			},
 
 			'getReadOptions' : function () {
@@ -100,12 +101,16 @@ define( function ( require ) {
 				return results;
 			},
 
+			'setQueue' : function ( queueContentsIds ) {
+				this.set( 'queued', _.contains( queueContentsIds, this.id ) );
+			},
+
 			'setVideoTypeId' : function () {
 				this.set( 'VideoTypeId', 1 );
 			},
 
-			'setQueue' : function ( queueContentsIds ) {
-				this.set( 'queued', _.contains( queueContentsIds, this.id ) );
+			'setVideoUrl' : function () {
+				this.set( 'VideoUrl', Backbone.history.location.href );
 			}
 
 		} );
