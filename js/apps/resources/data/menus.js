@@ -3,72 +3,72 @@ define( function ( require ) {
 
 	var videos = {
 		'name' : 'Videos',
+		'icon' : 'sinet-videos',
 		'url'  : '#resources/videos',
-		'icon' : 'fa-youtube-play',
 		'id'   : 'link-more-videos'
 	};
 
 	var learningTargets = {
 		'name' : 'Learning Targets',
+		'icon' : 'sinet-learningtarget',
 		'url'  : '#resources/learning/processes',
-		'icon' : 'fa-bullseye',
 		'id'   : 'link-more-targets'
 	};
 
 	var communities = {
 		'name' : 'Communities',
+		'icon' : 'sinet-groups',
 		'url'  : '#resources/communities',
-		'icon' : 'fa-users',
 		'id'   : 'link-more-communities'
 	};
 
 	var lumibook = {
 		'name' : 'LumiBook',
+		'icon' : 'sinet-lumibook',
 		'url'  : '#resources/lumibook',
-		'icon' : 'fa-book',
 		'id'   : 'link-more-lumibook'
 	};
 
 	var observation = {
 		'name'   : 'Observation 360',
+		'icon'   : 'sinet-observation',
 		'url'    : 'https://www.pd360.com/Observation360Web/index.cfm',
-		'icon'   : 'fa-eye',
 		'id'     : 'link-more-observation',
 		'target' : '_blank'
 	};
 
 	var userUploaded = {
 		'name' : 'User Video Uploader',
+		'icon' : 'sinet-uploadvideos',
 		'url'  : '#resources/videouploader',
-		'icon' : 'fa-film',
 		'id'   : 'link-more-uploader'
 	};
 
 	var moreResources = {
 		'name' : 'More Resources',
+		'icon' : 'sinet-more',
 		'url'  : '#resources/more',
-		'icon' : 'fa-align-left',
 		'id'   : 'link-resources-more'
 	};
 
 	var training = {
 		'name'   : 'PD 360 Training',
+		'icon'   : 'sinet-training',
 		'url'    : 'http://help.schoolimprovement.com/training',
-		'icon'   : 'fa-question-circle',
 		'id'     : 'link-more-training',
 		'target' : '_blank'
 	};
 
 	var learningProgression = {
 		'name' : 'Learning Progression',
+		'icon' : 'sinet-learningprogress',
 		'url'  : '#resources/learningProgression',
-		'icon' : 'fa-puzzle-piece',
 		'id'   : 'link-more-progression'
 	};
 
 	var admin = {
 		'name' : 'Admin',
-		'icon' : 'fa-wrench',
+		'icon' : 'sinet-admin',
 		'url'  : '#admin',
 		'id'   : 'link-more-admin'
 	};
