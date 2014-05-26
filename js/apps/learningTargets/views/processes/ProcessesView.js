@@ -1,15 +1,13 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette        = require( 'marionette' );
-	var template          = require( 'text!apps/learningTargets/templates/processes/processes.html' );
-	var ProcessesItemView = require( 'apps/learningTargets/views/processes/ProcessesItemView' );
-	var _                 = require( 'underscore' );
+	var Marionette             = require( 'marionette' );
+	var ProcessesCompositeView = require( 'apps/learningTargets/views/processes/ProcessesCompositeView' );
 
-	return Marionette.CompositeView.extend( {
-		'template'          : _.template( template ),
-		'itemView'          : ProcessesItemView,
-		'itemViewContainer' : 'ul.lt-list'
+	return Marionette.CollectionView.extend( {
+		'itemView'  : ProcessesCompositeView,
+		'tagName'   : 'ul',
+		'className' : 'lt-list media-list'
 	} );
 
 } );

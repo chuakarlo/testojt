@@ -6,11 +6,17 @@ define( function ( require ) {
 	var App      = require( 'App' );
 	var $        = require( 'jquery' );
 
+	var model    = {
+		ProcessesModel : require( 'apps/learningTargets/models/ProcessesModel' )
+	};
+
 	App.module( 'Entities', function ( Entities ) {
 
 		Entities.Processes = Backbone.CFCollection.extend( {
 
 			'path' : 'process.ProcessGateway',
+
+			'model' : model.ProcessesModel,
 
 			'idAttribute' : 'personnelId',
 

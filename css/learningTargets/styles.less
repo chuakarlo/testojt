@@ -245,6 +245,7 @@
 		}
 		li {
 			margin-bottom: -20px;
+
 			& > .lt-toggle-btn {
 				width: 100%;
 				z-index: 10;
@@ -303,6 +304,10 @@
 						min-width: 40px;
 					}
 				}
+			}
+			& > .active {
+				background: #f5f5f5;
+				text-decoration: none;
 			}
 			img.icon {
 				float:left;
@@ -470,8 +475,11 @@
 	.drawer {
 		width: 100%;
 		position: relative;
-		margin-bottom: 20px;
 		padding: 30px;
+		background: #fcfcfc;
+		border-width: 0 1px 1px;
+		border-style: solid;
+		border-color: #ebebeb;
 		.container {
 			.container-smooth;
 			padding: 0;
