@@ -53,6 +53,7 @@ define( function ( require ) {
 			},
 
 			'getUpdateOptions' : function () {
+				var ccParams = App.request( 'videoPlayer:queryObject' );
 				return {
 					'path'   : 'RespondService',
 					'method' : 'RespondUpdatedViewingTimeWithStatusCheck',
@@ -61,8 +62,8 @@ define( function ( require ) {
 						'ContentId'        : this.id,
 						'ViewingId'        : 1,
 						'SecondsCompleted' : this.getCurrentTime(),
-						'licId'            : 0,
-						'taskId'           : 0
+						'licId'            : ccParams.licenseId ? ccParams.licenseId : 0,
+						'taskId'           : ccParams.taskId ? ccParams.taskId : 0
 					}
 				};
 			},

@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	return function () {
 
+		var $          = require( 'jquery' );
 		var Backbone   = require( 'backbone' );
 		var App        = require( 'App' );
 		var AuthRouter = require( 'AuthRouter' );
@@ -16,18 +17,19 @@ define( function ( require ) {
 			require( 'videoPlayer/views/Views' );
 			require( 'videoPlayer/controllers/ShowController' );
 			require( 'videoPlayer/controllers/ShareController' );
+			require( 'videoPlayer/plugins/parseParams' );
 
 			VideoPlayer.Router = AuthRouter.extend( {
 				'appRoutes' : {
-					'resources/videos/:id' : 'showVideoPlayer'
+					'resources/videos/:params' : 'showVideoPlayer'
 				}
 			} );
 
 			var API = {
 
-				'showVideoPlayer' : function ( videoId ) {
+				'showVideoPlayer' : function ( params ) {
 					App.request( 'pd360:hide' );
-					VideoPlayer.Controller.Show.showVideo( videoId );
+					VideoPlayer.Controller.Show.showVideo( App.request( 'videoPlayer:videoId' ) );
 				},
 
 				'showShareDialog' : function ( model ) {
@@ -49,7 +51,21 @@ define( function ( require ) {
 			} );
 
 			App.reqres.setHandler( 'videoPlayer:isVideosRoute', function () {
-				return Backbone.history.fragment.match( /resources\/videos\/\d+$/g );
+				return App.getCurrentRoute().match( /resources\/videos\/\d+(\?.*)?$/ );
+			} );
+
+			App.reqres.setHandler( 'videoPlayer:urlParams', function () {
+				var re = /(\d+)(\?.*)?$/;
+				return re.exec( App.getCurrentRoute() );
+			} );
+
+			App.reqres.setHandler( 'videoPlayer:videoId', function () {
+				return App.request( 'videoPlayer:urlParams' )[ 1 ];
+			} );
+
+			App.reqres.setHandler( 'videoPlayer:queryObject', function () {
+				var queryObject = App.request( 'videoPlayer:urlParams' )[ 2 ];
+				return queryObject ? $.parseParams( queryObject ) : { };
 			} );
 
 			var videos = [ ];
@@ -74,10 +90,10 @@ define( function ( require ) {
 
 						setTimeout( function () {
 							this.player.dispose();
-
-							videos.splice( index );
 						}.bind( data ), 500 );
 					}
+					// Emptying array
+					videos = [ ];
 				} );
 			} );
 

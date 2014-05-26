@@ -93,11 +93,12 @@ define( function ( require ) {
 				// Make sure custom control is hidden in mobile devices.
 				if ( self.isMobile() ) {
 					this.controlBar.hide();
-					// Removing spinner due to bug in IOS/Android
-					// where spinner doesn't hide after first play.
-					this.removeChild( 'loadingSpinner' );
 				}
 
+			} );
+
+			player.on( 'firstplay', function () {
+				player.removeChild( 'loadingSpinner' );
 			} );
 
 			this.trigger( 'afterPlayerInit', player );

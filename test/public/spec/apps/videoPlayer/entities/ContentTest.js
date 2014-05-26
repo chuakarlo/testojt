@@ -1,6 +1,8 @@
 define( function ( require ) {
 	'use strict';
 
+	var sinon = window.sinon;
+
 	var App      = require( 'App' );
 	var Backbone = require( 'backbone' );
 
@@ -15,10 +17,14 @@ define( function ( require ) {
 				'videoId'     : 7652,
 				'licenseType' : [ '1' ]
 			} );
+
+			var stub = sinon.stub().returns( { } );
+			App.reqres.setHandler( 'videoPlayer:queryObject', stub );
 		} );
 
 		after( function () {
 			model = null;
+			App.reqres.removeHandler( 'videoPlayer:queryObject' );
 		} );
 
 		it( 'should be an instance of CFModel', function () {

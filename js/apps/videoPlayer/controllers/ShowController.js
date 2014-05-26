@@ -41,7 +41,7 @@ define( function ( require ) {
 				var segmentsRequest      = App.request( 'videoPlayer:segments', videoModel.toJSON() );
 
 				App.when( questionsRequest, queueContentsRequest, segmentsRequest, relatedVideosRequest ).done( function ( questions, queueContents, segments, relatedVideos ) {
-					if ( !App.request( 'videoPlayer:isVideosRoute') ) {
+					if ( !App.request( 'videoPlayer:isVideosRoute' ) ) {
 						return;
 					}
 
