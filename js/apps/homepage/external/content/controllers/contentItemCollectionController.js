@@ -1,6 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
+	var App                        = require( 'App' );
 	var $                          = require( 'jquery' );
 	var EmptyContentCollectionView = require( 'apps/homepage/external/content/views/EmptyContentCollectionView' );
 
@@ -16,8 +17,8 @@ define( function ( require ) {
 
 	return {
 		'doInitialize' : function ( view ) {
-			if ( view.model ){
-				var base = view.model.get('baseObject');
+			if ( view.model ) {
+				var base = view.model.get( 'baseObject' );
 
 				base.getPreFetchLogic( base.sharedData, function ( data, callback ) {
 					utils.collectionFetch( view, base, data, 0 ,function ( collection ) {
@@ -62,9 +63,11 @@ define( function ( require ) {
 				view.collection._byId[ recommendedItemView.model.get( 'ContentId' ) ].destroy( {
 					'dataType' : 'text',
 					'success'  : function () {
-						utils.removeQueueByRecommendedSuccess( view, recommendedItemView );
+						if ( App.request( 'homepage:isHomeRoute' ) ) {
+							utils.removeQueueByRecommendedSuccess( view, recommendedItemView );
+						}
 					},
-					'error' : function () {
+					'error'    : function () {
 						utils.doError( queueError );
 					}
 				} );

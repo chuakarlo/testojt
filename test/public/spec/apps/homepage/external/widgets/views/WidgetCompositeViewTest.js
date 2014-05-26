@@ -7,6 +7,7 @@ define( function ( require ) {
 		var Remoting   = require( 'Remoting' );
 		var widgets    = require( 'apps/homepage/external/widgets/manifest' )().splice(1);
 		var sinon      = window.sinon;
+		var App        = require( 'App' );
 		//collections
 		var UserWidgetCollection = require( 'apps/homepage/external/widgets/collections/UserWidgetCollection' );
 		var WidgetComposite      = require( 'apps/homepage/external/widgets/views/WidgetCompositeView' );
@@ -176,6 +177,7 @@ define( function ( require ) {
 			var selectedStub;
 
 			before( function () {
+				sinon.stub( App, 'request' ).returns( true );
 
 				widgetPreview     = new ( Marionette.ItemView ) ();
 				utilStub          = sinon.stub( utils, 'doShow' );
@@ -198,6 +200,7 @@ define( function ( require ) {
 			} );
 
 			after( function () {
+				App.request.restore();
 				utils.doShow.restore();
 				utils.newPreviewItem.restore();
 				utils.changeButtonAttr.restore();
@@ -247,7 +250,7 @@ define( function ( require ) {
 				utilStub.reset();
 			} );
 
-			it( 'should be able to call .showWidgetPreview', function (  ) {
+			it( 'should be able to call .showWidgetPreview', function () {
 
 				widgetComposite.showWidgetPreview( sinon.spy() );
 				widgetComposite.widgetPreviewItemView.should.not.equal( undefined );
@@ -346,6 +349,7 @@ define( function ( require ) {
 			var widgetCompositeEvt;
 
 			before( function () {
+				sinon.stub( App, 'request' ).returns( true );
 				widgetPreviewSpy    = sinon.spy( WidgetComposite.prototype, 'showWidgetPreview');
 				allWidgetsSpy       = sinon.spy( WidgetComposite.prototype, 'showAllWidgets');
 				activeWidgetSpy     = sinon.spy( WidgetComposite.prototype, 'showActiveWidgets');
@@ -362,6 +366,7 @@ define( function ( require ) {
 			} );
 
 			after( function () {
+				App.request.restore();
 				WidgetComposite.prototype.showWidgetPreview.restore();
 				WidgetComposite.prototype.showAllWidgets.restore();
 				WidgetComposite.prototype.showActiveWidgets.restore();
@@ -405,13 +410,13 @@ define( function ( require ) {
 				allWidgetsSpy.callCount.should.be.at.least( 1 );
 			} );
 
-			// it( 'activateWidget : click .widget-icon-btn.inactive', function () {
+			it( 'activateWidget : click .widget-icon-btn.inactive', function () {
 
-			// 	widgetCompositeEvt.$el.find('.widget-icon-btn.inactive').first().trigger( 'click' );
-			// 	console.log(widgetCompositeEvt.$el.find('.widget-icon-btn.inactive') );
-			// 	activateWidgetSpy.called.should.equal( true );
-			// 	activateWidgetSpy.callCount.should.be.at.least( 1 );
-			// } );
+				widgetCompositeEvt.$el.find('.widget-icon-btn.inactive').first().trigger( 'click' );
+				console.log(widgetCompositeEvt.$el.find('.widget-icon-btn.inactive') );
+				activateWidgetSpy.called.should.equal( true );
+				activateWidgetSpy.callCount.should.be.at.least( 1 );
+			} );
 
 			it( 'deactivateWidget : click .widget-icon-btn.active', function () {
 				widgetCompositeEvt.render();

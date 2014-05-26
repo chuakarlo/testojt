@@ -1,9 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette = require( 'marionette' );
-	var _          = require( 'underscore' );
-
+	var Marionette              = require( 'marionette' );
+	var _                       = require( 'underscore' );
+	var App                     = require( 'App' );
 	var template                = require( 'text!apps/homepage/external/widgets/templates/widgetItemView.html' );
 	var sequenceOverlayTemplate = require( 'text!apps/homepage/external/widgets/templates/widgetSequenceOverlayTemplate.html' );
 	var widgetLookup            = require( 'apps/homepage/external/widgets/manifest' );
@@ -75,8 +75,10 @@ define( function ( require ) {
 		},
 
 		'onRender' : function ( options ) {
-			doOnRender( this );
-			this.showSequenceOverlay();
+			if ( App.request( 'homepage:isHomeRoute' ) ) {
+				doOnRender( this );
+				this.showSequenceOverlay();
+			}
 		},
 
 		'showSequenceOverlay' : function () {

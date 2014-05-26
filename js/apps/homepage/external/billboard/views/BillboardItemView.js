@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
+	var App        = require( 'App' );
 	var template   = require( 'text!apps/homepage/external/billboard/templates/billboardView.html' );
 	var controller = require( 'apps/homepage/external/billboard/controllers/billboardController' );
 
@@ -25,7 +26,9 @@ define( function ( require ) {
 		},
 
 		'onRender' : function () {
-			controller.doOnRender( this );
+			if ( App.request( 'homepage:isHomeRoute' ) ) {
+				controller.doOnRender( this );
+			}
 		},
 
 		'redirect' : function ( e ) {

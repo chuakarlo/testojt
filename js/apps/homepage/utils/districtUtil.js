@@ -20,11 +20,13 @@ define( function ( require ) {
 				districtMessageModel.fetch( {
 
 					'success' : function ( model ) {
-						if ( model.isValidMessage() ) {
-							var districtMessageView = new DistrictMessageView( {
-								'model' : model
-							} );
-							layout.messageRegion.show( districtMessageView );
+						if ( App.request( 'homepage:isHomeRoute' ) ) {
+							if ( model.isValidMessage() ) {
+								var districtMessageView = new DistrictMessageView( {
+									'model' : model
+								} );
+								layout.messageRegion.show( districtMessageView );
+							}
 						}
 					}
 				} );

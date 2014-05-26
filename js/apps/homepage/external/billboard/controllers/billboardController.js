@@ -23,17 +23,20 @@ define( function ( require ) {
 
 				'success' : function ( collection ) {
 
-					transformSliderData( collection.toJSON(), function ( res ) {
-						itemView.images   = res.images;
-						itemView.captions = res.captions;
-						itemView.render();
-						itemView.$el.find( '.spinner-container' ).remove();
-					} );
+					if ( App.request( 'homepage:isHomeRoute' ) ) {
+						transformSliderData( collection.toJSON(), function ( res ) {
+							itemView.images   = res.images;
+							itemView.captions = res.captions;
+							itemView.render();
+							itemView.$el.find( '.spinner-container' ).remove();
+						} );
+					}
 				}
 			} );
 		},
 
 		'doOnRender' : function ( view ) {
+
 			var loading   = new LoadingView();
 			var billboard = view.$el.find( sliderSelector );
 

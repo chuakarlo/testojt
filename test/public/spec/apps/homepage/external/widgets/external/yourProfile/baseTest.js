@@ -13,6 +13,7 @@ define ( function ( require ) {
 		var collection;
 		var fetchStub;
 		var sampleModel;
+		var appStub;
 
 		before ( function () {
 
@@ -22,10 +23,12 @@ define ( function ( require ) {
 
 			collection = new CollectionItems();
 			fetchStub  = sinon.stub( Remoting, 'fetch' ).returns( sampleModel );
+			appStub = sinon.stub( App, 'request' ).returns( true );
 		} );
 
 		after ( function () {
 			Remoting.fetch.restore();
+			appStub.restore();
 		} );
 
 		//functions

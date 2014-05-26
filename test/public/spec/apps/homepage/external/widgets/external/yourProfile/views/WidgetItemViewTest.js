@@ -6,6 +6,7 @@ define( function ( require ) {
 	var expect         = require( 'chai').expect;
 	var Remoting       = require( 'Remoting' );
 	var Backbone       = require( 'backbone');
+	var App            = require( 'App' );
 	var WidgetItemView = require( 'apps/homepage/external/widgets/external/yourProfile/views/WidgetItemView' );
 
 	describe('User Settings WidgetItemView ItemView', function () {
@@ -29,7 +30,7 @@ define( function ( require ) {
 				'Title'                 : 'Dr',
 				'LastName'              : 'Towel'
 			} ];
-
+			sinon.stub( App, 'request' ).returns( true );
 			var dfd = new $.Deferred();
 			dfd.resolve( modelData );
 
@@ -45,6 +46,7 @@ define( function ( require ) {
 
 		after( function () {
 			Remoting.fetch.restore();
+			App.request.restore();
 		});
 
 		it ( 'should have profile icon linked to profile page', function () {

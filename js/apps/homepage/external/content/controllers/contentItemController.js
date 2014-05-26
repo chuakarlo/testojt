@@ -60,9 +60,11 @@ define( function ( require ) {
 			_this.model.destroy( {
 				'dataType' : 'text',
 				'success'  : function () {
-					utils.removeSuccess( _this, contentBtn, totalCount );
+					if ( App.request( 'homepage:isHomeRoute' ) ) {
+						utils.removeSuccess( _this, contentBtn, totalCount );
+					}
 				},
-				'error'   : function () {
+				'error'    : function () {
 					utils.removeError( contentBtn );
 				}
 			} );
@@ -84,7 +86,7 @@ define( function ( require ) {
 
 		'doViewTags' : function ( _this, e ) {
 			var tags = _this.model.get( 'Tags' );
-			if( tags ) {
+			if ( tags ) {
 				var contentBtn = $( e.currentTarget );
 				var strTags = { 'title' : _this.model.get( 'ContentName' ) , 'tags' : tags };
 				var data = JSON.stringify( strTags );

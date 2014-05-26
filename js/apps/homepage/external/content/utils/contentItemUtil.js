@@ -1,8 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	var $          = require( 'jquery' );
-	var _          = require( 'underscore' );
+	var App = require( 'App' );
+	var $   = require( 'jquery' );
+	var _   = require( 'underscore' );
 
 	var UIManager       = require( 'apps/homepage/external/content/external/agents/UIManager' );
 	var templateTooltip = require( 'text!apps/homepage/external/content/templates/contentTooltipView.html' );
@@ -46,11 +47,12 @@ define( function ( require ) {
 		'addItemToQueue' : function ( view, e ) {
 			var newQueue = new QueueModel();
 			newQueue.save( view.model.attributes, {
-				'success'  : function () {
-					addSuccess( view );
+				'success' : function () {
+					if ( App.request( 'homepage:isHomeRoute' ) ) {
+						addSuccess( view );
+					}
 				},
-
-				'error' : function () {
+				'error'   : function () {
 					addError( e );
 				}
 			} );

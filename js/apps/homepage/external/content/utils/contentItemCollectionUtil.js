@@ -75,7 +75,9 @@ define( function ( require ) {
 			collection.alterData( start );
 			collection.fetch( {
 				'success' : function ( collection, response ) {
-					injectAttributes( view, base, collection, data, callback );
+					if ( App.request( 'homepage:isHomeRoute' ) ) {
+						injectAttributes( view, base, collection, data, callback );
+					}
 				},
 				'error'   : function () {
 					App.vent.trigger ( 'flash:message', {

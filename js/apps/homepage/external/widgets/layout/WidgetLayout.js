@@ -38,16 +38,18 @@ define( function ( require ) {
 	function doInitialize ( view ) {
 		App.when( Remoting.fetch( fetchingModels( Session.personnelId() ) ) ).done( function ( models ) {
 
-			if ( !models || !models[ 0 ] || models[ 0 ].length === 0 ) {
-				models[ 0 ] = [ { WidgetId : 5 }, { WidgetId : 4 }, { WidgetId : 2 } ];
+			if ( App.request( 'homepage:isHomeRoute' ) ) {
+				if ( !models || !models[ 0 ] || models[ 0 ].length === 0 ) {
+					models[ 0 ] = [ { WidgetId : 5 }, { WidgetId : 4 }, { WidgetId : 2 } ];
+				}
+
+				view.widgetCollection           = new WidgetCollection( widgets );
+				view.userWidgetCollection       = new WidgetCollection( view.getUserWidgetCollection( models[ 0 ] ) );
+				view.actualUserWidgetCollection = new WidgetCollection( view.getUserWidgetCollection( models[ 0 ] ) );
+
+				var userWidgetCollectionView = new UserWidgetCollectionView( { 'collection' : view.actualUserWidgetCollection } );
+				view.userWidgets.show( userWidgetCollectionView );
 			}
-
-			view.widgetCollection           = new WidgetCollection( widgets );
-			view.userWidgetCollection       = new WidgetCollection( view.getUserWidgetCollection( models[ 0 ] ) );
-			view.actualUserWidgetCollection = new WidgetCollection( view.getUserWidgetCollection( models[ 0 ] ) );
-
-			var userWidgetCollectionView = new UserWidgetCollectionView( { 'collection' : view.actualUserWidgetCollection } );
-			view.userWidgets.show( userWidgetCollectionView );
 		} ).fail( function ( error ) {
 
 			App.vent.trigger( 'flash:message', {

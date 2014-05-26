@@ -1,10 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var BaseObj                = require( 'apps/homepage/BaseObject' );
-	var instance               = new BaseObj();
-	var WidgetItemView         = require( 'apps/homepage/external/widgets/external/observationsOfMe/views/WidgetItemView' );
-	var CollectionItems        = require( 'apps/homepage/external/widgets/external/observationsOfMe/collections/WidgetCollection' );
+	var App             = require( 'App' );
+	var BaseObj         = require( 'apps/homepage/BaseObject' );
+	var instance        = new BaseObj();
+	var WidgetItemView  = require( 'apps/homepage/external/widgets/external/observationsOfMe/views/WidgetItemView' );
+	var CollectionItems = require( 'apps/homepage/external/widgets/external/observationsOfMe/collections/WidgetCollection' );
 
 	instance._id = 'widgets';
 
@@ -12,7 +13,9 @@ define( function ( require ) {
 		var collection = new CollectionItems( options );
 		collection.fetch( {
 			'success' : function ( collection ) {
-				callback ( collection );
+				if ( App.request( 'homepage:isHomeRoute' ) ) {
+					callback ( collection );
+				}
 			}
 		} );
 	}

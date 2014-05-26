@@ -16,11 +16,11 @@ define( function ( require ) {
 		var BillboardCollectionData;
 		var navigateBillboardStub;
 		var BillboardCollectionStub;
+		var appStub;
 
 		before ( function () {
-
 			navigateBillboardStub = sinon.stub( App, 'navigate' );
-
+			appStub = sinon.stub( App, 'request' ).returns( true );
 			BillboardCollectionData = new BillboardCollection( [
 				{
 					'LinkURL'         : 'zubu.cloudapp.netdddd:3000/public?ContentId=123456',
@@ -39,7 +39,6 @@ define( function ( require ) {
 					'CoverFlowId'     : 61
 				}
 			] );
-
 			BillboardCollectionStub = sinon.stub( BillboardCollection.prototype, 'fetch' ).yieldsTo('success', BillboardCollectionData);
 
 			BillboardItemViewInstance = new BillboardItemView();
@@ -48,6 +47,7 @@ define( function ( require ) {
 		after( function () {
 			App.navigate.restore();
 			BillboardCollection.prototype.fetch.restore();
+			App.request.restore();
 		} );
 
 		it( 'should be an instance of ItemView', function () {
@@ -55,13 +55,13 @@ define( function ( require ) {
 		} );
 
 		describe( 'Video Slider', function () {
-				it ( 'should redirect to /#resources/videos/:contentId', function () {
-					$.when( BillboardItemViewInstance.render() ).done( function (x) {
-						x.$el.find( 'a.videoplay' ).first().trigger( 'click' );
-						navigateBillboardStub.should.have.been.calledWithExactly( 'resources/videos/123456', { 'trigger' : true } );
-					} );
+			it ( 'should redirect to /#resources/videos/:contentId', function () {
+				$.when( BillboardItemViewInstance.render() ).done( function (x) {
+					x.$el.find( 'a.videoplay' ).first().trigger( 'click' );
+					navigateBillboardStub.should.have.been.calledWithExactly( 'resources/videos/123456', { 'trigger' : true } );
 				} );
 			} );
+		} );
 	} );
 
 } );

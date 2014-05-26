@@ -80,7 +80,9 @@ define( function ( require ) {
 			doInitialize( this );
 		},
 		'onRender'          : function () {
-			doOnRender( this );
+			if ( App.request( 'homepage:isHomeRoute' ) ) {
+				doOnRender( this );
+			}
 		}
 	} );
 

@@ -41,7 +41,9 @@ define( function ( require ) {
 		},
 
 		'onRender' : function () {
-			this.$el.find( '.content-button' ).tooltip();
+			if ( App.request( 'homepage:isHomeRoute' ) ) {
+				this.$el.find( '.content-button' ).tooltip();
+			}
 		}
 
 	} );

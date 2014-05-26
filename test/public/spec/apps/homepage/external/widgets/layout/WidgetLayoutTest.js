@@ -1,11 +1,12 @@
-define(function(require) {
+define( function ( require ) {
 	'use strict';
 
-	describe('Widget Layout - Test', function() {
+	describe( 'Widget Layout - Test', function () {
 
 		require( 'jquery.spin' );
 
 		var sinon        = window.sinon;
+		var App          = require( 'App' );
 		var $            = require( 'jquery' );
 		var WidgetLayout = require('apps/homepage/external/widgets/layout/WidgetLayout');
 		var Remoting     = require( 'Remoting' );
@@ -28,15 +29,16 @@ define(function(require) {
 				}
 			] ];
 
+			sinon.stub( App, 'request' ).returns( true );
 			var deferred = new $.Deferred();
 			deferred.resolve( models );
 			initStub = sinon.stub( Remoting, 'fetch' ).returns( deferred.promise() );
 			layout   = new WidgetLayout();
-
 		} );
 
 		after( function () {
 			Remoting.fetch.restore();
+			App.request.restore();
 		} );
 
 		describe( 'Widget Layout View', function () {
@@ -50,7 +52,7 @@ define(function(require) {
 			} );
 		} );
 
-		describe( 'Change Panel Status', function ( ) {
+		describe( 'Change Panel Status', function () {
 			var changePanelStatus;
 			var eventspy;
 
@@ -70,7 +72,6 @@ define(function(require) {
 				changePanelStatus.callCount.should.be.at.least( 1 );
 			} );
 
-
 			it( 'should be able to call .changePanelStatus on close' , function ( ) {
 
 				layout.closeWidgetSettingsPanel( eventspy );
@@ -78,7 +79,6 @@ define(function(require) {
 			} );
 
 		} );
-
 
 	});
 });

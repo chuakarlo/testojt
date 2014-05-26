@@ -3,7 +3,7 @@ define( function ( require ) {
 
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
-
+	var App        = require( 'App' );
 	var settings   = require( 'apps/homepage/external/content/configuration/emptyContentSettings' );
 	var controller = require( 'apps/homepage/external/content/controllers/emptyContentController' );
 
@@ -17,7 +17,9 @@ define( function ( require ) {
 		},
 
 		'onRender' : function () {
-			controller.doOnRender( this );
+			if ( App.request( 'homepage:isHomeRoute' ) ) {
+				controller.doOnRender( this );
+			}
 		},
 
 		'onClose' : function () {

@@ -52,16 +52,18 @@ define( function ( require ) {
 
 			App.when( fetchingModels ).done( function ( models ) {
 
-				setUserProfileReqres( models[ 0 ] );
-				setUserTagsReqRes( models[ 1 ] );
+				if ( App.request( 'homepage:isHomeRoute' ) ) {
+					setUserProfileReqres( models[ 0 ] );
+					setUserTagsReqRes( models[ 1 ] );
 
-				var externalSections = manifest();
-				var collection       = new Backbone.Collection(externalSections);
-				var sectionView      = new SectionCollectionView( {
-					'collection' : collection
-				} );
+					var externalSections = manifest();
+					var collection       = new Backbone.Collection(externalSections);
+					var sectionView      = new SectionCollectionView( {
+						'collection' : collection
+					} );
 
-				layout.contentRegion.show( sectionView );
+					layout.contentRegion.show( sectionView );
+				}
 
 			} ).fail( function ( ) {
 
