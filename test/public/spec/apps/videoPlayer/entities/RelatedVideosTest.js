@@ -1,70 +1,140 @@
 define( function ( require ) {
 	'use strict';
 
+	var $        = require( 'jquery' );
 	var sinon    = window.sinon;
 	var App      = require( 'App' );
 	var Backbone = require( 'backbone' );
 
 	require( 'videoPlayer/entities/RelatedVideos' );
 
-	describe( 'VideoPlayer Entities', function () {
+	describe( 'RelatedVideos Entity', function () {
 
-		it( 'should exist on `App.VideoPlayer`', function () {
-			App.should.have.property( 'VideoPlayer' );
-			App.VideoPlayer.should.have.property( 'Entities' );
-			App.VideoPlayer.Entities.should.have.property( 'RelatedVideos' );
+		var collection;
+
+		before( function () {
+			var stub = sinon.stub().returns( false );
+			App.reqres.setHandler( 'pd360:available', stub );
+
+			collection = new App.VideoPlayer.Entities.RelatedVideos( [ ], {
+				'Tags' : [ 'ELA', '6th grade' ]
+			} );
 		} );
 
-		describe( 'RelatedVideos Entity', function () {
+		after( function () {
+			App.reqres.removeHandler( 'pd360:available' );
+			App.module( 'VideoPlayer' ).stop();
 
-			var collection;
+			collection = null;
+		} );
 
-			before( function () {
-				collection = new App.VideoPlayer.Entities.RelatedVideos();
+		it( 'should be an instance of CFModel', function () {
+			collection.should.be.an.instanceof( Backbone.CFCollection );
+		} );
+
+		it( 'does have a `path`', function () {
+			collection.should.have.property( 'path' );
+			collection.path.should.eql( 'SearchService' );
+		} );
+
+		it( 'does have a `model`', function () {
+			collection.should.have.property( 'model' );
+		} );
+
+		it( 'does have `getReadOptions`', function () {
+			collection.should.have.property( 'getReadOptions' );
+			collection.getReadOptions.should.be.a( 'function' );
+		} );
+
+		describe( '.getReadOptions', function () {
+
+			it( 'does return read options', function () {
+				var options = collection.getReadOptions();
+
+				options.should.have.property( 'method' );
+				options.method.should.eql( 'RespondSearchAPI' );
+
+				options.should.have.property( 'args' );
 			} );
 
-			after( function () {
-				collection = null;
+		} );
+
+		describe( '.parse', function () {
+
+			it( 'does remove the index 0 response element', function () {
+				var response  = [ 1, 2, 3 ];
+				var parseResp = [ 2, 3 ];
+
+				collection.parse( response ).should.eql( parseResp );
 			} );
 
-			it( 'should be an instance of CFModel', function () {
-				collection.should.be.an.instanceof( Backbone.CFCollection );
+		} );
+
+		describe( 'when requesting related videos', function () {
+			var result;
+			var ajax;
+
+			var fetch = function ( done ) {
+				var fetching = App.request( 'videoPlayer:relatedVideos', {
+					'Tags' : [ 'ELA', '6th grade' ]
+				} );
+
+				$.when( fetching ).always( function ( res ) {
+					result = res;
+					done();
+				} );
+			};
+
+			afterEach( function () {
+				$.ajax.restore();
+				result = null;
+				ajax   = null;
 			} );
 
-			it( 'does have a `path`', function () {
-				collection.should.have.property( 'path' );
-				collection.path.should.eql( 'RespondService' );
-			} );
+			describe( 'on error', function () {
 
-			it( 'does have a `model`', function () {
-				collection.should.have.property( 'model' );
-			} );
+				before( function ( done ) {
+					var err = new Error();
 
-			it( 'does have `getReadOptions`', function () {
-				collection.should.have.property( 'getReadOptions' );
-				collection.getReadOptions.should.be.a( 'function' );
-			} );
+					ajax = sinon.stub( $, 'ajax' );
+					ajax.yieldsTo( 'error', err );
 
-			describe( '.getReadOptions', function () {
+					fetch( done );
+				} );
 
-				it( 'does return read options', function () {
-					var options = collection.getReadOptions();
-
-					options.should.have.property( 'method' );
-					options.method.should.eql( 'relatedVideos' );
-
-					options.should.have.property( 'args' );
+				it( 'does return an error message', function () {
+					result.should.be.an.instanceof( Error );
+					result.message.should.equal( 'Error fetching related videos' );
 				} );
 
 			} );
 
-			describe( '.parse', function () {
+			describe( 'on success', function () {
 
-				it( 'does remove the index 0 response element', function () {
-					var response  = [ 1, 2, 3 ];
-					var parseResp = [ 2, 3 ];
+				before( function ( done ) {
+					ajax = sinon.stub( $, 'ajax' );
+					ajax.yieldsToAsync( 'success',
+						[
+							{
+								'maxScore' : 15.934493,
+								'name'     : 'response',
+								'numFound' : 2,
+								'start'    : 0
+							},
+							{
+								'ContentId'  : 7652,
+								'attributes' : {
+									'Tags' : [ 'ELA', '6th grade' ]
+								}
+							}
+						]
+					);
 
-					collection.parse( response ).should.eql( parseResp );
+					fetch( done );
+				} );
+
+				it( 'should return a RelatedVideos', function () {
+					result.should.be.an.instanceof( App.VideoPlayer.Entities.RelatedVideos );
 				} );
 
 			} );

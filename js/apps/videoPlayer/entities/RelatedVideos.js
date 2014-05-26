@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	var _        = require( 'underscore' );
 	var Backbone = require( 'backbone' );
+	var Session  = require( 'Session' );
 	var App      = require( 'App' );
 
 	require( 'videoPlayer/entities/Content' );
@@ -13,7 +14,7 @@ define( function ( require ) {
 
 			'model' : Entities.Content,
 
-			'path'  : 'RespondService',
+			'path'  : 'SearchService',
 
 			'initialize' : function ( models, options ) {
 				_.extend( this, options );
@@ -21,9 +22,14 @@ define( function ( require ) {
 
 			'getReadOptions' : function () {
 				return {
-					'method' : 'relatedVideos',
+					'method' : 'RespondSearchAPI',
 					'args'   : {
-						'ContentId' : this.ContentId
+						'persId'     : Session.personnelId(),
+						'start'      : 0,
+						'rows'       : 24,
+						'searchType' : 'RelatedContent',
+						'searchData' : this.Tags.join( ',' ),
+						'sort'       : 'created desc'
 					}
 				};
 			},
@@ -38,12 +44,10 @@ define( function ( require ) {
 
 		var API = {
 
-			'getRelatedVideos' : function ( contentId ) {
+			'getRelatedVideos' : function ( content ) {
 				var defer = App.Deferred();
 
-				var relatedVideos = new Entities.RelatedVideos( [ ], {
-					'ContentId' : contentId
-				} );
+				var relatedVideos = new Entities.RelatedVideos( [ ], content );
 
 				relatedVideos.fetch( {
 
@@ -62,8 +66,8 @@ define( function ( require ) {
 
 		};
 
-		App.reqres.setHandler( 'videoPlayer:getRelatedVideos', function ( contentId ) {
-			return API.getRelatedVideos( contentId );
+		App.reqres.setHandler( 'videoPlayer:relatedVideos', function ( content ) {
+			return API.getRelatedVideos( content );
 		} );
 
 	} );

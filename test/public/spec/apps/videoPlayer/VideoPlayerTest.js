@@ -92,7 +92,7 @@ define( function ( require ) {
 					var stub = sinon.stub().returns( collection );
 					App.reqres.setHandler( 'common:getQueueContents', stub );
 					App.reqres.setHandler( 'videoPlayer:questions', stub );
-					App.reqres.setHandler( 'videoPlayer:getRelatedVideos', stub );
+					App.reqres.setHandler( 'videoPlayer:relatedVideos', stub );
 					App.reqres.setHandler( 'videoPlayer:getVideoResources', stub );
 					App.reqres.setHandler( 'videoPlayer:segments', stub );
 				} );
@@ -100,7 +100,7 @@ define( function ( require ) {
 				after( function () {
 					App.reqres.removeHandler( 'common:getQueueContents' );
 					App.reqres.removeHandler( 'videoPlayer:questions' );
-					App.reqres.removeHandler( 'videoPlayer:getRelatedVideos' );
+					App.reqres.removeHandler( 'videoPlayer:relatedVideos' );
 					App.reqres.removeHandler( 'videoPlayer:getVideoResources' );
 					App.reqres.removeHandler( 'videoPlayer:segments' );
 				} );
