@@ -4,16 +4,46 @@ define( function ( require ) {
 	var $               = require( 'jquery' );
 	var captionSelector = '.nivo-caption';
 	var billboardHolder = '#billboard-container';
+	var nivoNextNav     = '.nivo-nextNav';
+	var nivoPrevNav     = '.nivo-prevNav';
 
-	var hideDirectionNav = function () {
+	var initSwipe = function ( element ) {
+
+		element = $( billboardHolder );
+
+		element.swipe( {
+			threshold        : 0,
+			excludedElements : '.noSwipe',
+			swipeLeft        : function () {
+				$( nivoNextNav ).click();
+			},
+			swipeRight       : function () {
+				$( nivoPrevNav ).click();
+			},
+
+			tap : function ( event, elem ) {
+				if ( $( elem ).is( nivoNextNav ) ) {
+					$( nivoNextNav ).click();
+				}
+
+				if ( $( elem ).is( nivoPrevNav ) ) {
+					$( nivoPrevNav ).click();
+				}
+			}
+		} );
+	};
+
+	var initDirectionNav = function () {
 		var collectionLength = $( '.nivo-controlNav' ).children().length;
-		var hidden           = false;
 		$( billboardHolder ).hide().fadeIn( 500 );
 		if ( collectionLength < 2 ) {
 			$( '.nivo-directionNav' ).hide();
-			hidden = true;
 		}
-		return hidden;
+	};
+
+	var afterLoad = function () {
+		initSwipe();
+		initDirectionNav();
 	};
 
 	return function () {
@@ -21,8 +51,9 @@ define( function ( require ) {
 			pauseTime    : 5000,
 			effect       : 'fade',
 			pauseOnHover : true,
-			animSpeed    : '1000',
-			afterLoad    : hideDirectionNav,
+			afterLoad    : afterLoad,
+			prevText     : '',
+			nextText     : '',
 			beforeChange : function () {
 				$( captionSelector ).fadeOut( 500 );
 			},
