@@ -2,7 +2,6 @@ define ( function ( require ) {
 	'use strict';
 
 	var Backbone    = require( 'backbone' );
-	var WidgetModel = require( 'apps/homepage/external/widgets/external/groupActivity/models/WidgetModel' );
 	var Remoting    = require( 'Remoting' );
 	var Session     = require( 'Session' );
 	var App         = require( 'App' );
@@ -18,7 +17,6 @@ define ( function ( require ) {
 	}
 
 	var Collection = Backbone.Collection.extend( {
-		'model'      : WidgetModel,
 		'comparator' : function ( model ) {
 			var date = model.get( 'LicenseContentTypeId' );
 			return -date;

@@ -1,11 +1,10 @@
-//code-review
 define( function ( require ) {
 	'use strict';
 
+	var App             = require( 'App' );
 	var Marionette      = require( 'marionette' );
 	var _               = require( 'underscore' );
 	var template        = require( 'text!apps/homepage/external/widgets/external/groupActivity/templates/widgetItemView.html' );
-	var limitCharacters = require( 'apps/homepage/utils/limitCharacters' );
 
 	var className    = 'col-md-12 no-padding widget-item';
 	var templateBind = _.template( template );
@@ -17,12 +16,9 @@ define( function ( require ) {
 		},
 		'templateHelpers' : function () {
 			return {
-				'creatorName' : this.limitCharacters( this.model.get( 'LicenseName' ) ),
+				'creatorName' : App.Homepage.Utils.limitCharacters( this.model.get( 'LicenseName' ), 37 ),
 				'getConfig'   : require( 'common/helpers/getConfig' )
 			};
-		},
-		'limitCharacters' : function ( text ) {
-			return limitCharacters( text, 37 );
 		}
 	} );
 } );

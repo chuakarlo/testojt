@@ -7,8 +7,6 @@ define( function ( require ) {
 	var WidgetItemView  = require( 'apps/homepage/external/widgets/external/groupActivity/views/WidgetItemView' );
 	var CollectionItems = require( 'apps/homepage/external/widgets/external/groupActivity/collections/WidgetCollection' );
 
-	instance._id = 'widgets';
-
 	function doGetCollection ( callback, options ) {
 		var collection = new CollectionItems( options );
 		collection.fetch( {
@@ -26,10 +24,7 @@ define( function ( require ) {
 			return 'Group Activity';
 		},
 		'header'          : function () {
-			return 'Group Activity';
-		},
-		'footer'          : function () {
-			return 'See All Groups';
+			return this.WidgetName();
 		},
 		'Description'     : function () {
 			return 'Get notified when there’s activity in one of your groups. Click on a group to go to that group’s activity wall.';
@@ -38,7 +33,7 @@ define( function ( require ) {
 			return 'http://i1032.photobucket.com/albums/a405/shinjiescorido/src_group_zps11338045.png';
 		},
 		'icon'            : function () {
-			return 'http://i1032.photobucket.com/albums/a405/shinjiescorido/src_group_zps11338045.png';
+			return this.imgSrc();
 		},
 		'em'              : 7,
 		'getExternalView' : WidgetItemView,
@@ -46,9 +41,6 @@ define( function ( require ) {
 			doGetCollection ( callback, options );
 		},
 		'_id'             : 'groupActivity',
-		'_header'         : function () {
-			return 'Group Activity';
-		},
 		'EmptyMessage'    : function () {
 			return 'No recent group activities.';
 		},
