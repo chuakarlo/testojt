@@ -279,6 +279,8 @@ define( function ( require ) {
 
 				'showGroupLeaderTools' : function ( groupId ) {
 
+					groupId = parseInt( groupId );
+
 					if ( !this.model || this.model.get( 'LicenseId') !== groupId ) {
 
 						this.model = new App.Entities.GroupModel( {
@@ -286,30 +288,33 @@ define( function ( require ) {
 						} );
 					}
 
-					App.when( this.model.fetch() ).done( _.bind( function () {
-						var persId = Session.personnelId();
-						var pd360Loaded = App.request( 'pd360:loaded' );
+					this.model.fetch( {
+						'success' : function ( model, res, options) {
+							var persId = Session.personnelId();
+							var pd360Loaded = App.request( 'pd360:loaded' );
 
-						App.content.show( new App.Common.LoadingView() );
+							App.content.show( new App.Common.LoadingView() );
 
-						App.when(
-							this.model.userIsAdmin( persId ),
-							this.model.userIsCreator( persId ),
-							pd360Loaded
-						).done( function ( groupAdmin, groupCreator ) {
+							App.when(
+								model.userIsAdmin( persId ),
+								model.userIsCreator( persId ),
+								pd360Loaded
+							).done( function ( groupAdmin, groupCreator ) {
 
-							if ( groupAdmin === true || groupCreator === true ) {
-								App.content.close();
-								App.request( 'pd360:navigate', 'communities', 'groupsBrowse', {
-									'LicenseId' : groupId
-								} );
-							} else {
-								App.navigate( 'home', {
-									'trigger' : true
-								} );
-							}
-						} );
-					}, this ) );
+								if ( groupAdmin === true || groupCreator === true ) {
+									App.content.close();
+									App.request( 'pd360:navigate', 'communities', 'groupsBrowse', {
+										'LicenseId' : groupId
+									} );
+								} else {
+									App.navigate( 'home', {
+										'trigger' : true
+									} );
+								}
+							} );
+
+						}
+					} );
 
 				}
 			} );
