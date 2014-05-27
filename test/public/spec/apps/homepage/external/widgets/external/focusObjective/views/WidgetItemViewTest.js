@@ -95,12 +95,15 @@ define( function ( require ) {
 		} );
 
 		it( 'should be an instance of ItemView', function () {
-			UserWidgetCompositeViewInstance = new UserWidgetCompositeView.itemView();
+			var Model     = Backbone.Model.extend();
+			var itemModel = new Model( modelData[ 0 ] );
+
+			UserWidgetCompositeViewInstance = new UserWidgetCompositeView.itemView( { 'model' : itemModel } );
 			expect( UserWidgetCompositeViewInstance ).to.be.an.instanceof( WidgetItemView );
 		} );
 
 		it( 'should limit the number of characters to 37 with elipses', function () {
-			var focusObjective = UserWidgetCompositeViewInstance.limitCharacter( modelData[0].ContentName );
+			var focusObjective = UserWidgetCompositeViewInstance.templateHelpers().content;
 			expect( focusObjective ).to.be.equal( 'Defining the Professional Learning Co...' );
 		} );
 

@@ -18,6 +18,7 @@ define( function ( require ) {
 		var modelData;
 
 		before( function () {
+
 			modelData = [ {
 				'PERCENTCOMPLETE' : 0,
 				'COURSEID'        : 7313,
@@ -125,7 +126,7 @@ define( function ( require ) {
 
 		it( 'should be an instance of ItemView', function () {
 			var Model     = Backbone.Model.extend();
-			var itemModel = new Model( modelData[0] );
+			var itemModel = new Model( modelData[ 5 ] );
 
 			UserWidgetCompositeViewInstance = new UserWidgetCompositeView.itemView( { 'model' : itemModel } );
 			expect( UserWidgetCompositeViewInstance ).to.be.an.instanceof( WidgetItemView );
@@ -133,7 +134,8 @@ define( function ( require ) {
 		} );
 
 		it( 'should limit the number of characters to 37 with elipses', function () {
-			var courseName = UserWidgetCompositeViewInstance.limitCharacter( modelData[5].COURSENAME );
+
+			var courseName = UserWidgetCompositeViewInstance.templateHelpers().content;
 			expect( courseName ).to.be.equal( 'CSvSC1 Talk About Teaching! with Char...' );
 		} );
 

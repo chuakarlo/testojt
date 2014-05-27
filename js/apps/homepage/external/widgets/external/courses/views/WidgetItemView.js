@@ -5,13 +5,12 @@ define( function ( require ) {
 	var Marionette       = require( 'marionette' );
 	var _                = require( 'underscore' );
 	var progressTemplate = require( 'text!apps/homepage/external/widgets/external/courses/templates/progressItemTemplate.html' );
-	var Utils            = App.Homepage.Utils;
 
 	function setTemplateHelpers ( model ) {
 		return {
 			'url'        : '#resources/learning/courses/' + model.get( 'COURSEID' ),
-			'content'    : Utils.limitCharacters( Utils.modelGet( model, 'COURSENAME' ), 37 ),
-			'completion' : Utils.modelGet( model, 'PERCENTCOMPLETE', '0')
+			'content'    : App.Homepage.Utils.limitCharacters( App.Homepage.Utils.modelGet( model, 'COURSENAME' ), 37 ),
+			'completion' : App.Homepage.Utils.modelGet( model, 'PERCENTCOMPLETE', '0')
 		};
 	}
 
@@ -23,7 +22,7 @@ define( function ( require ) {
 		},
 		'onShow'          : function ( ) {
 			if ( this.model ) {
-				Utils.progressCircle( this.$el, '.courses', this.model.get( 'PERCENTCOMPLETE' ) );
+				App.Homepage.Utils.progressCircle( this.$el, '.courses', this.model.get( 'PERCENTCOMPLETE' ) );
 			}
 		}
 	} );
