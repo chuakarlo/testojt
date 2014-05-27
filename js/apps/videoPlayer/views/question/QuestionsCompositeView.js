@@ -7,7 +7,7 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 
-	var QuestionsItemView = require( 'videoPlayer/views/QuestionItemView' );
+	var QuestionsItemView = require( 'videoPlayer/views/question/QuestionItemView' );
 	var NoItemView        = require( 'videoPlayer/views/NoItemView');
 
 	var template = require( 'text!videoPlayer/templates/questionsCompositeView.html' );

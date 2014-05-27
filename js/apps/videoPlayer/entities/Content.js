@@ -16,6 +16,8 @@ define( function ( require ) {
 
 			'defaults'    : {
 				'currentTime'        : 0,
+				'licenseId'          : 0,
+				'taskId'             : 0,
 				'GuidebookFileName'  : '',
 				'AudioFileName'      : '',
 				'TranscriptFileName' : ''
@@ -53,7 +55,6 @@ define( function ( require ) {
 			},
 
 			'getUpdateOptions' : function () {
-				var ccParams = App.request( 'videoPlayer:queryObject' );
 				return {
 					'path'   : 'RespondService',
 					'method' : 'RespondUpdatedViewingTimeWithStatusCheck',
@@ -62,8 +63,8 @@ define( function ( require ) {
 						'ContentId'        : this.id,
 						'ViewingId'        : 1,
 						'SecondsCompleted' : this.getCurrentTime(),
-						'licId'            : ccParams.licenseId ? ccParams.licenseId : 0,
-						'taskId'           : ccParams.taskId ? ccParams.taskId : 0
+						'licId'            : this.get( 'licenseId' ),
+						'taskId'           : this.get( 'taskId' )
 					}
 				};
 			},
@@ -149,6 +150,13 @@ define( function ( require ) {
 				videoContent.fetch( {
 
 					'success' : function () {
+						var queryObject = App.request( 'videoPlayer:queryObject' );
+
+						if ( queryObject.licenseId && queryObject.taskId ) {
+							videoContent.set( 'licenseId', queryObject.licenseId );
+							videoContent.set( 'taskId', queryObject.taskId );
+						}
+
 						defer.resolve( videoContent );
 					},
 

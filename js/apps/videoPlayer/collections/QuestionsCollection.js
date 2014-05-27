@@ -37,14 +37,24 @@ define( function ( require ) {
 			}
 
 			var latestDiff = 0;
+
+			// Set initial value
+			if ( this.first() ) {
+				latestDiff = timeDiff( this.first().get( 'Created' ) );
+			}
+
 			// get latest diff for reflection questions date of submission
 			this.each( function ( question ) {
-				if ( question.get( 'QuestionTypeId' ) === 1 &&
-					question.get( 'Created' ) !== '' ) {
+				if ( question.get( 'QuestionTypeId' ) === 1 ) {
+					var created     = question.get( 'Created' );
+					var currentDiff = 0;
 
-					var temp = timeDiff( question.get( 'Created' ) );
-					if ( temp < latestDiff || latestDiff === 0 ) {
-						latestDiff = temp;
+					if ( created !== '' ) {
+						currentDiff = timeDiff( question.get( 'Created' ) );
+					}
+
+					if ( currentDiff < latestDiff ) {
+						latestDiff = currentDiff;
 					}
 				}
 			}.bind( this ) );

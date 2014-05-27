@@ -23,7 +23,6 @@ define( function ( require ) {
 			'spec/apps/groups/entities/GroupMemberCollectionTest',
 			'spec/apps/groups/entities/GroupLinksCollectionTest',
 
-
 			// learningTargets
 			'spec/apps/learningTargets/LearningTargetsTest',
 			'spec/apps/learningTargets/views/MainViewTest',
@@ -118,8 +117,8 @@ define( function ( require ) {
 			// views/player
 			'spec/apps/videoPlayer/views/player/VideoPlayerViewTest.js',
 			// views/questions
-			'spec/apps/videoPlayer/views/QuestionsCompositeViewTest.js',
-			'spec/apps/videoPlayer/views/QuestionItemViewTest.js',
+			'spec/apps/videoPlayer/views/question/QuestionsCompositeViewTest.js',
+			'spec/apps/videoPlayer/views/question/QuestionItemViewTest.js',
 			// views/info
 			'spec/apps/videoPlayer/views/VideoInfoItemViewTest.js',
 			// views/share

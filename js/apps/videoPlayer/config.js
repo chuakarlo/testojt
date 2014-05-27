@@ -32,23 +32,15 @@ define( function ( require ) {
 			'responsive'     : [ {
 				'breakpoint' : 1100,
 				'settings'   : {
-					'slidesToShow'   : 4,
 					'slidesToScroll' : 2,
-					'touchThreshold' : 10,
-					'useCSS'         : false,
-					'slide'          : 'li',
-					'slickWidth'     : 1140
+					'touchThreshold' : 10
 				}
 			}, {
 				'breakpoint' : 450,
 				'settings'   : {
-					'slidesToShow'   : 4,
 					'slidesToScroll' : 1,
 					'touchThreshold' : 10,
-					'useCSS'         : false,
-					'slide'          : 'li',
-					'arrows'         : false,
-					'slickWidth'     : 1140
+					'arrows'         : false
 				}
 			} ]
 		}

@@ -1,16 +1,15 @@
 define( function ( require )  {
 	'use strict';
 
-	var $                   = require( 'jquery' );
 	var sinon               = window.sinon;
 	var App                 = require( 'App' );
-	var Remoting            = require( 'Remoting' );
 	var QuestionsView       = require( 'videoPlayer/views/QuestionsCompositeView' );
 	var QuestionsCollection = require( 'videoPlayer/collections/QuestionsCollection' );
 
 	describe( 'QuestionsView', function () {
 
-		var questionsView, stub;
+		var questionsView;
+		var stub;
 
 		var testData = [ {
 			'QuestionId'   : 1,
@@ -31,7 +30,7 @@ define( function ( require )  {
 			questionsView.render().onShow();
 		} );
 
-		after( function() {
+		after( function () {
 			stub = null;
 			App.reqres.removeHandler( 'pd360:available' );
 		} );
@@ -79,5 +78,3 @@ define( function ( require )  {
 	} );
 
 } );
-
-

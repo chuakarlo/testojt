@@ -115,17 +115,21 @@ define( function ( require ) {
 			// Closed caption plugin
 			player.ccToggle();
 
-			if ( !this.model.get( 'limited' ) && this.model.next ) {
+			if ( !this.model.get( 'limited' ) ) {
 				// Show replay button at end of video
 				player.videoReplay();
-				// Next video overlay
-				player.videoOverlay( {
-					'imageUrl'     : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.next.get( 'ImageURL' ),
-					'imageOpacity' : 0.75,
-					'clickUrl'     : '#resources/videos/' + this.model.next.get( 'ContentId' ),
-					'overlayText'  : '<div id="video-up-next"><p id="vjs-p-overlay">Up Next:</p><p id="vjs-title-overlay">' + this.model.next.get( 'ContentName' ) + '</p></div>'
-				} );
+
+				if ( this.model.next ) {
+					// Next video overlay
+					player.videoOverlay( {
+						'imageUrl'     : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.next.get( 'ImageURL' ),
+						'imageOpacity' : 0.75,
+						'clickUrl'     : '#resources/videos/' + this.model.next.get( 'ContentId' ),
+						'overlayText'  : '<div id="video-up-next"><p id="vjs-p-overlay">Up Next:</p><p id="vjs-title-overlay">' + this.model.next.get( 'ContentName' ) + '</p></div>'
+					} );
+				}
 			} else {
+				// Show 45 second video duration static display
 				player.staticDisplay( {
 					'timeToShow'   : config.video.previewLimit,
 					'imageUrl'     : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.get( 'ImageURL' ),
