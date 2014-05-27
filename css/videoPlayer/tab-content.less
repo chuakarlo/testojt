@@ -25,36 +25,28 @@
 			overflow : hidden;
 			position : relative;
 
-			.prevNext {
-				cursor      : pointer;
-				width       : 50px;
-				height      : 55px;
-				background  : url('../img/left-arrow.png') no-repeat center center rgba(0, 0, 0, 0.1);
-				text-indent : -9999px;
-				border      : 0;
-				z-index     : 10000;
-				position    : absolute;
-				bottom      : 150px;
-				left        : 0;
-				margin-top  : @prev-next-margin-top;
-				visibility  : hidden;
+			.prevNext2 {
+				display : none;
 			}
-			.nextLink {
-				background : url('../img/left-arrow-right.png') no-repeat center center rgba(0,0,0,.1);
-				right      : 0px;
-				left       : auto;
+
+			.prevNext , .prevNext2 {
+				cursor     : pointer;
+				border     : 0;
+				bottom     : 50%;
+				left       : 0;
+				visibility : hidden;
+				position   : absolute;
 			}
-		}
-
-		#video-segment, #related-videos {
-			.slick-list {
-				width       : 1115px;
-				margin      : auto;
-				padding-top : 5px;
-
-				.slick-track {
-					margin-left: -13px;
-				}
+			.prevNext:before, .prevNext2:before {
+				background  : rgba(110, 110, 110, 0.3);
+				padding     : 10px 12px;
+				color       : @vp-white;
+				font-size   : 20px;
+				text-shadow : -1px 0px 0px #b9bcc1;
+			}
+			.nextLink, .nextLink2 {
+				right : 0;
+				left  : auto;
 			}
 		}
 
@@ -82,11 +74,6 @@
 		li {
 			height : 282px;
 			width  : 285px !important;
-		}
-		.mobile {
-			~.prevNext, .slick-prev, .slick-next {
-				display : none !important;
-			}
 		}
 	}
 
@@ -149,14 +136,6 @@
 
 							.download-icon:hover {
 								color : @vp-blue-light;
-							}
-						}
-						.download-container:hover {
-							padding : ( ( @vp-base-padding / 5 ) * 2 );
-							border  : @border;
-							.border-radius( @cn-base-radius / 3 );
-							.download-icon {
-								color :	@vp-blue-light;
 							}
 						}
 					}

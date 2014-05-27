@@ -29,23 +29,29 @@ define( function ( require ) {
 		},
 
 		'initialize' : function () {
+			this.clickEnable = true;
 			if ( $.browser.mobile ||  $.browser.ipad ) {
 				this.clickEnable = false;
 			}
 		},
 
+		'onShow' : function () {
+			this.ui.download.tooltip( { 'title' : 'Download' } );
+		},
+
+		'onClose' : function () {
+			this.ui.download.tooltip( 'destroy' );
+		},
+
 		'previewFile' : function ( e ) {
 			e.preventDefault();
 			//disable click in mobile devices
-			if ( this.clickEnable === false) {
-				return false;
+			if ( this.clickEnable === true && this.model.get( 'previewPath') !== '' ) {
+				var pdfPreview = new PreviewView( { 'model' : this.model } );
+				App.modalRegion.show( pdfPreview, {
+					'className' : 'pdf-preview-modal'
+				} );
 			}
-
-			var pdfPreview  = new PreviewView( { 'model' : this.model } );
-
-			App.modalRegion.show( pdfPreview, {
-				'className' : 'pdf-preview-modal'
-			} );
 		},
 
 		'downloadFile' : function () {

@@ -39,8 +39,7 @@ define( function ( require ) {
 				'breakpoint' : 450,
 				'settings'   : {
 					'slidesToScroll' : 1,
-					'touchThreshold' : 10,
-					'arrows'         : false
+					'touchThreshold' : 10
 				}
 			} ]
 		}

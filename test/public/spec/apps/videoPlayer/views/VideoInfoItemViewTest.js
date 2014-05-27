@@ -20,30 +20,28 @@ define( function ( require ) {
 				'model' : content
 			} );
 
-			videoView.render();
 		} );
 
 		after( function () {
 			videoView = null;
 		} );
 
-		it( 'should return duration', function () {
-			var domDiv = videoView.$el.children().last();
-			var p      = domDiv.children().last().text();
-			p.should.have.be.equal( 'Duration: 00:00:00' );
+		it( 'does have a `template`', function () {
+			videoView.should.have.property( 'template' );
+		} );
+
+		it( 'does have a `className`', function () {
+			videoView.should.have.property( 'className' );
+		} );
+
+		it( 'does have `templateHelpers`', function () {
+			videoView.should.have.property( 'templateHelpers' );
 		} );
 
 		it( 'should call `.showVideoInfo` when video info is click', function () {
 			var domDiv = videoView.$el.children();
 			domDiv.first().click( function () {
-				domDiv.first().next().hasClass( 'popover' ).should.be.true();
-			} );
-		} );
-
-		it( 'should hide `.showVideoInfo` when transparent backdrop is click', function () {
-			var domDiv = videoView.$el.children();
-			domDiv.first().next().next().click( function () {
-				domDiv.first().next().hasClass( 'in' ).should.be.false();
+				domDiv.first().next().hasClass( 'modal' ).should.be.true();
 			} );
 		} );
 

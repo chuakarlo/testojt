@@ -11,37 +11,17 @@
 	}
 	#video-player-header {
 		h2 {
-			width         : auto;
-			white-space   : nowrap;
-			overflow      : hidden;
-			text-overflow : ellipsis;
+			width      : 97%;
+			word-break : break-word;
 		}
 		#video-info {
-			.popover {
-				max-width        : 100% !important;
-				background-color : white;
-				color            : black;
-			}
 			#info-icon {
 				cursor         : pointer;
-				color          : @vp-gray;
 				vertical-align : middle;
-				font-size      : 25px;
+				font-size      : 30px;
+				color          : @vp-blue;
 				float          : right;
-				margin-top     : 10px;
 				padding-right  : 5px;
-			}
-			#info-video-backdrop {
-				top        : 0;
-				left       : 0;
-				height     : 100%;
-				width      : 100%;
-				z-index    : 99;
-				position   : fixed;
-				background : transparent;
-			}
-			.clicked-icon {
-				color : @vp-blue !important;
 			}
 		}
 	}
@@ -50,7 +30,7 @@
 		#video-player {
 			float            : left;
 			padding          : 0px;
-			background-color : #000;
+			background-color : @vp-black;
 			#message-overlay {
 				display : none;
 			}
