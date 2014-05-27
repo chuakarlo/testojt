@@ -2,7 +2,6 @@ define ( function ( require ) {
 	'use strict';
 
 	var Backbone    = require( 'backbone' );
-	var WidgetModel = require( 'apps/homepage/external/widgets/external/observationsOfMe/models/WidgetModel' );
 	var Remoting    = require( 'Remoting' );
 	var $           = require( 'jquery' );
 	var Session     = require( 'Session' );
@@ -19,10 +18,8 @@ define ( function ( require ) {
 	}
 
 	var Collection = Backbone.Collection.extend( {
-		'model'      : WidgetModel,
 		'comparator' : function ( model ) {
-			var date = new Date( model.get( 'ObservationDate' ) ).getTime();
-			return -date;
+			return App.Homepage.Utils.compareDate( model, 'ObservationDate' );
 		}	} );
 
 		return Backbone.Collection.extend( {

@@ -8,77 +8,70 @@ define( function ( require ) {
 	var $          = require( 'jquery' );
 	var getConfig  = require( 'common/helpers/getConfig' );
 
+	var forcedCss = {
+		'width'  : '1em',
+		'height' : '1em'
+	};
+
+	var customProgressCircle = {
+		'showPercentText' : true,
+		'circleSize'      : 90,
+		'thickness'       : 3
+	};
+
+	var statusDescription = {
+		true  : 'Your profile is almost complete! The more we know about you, the better the content.',
+		false : 'Your profile is complete!'
+	};
+
+	function defaultImage ( e ) {
+		$( e.currentTarget ).attr( 'src', getConfig( 'profileAvatarWebPath' ) + 'default.png' );
+	}
+
+	function renderAvatar ( avatarImg ) {
+		avatarImg.error( defaultImage );
+		avatarImg.attr( 'src', avatarImg.attr( 'data-src' ) );
+	}
+
+	function renderCircle ( element ) {
+		var eCircle  = element.find( '#your-profile-circle' );
+		var nPercent = parseInt( eCircle.html(), 10 );
+		eCircle.html( '' );
+
+		if ( isNaN( nPercent ) ) {
+			nPercent = 25;
+		}
+
+		App.Homepage.Utils.progressCircle( element, '#your-profile-circle', nPercent, customProgressCircle, function ( $ ) {
+			$( eCircle ).find( '.fill, .bar' ).css( forcedCss );
+		} );
+	}
+
+	function checkAttribute ( attr ) {
+		return attr === '' || attr === 'default.png' || attr === 0 || attr === '0001-01-01';
+	}
+
 	return Marionette.ItemView.extend( {
-		'template'          : _.template( template ),
-		'className'         : 'col-md-12 no-padding user-settings',
-		'replaceSrc'        : function ( e ) {
-			$( e.currentTarget ).attr( 'src', getConfig( 'profileAvatarWebPath' ) + 'default.png' );
-		},
-		'templateHelpers'   : function ( ) {
+		'template'        : _.template( template ),
+		'className'       : 'col-md-12 no-padding user-settings',
+		'templateHelpers' : function ( ) {
+			var percentage = this.getPercentage( this.model.attributes );
 			return {
-				'avatar'      : this.getAvatarWithLink( this.model.attributes.Avatar ),
-				'description' : this.getDescription( this.getPercentage( this.model ) ),
-				'percentage'  : this.getPercentage( this.model )
+				'description' : statusDescription[ percentage > 99 ],
+				'percentage'  : percentage
 			};
 		},
-		'getAvatarWithLink' : function ( a ) {
-			return getConfig( 'profileAvatarWebPath' ) + a;
+		'getPercentage'   : function ( m ) {
+			var keys = Object.keys( m );
+			return ( 1 - $.grep( keys, function ( n, i ) {
+				return checkAttribute( m[ n ] );
+			} ).length / keys.length ) * 100;
 		},
-		'getDescription'    : function ( d ) {
-			var Description = 'Your profile is almost complete! The more we know about you, the better the content.';
-			if ( d > 99 ) {
-				Description = 'Your profile is complete!';
-			}
-			return Description;
-		},
-		'getPercentage'     : function ( m ) {
-			var cntEmpty = 0;
-			var kCount   = 0;
-			for ( var k in m.attributes ) {
-				kCount++;
-				if ( m.attributes[ k ] === '' || m.attributes[ k ] === 'default.png' || m.attributes[ k ] === 0 || m.attributes[ k ] === '0001-01-01' ) {
-					cntEmpty++;
-				}
-			}
-			var countNonEmpty     = kCount - cntEmpty;
-			var percentageDecimal = countNonEmpty / kCount;
-			var resultPercent     = percentageDecimal * 100;
-			return ( resultPercent );
-		},
-		'onRender'          : function ( parent ) {
+		'onRender'        : function () {
 			if ( App.request( 'homepage:isHomeRoute' ) ) {
-				var eCircle  = parent.$( '#your-profile-circle' );
-				var nPercent = parseInt( eCircle.html(), 10 );
-				eCircle.html( '' );
-
-				if ( isNaN( nPercent ) ) {
-					nPercent = 25;
-				}
-
-				require( [ 'pc-progressCircle' ], function ( $ ) {
-					$(eCircle).progressCircle( {
-						'nPercent'        : nPercent,
-						'showPercentText' : true,
-						'circleSize'      : 90,
-						'thickness'       : 3
-					} );
-
-					$(eCircle).find( '.fill' )
-						.css( 'width', '1em' )
-						.css( 'height', '1em' );
-					$(eCircle).find( '.bar' )
-						.css( 'width', '1em' )
-						.css( 'height', '1em' );
-
-				} );
-
-				var avatarImg = parent.$( '#avatarSrc' );
-
-				avatarImg.error( function ( e ) {
-					$( e.currentTarget ).attr( 'src', getConfig( 'profileAvatarWebPath' ) + 'default.png' );
-				});
-
-				avatarImg.attr( 'src', avatarImg.attr( 'data-src' ) );
+				var element = this.$el;
+				renderCircle( element );
+				renderAvatar( element.find( '#avatarSrc' ) );
 			}
 		}
 	} );

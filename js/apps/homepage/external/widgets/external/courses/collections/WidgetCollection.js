@@ -18,7 +18,7 @@ define ( function ( require ) {
 
 	var Collection = Backbone.Collection.extend( {
 		'comparator' : function ( model ) {
-			return -( new Date( model.get( 'STARTDATE' ) ).getTime() );
+			return App.Homepage.Utils.compareDate( model, 'STARTDATE' );
 		}
 	} );
 

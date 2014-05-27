@@ -2,11 +2,10 @@
 define( function ( require ) {
 	'use strict';
 
+	var App             = require( 'App' );
 	var Marionette      = require( 'marionette' );
 	var _               = require( 'underscore' );
-	var moment          = require( 'moment' );
 	var template        = require( 'text!apps/homepage/external/widgets/external/observationsOfMe/templates/widgetItemView.html' );
-	var limitCharacters = require( 'apps/homepage/utils/limitCharacters' );
 
 	var className    = 'widget-item';
 	var templateBind = _.template( template );
@@ -18,18 +17,9 @@ define( function ( require ) {
 		},
 		'templateHelpers' : function () {
 			return {
-				'observationName' : this.limitCharacters( this.model.get( 'OBSERVATIONNAME' ) ),
-				'observationId'   : this.model.get( 'OBSERVATIONID' ),
-				'observationDate' : this.timeDiff( new Date( this.model.get( 'OBSERVATIONDATE' ) ).getTime() ),
-				'numPd'           : this.model.get( 'NUMBEROFPRESCRIBEDPD' )
+				'observationName' : App.Homepage.Utils.limitCharacters( this.model.get( 'OBSERVATIONNAME' ), 26 ),
+				'observationDate' : App.Homepage.Utils.timeDiff( this.model, 'OBSERVATIONDATE' )
 			};
-		},
-		'limitCharacters' : function ( text ) {
-			return limitCharacters( text, 26 );
-		},
-		'timeDiff'        : function ( time ) {
-			var now = moment( time ).fromNow();
-			return now;
 		}
 	} );
 } );

@@ -7,8 +7,6 @@ define( function ( require ) {
 	var WidgetItemView  = require( 'apps/homepage/external/widgets/external/yourProfile/views/WidgetItemView' );
 	var CollectionItems = require( 'apps/homepage/external/widgets/external/yourProfile/collections/WidgetCollection' );
 
-	instance._id = 'widgets';
-
 	function doGetCollection ( callback, options ) {
 		var collection = new CollectionItems( options );
 		collection.fetch( {
@@ -26,10 +24,7 @@ define( function ( require ) {
 			return 'User Settings';
 		},
 		'header'          : function () {
-			return 'User Settings';
-		},
-		'footer'          : function () {
-			return 'Edit Settings';
+			return this.WidgetName();
 		},
 		'Description'     : function () {
 			return 'Access your profile settings, licenses, and personal usage report. Plus, get a snapshot of how complete your profile is. Remember, the more complete your profile, the more useful PD 360 is for you.';
@@ -38,7 +33,7 @@ define( function ( require ) {
 			return 'http://i1032.photobucket.com/albums/a405/shinjiescorido/src_userSettings_zpse7ae34fc.png';
 		},
 		'icon'            : function () {
-			return 'http://i1032.photobucket.com/albums/a405/shinjiescorido/src_userSettings_zpse7ae34fc.png';
+			return this.imgSrc();
 		},
 		'em'              : 8.5,
 		'getExternalView' : WidgetItemView,
@@ -46,9 +41,6 @@ define( function ( require ) {
 			doGetCollection ( callback, options );
 		},
 		'_id'             : 'yourProfile',
-		'_header'         : function () {
-			return 'User Settings';
-		},
 		'EmptyMessage'    : function () {
 			return '';
 		},

@@ -59,13 +59,11 @@ define ( function ( require ) {
 		} );
 
 		it( 'should have property header', function () {
-			base._header().should.equal( 'User Settings' );
 			base.header().should.equal( 'User Settings' );
 		} );
 
 		it( 'should have property footer', function () {
 			base._footer().should.equal( 'Edit Settings' );
-			base.footer().should.equal( 'Edit Settings' );
 		} );
 
 		it( 'should have property Description', function () {

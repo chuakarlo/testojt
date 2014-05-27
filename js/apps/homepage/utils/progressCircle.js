@@ -7,7 +7,7 @@ define( function () {
 		'showPercentText' : false
 	};
 
-	return function (  target, cssSelector, completion, options ) {
+	return function (  target, cssSelector, completion, options, callback ) {
 		options = options || defaultOptions;
 		require( [ 'pc-progressCircle' ], function ( $ ) {
 			$( target ).find( cssSelector ).progressCircle( {
@@ -16,6 +16,9 @@ define( function () {
 				'thickness'       : options.thickness,
 				'showPercentText' : options.showPercentText
 			} );
+			if ( callback ) {
+				callback( $ );
+			}
 		} );
 	};
 } );

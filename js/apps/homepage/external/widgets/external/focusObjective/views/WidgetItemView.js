@@ -12,9 +12,8 @@ define( function ( require ) {
 		'className'       : 'col-md-12 no-padding widget-item',
 		'templateHelpers' : function () {
 			return {
-				'content' : App.Homepage.Utils.limitCharacters( this.model.get( 'ContentName' ), 37 ),
-				'url'     : '#resources/videos/' + this.model.get( 'ContentId' ),
-				'imgIcon' : getConfig( 'contentThumbnailPath' ) + this.model.get( 'ImageURL' )
+				'content'   : App.Homepage.Utils.limitCharacters( this.model.get( 'ContentName' ), 37 ),
+				'getConfig' : getConfig( 'contentThumbnailPath' )
 			};
 		}
 	} );

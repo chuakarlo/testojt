@@ -8,10 +8,15 @@ define( function ( require ) {
 
 	function setTemplateHelpers ( model ) {
 		return {
-			'url'        : '#resources/learning/courses/' + model.get( 'COURSEID' ),
 			'content'    : App.Homepage.Utils.limitCharacters( App.Homepage.Utils.modelGet( model, 'COURSENAME' ), 37 ),
 			'completion' : App.Homepage.Utils.modelGet( model, 'PERCENTCOMPLETE', '0')
 		};
+	}
+
+	function doOnShow ( view, model ) {
+		if ( model ) {
+			App.Homepage.Utils.progressCircle( view.$el, '.courses', model.get( 'PERCENTCOMPLETE' ) );
+		}
 	}
 
 	return Marionette.ItemView.extend( {
@@ -21,9 +26,7 @@ define( function ( require ) {
 			return setTemplateHelpers ( this.model );
 		},
 		'onShow'          : function ( ) {
-			if ( this.model ) {
-				App.Homepage.Utils.progressCircle( this.$el, '.courses', this.model.get( 'PERCENTCOMPLETE' ) );
-			}
+			doOnShow( this, this.model );
 		}
 	} );
 } );
