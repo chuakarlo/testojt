@@ -12,9 +12,9 @@ define( function ( require ) {
 	var usersTemplate      = require( 'text!../templates/usersGroupCommentsView.html' );
 	var newsTemplate = require( 'text!../templates/NewsItemView.html');
 
-	var GroupCommentView   = require( '../views/GroupCommentView' );
-	var MiniPersonnelModel = require('../../common/entities/MiniPersonnel');
-	var MiniPersonnelView  = require('../../common/views/MiniPersonnel');
+	var GroupCommentView   = require( 'groups/views/GroupCommentView' );
+	var MiniPersonnelModel = require( 'common/entities/MiniPersonnel');
+	var MiniPersonnelView  = require( 'common/views/MiniPersonnel');
 	var stripHtml          = require( 'common/helpers/stripHtml' );
 
 	return Marionette.CompositeView.extend( {

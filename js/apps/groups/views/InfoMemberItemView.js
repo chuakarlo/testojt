@@ -5,8 +5,8 @@ define( function ( require ) {
 	var $                  = require( 'jquery' );
 	var Marionette         = require( 'marionette' );
 	var template           = require( 'text!../templates/groupInfoMemberView.html' );
-	var MiniPersonnelModel = require('../../common/entities/MiniPersonnel');
-	var MiniPersonnelView  = require('../../common/views/MiniPersonnel');
+	var MiniPersonnelModel = require( 'common/entities/MiniPersonnel' );
+	var MiniPersonnelView  = require( 'common/views/MiniPersonnel' );
 
 	return Marionette.ItemView.extend( {
 

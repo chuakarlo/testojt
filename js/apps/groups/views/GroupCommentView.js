@@ -8,8 +8,8 @@ define( function ( require ) {
 
 	var template           = require( 'text!../templates/groupCommentView.html' );
 	var usersTemplate      = require( 'text!../templates/usersGroupCommentView.html' );
-	var MiniPersonnelModel = require('../../common/entities/MiniPersonnel');
-	var MiniPersonnelView  = require('../../common/views/MiniPersonnel');
+	var MiniPersonnelModel = require( 'common/entities/MiniPersonnel' );
+	var MiniPersonnelView  = require( 'common/views/MiniPersonnel' );
 	var stripHtml          = require( 'common/helpers/stripHtml' );
 
 	return Marionette.ItemView.extend( {
