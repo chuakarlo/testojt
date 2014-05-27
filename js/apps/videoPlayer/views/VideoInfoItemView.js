@@ -28,7 +28,13 @@ define( function ( require ) {
 			},
 
 			'description' : function () {
-				return stripHtml( this.ContentDescription );
+				var info = stripHtml( this.ContentDescription );
+
+				if ( info.length === 0 ) {
+					info = 'This video has no description provided.';
+				}
+
+				return info;
 			}
 		},
 

@@ -14,9 +14,19 @@ define( function ( require ) {
 
 			'showVideo' : function ( videoId ) {
 
+				var getVideoContent;
+
 				App.content.show( new App.Common.LoadingView() );
 
-				var getVideoContent = App.request( 'videoPlayer:getVideoContent', videoId );
+				// get URL query
+				var queryObj = App.request( 'videoPlayer:queryObject' );
+
+				// check if the video is user uploaded or not
+				if ( queryObj.uuv ) {
+					getVideoContent = App.request( 'video:userUploaded', videoId );
+				} else {
+					getVideoContent = App.request( 'videoPlayer:getVideoContent', videoId );
+				}
 
 				App.when( getVideoContent ).done( function ( videoContent ) {
 
@@ -120,13 +130,11 @@ define( function ( require ) {
 					}
 
 					// show video resources
-					var resources = App.request( 'videoPlayer:getVideoResources', videoModel );
-					if ( !resources.isEmpty() ) {
-						var resourcesView = new App.VideoPlayer.Views.ResourcesView( {
-							'collection' : resources
-						} );
-						layout.videoResourcesRegion.show( resourcesView );
-					}
+					var resources     = App.request( 'videoPlayer:getVideoResources', videoModel );
+					var resourcesView = new App.VideoPlayer.Views.ResourcesView( {
+						'collection' : resources
+					} );
+					layout.videoResourcesRegion.show( resourcesView );
 
 					//show related vids
 					var relatedView = new App.VideoPlayer.Views.VideoCollectionView( {

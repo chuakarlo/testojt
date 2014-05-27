@@ -1,9 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	var Backbone = require( 'backbone' );
-	var sinon    = window.sinon;
-
+	var Backbone            = require( 'backbone' );
 	var VideoCollectionView = require( 'videoPlayer/views/tabs/VideoCollectionView' );
 
 	require( 'common/views' );
@@ -23,13 +21,6 @@ define( function ( require ) {
 			} ];
 
 			testCollection = new Backbone.Collection( testData );
-
-			VideoCollectionView.prototype.onBeforeItemAdded = function ( itemView ) {
-				sinon.stub( itemView.templateHelpers, 'imageUrl' ).returns( '' );
-			};
-			VideoCollectionView.prototype.onItemRemoved = function ( itemView ) {
-				itemView.templateHelpers.imageUrl.restore();
-			};
 
 			videosCollectionView = new VideoCollectionView( {
 				'collection' : testCollection

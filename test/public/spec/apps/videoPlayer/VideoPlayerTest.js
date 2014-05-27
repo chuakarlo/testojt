@@ -24,12 +24,16 @@ define( function ( require ) {
 
 			var truthStub = sinon.stub().returns( true );
 			App.reqres.setHandler( 'videoPlayer:isVideosRoute', truthStub );
+
+			var queryObjectStub = sinon.stub().returns( { } );
+			App.reqres.setHandler( 'videoPlayer:queryObject', queryObjectStub );
 		} );
 
 		after( function () {
 			App.reqres.removeHandler( 'pd360:available' );
 			App.reqres.removeHandler( 'user:licenses' );
 			App.reqres.removeHandler( 'videoPlayer:isVideosRoute' );
+			App.reqres.removeHandler( 'videoPlayer:queryObject' );
 			App.module( 'VideoPlayer' ).stop();
 		} );
 

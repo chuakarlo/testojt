@@ -26,7 +26,7 @@ define( function ( require ) {
 			'initialize' : function ( attr, options ) {
 				_.extend( this, options );
 
-				this.setVideoTypeId();
+				this.setVideoTypeId( 1 );
 				this.setVideoUrl();
 			},
 
@@ -107,8 +107,8 @@ define( function ( require ) {
 				this.set( 'queued', _.contains( queueContentsIds, this.id ) );
 			},
 
-			'setVideoTypeId' : function () {
-				this.set( 'VideoTypeId', 1 );
+			'setVideoTypeId' : function ( videoTypeId ) {
+				this.set( 'VideoTypeId', videoTypeId );
 			},
 
 			'setVideoUrl' : function () {

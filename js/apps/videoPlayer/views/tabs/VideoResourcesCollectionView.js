@@ -4,10 +4,9 @@ define( function ( require ) {
 	require( 'pc-carouselSnap' );
 	require( 'jquery-browser' );
 
-	var $          = require( 'jquery' );
-	var Marionette = require( 'marionette' );
-
+	var Marionette            = require( 'marionette' );
 	var VideoResourceItemView = require( 'videoPlayer/views/tabs/VideoResourceItemView' );
+	var NoItemView            = require( 'videoPlayer/views/NoItemView' );
 
 	return Marionette.CollectionView.extend( {
 
@@ -17,16 +16,23 @@ define( function ( require ) {
 
 		'className' : 'row',
 
+		'emptyView' : NoItemView,
+
 		'onShow' : function () {
-			if ( $.browser.mobile ||  $.browser.ipad ) {
-				this.$el.addClass( 'mobile' );
+			if ( this.collection.length !== 0 ) {
+				this.$el.carouselSnap( {
+					nextID                : 'next-slide',
+					prevID                : 'previous-slide',
+					elementsToMoveOnClick : 4,
+					startOnCenter         : true
+				} );
+			} else {
+				this.$el.css( {
+					'height'        : 'auto',
+					'margin-left'   : 0,
+					'margin-bottom' : 0
+				} );
 			}
-			this.$el.carouselSnap( {
-				nextID                : 'next-slide',
-				prevID                : 'previous-slide',
-				elementsToMoveOnClick : 4,
-				startOnCenter         : true
-			} );
 		},
 
 		'onClose' : function () {

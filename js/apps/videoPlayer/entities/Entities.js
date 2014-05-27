@@ -6,6 +6,7 @@ define( function ( require ) {
 	require( 'videoPlayer/entities/RelatedVideos' );
 	require( 'videoPlayer/entities/SearchResults' );
 	require( 'videoPlayer/entities/Segments' );
+	require( 'videoPlayer/entities/UserContent' );
 	require( 'videoPlayer/entities/VideoResources' );
 
 } );

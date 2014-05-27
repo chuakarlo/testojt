@@ -25,21 +25,29 @@ define( function ( require ) {
 		'templateHelpers' : {
 
 			'videoUrl' : function () {
-				var url       = 'http://schoolimp-vh.akamaihd.net/i/PD360/media/video/';
-				var bitrates  = ',304,552,800,1152,1552,1952,2448,';
-				var extension = '.mp4.csmil/master.m3u8';
-				var folder    = this.FileName.split( '.' )[ 0 ];
-				var file      = this.FileName.split( '.' )[ 0 ] + '_';
+				var url;
 
-				if ( this.ContentTypeId === 3 ) {
-					url += 'PD360/';
-				} else if ( this.ContentTypeId === 6 ) {
-					url += 'CC360/';
+				if ( ! this.Uploaded ) {
+					var bitrates  = ',304,552,800,1152,1552,1952,2448,';
+					var extension = '.mp4.csmil/master.m3u8';
+					var folder    = this.FileName.split( '.' )[ 0 ];
+					var file      = this.FileName.split( '.' )[ 0 ] + '_';
+
+					// set video base URL
+					url = 'http://schoolimp-vh.akamaihd.net/i/PD360/media/video/';
+
+					if ( this.ContentTypeId === 3 ) {
+						url += 'PD360/';
+					} else if ( this.ContentTypeId === 6 ) {
+						url += 'CC360/';
+					}
+
+					url += this.SKU + '/';
+					url += folder + '/';
+					url += file + bitrates + extension;
+				} else {
+					url = config.video.previewUrl + 'video/ugc/' + this.FileName;
 				}
-
-				url += this.SKU + '/';
-				url += folder + '/';
-				url += file + bitrates + extension;
 
 				return url;
 			},

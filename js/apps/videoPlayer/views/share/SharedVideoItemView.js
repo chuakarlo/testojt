@@ -33,7 +33,16 @@ define( function ( require ) {
 		'templateHelpers' : {
 
 			'getImageUrl' : function () {
-				return getConfig( 'contentThumbnailPath' ) + this.ImageURL;
+				var imageUrl;
+
+				if ( this.Uploaded ) {
+					imageUrl = getConfig( 'contentThumbnailPath' ) + 'thumb_2205_PD_sendingmessages.jpg';
+
+				} else {
+					imageUrl = getConfig( 'contentThumbnailPath' ) + this.ImageURL;
+				}
+
+				return imageUrl;
 			},
 
 			'getSegmentLength' : function () {

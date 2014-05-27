@@ -5,9 +5,10 @@ define( function ( require ) {
 	require( 'jquery-browser' );
 	require( 'common/views' );
 
-	var $          = require( 'jquery' );
 	var App        = require( 'App' );
 	var Marionette = require( 'marionette' );
+	var NoItemView = require( 'videoPlayer/views/NoItemView' );
+
 	var config     = App.request( 'videoPlayer:config' );
 
 	return Marionette.CollectionView.extend( {
@@ -18,11 +19,12 @@ define( function ( require ) {
 
 		'className' : 'slick',
 
+		'emptyView' : NoItemView,
+
 		'onShow' : function () {
-			if ( $.browser.mobile ||  $.browser.ipad ) {
-				this.$el.addClass( 'mobile' );
+			if ( this.collection.length !== 0 ) {
+				this.$el.slick( config.slick );
 			}
-			this.$el.slick( config.slick );
 		},
 
 		'onClose' : function () {
