@@ -4,9 +4,6 @@ define( function ( require ) {
 	var App = require( 'App' );
 	var _   = require( 'underscore' );
 
-	var MiniPersonnelModel = require('common/entities/MiniPersonnel');
-	var ModalPersonnelView = require('common/views/PersonnelModal');
-
 	//-----------------------------------------------
 	// Handle calls from flash to navigate elsewhere
 	//-----------------------------------------------
@@ -54,25 +51,6 @@ define( function ( require ) {
 		//-----------------------
 		} else if ( _.has( link, 'JOINGROUP' ) ) {
 			url = '#groups/' + link.JOINGROUP;
-
-		//-----------------------
-		// COLLEAGUE LINKS
-		//-----------------------
-		} else if ( _.has( link, 'SHOWPROFILE' ) ) {
-
-			var model = new MiniPersonnelModel( {
-				'persId' : link.SHOWPROFILE
-			} );
-
-			var view = new ModalPersonnelView( {
-				'model' : model
-			} );
-
-			model.fetch( {
-				'success' : function () {
-					App.modalRegion.show( view );
-				}
-			} );
 		}
 
 		// If we built a url, navigate to it.
