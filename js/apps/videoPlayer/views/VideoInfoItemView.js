@@ -13,12 +13,14 @@ define( function ( require ) {
 		'template' : _.template( template ),
 
 		'ui' : {
-			'videoInfo'   : '#info-icon',
-			'infoContent' : '#info-video-content'
+			'videoInfo'    : '#info-icon',
+			'infoContent'  : '#info-video-content',
+			'infoBackdrop' : '#info-video-backdrop'
 		},
 
 		'events' : {
-			'click @ui.videoInfo' : 'showVideoInfo'
+			'click @ui.videoInfo'    : 'showVideoInfo',
+			'click @ui.infoBackdrop' : 'showVideoInfoBackdrop'
 		},
 
 		'templateHelpers' : {
@@ -40,6 +42,7 @@ define( function ( require ) {
 
 		'showVideoInfo' : function () {
 			var self = this;
+			this.ui.infoBackdrop.show();
 			this.ui.videoInfo.toggleClass( 'clicked-icon' );
 			this.ui.videoInfo.popover( {
 				'html'      : true,
@@ -55,6 +58,12 @@ define( function ( require ) {
 			} );
 
 			this.ui.videoInfo.popover( 'toggle' );
+		},
+
+		'showVideoInfoBackdrop' : function () {
+			this.ui.infoBackdrop.hide();
+			this.ui.videoInfo.popover( 'toggle' );
+			this.ui.videoInfo.toggleClass( 'clicked-icon' );
 		}
 
 	} );
