@@ -33,9 +33,7 @@ define( function ( require ) {
 		'events' : {
 			'submit form'             : 'replyComment',
 			'click @ui.removeComment' : 'removeComment',
-			'click @ui.creator'       : 'showMiniPersonnel',
-			'mouseenter @ui.creator'  : 'showMiniPersonnel',
-			'mouseleave @ui.creator'  : 'hideMiniPersonnel'
+			'mouseenter @ui.creator'  : 'showMiniPersonnel'
 		},
 
 		'initialize' : function ( options ) {
@@ -64,11 +62,11 @@ define( function ( require ) {
 
 		'showMiniPersonnel' : function ( event ) {
 
-			// We disabled the event that just captured the click
+			// We disable the event that just captured the mouseenter
 			// and let the popover library handle the click so we
 			// don't have to fetch the model or create the view every
 			// time.
-			$( this.el ).off( 'click', '.creator-name' );
+			$( this.el ).off( 'mouseenter', '.creator-name' );
 
 			var model = new MiniPersonnelModel( {
 				'persId' : this.model.get( 'Creator' )
@@ -82,7 +80,7 @@ define( function ( require ) {
 			this.ui.creator.popover( {
 				'html'      : true,
 				'placement' : 'top',
-				'trigger'   : 'click',
+				'trigger'   : 'hover',
 				'content'   : function () {
 					return view.render().el;
 				}

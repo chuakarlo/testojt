@@ -8,6 +8,7 @@ define( function ( require ) {
 		var App        = require( 'App' );
 		var Session    = require( 'Session' );
 
+		require( 'common/controllers/BaseController' );
 		require( 'groups/controllers/listController' );
 		require( 'groups/controllers/editController' );
 		require( 'groups/controllers/wallController' );
@@ -15,9 +16,7 @@ define( function ( require ) {
 		require( 'groups/controllers/sideController' );
 		require( 'groups/controllers/resourcesController' );
 		require( 'groups/controllers/membersController' );
-
 		require( 'groups/views/Views' );
-		require( 'common/controllers/BaseController' );
 
 		// ## Groups App
 		App.module( 'Groups', function ( Groups ) {
@@ -90,24 +89,41 @@ define( function ( require ) {
 							App.content.show( this.layout );
 						}
 
-						if ( !this.headerController ) {
-							this.headerController = new Groups.Show.HeaderController( {
-								'layout' : this.layout,
-								'model'  : this.model
-							} );
-						}
-
-						if ( !this.sideController ) {
-							this.sideController = new Groups.Show.SideController( {
-								'layout' : this.layout,
-								'model'  : this.model
-							} );
-						}
+						// Show the header and side views
+						this.showHeaderAndSide( groupId );
 
 						def.resolve();
 					}, this ) );
 
 					return def.promise();
+				},
+
+				'showHeaderAndSide' : function ( groupId ) {
+
+					if ( !this.headerController ) {
+						this.headerController = new Groups.Show.HeaderController( {
+							'layout' : this.layout,
+							'model'  : this.model
+						} );
+					}
+
+					if ( !this.sideController ) {
+						this.sideController = new Groups.Show.SideController( {
+							'layout' : this.layout,
+							'model'  : this.model
+						} );
+					}
+
+					var controllers = [
+						this.headerController,
+						this.sideController
+					];
+
+					_.each( controllers, function ( ctrl ) {
+						if ( ctrl.lastGroupId !== groupId ) {
+							ctrl.getData( groupId );
+						}
+					} );
 				},
 
 				'showGroupWall' : function ( groupId ) {
@@ -124,17 +140,9 @@ define( function ( require ) {
 							} );
 						}
 
-						var controllers = [
-							this.headerController,
-							this.sideController,
-							this.wallController
-						];
-
-						_.each( controllers, function ( ctrl ) {
-							if ( ctrl.lastGroupId !== groupId ) {
-								ctrl.getData( groupId );
-							}
-						} );
+						if ( this.wallController.lastGroupId !== groupId ) {
+							this.wallController.getData( groupId );
+						}
 
 					}, this ) );
 
@@ -153,17 +161,9 @@ define( function ( require ) {
 							} );
 						}
 
-						var controllers = [
-							this.headerController,
-							this.sideController,
-							this.membersController
-						];
-
-						_.each( controllers, function ( ctrl ) {
-							if ( ctrl.lastGroupId !== groupId ) {
-								ctrl.getData( groupId );
-							}
-						} );
+						if ( this.membersController.lastGroupId !== groupId ) {
+							this.membersController.getData( groupId );
+						}
 
 					}, this ) );
 				},
@@ -181,17 +181,10 @@ define( function ( require ) {
 							} );
 						}
 
-						var controllers = [
-							this.headerController,
-							this.sideController,
-							this.infoController
-						];
+						if ( this.infoController.lastGroupId !== groupId ) {
+							this.membersController.getData( groupId );
+						}
 
-						_.each( controllers, function ( ctrl ) {
-							if ( ctrl.lastGroupId !== groupId ) {
-								ctrl.getData( groupId );
-							}
-						} );
 					}, this ) );
 				},
 
@@ -208,17 +201,9 @@ define( function ( require ) {
 							} );
 						}
 
-						var controllers = [
-							this.headerController,
-							this.sideController,
-							this.resourcesController
-						];
-
-						_.each( controllers, function ( ctrl ) {
-							if ( ctrl.lastGroupId !== groupId ) {
-								ctrl.getData( groupId );
-							}
-						} );
+						if ( this.resourcesController.lastGroupId !== groupId ) {
+							this.resourcesController.getData( groupId );
+						}
 
 					}, this ) );
 				},
@@ -244,15 +229,21 @@ define( function ( require ) {
 						this.wallController = null;
 					}
 
+					if ( this.resourcesController ) {
+						this.resourcesController.close();
+						this.resourcesController = null;
+					}
+
+					if ( this.infoController ) {
+						this.infoController.close();
+						this.infoController = null;
+					}
+
 					if ( this.membersController ) {
 						this.membersController.close();
 						this.membersController = null;
 					}
 
-					if ( this.resourcesController ) {
-						this.resourcesController.close();
-						this.resourcesController = null;
-					}
 				},
 
 				'listGroups' : function () {

@@ -19,17 +19,15 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'click @ui.member'      : 'showMiniPersonnel',
-			'mouseenter @ui.member' : 'showMiniPersonnel',
-			'mouseleave @ui.member' : 'hideMiniPersonnel'
+			'mouseenter @ui.member' : 'showMiniPersonnel'
 		},
 
 		'showMiniPersonnel' : function ( event ) {
-			// We disabled the event that just captured the click
+			// We disable the event that just captured the mousesent
 			// and let the popover library handle the click so we
 			// don't have to fetch the model or create the view every
 			// time.
-			$( this.el ).off( 'click', '.group-member' );
+			$( this.el ).off( 'mouseenter', '.group-member' );
 
 			var model = new MiniPersonnelModel( {
 				'persId' : this.model.get( 'PersonnelId' )
@@ -43,7 +41,7 @@ define( function ( require ) {
 			this.ui.member.popover( {
 				'html'      : true,
 				'placement' : 'top',
-				'trigger'   : 'click',
+				'trigger'   : 'hover',
 				'content'   : function () {
 					return view.render().el;
 				}

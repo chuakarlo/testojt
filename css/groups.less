@@ -127,6 +127,10 @@
 		float: left;
 		padding: 2px;
 
+		.popover {
+			max-width : none;
+		}
+
 		p {
 			float: left;
 			padding: 7px 6px;
@@ -204,12 +208,25 @@
 	}
 }
 
-.group-content-region {
+.groups-content-region {
+
+	// All of the popovers inside groups should not have
+	// the max width
+	.popover {
+		max-width : none;
+	}
+
+	/* Members Tab */
 	ul.memberAvatars {
 		li {
-			text-align: center;
-			min-height: 150px;
+			text-align : center;
+			min-height : 150px;
+
 		}
+	}
+
+	.show-more-members {
+		text-align : center;
 	}
 }
 
@@ -411,62 +428,12 @@
 	}
 }
 
-/* Groups Slick Carousel Override*/
-
-#groups-slick-carousel {
-
-	.slick:hover > button {
-		visibility: visible;
-	}
-
-	.slick {
-
-		.slick-list {
-			height : 390px;
-		}
-
-		.slick-track {
-			padding-left: 0px;
-		}
-
-		.slick-slide {
-			box-sizing : border-box;
-			padding    : 0px 10px;
-			width      : 283px !important;
-			min-height : 282px;
-		}
-
-		.slick-prev, .slick-next {
-			border      : 0 none;
-			cursor      : pointer;
-			height      : 50px;
-			position    : absolute;
-			text-indent : -9999px;
-			width       : 50px;
-			z-index     : 20;
-			display     : none;
-		}
-
-		.slick-prev {
-			background : url("./../img/left-arrow.png") no-repeat scroll center center rgba(0, 0, 0, 0.1);
-			left       : -10px;
-			visibility : hidden;
-		}
-
-		.slick-next {
-			background : url("./../img/left-arrow-right.png") no-repeat scroll center center rgba(0, 0, 0, 0.1);
-			right      : -10px;
-			visibility : hidden;
-		}
-	}
-}
-
 /************************************************************\
-						Groups Form 
+						Groups Form
 \************************************************************/
 
 .groups-form-content {
-	background : @cn-gray-light;	
+	background : @cn-gray-light;
 	padding-bottom : 10px;
 	padding-top : 10px;
 
@@ -525,12 +492,12 @@
 	}
 
 	.input-validation:valid {
-		border: 1px solid @cn-green!important;		
+		border: 1px solid @cn-green!important;
 	}
 
 	.input-validation:invalid {
-		border: 1px solid red!important;		
-	}	
+		border: 1px solid red!important;
+	}
 
 	.logo-upload-drop{
 		background : @cn-white;
@@ -554,7 +521,7 @@
 			margin-left : 44%;
 			margin-top : 24%;
 			font-size : 3.5em;
-		}		
+		}
 	}
 
 	.tooltip2 {
@@ -587,27 +554,27 @@
 	    left: 50%;
 	    position: absolute;
 	    z-index: 99;
-	}					
+	}
 
 	input[type="text"]:invalid ~ .group-name-validation::before {
 		color : red;
-		content: 'Group Name is a required field.';		
+		content: 'Group Name is a required field.';
 	}
 
 	textarea[type="text"]:invalid ~ .group-description-validation::before {
 		color : red;
-		content: 'Group Description is a required field.';		
-	}		
+		content: 'Group Description is a required field.';
+	}
 
 	input[type="text"]:valid ~ .group-name-validation::before {
 		content: 'This is a valid name. \2713';
-		color : @cn-green;		
-	}	
+		color : @cn-green;
+	}
 
 	textarea[type="text"]:valid ~ .group-description-validation::before {
 		content: 'This is a valid description. \2713';
-		color : @cn-green;		
-	}		
+		color : @cn-green;
+	}
 }
 
 

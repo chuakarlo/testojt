@@ -19,7 +19,7 @@ define( function ( require ) {
 
 			'getData' : function ( groupId ) {
 				this.layout.groupsContentRegion.show( new App.Common.LoadingView() );
-				$.when( this.model.getMembers() )
+				$.when( this.model.getMembers( 100 ) )
 					.done( this.showGroup );
 			},
 
