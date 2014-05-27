@@ -1,4 +1,4 @@
-define( function( require ) {
+define( function ( require ) {
 	'use strict';
 
 	var App                  = require( 'App' );
@@ -25,7 +25,7 @@ define( function( require ) {
 		'itemView'  : searchResultItemView,
 		'emptyView' : EmptyResultView,
 
-		'getItemView' : function( item ) {
+		'getItemView' : function ( item ) {
 
 			// Check which type of model needs to be displayed
 			// and return the proper view.
@@ -33,7 +33,7 @@ define( function( require ) {
 				return ColleagueItemView;
 			} else if (item instanceof App.Entities.CommunityModel) {
 				return CommunityItemView;
-			} else if (item instanceof App.Entities.GroupModel) {
+			} else if (item instanceof App.Entities.SearchGroupModel) {
 				return GroupItemView;
 			} else if (item instanceof App.Entities.VideoModel) {
 				return VideoItemView;
