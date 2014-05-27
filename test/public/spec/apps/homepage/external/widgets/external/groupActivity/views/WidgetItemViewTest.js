@@ -145,12 +145,15 @@ define( function ( require ) {
 		} );
 
 		it( 'should be an instance of ItemView', function () {
-			UserWidgetCompositeViewInstance = new UserWidgetCompositeView.itemView();
+			var Model     = Backbone.Model.extend();
+			var itemModel = new Model( modelData[ 0 ] );
+
+			UserWidgetCompositeViewInstance = new UserWidgetCompositeView.itemView( { 'model' : itemModel } );
 			expect( UserWidgetCompositeViewInstance ).to.be.an.instanceof( WidgetItemView );
 		} );
 
 		it( 'should limit the number of characters to 37 with elipses', function () {
-			var focusObjective = UserWidgetCompositeViewInstance.limitCharacters( modelData[0].LicenseName );
+			var focusObjective = UserWidgetCompositeViewInstance.templateHelpers().creatorName;
 			expect( focusObjective ).to.be.equal( 'Testfoo This is a very long name that...' );
 		} );
 
