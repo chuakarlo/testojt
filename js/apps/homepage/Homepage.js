@@ -11,6 +11,8 @@ define( function ( require ) {
 		// ## Homepage App
 		App.module( 'Homepage', function ( Homepage, App ) {
 
+			// load utils
+			require( './utils/utils' );
 			// load homepage
 			require( './controllers/homeController' );
 

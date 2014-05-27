@@ -6,8 +6,6 @@ define ( function (require ) {
 	var Session  = require( 'Session' );
 	var App      = require( 'App' );
 
-	var WidgetModel = require( 'apps/homepage/external/widgets/external/focusObjective/models/WidgetModel' );
-
 	function widgetRequest ( personnelId ) {
 		return {
 			'path'   : 'com.schoolimprovement.pd360.dao.RespondService',
@@ -18,10 +16,6 @@ define ( function (require ) {
 		};
 	}
 
-	var Collection = Backbone.Collection.extend( {
-		'model' : WidgetModel
-	} );
-
 	return Backbone.Collection.extend( {
 		'fetch' : function ( options ) {
 
@@ -29,7 +23,7 @@ define ( function (require ) {
 
 			App.when( fetchingModels ).done( function ( models ) {
 
-				options.success( new Collection( models[ 0 ] ) );
+				options.success( new Backbone.Collection( models[ 0 ] ) );
 
 			} ).fail( function ( error ) {
 

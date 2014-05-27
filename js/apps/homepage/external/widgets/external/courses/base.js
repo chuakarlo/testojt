@@ -7,8 +7,6 @@ define( function ( require ) {
 	var WidgetItemView  = require( 'apps/homepage/external/widgets/external/courses/views/WidgetItemView' );
 	var CollectionItems = require( 'apps/homepage/external/widgets/external/courses/collections/WidgetCollection' );
 
-	instance._id = 'widgets';
-
 	function doGetCollection ( callback, options ) {
 		var collection = new CollectionItems( options );
 		collection.fetch( {
@@ -26,10 +24,7 @@ define( function ( require ) {
 			return 'Courses';
 		},
 		'header'          : function () {
-			return 'Courses';
-		},
-		'footer'          : function () {
-			return 'See All Courses';
+			return this.WidgetName();
 		},
 		'Description'     : function () {
 			return 'See the courses you haven’t completed. Click on an unfinished course to pick up right where you left off.';
@@ -38,7 +33,7 @@ define( function ( require ) {
 			return 'http://i1032.photobucket.com/albums/a405/shinjiescorido/src_courses_zps2b594805.png';
 		},
 		'icon'            : function () {
-			return 'http://i1032.photobucket.com/albums/a405/shinjiescorido/src_courses_zps2b594805.png';
+			return this.imgSrc();
 		},
 		'em'              : 8.5,
 		'getExternalView' : WidgetItemView,
@@ -46,9 +41,6 @@ define( function ( require ) {
 			doGetCollection ( callback, options );
 		},
 		'_id'             : 'courses',
-		'_header'         : function () {
-			return 'Courses';
-		},
 		'_footer'         : function ( ) {
 			return 'See All Courses';
 		},

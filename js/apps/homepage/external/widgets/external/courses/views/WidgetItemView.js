@@ -1,46 +1,30 @@
 define( function ( require ) {
 	'use strict';
 
+	var App              = require( 'App' );
 	var Marionette       = require( 'marionette' );
 	var _                = require( 'underscore' );
 	var progressTemplate = require( 'text!apps/homepage/external/widgets/external/courses/templates/progressItemTemplate.html' );
-	var limitCharacters  = require( 'apps/homepage/utils/limitCharacters' );
+	var Utils            = App.Homepage.Utils;
 
-	function doOnshow ( view ) {
-		if ( view.model ) {
-			var completion = view.model.get( 'PERCENTCOMPLETE' );
-			var that       = view;
-			require( [ 'pc-progressCircle' ], function ( $ ) {
-				$(that.$el).find( '.courses' ).progressCircle( {
-					'nPercent'        : completion,
-					'circleSize'      : 25,
-					'thickness'       : 4,
-					'showPercentText' : false
-				} );
-			} );
-		}
+	function setTemplateHelpers ( model ) {
+		return {
+			'url'        : '#resources/learning/courses/' + model.get( 'COURSEID' ),
+			'content'    : Utils.limitCharacters( Utils.modelGet( model, 'COURSENAME' ), 37 ),
+			'completion' : Utils.modelGet( model, 'PERCENTCOMPLETE', '0')
+		};
 	}
 
 	return Marionette.ItemView.extend( {
-		'initialize'      : function ( ) {
-			//default template
-			this.template = _.template( progressTemplate );
-		},
 		'className'       : 'widget-item',
+		'template'        : _.template( progressTemplate ),
 		'templateHelpers' : function () {
-			return {
-				'url'        : '#resources/learning/courses/' + this.model.get( 'COURSEID' ),
-				'content'    : this.model ? this.limitCharacter( this.model.get( 'COURSENAME' ) ) : '',
-				'completion' : this.model ? this.model.get( 'PERCENTCOMPLETE' ) : ''
-			};
-		},
-		'limitCharacter'  : function ( text ) {
-			return limitCharacters( text, 37 );
+			return setTemplateHelpers ( this.model );
 		},
 		'onShow'          : function ( ) {
-			doOnshow( this );
+			if ( this.model ) {
+				Utils.progressCircle( this.$el, '.courses', this.model.get( 'PERCENTCOMPLETE' ) );
+			}
 		}
-
 	} );
-
 } );
