@@ -53,11 +53,13 @@ define( function ( require ) {
 			},
 
 			'duration' : function () {
-				return convertSecsToMins( this.SegmentLengthInSeconds );
+				return this.SegmentLengthInSeconds ? convertSecsToMins( this.SegmentLengthInSeconds ) : '';
 			},
 
 			'imageUrl' : function () {
-				return 'http://resources.pd360.com/PD360/media/thumb/' + this.ImageURL;
+				var imgURL = this.ImageURL ? 'http://resources.pd360.com/PD360/media/thumb/' + this.ImageURL : 'img/pd-360.jpg';
+
+				return imgURL;
 			}
 		},
 
@@ -86,7 +88,9 @@ define( function ( require ) {
 
 		'navigateToVideoPage' : function ( ev ) {
 			ev.preventDefault();
-			App.navigate( '#resources/videos/' + this.model.id , { trigger : true } );
+
+			var uuv = this.model.get( 'UUVideoId' ) ? '?uuv=true' : '';
+			App.navigate( '#resources/videos/' + this.model.id + uuv, { trigger : true } );
 		},
 
 		'showDetails' : function () {
