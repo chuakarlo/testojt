@@ -52,11 +52,11 @@ define( function ( require ) {
 					this.setCookie( eulaCookie, jqXHR.personnel.LicenseAccepted );
 
 					App.vent.trigger( 'session:deferredResources' );
+					App.request( 'session:initialize', jqXHR );
+
 					Vent.trigger( 'login:success' );
 					Vent.trigger( 'session:change' );
 					App.request( 'pd360:login', this.username, this.password );
-
-					App.request( 'session:initialize', jqXHR );
 
 					if ( done ) {
 						done( jqXHR, status, error );

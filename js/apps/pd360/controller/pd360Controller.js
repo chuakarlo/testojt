@@ -121,7 +121,7 @@ define( function ( require ) {
 						this.loginShared();
 					} else if ( username && !valid ) {
 						// user has cookie but no pd360 creds
-						Vent.trigger( 'login:show' );
+						App.navigate( 'logout', { 'trigger' : true } );
 					}
 
 				}.bind( this ), 0 );

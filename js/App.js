@@ -64,10 +64,12 @@ define( function ( require ) {
 
 				} else {
 
+					var hash = fragment;
+
 					// On login session:personnel doesn't exist immediately
 					// Wait for session to be initialized then redirect
-					Vent.on( 'session:initialized', function ( fragment ) {
-						App.navigate( fragment, { 'trigger' : true } );
+					Vent.on( 'session:initialized', function () {
+						App.navigate( hash, { 'trigger' : true, 'replace' : true } );
 					}.bind( this ) );
 
 					return;
