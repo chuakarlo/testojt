@@ -18,14 +18,44 @@ define( function ( require ) {
 
 			var models = [ [
 				{
-					'PersonnelId'       : 13778,
-					'PresentationOrder' : 1,
-					'WidgetId'          : 1
+					'PersonnelId'            : 13778,
+					'PresentationOrder'      : 1,
+					'WidgetId'               : 1,
+					'ContentId'              : 1,
+					'PERCENTCOMPLETE'        : 0,
+					'COURSEID'               : 10118,
+					'COURSECREATOR'          : 'Test Foo',
+					'COURSENAME'             : 'timeTest',
+					'EXPIREDATE'             : 'February, 28 2010 12:01:00',
+					'ContentName'            : 'Defining the Professional Learning Community',
+					'SegmentLengthInSeconds' : 692,
+					'Children'               : [ ],
+					'ImageURL'               : 'thumb_1204-2.jpg',
+					'TranscriptFileName'     : 'tr_1204-2.pdf',
+					'GuidebookFileName'      : 'gb_1204-2.pdf',
+					'ContentTypeId'          : 3,
+					'AudioFileName'          : 'au_1204-2.mp3',
+					'ContentDescription'     : ''
 				},
 				{
-					'PersonnelId'       : 13778,
-					'PresentationOrder' : 2,
-					'WidgetId'          : 2
+					'PersonnelId'            : 13778,
+					'PresentationOrder'      : 2,
+					'WidgetId'               : 2,
+					'ContentId'              : 1,
+					'PERCENTCOMPLETE'        : 0,
+					'COURSEID'               : 10118,
+					'COURSECREATOR'          : 'Test Foo',
+					'COURSENAME'             : 'timeTest',
+					'EXPIREDATE'             : 'February, 28 2010 12:01:00',
+					'ContentName'            : 'Defining the Professional Learning Community',
+					'SegmentLengthInSeconds' : 692,
+					'Children'               : [ ],
+					'ImageURL'               : 'thumb_1204-2.jpg',
+					'TranscriptFileName'     : 'tr_1204-2.pdf',
+					'GuidebookFileName'      : 'gb_1204-2.pdf',
+					'ContentTypeId'          : 3,
+					'AudioFileName'          : 'au_1204-2.mp3',
+					'ContentDescription'     : ''
 				}
 			] ];
 

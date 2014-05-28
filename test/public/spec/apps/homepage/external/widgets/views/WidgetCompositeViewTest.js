@@ -413,7 +413,6 @@ define( function ( require ) {
 			it( 'activateWidget : click .widget-icon-btn.inactive', function () {
 
 				widgetCompositeEvt.$el.find('.widget-icon-btn.inactive').first().trigger( 'click' );
-				console.log(widgetCompositeEvt.$el.find('.widget-icon-btn.inactive') );
 				activateWidgetSpy.called.should.equal( true );
 				activateWidgetSpy.callCount.should.be.at.least( 1 );
 			} );

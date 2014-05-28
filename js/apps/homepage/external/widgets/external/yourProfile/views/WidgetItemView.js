@@ -20,8 +20,8 @@ define( function ( require ) {
 	};
 
 	var statusDescription = {
-		true  : 'Your profile is almost complete! The more we know about you, the better the content.',
-		false : 'Your profile is complete!'
+		false : 'Your profile is almost complete! The more we know about you, the better the content.',
+		true  : 'Your profile is complete!'
 	};
 
 	function defaultImage ( e ) {
