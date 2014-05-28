@@ -3,9 +3,10 @@ define( function ( require ) {
 
 	require( 'moment-timezone' );
 	require( 'timezone' );
+	require( 'videoPlayer/config' );
 
 	var moment   = require( 'moment' );
-	var Backbone = require( 'filterable.collection' );
+	var Backbone = require( 'backbone' );
 
 	var App           = require( 'App' );
 	var QuestionModel = require( 'videoPlayer/models/QuestionModel' );

@@ -3,7 +3,7 @@ define( function ( require ) {
 
 	var sinon = window.sinon;
 
-	var QuestionItemView = require( 'videoPlayer/views/QuestionItemView' );
+	var QuestionItemView = require( 'videoPlayer/views/question/QuestionItemView' );
 	var QuestionModel = require( 'videoPlayer/models/QuestionModel' );
 
 	describe( 'QuestionsItemView', function () {

@@ -2,6 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	require( 'jquery.autogrow' );
+	require( 'videoPlayer/config' );
 
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );

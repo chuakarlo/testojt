@@ -53,7 +53,7 @@ define( function ( require ) {
 			},
 
 			'getCC' : function () {
-				var url    = 'http://resources.pd360.com/PD360/media/video/';
+				var url    = 'PD360/media/video/';
 				var folder = this.FileName.split( '.' )[ 0 ];
 				var file   = folder;
 				if ( this.ContentTypeId === 3 ) {
@@ -95,11 +95,10 @@ define( function ( require ) {
 					this.volume( 0.5 );
 				}
 				this.loadingSpinner.show();
-				this.controlBar.show();
 				this.controlBar.addChild( 'videoReplay' );
-
 				// Make sure custom control is hidden in mobile devices.
 				if ( self.isMobile() ) {
+					this.removeChild( 'loadingSpinner' );
 					this.controlBar.hide();
 				}
 
