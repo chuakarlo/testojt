@@ -40,12 +40,44 @@ define( function ( require ) {
 	// start history after initialization.
 	App.on( 'initialize:after', function () {
 		if ( Backbone.history ) {
+
+			// Add Catchall Handler
+			Backbone.history.handlers.push( { 'route' : /(.*)/, 'callback' : function catchAllRouteHandler ( fragment ) {
+
+				// Require login if they have not previously authenticated
+				if ( App.request( 'session:authenticated' ) === false ) {
+
+					Vent.trigger( 'login:show', fragment );
+					return;
+
+				}
+
+				// If they have authenticated, and tried to access an unavailable route redirect home.
+				if ( App.request( 'session:personnel' ) ) {
+
+					App.navigate( 'home', { 'trigger' : true } );
+
+					fragment = fragment || 'the page you requested';
+
+					App.errorHandler( { 'message' : 'Sorry, ' + fragment + ' is currently unavailable or does not exist.' } );
+					return;
+
+				} else {
+
+					// On login session:personnel doesn't exist immediately
+					// Wait for session to be initialized then redirect
+					Vent.on( 'session:initialized', function ( fragment ) {
+						App.navigate( fragment, { 'trigger' : true } );
+					}.bind( this ) );
+
+					return;
+
+				}
+
+			} } );
+
 			Backbone.history.start();
 
-			// If no fragment exists, load login
-			if ( this.getCurrentRoute() === '' ) {
-				Vent.trigger( 'login:show' );
-			}
 		}
 	} );
 
