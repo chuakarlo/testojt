@@ -98,7 +98,7 @@ define( function ( require ) {
 						window.location.origin = window.location.protocol + '//' + window.location.hostname + ( window.location.port ? ':' + window.location.port: '' );
 					}
 
-					var currentLocation = window.location.origin;
+					var currentLocation = window.location.origin + window.location.pathname;
 
 					// this is to reload the application
 					window.location.assign( currentLocation );
