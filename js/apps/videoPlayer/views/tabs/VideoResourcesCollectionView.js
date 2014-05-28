@@ -28,9 +28,8 @@ define( function ( require ) {
 				} );
 			} else {
 				this.$el.css( {
-					'height'        : 'auto',
-					'margin-left'   : 0,
-					'margin-bottom' : 0
+					'height' : 'auto',
+					'margin' : 0
 				} );
 			}
 		},
