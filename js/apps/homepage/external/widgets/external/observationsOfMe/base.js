@@ -45,7 +45,7 @@ define( function ( require ) {
 			return 'No observation items to show.';
 		},
 		'EmptyType'       : function () {
-			return 'fa-eye-slash';
+			return 'fa-eye-empty';
 		},
 		'_footer'         : function ( ) {
 			return 'See In Observations';
