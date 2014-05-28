@@ -1,4 +1,4 @@
-define ( function( require ) {
+define ( function ( require ) {
 	'use strict';
 
 	var nivoSetting = require( 'apps/homepage/external/billboard/configuration/nivoSettings');
@@ -35,13 +35,11 @@ define ( function( require ) {
 			( nivoSettings.pauseTime ).should.be.equal( desiredSettings.pauseTime );
 			( nivoSettings.effect ).should.be.equal( desiredSettings.effect );
 			( nivoSettings.pauseOnHover ).should.be.equal( desiredSettings.pauseOnHover );
-			( nivoSettings.animSpeed ).should.be.equal( desiredSettings.animSpeed );
 			nivoSettings.beforeChange();
 			nivoSettings.afterChange();
-			( nivoSettings.afterLoad() ).should.be.equal( true );
 		} );
 
-		after( function() {
+		after( function () {
 			$( '#nivoHolder' ).remove();
 		} );
 
