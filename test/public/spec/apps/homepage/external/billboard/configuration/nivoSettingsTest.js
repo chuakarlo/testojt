@@ -14,14 +14,17 @@ define ( function ( require ) {
 	describe( 'Billboard : Nivo Settings - Test ', function () {
 
 		var nivoSettings;
-		var desiredSettings = {
-			pauseTime    : 5000,
-			effect       : 'fade',
-			pauseOnHover : true,
-			animSpeed    : '1000'
-		};
+		var desiredSettings;
 
 		before( function ( done ) {
+
+			desiredSettings = {
+				pauseTime    : 5000,
+				effect       : 'fade',
+				pauseOnHover : true,
+				animSpeed    : '1000'
+			};
+
 			$( 'body' ).append( '<div id="nivoHolder">' + nivoContent + '</div>' );
 			nivoSettings = nivoSetting();
 			require( [ 'pc-nivo' ], function ( $ ) {

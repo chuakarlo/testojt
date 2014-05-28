@@ -127,7 +127,7 @@ require.config( {
 		},
 
 		'carouselSnap' : {
-			'deps' : [ 'jquery' ]
+			'deps' : [ 'jquery', 'pc-swipe' ]
 		},
 
 		'jquery' : {
@@ -185,7 +185,7 @@ require.config( {
 
 		'pc-nivo' : {
 			'exports' : '$',
-			'deps'    : [ 'jquery' ]
+			'deps'    : [ 'jquery', 'pc-swipe' ]
 		},
 
 		'pc-progressCircle' : {
