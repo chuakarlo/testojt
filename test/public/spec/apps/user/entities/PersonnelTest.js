@@ -39,7 +39,7 @@ define( function ( require ) {
 				var options = model.getReadOptions();
 
 				options.should.have.property( 'method' );
-				options.method.should.equal( 'getById' );
+				options.method.should.equal( 'getCoverFlow' );
 
 				options.should.have.property( 'args' );
 				options.args.should.have.property( 'id' );

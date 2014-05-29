@@ -21,7 +21,7 @@ define( function ( require ) {
 	function widgetRequestSecondary ( personnelId ) {
 		return {
 			'path'   : 'com.schoolimprovement.pd360.dao.core.ClientPersonnelGateway',
-			'method' : 'getById',
+			'method' : 'getCoverFlow',
 			'args'   : {
 				'id' : personnelId
 			}

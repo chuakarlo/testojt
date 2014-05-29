@@ -17,7 +17,7 @@ define( function ( require ) {
 
 			'getReadOptions' : function () {
 				return {
-					'method' : 'getById',
+					'method' : 'getCoverFlow',
 
 					'args' : {
 						'id' : Session.personnelId()
