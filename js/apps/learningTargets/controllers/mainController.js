@@ -13,6 +13,7 @@ define( function ( require ) {
 	var ObservationsView      = require( 'apps/learningTargets/views/observations/ObservationsView' );
 	var ObjectivesFolderView  = require( 'apps/learningTargets/views/objectives/focusfolders/FocusFolderView' );
 	var ObjectivesContentView = require( 'apps/learningTargets/views/objectives/contents/ContentView' );
+	var $                     = require( 'jquery' );
 
 	App.module( 'LearningTargets.Main', function ( Main ) {
 		var mainView;
@@ -75,6 +76,7 @@ define( function ( require ) {
 				// navigate to legacy page
 				App.when( pd360Loaded ).done( function () {
 					App.content.show( new ProcessesView() );
+					$( '.content-wrapper' ).html( '' );
 					App.request( 'pd360:navigate', page, sub, opts );
 				} );
 			},
