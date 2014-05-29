@@ -31,12 +31,14 @@ define( function ( require ) {
 
 				// SSO returns array, Login returns object
 				if ( _.isArray(jqXHR) ) {
-					jqXHR = jqXHR[ 0 ];
+					jqXHR = { 'personnel' : jqXHR[ 0 ] };
+					this.password = jqXHR.personnel.Password;
+					this.username = jqXHR.personnel.LoginName;
 				}
 
 				// Redirect to login if SSO error occurred
-				if ( jqXHR.ErrorId ) {
-					App.request( 'login:error', jqXHR );
+				if ( jqXHR.personnel.ErrorId ) {
+					App.request( 'login:error', jqXHR.personnel );
 					return;
 				}
 
@@ -51,12 +53,22 @@ define( function ( require ) {
 					this.setCookie( personnelCookie, jqXHR.personnel.PersonnelId );
 					this.setCookie( eulaCookie, jqXHR.personnel.LicenseAccepted );
 
-					App.vent.trigger( 'session:deferredResources' );
-					App.request( 'session:initialize', jqXHR );
+					// After the session is initialized trigger the other events
+					Vent.on( 'session:initialized', function ssoSessionInitialized () {
+						Vent.trigger( 'login:success' );
+						Vent.trigger( 'session:change' );
+						App.request( 'pd360:login', this.username, this.password );
+					}.bind( this ) );
 
-					Vent.trigger( 'login:success' );
-					Vent.trigger( 'session:change' );
-					App.request( 'pd360:login', this.username, this.password );
+					// Standard Login
+					if ( jqXHR.config ) {
+						App.vent.trigger( 'session:deferredResources' );
+						App.request( 'session:initialize', jqXHR );
+
+					// SSO Login
+					} else {
+						App.request( 'session:refresh' );
+					}
 
 					if ( done ) {
 						done( jqXHR, status, error );
@@ -92,7 +104,6 @@ define( function ( require ) {
 			options.returnformat = 'json';
 
 			// set defaults
-			this.username  = options.loginName;
 			this.ssoParams = $.param( options );
 
 			// update url for SSO
