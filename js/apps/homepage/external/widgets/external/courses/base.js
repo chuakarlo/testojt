@@ -45,7 +45,7 @@ define( function ( require ) {
 			return 'See All Courses';
 		},
 		'EmptyMessage'    : function () {
-			return 'No available courses to show.';
+			return '';
 		},
 		'EmptyType'       : function () {
 			return 'fa-list-ol';

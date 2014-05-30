@@ -16,6 +16,7 @@ define( function ( require ) {
 		var UserWidgetCompositeView;
 		var WidgetCollectionStub;
 		var modelData;
+		var navigateStub;
 
 		before( function () {
 			modelData = [ {
@@ -76,6 +77,7 @@ define( function ( require ) {
 			} ];
 
 			sinon.stub( App, 'request' ).returns( true );
+			navigateStub = sinon.stub( App, 'navigate' );
 			var dfd = new $.Deferred();
 			dfd.resolve( modelData );
 
@@ -92,6 +94,7 @@ define( function ( require ) {
 		after( function () {
 			Remoting.fetch.restore();
 			App.request.restore();
+			App.navigate.restore();
 		} );
 
 		it( 'should be an instance of ItemView', function () {
@@ -100,11 +103,17 @@ define( function ( require ) {
 
 			UserWidgetCompositeViewInstance = new UserWidgetCompositeView.itemView( { 'model' : itemModel } );
 			expect( UserWidgetCompositeViewInstance ).to.be.an.instanceof( WidgetItemView );
+			UserWidgetCompositeViewInstance.render();
 		} );
 
 		it( 'should limit the number of characters to 37 with elipses', function () {
 			var focusObjective = UserWidgetCompositeViewInstance.templateHelpers().content;
 			expect( focusObjective ).to.be.equal( 'Defining the Professional Learning Co...' );
+		} );
+
+		it ( 'should be able to call redirect', function () {
+			UserWidgetCompositeViewInstance.$el.find( 'a.focusObjectiveLink' ).first().trigger( 'click' );
+			navigateStub.should.have.been.calledWithExactly( 'resources/videos/671', { 'trigger' : true } );
 		} );
 
 	});

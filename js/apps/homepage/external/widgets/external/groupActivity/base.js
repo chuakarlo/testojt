@@ -42,7 +42,7 @@ define( function ( require ) {
 		},
 		'_id'             : 'groupActivity',
 		'EmptyMessage'    : function () {
-			return 'No recent group activities.';
+			return '';
 		},
 		'EmptyType'       : function () {
 			return 'fa-group';

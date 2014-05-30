@@ -16,6 +16,7 @@ define( function ( require ) {
 		var UserWidgetCompositeView;
 		var WidgetCollectionStub;
 		var modelData;
+		var navigateStub;
 
 		before( function () {
 			modelData = [ {
@@ -31,6 +32,7 @@ define( function ( require ) {
 			} ];
 
 			sinon.stub( App, 'request' ).returns( true );
+			navigateStub = sinon.stub( App, 'navigate' );
 			var dfd = new $.Deferred();
 			dfd.resolve( modelData );
 
@@ -47,6 +49,7 @@ define( function ( require ) {
 		after( function () {
 			Remoting.fetch.restore();
 			App.request.restore();
+			App.navigate.restore();
 		} );
 
 		it( 'should be an instance of ItemView', function () {
@@ -66,6 +69,12 @@ define( function ( require ) {
 			var diff = moment( modelData[ 0 ].OBSERVATIONDATE ).fromNow();
 			var observationsOfMeDate = UserWidgetCompositeViewInstance.templateHelpers().observationDate;
 			observationsOfMeDate.should.be.equal( diff );
+		} );
+
+		it ( 'should be able to call redirect', function () {
+			UserWidgetCompositeViewInstance.render();
+			UserWidgetCompositeViewInstance.$el.find( 'a.observationLink' ).first().trigger( 'click' );
+			navigateStub.should.have.been.calledWithExactly( 'resources/learning/observations/664979', { 'trigger' : true } );
 		} );
 
 	});

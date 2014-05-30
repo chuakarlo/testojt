@@ -16,6 +16,7 @@ define( function ( require ) {
 		var UserWidgetCompositeView;
 		var WidgetCollectionStub;
 		var modelData;
+		var navigateStub;
 
 		before( function () {
 			modelData = [ {
@@ -33,6 +34,7 @@ define( function ( require ) {
 				'LastName'              : 'Towel'
 			} ];
 			sinon.stub( App, 'request' ).returns( true );
+			navigateStub = sinon.stub( App, 'navigate' );
 			var dfd = new $.Deferred();
 			dfd.resolve( modelData );
 
@@ -50,6 +52,7 @@ define( function ( require ) {
 		after( function () {
 			Remoting.fetch.restore();
 			App.request.restore();
+			App.navigate.restore();
 		});
 
 		it( 'should be an instance of ItemView', function () {
@@ -65,6 +68,21 @@ define( function ( require ) {
 			var templatehelper = UserWidgetCompositeViewInstance.templateHelpers();
 			templatehelper.percentage.should.be.equal( 100 );
 			templatehelper.description.should.be.equal( 'Your profile is complete!' );
+		} );
+
+		it ( 'should be able to call redirect to profile', function () {
+			UserWidgetCompositeViewInstance.$el.find( 'a#profile-icon' ).first().trigger( 'click' );
+			navigateStub.should.have.been.calledWithExactly( 'settings/profile', { 'trigger' : true } );
+		} );
+
+		it ( 'should be able to call redirect to licenses', function () {
+			UserWidgetCompositeViewInstance.$el.find( 'a#license-icon' ).first().trigger( 'click' );
+			navigateStub.should.have.been.calledWithExactly( 'settings/licenses', { 'trigger' : true } );
+		} );
+
+		it ( 'should be able to call redirect to reports', function () {
+			UserWidgetCompositeViewInstance.$el.find( 'a#setting-icon' ).first().trigger( 'click' );
+			navigateStub.should.have.been.calledWithExactly( 'settings/personal-reports', { 'trigger' : true } );
 		} );
 
 	});

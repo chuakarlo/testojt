@@ -42,7 +42,7 @@ define( function ( require ) {
 		},
 		'_id'             : 'observationsOfMe',
 		'EmptyMessage'    : function () {
-			return 'No observation items to show.';
+			return '';
 		},
 		'EmptyType'       : function () {
 			return 'fa-eye-empty';

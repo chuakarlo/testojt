@@ -16,6 +16,7 @@ define( function ( require ) {
 		var UserWidgetCompositeView;
 		var WidgetCollectionStub;
 		var modelData;
+		var navigateStub;
 
 		before( function () {
 			modelData = [ {
@@ -126,6 +127,7 @@ define( function ( require ) {
 			} ];
 
 			sinon.stub( App, 'request' ).returns( true );
+			navigateStub = sinon.stub( App, 'navigate' );
 			var dfd = new $.Deferred();
 			dfd.resolve( modelData );
 
@@ -142,6 +144,7 @@ define( function ( require ) {
 		after( function () {
 			Remoting.fetch.restore();
 			App.request.restore();
+			App.navigate.restore();
 		} );
 
 		it( 'should be an instance of ItemView', function () {
@@ -155,6 +158,12 @@ define( function ( require ) {
 		it( 'should limit the number of characters to 37 with elipses', function () {
 			var focusObjective = UserWidgetCompositeViewInstance.templateHelpers().creatorName;
 			expect( focusObjective ).to.be.equal( 'Testfoo This is a very long name that...' );
+		} );
+
+		it ( 'should be able to call redirect', function () {
+			UserWidgetCompositeViewInstance.render();
+			UserWidgetCompositeViewInstance.$el.find( 'a.groupActivityLink' ).first().trigger( 'click' );
+			navigateStub.should.have.been.calledWithExactly( 'groups/4883', { 'trigger' : true } );
 		} );
 
 	});

@@ -16,6 +16,7 @@ define( function ( require ) {
 		var UserWidgetCompositeView;
 		var WidgetCollectionStub;
 		var modelData;
+		var navigateStub;
 
 		before( function () {
 
@@ -106,6 +107,7 @@ define( function ( require ) {
 			} ];
 
 			sinon.stub( App, 'request' ).returns( true );
+			navigateStub = sinon.stub( App, 'navigate' );
 			var dfd = new $.Deferred();
 			dfd.resolve( modelData );
 
@@ -122,6 +124,7 @@ define( function ( require ) {
 		after( function () {
 			Remoting.fetch.restore();
 			App.request.restore();
+			App.navigate.restore();
 		} );
 
 		it( 'should be an instance of ItemView', function () {
@@ -137,6 +140,11 @@ define( function ( require ) {
 
 			var courseName = UserWidgetCompositeViewInstance.templateHelpers().content;
 			expect( courseName ).to.be.equal( 'CSvSC1 Talk About Teaching! with Char...' );
+		} );
+
+		it ( 'should be able to call redirect to learning courses', function () {
+			UserWidgetCompositeViewInstance.$el.find( 'a.courseLink' ).first().trigger( 'click' );
+			navigateStub.should.have.been.calledWithExactly( 'resources/learning/courses/17868', { 'trigger' : true } );
 		} );
 
 	});

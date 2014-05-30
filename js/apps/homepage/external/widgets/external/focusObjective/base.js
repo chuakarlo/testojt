@@ -44,7 +44,7 @@ define( function ( require ) {
 		'_mainUrl'        : '#resources/learning/processes',
 		'_id'             : 'focusObjective',
 		'EmptyMessage'    : function () {
-			return 'No available videos to show.';
+			return '';
 		},
 		'EmptyType'       : function () {
 			return 'fa-video-camera';
