@@ -9,8 +9,14 @@ define( function ( require ) {
 
 	var className    = 'widget-item';
 	var templateBind = _.template( template );
+	var widgetCompositeController = require('apps/homepage/external/widgets/controllers/widgetCompositeController');
+
+	var widgetDirectory = 'resources/learning/observations/';
 
 	return Marionette.ItemView.extend( {
+		'events'          : {
+			'click a.observationLink' : 'redirect'
+		},
 		'template'        : templateBind,
 		'className'       : function () {
 			return className;
@@ -20,6 +26,10 @@ define( function ( require ) {
 				'observationName' : App.Homepage.Utils.limitCharacters( this.model.get( 'OBSERVATIONNAME' ), 26 ),
 				'observationDate' : App.Homepage.Utils.timeDiff( this.model, 'OBSERVATIONDATE' )
 			};
+		},
+		'redirect'        : function ( e ) {
+			widgetCompositeController.doRedirect( e, widgetDirectory );
+			return false;
 		}
 	} );
 } );

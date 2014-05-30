@@ -1,14 +1,16 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette           = require( 'marionette' );
-	var Backbone             = require( 'backbone' );
-	var _                    = require( 'underscore' );
-	var template             = require( 'text!apps/homepage/external/widgets/templates/userWidgetCompositeView.html' );
-	var ItemView             = require( 'apps/homepage/external/widgets/views/EmptyWidgetView' );
-	var footerTemplate       = require( 'text!apps/homepage/external/widgets/templates/widgetFooterTemplate.html' );
-	var widgetLookup         = require( 'apps/homepage/external/widgets/manifest' );
-	var WidgetItemCollection = require( 'apps/homepage/external/widgets/collections/WidgetItemCollection' );
+	var Marionette                = require( 'marionette' );
+	var Backbone                  = require( 'backbone' );
+	var _                         = require( 'underscore' );
+	var template                  = require( 'text!apps/homepage/external/widgets/templates/userWidgetCompositeView.html' );
+	var ItemView                  = require( 'apps/homepage/external/widgets/views/EmptyWidgetView' );
+	var footerTemplate            = require( 'text!apps/homepage/external/widgets/templates/widgetFooterTemplate.html' );
+	var widgetLookup              = require( 'apps/homepage/external/widgets/manifest' );
+	var WidgetItemCollection      = require( 'apps/homepage/external/widgets/collections/WidgetItemCollection' );
+	var widgetCompositeController = require('apps/homepage/external/widgets/controllers/widgetCompositeController');
+
 	var App                  = require('App');
 
 	function returnCollection ( view, collection, widgets ) {
@@ -37,6 +39,11 @@ define( function ( require ) {
 		} );
 
 		view.$el.find( 'div.footer' ).append( footer );
+
+		view.$el.find( 'a.footerLink' ).click( function ( e ) {
+			widgetCompositeController.doRedirect( e );
+			return false;
+		});
 
 		if ( view._isRendered === true ) {
 			view.collection.set( collection.models );

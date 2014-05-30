@@ -6,7 +6,12 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var template   = require( 'text!apps/homepage/external/widgets/external/yourProfile/templates/widgetItemView.html' );
 	var $          = require( 'jquery' );
+
 	var getConfig  = require( 'common/helpers/getConfig' );
+
+	var widgetCompositeController = require('apps/homepage/external/widgets/controllers/widgetCompositeController');
+
+	var widgetDirectory = 'settings/';
 
 	var forcedCss = {
 		'width'  : '1em',
@@ -52,6 +57,11 @@ define( function ( require ) {
 	}
 
 	return Marionette.ItemView.extend( {
+		'events'          : {
+			'click a#profile-icon' : 'redirect',
+			'click a#setting-icon' : 'redirect',
+			'click a#license-icon' : 'redirect'
+		},
 		'template'        : _.template( template ),
 		'className'       : 'col-md-12 no-padding user-settings',
 		'templateHelpers' : function ( ) {
@@ -73,6 +83,10 @@ define( function ( require ) {
 				renderCircle( element );
 				renderAvatar( element.find( '#avatarSrc' ) );
 			}
+		},
+		'redirect'        : function ( e ) {
+			widgetCompositeController.doRedirect( e, widgetDirectory );
+			return false;
 		}
 	} );
 } );

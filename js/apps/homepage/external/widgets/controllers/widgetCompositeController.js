@@ -193,6 +193,13 @@ define( function ( require ) {
 			var selectedBtn = currentBtn.closest( 'li[ class="selected" ]' );
 			selectedBtn.removeClass( 'selected' );
 			currentBtn.addClass( 'selected' );
+		},
+
+		'doRedirect' : function ( e, widgetDirectory ) {
+			widgetDirectory = widgetDirectory || '';
+			App.navigate( widgetDirectory + $( e.currentTarget ).attr( 'data-url' ), {
+				'trigger' : true
+			} );
 		}
 	};
 

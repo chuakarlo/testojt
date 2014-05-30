@@ -5,6 +5,9 @@ define( function ( require ) {
 	var Marionette       = require( 'marionette' );
 	var _                = require( 'underscore' );
 	var progressTemplate = require( 'text!apps/homepage/external/widgets/external/courses/templates/progressItemTemplate.html' );
+	var widgetCompositeController = require('apps/homepage/external/widgets/controllers/widgetCompositeController');
+
+	var widgetDirectory = 'resources/learning/courses/';
 
 	function setTemplateHelpers ( model ) {
 		return {
@@ -20,6 +23,9 @@ define( function ( require ) {
 	}
 
 	return Marionette.ItemView.extend( {
+		'events'          : {
+			'click a.courseLink' : 'redirect'
+		},
 		'className'       : 'widget-item',
 		'template'        : _.template( progressTemplate ),
 		'templateHelpers' : function () {
@@ -27,6 +33,10 @@ define( function ( require ) {
 		},
 		'onShow'          : function ( ) {
 			doOnShow( this, this.model );
+		},
+		'redirect'        : function ( e ) {
+			widgetCompositeController.doRedirect( e, widgetDirectory );
+			return false;
 		}
 	} );
 } );
