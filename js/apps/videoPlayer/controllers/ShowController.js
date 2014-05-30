@@ -71,7 +71,10 @@ define( function ( require ) {
 					}
 
 					// get all queue contents ids
-					var queueContentsIds = queueContents.pluck( 'ContentId' );
+					var queueContentsIds = [ ];
+					_.each( queueContents.models, function ( model ) {
+						queueContentsIds.push( model.id );
+					} );
 
 					// set content queued attribute
 					videoModel.setQueue( queueContentsIds );

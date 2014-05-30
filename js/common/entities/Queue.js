@@ -10,7 +10,22 @@ define( function ( require ) {
 
 		Entities.QueueContent = Backbone.CFModel.extend( {
 
-			'idAttribute' : 'ContentId'
+			'initialize' : function () {
+				var modelId;
+				var videoTypeId;
+
+				if ( !_.isUndefined( this.get( 'ContentId' ) ) ) {
+					modelId     = this.get( 'ContentId' );
+					videoTypeId = 1;
+				} else {
+					modelId     = this.get( 'UUVideoId' );
+					videoTypeId = 2;
+				}
+
+				// set model id and VideoTypeId
+				this.id = modelId;
+				this.set( 'VideoTypeId', videoTypeId );
+			}
 
 		} );
 
