@@ -170,10 +170,12 @@ define( function ( require ) {
 			App.navigate( 'login', { 'trigger' : true } );
 		} );
 
-		Vent.on( 'login:success', function () {
+		Vent.on( 'login:success', function ( forceRoute ) {
 			// if there was a requested route before login
-			if ( requestedRoute ) {
-				App.navigate( requestedRoute, { 'trigger' : true } );
+			forceRoute = forceRoute || requestedRoute;
+
+			if ( forceRoute ) {
+				App.navigate( forceRoute, { 'trigger' : true } );
 				requestedRoute = null;
 			} else {
 				App.navigate( 'home', { 'trigger' : true } );

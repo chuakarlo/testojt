@@ -1,11 +1,12 @@
 define( function ( require ) {
 	'use strict';
 
-	var $        = require( 'jquery' );
-	var _        = require( 'underscore' );
-	var Backbone = require( 'backbone' );
-	var Vent     = require( 'Vent' );
-	var App      = require( 'App' );
+	var $         = require( 'jquery' );
+	var _         = require( 'underscore' );
+	var Backbone  = require( 'backbone' );
+	var Vent      = require( 'Vent' );
+	var App       = require( 'App' );
+	var ssoHelper = require( 'user/SsoHelper' );
 
 	require( 'jquery-cookie' );
 	require( 'user/SessionHelper' );
@@ -53,6 +54,7 @@ define( function ( require ) {
 					this.setCookie( personnelCookie, jqXHR.personnel.PersonnelId );
 					this.setCookie( eulaCookie, jqXHR.personnel.LicenseAccepted );
 
+					this.requestedRoute = null;
 					// After the session is initialized trigger the other events
 					Vent.on( 'session:initialized', function ssoSessionInitialized () {
 						Vent.trigger( 'login:success' );
@@ -67,7 +69,11 @@ define( function ( require ) {
 
 					// SSO Login
 					} else {
-						App.request( 'session:refresh' );
+						// show a loading view while fetching data
+						App.content.show( new App.Common.LoadingView() );
+
+						this.requestedRoute = options.forceRoute || null;
+						App.request( 'session:refresh', this.requestedRoute );
 					}
 
 					if ( done ) {
@@ -100,18 +106,30 @@ define( function ( require ) {
 		},
 
 		'sso' : function ( options ) {
-			// force json return
-			options.returnformat = 'json';
 
-			// set defaults
-			this.ssoParams = $.param( options );
+			// Determine requested route if one exists
+			var forceRoute = this.linkFromParams( options );
 
-			// update url for SSO
-			this.url = function () {
-				return '/com/schoolimprovement/pd360/dao/SessionService.cfc?method=authenticateSingleSignOnUser&' + this.ssoParams;
-			};
+			// Login with SSO credentials and redirect
+			if ( this.isSSO( options ) ) {
+				// force json return
+				options.returnformat = 'json';
 
-			this.fetch( { } );
+				// set defaults
+				this.ssoParams = $.param( options );
+
+				// update url for SSO
+				this.url = function () {
+					return '/com/schoolimprovement/pd360/dao/SessionService.cfc?method=authenticateSingleSignOnUser&' + this.ssoParams;
+				};
+
+				this.fetch( { 'forceRoute' : forceRoute } );
+
+			// If not SSO login just navigate to requested route
+			} else {
+				App.navigate( forceRoute, { 'trigger' : true } );
+			}
+
 		},
 
 		// extra logout steps
@@ -169,7 +187,11 @@ define( function ( require ) {
 		'removeCookie' : function ( name, options ) {
 			options = options || cookieOptions;
 			$.removeCookie( name, options );
-		}
+		},
+
+		'isSSO' : ssoHelper.isSSO,
+
+		'linkFromParams' : ssoHelper.linkFromParams
 
 	} );
 

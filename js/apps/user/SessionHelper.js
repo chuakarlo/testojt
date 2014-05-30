@@ -30,7 +30,7 @@ define( function ( require ) {
 
 		};
 
-		var refreshSession = function () {
+		var refreshSession = function ( route ) {
 
 			var cfToken     = $.cookie( 'CFTOKEN' );
 			var personnelId = $.cookie( Session.cookies.personnel );
@@ -45,7 +45,14 @@ define( function ( require ) {
 
 				App.vent.trigger( 'session:deferredResources' );
 
-				Backbone.history.loadUrl( App.getCurrentRoute() );
+				route = route || App.getCurrentRoute();
+
+				// reload route if page was refreshed
+				Backbone.history.loadUrl( route );
+
+				if ( route ) {
+					window.location.hash = route;
+				}
 
 			} )
 
@@ -60,8 +67,8 @@ define( function ( require ) {
 				}
 			},
 
-			'refreshSession' : function () {
-				refreshSession();
+			'refreshSession' : function ( route ) {
+				refreshSession( route );
 			},
 
 			'getObject' : function ( object, key ) {
@@ -108,8 +115,8 @@ define( function ( require ) {
 			return API.initializeSession( loginObject );
 		} );
 
-		App.reqres.setHandler( 'session:refresh', function () {
-			return API.refreshSession();
+		App.reqres.setHandler( 'session:refresh', function ( route ) {
+			return API.refreshSession( route );
 		} );
 
 		//--------------------------
