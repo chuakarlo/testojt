@@ -91,7 +91,21 @@
 			}
 		}
 	}
-
+li#processOfMe{
+	div.widget-item{
+		border-left : 2px solid @pc-white;
+			span.duedate{
+				font-size   : 10px;
+			}
+	}
+	div.widget-item:hover{
+		span.duedate{
+			color: @pc-red;
+		}
+			border-left:2px solid @pc-red;
+			background-color: @pc-gray-lightest;
+	}
+}
 	div.widget-item {
 		.bg-color-trans
 		&:hover{
