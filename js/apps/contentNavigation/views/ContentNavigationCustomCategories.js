@@ -9,12 +9,15 @@ define( function ( require ) {
 
 	return Marionette.CompositeView.extend( {
 
-		'template'  : _.template( template ),
-		'itemView'  : CategoryItemView,
-		'tagName'   : 'ul',
-		'className' : 'cn-content-filter nested-list',
-		'onShow'    : function () {
+		'template' : _.template( template ),
 
+		'itemView' : CategoryItemView,
+
+		'tagName' : 'ul',
+
+		'className' : 'cn-content-filter nested-list',
+
+		'onShow' : function () {
 			$( this.$el ).find( 'li:nth-child( 2 )' ).addClass( 'selected' );
 		}
 

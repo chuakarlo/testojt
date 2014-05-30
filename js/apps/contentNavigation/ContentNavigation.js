@@ -89,6 +89,8 @@ define( function ( require ) {
 					$( window ).off( 'scroll.smack' );
 					this.activeLibrary.close();
 					this.activeLibrary = null;
+					this.layout.close();
+					this.layout = null;
 				}
 
 			} );

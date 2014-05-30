@@ -8,11 +8,15 @@ define( function ( require ) {
 
 	return Marionette.CompositeView.extend( {
 
-		'template'  : _.template( template ),
-		'itemView'  : CategoryItemView,
-		'tagName'   : 'ul',
+		'template' : _.template( template ),
+
+		'itemView' : CategoryItemView,
+
+		'tagName' : 'ul',
+
 		'className' : 'cn-content-filter',
-		'onShow'    : function () {
+
+		'onShow' : function () {
 			$( this.$el ).find( 'li:nth-child( 2 )' ).addClass( 'selected' );
 		}
 

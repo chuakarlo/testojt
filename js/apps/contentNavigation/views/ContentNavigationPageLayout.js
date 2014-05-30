@@ -1,11 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
+	var Vent       = require( 'Vent' );
 	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
-
-	var template = require( 'text!../templates/contentNavigationLayout.html' );
+	var template   = require( 'text!../templates/contentNavigationLayout.html' );
 
 	return Marionette.Layout.extend( {
 
@@ -24,9 +24,10 @@ define( function ( require ) {
 		},
 
 		'ui' : {
-			'sidebarShow' : '.cn-sidebar-show',
-			'sidebarHide' : 'span[id=cn-sidebar-hide]',
-			'sidebar'     : '.cn-sidebar'
+			'sidebarShow'    : '.cn-sidebar-show',
+			'sidebarHide'    : 'span[id=cn-sidebar-hide]',
+			'sidebar'        : '.cn-sidebar',
+			'sidebarWrapper' : 'div.cn-sidebar-wrapper'
 		},
 
 		'events' : {
@@ -38,7 +39,6 @@ define( function ( require ) {
 			ev.preventDefault();
 			$( 'body' ).addClass( 'disable-scroll' );
 			this.ui.sidebar.addClass( 'sidebar-open' ).removeClass( 'hidden-xs' );
-
 		},
 
 		'sidebarHide' : function ( ev ) {
@@ -48,36 +48,77 @@ define( function ( require ) {
 		},
 
 		'onShow' : function ( ) {
+			var delay = null;
+			var timer = null;
 
-			this.ui.sidebar.perfectScrollbar( { suppressScrollX : true } );
-			setTimeout( function () {
+			this.updateSidebarScroll();
+
+			delay = setTimeout( function () {
 				this.reloadSidebar();
-			}.bind( this ) );
-			$( window ).on( 'resize' ,function ( ) {
-				this.reloadSidebar();
+			}.bind( this ) , 500 );
+
+			$( window ).on( 'resize scroll' ,function ( ) {
+				clearTimeout( timer );
+				timer = setTimeout( function () {
+					this.reloadSidebar();
+					this.ui.sidebar.perfectScrollbar( 'update' );
+				}.bind( this ), 0 );
 			}.bind( this ) );
 
+			this.listenTo( Vent, 'contentNavigation:updateScrollbar', function () {
+				this.updateSidebarScroll();
+			}.bind( this ) );
+
+			this.listenTo( Vent, 'contentNavigation:resetBodyScroll', function () {
+				this.resetBodyScroll();
+			}.bind( this ) );
 		},
 
 		'onClose' : function () {
 			this.ui.sidebar.perfectScrollbar( 'destroy' );
+			$( window ).off( 'resize scroll');
+			this.stopListening();
 		},
 
 		'reloadSidebar' : function () {
 			this.setSidebarHeight();
-			this.ui.sidebar.perfectScrollbar( 'update' );
+
 			if ( $( window ).width() > 767 ) {
-				this.ui.sidebar.affix( { offset : { top : 170, bottom : 90 } } );
+				this.ui.sidebar.affix( { offset : { top : 170, bottom : 0 } } );
 			}
 		},
 
 		'setSidebarHeight' : function () {
 			if ( $( window ).width() > 767 ) {
-				this.ui.sidebar.css( 'height', $( window ).height() - 90 );
+				if ( $( window ).scrollTop() > 0 ) {
+					this.ui.sidebar.css( 'height', $( window ).height() );
+				} else {
+					this.ui.sidebar.css( 'height', $( window ).height() - 200 );
+				}
 			} else {
 				this.ui.sidebar.css( 'height', $( window ).height() );
 			}
 
+		},
+
+		'updateSidebarScroll' : function () {
+			if ( this.ui.sidebarWrapper.height() < this.getSidebarHeight() ) {
+				this.ui.sidebar.perfectScrollbar( 'destroy' );
+			} else {
+				this.ui.sidebar.perfectScrollbar( { suppressScrollX : true } );
+			}
+		},
+
+		'resetBodyScroll' : function () {
+			$( window ).scrollTop( 0 );
+
+			if ( this.ui.sidebar.hasClass( 'affix' ) ) {
+				this.ui.sidebar.removeClass( 'affix' ).addClass( 'affix-top' );
+			}
+
+			if ( this.ui.sidebar.hasClass( 'affix-bottom' ) ) {
+				this.ui.sidebar.removeClass( 'affix-bottom' ).addClass( 'affix-top' );
+			}
 		},
 
 		'getSidebarHeight' : function () {

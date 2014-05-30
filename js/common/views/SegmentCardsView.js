@@ -24,14 +24,12 @@ define( function ( require ) {
 			'infoIcon'    : 'span.sc-info-icon',
 			'watchIcon'   : 'span.sc-watch-later-icon',
 			'loadingIcon' : 'span.sc-watch-later-loading-icon',
-			'infoOverlay' : 'div.sc-overlay-details',
-			'playNowLink' : 'a.sc-play-link'
+			'infoOverlay' : 'div.sc-overlay-details'
 		},
 
 		'events' : {
-			'click @ui.infoIcon'    : 'showDetails',
-			'click @ui.watchIcon'   : 'watchLaterQueue',
-			'click @ui.playNowLink' : 'navigateToVideoPage'
+			'click @ui.infoIcon'  : 'showDetails',
+			'click @ui.watchIcon' : 'watchLaterQueue'
 		},
 
 		'templateHelpers' : {
@@ -49,7 +47,7 @@ define( function ( require ) {
 			},
 
 			'shortContentDescription' : function () {
-				return getAbbreviation( stripHtml( this.ContentDescription || this.Description ) , 250 );
+				return getAbbreviation( stripHtml( this.ContentDescription || this.Description ) , 200 );
 			},
 
 			'duration' : function () {
@@ -60,6 +58,12 @@ define( function ( require ) {
 				var imgURL = this.ImageURL ? 'http://resources.pd360.com/PD360/media/thumb/' + this.ImageURL : 'img/pd-360.jpg';
 
 				return imgURL;
+			},
+
+			'linkUrl' : function () {
+				var uuv = this.UUVideoId ? '?uuv=true' : '';
+
+				return '#resources/videos/' + ( this.ContentId || this.UUVideoId )  + uuv;
 			}
 		},
 
@@ -84,13 +88,6 @@ define( function ( require ) {
 			this.removeTooltip( this.ui.infoIcon );
 			this.removeTooltip( this.ui.watchIcon );
 			this.ui.loadingIcon.spin( false );
-		},
-
-		'navigateToVideoPage' : function ( ev ) {
-			ev.preventDefault();
-
-			var uuv = this.model.get( 'UUVideoId' ) ? '?uuv=true' : '';
-			App.navigate( '#resources/videos/' + this.model.id + uuv, { trigger : true } );
 		},
 
 		'showDetails' : function () {

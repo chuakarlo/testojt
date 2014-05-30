@@ -1,26 +1,45 @@
 define( function ( require ) {
 	'use strict';
+
+	var Vent           = require( 'Vent' );
 	var _              = require( 'underscore' );
 	var Marionette     = require( 'marionette' );
-	var Vent           = require( 'Vent' );
+	var $              = require( 'jquery' );
 	var FilterItemView = require( '../views/ContentNavigationFilterItemView' );
 	var template       = require( 'text!../templates/contentNavigationFiltersView.html' );
 
 	return Marionette.CompositeView.extend( {
 
-		'template'          : _.template( template ),
-		'itemView'          : FilterItemView,
+		'template' : _.template( template ),
+
+		'itemView' : FilterItemView,
+
 		'itemViewContainer' : '.cn-filter-list',
-		'className'         : 'cn-header-filter',
+
+		'className' : 'cn-header-filter',
 
 		'ui' : {
 			'clearButton' : '.cn-clear-btn',
-			'filter'      : '.cn-filter-item'
+			'filter'      : '.cn-filter-item',
+			'collapseBtn' : 'span.cn-collapse'
 		},
 
 		'events' : {
 			'click @ui.clearButton' : 'clearFilters',
-			'click @ui.filter'      : 'changeClear'
+			'click @ui.filter'      : 'changeClear',
+			'click @ui.collapseBtn' : 'toggleFilter'
+		},
+
+		'toggleFilter' : function ( ev ) {
+			if ( $( ev.currentTarget ).hasClass( 'open' ) ) {
+				$( ev.currentTarget  ).removeClass( 'open' ).removeClass( 'fa-minus' ).addClass( 'fa-plus' );
+				$( 'div.cn-filter-container-' + this.options.filterName.toLowerCase() ).hide();
+			} else {
+				$( ev.currentTarget  ).addClass( 'open' ).removeClass( 'fa-plus' ).addClass( 'fa-minus' );
+				$( 'div.cn-filter-container-' + this.options.filterName.toLowerCase() ).show();
+			}
+
+			Vent.trigger( 'contentNavigation:updateScrollbar' );
 		},
 
 		'changeClear' : function () {
@@ -36,6 +55,9 @@ define( function ( require ) {
 
 			this.$el.find( 'li' ).removeClass( 'selected' );
 			this.$el.find( '.cn-clear-btn' ).attr( 'disabled', 'disabled' );
+
+			Vent.trigger( 'contentNavigation:resetBodyScroll' );
+
 			Vent.trigger( 'contentNavigation:pd360:clearFilters', this.collection );
 		},
 

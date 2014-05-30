@@ -20,7 +20,7 @@ define( function ( require ) {
 					'method' : 'RespondCustomContentGetTree',
 					'args'   : {
 						'licenseTypeId'        : 1,
-						'licenseContentTypeId' : 174
+						'licenseContentTypeId' : this.licenseModel.get( 'LicenseContentTypeId' )
 					}
 				};
 			}
@@ -29,8 +29,10 @@ define( function ( require ) {
 
 		var API = {
 
-			'initializeCategories' : function ( defer ) {
+			'initializeCategories' : function ( defer , model ) {
 				var categories = new Entities.CustomContentCategories();
+
+				categories.licenseModel = model;
 
 				categories.fetch( {
 
@@ -45,18 +47,18 @@ define( function ( require ) {
 				} );
 			},
 
-			'getCategories' : function () {
+			'getCategories' : function ( model ) {
 				var defer = App.Deferred();
 
-				this.initializeCategories( defer );
+				this.initializeCategories( defer , model );
 
 				return defer.promise();
 			}
 
 		};
 
-		App.reqres.setHandler( 'contentNavigation:customContent:categories', function () {
-			return API.getCategories();
+		App.reqres.setHandler( 'contentNavigation:customContent:categories', function ( model ) {
+			return API.getCategories( model );
 		} );
 
 	} );

@@ -10,9 +10,11 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 
-		'tagName'  : 'li',
+		'tagName' : 'li',
+
 		'template' : _.template( template ),
-		'ui'       : {
+
+		'ui' : {
 			'category' : '.cn-uuv-category-item'
 		},
 
@@ -21,12 +23,13 @@ define( function ( require ) {
 		},
 
 		'changeCategory' : function () {
-			Vent.trigger( 'contentNavigation:uuv:changeCategory', this.model );
 
-			setTimeout( function () {
-				this.$el.parent().children( 'li' ).removeClass( 'selected' );
-				this.$el.addClass( 'selected' );
-			}.bind( this ) );
+			this.$el.parent().children( 'li' ).removeClass( 'selected' );
+			this.$el.addClass( 'selected' );
+
+			Vent.trigger( 'contentNavigation:resetBodyScroll' );
+
+			Vent.trigger( 'contentNavigation:uuv:changeCategory', this.model );
 		}
 
 	} );

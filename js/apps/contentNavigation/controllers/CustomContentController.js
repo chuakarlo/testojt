@@ -28,7 +28,7 @@ define( function ( require ) {
 				this.setEventHandlers();
 				this.categories = new CustomContentCollection();
 
-				var categoriesRequest = App.request( 'contentNavigation:customContent:categories' );
+				var categoriesRequest = App.request( 'contentNavigation:customContent:categories' , options.model );
 
 				App.when( categoriesRequest ).then( function ( categories ) {
 

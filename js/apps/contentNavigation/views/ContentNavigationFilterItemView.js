@@ -9,9 +9,11 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 
-		'tagName'  : 'li',
+		'tagName' : 'li',
+
 		'template' : _.template( template ),
-		'ui'       : {
+
+		'ui' : {
 			'filter' : '.cn-filter-item'
 		},
 
@@ -20,9 +22,14 @@ define( function ( require ) {
 		},
 
 		'filterSegments' : function () {
+
 			var filter = this.model.attributes.title;
-			Vent.trigger( 'contentNavigation:updateSearchData', filter.toLowerCase() );
+
+			Vent.trigger( 'contentNavigation:resetBodyScroll' );
+
 			this.$el.toggleClass( 'selected' );
+
+			Vent.trigger( 'contentNavigation:updateSearchData', filter.toLowerCase() );
 		}
 
 	} );

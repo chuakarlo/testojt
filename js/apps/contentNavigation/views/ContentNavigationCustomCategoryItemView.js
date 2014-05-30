@@ -11,9 +11,11 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 
-		'tagName'  : 'li',
+		'tagName' : 'li',
+
 		'template' : _.template( template ),
-		'ui'       : {
+
+		'ui' : {
 			'category' : '.cn-custom-category-item'
 		},
 
@@ -32,18 +34,15 @@ define( function ( require ) {
 		},
 
 		'changeCategory' : function () {
-			if ( this.model.get( 'isCategory' ) ) {
-				Vent.trigger( 'contentNavigation:uuv:changeCategory', this.model.get( 'ContentName' ) );
-			}
 
-			setTimeout( function () {
+			if ( this.model.get( 'isCategory' ) ) {
 				if ( this.$el.hasClass( 'cn-custom-category' ) ) {
 					this.$el.parent().children( 'li' ).removeClass( 'selected' );
 					this.$el.addClass( 'selected' );
 				}
-
-				$( '.cn-sidebar' ).css( 'top', 0 );
-			}.bind( this ) );
+				Vent.trigger( 'contentNavigation:resetBodyScroll' );
+				Vent.trigger( 'contentNavigation:uuv:changeCategory', this.model.get( 'ContentName' ) );
+			}
 		}
 
 	} );

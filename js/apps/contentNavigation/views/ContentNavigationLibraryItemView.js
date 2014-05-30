@@ -10,28 +10,30 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 
-		'tagName'   : 'li',
-		'template'  : _.template( template ),
-		'ui'        : {
+		'tagName' : 'li',
+
+		'template' : _.template( template ),
+
+		'ui' : {
 			'item' : '.cn-library-item'
 		},
+
 		'events' : {
 			'click @ui.item' : 'switchLibrary'
 		},
 
 		'switchLibrary' : function () {
 
+			this.$el.parent().children( 'li' ).removeClass( 'selected' );
+			this.$el.addClass( 'selected' );
+
+			Vent.trigger( 'contentNavigation:resetBodyScroll');
+
 			if ( this.model.get( 'LibraryType' ) === 'pd360' ) {
 				Vent.trigger( 'contentNavigation:switchLibrary', this.model, true );
 			} else {
 				Vent.trigger( 'contentNavigation:switchLibrary', this.model );
 			}
-
-			setTimeout( function () {
-				this.$el.parent().children( 'li' ).removeClass( 'selected' );
-				this.$el.addClass( 'selected' );
-			}.bind( this ) );
-
 		}
 
 	} );
