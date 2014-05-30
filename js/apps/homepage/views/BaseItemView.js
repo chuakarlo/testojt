@@ -12,7 +12,7 @@ define( function ( require ) {
 
 	return Marionette.Layout.extend( {
 
-		'className' : 'home-container',
+		'className'  : 'home-container',
 
 		'template'   : _.template( template ),
 
@@ -22,6 +22,11 @@ define( function ( require ) {
 		},
 
 		'onShow' : function () {
+
+			if ( 'ontouchstart' in document.documentElement ) {
+				$( '#Home-page-view' ).addClass( 'touchable' );
+			}
+
 			this.showWizzard();
 		},
 

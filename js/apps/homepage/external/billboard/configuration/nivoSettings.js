@@ -6,6 +6,7 @@ define( function ( require ) {
 	var billboardHolder = '#billboard-container';
 	var nivoNextNav     = '.nivo-nextNav';
 	var nivoPrevNav     = '.nivo-prevNav';
+	var homePage        = '#Home-page-view';
 
 	var initSwipe = function ( element ) {
 
@@ -19,24 +20,16 @@ define( function ( require ) {
 			},
 			swipeRight       : function () {
 				$( nivoPrevNav ).click();
-			},
-
-			tap : function ( event, elem ) {
-				if ( $( elem ).is( nivoNextNav ) ) {
-					$( nivoNextNav ).click();
-				}
-
-				if ( $( elem ).is( nivoPrevNav ) ) {
-					$( nivoPrevNav ).click();
-				}
 			}
 		} );
 	};
 
 	var initDirectionNav = function () {
-		var collectionLength = $( '.nivo-controlNav' ).children().length;
+
 		$( billboardHolder ).hide().fadeIn( 500 );
-		if ( collectionLength < 2 ) {
+		var collectionLength = $( '.nivo-controlNav' ).children().length;
+		var bHide            = $( homePage ).hasClass( 'touchable' ) || ( collectionLength < 2 );
+		if ( bHide ) {
 			$( '.nivo-directionNav' ).hide();
 		}
 	};
@@ -49,6 +42,7 @@ define( function ( require ) {
 	return function () {
 		return {
 			pauseTime    : 5000,
+			animSpeed    : $( homePage ).hasClass( 'touchable' ) ? 10 : 1000,
 			effect       : 'fade',
 			pauseOnHover : true,
 			afterLoad    : afterLoad,
