@@ -31,6 +31,7 @@ define( function ( require ) {
 			var ContentNavigationController = Marionette.Controller.extend( {
 
 				'showContentNavigation' : function () {
+					App.request( 'pd360:hide' );
 					_.extend( this, Backbone.Events );
 
 					// show a loading view while data is fetching

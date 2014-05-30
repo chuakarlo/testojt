@@ -24,7 +24,7 @@ define( function ( require ) {
 		},
 
 		'ui' : {
-			'sidebarShow' : 'div[id=test]',
+			'sidebarShow' : '.cn-sidebar-show',
 			'sidebarHide' : 'span[id=cn-sidebar-hide]',
 			'sidebar'     : '.cn-sidebar'
 		},

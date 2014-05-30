@@ -55,14 +55,30 @@ define( function ( require ) {
 				this.queryModel.set( 'start', rows + start );
 			},
 
-			'updateSearchData' : function ( term ) {
+			'updateSearchData' : function ( term, clearCollection ) {
 				// if item is not in array
-				var index = this.queryModel.get( 'searchArray' ).indexOf( term );
+				if ( term ) {
+					var index = this.queryModel.get( 'searchArray' ).indexOf( term );
 
-				if ( index === -1 ) {
-					this.queryModel.get( 'searchArray' ).push( term );
-				} else {
-					this.queryModel.get( 'searchArray' ).splice( index, 1 );
+					if ( index === -1 ) {
+						this.queryModel.get( 'searchArray' ).push( term );
+					} else {
+						this.queryModel.get( 'searchArray' ).splice( index, 1 );
+					}
+
+				}
+
+				if ( clearCollection ) {
+					clearCollection.each( function ( item ) {
+						var filter = item.get( 'title' ).toLowerCase();
+
+						var index = this.queryModel.get( 'searchArray' ).indexOf( filter );
+
+						if ( index !== -1 ) {
+							this.queryModel.get( 'searchArray' ).splice( index, 1 );
+						}
+
+					}.bind( this ) );
 				}
 
 				this.queryModel.set( 'searchData', this.queryModel.get( 'searchArray' ).join( ', ') );

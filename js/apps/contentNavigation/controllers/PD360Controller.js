@@ -72,6 +72,10 @@ define( function ( require ) {
 						this.updateQueryData( null, sort );
 					}
 				}.bind( this ) );
+
+				this.listenTo( Vent, 'contentNavigation:pd360:clearFilters', function ( clearCollection ) {
+					this.updateQueryData( null, null, clearCollection );
+				}.bind( this ) );
 			},
 
 			'mapFilter' : function ( data ) {
@@ -162,16 +166,19 @@ define( function ( require ) {
 				var gradesView = new App.ContentNavigation.Views.Filters( {
 					'collection'  : grades,
 					'id'          : 'cn-grades-filter',
+					'filterName'  : 'Grades',
 					'splitColumn' : true
 				} );
 				var subjectsView = new App.ContentNavigation.Views.Filters( {
 					'collection'  : subjects,
 					'id'          : 'cn-subjects-filter',
+					'filterName'  : 'Subjects',
 					'splitColumn' : false
 				} );
 				var topicsView = new App.ContentNavigation.Views.Filters( {
 					'collection'  : topics,
 					'id'          : 'cn-topics-filter',
+					'filterName'  : 'Topics',
 					'splitColumn' : false
 				} );
 
@@ -220,7 +227,7 @@ define( function ( require ) {
 				this.setupInfiniteScroll();
 			},
 
-			'updateQueryData' : function ( filter, sort ) {
+			'updateQueryData' : function ( filter, sort, clearCollection ) {
 
 				if ( filter ) {
 					this.pd360VideosCollection.updateSearchData( filter );
@@ -228,6 +235,10 @@ define( function ( require ) {
 
 				if ( sort ) {
 					this.queryModel.set( 'sort', sort );
+				}
+
+				if ( clearCollection ) {
+					this.pd360VideosCollection.updateSearchData( null, clearCollection );
 				}
 
 				// reset start and collection
