@@ -32,9 +32,8 @@ define( function ( require ) {
 	var observation = {
 		'name'   : 'Observation 360',
 		'icon'   : 'sinet-observation',
-		'url'    : 'https://www.pd360.com/Observation360Web/index.cfm',
+		'url'    : '#resources/observation/me',
 		'id'     : 'link-more-observation',
-		'target' : '_blank'
 	};
 
 	var userUploaded = {

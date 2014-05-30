@@ -7,6 +7,7 @@ define( function ( require ) {
 	var communities         = require( 'communities/Communities' );
 	var contentNavigation   = require( 'contentNavigation/ContentNavigation' );
 	var groups              = require( 'groups/Groups' );
+	var observation         = require( 'observation/Observation');
 	var homepage            = require( 'homepage/Homepage' );
 	var learningProgression = require( 'learningProgression/LearningProgression' );
 	var learningTargets     = require( 'apps/learningTargets/LearningTargets' );
@@ -21,6 +22,7 @@ define( function ( require ) {
 		communities();
 		contentNavigation();
 		groups();
+		observation();
 		homepage();
 		learningProgression();
 		learningTargets();
