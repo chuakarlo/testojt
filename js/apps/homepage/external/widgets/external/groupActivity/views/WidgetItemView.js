@@ -9,6 +9,7 @@ define( function ( require ) {
 	var className    = 'col-md-12 no-padding widget-item';
 	var templateBind = _.template( template );
 	var widgetCompositeController = require('apps/homepage/external/widgets/controllers/widgetCompositeController');
+	var getConfig  = require( 'common/helpers/getConfig' );
 
 	var widgetDirectory = 'groups/';
 
@@ -23,7 +24,7 @@ define( function ( require ) {
 		'templateHelpers' : function () {
 			return {
 				'creatorName' : App.Homepage.Utils.limitCharacters( this.model.get( 'LicenseName' ), 37 ),
-				'getConfig'   : require( 'common/helpers/getConfig' )
+				'getConfig'   : getConfig( 'groupAvatarWebPath' )
 			};
 		},
 		'redirect'        : function ( e ) {
