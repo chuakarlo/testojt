@@ -6,9 +6,9 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 
 	// templates
-	var template         = require( 'text!videoPlayer/templates/share/selectedItemView.html' );
-	var personTooltipTpl = require( 'text!videoPlayer/templates/share/personItemTooltip.html' );
-	var groupTooltipTpl  = require( 'text!videoPlayer/templates/share/groupItemTooltip.html' );
+	var template         = require( 'text!share/templates/selectedItemView.html' );
+	var personTooltipTpl = require( 'text!share/templates/personItemTooltip.html' );
+	var groupTooltipTpl  = require( 'text!share/templates/groupItemTooltip.html' );
 
 	require( 'tipsy' );
 

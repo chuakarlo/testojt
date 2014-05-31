@@ -1,0 +1,217 @@
+.share-modal {
+
+	.results-empty-view {
+		display  : block;
+		width    : 100%;
+		height   : 100%;
+		margin   : 0 auto;
+		padding  : 10px 15px;
+		color    : #B2B5B9;
+	}
+
+	#video-thumbnail {
+		width         : 155px;
+		float         : left;
+		padding-right : 10px;
+	}
+
+	@media (min-width: @screen-sm-min) {
+		.modal-dialog {
+			width : 720px;
+		}
+	}
+
+	.modal-content {
+		background : #EEEEEE;
+		border     : none;
+		padding : 0;
+	}
+
+	.modal-footer {
+
+		margin: 0;
+
+		button {
+			min-width : 138px;
+		}
+
+	}
+
+	.modal-body {
+
+		background : #f5f5f5;
+
+		.left-bar {
+
+			border-right : 1px solid #dbdbdb;
+
+			.share-content-url {
+				word-wrap : break-word;
+				color     : #5abef9;
+			}
+
+			.message {
+				border-top : 1px solid #dbdbdb;
+			}
+
+			textarea {
+				width         : 100%;
+				border        : 1px solid #dbdbdb;
+				border-radius : 3px;
+				background    : white;
+				resize        : none;
+				padding       : 10px;
+			}
+
+		}
+
+		.right-bar {
+
+			.search {
+
+				border-bottom : 1px solid #dbdbdb;
+				padding       : 22px;
+				position      : relative;
+
+				.search-form {
+					position : relative;
+				}
+
+				input {
+					border-radius : 20px;
+					padding       : 7px 15px;
+					border        : 1px solid #dbdbdb;
+					width         : 100%;
+				}
+
+			}
+
+		}
+
+	}
+
+	#share-search-results {
+
+		max-height : 220px;
+		overflow-x : hidden;
+		overflow-y : auto;
+		position   : absolute;
+		width      : 100%;
+		top        : 40px;
+		z-index    : 10; // so search results appear over selected items
+
+		& > ul {
+			border-radius : 3px;
+			background    : #fdfdfd;
+			padding       : 0;
+			border        : 1px solid #dbdbdb;
+			margin        : 0;
+
+			li {
+
+				border-bottom : 1px solid #f5f5f5;
+
+				span {
+					margin      : 0;
+					cursor      : pointer;
+					display     : block;
+					padding     : 10px 12px;
+					font-weight : 500;
+
+					&:hover {
+						background : #f5f5f5;
+					}
+
+					.person-name {
+						margin-bottom : 0;
+					}
+
+					.person-location {
+						margin-bottom : 0;
+						font-weight   : 200;
+						color         : #b2b5b9;
+					}
+
+				}
+
+			}
+
+			h4 {
+				border-bottom : 1px solid #9fd753;
+				background    : #b0e46a;
+				padding       : 10px 12px;
+				margin        : 0;
+				color         : white;
+			}
+		}
+
+	}
+
+	#selected-items {
+
+		padding-top : 10px;
+		overflow-y  : auto;
+		max-height  : 210px;
+		width       : 100%;
+
+		ul {
+
+			list-style : none;
+			margin     : 0;
+			padding    : 0;
+
+			li {
+
+				display        : inline-block;
+				padding        : 4px;
+				vertical-align : top;
+				width          : 50%;
+
+				.input-group-addon {
+
+					background : #545965;
+					border     : none;
+					color      : white;
+					cursor     : pointer;
+
+				}
+
+				.form-control {
+
+					background       : #4b505c;
+					border           : none;
+					color            : white;
+					max-width        : 122px;
+					overflow         : hidden;
+					-o-text-overflow : ellipsis;
+					text-overflow    : ellipsis;
+					white-space      : nowrap;
+
+					.tooltip {
+						position : fixed;
+					}
+
+					.tooltip-inner {
+						white-space : pre-wrap;
+					}
+
+					.tooltip-name {
+						font-weight : 500;
+						word-wrap   : break-word;
+					}
+
+					.tooltip-location {
+						font-size   : 12px;
+						font-weight : 200;
+						word-wrap   : break-word;
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+}

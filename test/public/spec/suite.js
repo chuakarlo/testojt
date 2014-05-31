@@ -64,12 +64,6 @@ define( function ( require ) {
 			// views/info
 			'spec/apps/videoPlayer/views/VideoInfoItemViewTest.js',
 			// views/share
-			'spec/apps/videoPlayer/views/share/SharedVideoItemViewTest.js',
-			'spec/apps/videoPlayer/views/share/SelectedItemsCollectionViewTest.js',
-			'spec/apps/videoPlayer/views/share/SelectedItemViewTest.js',
-			'spec/apps/videoPlayer/views/share/ShareVideoLayoutTest.js',
-			'spec/apps/videoPlayer/views/share/SearchResultsTreeRootTest.js',
-			'spec/apps/videoPlayer/views/share/SearchResultsTreeViewTest.js',
 			// views/tabs
 			'spec/apps/videoPlayer/views/tabs/ButtonsItemViewTest.js',
 			'spec/apps/videoPlayer/views/tabs/TabsItemViewTest.js',

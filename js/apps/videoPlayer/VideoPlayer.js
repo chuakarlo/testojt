@@ -16,7 +16,6 @@ define( function ( require ) {
 			require( 'videoPlayer/entities/Entities' );
 			require( 'videoPlayer/views/Views' );
 			require( 'videoPlayer/controllers/ShowController' );
-			require( 'videoPlayer/controllers/ShareController' );
 			require( 'videoPlayer/plugins/parseParams' );
 
 			VideoPlayer.Router = AuthRouter.extend( {

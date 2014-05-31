@@ -5,8 +5,6 @@ define( function ( require ) {
 	var App = require( 'App' );
 
 	var QuestionsCollection = require( 'videoPlayer/collections/QuestionsCollection' );
-	var ShareVideoLayout    = require( 'videoPlayer/views/share/ShareVideoLayout' );
-	var SharedVideoItemView = require( 'videoPlayer/views/share/SharedVideoItemView' );
 
 	App.module( 'VideoPlayer.Controller', function ( Controller ) {
 
@@ -152,13 +150,15 @@ define( function ( require ) {
 
 			'showShareVideoDialog' : function ( model ) {
 
-				// show share video dialog
-				var shareVideoLayout = new ShareVideoLayout( { 'model' : model } );
-				App.modalRegion.show( shareVideoLayout, { 'className' : 'share-modal' } );
+				window.showSharedModal( {
 
-				// show shared video on the share dialog
-				var sharedVideoView = new SharedVideoItemView( { 'model' : model } );
-				shareVideoLayout.sharedVideoRegion.show( sharedVideoView );
+					'type' : 'video',
+
+					'data' : {
+						'model' : model
+					}
+
+				} );
 
 			}
 

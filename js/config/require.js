@@ -85,6 +85,7 @@ require.config( {
 		'pd360'               : 'apps/pd360',
 		'resources'           : 'apps/resources',
 		'search'              : 'apps/search',
+		'share'               : 'apps/share',
 		'user'                : 'apps/user',
 		'videoPlayer'         : 'apps/videoPlayer',
 		'videoUploader'       : 'apps/videoUploader'
