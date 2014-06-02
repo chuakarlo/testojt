@@ -99,12 +99,14 @@
 					font-size   : 10px;
 				}
 		}
-		div.widget-item:hover{
+		@media( min-width: 992px ){
+			div.widget-item:hover{
 			span.duedate{
-				color: @pc-red;
+					color: @pc-red;
+				}
+					border-left:2px solid @pc-red;
+					background-color: @pc-gray-lightest;
 			}
-				border-left:2px solid @pc-red;
-				background-color: @pc-gray-lightest;
 		}
 	}
 
@@ -342,9 +344,10 @@
 					width  : 25px;
 				}
 			}
-
-			div.widget-item:hover{
-				background-color: @pc-gray-lightest;
+			@media ( min-width: 992px ){
+				div.widget-item:hover{
+					background-color: @pc-gray-lightest;
+				}
 			}
 		}
 
