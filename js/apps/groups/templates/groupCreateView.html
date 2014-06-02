@@ -1,70 +1,69 @@
 <div class="page-header">
 	<h2>Create Group</h2>
 </div>
-<form role="form">
-<div class="groups-form-content">
-	<div class="upload-form">
-		<h3>Group Information</h3>
+<div class="form-container group-creation">
+	<form role="form" class="form-horizontal">
 
-		  <div class="form-group">
-		    <span for="inputGroupName">Group Name</span>
-		    <input type="text" class="input-validation form-control" id="inputGroupName" placeholder="Enter Group Name" required>
-		    <div class="group-name-validation"></div>
-		  </div>
-		  <div class="form-group">
-		    <span for="inputGroupDescription">Group Description</span>
-
-		    <textarea type="text" class="input-validation form-control" id="inputGroupDescription" rows="5" placeholder="Enter Group Description" required></textarea>
-		    <div class="group-description-validation"></div>
-		  </div>
-	</div>
-	<hr>
-	<div class="upload-form">
-		<h3>Add Photos</h3>
-		<div>
-			<span>Group Logo</span>
-			<div class="logo-upload-drop"><span class="fa fa-plus"></span></div>
-		</div>
-		<div>
-			<span>Cover Photo</span>
-			<div class="banner-upload-drop"><span class="fa fa-plus"></span></div>
-		</div>
-	</div>
-	<hr>
-	<div class="upload-form">
-		<div class="groups-create-privacy">
-
-			<h3>Privacy
-				<a name="Public groups allow any user to join at any time. Private groups restrict membership to those users who are approved by group leaders. Hidden groups are not displayed in search results, and users must therefore be invited to join by group leaders." class="tooltip2"><span class="fa fa-info-circle"></span></a>
-			</h3>
-			<div class="radio">
-				<label>
-					<input type="radio" name="optionsRadios" id="setGroupPublic" value="0" checked>
-					Public
-				</label>
-			</div>
-
-			<div class="radio">
-				<label>
-					<input type="radio" name="optionsRadios" id="setGroupPrivate" value="1">
-					Private
-				</label>
-			</div>
-
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" value="1" id="setGroupVisibility">
-					Hidden
-				</label>
+		<div class="form-group">
+			<label class="control-label col-sm-3" for="inputGroupName">Group Name</label>
+			<div class="col-sm-9">
+				<input type="text" class="input-validation form-control" id="inputGroupName" placeholder="Enter Group Name" required>
 			</div>
 		</div>
-	</div>
+
+		<div class="form-group">
+			<label class="control-label col-sm-3" for="inputGroupDescription">Group Description</label>
+			<div class="col-sm-9">
+				<textarea type="text" class="input-validation form-control" id="inputGroupDescription" rows="5" placeholder="Enter Group Description" required></textarea>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label col-sm-3">Group Logo</label>
+			<div class="col-sm-9">
+				<div class="logo-upload-drop"><span class="fa fa-plus"></span></div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label col-sm-3">Cover Photo</label>
+			<div class="col-sm-9">
+				<div class="banner-upload-drop"><span class="fa fa-plus"></span></div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label col-sm-3">Privacy</label>
+			<div class="col-sm-9">
+
+				<div class="radio">
+					<label>
+						<input type="radio" name="optionsRadios" id="setGroupPublic" value="0" checked>
+						Public
+					</label>
+				</div>
+				<div class="radio">
+					<label>
+						<input type="radio" name="optionsRadios" id="setGroupPrivate" value="1">
+						Private
+					</label>
+				</div>
+
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" value="1" id="setGroupVisibility">
+						Hidden
+					</label>
+				</div>
+				<span class="help-block">Public groups allow any user to join at any time. Private groups restrict membership to those users who are approved by group leaders. Hidden groups are not displayed in search results, and users must therefore be invited to join by group leaders.</span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-9 col-sm-offset-3">
+				<button type="submit" class="btn create btn-primary submit-btn ladda-button"  data-style="expand-right">Create</button>
+			</div>
+		</div>
+
+	</form>
 </div>
-
-<div class="groups-form-content-bottom">
-	<div class="upload-actions">
-		<button type="button" class="btn cancel btn-default cancel-btn">Cancel</button>
-		<button type="submit" class="btn create btn-primary submit-btn">Create</button>
-	</div>
-</div>
-</form>

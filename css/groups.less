@@ -38,7 +38,6 @@
 
 }
 
-
 #group {
 
 	.date {
@@ -62,8 +61,8 @@
 
 	.banner {
 
-		height          : 320px;
-		width           : 100%;
+		height : 320px;
+		width  : 100%;
 
 		@media (max-width: @screen-xs-max) {
 			height: 160px;
@@ -77,8 +76,8 @@
 
 		.btn-group-banner {
 			position : absolute;
-			bottom   : 5px;
-			right    : 8px;
+			bottom   : 15px;
+			right    : 15px;
 
 			button {
 				float       : left;
@@ -93,7 +92,7 @@
 		.avatar {
 			position         : relative;
 			top              : -60px;
-			left             : 20px;
+			left             : 15px;
 			float            : left;
 			margin-bottom    : -35px;
 			min-width        : 100px;
@@ -201,12 +200,16 @@
 		max-width : none;
 	}
 
-	/* Members Tab */
+	 // Members Tab
 	ul.memberAvatars {
 		li {
 			text-align : center;
 			min-height : 150px;
 
+		}
+
+		img {
+			height: 100px;
 		}
 	}
 
@@ -239,46 +242,6 @@
 	.right-side > ul > li {
 		border-bottom: 1px solid #ebebeb;
 		margin-bottom: 15px;
-	}
-
-	.comment {
-		border: 1px solid #ebebeb;
-		border-radius: 3px;
-		width: 100%;
-		margin-bottom: 25px;
-
-		textarea {
-			width: 100%;
-			border: none;
-			resize: none;
-			padding:12px;
-		}
-
-		a {
-			color: none;
-		}
-
-		.post {
-			padding: 6px 12px;
-			background: #f3f2f2;
-			width: 100%;
-
-			li {
-				border-bottom: 1px solid #ebebeb;
-			}
-
-			img {
-				float: left;
-				margin: 10px 30px 0 0;
-				cursor: pointer;
-			}
-
-			button {
-				float: right;
-				height: 32px;
-				width: 85px;
-			}
-		}
 	}
 
 	.wrapper {
@@ -314,27 +277,13 @@
 	}
 
 	.reply {
-		background: #f8f8f8;
-		border-radius: 3px;
-		margin-bottom: 15px;
+		background    : #f8f8f8;
+		margin-bottom : 15px;
+		.border-top-radius( 6px );
 
 		li {
 			padding: 13px;
 			border-bottom: 1px solid #ebebeb;
-
-			&.message {
-				border: none;
-				background: #ebebeb;
-				border-bottom-left-radius: 3px;
-				border-bottom-right-radius: 3px;
-
-				input {
-					width: 100%;
-					border: none;
-					border-radius: 3px;
-					padding: 12px;
-				}
-			}
 		}
 
 		.profile {
@@ -398,13 +347,9 @@
 			color: #b2b5b9;
 		}
 
-		.btn {
-			width: 140px;
-			margin-top: 6px;
-		}
-
 		.btn-invite-ignore {
-			width: 115px;
+			width     : 115px;
+			min-width : inherit;
 		}
 	}
 
@@ -414,172 +359,44 @@
 }
 
 /************************************************************\
-						Groups Form
+					Groups Creation Form
 \************************************************************/
 
-.groups-form-content {
-	background : @cn-gray-light;
-	padding-bottom : 10px;
-	padding-top : 10px;
+.group-creation {
 
-	.upload-form {
-		position    : relative;
-		left        : 36%;
-		top         : 10%;
-		width       : 30%;
-		line-height : 1.5;
+	.logo-upload-drop, .banner-upload-drop {
+		display          : block;
+		padding          : 6px 12px;
+		font-size        : 14px;
+		line-height      : 1.42857143;
+		color            : #808080;
+		border           : 1px solid #cccccc;
+		border-radius    : 4px;
+		background-color : #fff;
+		.box-shadow( inset 0 1px 1px rgba(0, 0, 0, 0.075) );
 	}
 
-	span {
-		color : @gray-light;
-	}
-
-	.upload-resource-type {
-		margin-top : 6%;
-	}
-
-	.radio-upload {
-		height : 20px;
-		width  : 17px;
-	}
-
-	.upload-content-file {
-		margin-top : 3%;
-	}
-
-	.upload-content-link {
-		display    : none;
-		margin-top : 3%
-	}
-
-
-	.fileinput-button {
-		position : relative;
-		overflow : hidden;
-		background : @cn-gray-light;
-	}
-	.fileinput-button input {
-		position   : absolute;
-		top        : 0;
-		right      : 0;
-		margin     : 0;
-		opacity    : 0;
-		direction  : ltr;
-		cursor     : pointer;
-	}
-
-	.resource-description {
-		margin-top : 6%;
-
-		textarea {
-			margin-top : 4%;
-		}
-	}
-
-	.input-validation:valid {
-		border: 1px solid @cn-green!important;
-	}
-
-	.input-validation:invalid {
-		border: 1px solid red!important;
-	}
-
-	.logo-upload-drop{
-		background : @cn-white;
-		width       : 60%;
-		height : 200px;
-		margin-bottom: 15px;
+	.logo-upload-drop {
+		width         : 200px;
+		height        : 200px;
+		margin-bottom : 15px;
 
 		span {
 			margin-left : 41%;
-			margin-top : 38%;
-			font-size : 3.5em;
+			margin-top  : 38%;
+			font-size   : 3.5em;
 		}
 	}
 
-	.banner-upload-drop{
-		background : @cn-white;
-		width       : 100%;
-		height : 200px;
+	.banner-upload-drop {
+		// background : @cn-white;
+		width      : 100%;
+		height     : 200px;
 
 		span {
 			margin-left : 44%;
-			margin-top : 24%;
-			font-size : 3.5em;
-		}
-	}
-
-	.tooltip2 {
-	    display: inline;
-	    position: relative;
-	}
-
-	.tooltip2:hover:after {
-	    background: #333;
-	    background: rgba(0,0,0,.8);
-	    border-radius: 5px;
-	    bottom: 26px;
-	    color: #fff;
-	    content: attr(name);
-	    left: 20%;
-	    padding: 10px 20px;
-	    position: absolute;
-	    z-index: 98;
-	    width: 220px;
-	    font-size : 0.5em;
-	    text-align: left;
-	}
-
-	.tooltip2:hover:before{
-	    border: solid;
-	    border-color: #333 transparent;
-	    border-width: 6px 6px 0 6px;
-	    bottom: 20px;
-	    content: "";
-	    left: 50%;
-	    position: absolute;
-	    z-index: 99;
-	}
-
-	input[type="text"]:invalid ~ .group-name-validation::before {
-		color : red;
-		content: 'Group Name is a required field.';
-	}
-
-	textarea[type="text"]:invalid ~ .group-description-validation::before {
-		color : red;
-		content: 'Group Description is a required field.';
-	}
-
-	input[type="text"]:valid ~ .group-name-validation::before {
-		content: 'This is a valid name. \2713';
-		color : @cn-green;
-	}
-
-	textarea[type="text"]:valid ~ .group-description-validation::before {
-		content: 'This is a valid description. \2713';
-		color : @cn-green;
-	}
-}
-
-
-.groups-form-content-bottom {
-	background : @gray-dark;
-	height     : 70px;
-
-	.upload-actions {
-		width       : 24%;
-		height      : 82%;
-		margin-left : 74%;
-
-		button {
-			width      : 49%;
-			margin-top : 6.5%;
-		}
-		.cancel-btn {
-			background   : @gray-dark;
-			color        : @gray-light;
-			border-color : @gray-light;
+			margin-top  : 80px;
+			font-size   : 3.5em;
 		}
 	}
 }
