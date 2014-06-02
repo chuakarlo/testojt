@@ -91,7 +91,7 @@ define( function ( require ) {
 		'setSidebarHeight' : function () {
 			if ( $( window ).width() > 767 ) {
 				if ( $( window ).scrollTop() > 0 ) {
-					this.ui.sidebar.css( 'height', $( window ).height() );
+					this.ui.sidebar.css( 'height', $( window ).height() - 20 );
 				} else {
 					this.ui.sidebar.css( 'height', $( window ).height() - 200 );
 				}

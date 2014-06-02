@@ -225,6 +225,7 @@ define( function ( require ) {
 				this.closeLoading();
 				this.layout.segmentsRegion.show( this.segmentsView );
 				this.setupInfiniteScroll();
+				Vent.trigger( 'contentNavigation:updateScrollbar' );
 			},
 
 			'updateQueryData' : function ( filter, sort, clearCollection ) {

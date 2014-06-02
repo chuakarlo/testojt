@@ -46,6 +46,8 @@ define( function ( require ) {
 
 			'showVideos' : function ( libraries, queueContents ) {
 
+				Vent.trigger( 'contentNavigation:updateScrollbar' );
+
 				this.showLoading();
 				this.queueContents = queueContents;
 

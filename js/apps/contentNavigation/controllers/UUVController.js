@@ -149,6 +149,8 @@ define( function ( require ) {
 
 			'showVideos' : function ( queueContents ) {
 
+				Vent.trigger( 'contentNavigation:updateScrollbar' );
+
 				// remove handlers for filters
 				this.showLoading();
 
