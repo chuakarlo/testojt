@@ -89,7 +89,7 @@ define( function ( require ) {
 
 		'login' : function ( options ) {
 			this.url = function () {
-				return '/com/schoolimprovement/pd360/dao/RespondService.cfc?method=rspndLoginTest&loginNm=' + this.username + '&passwrd=' + this.password + '&returnformat=json';
+				return '/com/schoolimprovement/pd360/dao/RespondService.cfc?method=rspndLogin&loginNm=' + this.username + '&passwrd=' + this.password + '&returnformat=json';
 			};
 
 			if ( options.username && options.password ) {
