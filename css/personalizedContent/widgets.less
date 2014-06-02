@@ -93,30 +93,17 @@
 	}
 
 	li#processOfMe{
-		clearer{
-			clear : both;
-		}
 		div.widget-item{
 			border-left : 2px solid @pc-white;
-				div.duedate{
+				span.duedate{
 					font-size   : 10px;
 				}
 		}
-		@media( min-width: 992px ){
-			div.widget-item:hover{
-				div.duedate{
-						color: @pc-red;
-					}
-					border-left:2px solid @pc-red;
-					background-color: @pc-gray-lightest;
+		div.widget-item:hover{
+			span.duedate{
+				color: @pc-red;
 			}
-		}
-	}
-
-	div.widget-item {
-		.bg-color-trans
-		&:hover{
-			background-color: @pc-gray-lightest;
+				border-left : 2px solid @pc-red;
 		}
 	}
 
@@ -347,9 +334,16 @@
 					width  : 25px;
 				}
 			}
-			@media ( min-width: 992px ){
-				div.widget-item:hover{
-					background-color: @pc-gray-lightest;
+
+			div.widget-item {
+				.bg-color-trans;
+				&:hover{
+					 &, .prog-circle .after {
+					 	background-color :  #e6f2b6;;
+					 }
+					 .prog-circle {
+					 	background-color : white;
+					 }
 				}
 			}
 		}
