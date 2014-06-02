@@ -68,7 +68,9 @@ define( function ( require ) {
 		},
 
 		'hideCollapsibleMenu' : function ( event ) {
+			event.preventDefault();
 			$( '#navbar .navbar-collapse.in' ).removeClass( 'in' );
+			App.navigate( event.currentTarget.hash.substr( 1 ), { 'trigger' : true } );
 		},
 
 		'toggleUserMenu' : function ( event ) {
