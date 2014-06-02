@@ -10,6 +10,7 @@ define( function ( require ) {
 
 		require( 'common/controllers/BaseController' );
 		require( 'groups/controllers/listController' );
+		require( 'groups/controllers/createController' );
 		require( 'groups/controllers/editController' );
 		require( 'groups/controllers/wallController' );
 		require( 'groups/controllers/headerController' );
@@ -258,7 +259,7 @@ define( function ( require ) {
 
 				'showCreateGroup' : function () {
 					App.request( 'pd360:hide' );
-					Groups.Show.Controller.showCreateGroup();
+					Groups.Create.Controller.showCreateGroup();
 				},
 
 				'leaveGroup' : function ( model ) {

@@ -9,6 +9,7 @@ define( function ( require ) {
 	var Backbone = require( 'backbone' );
 	var Remoting = require( 'Remoting' );
 	var App      = require( 'App' );
+	var Session  = require( 'Session' );
 
 	require( 'groups/entities/GroupMemberCollection' );
 	require( 'groups/entities/GroupResourcesCollection' );
@@ -100,11 +101,51 @@ define( function ( require ) {
 			*/
 			'getCreateOptions' : function () {
 				return {
-					'path'       : 'LicensesGateway',
-					'objectPath' : 'Licenses',
+					'path'       : 'core.LicensesGateway',
+					'objectPath' : 'core.Licenses',
 					'method'     : 'save',
 					'args'       : this.toJSON()
 				};
+			},
+
+			/**
+			* Join this group
+			* @param {Integer} persId
+			*	The ID of the user you want to join this group
+			* @returns {Deferred}
+			*/
+			'join' : function ( persId ) {
+				var data = {
+					'path'   : 'AdminService',
+					'method' : 'takeASeatFromLicense',
+					'args'   : {
+						'persId'    : parseInt( persId ),
+						'licId'     : this.get( 'LicenseId' ),
+						'creatorId' : Session.personnelId()
+					}
+				};
+
+				return Remoting.fetch( data );
+			},
+
+			/**
+			* Leave this group
+			* @param {Integer} persId
+			*	The ID of the user you want to leave this group
+			* @returns {Deferred}
+			*/
+			'leave' : function ( persId ) {
+				var data = {
+					'path'   : 'AdminService',
+					'method' : 'returnASeatToLicense',
+					'args'   : {
+						'persId'    : parseInt( persId ),
+						'licId'     : this.get( 'LicenseId' ),
+						'removerId' : Session.personnelId()
+					}
+				};
+
+				return Remoting.fetch( data );
 			},
 
 			/**
@@ -289,6 +330,22 @@ define( function ( require ) {
 			*/
 			'getMemberLinks' : function () {
 				return this.getLinks( 'member' );
+			},
+
+			/**
+			* Update the search index for this group
+			* @returns {Deferred}
+			*/
+			'updateSearchIndex' : function () {
+				var data = {
+					'path'   : 'SearchService',
+					'method' : 'updateGroupsSearchIndex',
+					'args'   : {
+						'groupId' : this.get( 'LicenseId' )
+					}
+				};
+
+				return Remoting.fetch( data );
 			}
 
 		} );

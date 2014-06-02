@@ -3,10 +3,13 @@ define( function ( require ) {
 
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
-	var Vent       = require( 'Vent' );
 	var template   = require( 'text!../templates/groupCreateView.html' );
+	var App        = require( 'App' );
+	var Session    = require( 'Session' );
 
-	return Marionette.CompositeView.extend( {
+	require( 'backbone.stickit' );
+
+	return Marionette.ItemView.extend( {
 
 		'template'   : _.template( template ),
 
@@ -17,32 +20,60 @@ define( function ( require ) {
 			'submit form'         : 'createGroupClicked'
 		},
 
-		'ui' : {
-			'groupName'        : '#inputGroupName',
-			'groupDescription' : '#inputGroupDescription',
-			'groupPublic'      : '#setGroupPublic',
-			'groupPrivate'     : '.radio',
-			'groupVisibility'  : '#setGroupVisibility'
+		'bindings' : {
+			'#inputGroupName'           : 'LicenseName',
+			'#inputGroupDescription'    : 'Misc',
+			'input[name=optionsRadios]' : {
+				'observe' : 'PrivateGroup',
+				'onSet'   : 'toInt'
+			},
+			'#setGroupVisibility'       : {
+				'observe' : 'Hidden',
+				'onSet'   : 'toInt'
+			}
+		},
+
+		'toInt' : function ( val, options ) {
+			val = parseInt( val );
+			if ( val ) {
+				return 1;
+			}
+			return 0;
+		},
+
+		'onRender' : function () {
+			this.stickit();
 		},
 
 		'createGroupClicked' : function ( e ) {
-			// Insert Create Group Event Here
-			var groupData = {
-				'LicenseName'  : this.ui.groupName.val(),
-				'Misc'         : this.ui.groupDescription.val(),
-				'PrivateGroup' : this.ui.groupPrivate.find('input[name="optionsRadios"]:checked').val(),
-				'Hidden'       : this.ui.groupVisibility.is(':checked')
-			};
-
-			if ( !( ( groupData.LicenseName === '' ) || ( groupData.Misc === '' ) ) ) {
-				Vent.trigger( 'group:createGroup', groupData );
-			}
 
 			e.preventDefault();
+
+			var persId = Session.personnelId();
+			if ( !( ( this.model.get( 'LicenseName' ) === '' ) || ( this.model.get( 'Misc' ) === '' ) ) ) {
+				this.model.set( 'Creator', persId );
+				this.model.save(null, {
+					'success' : function ( model, response, options ) {
+						// Unfortunately now that the group has been created,
+						// we have to then join it, and update the search index
+						// so we can search for the group.
+						App.when( model.join( persId ), model.updateSearchIndex() )
+							.done( function () {
+								App.navigate( 'groups/' + model.get( 'LicenseId' ), {
+									'trigger' : true
+								} );
+							} );
+					},
+
+					'error' : App.errorHandler.bind( App, {
+						'messsage' : 'There was an issue creating the group.'
+					} )
+				} );
+			}
 		},
 
 		'cancelCreateGroupClicked' : function () {
-			Vent.trigger( 'group:listGroups' );
+			App.navigate( '#groups' );
 		}
 
 	} );

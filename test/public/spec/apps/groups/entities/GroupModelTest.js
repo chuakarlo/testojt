@@ -4,22 +4,27 @@ define( function ( require ) {
 	var $        = require( 'jquery' );
 	var _        = require( 'underscore' );
 	var Backbone = require( 'backbone' );
-	var sinon    = window.sinon;
 	var App      = require( 'App' );
+	var Session  = require( 'Session' );
+	var sinon    = window.sinon;
 
 	require( 'groups/entities/GroupModel' );
 
 	describe( 'GroupModel', function () {
 		var group;
 		var stub;
+		var sessionStub;
 
 		before( function () {
 			// Stub Flash available call
 			stub = sinon.stub().returns( false );
+			// Active user stub
+			sessionStub = sinon.stub( Session, 'personnelId' ).returns( 9876 );
 			App.reqres.setHandler( 'pd360:available', stub );
 
 			group = new App.Entities.GroupModel( {
-				'LicenseId' : 123
+				'LicenseId' : 123,
+				'Creator'   : 999
 			} );
 		} );
 
@@ -63,10 +68,70 @@ define( function ( require ) {
 			it( 'should return the correct method and args to create a group', function () {
 				var options = group.getCreateOptions();
 
-				options.path.should.equal( 'LicensesGateway' );
-				options.objectPath.should.equal( 'Licenses' );
+				options.path.should.equal( 'core.LicensesGateway' );
+				options.objectPath.should.equal( 'core.Licenses' );
 				options.method.should.equal( 'save' );
 				options.args.should.have.keys( _.keys( group.defaults ) );
+			} );
+		} );
+
+		describe( '.join', function () {
+			var ajaxStub;
+
+			beforeEach( function () {
+				ajaxStub = sinon.stub( $, 'ajax' );
+				ajaxStub.onFirstCall().yieldsTo( 'success', 'fakeSignature' );
+			} );
+
+			afterEach( function () {
+				$.ajax.restore();
+			} );
+
+			it( 'should make a request to the proper url with proper args', function () {
+
+				group.join( 54321 );
+
+				var call = ajaxStub.getCall( 1 );
+
+				var callData = JSON.parse( call.args[ 0 ].data );
+
+				callData.path.should.equal( 'AdminService' );
+				callData.method.should.equal( 'takeASeatFromLicense' );
+				callData.args.should.eql( {
+					'licId'     : 123,
+					'persId'    : 54321,
+					'creatorId' : 9876
+				});
+			} );
+		} );
+
+		describe( '.leave', function () {
+			var ajaxStub;
+
+			beforeEach( function () {
+				ajaxStub = sinon.stub( $, 'ajax' );
+				ajaxStub.onFirstCall().yieldsTo( 'success', 'fakeSignature' );
+			} );
+
+			afterEach( function () {
+				$.ajax.restore();
+			} );
+
+			it( 'should make a request to the proper url with proper args', function () {
+
+				group.leave( '54321' );
+
+				var call = ajaxStub.getCall( 1 );
+
+				var callData = JSON.parse( call.args[ 0 ].data );
+
+				callData.path.should.equal( 'AdminService' );
+				callData.method.should.equal( 'returnASeatToLicense' );
+				callData.args.should.eql( {
+					'licId'     : 123,
+					'persId'    : 54321,
+					'removerId' : 9876
+				});
 			} );
 		} );
 
@@ -327,6 +392,36 @@ define( function ( require ) {
 					group.getMemberLinks();
 					spy.should.be.calledWith( 'member' );
 				} );
+			} );
+
+		} );
+
+		describe( '.updateSearchIndex', function () {
+			var ajaxStub;
+
+			before( function () {
+				ajaxStub = sinon.stub( $, 'ajax' );
+				ajaxStub.onFirstCall().yieldsTo('success', 'fakeSignature');
+			} );
+
+			after( function () {
+				$.ajax.restore();
+			} );
+
+			it( 'should make a request to the proper url with proper args', function () {
+
+				group.updateSearchIndex();
+
+				var call = ajaxStub.getCall( 1 );
+
+				var callData = JSON.parse( call.args[ 0 ].data );
+
+				callData.path.should.equal( 'SearchService' );
+				callData.method.should.equal( 'updateGroupsSearchIndex' );
+				callData.args.should.eql( {
+					'groupId' : 123
+				});
+
 			} );
 
 		} );
