@@ -153,6 +153,7 @@ define( function ( require ) {
 			}
 
 			if ( val !== '' ) {
+				val = encodeURIComponent( val );
 				var url = 'search/All/' + val;
 				App.navigate( url, { 'trigger' : true } );
 			}

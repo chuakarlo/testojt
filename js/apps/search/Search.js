@@ -18,7 +18,7 @@ define( function ( require ) {
 
 				'appRoutes' : {
 					'search'                : 'showSearchResults',
-					'search/:filter/:query' : 'showSearchResults'
+					'search/:filter/*query' : 'showSearchResults'
 				}
 
 			} );
