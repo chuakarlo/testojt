@@ -130,6 +130,21 @@ define( function ( require ) {
 				this.queryModel.set( 'args', this[ Library ].args );
 			},
 
+			'resetStart' : function () {
+				var start = this.queryModel.get( 'start' );
+				var args  = this.queryModel.get( 'args' );
+
+				if ( args.hasOwnProperty( 'start' ) ) {
+					args.start = start;
+				}
+
+				if ( args.hasOwnProperty( 'startRow' ) ) {
+					args.startRow = start;
+				}
+
+				this.queryModel.set( 'args', args );
+			},
+
 			'updateStart' : function () {
 				var start = this.queryModel.get( 'start' );
 				var rows  = this.queryModel.get( 'rows' );
@@ -140,13 +155,13 @@ define( function ( require ) {
 
 				if ( args.hasOwnProperty( 'start' ) ) {
 					args.start = this.queryModel.get( 'start' );
-					this.queryModel.set( 'args', args );
 				}
 
 				if ( args.hasOwnProperty( 'startRow' ) ) {
 					args.startRow = this.queryModel.get( 'start' );
-					this.queryModel.set( 'args', args );
 				}
+
+				this.queryModel.set( 'args', args );
 			},
 
 			'updateSearchData' : function ( category ) {
@@ -154,8 +169,9 @@ define( function ( require ) {
 
 				if ( args.hasOwnProperty( 'searchData' ) ) {
 					args.searchData = category;
-					this.queryModel.set( 'args', args );
 				}
+
+				this.queryModel.set( 'args', args );
 			}
 
 		} );

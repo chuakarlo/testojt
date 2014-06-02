@@ -32,6 +32,10 @@ define( function ( require ) {
 
 				App.when( categoriesRequest ).then( function ( categories ) {
 
+					if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
+						return;
+					}
+
 					this.showVideos( categories );
 				}.bind( this ), this.showError );
 
@@ -70,14 +74,21 @@ define( function ( require ) {
 					}.bind( this ) );
 				}.bind( this ) );
 
-				var categoriesView = new App.ContentNavigation.Views.CustomCategories( { 'collection' : this.categories } );
-				this.layout.filtersRegion.show( categoriesView );
-
 				this.closeLoading();
 
-				// Load default category, at categories.at( 1 );
-				var firstCategory = this.categories.at( 1 ).get( 'ContentName' );
-				this.changeCategory( firstCategory );
+				if ( this.categories.length ) {
+					var categoriesView = new App.ContentNavigation.Views.CustomCategories( { 'collection' : this.categories } );
+					this.layout.filtersRegion.show( categoriesView );
+
+					// Load default category, at categories.at( 1 );
+					var firstCategory = this.categories.at( 1 ).get( 'ContentName' );
+					this.changeCategory( firstCategory );
+				} else {
+
+					this.layout.filtersRegion.close();
+					var segmentsView = new App.ContentNavigation.Views.Segments( { 'collection' : new CustomContentCollection() } );
+					this.layout.segmentsRegion.show( segmentsView );
+				}
 			},
 
 			'changeCategory' : function ( contentName ) {
@@ -98,6 +109,10 @@ define( function ( require ) {
 
 				App.when( queueRequest ).then( function ( queue ) {
 
+					if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
+						return;
+					}
+
 					var contentIds = queue.pluck( 'ContentId' );
 
 					this.videos.each( function ( model ) {
@@ -108,6 +123,10 @@ define( function ( require ) {
 					this.closeLoading();
 					var segmentsView = new App.ContentNavigation.Views.Segments( { 'collection' : this.videos } );
 					this.layout.segmentsRegion.show( segmentsView );
+
+					if ( this.videos.length ) {
+						this.noMoreVideos();
+					}
 
 				}.bind( this ), this.showError );
 			},
@@ -170,6 +189,12 @@ define( function ( require ) {
 			'closeLoading' : function () {
 				// Close the loading view
 				this.layout.loadingRegion.close();
+			},
+
+			'noMoreVideos' : function () {
+				$( window ).off( 'scroll.smack' );
+				var noMoreVideosView = new App.ContentNavigation.Views.NoMoreVideos();
+				this.layout.loadingRegion.show( noMoreVideosView );
 			},
 
 			'showError' : function ( error ) {

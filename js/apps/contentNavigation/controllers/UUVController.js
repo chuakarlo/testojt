@@ -39,6 +39,10 @@ define( function ( require ) {
 
 				App.when( queueRequest ).then( function ( queue ) {
 
+					if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
+						return;
+					}
+
 					this.showVideos( queue );
 				}.bind( this ), this.showError );
 
@@ -83,8 +87,6 @@ define( function ( require ) {
 				// of the window, fetch the next set of results.
 				var that = this;
 
-				this.UUVideosCollection.updateStart();
-
 				var rows              = this.UUVideosCollection.queryModel.get( 'rows' );
 				var lastResultsLength = this.UUVideosCollection.queryModel.get( 'lastResultsLength' );
 
@@ -100,26 +102,15 @@ define( function ( require ) {
 							this.showLoading();
 
 							var videosRequest = App.request( 'contentNavigation:uuv:getSegments', this.queryModel );
+							var queueRequest  = App.request( 'common:getQueueContents' );
 
-							App.when( videosRequest ).then( function ( videos ) {
+							App.when( videosRequest, queueRequest ).then( function ( videos, queueContents ) {
 
-								videos.each( function ( model ) {
-
-									var _id = model.get( 'UUVideoId' );
-									model.set( 'queued', _.contains( this.qContentsIds, _id ) );
-
-									this.UUVideosCollection.add( model );
-								}.bind( this ) );
-
-								this.closeLoading();
-								this.layout.segmentsRegion.show( this.segmentsView );
-
-								// setup infinite scroll if last result is equal to 24
-								this.queryModel.set( 'lastResultsLength', videos.length );
-
-								if ( this.queryModel.get( 'lastResultsLength' ) === this.queryModel.get( 'rows' ) ) {
-									this.setupInfiniteScroll();
+								if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
+									return;
 								}
+
+								this.displayVideos( videos, queueContents );
 
 							}.bind( this ), this.showError );
 
@@ -147,6 +138,49 @@ define( function ( require ) {
 				this.layout.loadingRegion.close();
 			},
 
+			'noMoreVideos' : function () {
+				$( window ).off( 'scroll.smack' );
+				var noMoreVideosView = new App.ContentNavigation.Views.NoMoreVideos();
+				this.layout.loadingRegion.show( noMoreVideosView );
+			},
+
+			'displayVideos' : function ( vids, queueContents ) {
+
+				var videos = vids;
+
+				this.qContentsIds = queueContents.pluck( 'UUVideoId' );
+
+				if ( vids.length && vids.at( 0 ).has( 'numFound' ) ) {
+					this.queryModel.set( 'numFound', vids.at( 0 ).get( 'numFound' ) );
+					videos = vids.slice( 1 );
+				}
+
+				videos.forEach( function ( model ) {
+
+					var _id = model.get( 'UUVideoId' );
+					model.set( 'queued', _.contains( this.qContentsIds, _id ) );
+
+					this.UUVideosCollection.add( model );
+				}.bind( this ) );
+
+				this.closeLoading();
+				this.layout.segmentsRegion.show( this.segmentsView );
+
+				// setup infinite scroll if last result is equal to 24
+				this.queryModel.set( 'lastResultsLength', videos.length );
+
+				if ( this.queryModel.get( 'lastResultsLength' ) === this.queryModel.get( 'rows' ) ) {
+
+					this.UUVideosCollection.updateStart();
+					this.setupInfiniteScroll();
+				} else {
+					if ( this.UUVideosCollection.queryModel.get( 'lastResultsLength' ) !== 0 ) {
+						this.noMoreVideos();
+					}
+
+				}
+			},
+
 			'showVideos' : function ( queueContents ) {
 
 				Vent.trigger( 'contentNavigation:updateScrollbar' );
@@ -154,7 +188,6 @@ define( function ( require ) {
 				// remove handlers for filters
 				this.showLoading();
 
-				this.qContentsIds = queueContents.pluck( 'UUVideoId' );
 				this.segmentsView = new App.ContentNavigation.Views.Segments( {
 					'collection' : this.UUVideosCollection
 				} );
@@ -164,30 +197,12 @@ define( function ( require ) {
 				var videosRequest = App.request( 'contentNavigation:uuv:getSegments', this.queryModel );
 
 				App.when( videosRequest ).then( function ( videos ) {
-					var vids = videos;
 
-					if ( videos.length && videos.at( 0 ).hasOwnProperty( 'numFound' ) ) {
-						this.queryModel.set( 'numFound', videos.at( 0 ).get( 'numFound' ) );
-						vids = videos.slice( 1 );
+					if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
+						return;
 					}
 
-					videos.each( function ( model ) {
-
-						var _id = model.get( 'UUVideoId' );
-						model.set( 'queued', _.contains( this.qContentsIds, _id ) );
-
-						this.UUVideosCollection.add( model );
-					}.bind( this ) );
-
-					this.closeLoading();
-					this.layout.segmentsRegion.show( this.segmentsView );
-
-					// setup infinite scroll if last result is equal to 24
-					this.queryModel.set( 'lastResultsLength', vids.length );
-
-					if ( this.queryModel.get( 'lastResultsLength' ) === this.queryModel.get( 'rows' ) ) {
-						this.setupInfiniteScroll();
-					}
+					this.displayVideos( videos, queueContents );
 
 				}.bind( this ), this.showError );
 			},
@@ -206,47 +221,31 @@ define( function ( require ) {
 
 				// reset start and collection
 				$( window ).off( 'scroll.smack' );
-				this.queryModel.set( 'start', 0 );
 				this.UUVideosCollection.reset();
+				this.UUVideosCollection.queryModel.set( 'start', 0 );
 
 				if ( title === 'Popular' || title === 'My Uploads' || title === 'Recommended For You' || title === 'Featured' ) {
+					this.UUVideosCollection.resetStart();
 					this.UUVideosCollection.setArgs( title );
 				} else {
-					this.UUVideosCollection.setArgs( 'Other Categories' );
+					this.UUVideosCollection.resetStart();
 					this.UUVideosCollection.updateSearchData( category.get( 'UUVideoTopicId' ) );
+					this.UUVideosCollection.setArgs( 'Other Categories' );
 				}
 
 				this.layout.segmentsRegion.close();
 				this.showLoading();
 
 				var videosRequest = App.request( 'contentNavigation:uuv:getSegments', this.queryModel );
+				var queueRequest  = App.request( 'common:getQueueContents' );
 
-				App.when( videosRequest ).then( function ( videos ) {
+				App.when( videosRequest, queueRequest ).then( function ( videos, queueContents ) {
 
-					var vids = videos;
-
-					if ( videos.length && videos.at( 0 ).hasOwnProperty( 'numFound' ) ) {
-						this.queryModel.set( 'numFound', videos.at( 0 ).get( 'numFound' ) );
-						vids = videos.slice( 1 );
+					if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
+						return;
 					}
 
-					videos.each( function ( model ) {
-
-						var _id = model.get( 'UUVideoId' );
-						model.set( 'queued', _.contains( this.qContentsIds, _id ) );
-
-						this.UUVideosCollection.add( model );
-					}.bind( this ) );
-
-					this.closeLoading();
-					this.layout.segmentsRegion.show( this.segmentsView );
-
-					// setup infinite scroll if last result is equal to 24
-					this.queryModel.set( 'lastResultsLength', vids.length );
-
-					if ( this.queryModel.get( 'lastResultsLength' ) === this.queryModel.get( 'rows' ) ) {
-						this.setupInfiniteScroll();
-					}
+					this.displayVideos( videos, queueContents );
 
 				}.bind( this ), this.showError );
 

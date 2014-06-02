@@ -41,6 +41,10 @@ define( function ( require ) {
 
 					App.when( librariesRequest ).then( function ( libraries ) {
 
+						if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
+							return;
+						}
+
 						if ( !this.layout ) {
 							this.layout = new ContentLayout();
 							App.content.show( this.layout );
@@ -97,6 +101,11 @@ define( function ( require ) {
 
 			Vent.on( 'contentNavigation:switchLibrary', function ( model, defaultLibrary ) {
 				return API.switchLibrary( model, defaultLibrary );
+			} );
+
+			App.reqres.setHandler( 'contentNavigation:isCorrectRoute', function () {
+
+				return Backbone.history.fragment.match( /resources\/videos/ );
 			} );
 
 			var API = new ContentNavigationController();

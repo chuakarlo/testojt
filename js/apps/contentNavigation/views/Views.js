@@ -13,6 +13,7 @@ define( function ( require ) {
 		Views.UUVCategories    = require( 'contentNavigation/views/ContentNavigationUUVCategories' );
 		Views.CustomCategories = require( 'contentNavigation/views/ContentNavigationCustomCategories' );
 		Views.EmptyCollection  = require( 'contentNavigation/views/ContentNavigationCollectionEmptyView' );
+		Views.NoMoreVideos     = require( 'contentNavigation/views/ContentNavigationNoMoreVideosView' );
 
 	} );
 
