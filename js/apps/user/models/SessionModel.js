@@ -110,6 +110,9 @@ define( function ( require ) {
 			// Determine requested route if one exists
 			var forceRoute = this.linkFromParams( options );
 
+			// Default to home if there wasn't a requested route
+			forceRoute = forceRoute || 'home';
+
 			// Login with SSO credentials and redirect
 			if ( this.isSSO( options ) ) {
 				// force json return

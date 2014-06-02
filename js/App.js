@@ -57,19 +57,18 @@ define( function ( require ) {
 
 					App.navigate( 'home', { 'trigger' : true } );
 
-					fragment = fragment || 'the page you requested';
+					if ( fragment ) {
+						App.errorHandler( { 'message' : 'Sorry, `' + fragment + '` is currently unavailable or does not exist.' } );
+					}
 
-					App.errorHandler( { 'message' : 'Sorry, ' + fragment + ' is currently unavailable or does not exist.' } );
 					return;
 
 				} else {
 
-					var hash = fragment;
-
 					// On login session:personnel doesn't exist immediately
 					// Wait for session to be initialized then redirect
 					Vent.on( 'session:initialized', function () {
-						App.navigate( hash, { 'trigger' : true, 'replace' : true } );
+						App.navigate( fragment, { 'trigger' : true, 'replace' : true } );
 					}.bind( this ) );
 
 					return;
