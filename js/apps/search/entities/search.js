@@ -181,7 +181,7 @@ define( function ( require ) {
 
 					var models = [ ];
 					switch (searchType) {
-						case 'VideosCore' :
+						case 'VideosAll' :
 							models = this.createModels( res, Mod.VideoModel, 'videos');
 							break;
 

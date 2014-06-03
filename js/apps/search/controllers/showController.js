@@ -51,7 +51,7 @@ define( function ( require ) {
 					},
 					{
 						'id'     : 'Videos',
-						'filter' : 'VideosCore'
+						'filter' : 'VideosAll'
 					},
 					{
 						'id'     : 'All',
