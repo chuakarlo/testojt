@@ -7,6 +7,7 @@ define( function ( require ) {
 	var Session    = require( 'Session' );
 	var $          = require( 'jquery' );
 	var App        = require( 'App' );
+	var moment     = require( 'moment' );
 
 	var template           = require( 'text!../templates/groupCommentsView.html' );
 	var usersTemplate      = require( 'text!../templates/usersGroupCommentsView.html' );
@@ -57,7 +58,6 @@ define( function ( require ) {
 			if ( this.model.get( 'NewsId' ) ) {
 				this.ui.replyBox.hide();
 			}
-
 		},
 
 		'showMiniPersonnel' : function ( event ) {
@@ -214,7 +214,21 @@ define( function ( require ) {
 		},
 
 		'templateHelpers' : {
-			'getUserAvatarPath' : require( 'common/helpers/getUserAvatarPath' )
+			'getUserAvatarPath' : require( 'common/helpers/getUserAvatarPath' ),
+
+			'formatDate' : function ( date ) {
+
+				// milliseconds in 24 hours
+				var timeToSwitch = 60 * 60 * 24 * 1000;
+
+				// Only show time ago for the first 24 hours
+				if ( moment().diff( moment( date ) ) > timeToSwitch ) {
+					return moment( date ).format( 'MMMM D, YYYY' );
+				}
+
+				return moment( date ).fromNow();
+
+			}
 		}
 
 	} );

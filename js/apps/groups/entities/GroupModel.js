@@ -154,7 +154,7 @@ define( function ( require ) {
 			*	The ID of the user you want to verify
 			* @returns {Deferred}
 			*/
-			'userIsGroupMember' : _.memoize( function ( persId ) {
+			'userIsGroupMember' : function ( persId ) {
 				// Check to see if a person is in this group
 				var data = {
 					'path'   : 'GroupService',
@@ -174,7 +174,7 @@ define( function ( require ) {
 
 				return fetch;
 
-			} ),
+			},
 
 			/**
 			* Check if a user is the creator of this group
@@ -195,7 +195,7 @@ define( function ( require ) {
 			*	The ID of the user you want to verify
 			* @returns {Deferred}
 			*/
-			'userIsAdmin' : _.memoize( function ( persId ) {
+			'userIsAdmin' : function ( persId ) {
 				// Check to see if a person is a group admin
 				var data = {
 					'path'   : 'GroupService',
@@ -208,7 +208,7 @@ define( function ( require ) {
 
 				return Remoting.fetch( data );
 
-			} ),
+			},
 
 			/**
 			* Get the members belonging to this group
@@ -241,7 +241,7 @@ define( function ( require ) {
 			* Get the date of the last activity for this group
 			* @returns {Deferred}
 			*/
-			'getLastUpdate' : _.memoize( function () {
+			'getLastUpdate' : function () {
 				var data = {
 					'path'   : 'GroupService',
 					'method' : 'getMostRecentActivityDateForGroup',
@@ -251,7 +251,7 @@ define( function ( require ) {
 				};
 
 				return Remoting.fetch( data );
-			} ),
+			},
 
 			/**
 			* Get the resources available for this group

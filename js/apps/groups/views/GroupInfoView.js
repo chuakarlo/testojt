@@ -7,6 +7,7 @@ define( function ( require ) {
 	var MemberItemView = require( '../views/InfoMemberItemView' );
 	var template       = require( 'text!../templates/groupInfoView.html' );
 	var stripHtml      = require( 'common/helpers/stripHtml' );
+	var moment         = require( 'moment' );
 
 	return Marionette.CompositeView.extend( {
 
@@ -25,13 +26,10 @@ define( function ( require ) {
 
 		'events' : {
 			'click @ui.showMoredetails' : 'toggleDetails',
-			'click @ui.hideMoredetails' : 'toggleDetails',
-			'click @ui.membersLink'     : 'showMembersTab'
-
+			'click @ui.hideMoredetails' : 'toggleDetails'
 		},
 
 		'initialize' : function () {
-
 			// strip html before deciding whether to show goals section or not
 			this.model.set( 'Objectives', stripHtml( this.model.get( 'Objectives' ) ) );
 		},
@@ -50,10 +48,6 @@ define( function ( require ) {
 
 		},
 
-		'showMembersTab' : function () {
-			// $('#tab-members').trigger('click');
-		},
-
 		// Hide show group description
 		'toggleDetails' : function () {
 
@@ -66,7 +60,15 @@ define( function ( require ) {
 
 			return {
 
-				'getAbbreviation' : require( 'common/helpers/getAbbreviation' )
+				'getAbbreviation' : require( 'common/helpers/getAbbreviation' ),
+
+				'formatDate' : function ( date ) {
+					return moment( date ).format( 'MMMM D, YYYY' );
+				},
+
+				'formatDateAgo' : function ( date ) {
+					return moment( date ).fromNow();
+				}
 
 			};
 
