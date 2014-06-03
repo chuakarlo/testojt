@@ -2,9 +2,11 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette              = require( 'marionette' );
+	var $                       = require( 'jquery' );
 	var _                       = require( 'underscore' );
 	var App                     = require( 'App' );
 	var template                = require( 'text!apps/homepage/external/widgets/templates/widgetItemView.html' );
+	var widgetMobileItemView    = require( 'text!apps/homepage/external/widgets/templates/widgetMobileItemView.html' );
 	var sequenceOverlayTemplate = require( 'text!apps/homepage/external/widgets/templates/widgetSequenceOverlayTemplate.html' );
 	var widgetLookup            = require( 'apps/homepage/external/widgets/manifest' );
 
@@ -81,8 +83,23 @@ define( function ( require ) {
 			}
 		},
 
+		'onShow' : function () {
+			this.addMobileItems();
+		},
+
 		'showSequenceOverlay' : function () {
 			doShowSequenceOverlay( this );
+		},
+
+		'addMobileItems' : function () {
+			var mobileTemplate        = _.template( widgetMobileItemView );
+			var mobileTemplateHelpers = {
+				'WidgetId'     : this.model.id,
+				'WidgetName'   : this.model.get( 'WidgetName' )(),
+				'WidgetIcon'   : this.getWidgetIcon(),
+				'WidgetStatus' : this.getWidgetStatus()
+			};
+			$( '#widget-mobile-selection ul' ).append( mobileTemplate( mobileTemplateHelpers ) );
 		},
 
 		'getKeyByWidgetId' : function () {

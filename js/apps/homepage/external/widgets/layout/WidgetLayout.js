@@ -11,9 +11,10 @@ define( function ( require ) {
 
 	var WidgetCollection = require( 'apps/homepage/external/widgets/collections/WidgetCollection' );
 
-	var UserWidgetCollectionView = require( 'apps/homepage/external/widgets/views/UserWidgetCollectionView' );
-	var WidgetCompositeView      = require( 'apps/homepage/external/widgets/views/WidgetCompositeView' );
-	var template                 = require( 'text!apps/homepage/external/widgets/templates/widgetLayoutView.html' );
+	var UserWidgetCollectionView  = require( 'apps/homepage/external/widgets/views/UserWidgetCollectionView' );
+	var WidgetCompositeView       = require( 'apps/homepage/external/widgets/views/WidgetCompositeView' );
+	var MobileWidgetCompositeView = require( 'apps/homepage/external/widgets/views/MobileWidgetCompositeView' );
+	var template                  = require( 'text!apps/homepage/external/widgets/templates/widgetLayoutView.html' );
 
 	var panelStatuses = [ 'opened', 'closed' ];
 	var widgets       = require( 'apps/homepage/external/widgets/manifest' )().splice(1);
@@ -94,6 +95,7 @@ define( function ( require ) {
 		},
 		'events' : {
 			'click div#widget-settings.closed'         : 'showWidgetSettingsPanel',
+			'click div#mobile-widget-settings.closed'  : 'showMobileWidgetSettings',
 			'click p#awesomeness'                      : 'showWidgetSettingsPanel',
 			'click #placeholder-icon'                  : 'showWidgetSettingsPanel',
 			'click div#widget-settings.opened'         : 'closeWidgetSettingsPanel',
@@ -103,13 +105,26 @@ define( function ( require ) {
 		'className' : 'widget-container',
 		'template'  : _.template( template ),
 		'regions'   : {
-			'userWidgets'    : '#user-widgets #active-widgets',
-			'widgetSettings' : '#widgets-settings-panel-wrapper'
+			'userWidgets'          : '#user-widgets #active-widgets',
+			'widgetSettings'       : '#widgets-settings-panel-wrapper',
+			'mobileWidgetSettings' : '#mobile-widgets-settings-panel'
 		},
 
 		'showWidgetSettingsPanel' : function ( e ) {
 			doShowWidgetSettingsPanel( this, e );
 			$( '#widgets-settings-panel-wrapper' ).focus().css('outline', 'none');
+		},
+
+		'showMobileWidgetSettings' : function ( e ) {
+			var panelBtn            = $( '#widget-settings' );
+			var widgetCompositeView = new MobileWidgetCompositeView( {
+				'collection'                 : this.widgetCollection,
+				'widgetCollection'           : this.widgetCollection,
+				'userWidgetCollection'       : this.userWidgetCollection,
+				'actualUserWidgetCollection' : this.actualUserWidgetCollection
+			} );
+			this.mobileWidgetSettings.show( widgetCompositeView );
+			this.changePanelStatus( panelBtn, panelStatuses[ 1 ], panelStatuses[ 0 ] );
 		},
 
 		'closeWidgetSettingsPanel' : function ( e ) {

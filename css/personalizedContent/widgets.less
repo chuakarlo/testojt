@@ -1,7 +1,7 @@
 #Home-page-view {
 
 	// *
-	//  Widgets
+	//  Widgetspanel
 	// *
 
 	// Color Declaration
@@ -487,7 +487,7 @@
 		display : none;
 	}
 
-	#widget-settings {
+	#widget-settings, #mobile-widget-settings {
 		display        : inline-block;
 		width          : 20px;
 		height         : 20px;
@@ -497,8 +497,12 @@
 		cursor         : pointer;
 	}
 
-	#widget-settings.active, #widget-settings:hover {
+	#widget-settings.active, #widget-settings:hover, #mobile-widget-settings.active, #mobile-widget-settings:hover {
 		background-position : 0px;
+	}
+
+	#mobile-widget-settings.visible-xs {
+		display : inline-block !important;
 	}
 
 	#inactive-widgets {
@@ -544,12 +548,16 @@
 	}
 
 	// Widget settings panel
-	#widgets-settings-panel {
+	#widgets-settings-panel, #mobile-widgets-settings-panel {
 		background-color : #2b2d30;
 		margin           : auto;
 		color            : @pc-white;
 		padding-bottom   : 5px;
 		padding-top      : 1px;
+	}
+	#mobile-widgets-settings-panel {
+		display : none;
+		padding : 0px;
 	}
 	#widget-settings-header {
 		margin     : auto;
@@ -694,4 +702,66 @@
 		border           : 1px solid #6a6d74;
 	}
 
+	// Mobile
+	#widget-mobile-header {
+		text-align : center;
+		h4 {
+			border-bottom : 1px solid #FFF;
+			padding       : 0px 0px 10px 0px;
+		}
+		select {
+			background-color : transparent;
+			border           : 1px solid #FFF;
+		}
+	}
+
+	#widget-mobile-selection {
+		ul {
+			list-style-type : none;
+			padding         : 0px;
+			margin          : 0px;
+			li {
+				padding       : 14px;
+				border-bottom : 1px solid #4f96c7;
+				i {
+					border      : 1px solid;
+					padding     : 6px;
+					font-size   : 12px;
+					font-weight : bolder;
+					margin-top  : -4px;
+				}
+			}
+			.active-widget-mobile {
+				background-color : #2fafea;
+			}
+			.inactive-widget-mobile {
+				background-color   : #dfe0e1;
+				border-bottom      : 1px solid #b9b9b9;
+				border-left-color  : #b9b9b9;
+				border-right-color : #b9b9b9;
+			}
+		}
+	}
+
+	#widget-mobile-actions {
+		text-align : center;
+		padding    : 10px 0px 20px 0px;
+		button {
+			font-size : 12px;
+			width     : 69px;
+			height    : 28px;
+			margin    : 0px 3px;
+			color     : @pc-white;
+			padding   : 0px 0px;
+		}
+		.cancel {
+			background-color : transparent;
+		}
+		.action-btn {
+			background-color : #7d818b;
+		}
+		.action-close-btn {
+			font-size : 9px;
+		}
+	}
 }
