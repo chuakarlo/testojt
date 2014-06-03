@@ -39,12 +39,14 @@ define( function ( require ) {
 			ev.preventDefault();
 			$( 'body' ).addClass( 'disable-scroll' );
 			this.ui.sidebar.addClass( 'sidebar-open' ).removeClass( 'hidden-xs' );
+			this.updateSidebarScroll();
+
 		},
 
 		'sidebarHide' : function ( ev ) {
 			ev.preventDefault();
 			$( 'body' ).removeClass( 'disable-scroll' );
-			this.$el.find( '.cn-sidebar' ).removeClass( 'sidebar-open' ).addClass( 'hidden-xs' );
+			this.ui.sidebar.removeClass( 'sidebar-open' ).addClass( 'hidden-xs' );
 		},
 
 		'onShow' : function ( ) {
