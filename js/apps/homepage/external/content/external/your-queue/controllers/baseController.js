@@ -22,6 +22,7 @@ define( function ( require ) {
 				model.set( 'id', newContentId );
 				model.set( 'ContentId', newContentId  );
 				model.set( 'queued', true );
+				model.set( 'VideoTypeId', hasContentId ? 1 : 2 );
 				model.set( 'fromHomepage', true );
 			} );
 

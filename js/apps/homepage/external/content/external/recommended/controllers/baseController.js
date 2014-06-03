@@ -13,8 +13,9 @@ define( function ( require ) {
 			var count = collectionParam.models[ 0 ].get( 'numFound' );
 
 			collectionParam.models = collectionParam.models.slice( 1 );
-			var qContentsIds = _.pluck( collectionParam.queueCollection, 'ContentId' );
-
+			var qContentsIds = _.map( collectionParam.queueCollection, function ( model ) {
+				return model.ContentId === undefined ? model.UUVideoId : model.ContentId;
+			} );
 			collectionParam.models.forEach( function ( model ) {
 				var contentId    = model.get( 'ContentId' );
 				var hasContentId = ( contentId && contentId !== 0 );
@@ -23,6 +24,7 @@ define( function ( require ) {
 				model.set( 'id', newContentId );
 				model.set( 'ContentId', newContentId  );
 				model.set( 'queued', _.contains( qContentsIds, model.id ) );
+				model.set( 'VideoTypeId', hasContentId ? 1 : 2 );
 				model.set( 'fromHomepage', true );
 			} );
 
