@@ -339,7 +339,7 @@
 				.bg-color-trans;
 				&:hover{
 					 &, .prog-circle .after {
-					 	background-color :  #e6f2b6;;
+					 	background-color :  @pc-gray-lightest;
 					 }
 					 .prog-circle {
 					 	background-color : white;
@@ -477,10 +477,9 @@
 	}
 
 	//display if hovered
-	#inactive-holder > div:hover .prevNext,
-	#active-holder > div:hover .prevNext {
+	#inactive-holder > div:hover .active.prevNext,
+	#active-holder > div:hover .active.prevNext {
 		display : inline-block;
-
 	}
 
 	.block-hide{
@@ -488,17 +487,27 @@
 	}
 
 	#widget-settings, #mobile-widget-settings {
-		display        : inline-block;
-		width          : 20px;
-		height         : 20px;
-		vertical-align : middle;
-		background     : url(../img/settings.png) 20px;
-		margin         : 0px 10px 5px;
-		cursor         : pointer;
+		display                : inline-block;
+		vertical-align         : middle;
+		display                : inline-block;
+		font-family            : FontAwesome;
+		font-style             : normal;
+		font-weight            : normal;
+		line-height            : 1;
+		-webkit-font-smoothing : antialiased;
+		margin                 : 0px 10px 5px;
+		cursor                 : pointer;
+		font-size              : 19px;
+		padding                : 3px 4px;
+		border-radius          : 3px;
+		&:before {
+			content: "\f013";
+		}
 	}
 
-	#widget-settings.active, #widget-settings:hover, #mobile-widget-settings.active, #mobile-widget-settings:hover {
-		background-position : 0px;
+	#widget-settings.active, #widget-settings:hover, #mobile-widget-settings.active, #widget-settings.opened, #mobile-widget-settings.opened, #mobile-widget-settings:hover {
+		color         : @pc-white;
+		background    : #00A8FF;
 	}
 
 	#mobile-widget-settings.visible-xs {
