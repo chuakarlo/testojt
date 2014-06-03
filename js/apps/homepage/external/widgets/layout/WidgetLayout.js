@@ -50,11 +50,17 @@ define( function ( require ) {
 
 				var userWidgetCollectionView = new UserWidgetCollectionView( { 'collection' : view.actualUserWidgetCollection } );
 				view.userWidgets.show( userWidgetCollectionView );
+
+				userWidgetCollectionView.collection.on( 'reset', function () {
+					userWidgetCollectionView.$el.empty();
+					view.userWidgets.close();
+					view.userWidgets.show( userWidgetCollectionView );
+				} );
 			}
 		} ).fail( function ( error ) {
 
 			App.vent.trigger( 'flash:message', {
-				'message' : 'An error occurred setting up widgets. Please try again later.'
+				'message' : App.Homepage.Utils.message.widgetSaveError
 			} );
 
 		} );
@@ -99,6 +105,7 @@ define( function ( require ) {
 			'click p#awesomeness'                      : 'showWidgetSettingsPanel',
 			'click #placeholder-icon'                  : 'showWidgetSettingsPanel',
 			'click div#widget-settings.opened'         : 'closeWidgetSettingsPanel',
+			'click div#mobile-widget-settings.opened'  : 'closeMobileSettingsPanel',
 			'focusout #widgets-settings-panel-wrapper' : 'blurAction',
 			'click #widgets-settings-panel-wrapper'    : 'focusAction'
 		},
@@ -116,7 +123,7 @@ define( function ( require ) {
 		},
 
 		'showMobileWidgetSettings' : function ( e ) {
-			var panelBtn            = $( '#widget-settings' );
+			var panelBtn            = $( e.currentTarget );
 			var widgetCompositeView = new MobileWidgetCompositeView( {
 				'collection'                 : this.widgetCollection,
 				'widgetCollection'           : this.widgetCollection,
@@ -133,6 +140,12 @@ define( function ( require ) {
 				this.initialize();
 			}
 			closeMessage();
+		},
+
+		'closeMobileSettingsPanel' : function ( e ) {
+			var panelBtn = $( e.currentTarget );
+			this.mobileWidgetSettings.close();
+			this.changePanelStatus( panelBtn, panelStatuses[ 0 ], panelStatuses[ 1 ] );
 		},
 
 		'changePanelStatus' : function ( btn, from, to ) {

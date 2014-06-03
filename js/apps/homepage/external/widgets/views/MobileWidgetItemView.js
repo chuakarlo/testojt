@@ -86,7 +86,6 @@ define( function ( require ) {
 			var model  = mode === 'remove' ? this.model.id : widget;
 
 			this.options.userWidgetCollection[ mode ]( model );
-			this.options.actualUserWidgetCollection[ mode ]( model, { 'silent' : true } );
 		},
 
 		'widgetLimitExceeded' : function () {
@@ -124,10 +123,6 @@ define( function ( require ) {
 				this.switchClass( widgetItemIcon, widgetStatuses[ 1 ] + '-xs', widgetStatuses[ 0 ] + '-xs' );
 				this.switchClass( widgetItemIcon, widgetIconClass[ 0 ], widgetIconClass[ 1 ] );
 			}
-		},
-
-		'changeItemIdsClasses' : function () {
-
 		},
 
 		'switchClass' : function ( btn, oldClass, newClass ) {

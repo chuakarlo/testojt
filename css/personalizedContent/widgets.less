@@ -92,26 +92,18 @@
 		}
 	}
 
-	li#processOfMe {
-		div.widget-item {
+	li#processOfMe{
+		div.widget-item{
 			border-left : 2px solid @pc-blue-light;
-				div.description {
-					vertical-align : middle;
-				}
-				div.duedate {
+				div.duedate{
 					font-size : 10px;
 					color     : @pc-red;
-				}
-				i.greatericon {
-					font-size: 1.75em;
-					padding-left: 35px;
 				}
 		}
 		div.olderdate{
 			border-left : 2px solid @pc-red;
 		}
 	}
-
 .footerLink {
 	i{
 		margin-left : 20px;
@@ -520,10 +512,6 @@
 		background    : #00A8FF;
 	}
 
-	#mobile-widget-settings.visible-xs {
-		display : inline-block !important;
-	}
-
 	#inactive-widgets {
 		margin   : @pc-min auto;
 		position : relative;
@@ -767,7 +755,7 @@
 		padding    : 10px 0px 20px 0px;
 		button {
 			font-size : 12px;
-			width     : 69px;
+			min-width : 69px !important;
 			height    : 28px;
 			margin    : 0px 3px;
 			color     : @pc-white;
@@ -782,5 +770,16 @@
 		.action-close-btn {
 			font-size : 9px;
 		}
+	}
+
+	// Tablet
+	#widgets-settings-panel-wrapper.visible-sm #widgets-settings-panel {
+		height : 800px;
+	}
+	#widget-settings-content.visible-sm {
+		height : 600px;
+	}
+	.actions.visible-sm button {
+		width : 60px;
 	}
 }

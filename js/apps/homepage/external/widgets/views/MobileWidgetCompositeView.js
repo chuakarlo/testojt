@@ -26,8 +26,8 @@ define( function ( require ) {
 
 	return Marionette.CompositeView.extend( {
 		'events' : {
-			'click #widget-mobile-actions .cancel'                : 'closeWidgetSettingsPanel',
 			'change #widget-mobile-header select'                 : 'changeView',
+			'click #widget-mobile-actions .cancel'                : 'cancelAllChanges',
 			'click #widget-mobile-actions .mobile-save'           : 'saveAll',
 			'click #widget-mobile-actions .mobile-save-and-close' : 'saveAllandClose'
 		},
@@ -53,7 +53,14 @@ define( function ( require ) {
 			this.selectOptionByValue( widgetSelectVal );
 		},
 
+		'cancelAllChanges' : function () {
+			this.options.userWidgetCollection.reset( this.options.actualUserWidgetCollection.models );
+			this.switchClass( $( '#mobile-widget-settings' ), 'opened', 'closed' );
+			this.closeWidgetSettingsPanel();
+		},
+
 		'saveAll' : function () {
+			this.options.actualUserWidgetCollection.reset( this.options.userWidgetCollection.models );
 			this.updateUserWidgets();
 
 			if ( !this.onAllWidgetsTab() ) {
@@ -66,7 +73,9 @@ define( function ( require ) {
 		},
 
 		'saveAllandClose' : function () {
+			this.options.actualUserWidgetCollection.reset( this.options.userWidgetCollection.models );
 			this.updateUserWidgets();
+			this.switchClass( $( '#mobile-widget-settings' ), 'opened', 'closed' );
 			this.closeWidgetSettingsPanel();
 		},
 
@@ -81,7 +90,7 @@ define( function ( require ) {
 		'getWidgetsByStatus' : function ( status ) {
 			var self = this;
 			return this.options.widgetCollection.filter( function ( model ) {
-				var data = self.options.userWidgetCollection.get( model.get( 'WidgetId' ) );
+				var data = self.options.actualUserWidgetCollection.get( model.get( 'WidgetId' ) );
 				return ( typeof data !== 'undefined' ) === status;
 			} );
 		},
@@ -98,7 +107,7 @@ define( function ( require ) {
 			var self      = this;
 			var widgetIds = this.pushWidgetIds();
 
-			App.when( Remoting.fetch( widgetAPI( Session.personnelId(), widgetIds ) ) ).done( function ( ) {
+			App.when( Remoting.fetch( widgetAPI( Session.personnelId(), widgetIds ) ) ).done( function () {
 				self.showMessageToUser( App.Homepage.Utils.message.widgetChangeSave, 'success' );
 			} ).fail( function ( error ) {
 				self.showMessageToUser( App.Homepage.Utils.message.widgetSaveError, 'error' );
@@ -118,6 +127,11 @@ define( function ( require ) {
 				'message' : message,
 				'type'    : type
 			} );
+		},
+
+		'switchClass' : function ( btn, oldClass, newClass ) {
+			btn.removeClass( oldClass );
+			btn.addClass( newClass );
 		},
 
 		'closeWidgetSettingsPanel' : function () {
