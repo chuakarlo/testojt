@@ -31,7 +31,7 @@
 					margin-top: 7px;
 				}
 
-				&:nth-last-child( 1 ) {
+				&:nth-child( 3 ) {
 					float      : right;
 					margin-top : 6px;
 				}
@@ -116,6 +116,15 @@
 		span {
 			margin-top : -26px;
 		}
+
+		&.sticky {
+			position   : fixed;
+			top        : 0;
+			left       : 0;
+			margin-top : 0px;
+			width      : 100%;
+			z-index    : 999;
+		}
 	}
 
 	//SIDEBAR STYLES
@@ -152,7 +161,24 @@
 
 		//SIDEBAR BUTTON PANEL STYLES
 		.cn-sidebar-button-panel {
-			padding : 5px 0px;
+			padding            : 5px 15px;
+			position           : fixed;
+			top                : 0;
+			left               : 0;
+			background         : @cn-white;
+			width              : 100%;
+			z-index            : 1001;
+			box-shadow         : 0px 0px 25px @cn-gray;
+			-ms-box-shadow     : 0px 0px 25px @cn-gray;
+			-o-box-shadow      : 0px 0px 25px @cn-gray;
+			-moz-box-shadow    : 0px 0px 25px @cn-gray;
+			-webkit-box-shadow : 0px 0px 25px @cn-gray;
+		}
+
+		#cn-libraries {
+			@media( max-width : @screen-xs-max ) {
+				margin-top : 40px;
+			}
 		}
 
 		.cn-content-filter {

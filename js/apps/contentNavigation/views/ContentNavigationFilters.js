@@ -19,23 +19,23 @@ define( function ( require ) {
 		'className' : 'cn-header-filter',
 
 		'ui' : {
-			'clearButton' : '.cn-clear-btn',
-			'filter'      : '.cn-filter-item',
-			'collapseBtn' : 'span.cn-collapse'
+			'clearButton'    : '.cn-clear-btn',
+			'filter'         : '.cn-filter-item',
+			'collapseButton' : '.cn-collapse'
 		},
 
 		'events' : {
-			'click @ui.clearButton' : 'clearFilters',
-			'click @ui.filter'      : 'changeClear',
-			'click @ui.collapseBtn' : 'toggleFilter'
+			'click @ui.clearButton'    : 'clearFilters',
+			'click @ui.filter'         : 'changeClear',
+			'click @ui.collapseButton' : 'toggleFilter'
 		},
 
 		'toggleFilter' : function ( ev ) {
 			if ( $( ev.currentTarget ).hasClass( 'open' ) ) {
-				$( ev.currentTarget  ).removeClass( 'open' ).removeClass( 'fa-minus' ).addClass( 'fa-plus' );
+				$( ev.currentTarget  ).removeClass( 'open' ).children( '.fa' ).removeClass( 'fa-minus' ).addClass( 'fa-plus' );
 				$( 'div.cn-filter-container-' + this.options.filterName.toLowerCase() ).hide();
 			} else {
-				$( ev.currentTarget  ).addClass( 'open' ).removeClass( 'fa-plus' ).addClass( 'fa-minus' );
+				$( ev.currentTarget  ).addClass( 'open' ).children( '.fa' ).removeClass( 'fa-plus' ).addClass( 'fa-minus' );
 				$( 'div.cn-filter-container-' + this.options.filterName.toLowerCase() ).show();
 			}
 

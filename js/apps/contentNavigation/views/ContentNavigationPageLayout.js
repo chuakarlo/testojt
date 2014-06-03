@@ -25,7 +25,7 @@ define( function ( require ) {
 
 		'ui' : {
 			'sidebarShow'    : '.cn-sidebar-show',
-			'sidebarHide'    : 'span[id=cn-sidebar-hide]',
+			'sidebarHide'    : '.cn-sidebar-hide',
 			'sidebar'        : '.cn-sidebar',
 			'sidebarWrapper' : 'div.cn-sidebar-wrapper'
 		},
@@ -45,6 +45,7 @@ define( function ( require ) {
 
 		'sidebarHide' : function ( ev ) {
 			ev.preventDefault();
+			ev.stopPropagation();
 			$( 'body' ).removeClass( 'disable-scroll' );
 			this.ui.sidebar.removeClass( 'sidebar-open' ).addClass( 'hidden-xs' );
 		},
@@ -64,6 +65,7 @@ define( function ( require ) {
 				timer = setTimeout( function () {
 					this.reloadSidebar();
 					this.ui.sidebar.perfectScrollbar( 'update' );
+					this.setStickyFilterToggle();
 				}.bind( this ), 0 );
 			}.bind( this ) );
 
@@ -125,6 +127,14 @@ define( function ( require ) {
 
 		'getSidebarHeight' : function () {
 			return this.ui.sidebar.height();
+		},
+
+		'setStickyFilterToggle' : function () {
+			if ( $( window ).scrollTop() < 163 ) {
+				this.ui.sidebarShow.removeClass( 'sticky' );
+			} else {
+				this.ui.sidebarShow.addClass( 'sticky' );
+			}
 		}
 
 	} );
