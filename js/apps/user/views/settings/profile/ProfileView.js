@@ -8,6 +8,9 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var async      = require( 'async' );
 
+	var indexToChar       = require( 'common/helpers/indexToChar' );
+	var getUserAvatarPath = require( 'common/helpers/getUserAvatarPath' );
+
 	var template      = require( 'text!user/templates/settings/profile/profile.html' );
 	var PasswordModal = require( 'user/views/settings/profile/PasswordModal' );
 
@@ -205,8 +208,13 @@ define( function ( require ) {
 
 		'initUploader' : function () {
 
-			// the name of the file to store on akamai
-			var filename = Session.personnelId() + '_' + Date.now();
+			var id = Session.personnelId();
+
+			// folder will be an English alphabet character determined by modulo
+			var folder = indexToChar( id % 26 );
+
+			// the name of the file to store on akamai. Extension will be added by upload endpoint
+			var filename = folder + '/' + id;
 
 			this.ui.uploader.fineUploader( {
 
@@ -238,21 +246,31 @@ define( function ( require ) {
 
 				'showMessage' : function ( message ) {
 
-					console.log( message );
+					App.errorHandler( {
+						'message' : message
+					} );
 
 				}
 
 			} )
 
 			.on( 'error', function () {
-				// TODO: error handling
+
+				App.errorHandler( {
+					'message' : 'An error occurred and the image could not be uploaded'
+				} );
+
 			} )
 
-			.on( 'complete', function ( event, id, name ) {
-				var avatar = filename + '.' + name.split( '.' ).pop();
+			.on( 'complete', function ( event, id, name, response ) {
 
-				this.profileModel.set( 'Avatar', avatar );
-				this.render();
+				if ( response.success ) {
+					var avatar = filename + '.' + name.split( '.' ).pop();
+
+					this.profileModel.set( 'Avatar', avatar );
+					this.profileModel.save();
+					this.render();
+				}
 
 			}.bind( this ) );
 		},
@@ -327,8 +345,10 @@ define( function ( require ) {
 			}
 		},
 
-		'templateHelpers' : {
-			'getConfig' : require( 'common/helpers/getConfig' )
+		'templateHelpers' : function () {
+			return {
+				'getUserAvatar' : getUserAvatarPath( this.profileModel.get( 'Avatar' ) )
+			};
 		}
 
 	} );

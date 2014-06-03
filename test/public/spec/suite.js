@@ -77,7 +77,6 @@ define( function ( require ) {
 			// entities
 			'spec/apps/videoPlayer/entities/ContentTest.js',
 			'spec/apps/videoPlayer/entities/RelatedVideosTest.js',
-			'spec/apps/videoPlayer/entities/SearchResultsTest.js',
 			'spec/apps/videoPlayer/entities/SegmentsTest.js',
 			'spec/apps/videoPlayer/entities/UserContentTest.js',
 			'spec/apps/videoPlayer/entities/VideoResourcesTest.js',
