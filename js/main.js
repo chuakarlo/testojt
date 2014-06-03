@@ -1,3 +1,5 @@
+/*! Copyright (c) 2012-2014 School Improvement Network, LLC. All rights reserved. */
+
 ( function () {
 	'use strict';
 
