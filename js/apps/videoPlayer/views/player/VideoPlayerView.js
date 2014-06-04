@@ -2,6 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var _          = require( 'underscore' );
+	var $          = require( 'jquery' );
 	var videojs    = require( 'videojs' );
 	var Marionette = require( 'marionette' );
 
@@ -10,6 +11,7 @@ define( function ( require ) {
 	require( 'videoPlayer/plugins/videoOverlay' );
 	require( 'videoPlayer/plugins/videoReplay' );
 	require( 'videoPlayer/plugins/staticDisplay' );
+	require( 'videoPlayer/plugins/videoTracking' );
 
 	var App    = require( 'App' );
 	var config = App.request( 'videoPlayer:config' );
@@ -76,6 +78,7 @@ define( function ( require ) {
 			this.listenTo( this, 'show', this.initializePlayer );
 			this.listenTo( this, 'afterPlayerInit', this.initPlugins );
 			this.listenTo( this, 'afterPlayerInit', this.startTracking );
+			this.initNextSegment();
 		},
 
 		'initializePlayer' : function () {
@@ -125,16 +128,6 @@ define( function ( require ) {
 			if ( !this.model.get( 'limited' ) ) {
 				// Show replay button at end of video
 				player.videoReplay();
-
-				if ( this.model.next ) {
-					// Next video overlay
-					player.videoOverlay( {
-						'imageUrl'     : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.next.get( 'ImageURL' ),
-						'imageOpacity' : 0.75,
-						'clickUrl'     : '#resources/videos/' + this.model.next.get( 'ContentId' ),
-						'overlayText'  : '<div id="video-up-next"><p id="vjs-p-overlay">Up Next:</p><p id="vjs-title-overlay">' + this.model.next.get( 'ContentName' ) + '</p></div>'
-					} );
-				}
 			} else {
 				// Show 45 second video duration static display
 				player.staticDisplay( {
@@ -149,29 +142,41 @@ define( function ( require ) {
 		},
 
 		'startTracking' : function ( player ) {
-			if ( !this.model.get( 'limited' ) ) {
-				// Here we'll track the player time manually
-				// so we won't depend on the player element
-				// being available in reporting video progress
-				// when page navigates to a different route.
-				player.on( 'timeupdate', function () {
-					this.model.set( 'currentTime' , player.currentTime() );
-				}.bind( this ) );
-
-				player.on( 'pause', function () {
-					this.model.save();
-				}.bind( this ) );
-
-				player.on( 'ended', function () {
-					this.model.save();
-				}.bind( this ) );
-			}
+			player.tracker( { 'model' : this.model } );
 		},
 
 		'isMobile' : function () {
 			return videojs.IS_IOS ||
 				videojs.IS_ANDROID ||
 				videojs.IS_OLD_ANDROID;
+		},
+
+		'initNextSegment' : function () {
+			if ( this.model.next ) {
+				if ( $.browser.mobile ||  $.browser.ipad ) {
+					this.listenTo( this, 'render', this.displayBlock );
+				} else {
+					this.listenTo( this, 'afterPlayerInit', this.displayOverlay );
+				}
+			}
+
+		},
+
+		'displayBlock' : function ( player ) {
+			// display Next video below player
+			this.$el.find( '#next-url' ).prop( 'href', '#resources/videos/' + this.model.next.get( 'ContentId' ) );
+			this.$el.find( '#fa-info' ).text( 'Play Next: ' + this.model.next.get( 'ContentName' ) );
+			this.$el.find( '#next-segment' ).css( 'display', 'block' );
+		},
+
+		'displayOverlay' : function ( player ) {
+			// display Next video in overlay
+			player.videoOverlay( {
+				'imageUrl'     : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.next.get( 'ImageURL' ),
+				'imageOpacity' : 0.75,
+				'clickUrl'     : '#resources/videos/' + this.model.next.get( 'ContentId' ),
+				'overlayText'  : '<div id="video-up-next"><p id="vjs-p-overlay">Up Next:</p><p id="vjs-title-overlay">' + this.model.next.get( 'ContentName' ) + '</p></div>'
+			} );
 		}
 
 	} );

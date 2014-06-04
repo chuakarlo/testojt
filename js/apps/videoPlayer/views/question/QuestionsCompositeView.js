@@ -4,6 +4,7 @@ define( function ( require ) {
 	require( 'slick' );
 	require( 'jquery.pscrollbar' );
 
+	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 
@@ -50,6 +51,10 @@ define( function ( require ) {
 		'initialize' : function ( options ) {
 			_.bindAll( this );
 			_.extend( this, options );
+
+			if ( $.browser.mobile ||  $.browser.ipad ) {
+				this.$el.addClass( 'mobile-next-segment' );
+			}
 		},
 
 		'onCompositeCollectionRendered' : function () {
