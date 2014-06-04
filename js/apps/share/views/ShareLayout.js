@@ -1,6 +1,8 @@
 define( function ( require ) {
 	'use strict';
 
+	require( 'jquery-placeholder' );
+
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
 
@@ -20,12 +22,14 @@ define( function ( require ) {
 
 		'ui' : {
 			'searchInput' : '.search-input',
+			'searchClear' : '#search-clear',
 			'shareButton' : '#share-btn',
 			'message'     : '.message > textarea'
 		},
 
 		'events' : {
-			'keyup @ui.searchInput' : 'onSearchKeyup'
+			'keyup @ui.searchInput' : 'onSearchKeyup',
+			'click @ui.searchClear' : 'hideSearchClear'
 		},
 
 		'triggers' : {
@@ -37,6 +41,7 @@ define( function ( require ) {
 		},
 
 		'onSearchKeyup' : _.debounce( function () {
+			this.toggleSearchClear();
 			this.trigger( 'search' );
 		}, 500 ),
 
@@ -45,6 +50,21 @@ define( function ( require ) {
 				'title'       : this.options.title,
 				'placeholder' : this.options.placeholder
 			};
+		},
+
+		'onShow' : function () {
+			this.ui.searchInput.placeholder();
+			this.ui.message.placeholder();
+			this.toggleSearchClear();
+		},
+
+		'toggleSearchClear' : function () {
+			this.ui.searchClear.toggle( Boolean( this.ui.searchInput.val() ) );
+		},
+
+		'hideSearchClear' : function () {
+			this.ui.searchInput.val( '' ).focus();
+			this.ui.searchClear.hide();
 		}
 
 	} );

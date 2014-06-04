@@ -1,8 +1,14 @@
-<img id="video-thumbnail" src="<%- imageUrl %>"></img>
-<span class="text">
-	<p id="share-content-title"><%- ContentName %></p>
-	<p id="video-thumbnail-duration"><%- segmentLength %></p>
-</span>
-<span>
-	<a href="<%- VideoUrl %>" class="share-content-url"><%- VideoUrl %></a>
-</span>
+<div class="col-xs-6 col-sm-6" id="video-thumbnail">
+	<img src="<%- imageUrl %>"></img>
+</div>
+<div class="col-xs-6 col-sm-6" id="video-title">
+		<span id="share-content-title"><%- ContentName %></span>
+</div>
+<div class="col-xs-6 col-xs-pull-6" id="video-duration">
+	<span>Duration: <%- segmentLength %></span>
+</div>
+<div class="col-xs-12" id="video-url">
+	<p>URL:</p>
+	<p class="share-content-url"><%- VideoUrl %></p>
+</div>
+

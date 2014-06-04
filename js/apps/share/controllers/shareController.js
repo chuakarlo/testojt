@@ -136,6 +136,7 @@ define( function ( require ) {
 
 			// clear search input
 			this.shareModal.ui.searchInput.val( '' );
+			this.shareModal.hideSearchClear();
 		},
 
 		'removeItem' : function ( view ) {
@@ -191,7 +192,7 @@ define( function ( require ) {
 			this.closeSearchResults();
 
 			App.errorHandler( {
-				'region'   : this.shareModal.selectedItems,
+				'region'   : this.shareModal.searchResults,
 				'viewText' : 'An error occurred while searching',
 				'message'  : false
 			} );

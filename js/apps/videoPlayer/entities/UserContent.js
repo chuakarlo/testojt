@@ -23,6 +23,8 @@ define( function ( require ) {
 				'GuidebookFileName'      : '',
 				'AudioFileName'          : '',
 				'TranscriptFileName'     : '',
+				'ContentName'            : '',
+				'ContentDescription'     : '',
 				'currentTime'            : 0,
 				'ContentId'              : 0,
 				'ContentParentId'        : 0,
@@ -44,7 +46,9 @@ define( function ( require ) {
 				};
 
 				_.each( attrMap, function ( val, key ) {
-					response[ key ] = response[ val ];
+					if ( response[ val ] ) {
+						response[ key ] = response[ val ];
+					}
 				} );
 
 				return response;
@@ -60,7 +64,8 @@ define( function ( require ) {
 			},
 
 			'getUpdateOptions' : function () {
-				var now = moment().tz( 'MST7MDT' ).format( 'MMMM D, YYYY H:mm:ss A' );
+				var now         = moment().tz( 'MST7MDT' ).format( 'MMMM D, YYYY H:mm:ss A' );
+				var viewingDate = this.get( 'BeganViewingDate' ) ? this.get( 'BeganViewingDate' ) : now;
 
 				return {
 					'path'       : 'uuvideos.UUVideoViewingProgressGateway',
@@ -70,7 +75,7 @@ define( function ( require ) {
 						'PersonnelId'      : Session.personnelId(),
 						'UUVideoId'        : this.id,
 						'ViewingId'        : 0,
-						'BeganViewingDate' : now
+						'BeganViewingDate' : viewingDate
 					}
 				};
 			}

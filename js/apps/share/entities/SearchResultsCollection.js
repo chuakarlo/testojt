@@ -1,13 +1,15 @@
 define( function ( require ) {
 	'use strict';
 
-	var Backbone = require( 'backbone' );
-	var Session  = require( 'Session' );
-	var _        = require( 'underscore' );
+	var Backbone     = require( 'backbone' );
+	var Session      = require( 'Session' );
+	var _            = require( 'underscore' );
+	var SearchResult = require( 'share/entities/SearchResultModel' );
 
 	return Backbone.CFCollection.extend( {
 
-		'path' : 'RespondService',
+		'model' : SearchResult,
+		'path'  : 'RespondService',
 
 		'initialize' : function ( models, options ) {
 			this.searchData = options.searchData;
