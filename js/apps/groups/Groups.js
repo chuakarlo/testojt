@@ -29,6 +29,7 @@ define( function ( require ) {
 			require( 'groups/views/Views' );
 			require( 'groups/entities/GroupCollection' );
 			require( 'groups/entities/GroupInviteCollection' );
+			require( 'groups/controllers/uploadResourceController' );
 
 			// configure groups routes
 			Groups.Router = AuthRouter.extend( {
@@ -42,7 +43,8 @@ define( function ( require ) {
 					'groups/:groupId/members'   : 'showGroupMembers',
 					'groups/:groupId/info'      : 'showGroupInfo',
 					'groups/:groupId/leader'    : 'showGroupLeaderTools',
-					'groups.create'             : 'showCreateGroup'
+					'groups.create'             : 'showCreateGroup',
+					'groups/:groupId/upload'    : 'uploadResource'
 				}
 
 			} );
@@ -309,6 +311,24 @@ define( function ( require ) {
 						}
 					} );
 
+				},
+
+				'uploadResource' : function ( groupId ) {
+					App.request( 'pd360:hide' );
+
+					App.content.show( new App.Common.LoadingView() );
+
+					this.model = new App.Entities.GroupModel( {
+						'LicenseId' : groupId
+					} );
+
+					App.when( this.model.fetch(), this.model.userIsAdmin( groupId ) ).done( function ( groupModel, userStatus ) {
+
+						Groups.Upload.Controller.uploadPage( {
+							'groupModel' : groupModel[ 0 ],
+							'userStatus' : userStatus[ 0 ]
+						} );
+					} );
 				}
 			} );
 
@@ -326,6 +346,10 @@ define( function ( require ) {
 
 			Vent.on( 'group:acceptGroup', function ( model ) {
 				Groups.Edit.Controller.acceptGroup( model );
+			} );
+
+			Vent.on( 'resource:upload', function ( model ) {
+				App.navigate( 'groups/' + model.attributes.LicenseId + '/upload', { 'trigger' : true } );
 			} );
 
 			App.addInitializer( function () {

@@ -37,7 +37,9 @@ define( function ( require ) {
 					memberLinkCollection
 				) {
 
-				var resourcesLayout = new App.Groups.Views.GroupResourcesLayout();
+				var resourcesLayout = new App.Groups.Views.GroupResourcesLayout( {
+					'groupModel' : this.model
+				} );
 				this.layout.groupsContentRegion.show( resourcesLayout );
 
 				var leaderCollection = new Backbone.Collection();
