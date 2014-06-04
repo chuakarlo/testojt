@@ -55,18 +55,15 @@ define( function ( require ) {
 		'onRender' : function () {
 			// If the user selected the remember me option,
 			// populate the username for them.
-			if ( $.cookie( 'remember' ) === 'true' ) {
+			if ( $.cookie( 'remember' ) ) {
 				this.ui.remember.prop( 'checked', 'checked' );
-				this.ui.username.val( $.cookie( 'UID' ) );
+				this.ui.username.val( $.cookie( 'remember' ) );
 			}
 		},
 
 		'rememberMe' : function ( event ) {
-			// if the checkbox is checked, set the remember cookie,
-			// else remove it.
-			if ( this.ui.remember.is( ':checked' ) ) {
-				Session.setCookie( 'remember', true );
-			} else {
+			// if the checkbox is unchecked remove the cookie
+			if ( !this.ui.remember.is( ':checked' ) ) {
 				Session.removeCookie( 'remember' );
 			}
 		},
@@ -85,7 +82,10 @@ define( function ( require ) {
 				Session.login( {
 					'username' : this.model.get( 'Username' ),
 					'password' : this.model.get( 'Password' ),
-					'error'    : function ( jqXHR, status, error ) {
+					'ladda'    : l,
+					'remember' : this.ui.remember.is( ':checked' ),
+
+					'error' : function ( jqXHR, status, error ) {
 						l.stop();
 
 						App.vent.trigger( 'flash:message', {

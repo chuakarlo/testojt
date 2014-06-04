@@ -186,10 +186,6 @@ define( function ( require ) {
 			App.navigate( 'success', { 'trigger' : true } );
 		} );
 
-		App.reqres.setHandler( 'login:error', function ( error ) {
-			User.Login.Controller.showLoginError( error );
-		} );
-
 		App.reqres.setHandler( 'session:username', function () {
 			return Session.username();
 		} );

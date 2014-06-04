@@ -39,7 +39,8 @@ define( function ( require ) {
 
 				// Redirect to login if SSO error occurred
 				if ( jqXHR.personnel.ErrorId ) {
-					App.request( 'login:error', jqXHR.personnel );
+					App.errorHandler( { 'message' : jqXHR.personnel.DisplayText } );
+					options.ladda.stop();
 					return;
 				}
 
@@ -49,6 +50,14 @@ define( function ( require ) {
 					// Set the cookies before we trigger success
 					if ( this.username ) {
 						this.setCookie( usernameCookie, this.username );
+
+						// Set remember cookie if it was checked
+						if ( options.remember ) {
+							var expirationDate = new Date();
+
+							expirationDate.setFullYear( expirationDate.getFullYear() + 1 );
+							$.cookie( 'remember', this.username, { 'expires' : expirationDate } );
+						}
 					}
 
 					this.setCookie( personnelCookie, jqXHR.personnel.PersonnelId );
@@ -92,16 +101,18 @@ define( function ( require ) {
 				return '/com/schoolimprovement/pd360/dao/RespondService.cfc?method=rspndLogin&loginNm=' + this.username + '&passwrd=' + this.password + '&returnformat=json';
 			};
 
-			if ( options.username && options.password ) {
-				this.username = options.username;
-				this.password = options.password;
+			// remove old cookies
+			this.removeCookie( 'remember' );
 
-				// remove username and password so that jQuery doesn't make the URL http://user:pass@domain.com
-				delete options.username;
-				delete options.password;
+			// set variables
+			this.username = options.username;
+			this.password = options.password;
 
-				this.fetch( options );
-			}
+			// remove username and password so that jQuery doesn't make the URL http://user:pass@domain.com
+			delete options.username;
+			delete options.password;
+
+			this.fetch( options );
 
 		},
 
@@ -119,11 +130,11 @@ define( function ( require ) {
 				options.returnformat = 'json';
 
 				// set defaults
-				this.ssoParams = $.param( options );
+				var params = $.param( options );
 
 				// update url for SSO
 				this.url = function () {
-					return '/com/schoolimprovement/pd360/dao/SessionService.cfc?method=authenticateSingleSignOnUser&' + this.ssoParams;
+					return '/com/schoolimprovement/pd360/dao/SessionService.cfc?method=authenticateSingleSignOnUser&' + params;
 				};
 
 				this.fetch( { 'forceRoute' : forceRoute } );
@@ -144,11 +155,7 @@ define( function ( require ) {
 			this.removeCookie( 'CFID' );
 			this.removeCookie( 'CFTOKEN' );
 			this.removeCookie( useWizardsCookie );
-
-			// remove personnelId & username
-			if ( !$.cookie( 'remember' ) ) {
-				this.removeCookie( usernameCookie );
-			}
+			this.removeCookie( usernameCookie );
 			this.removeCookie( personnelCookie );
 			this.removeCookie( eulaCookie );
 
