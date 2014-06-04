@@ -5,22 +5,7 @@ define( function ( require ) {
 	var template   = require( 'text!apps/learningTargets/templates/groups/group.html' );
 	var _          = require( 'underscore' );
 	var $          = require( 'jquery' );
-	var Remoting   = require( 'Remoting' );
-	var Session    = require( 'Session' );
 	var App        = require( 'App' );
-
-	function clientProfileParams ( personnelId ) {
-		return [
-			{
-				'path'   : 'com.schoolimprovement.pd360.dao.GroupService',
-				'method' : 'getTaskTreeByLicenseId',
-				'args'   : {
-					'persId' : Session.personnelId(),
-					'id'     : personnelId
-				}
-			}
-		];
-	}
 
 	return Marionette.ItemView.extend( {
 		'template'        : _.template( template ),
@@ -49,18 +34,38 @@ define( function ( require ) {
 
 			$( toggleContent ).slideToggle( 300 );
 
-			var fetchingModels = Remoting.fetch( clientProfileParams( this.model.get( 'LICENSEID' ) ) );
+			var licenseId   = this.model.get( 'LICENSEID' );
+			var getTaskTree = App.request( 'lt:tasktree', licenseId );
+			var detailsElem = $( '#data-' +  licenseId );
+			//
+			// show loading text or spinner
+			detailsElem.text( 'Loading...' );
 
-			App.when( fetchingModels ).done( function ( models ) {
+			App.when( getTaskTree ).done( function ( tasks ) {
+				var taskLength = tasks.models.length;
 
-				var questionsText = models[ 0 ][ 0 ].QuestionText;
+				// clear the element
+				detailsElem.text( '' );
 
-				// remove inline font face and size
-				var qt = questionsText
-									.replace( /face\="Verdana"/gi, '' )
-									.replace( /size\="\d+"/gi, '' );
+				if ( !taskLength || taskLength < 1 ) {
+					return detailsElem.text( 'There are currently no task for this Group' );
+				}
 
-				$( '#data-' + this.model.get( 'LICENSEID' ) ).html( qt );
+				_.each( tasks.models, function ( task ) {
+					var qt       = task.get( 'QuestionText' );
+					var qtResult = qt.replace( /face\="Verdana"/gi, '' ).replace( /size\="\d+"/gi, '' );
+
+					if ( qtResult === '' ) {
+						qtResult = 'No content available.';
+					}
+
+					detailsElem.append( qtResult );
+
+					if ( taskLength > 1 ) {
+						detailsElem.append( '<hr/>' );
+					}
+
+				} );
 
 			}.bind( this ) ).fail( App.errorHandler );
 

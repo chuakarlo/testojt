@@ -47,12 +47,55 @@ define( function ( require ) {
 			} );
 
 			return defer.promise();
+		},
+
+		'getTaskTree' : function ( lid ) {
+
+			var defer = $.Deferred();
+
+			var TaskTree = Backbone.CFCollection.extend( {
+
+				'path' : 'GroupService',
+
+				'idAttribute' : 'personnelId',
+
+				'getReadOptions' : function () {
+					return {
+						'method' : 'getTaskTreeByLicenseId',
+						'args'   : {
+							'persId' : Session.personnelId(),
+							'id'     : lid
+						}
+					};
+				}
+
+			} );
+
+			var taskTree = new TaskTree();
+			taskTree.fetch( {
+
+				'success' : function () {
+					defer.resolve( taskTree );
+				},
+
+				'error' : function () {
+					defer.reject( new Error( 'Error fetching group task tree' ) );
+				}
+
+			} );
+
+			return defer.promise();
+
 		}
 
 	};
 
 	App.reqres.setHandler( 'lt:groups', function () {
 		return API.getGroups();
+	} );
+
+	App.reqres.setHandler( 'lt:tasktree', function ( lid ) {
+		return API.getTaskTree( lid );
 	} );
 
 } );
