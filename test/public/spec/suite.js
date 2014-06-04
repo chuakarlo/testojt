@@ -133,7 +133,8 @@ define( function ( require ) {
 			'spec/apps/homepage/external/content/external/recommended/collections/RecommendedCollectionTest.js',
 
 			//Homepage - null
-			'spec/apps/homepage/external/widgets/external/null/baseTest.js'
+			'spec/apps/homepage/external/widgets/external/null/baseTest.js',
+			'spec/apps/homepage/external/widgets/views/EmptyWidgetViewTest.js'
 		]
 
 	};

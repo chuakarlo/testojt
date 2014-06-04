@@ -11,7 +11,7 @@ define( function ( require ) {
 	return Marionette.ItemView.extend( {
 		'template'        : _.template( template ),
 		'ui'              : {
-			'helpLink' : '#emptywidgetHelp'
+			'helpLink' : 'a[name=emptywidgetHelp]'
 		},
 		'events'          : {
 			'click @ui.helpLink' : 'redirectToHelp'
@@ -27,14 +27,17 @@ define( function ( require ) {
 		},
 		'redirectToHelp'  : function () {
 
-			var personnel   = App.request( 'homepage:userProfile' );
-			var email       = 'email='       + personnel.EmailAddress;
-			var fname       = 'fname='       + personnel.FirstName;
-			var lname       = 'lname='       + personnel.LastName;
-			var personnelid = 'personnelid=' + personnel.PersonnelId;
+			var personnel   = App.request( 'session:personnel' );
+			var email       = 'email='       + encodeURIComponent( personnel.EmailAddress );
+			var fname       = 'fname='       + encodeURIComponent( personnel.FirstName );
+			var lname       = 'lname='       + encodeURIComponent( personnel.LastName );
+			var personnelid = 'personnelid=' + encodeURIComponent( personnel.PersonnelId );
 			var location    = 'url=' + window.location + '#widgets';
 			var url         = 'http://help.schoolimprovement.com/#context/' + [ email, fname, lname, personnelid, location ].join( '&' );
 
+			this.setURL( url );
+		},
+		'setURL'          : function ( url ) {
 			this.ui.helpLink.attr( 'href', url );
 		}
 
