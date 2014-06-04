@@ -21,7 +21,7 @@ define( function ( require ) {
 		'showTrainingCatalog' : function ( e ) {
 			e.preventDefault();
 
-			this.trigger( 'lt:training', this.processModal );
+			this.trigger( 'lt:training' );
 		},
 
 		'setCatalogLinks' : function ( model ) {
