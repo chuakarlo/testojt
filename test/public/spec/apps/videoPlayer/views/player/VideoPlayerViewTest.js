@@ -22,29 +22,12 @@ define( function ( require ) {
 		describe( '.startTracking', function () {
 
 			before( function () {
-				player.currentTime = sinon.spy();
-				player.dispose = sinon.spy();
-				player.el = sinon.stub().returns( true );
-				player.stopTrackingProgress = sinon.spy();
+				player.tracker = sinon.spy();
 				videoPlayerView.startTracking( player );
 			} );
 
-			it( 'calls player currentTime method on timeupdate event', function () {
-				player.currentTime.should.have.callCount( 0 );
-				player.trigger( 'timeupdate' );
-				player.currentTime.should.have.callCount( 1 );
-			} );
-
-			it( 'reports video progress when video is paused and ends', function () {
-				videoPlayerView.model.save.should.have.callCount( 0 );
-
-				player.trigger( 'pause' );
-				videoPlayerView.model.save.should.have.callCount( 1 );
-
-				player.trigger( 'ended' );
-				videoPlayerView.model.save.should.have.callCount( 2 );
-
-				videoPlayerView.model.save.reset();
+			it( 'calls player tracker', function () {
+				player.tracker.should.have.callCount( 1 );
 			} );
 
 		} );
