@@ -12,8 +12,7 @@ define( function ( require ) {
 		'className'  : 'groups-invites-empty-view',
 
 		'initialize' : function () {
-			this.options.parentOptions.$el.find('.slick-list').slideUp();
-			this.options.parentOptions.$el.find('h2').html('You have no pending invitations.');
+			this.options.parentOptions.$el.find('h2').hide();
 		}
 
 	} );

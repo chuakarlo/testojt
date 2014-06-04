@@ -270,14 +270,6 @@ define( function ( require ) {
 					Groups.Edit.Controller.joinGroup( model );
 				},
 
-				'ignoreGroup' : function ( model ) {
-					Groups.Edit.Controller.ignoreGroup( model );
-				},
-
-				'acceptGroup' : function ( model ) {
-					Groups.Edit.Controller.acceptGroup( model );
-				},
-
 				'showGroupLeaderTools' : function ( groupId ) {
 
 					groupId = parseInt( groupId );
@@ -329,11 +321,11 @@ define( function ( require ) {
 			} );
 
 			Vent.on( 'group:ignoreGroup', function ( model ) {
-				return APIController.ignoreGroup( model );
+				Groups.Edit.Controller.ignoreGroup( model );
 			} );
 
 			Vent.on( 'group:acceptGroup', function ( model ) {
-				return APIController.acceptGroup( model );
+				Groups.Edit.Controller.acceptGroup( model );
 			} );
 
 			App.addInitializer( function () {
