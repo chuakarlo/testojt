@@ -102,7 +102,12 @@ define( function ( require ) {
 		},
 
 		'showPagination' : function () {
-			this.ui.currentPage.text( 1 );
+			if ( this.collection.length ) {
+				this.ui.currentPage.text( 1 );
+			} else {
+				this.ui.currentPage.text( 0 );
+			}
+
 			this.ui.lastPage.text( this.collection.length );
 		},
 

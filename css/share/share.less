@@ -1,18 +1,13 @@
 .share-modal {
 
 	.results-empty-view {
-		display  : block;
-		width    : 100%;
-		height   : 100%;
-		margin   : 0 auto;
-		padding  : 10px 15px;
-		color    : #B2B5B9;
-	}
-
-	#video-thumbnail {
-		width         : 155px;
-		float         : left;
-		padding-right : 10px;
+		color      : #B2B5B9;
+		display    : block;
+		height     : 100%;
+		margin     : 0 auto;
+		padding    : 20px;
+		text-align : center;
+		width      : 100%;
 	}
 
 	@media (min-width: @screen-sm-min) {
@@ -41,13 +36,47 @@
 
 			border-right : 1px solid #dbdbdb;
 
-			.share-content-url {
-				word-wrap : break-word;
-				color     : #5abef9;
+			#video-info {
+
+				padding : 0;
+
+				#video-thumbnail {
+					padding-left  : 0;
+
+					& > img {
+						width : 100%;
+					}
+				}
+
+				#video-title {
+					float   : right;
+					padding : 0;
+				}
+
+				#video-duration {
+					padding : 15px 0;
+				}
+
+				#video-url {
+
+					padding : 0 0 15px 0;
+
+					p {
+						margin : 0;
+					}
+
+					.share-content-url {
+						color         : #5ABEF9;
+						word-break    : break-all;
+						ms-word-break : break-all;
+					}
+				}
+
 			}
 
 			.message {
 				border-top : 1px solid #dbdbdb;
+				padding    : 0;
 			}
 
 			textarea {
@@ -57,6 +86,10 @@
 				background    : white;
 				resize        : none;
 				padding       : 10px;
+			}
+
+			.placeholder {
+				color : #DBDBDB;
 			}
 
 		}
@@ -78,6 +111,26 @@
 					padding       : 7px 15px;
 					border        : 1px solid #dbdbdb;
 					width         : 100%;
+				}
+
+				input::-ms-clear {
+					display : none;
+				}
+
+				#search-clear {
+					position  : absolute;
+					right     : 10px;
+					top       : 0;
+					bottom    : 0;
+					height    : 20px;
+					margin    : auto;
+					font-size : 20px;
+					cursor    : pointer;
+					color     : #CCCCCC;
+				}
+
+				.placeholder {
+					color : #DBDBDB;
 				}
 
 			}
@@ -145,15 +198,18 @@
 
 	#selected-items {
 
-		padding-top : 10px;
+		height      : auto;
+		min-width   : 100%;
 		overflow-y  : auto;
-		max-height  : 210px;
-		width       : 100%;
+		padding-top : 10px;
 
 		ul {
 
+			height     : auto;
 			list-style : none;
 			margin     : 0;
+			overflow-x : hidden;
+			overflow-y : hidden;
 			padding    : 0;
 
 			li {

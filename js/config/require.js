@@ -34,7 +34,7 @@ require.config( {
 		'jquery.mousewheel'     : 'libs/perfect-scrollbar/src/jquery.mousewheel',
 		'jquery'                : 'libs/jquery/dist/jquery',
 		'jquery-cookie'         : 'libs/jquery-cookie/jquery.cookie',
-		'jquery-placeholder'    : 'libs/jquery-placeholder/jquery.placeholder.min',
+		'jquery-placeholder'    : 'libs/jquery-placeholder/jquery.placeholder',
 		'marionette'            : 'libs/backbone.marionette/lib/core/amd/backbone.marionette',
 		'moment'                : 'libs/momentjs/moment',
 		'moment-timezone'       : 'libs/moment-timezone/moment-timezone',

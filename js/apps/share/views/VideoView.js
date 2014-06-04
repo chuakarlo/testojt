@@ -5,19 +5,33 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 
 	var template      = require( 'text!share/templates/VideoTemplate.html' );
-	var timeFormatter = require( 'videoPlayer/utils/utils' ).formatTime;
+	var timeFormatter = require( 'common/helpers/convertSecsToMins' );
 	var getConfig     = require( 'common/helpers/getConfig' );
+
+	require( 'videoPlayer/plugins/selectText' );
 
 	return Marionette.ItemView.extend( {
 
-		'template' : _.template( template ),
+		'template'  : _.template( template ),
+		'id'        : 'video-info',
+		'className' : 'col-xs-12',
 
-		'className' : 'video-content',
+		'ui' : {
+			'videoUrl' : '.share-content-url'
+		},
+
+		'events' : {
+			'click @ui.videoUrl' : 'selectVideoUrl'
+		},
+
+		'selectVideoUrl' : function () {
+			this.ui.videoUrl.selectText();
+		},
 
 		'getImageUrl' : function () {
 			// user uploaded video
 			if ( this.model.get( 'Uploaded' ) ) {
-				return getConfig( 'contentThumbnailPath' ) + 'thumb_2205_PD_sendingmessages.jpg';
+				return 'img/pd-360.jpg';
 			}
 
 			return getConfig( 'contentThumbnailPath' ) + this.model.get( 'ImageURL' );

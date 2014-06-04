@@ -93,6 +93,7 @@ define( function ( require ) {
 	} );
 
 	App.content.on( 'before:show', function ( view ) {
+		App.modalRegion.close();
 		App.flashMessage.close();
 	} );
 
