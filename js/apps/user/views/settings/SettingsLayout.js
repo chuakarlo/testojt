@@ -10,9 +10,9 @@ define( function ( require ) {
 		'template' : _.template( template ),
 
 		'regions' : {
-			'nav'     : '#settings-nav',
-			'content' : '#settings-content',
-			'loading' : '#settings-loading'
+			'nav'     : '#setting-nav',
+			'content' : '#setting-content',
+			'loading' : '#setting-loading'
 		}
 
 	} );

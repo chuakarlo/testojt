@@ -1,10 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var App        = require( 'App' );
-	var Backbone   = require( 'backbone' );
-	var Marionette = require( 'marionette' );
-
+	var App               = require( 'App' );
+	var Backbone          = require( 'backbone' );
+	var Marionette        = require( 'marionette' );
+	var $                 = require('jquery');
 	var NavCollectionView = require( 'user/views/settings/nav/NavCollectionView' );
 	var ProfileView       = require( 'user/views/settings/profile/ProfileView' );
 
@@ -138,6 +138,8 @@ define( function ( require ) {
 				App.when( pd360Loaded ).done( function () {
 					loadingView.close();
 					App.request( 'pd360:navigate', 'home', 'homePersonalReports' );
+					$( '#nav-search' ).focus();
+					this.layout.$el.find( '#setting-nav-header' ).css( 'outline', 0 ).attr( 'tabindex', 1000 ).focus();
 				}.bind( this ) );
 
 			},
@@ -150,6 +152,8 @@ define( function ( require ) {
 				App.when( pd360Loaded ).done( function () {
 					loadingView.close();
 					App.request( 'pd360:navigate', 'home', 'homeLicenses' );
+					$( '#nav-search' ).focus();
+					this.layout.$el.find( '#setting-nav-header' ).css( 'outline', 0 ).attr( 'tabindex', 1000 ).focus();
 				}.bind( this ) );
 			}
 
