@@ -47,7 +47,8 @@
     "bootstro.js": "https://github.com/raohuaming/bootstro.js.git",
     "backbone.touch": "~0.4.0",
     "bootstrap-select-3": "https://github.com/silviomoreto/bootstrap-select.git",
-    "tipsy": "~0.1.7"
+    "tipsy": "~0.1.7",
+    "adjustable-peek": "~1.0.1"
   },
   "devDependencies": {
     "chai": "1.8.x",

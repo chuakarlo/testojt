@@ -63,6 +63,7 @@ require.config( {
 		'pc-carouselSnap'       : 'libs/circular-snap-carousel/carousel-snap',
 		'pc-swipe'              : 'libs/circular-snap-carousel/jquery.touchSwipe',
 		'pc-htmlconcat'         : 'libs/htmlConcat/htmlconcat',
+		'pc-adjustablePeek'     : 'libs/adjustable-peek/adjustable-peek',
 		'bootstro'              : 'libs/bootstro.js/bootstro',
 		'bootstrap-select'      : 'libs/bootstrap-select-3/bootstrap-select',
 		'tipsy'                 : 'libs/tipsy/src/javascripts/jquery.tipsy',
@@ -205,6 +206,11 @@ require.config( {
 		},
 
 		'pc-htmlconcat' : {
+			'exports' : '$',
+			'deps'    : [ 'jquery' ]
+		},
+
+		'pc-adjustablePeek' : {
 			'exports' : '$',
 			'deps'    : [ 'jquery' ]
 		},
