@@ -3,7 +3,14 @@
 }
 
 .navbar-brand {
-	padding: 0;
+	padding          : 5px 3px 5px 0;
+	font-size        : 40px;
+	background-color : #8dc73f;
+
+	.navbar-default &:hover, .navbar-default &:focus {
+		background-color : #8dc73f;
+		color            : #fff;
+	}
 }
 
 .navbar-static-top {
@@ -84,24 +91,29 @@
 	}
 }
 
+// --------------------------------
 // Notification badge and icon
-.notification-icon {
-	margin: -10px -10px -10px 0;
-}
-
+// --------------------------------
 .badge.badge-info {
-	&.notifications {
-		position: relative;
-		top: -10px;
-		left: -5px;
-		margin-bottom: -10px;
+	&.message-count {
+		position      : relative;
+		top           : -10px;
+		left          : -10px;
+		margin-bottom : -10px;
+		margin-right  : -10px;
 	}
 
-	background-color: @brand-primary;
-	font-weight: normal;
+	background-color : @brand-primary;
+	font-weight      : normal;
 }
 
+.hidden-message {
+	display : none;
+}
+
+// --------------------------------
 // Resource Icons
+// --------------------------------
 .yamm-content {
 	@media ( max-width: @screen-xs-max ) {
 		display: table-row;
@@ -126,7 +138,6 @@
 
 					.title {
 						color: #fff;
-						font-size: 18px;
 					}
 
 				}
@@ -160,7 +171,9 @@
 	}
 }
 
+// --------------------------------
 // Search input
+// --------------------------------
 .search.form-group {
 	input {
 		.border-left-radius( 15px );
@@ -190,7 +203,9 @@ div.phone-search {
 	}
 }
 
+// --------------------------------
 // Navbar toggle
+// --------------------------------
 .navbar-toggle {
 	margin-right: 0;
 	padding: 0px 20px;
@@ -239,9 +254,4 @@ div.phone-search {
 	-ms-transform-origin: 9.5px 0px;
 	transform: rotate( 0deg );
 	transform-origin: 9.5px 0px;
-}
-
-// Misc
-.hidden-message {
-	visibility: hidden;
 }
