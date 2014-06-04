@@ -6,9 +6,9 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 
 	return Marionette.ItemView.extend( {
-		'template' : _.template( template ),
+		'template'     : _.template( template ),
 
-		'tagName'  : 'li',
+		'tagName'      : 'li',
 
 		'ui'       : {
 			'drawerToggleButton' : '.lt-toggle-btn'
@@ -21,7 +21,7 @@ define( function ( require ) {
 		'showTrainingCatalog' : function ( e ) {
 			e.preventDefault();
 
-			this.trigger( 'lt:training' );
+			this.trigger( 'lt:training', this.processModal );
 		},
 
 		'setCatalogLinks' : function ( model ) {

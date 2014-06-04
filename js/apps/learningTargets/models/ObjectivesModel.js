@@ -1,7 +1,8 @@
 define( function ( require ) {
 	'use strict';
 
-	var Backbone = require( 'backbone' );
+	var Backbone        = require( 'backbone' );
+	var getAbbreviation = require( 'common/helpers/getAbbreviation' );
 
 	return Backbone.Model.extend( {
 
@@ -36,17 +37,12 @@ define( function ( require ) {
 		},
 
 		'_setContentNameLength' : function ( model ) {
-			if ( model.ContentName.length > 50 ) {
-				model.CName = model.ContentName.substr( 0, 35 ) + '...';
-			}
-
+			model.CName = getAbbreviation ( model.ContentName, 35 );
 			return model;
 		},
 
 		'_setStateStandardTitleLength' : function ( model ) {
-			if ( model.StateStandardTitle.length > 50 ) {
-				model.SSTitle = model.StateStandardTitle.substr( 0, 50 ) + '...';
-			}
+			model.SSTitle = getAbbreviation ( model.StateStandardTitle, 40 );
 
 			return model;
 		},

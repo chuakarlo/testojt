@@ -5,22 +5,32 @@
 define( function ( require ) {
 	'use strict';
 
-	return function ( dateTime ) {
-		var hour = new Date( dateTime ).getHours();
-		var min  = new Date( dateTime ).getMinutes();
-		var sec  = new Date( dateTime ).getSeconds();
+	var setTimeValue = function ( timevalue ) {
+		if ( timevalue > 10 ) {
+			return timevalue;
+		}
+		return '0' + timevalue;
+	};
 
-		if ( hour < 10 ) {
-			hour = '0' + hour;
+	var setTimeMeridians = function ( hr ) {
+		if ( hr >= 12 ) {
+			return 'PM';
 		}
-		if ( min < 10 ) {
-			min = '0' + min;
-		}
-		if ( sec < 10 ) {
-			sec = '0' + sec;
+		return 'AM';
+	};
+
+	return function ( dateTime, options ) {
+
+		var hour = setTimeValue( new Date( dateTime ).getHours() );
+		var min  = setTimeValue( new Date( dateTime ).getMinutes() );
+		var sec  = setTimeValue( new Date( dateTime ).getSeconds() );
+		var tm   = '';
+
+		if ( options ) {
+			tm = ' ' + setTimeMeridians( new Date( dateTime ).getHours() );
 		}
 
-		return hour + ':' + min + ':' + sec;
+		return hour + ':' + min + ':' + sec + tm;
 	};
 
 } );

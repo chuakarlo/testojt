@@ -32,6 +32,7 @@ define( function ( require ) {
 			var toggleBtn     = $( e.currentTarget );
 			var toggleContent = toggleBtn.siblings( '.lt-toggle-content' )[ 0 ];
 
+			$( toggleBtn ).toggleClass( 'active' );
 			$( toggleContent ).slideToggle( 300 );
 
 			var licenseId   = this.model.get( 'LICENSEID' );

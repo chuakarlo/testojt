@@ -44,7 +44,6 @@ define( function ( require ) {
 				contentRegion = new Main.regions.Content( {
 					el : mainView.el.querySelector( '.lt-content' )
 				} );
-
 				mainView.activateTab( content );
 			},
 
@@ -83,17 +82,16 @@ define( function ( require ) {
 
 			'showTrainingCatalog' : function ( view ) {
 				if ( view.model.get( 'CatalogResourceTypeId' ) === 3 ) {
-
 					Main.helper._apiRequest( 'lt:description', function ( collection ) {
+
 						var descriptionView = new DescriptionView( {
 							model : collection.models[ 0 ]
 						} );
 
 						App.modalRegion.show( descriptionView );
+
 					}, view.model );
-
 				}
-
 			}
 
 		};

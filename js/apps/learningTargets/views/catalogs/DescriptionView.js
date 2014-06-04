@@ -4,7 +4,7 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var template   = require( 'text!apps/learningTargets/templates/catalogs/description.html' );
 	var _          = require( 'underscore' );
-	var getTime    = require( '../../../../common/helpers/getTime' );
+	var getTime    = require( 'common/helpers/getTime' );
 
 	return Marionette.ItemView.extend( {
 		'template' : _.template( template ),
@@ -12,11 +12,11 @@ define( function ( require ) {
 		'templateHelpers' : function () {
 			return {
 				getStartTime : function () {
-					return getTime( this.StartTime );
+					return getTime( this.StartTime, true );
 				},
 
 				getEndTime : function () {
-					return getTime( this.EndTime );
+					return getTime( this.EndTime, true );
 				}
 			};
 		}

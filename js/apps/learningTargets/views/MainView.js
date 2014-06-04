@@ -17,7 +17,6 @@ define( function ( require ) {
 			'nav'       : '.lt-left-nav',
 			'selectNav' : 'select.selectpicker'
 		},
-
 		'events' : {
 			'change @ui.selectNav' : 'onSelect'
 		},
@@ -25,7 +24,6 @@ define( function ( require ) {
 		'onSelect' : function ( e ) {
 			App.navigate( 'resources/learning/' + e.currentTarget.value, true );
 		},
-
 		'activateTab' : function ( content, options ) {
 			var self                = this;
 			var learningTargetsMenu = self.$( '.selectpicker' );
@@ -39,9 +37,9 @@ define( function ( require ) {
 			$( '.' + content ).addClass( 'active' );
 
 			// render bootstrap selectbox
-			$( learningTargetsMenu ).addClass('col-xs-12').selectpicker('setStyle');
+			$( learningTargetsMenu ).addClass( 'col-xs-12' ).selectpicker( 'setStyle' );
 			$( learningTargetsMenu ).val( content );
-			$( learningTargetsMenu ).selectpicker('render');
+			$( learningTargetsMenu ).selectpicker( 'render' );
 		}
 
 	} );
