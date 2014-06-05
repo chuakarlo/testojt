@@ -13,10 +13,14 @@ define( function ( require ) {
 			this.stopListening();
 			$( window ).off( 'scroll.smack' );
 			this.pd360VideosCollection.reset();
-			this.pd360VideosCollection.queryModel = null;
-			this.pd360VideosCollection            = null;
-			this.queryModel                       = null;
-			this.layout                           = null;
+
+			this.pd360VideosCollection.queryModel.get( 'searchArray' ).length = 0;
+
+			this.pd360VideosCollection.queryModel       = null;
+			this.pd360VideosCollection                  = null;
+			this.queryModel.get( 'searchArray' ).length = 0;
+			this.queryModel                             = null;
+			this.layout                                 = null;
 		},
 
 		'setEventHandlers' : function () {
