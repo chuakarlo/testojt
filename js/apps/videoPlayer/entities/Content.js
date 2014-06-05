@@ -82,7 +82,7 @@ define( function ( require ) {
 						'downloadPath' : '/gb/' + this.get( 'GuidebookFileName' ),
 						'thumbnail'    : '/img/guidebook.jpg'
 					}, {
-						'previewPath'  : config.video.previewUrl + 'gb/' + this.get( 'AudioFileName' ),
+						'previewPath'  : '',
 						'downloadPath' : '/mp3/' + this.get( 'AudioFileName' ),
 						'thumbnail'    : '/img/audio.jpg'
 					}, {

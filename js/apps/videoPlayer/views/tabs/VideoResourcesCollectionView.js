@@ -2,7 +2,6 @@ define( function ( require ) {
 	'use strict';
 
 	require( 'pc-carouselSnap' );
-	require( 'jquery-browser' );
 
 	var Marionette            = require( 'marionette' );
 	var VideoResourceItemView = require( 'videoPlayer/views/tabs/VideoResourceItemView' );

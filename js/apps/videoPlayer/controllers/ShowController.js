@@ -95,12 +95,6 @@ define( function ( require ) {
 					} );
 					layout.playerRegion.show( videoPlayerView );
 
-					//Video info view
-					var videoInfoView = new App.VideoPlayer.Views.VideoInfoView( {
-						'model' : videoModel
-					} );
-					layout.videoInfoRegion.show( videoInfoView );
-
 					// Questions view
 					var questionsCollection = new QuestionsCollection();
 					questionsCollection.reset( questions );

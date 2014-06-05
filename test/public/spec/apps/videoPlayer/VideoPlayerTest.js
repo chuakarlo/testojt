@@ -2,10 +2,8 @@
 define( function ( require ) {
 	'use strict';
 
-	var $          = require( 'jquery' );
 	var Marionette = require( 'marionette' );
 	var Backbone   = require( 'backbone' );
-	var Remoting   = require( 'Remoting' );
 	var sinon      = window.sinon;
 	var App        = require( 'App' );
 
@@ -120,8 +118,7 @@ define( function ( require ) {
 						'segmentLabelRegion'   : { 'show' : showSpy },
 						'videoSegmentsRegion'  : { 'show' : showSpy },
 						'videoResourcesRegion' : { 'show' : showSpy },
-						'relatedVideosRegion'  : { 'show' : showSpy },
-						'videoInfoRegion'      : { 'show' : showSpy }
+						'relatedVideosRegion'  : { 'show' : showSpy }
 					} );
 
 					// Call showVideoResources
@@ -135,7 +132,7 @@ define( function ( require ) {
 					showStub.should.have.callCount( 1 );
 
 					// regions should have called show
-					showSpy.should.have.callCount( 9 );
+					showSpy.should.have.callCount( 8 );
 
 					// Restoring stubs
 					App.content.show.restore();

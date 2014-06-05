@@ -1,8 +1,15 @@
-<i class="fa grayed fa-info-circle" id="info-icon"></i>
-<div id="info-video-backdrop" hidden>
-</div>
-<div id="info-video-content" hidden>
-			<p><%- description() %></p>
-			<hr />
-			<p>Duration: <%- duration() %></p>
+<div class="modal-content col-xs-12">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h2 class="modal-title"><%- ContentName %></h2>
+	</div>
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-xs-12">
+				<p><%- description() %></p>
+				<hr />
+				<p>Duration: <%- duration() %></p>
+			</div>
+		</div>
+	</div>
 </div>

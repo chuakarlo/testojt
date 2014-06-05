@@ -43,7 +43,22 @@
 	}
 }
 
-/* partial fix for bootstrap modal shifting to the left(https://github.com/twbs/bootstrap/issues/8768) */
+//video information modal overrides
+.info-modal {
+	.modal-content {
+		max-height                 : 380px;
+		overflow-y                 : scroll;
+		margin-top                 : 10%;
+		-webkit-overflow-scrolling : touch;
+	}
+	h2 {
+		font-size : 20px !important;
+	}
+	.modal-header .close {
+		margin-left : 2px;
+	}
+}
+	/* partial fix for bootstrap modal shifting to the left(https://github.com/twbs/bootstrap/issues/8768) */
 body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
 	margin-right : 0 !important;
 	width        : 100% !important;
