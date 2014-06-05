@@ -6,6 +6,9 @@
 define( function ( require ) {
 	'use strict';
 
+	var $         = require( 'jquery' );
+	var modernizr = window.Modernizr;
+
 	var ITEMS_SHOWN_PER_PANE = 4;
 
 	var UIManager = function () {};
@@ -44,6 +47,15 @@ define( function ( require ) {
 						}
 					} );
 				},
+				afterClone            : function () {
+					$( container ).currentClonedItem( function ( item ) {
+
+						$( '.cloned-item span.sc-info-icon' ).off( 'click' ).on( 'click', function ( e ) {
+							showDetails( e );
+						} );
+
+					} );
+				},
 				lastPaneEvent         : function () {
 					if ( view.collection.length && count !== view.collection.length - 1 ) {
 						base.getCarouselCustomAction( view, view.collection, 1, base );
@@ -51,6 +63,45 @@ define( function ( require ) {
 				}
 			} );
 		} );
+	}
+
+	function showDetails ( item ) {
+		var tooltipText = '';
+
+		removeTooltip( $( item.currentTarget ) );
+
+		if ( !$( item.currentTarget ).hasClass( 'blued' ) ) {
+			$( item.currentTarget ).addClass( 'blued fa-times-circle').removeClass( 'grayed fa-info-circle' );
+			tooltipText = 'Close';
+			$( item.currentTarget ).closest( 'li' ).find( 'div.sc-overlay-details' ).fadeIn();
+		} else {
+			$( item.currentTarget ).addClass( 'grayed fa-info-circle' ).removeClass( 'blued fa-times-circle' );
+			tooltipText = 'Description';
+			$( item.currentTarget ).closest( 'li' ).find( 'div.sc-overlay-details' ).fadeOut();
+		}
+
+		addTooltip( $( item.currentTarget ) , { 'title' : tooltipText  }  );
+		showTooltip( $( item.currentTarget ) );
+
+	}
+
+	function addTooltip ( elem , options ) {
+		if ( !modernizr.touch ) {
+			elem.attr( 'title' , options.title || '' ).tooltip( options );
+			console.log( elem.attr( 'title' , options.title || '' ).tooltip( options ) );
+		}
+	}
+
+	function removeTooltip ( elem ) {
+		if ( !modernizr.touch ) {
+			elem.tooltip( 'destroy' );
+		}
+	}
+
+	function showTooltip ( elem ) {
+		if ( !modernizr.touch ) {
+			elem.tooltip( 'show' );
+		}
 	}
 
 	function doRemoveItemOnCarousel ( container, item ) {
