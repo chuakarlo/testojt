@@ -36,18 +36,18 @@ define( function ( require ) {
 		},
 
 		'sidebarShow' : function ( ev ) {
-			ev.preventDefault();
-			$( 'body' ).addClass( 'disable-scroll' );
+			//ev.preventDefault();
+			$( 'html' ).addClass( 'disable-scroll' );
 			this.ui.sidebar.addClass( 'sidebar-open' ).removeClass( 'hidden-xs' );
-			this.updateSidebarScroll();
+			//this.updateSidebarScroll();
 
 		},
 
 		'sidebarHide' : function ( ev ) {
-			ev.preventDefault();
-			ev.stopPropagation();
-			$( 'body' ).removeClass( 'disable-scroll' );
+			//ev.preventDefault();
+			$( 'html' ).removeClass( 'disable-scroll' );
 			this.ui.sidebar.removeClass( 'sidebar-open' ).addClass( 'hidden-xs' );
+			//ev.stopPropagation();
 		},
 
 		'onShow' : function ( ) {
@@ -64,7 +64,7 @@ define( function ( require ) {
 				clearTimeout( timer );
 				timer = setTimeout( function () {
 					this.reloadSidebar();
-					this.ui.sidebar.perfectScrollbar( 'update' );
+					this.updateSidebarScroll();
 					this.setStickyFilterToggle();
 				}.bind( this ), 0 );
 			}.bind( this ) );
@@ -76,6 +76,7 @@ define( function ( require ) {
 			this.listenTo( Vent, 'contentNavigation:resetBodyScroll', function () {
 				this.resetBodyScroll();
 			}.bind( this ) );
+
 		},
 
 		'onClose' : function () {
@@ -106,7 +107,7 @@ define( function ( require ) {
 		},
 
 		'updateSidebarScroll' : function () {
-			if ( this.ui.sidebarWrapper.height() < this.getSidebarHeight() ) {
+			if ( this.ui.sidebarWrapper.height() < this.getSidebarHeight() || $( window ).width() < 768 ) {
 				this.ui.sidebar.perfectScrollbar( 'destroy' );
 			} else {
 				this.ui.sidebar.perfectScrollbar( { suppressScrollX : true } );
