@@ -63,12 +63,7 @@ define( function ( require ) {
 			$( learningTargetsMenu ).addClass( 'col-xs-12' ).selectpicker( 'setStyle' );
 			$( learningTargetsMenu ).val( content );
 			$( learningTargetsMenu ).selectpicker( 'render' );
-		},
-
-		'onRender' : function ( ) {
-			this.delegateEvents();
 		}
-
 	} );
 
 } );

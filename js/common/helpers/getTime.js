@@ -13,10 +13,17 @@ define( function ( require ) {
 	};
 
 	var setTimeMeridians = function ( hr ) {
+		var hourtm = {
+			'hr' : hr,
+			'tm' : 'AM'
+		};
+
 		if ( hr >= 12 ) {
-			return 'PM';
+			hourtm.hr = setTimeValue( hr - 12 );
+			hourtm.tm = 'PM';
 		}
-		return 'AM';
+
+		return hourtm;
 	};
 
 	return function ( dateTime, options ) {
@@ -27,7 +34,10 @@ define( function ( require ) {
 		var tm   = '';
 
 		if ( options ) {
-			tm = ' ' + setTimeMeridians( new Date( dateTime ).getHours() );
+			var hourtm = setTimeMeridians( new Date( dateTime ).getHours() );
+			hour = hourtm.hr;
+			tm   = ' ' + hourtm.tm;
+
 		}
 
 		return hour + ':' + min + ':' + sec + tm;
