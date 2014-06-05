@@ -49,7 +49,7 @@ define( function ( require ) {
 		'EmptyType'       : function () {
 			return 'fa-video-camera';
 		},
-		'_footer'         : function ( ) {
+		'_footer'         : function () {
 			return 'See All Processes';
 		}
 	} );
