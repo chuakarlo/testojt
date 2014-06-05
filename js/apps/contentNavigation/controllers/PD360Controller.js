@@ -1,13 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var _                 = require( 'underscore' );
-	var Marionette        = require( 'marionette' );
-	var App               = require( 'App' );
-	var Utils             = require( 'contentNavigation/controllers/PD360ControllerUtils' );
-	var FiltersLayout     = require( 'contentNavigation/views/ContentNavigationFiltersLayout' );
-	var FiltersCollection = require( 'contentNavigation/collections/FiltersCollection' );
-	var SortByCollection  = require( 'contentNavigation/collections/SortByCollection' );
+	var _             = require( 'underscore' );
+	var Marionette    = require( 'marionette' );
+	var App           = require( 'App' );
+	var Utils         = require( 'contentNavigation/controllers/PD360ControllerUtils' );
+	var FiltersLayout = require( 'contentNavigation/views/ContentNavigationFiltersLayout' );
 	require( 'jquery.bum-smack' );
 
 	App.module( 'ContentNavigation.Controller', function ( Controller ) {
@@ -25,7 +23,7 @@ define( function ( require ) {
 					'text'       : 'Loading Filters'
 				} );
 
-				var sortBy = new SortByCollection();
+				var sortBy = new App.ContentNavigation.Entities.SortByCollection();
 				sortBy.add( { 'title' : 'Release Date', 'value' : 'created desc' } );
 				sortBy.add( { 'title' : 'A-Z', 'value' : 'title asc' } );
 
@@ -65,9 +63,9 @@ define( function ( require ) {
 				this.layout.filtersRegion.show( filtersLayout );
 
 				// get Grades from filters
-				var grades   = new FiltersCollection();
-				var subjects = new FiltersCollection();
-				var topics   = new FiltersCollection();
+				var grades   = new App.ContentNavigation.Entities.FiltersCollection();
+				var subjects = new App.ContentNavigation.Entities.FiltersCollection();
+				var topics   = new App.ContentNavigation.Entities.FiltersCollection();
 
 				grades.add( this.mapFilter( filters.models[ 0 ].attributes.Grades ) );
 				subjects.add( this.mapFilter( filters.models[ 0 ].attributes.Subjects ) );

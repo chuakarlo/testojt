@@ -1,12 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var _                       = require( 'underscore' );
-	var Marionette              = require( 'marionette' );
-	var App                     = require( 'App' );
-	var Vent                    = require( 'Vent' );
-	var $                       = require( 'jquery' );
-	var CustomContentCollection = require( 'contentNavigation/collections/CustomContentCollection' );
+	var _          = require( 'underscore' );
+	var Marionette = require( 'marionette' );
+	var App        = require( 'App' );
+	var Vent       = require( 'Vent' );
+	var $          = require( 'jquery' );
 	require( 'jquery.bum-smack' );
 
 	App.module( 'ContentNavigation.Controller', function ( Controller ) {
@@ -26,7 +25,7 @@ define( function ( require ) {
 				this.showLoading();
 				this.showFilterLoading();
 				this.setEventHandlers();
-				this.categories = new CustomContentCollection();
+				this.categories = new App.ContentNavigation.Entities.CustomContentCollection();
 
 				var categoriesRequest = App.request( 'contentNavigation:customContent:categories' , options.model );
 
@@ -86,7 +85,7 @@ define( function ( require ) {
 				} else {
 
 					this.layout.filtersRegion.close();
-					var segmentsView = new App.ContentNavigation.Views.Segments( { 'collection' : new CustomContentCollection() } );
+					var segmentsView = new App.ContentNavigation.Views.Segments( { 'collection' : new App.ContentNavigation.Entities.CustomContentCollection() } );
 					this.layout.segmentsRegion.show( segmentsView );
 				}
 			},
@@ -96,7 +95,7 @@ define( function ( require ) {
 				var queueRequest = App.request( 'common:getQueueContents' );
 				// Load default category, at categories.at( 1 );
 				if ( !this.videos ) {
-					this.videos   = new CustomContentCollection();
+					this.videos   = new App.ContentNavigation.Entities.CustomContentCollection();
 				} else {
 					this.videos.reset();
 					this.layout.segmentsRegion.close();

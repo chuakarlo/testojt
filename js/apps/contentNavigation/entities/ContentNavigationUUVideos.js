@@ -39,6 +39,14 @@ define( function ( require ) {
 			{ 'id' : 'Technology in the Classroom', 'UUVideoTopicId' : 24, 'title' : 'Technology in the Classroom' , 'library' : 'Sinet Internal Training' }
 		] ;
 
+		Entities.UUVCategoryModel = Backbone.Model.extend ( {
+
+		} );
+
+		Entities.UUVCategoriesCollection = Backbone.Collection.extend( {
+			'model' : Entities.UUVCategoryModel
+		} );
+
 		Entities.UUVQueryModel = Backbone.CFModel.extend( {
 
 			'defaults' : {

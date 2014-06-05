@@ -7,14 +7,22 @@ define( function ( require ) {
 
 	App.module( 'ContentNavigation.Entities', function ( Entities ) {
 
-		Entities.FilterModel = Backbone.CFModel.extend( {
+		Entities.FilterModel = Backbone.Model.extend ( {
+
+		} );
+
+		Entities.FiltersCollection = Backbone.Collection.extend( {
+			'model' : Entities.FilterModel
+		} );
+
+		Entities.FilterCFModel = Backbone.CFModel.extend( {
 
 		} );
 
 		Entities.Filters = Backbone.CFCollection.extend( {
 
 			'path'  : 'RespondService',
-			'model' : Entities.FilterModel,
+			'model' : Entities.FilterCFModel,
 
 			'getReadOptions' : function () {
 				return {

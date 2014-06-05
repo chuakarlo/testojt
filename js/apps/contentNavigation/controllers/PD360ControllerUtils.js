@@ -1,10 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var _                 = require( 'underscore' );
-	var App               = require( 'App' );
-	var Vent              = require( 'Vent' );
-	var $                 = require( 'jquery' );
+	var _    = require( 'underscore' );
+	var App  = require( 'App' );
+	var Vent = require( 'Vent' );
+	var $    = require( 'jquery' );
 	require( 'jquery.bum-smack' );
 
 	return {

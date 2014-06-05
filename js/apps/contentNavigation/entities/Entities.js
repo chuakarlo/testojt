@@ -6,5 +6,7 @@ define( function ( require ) {
 	require( 'contentNavigation/entities/ContentNavigationPD360Videos' );
 	require( 'contentNavigation/entities/ContentNavigationUUVideos' );
 	require( 'contentNavigation/entities/ContentNavigationCustomContentCategories' );
+	require( 'contentNavigation/entities/ContentNavigationSort' );
+	require( 'contentNavigation/entities/ContentNavigationCustomContent' );
 
 } );

@@ -93,6 +93,7 @@ define( function ( require ) {
 					$( window ).off( 'scroll.smack' );
 					this.activeLibrary.close();
 					this.activeLibrary = null;
+					delete this.activeLibrary;
 					this.layout.close();
 					this.layout = null;
 				}
