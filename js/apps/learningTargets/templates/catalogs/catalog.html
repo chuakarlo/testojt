@@ -1,8 +1,11 @@
 <div class="lt-toggle-btn catalog-item <%- catalogTraining %>">
-	<div class="col-xs-8 truncate"><img src="/img/eye.png" class="icon" alt="">
-		<p><a href="<%- catalogLinks %>" class="icon"><%- ResourceName %></p>
+	<div class="row">
+	    <img class="icon-img" src="/img/eye.png">
+	    <span class="title-wrapper group-title col-xs-6 col-sm-9 col-md-9">
+		<a href="<%- catalogLinks %>"><%- ResourceName %></a>
+	    </span>
+	    <span class="title-wrapper col-xs-3 col-sm-2 col-md-2">
+		<%- CreditHours %> credits
+	    </span>
 	</div>
-	<div class="col-xs-4"><p><%- CreditHours %> credits</p></div>
 </div>
-
-<br class="clearfix">

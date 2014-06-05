@@ -51,6 +51,7 @@ define( function ( require ) {
 			'spec/apps/user/entities/LicenseTest',
 			'spec/apps/user/entities/PersonnelTest',
 			'spec/apps/user/entities/ProfileTest',
+			'spec/apps/user/entities/SendPasswordTest',
 
 			'spec/plugins/Backbone.CFTest',
 

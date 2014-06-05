@@ -14,16 +14,37 @@ define( function ( require ) {
 		'className' : 'learning-targets',
 
 		'ui' : {
-			'nav'       : '.lt-left-nav',
-			'selectNav' : 'select.selectpicker'
+			'nav'        : '.lt-left-nav',
+			'selectNav'  : 'select.selectpicker',
+			'viewAllBtn' : '.view-all'
 		},
-
 		'events' : {
-			'change @ui.selectNav' : 'onSelect'
+			'change @ui.selectNav' : 'onSelect',
+			'click @ui.viewAllBtn' : 'viewAll'
 		},
 
 		'onSelect' : function ( e ) {
 			App.navigate( 'resources/learning/' + e.currentTarget.value, true );
+		},
+
+		'setupViewAllButton' : function ( content ) {
+			var viewAllBtn = this.ui.viewAllBtn;
+
+			if ( content === 'group-task' || content === 'focus-objectives' || content === 'catalogs' ) {
+				return viewAllBtn.hide();
+			}
+
+			viewAllBtn.show();
+		},
+
+		'viewAll' : function ( e ) {
+			e.preventDefault();
+			this.trigger( 'lt:viewall' );
+		},
+
+		'onRender' : function () {
+			// should fix event delegation issue when rediretcing to the legacy page
+			this.delegateEvents();
 		},
 
 		'activateTab' : function ( content, options ) {
@@ -39,11 +60,10 @@ define( function ( require ) {
 			$( '.' + content ).addClass( 'active' );
 
 			// render bootstrap selectbox
-			$( learningTargetsMenu ).addClass('col-xs-12').selectpicker('setStyle');
+			$( learningTargetsMenu ).addClass( 'col-xs-12' ).selectpicker( 'setStyle' );
 			$( learningTargetsMenu ).val( content );
-			$( learningTargetsMenu ).selectpicker('render');
+			$( learningTargetsMenu ).selectpicker( 'render' );
 		}
-
 	} );
 
 } );

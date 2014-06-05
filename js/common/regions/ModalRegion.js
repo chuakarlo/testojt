@@ -2,6 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var _          = require( 'underscore' );
+	var $          = require( 'jquery' );
 	var Marionette = require( 'marionette' );
 
 	return Marionette.Region.extend( {
@@ -26,17 +27,17 @@ define( function ( require ) {
 		// Overwrite show so we can capture aditional options. The view must
 		// contain the class names from modal-dialog down.
 		// http://getbootstrap.com/javascript/#modals
-		'show': function( view, options ) {
-			
-		    this.showOptions = options || {};
+		'show' : function ( view, options ) {
+
+			this.showOptions = options || { };
 
 			// If a className attribute is passed in, add that to the region
 			if ( this.showOptions.className ) {
 				this.$el.addClass( this.showOptions.className );
 			}
 
-		    // Call the original show method
-		    Marionette.Region.prototype.show.apply( this, arguments );
+			// Call the original show method
+			Marionette.Region.prototype.show.apply( this, arguments );
 		},
 
 		// show the modal with your desired
@@ -45,7 +46,7 @@ define( function ( require ) {
 		},
 
 		// close the share video modal dialog
-		'onClose' : function() {
+		'onClose' : function () {
 
 			// Remove the className from the modal region
 			if ( this.showOptions.className ) {
@@ -53,9 +54,11 @@ define( function ( require ) {
 			}
 
 			// Clear the options
-			this.showOptions = {};
+			this.showOptions = { };
 
 			this.$el.modal( 'hide' );
+
+			$('.modal-backdrop').remove();
 		}
 
 	} );

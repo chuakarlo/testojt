@@ -18,6 +18,29 @@ define( function ( require ) {
 	App.module( 'LearningTargets.Main', function ( Main ) {
 		var mainView;
 		var contentRegion;
+		var currentPage;
+
+		var legacyPages = {
+			'processes' : {
+				'page'    : 'observation',
+				'subPage' : 'observationProcessesOfMe'
+			},
+
+			'courses' : {
+				'page'    : 'courses',
+				'subPage' : 'coursesBrowse'
+			},
+
+			'portfolio' : {
+				'page'    : 'home',
+				'subPage' : 'homePortfolio'
+			},
+
+			'observations' : {
+				'page'    : 'observation',
+				'subPage' : 'observationOfMe'
+			}
+		};
 
 		Main.regions = {
 			'Content' : Backbone.Marionette.Region.extend( { } )
@@ -30,13 +53,14 @@ define( function ( require ) {
 			},
 
 			'_setContent' : function ( content, options ) {
-				//var self = this;
+				var self = this;
 				// hide pd360 flash
 				App.request( 'pd360:hide' );
 
 				// show main view
 				if ( !mainView ) {
 					mainView = new MainView();
+					mainView.on( 'lt:viewall', self.handleViewallLink.bind( self ) );
 				}
 
 				App.content.show( mainView );
@@ -45,6 +69,8 @@ define( function ( require ) {
 					el : mainView.el.querySelector( '.lt-content' )
 				} );
 
+				self.setupViewAllLink( content );
+				mainView.setupViewAllButton( content );
 				mainView.activateTab( content );
 			},
 
@@ -81,19 +107,27 @@ define( function ( require ) {
 				} );
 			},
 
+			'handleViewallLink' : function ( view ) {
+				var self = this;
+				self.redirectToLegacyPage( view, currentPage.page, currentPage.subPage );
+			},
+
+			'setupViewAllLink' : function ( content ) {
+				currentPage = legacyPages[ content ];
+			},
+
 			'showTrainingCatalog' : function ( view ) {
 				if ( view.model.get( 'CatalogResourceTypeId' ) === 3 ) {
-
 					Main.helper._apiRequest( 'lt:description', function ( collection ) {
+
 						var descriptionView = new DescriptionView( {
 							model : collection.models[ 0 ]
 						} );
 
 						App.modalRegion.show( descriptionView );
+
 					}, view.model );
-
 				}
-
 			}
 
 		};
