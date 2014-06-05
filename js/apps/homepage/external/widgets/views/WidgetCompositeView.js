@@ -14,11 +14,6 @@ define( function ( require ) {
 	var panelStatuses     = [ 'opened', 'closed' ];
 	var widgetSettingsBtn = $( '#widget-settings' );
 
-	var messages = {
-		'widgetLimitError' : 'You have reached the amount of widgets to be displayed on your homepage.',
-		'widgetMinError'   : 'Action not allowed. You must have at least one active widget'
-	};
-
 	function closeMessage () {
 		var err = $( '.flash-close' );
 		if ( err ) {
@@ -146,7 +141,7 @@ define( function ( require ) {
 
 		'displayLimitError' : function ( e ) {
 			App.vent.trigger( 'flash:message', {
-				'message' : messages.widgetLimitError,
+				'message' : App.Homepage.Utils.message.widgetLimitError,
 				'type'    : 'error'
 			} );
 		},

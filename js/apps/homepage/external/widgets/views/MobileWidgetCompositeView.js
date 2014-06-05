@@ -13,11 +13,6 @@ define( function ( require ) {
 	var template             = require( 'text!apps/homepage/external/widgets/templates/mobileWidgetCompositeView.html' );
 	var MobileWidgetItemView = require( 'apps/homepage/external/widgets/views/MobileWidgetItemView' );
 
-	var messages = {
-		'widgetChangeSave' : 'Changes has been saved.',
-		'widgetSaveError'  : 'An error occurred. Please try again later.'
-	};
-
 	var widgetAPI = function ( personnelId, widgetIds ) {
 		return {
 			'path'   : 'com.schoolimprovement.pd360.dao.core.WidgetGateway',
@@ -104,9 +99,9 @@ define( function ( require ) {
 			var widgetIds = this.pushWidgetIds();
 
 			App.when( Remoting.fetch( widgetAPI( Session.personnelId(), widgetIds ) ) ).done( function ( ) {
-				self.showMessageToUser( messages.widgetChangeSave, 'success' );
+				self.showMessageToUser( App.Homepage.Utils.message.widgetChangeSave, 'success' );
 			} ).fail( function ( error ) {
-				self.showMessageToUser( messages.widgetSaveError, 'error' );
+				self.showMessageToUser( App.Homepage.Utils.message.widgetSaveError, 'error' );
 			} );
 		},
 

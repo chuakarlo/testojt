@@ -40,10 +40,10 @@ define( function ( require ) {
 
 		view.$el.find( 'div.footer' ).append( footer );
 
-		view.$el.find( 'a.footerLink' ).click( function ( e ) {
+		view.$el.find( 'a.footerLink' ).on( 'click', function ( e ) {
 			widgetCompositeController.doRedirect( e );
 			return false;
-		});
+		} );
 
 		if ( view._isRendered === true ) {
 			view.collection.set( collection.models );

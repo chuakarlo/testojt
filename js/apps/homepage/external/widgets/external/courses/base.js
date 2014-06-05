@@ -50,6 +50,6 @@ define( function ( require ) {
 		'EmptyType'       : function () {
 			return 'fa-list-ol';
 		},
-		'_mainUrl'        : '#resources/learning/courses'
+		'_mainUrl'        : 'resources/learning/courses'
 	} );
 } );

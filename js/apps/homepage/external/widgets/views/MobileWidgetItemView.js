@@ -13,11 +13,6 @@ define( function ( require ) {
 	var widgetStatuses  = [ 'active', 'inactive' ];
 	var widgetIconClass = [ 'fa-plus', 'fa-minus' ];
 
-	var messages = {
-		'widgetLimitError' : 'You have reached the amount of widgets to be displayed on your homepage.',
-		'widgetMinError'   : 'Action not allowed. You must have at least one active widget'
-	};
-
 	function doGetWidgetStatus ( view ) {
 		var status = 'inactive';
 		if ( view.options.actualUserWidgetCollection._byId[ view.model.get( 'WidgetId' ) ] ) {
@@ -65,7 +60,7 @@ define( function ( require ) {
 
 		'activateWidget' : function ( e ) {
 			if ( this.widgetLimitExceeded() ) {
-				this.showMessageToUser( messages.widgetLimitError, 'error' );
+				this.showMessageToUser( App.Homepage.Utils.message.widgetLimitError, 'error' );
 			} else {
 				this.changeItemUIXS( e );
 				this.changeWidgetStatusBy( 'add' );
@@ -75,7 +70,7 @@ define( function ( require ) {
 
 		'deactivateWidget' : function ( e ) {
 			if ( this.widgetMinimumReached() ) {
-				this.showMessageToUser( messages.widgetMinError, 'error' );
+				this.showMessageToUser( App.Homepage.Utils.message.widgetMinError, 'error' );
 			} else {
 				this.changeItemUIXS( e );
 				this.changeWidgetStatusBy( 'remove' );

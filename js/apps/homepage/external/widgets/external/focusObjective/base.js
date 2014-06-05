@@ -41,7 +41,7 @@ define( function ( require ) {
 		'getCollection'   : function ( callback, options ) {
 			doGetCollection( callback, options );
 		},
-		'_mainUrl'        : '#resources/learning/focus-objectives',
+		'_mainUrl'        : 'resources/learning/focus-objectives',
 		'_id'             : 'focusObjective',
 		'EmptyMessage'    : function () {
 			return '';

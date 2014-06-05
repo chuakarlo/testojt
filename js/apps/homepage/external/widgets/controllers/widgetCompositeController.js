@@ -27,11 +27,6 @@ define( function ( require ) {
 		}
 	}
 
-	var messages           = {
-		'widgetLimitError' : 'You have reached the amount of widgets to be displayed on your homepage.',
-		'widgetMinError'   : 'Action not allowed. You must have at least one active widget'
-	};
-
 	var fetchingModels = function ( personnelId, widgetIds ) {
 		return {
 			'path'   : 'com.schoolimprovement.pd360.dao.core.WidgetGateway',
@@ -156,7 +151,7 @@ define( function ( require ) {
 			} else {
 				view.showWidgetPreview( e );
 				App.vent.trigger( 'flash:message', {
-					'message' : messages.widgetMinError,
+					'message' : App.Homepage.Utils.message.widgetMinError,
 					'type'    : 'error'
 				} );
 			}

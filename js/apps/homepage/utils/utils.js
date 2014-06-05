@@ -9,5 +9,6 @@ define( function ( require ) {
 		Utils.progressCircle  = require( 'apps/homepage/utils/progressCircle' );
 		Utils.compareDate     = require( 'apps/homepage/utils/compareDate' );
 		Utils.timeDiff        = require( 'apps/homepage/utils/timeDiff' );
+		Utils.message         = require( 'apps/homepage/utils/message' );
 	} );
 } );

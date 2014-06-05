@@ -50,6 +50,6 @@ define( function ( require ) {
 		'_footer'         : function ( ) {
 			return 'Edit Settings';
 		},
-		'_mainUrl'        : '#settings/profile'
+		'_mainUrl'        : 'settings/profile'
 	} );
 } );

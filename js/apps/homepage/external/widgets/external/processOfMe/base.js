@@ -41,7 +41,7 @@ define( function ( require ) {
 		'getCollection'   : function ( callback, options ) {
 			doGetCollection( callback, options );
 		},
-		'_mainUrl'        : '#resources/learning/processes',
+		'_mainUrl'        : 'resources/learning/processes',
 		'_id'             : 'processOfMe',
 		'EmptyMessage'    : function () {
 			return 'No available videos to show.';

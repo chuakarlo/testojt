@@ -50,6 +50,6 @@ define( function ( require ) {
 		'_footer'         : function ( ) {
 			return 'See All Groups';
 		},
-		'_mainUrl'        : '#groups'
+		'_mainUrl'        : 'groups'
 	} );
 } );
