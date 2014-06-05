@@ -36,29 +36,20 @@ define( function ( require ) {
 		},
 
 		'sidebarShow' : function ( ev ) {
-			//ev.preventDefault();
 			$( 'html' ).addClass( 'disable-scroll' );
 			this.ui.sidebar.addClass( 'sidebar-open' ).removeClass( 'hidden-xs' );
-			//this.updateSidebarScroll();
-
 		},
 
 		'sidebarHide' : function ( ev ) {
-			//ev.preventDefault();
 			$( 'html' ).removeClass( 'disable-scroll' );
 			this.ui.sidebar.removeClass( 'sidebar-open' ).addClass( 'hidden-xs' );
-			//ev.stopPropagation();
 		},
 
 		'onShow' : function ( ) {
-			var delay = null;
 			var timer = null;
 
 			this.updateSidebarScroll();
-
-			delay = setTimeout( function () {
-				this.reloadSidebar();
-			}.bind( this ) , 500 );
+			this.reloadSidebar();
 
 			$( window ).on( 'resize scroll' ,function ( ) {
 				clearTimeout( timer );

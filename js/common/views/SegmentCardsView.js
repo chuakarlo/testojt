@@ -24,12 +24,14 @@ define( function ( require ) {
 			'infoIcon'    : 'span.sc-info-icon',
 			'watchIcon'   : 'span.sc-watch-later-icon',
 			'loadingIcon' : 'span.sc-watch-later-loading-icon',
-			'infoOverlay' : 'div.sc-overlay-details'
+			'infoOverlay' : 'div.sc-overlay-details',
+			'playNowLink' : 'a.sc-play-link'
 		},
 
 		'events' : {
-			'click @ui.infoIcon'  : 'showDetails',
-			'click @ui.watchIcon' : 'watchLaterQueue'
+			'click @ui.infoIcon'    : 'showDetails',
+			'click @ui.watchIcon'   : 'watchLaterQueue',
+			'click @ui.playNowLink' : 'navigateToVideoPage'
 		},
 
 		'templateHelpers' : {
@@ -88,6 +90,14 @@ define( function ( require ) {
 			this.removeTooltip( this.ui.infoIcon );
 			this.removeTooltip( this.ui.watchIcon );
 			this.ui.loadingIcon.spin( false );
+		},
+
+		'navigateToVideoPage' : function ( ev ) {
+			ev.preventDefault();
+
+			var uuv = this.UUVideoId ? '?uuv=true' : '';
+
+			App.navigate( '#resources/videos/' + this.model.id + uuv , { 'trigger' : true } );
 		},
 
 		'showDetails' : function () {

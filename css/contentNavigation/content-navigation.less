@@ -51,7 +51,6 @@
 			margin-left : -55px;
 
 			p.cn-no-results {
-				margin-left : 300px;
 				font-size   : 15px;
 				margin-top  : 50px;
 			}
@@ -123,17 +122,18 @@
 			}
 
 			&.sticky {
-				position   : fixed;
-				top        : 0;
-				left       : 0;
-				margin-top : 0px;
-				width      : 100%;
-				z-index    : 999;
+				position           : fixed;
+				top                : 0;
+				left               : 0;
+				margin-top         : 0px;
+				width              : 100%;
+				z-index            : 999;
 				box-shadow         : 0px 0px 25px @cn-gray-darker;
 				-ms-box-shadow     : 0px 0px 25px @cn-gray-darker;
 				-o-box-shadow      : 0px 0px 25px @cn-gray-darker;
 				-moz-box-shadow    : 0px 0px 25px @cn-gray-darker;
 				-webkit-box-shadow : 0px 0px 25px @cn-gray-darker;
+				z-index            : 2000000002;
 			}
 		}
 	}
@@ -156,6 +156,7 @@
 		padding-top    : 5px;
 		padding-bottom : 5px;
 		background     : @cn-white;
+		z-index        : 666;
 
 		.btn {
 			min-width : inherit;

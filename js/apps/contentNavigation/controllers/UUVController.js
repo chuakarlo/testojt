@@ -51,8 +51,6 @@ define( function ( require ) {
 			'onClose' : function () {
 				$( window ).off( 'scroll.smack' );
 
-				this.segmentsView.close();
-
 				this.UUVideosCollection.reset();
 				this.UUVideosCollection.queryModel = null;
 				this.UUVideosCollection = null;

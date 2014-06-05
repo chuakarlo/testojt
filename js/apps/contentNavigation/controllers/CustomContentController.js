@@ -135,9 +135,6 @@ define( function ( require ) {
 				$( window ).off( 'scroll.smack' );
 
 				this.stopListening();
-				this.layout.segmentsRegion.close();
-				this.layout.filtersRegion.close();
-				this.layout.loadingRegion.close();
 
 				this.categories.reset();
 				this.categories = null;
