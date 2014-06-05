@@ -93,6 +93,9 @@ define( function ( require ) {
 				'autoplay'  : true,
 				'techOrder' : [ 'flash', 'html5' ]
 			}, function () {
+				$( 'div.vjs-captions-button.vjs-menu-button.vjs-control > div.vjs-menu' ).remove();
+				document.getElementsByClassName( 'vjs-captions-button vjs-menu-button vjs-control' )[ 0 ].setAttribute( 'style', 'display: none;' );
+
 				// Check if flash is supported so,
 				// volume() won't throw an error if flash player isn't available.
 				if ( videojs.Flash.isSupported() ) {
