@@ -13,8 +13,7 @@ define( function ( require ) {
 		'className'         : 'wide-container-fluid resources section-container',
 		'id'                : 'billboard-container',
 		'events' : {
-			'click a.videoplay' : 'redirect',
-			'click a.videoLink' : 'redirect'
+			'click a.videoplay' : 'redirect'
 		},
 
 		'initialize' : function () {

@@ -1,10 +1,12 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette      = require( 'marionette' );
-	var template        = require( 'text!apps/learningTargets/templates/courses/course.html' );
-	var _               = require( 'underscore' );
-	var $               = require( 'jquery' );
+	var Marionette = require( 'marionette' );
+	var App        = require( 'App' );
+	var Backbone   = require( 'backbone' );
+	var template   = require( 'text!apps/learningTargets/templates/courses/course.html' );
+	var _          = require( 'underscore' );
+	var $          = require( 'jquery' );
 
 	return Marionette.ItemView.extend( {
 		'template' : _.template( template ),
@@ -48,7 +50,11 @@ define( function ( require ) {
 
 			var self = this;
 			if ( self.model.get( 'COURSEID' ) === self.model.collection.selectedCourseId ) {
+
 				self.$el.find( '.course-title' ).trigger( 'click' );
+				var test =  App.getCurrentRoute();
+				Backbone.history.navigate( 'home', { 'trigger' : false } );
+				Backbone.history.navigate( test , { 'trigger' : false } );
 			}
 		}
 
