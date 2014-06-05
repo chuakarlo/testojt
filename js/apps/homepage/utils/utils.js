@@ -10,5 +10,6 @@ define( function ( require ) {
 		Utils.compareDate     = require( 'apps/homepage/utils/compareDate' );
 		Utils.timeDiff        = require( 'apps/homepage/utils/timeDiff' );
 		Utils.message         = require( 'apps/homepage/utils/message' );
+		Utils.navigate        = require( 'apps/homepage/utils/navigate' );
 	} );
 } );

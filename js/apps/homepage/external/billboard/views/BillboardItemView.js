@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
+	var $          = require( 'jquery' );
 	var App        = require( 'App' );
 	var template   = require( 'text!apps/homepage/external/billboard/templates/billboardView.html' );
 	var controller = require( 'apps/homepage/external/billboard/controllers/billboardController' );
@@ -13,7 +14,8 @@ define( function ( require ) {
 		'className'         : 'wide-container-fluid resources section-container',
 		'id'                : 'billboard-container',
 		'events' : {
-			'click a.videoplay' : 'redirect'
+			'click a.videoplay' : 'redirect',
+			'click a.videoLink' : 'extRedirect'
 		},
 
 		'initialize' : function () {
@@ -33,6 +35,10 @@ define( function ( require ) {
 		'redirect' : function ( e ) {
 			controller.doRedirect( e );
 			return false;
+		},
+
+		'extRedirect' : function ( e ) {
+			return App.Homepage.Utils.navigate( $( e.currentTarget ).attr( 'data-url' ) );
 		}
 	} );
 
