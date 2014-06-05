@@ -2,7 +2,6 @@ define( function ( require ) {
 	'use strict';
 
 	var _          = require( 'underscore' );
-	var $          = require( 'jquery' );
 	var Backbone   = require( 'backbone' );
 	var Marionette = require( 'marionette' );
 	var template   = require( 'text!user/templates/eula/eulaLayout.html' );
@@ -70,7 +69,7 @@ define( function ( require ) {
 
 					'success' : function () {
 						l.stop();
-						$.cookie( 'EULA', now );
+						App.request( 'session:personnel' ).LicenseAccepted = now;
 						App.navigate( 'home', { 'trigger' : true } );
 					},
 

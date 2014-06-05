@@ -192,7 +192,7 @@ define( function ( require ) {
 
 		// set handler when requesting if EULA is accepted
 		App.reqres.setHandler( 'session:eulaAccepted', function () {
-			return Session.eulaAccepted();
+			return App.request( 'session:personnel', 'LicenseAccepted' );
 		} );
 
 		// set handler when requesting if session is authenticated

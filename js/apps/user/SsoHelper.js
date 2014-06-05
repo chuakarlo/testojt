@@ -3,15 +3,37 @@ define( function ( require ) {
 
 	var _ = require( 'underscore' );
 
+	var getSSODefaults = function ( options ) {
+
+		var params = uppercaseKeys( options );
+
+		var defaults = {
+			'EMAIL'        : '',
+			'FNAME'        : 'a',
+			'GROUP'        : '',
+			'LICENSEID'    : -1,
+			'LNAME'        : 'a',
+			'LOGINNAME'    : '',
+			'MD5'          : '',
+			'NCESID'       : 0,
+			'RETURNFORMAT' : 'json',
+			'SCHOOLID'     : 0
+		};
+
+		return _.extend( defaults, params );
+
+	};
+
+	var isSSO = function ( params ) {
+		return params.md5 || params.group || params.email;
+	};
+
 	var linkFromParams = function ( options ) {
 
 		var link;
 
 		// transform all keys to UPPERCASE
-		var params = { };
-		_.each( options, function changeToUpperCase ( value, key ) {
-			params[ key.toUpperCase() ] = value;
-		} );
+		var params = uppercaseKeys( options );
 
 		//--------------------------
 		// content id
@@ -106,13 +128,20 @@ define( function ( require ) {
 
 	};
 
-	var isSSO = function ( params ) {
-		return params.md5 || params.md5pswd || params.groupId || params.group;
+	var uppercaseKeys = function ( options ) {
+		// transform all keys to UPPERCASE
+		var params = { };
+		_.each( options, function changeToUpperCase ( value, key ) {
+			params[ key.toUpperCase() ] = value;
+		} );
+
+		return params;
 	};
 
 	return {
-		'linkFromParams' : linkFromParams,
-		'isSSO'          : isSSO
+		'getSSODefaults' : getSSODefaults,
+		'isSSO'          : isSSO,
+		'linkFromParams' : linkFromParams
 	};
 
 } );

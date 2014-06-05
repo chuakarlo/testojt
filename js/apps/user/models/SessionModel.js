@@ -15,7 +15,6 @@ define( function ( require ) {
 
 	var usernameCookie   = cookies.username;
 	var personnelCookie  = cookies.personnel;
-	var eulaCookie       = cookies.eula;
 	var cfCookie         = cookies.cf;
 	var useWizardsCookie = cookies.useWizards;
 	var cookieOptions    = { 'path' : '/' };
@@ -61,7 +60,6 @@ define( function ( require ) {
 					}
 
 					this.setCookie( personnelCookie, jqXHR.personnel.PersonnelId );
-					this.setCookie( eulaCookie, jqXHR.personnel.LicenseAccepted );
 
 					this.requestedRoute = null;
 					// After the session is initialized trigger the other events
@@ -126,8 +124,9 @@ define( function ( require ) {
 
 			// Login with SSO credentials and redirect
 			if ( this.isSSO( options ) ) {
-				// force json return
-				options.returnformat = 'json';
+
+				// get defaults and use UPPERCASE key names
+				options = this.getSSODefaults( options );
 
 				// set defaults
 				var params = $.param( options );
@@ -137,7 +136,10 @@ define( function ( require ) {
 					return '/com/schoolimprovement/pd360/dao/SessionService.cfc?method=authenticateSingleSignOnUser&' + params;
 				};
 
-				this.fetch( { 'forceRoute' : forceRoute } );
+				this.fetch( {
+					'forceRoute' : forceRoute,
+					'ladda'      : { 'stop' : function () {} }
+				} );
 
 			// If not SSO login just navigate to requested route
 			} else {
@@ -157,7 +159,6 @@ define( function ( require ) {
 			this.removeCookie( useWizardsCookie );
 			this.removeCookie( usernameCookie );
 			this.removeCookie( personnelCookie );
-			this.removeCookie( eulaCookie );
 
 			// Log out of flash
 			Vent.trigger( 'pd360:logout' );
@@ -165,10 +166,6 @@ define( function ( require ) {
 			// trigger session change for menus, etc
 			Vent.trigger( 'session:destroy' );
 
-		},
-
-		'eulaAccepted' : function () {
-			return $.cookie( eulaCookie );
 		},
 
 		'useWizards' : function () {
@@ -199,8 +196,8 @@ define( function ( require ) {
 			$.removeCookie( name, options );
 		},
 
-		'isSSO' : ssoHelper.isSSO,
-
+		'getSSODefaults' : ssoHelper.getSSODefaults,
+		'isSSO'          : ssoHelper.isSSO,
 		'linkFromParams' : ssoHelper.linkFromParams
 
 	} );
