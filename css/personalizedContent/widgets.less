@@ -94,19 +94,21 @@
 
 	li#processOfMe{
 		div.widget-item{
-			border-left : 2px solid @pc-white;
-				span.duedate{
-					font-size   : 10px;
+			border-left : 2px solid @pc-blue-light;
+				div.duedate{
+					font-size : 10px;
+					color     : @pc-red;
 				}
 		}
-		div.widget-item:hover{
-			span.duedate{
-				color: @pc-red;
-			}
-				border-left : 2px solid @pc-red;
+		div.olderdate{
+			border-left : 2px solid @pc-red;
 		}
 	}
-
+.footerLink {
+	i{
+		margin-left : 20px;
+	}
+}
 	#active-holder {
 		overflow : hidden;
 
