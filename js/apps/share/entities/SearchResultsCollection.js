@@ -34,7 +34,7 @@ define( function ( require ) {
 				response.GROUPS.unshift( { 'title' : 'GROUPS' } );
 			}
 
-			return _.union( response.PERSONNEL, response.GROUPS );
+			return _.union( response.GROUPS, response.PERSONNEL );
 		}
 
 	} );

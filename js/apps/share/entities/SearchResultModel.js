@@ -11,6 +11,14 @@ define( function ( require ) {
 			} else {
 				this.id = this.get( 'LicenseId' );
 			}
+		},
+
+		'isPerson' : function () {
+			if ( this.get( 'PersonnelId' ) ) {
+				return true;
+			}
+
+			return false;
 		}
 
 	} );

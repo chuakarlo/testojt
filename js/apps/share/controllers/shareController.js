@@ -47,6 +47,9 @@ define( function ( require ) {
 			// listen for the removal of a person/group
 			this.listenTo( selectedItemsView, 'itemview:item:remove', this.removeItem );
 
+			// listen for the selection of either a group or person
+			this.listenTo( App.vent, 'share:selectedItem', this.selectItem );
+
 			// show the selected items, will auto populate when adding/removing
 			shareModal.selectedItems.show( selectedItemsView );
 
@@ -66,17 +69,9 @@ define( function ( require ) {
 
 			var message = this.shareModal.ui.message.val() + ' ' + this.url;
 
-			var isPerson = function ( item ) {
-				if ( item.get( 'PersonnelId' ) ) {
-					return true;
-				}
-
-				return false;
-			};
-
 			// split the selectedItems array into two arrays, persons and groups
 			this.selectedItems.each( function ( elem ) {
-				( isPerson( elem ) ? persons : groups ).push( elem );
+				( elem.isPerson ? persons : groups ).push( elem );
 			} );
 
 			// get the personnel ids to share to
@@ -127,9 +122,9 @@ define( function ( require ) {
 			this.shareModal.ui.shareButton.attr( 'disabled', disabled );
 		},
 
-		'selectItem' : function ( view ) {
+		'selectItem' : function ( args ) {
 			// add the selected item to the list
-			this.selectedItems.add( view.model );
+			this.selectedItems.add( args.model ? args.model : args );
 
 			// remove body click handler that would hide search results
 			this.clearClickBinding();

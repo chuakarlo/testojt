@@ -20,8 +20,14 @@ define( function ( require ) {
 
 			// `hidden.bs.modal` is fired by Twitter Bootstrap after it hides
 			// the modal. Close the present view when that happens
-			this.$el.on( 'hidden.bs.modal', _.bind(this.close, this) );
+			this.$el.on( 'hidden.bs.modal', _.bind( this.close, this ) );
 
+			// focus on search input on modal shown
+			this.$el.on( 'shown.bs.modal', _.bind( this.focusOnInput, this ) );
+		},
+
+		'focusOnInput' : function () {
+			this.$el.find( '.search-input' ).focus();
 		},
 
 		// Overwrite show so we can capture aditional options. The view must
@@ -58,7 +64,7 @@ define( function ( require ) {
 
 			this.$el.modal( 'hide' );
 
-			$('.modal-backdrop').remove();
+			$( '.modal-backdrop' ).remove();
 		}
 
 	} );

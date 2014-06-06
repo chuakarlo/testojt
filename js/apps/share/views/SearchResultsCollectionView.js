@@ -11,8 +11,16 @@ define( function ( require ) {
 	return Marionette.CollectionView.extend( {
 
 		'tagName'   : 'ul',
-
 		'emptyView' : EmptyView,
+
+		'initialize' : function () {
+			this.listenTo( this, 'itemview:item:highlight', this.toggleHighlighted );
+		},
+
+		'onShow' : function () {
+			// set default selected item
+			this.$el.children( 'li:eq(1)' ).addClass( 'selected' );
+		},
 
 		'getItemView' : function ( item ) {
 			if ( item.get( 'PersonnelId' ) ) {
@@ -22,6 +30,11 @@ define( function ( require ) {
 			}
 
 			return HeaderView;
+		},
+
+		'toggleHighlighted' : function ( childView ) {
+			this.$el.find( '.selected' ).removeClass( 'selected' );
+			childView.$el.addClass( 'selected' );
 		}
 
 	} );

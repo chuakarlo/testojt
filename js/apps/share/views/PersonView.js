@@ -13,7 +13,8 @@ define( function ( require ) {
 		'tagName' : 'li',
 
 		'triggers' : {
-			'click .result-item' : 'share:selectedItem'
+			'click .result-item'      : 'share:selectedItem',
+			'mouseenter .result-item' : 'item:highlight'
 		}
 
 	} );

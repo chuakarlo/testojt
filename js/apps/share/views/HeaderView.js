@@ -10,7 +10,9 @@ define( function ( require ) {
 
 		'template' : _.template( template ),
 
-		'tagName' : 'li'
+		'tagName' : 'li',
+
+		'className' : 'list-header'
 
 	} );
 
