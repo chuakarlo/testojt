@@ -5,6 +5,8 @@
 define( function ( require ) {
 	'use strict';
 
+	// function to format the display value
+	// concat zero if less than 10 e.g '09'
 	var setTimeValue = function ( timevalue ) {
 		if ( timevalue > 10 ) {
 			return timevalue;
@@ -12,6 +14,7 @@ define( function ( require ) {
 		return '0' + timevalue;
 	};
 
+	// function to set Time Meridians if the user choose to display 12hr format
 	var setTimeMeridians = function ( hr ) {
 		var hourtm = {
 			'hr' : hr,
@@ -27,7 +30,6 @@ define( function ( require ) {
 	};
 
 	return function ( dateTime, options ) {
-
 		var hour = setTimeValue( new Date( dateTime ).getHours() );
 		var min  = setTimeValue( new Date( dateTime ).getMinutes() );
 		var sec  = setTimeValue( new Date( dateTime ).getSeconds() );
@@ -37,7 +39,6 @@ define( function ( require ) {
 			var hourtm = setTimeMeridians( new Date( dateTime ).getHours() );
 			hour = hourtm.hr;
 			tm   = ' ' + hourtm.tm;
-
 		}
 
 		return hour + ':' + min + ':' + sec + tm;

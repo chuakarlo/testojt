@@ -10,6 +10,17 @@
 	}
 }
 
+.radius-corner {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.box-shadows {
+	-webkit-box-shadow: 0px 1px 5px 0px #4a4a4a;
+    -moz-box-shadow: 0px 1px 5px 0px #4a4a4a;
+    box-shadow: 0px 1px 5px 0px #4a4a4a;
+}
+
 .learning-targets {
 	@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
 		.view-all {
@@ -380,7 +391,7 @@
 		ul.nav-objectives {
 			padding: 0;
 			li {
-				margin : 0 0 10px;
+				margin : 0 0 25px;
 				list-style : none;
 				max-height : 300px;
 				overflow : visible;
@@ -429,14 +440,68 @@
 					}
 				}
 				& > .fo-info {
-					padding: 5px 10px;
-					background: #f3f5f6;
-					position: relative;
-					max-height: 100px;
-					h3 {
-						min-height: 35px;
-						padding-bottom: 0;
-						margin: 2px 0;
+					background : #f5f5f5;
+					border : 1px solid #d8d8d8;
+					position : relative;
+					height: auto;
+					overflow-y: visible;
+					.fo-header {
+						overflow: visible;
+						display: block;
+						height: 30px;
+						padding : 5px 10px 0;
+						.fa-info-circle, .fa-times-circle {
+							font-size : 20px;
+						}
+						.fa-info-circle:hover {
+							color: #3dadef;
+						}
+						.fa-times-circle {
+							z-index: 2;
+							position: absolute;
+							right: 10px;
+						}
+						.fa-times-circle:hover {
+							color: #999999;
+						}
+					}
+					.fo-title {
+						padding : 10px 15px;
+						.fa-folder {
+							font-size : 80px;
+							text-align : center;
+							color: #d8d8d8;
+						}
+						h3 {
+							min-height: 35px;
+							padding-bottom: 0;
+							margin: 2px 0;
+							display:block;
+							vertical-align: middle;
+						}
+					}
+					.fo-overlay-details {
+						position: absolute;
+						background: #000000;
+						opacity: .8;
+						bottom: 0;
+						width: 100%;
+						height: 100%;
+						z-index: 1;
+						padding: 2px 15px;
+						p {
+							color: #ffffff;
+						}
+						.fo-overlay-title {
+							opacity : 1;
+							padding: 0;
+							border-bottom: 1px solid #b4b4b4;
+							padding-bottom: 5px;
+						}
+					}
+					i {
+						display: block;
+						cursor: pointer;
 					}
 					p {
 						line-height: 1em;
@@ -459,7 +524,6 @@
 			.title-folder {
 				min-height: 75px;
 				h3 {
-					padding-top: 20px !important;
 					min-height: auto !important;
 					padding-bottom: 0;
 					text-align: center;

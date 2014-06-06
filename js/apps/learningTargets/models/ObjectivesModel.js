@@ -8,10 +8,12 @@ define( function ( require ) {
 
 		'parse' : function ( model ) {
 			model.FolderTitle = '';
+			model.DescIcon    = '';
 
 			if ( !model.ContentId ) {
 				model.SSTitle = model.StateStandardTitle;
 				this._setStateStandardTitleLength( model );
+				this._setDescriptionIcon( model );
 			} else {
 				model.CName      = model.ContentName;
 				model.VCompleted = '';
@@ -42,7 +44,15 @@ define( function ( require ) {
 		},
 
 		'_setStateStandardTitleLength' : function ( model ) {
-			model.SSTitle = getAbbreviation ( model.StateStandardTitle, 40 );
+			model.SSTitle = getAbbreviation ( model.StateStandardTitle, 20 );
+
+			return model;
+		},
+
+		'_setDescriptionIcon' : function ( model ) {
+			if ( model.StateStandardDescription.length <= 0 ) {
+				model.DescIcon = 'hide';
+			}
 
 			return model;
 		},
