@@ -1,20 +1,20 @@
 define( function ( require ) {
 	'use strict';
 
-	var App                   = require( 'App' );
-	var Backbone              = require( 'backbone' );
-	var MainView              = require( 'apps/learningTargets/views/MainView' );
-	var GroupsView            = require( 'apps/learningTargets/views/groups/GroupsView' );
-	var CoursesView           = require( 'apps/learningTargets/views/courses/CoursesView' );
-	var CatalogsView          = require( 'apps/learningTargets/views/catalogs/CatalogsView' );
-	var ProcessesView         = require( 'apps/learningTargets/views/processes/ProcessesView' );
-	var PortfoliosView        = require( 'apps/learningTargets/views/portfolios/PortfoliosView' );
-	var DescriptionView       = require( 'apps/learningTargets/views/catalogs/DescriptionView' );
-	var ObservationsView      = require( 'apps/learningTargets/views/observations/ObservationsView' );
-	var ObjectivesFolderView  = require( 'apps/learningTargets/views/objectives/focusfolders/FocusFolderView' );
-	var ObjectivesContentView = require( 'apps/learningTargets/views/objectives/contents/ContentView' );
-	var ReflectionQuestionsView   = require( 'apps/learningTargets/views/reflectionQuestions/ReflectionQuestionsView' );
-	var $                     = require( 'jquery' );
+	var App                     = require( 'App' );
+	var Backbone                = require( 'backbone' );
+	var MainView                = require( 'apps/learningTargets/views/MainView' );
+	var GroupsView              = require( 'apps/learningTargets/views/groups/GroupsView' );
+	var CoursesView             = require( 'apps/learningTargets/views/courses/CoursesView' );
+	var CatalogsView            = require( 'apps/learningTargets/views/catalogs/CatalogsView' );
+	var ProcessesView           = require( 'apps/learningTargets/views/processes/ProcessesView' );
+	var PortfoliosView          = require( 'apps/learningTargets/views/portfolios/PortfoliosView' );
+	var DescriptionView         = require( 'apps/learningTargets/views/catalogs/DescriptionView' );
+	var ObservationsView        = require( 'apps/learningTargets/views/observations/ObservationsView' );
+	var ObjectivesFolderView    = require( 'apps/learningTargets/views/objectives/focusfolders/FocusFolderView' );
+	var ObjectivesContentView   = require( 'apps/learningTargets/views/objectives/contents/ContentView' );
+	var ReflectionQuestionsView = require( 'apps/learningTargets/views/reflectionQuestions/ReflectionQuestionsView' );
+	var $                       = require( 'jquery' );
 
 	App.module( 'LearningTargets.Main', function ( Main ) {
 		var mainView;
@@ -354,7 +354,7 @@ define( function ( require ) {
 					// bind to redirect event
 					reflectionQuestionsView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
 
-					// display Courses
+					// display Reflection Questions
 					helper._showView( reflectionQuestionsView );
 				} );
 			}
