@@ -30,17 +30,14 @@ define( function ( require ) {
 	function chopDataToNewModel ( model ) {
 		return {
 			'Avatar'                : model.Avatar,
-			'ProfessionalStartDate' : model.ProfessionalStartDate,
-			'CCSubjectId'           : model.CCSubjectId,
-			'GradeLevelId'          : model.GradeLevelId,
-			'State'                 : model.State,
 			'FirstName'             : model.FirstName,
+			'LastName'              : model.LastName,
 			'EmailAddress'          : model.EmailAddress,
-			'Country'               : model.Country,
+			'Title'                 : model.Title || model.Position,
+			'ProfessionalStartDate' : model.ProfessionalStartDate,
 			'RoleTypeId'            : model.RoleTypeId,
-			'DistrictName'          : model.DistrictName,
-			'Title'                 : model.Title,
-			'LastName'              : model.LastName
+			'GradeLevelId'          : model.GradeLevelId,
+			'CCSubjectId'           : model.CCSubjectId
 		};
 	}
 
