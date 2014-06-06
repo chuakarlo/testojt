@@ -17,7 +17,10 @@ define( function ( require ) {
 				startOnCenter : false,
 				rotate        : true,
 				beforeShift   : function () {},
-				afterShift    : function () {}
+				afterShift    : function () {},
+				onInitialize  : function () {
+					container.show();
+				}
 			} );
 		} );
 	}
@@ -47,7 +50,9 @@ define( function ( require ) {
 		'itemView'  : UserWidgetItemView,
 		'className' : 'active-widgets-container no-padding',
 
-		'onShow'    : function () {
+		'onBeforeRender' : function ( parent ) {
+
+			this.$el.hide();
 
 			var self  = this;
 			var count = 3 - this.collection.length;
@@ -57,7 +62,6 @@ define( function ( require ) {
 				self.$el.append( emptyUserWidgetItemView.render().el );
 			}
 			adjustWidgetMargin( this.$el );
-
 		}
 	} );
 } );

@@ -19,6 +19,9 @@ define( function ( require ) {
 	var panelStatuses = [ 'opened', 'closed' ];
 	var widgets       = require( 'apps/homepage/external/widgets/manifest' )().splice(1);
 
+	//early load for performance
+	require( 'pc-adjustablePeek' );
+
 	function closeMessage () {
 		var err = $( '.flash-close' );
 		if ( err ) {
