@@ -83,15 +83,12 @@
 			z-index  : 10000;
 			color    : @pc-gray-light;
 			&:before {
-				background-color      : #666666;
-				background-image      : -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,#666),color-stop(1,#555));
-				background-image      : -webkit-linear-gradient(top,#666,#555);
-				background-image      : linear-gradient(top,#666,#555);
-				border                : 1px solid #505050;
-				-webkit-border-radius : 2px;
+				background-color      : #aaa;
+				background-image      : -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, @pc-white),color-stop(1,#DDD));
+				background-image      : -webkit-linear-gradient(top, @pc-white,#DDD);
+				background-image      : linear-gradient(top, @pc-white,#DDD);
+				-webkit-border-radius : 2px 0 0 2px;
 				border-radius         : 2px 0 0 2px;
-				-webkit-box-shadow    : 0 1px 0 rgba(255,255,255,.06),1px 1px 0 rgba(255,255,255,.03),-1px -1px 0 rgba(0,0,0,.02),inset 1px 1px 0 rgba(255,255,255,.05);
-				box-shadow            : 0 1px 0 rgba(255,255,255,.06),1px 1px 0 rgba(255,255,255,.03),-1px -1px 0 rgba(0,0,0,.02),inset 1px 1px 0 rgba(255,255,255,.05);
 				color                 : @pc-white;
 				cursor                : pointer !important;
 				display               : inline-block;
@@ -101,7 +98,6 @@
 				outline               : 0;
 				text-align            : center;
 				text-shadow           : 0 -1px 0 rgba(0,0,0,.5);
-				color                 : #ccc;
 				font-size             : 25px;
 				text-shadow           : -1px 0px 0px rgba(0, 0, 0, 0.3);
 				padding               : 4px 12px 4px 10px;
@@ -109,6 +105,11 @@
 			&.nextLink:before, &.nextLink2:before {
 				padding       : 4px 10px 4px 13px;
 				border-radius : 0 2px 2px 0;
+			}
+			&:hover:before {
+				background-image      : -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, #DDD),color-stop(1,@pc-white));
+				background-image      : -webkit-linear-gradient(top, #DDD,@pc-white);
+				background-image      : linear-gradient(top, #DDD,@pc-white);
 			}
 		}
 		.nextLink, .nextLink2 {
