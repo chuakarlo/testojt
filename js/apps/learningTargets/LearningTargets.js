@@ -13,8 +13,9 @@ define( function ( require ) {
 		require ( 'apps/learningTargets/entities/Portfolios' );
 		require ( 'apps/learningTargets/entities/Processes' );
 		require ( 'apps/learningTargets/entities/Catalogs' );
-		require ( 'apps/learningTargets/entities/Groups' );
+		// require ( 'apps/learningTargets/entities/Groups' );
 		require ( 'apps/learningTargets/entities/CatalogDescriptions' );
+		require ( 'apps/learningTargets/entities/ReflectionQuestions' );
 
 		App.module( 'LearningTargets', function ( LearningTargets, App ) {
 
@@ -22,17 +23,17 @@ define( function ( require ) {
 			LearningTargets.Router = AuthRouter.extend ( {
 
 				'appRoutes' : {
-					'resources/learning'                  : 'showMain',
-					'resources/learning/courses'          : 'showCourses',
-					'resources/learning/courses/:id'      : 'showCoursesWithId',
-					'resources/learning/processes'        : 'showProcesses',
-					'resources/learning/observations'     : 'showObservations',
-					'resources/learning/observations/:id' : 'showObservationsWithId',
-					'resources/learning/portfolio'        : 'showPortfolio',
-					'resources/learning/catalogs'         : 'showCatalogs',
-					// 'resources/learning/group-task'       : 'showGroups',
-					'resources/learning/focus-objectives' : 'showFocusObjectivesTitle',
-
+					'resources/learning'                                            : 'showMain',
+					'resources/learning/courses'                                    : 'showCourses',
+					'resources/learning/courses/:id'                                : 'showCoursesWithId',
+					'resources/learning/processes'                                  : 'showProcesses',
+					'resources/learning/observations'                               : 'showObservations',
+					'resources/learning/observations/:id'                           : 'showObservationsWithId',
+					'resources/learning/portfolio'                                  : 'showPortfolio',
+					'resources/learning/catalogs'                                   : 'showCatalogs',
+					// 'resources/learning/group-task'                                 : 'showGroups',
+					'resources/learning/focus-objectives'                           : 'showFocusObjectivesTitle',
+					'resources/learning/reflection-questions'                       : 'showReflectionQuestions',
 					'resources/learning/objectives/:focustitle/:ncesid/:statestdid' : 'showFocusObjectivesContent'
 				}
 			} );

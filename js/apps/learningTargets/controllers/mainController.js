@@ -13,6 +13,7 @@ define( function ( require ) {
 	var ObservationsView      = require( 'apps/learningTargets/views/observations/ObservationsView' );
 	var ObjectivesFolderView  = require( 'apps/learningTargets/views/objectives/focusfolders/FocusFolderView' );
 	var ObjectivesContentView = require( 'apps/learningTargets/views/objectives/contents/ContentView' );
+	var ReflectionQuestionsView   = require( 'apps/learningTargets/views/reflectionQuestions/ReflectionQuestionsView' );
 	var $                     = require( 'jquery' );
 
 	App.module( 'LearningTargets.Main', function ( Main ) {
@@ -337,7 +338,27 @@ define( function ( require ) {
 					helper._showView( objectivesContentView );
 
 				}, options );
+			},
+
+			'showReflectionQuestions' : function () {
+				var helper = Main.helper;
+				helper._setContent( 'reflection-questions' );
+
+				helper._showView( new App.Common.LoadingView() );
+
+				helper._apiRequest( 'lt:reflection-questions', function ( collection ) {
+					var reflectionQuestionsView = new ReflectionQuestionsView( {
+						collection : collection
+					} );
+
+					// bind to redirect event
+					reflectionQuestionsView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
+
+					// display Courses
+					helper._showView( reflectionQuestionsView );
+				} );
 			}
+
 		};
 
 	} );

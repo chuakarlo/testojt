@@ -30,7 +30,7 @@ define( function ( require ) {
 		'setupViewAllButton' : function ( content ) {
 			var viewAllBtn = this.ui.viewAllBtn;
 
-			if ( content === 'group-task' || content === 'focus-objectives' || content === 'catalogs' ) {
+			if ( content === 'group-task' || content === 'focus-objectives' || content === 'catalogs' || content === 'reflection-questions' ) {
 				return viewAllBtn.hide();
 			}
 
