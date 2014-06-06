@@ -5,6 +5,7 @@ define( function ( require ) {
 	var Backbone      = require( 'backbone' );
 	var template      = require( 'text!apps/learningTargets/templates/processes/process.html' );
 	var TasksItemView = require( 'apps/learningTargets/views/processes/TasksItemView' );
+	var EmptyView     = require( 'apps/learningTargets/views/processes/EmptyTask' );
 	var _             = require( 'underscore' );
 	var $             = require( 'jquery' );
 
@@ -12,6 +13,7 @@ define( function ( require ) {
 		'template'          : _.template( template ),
 		'tagName'           : 'li',
 		'itemView'          : TasksItemView,
+		'emptyView'         : EmptyView,
 		'itemViewContainer' : '.lt-toggle-content',
 
 		'ui'                : {
