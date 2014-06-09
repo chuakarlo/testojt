@@ -4,6 +4,8 @@ define( function ( require ) {
 	var Backbone = require( 'backbone' );
 	var App      = require( 'App' );
 
+	require( './GroupResourceFileModel' );
+
 	App.module( 'Entities', function ( Mod ) {
 
 		var groupIdError = function () {
@@ -11,6 +13,8 @@ define( function ( require ) {
 		};
 
 		Mod.GroupResourcesCollection = Backbone.CFCollection.extend( {
+
+			'model' : App.Entities.GroupResourceFileModel,
 
 			'path'   : 'CommunityService',
 

@@ -14,6 +14,11 @@ define( function ( require ) {
 	require( 'groups/entities/GroupMemberCollection' );
 	require( 'groups/entities/GroupResourcesCollection' );
 	require( 'groups/entities/GroupLinksCollection' );
+	require( 'groups/entities/GroupResourceThreadModel' );
+	require( 'groups/entities/GroupResourceThreadPostModel' );
+	require( 'groups/entities/GroupResourceFileModel' );
+	require( 'groups/entities/GroupResourceLinkModel' );
+	require( 'groups/entities/GroupNewsEntryModel' );
 
 	App.module( 'Entities', function ( Mod ) {
 
@@ -205,7 +210,9 @@ define( function ( require ) {
 			* @returns {Deferred}
 			*/
 			'userIsAdmin' : function ( persId ) {
-				// Check to see if a person is a group admin
+
+				persId = parseInt( persId );
+
 				var data = {
 					'path'   : 'GroupService',
 					'method' : 'userIsGroupAdmin',
@@ -230,6 +237,7 @@ define( function ( require ) {
 
 				var def = App.Deferred();
 
+				// if no limit is provided, default to all of them
 				limit = limit || -1;
 
 				var memberCollection = new App.Entities.GroupMemberCollection([ ], {
@@ -342,7 +350,8 @@ define( function ( require ) {
 			},
 
 			/**
-			* Update the search index for this group
+			* Update the search index for this group. This should only be
+			* called once.
 			* @returns {Deferred}
 			*/
 			'updateSearchIndex' : function () {
@@ -355,6 +364,143 @@ define( function ( require ) {
 				};
 
 				return Remoting.fetch( data );
+			},
+
+			'createResourceThread' : function ( options ) {
+
+				options = options || { };
+
+				var date = new Date();
+				date = date.toString();
+
+				var persId = parseInt( Session.personnelId() );
+
+				return new App.Entities.GroupResourceThreadModel( {
+					'PersonnelId' : persId,
+					'Title'       : 'Group Resource: ' + options.fileName,
+					'LocationId'  : this.get( 'LicenseId' ),
+					'Created'     : date,
+					'Creator'     : persId
+				} );
+
+			},
+
+			'createResourceForumPosts' : function ( threadModel, options ) {
+
+				var persId = parseInt( Session.personnelId() );
+
+				return new App.Entities.GroupResourceThreadPostModel( {
+					'ForumThreadId' : threadModel.get( 'ForumThreadId' ),
+					'PersonnelId'   : persId,
+					'Subject'       : threadModel.get( 'Title' ),
+					'Text'          : options.fileName,
+					'Created'       : threadModel.get( 'Created' ),
+					'Creator'       : persId
+				} );
+			},
+
+			'createFileResource' : function ( threadModel, postModel, options ) {
+
+				var deferred = App.Deferred();
+				var persId = parseInt( Session.personnelId() );
+
+				App.when( this.userIsAdmin( persId ) ).done( _.bind( function ( isAdmin ) {
+					var fileType = 11;
+					if ( isAdmin[ 0 ] ) {
+						fileType = 9;
+					}
+					var resource = new App.Entities.GroupResourceFileModel( {
+						'PersonnelId'     : persId,
+						'FileName'        : postModel.get( 'Text' ),
+						'FileTypeId'      : fileType,
+						'FileDescription' : options.fileDescription,
+						'LocationId'      : this.get( 'LicenseId' ),
+						'Created'         : postModel.get( 'Created' ),
+						'Creator'         : persId,
+						'threadId'        : threadModel.get( 'ForumThreadId' ),
+						'postId'          : postModel.get( 'ForumPostId' )
+					} );
+					deferred.resolve( resource );
+				}, this ) );
+
+				return deferred.promise();
+			},
+
+			'createLinkResource' : function ( threadModel, postModel, options ) {
+
+				var deferred = App.Deferred();
+				var persId = parseInt( Session.personnelId() );
+
+				App.when( this.userIsAdmin( persId ) ).done( _.bind( function ( isAdmin ) {
+					// admin is 6
+					var linkType = 7;
+					if ( isAdmin[ 0 ] ) {
+						linkType = 6;
+					}
+					var resource = new App.Entities.GroupResourceLinkModel( {
+						'PersonnelId'     : Session.personnelId(),
+						'LinkURL'         : options.fileName,
+						'LinkTypeId'      : linkType,
+						'LinkDescription' : options.fileDescription,
+						'LocationId'      : this.get( 'LicenseId' ),
+						'Created'         : postModel.get( 'Created' ),
+						'Creator'         : Session.personnelId(),
+						'threadId'        : threadModel.get( 'ForumThreadId' ),
+						'postId'          : postModel.get( 'ForumPostId' )
+					} );
+					deferred.resolve( resource );
+				}, this ) );
+
+				return deferred.promise();
+			},
+
+			'createNewsEntry' : function ( message ) {
+				var date = new Date();
+				date = date.toString();
+
+				return new App.Entities.GroupNewsEntryModel( {
+					'LicenseId' : this.get( 'LicenseId' ),
+					'NewsEntry' : message,
+					'Created'   : date,
+					'Creator'   : parseInt( Session.personnelId() )
+				} );
+			},
+
+			/**
+			* I have no idea what is going on
+			*/
+			'prepareResource' : function ( options ) {
+
+				options = options || { };
+
+				var deferred = App.Deferred();
+
+				var thread = this.createResourceThread();
+				// Create a thread first
+				App.when( thread.save() ).done( _.bind( function () {
+					// Then create a post
+					var post = this.createResourceForumPosts( thread, options );
+					App.when( post.save() ).done( _.bind( function () {
+						// Then I guess we create the resource...
+						var def;
+						if ( options.resourceType === 'file' ) {
+							def = this.createFileResource( thread, post, options );
+						} else {
+							def = this.createLinkResource( thread, post, options );
+						}
+						// We have to return a deferred since we check if they
+						// are an admin or not.
+						App.when( def ).done( function (resource ) {
+							App.when( resource.save() ).done( function () {
+								// Now we are actually ready to upload the file
+								deferred.resolve( resource );
+							} );
+						} );
+					}, this ) );
+				}, this ) );
+
+				return deferred.promise();
+
 			}
 
 		} );

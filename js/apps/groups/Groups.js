@@ -322,13 +322,12 @@ define( function ( require ) {
 						'LicenseId' : groupId
 					} );
 
-					App.when( this.model.fetch(), this.model.userIsAdmin( groupId ) ).done( function ( groupModel, userStatus ) {
+					App.when( this.model.fetch() ).done( _.bind( function () {
 
 						Groups.Upload.Controller.uploadPage( {
-							'groupModel' : groupModel[ 0 ],
-							'userStatus' : userStatus[ 0 ]
+							'groupModel' : this.model
 						} );
-					} );
+					}, this ) );
 				}
 			} );
 

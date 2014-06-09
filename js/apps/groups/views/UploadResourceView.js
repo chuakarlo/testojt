@@ -1,163 +1,214 @@
 define( function ( require ) {
 	'use strict';
 
-	var template        = require( 'text!../templates/uploadResourceView.html' );
-	var _               = require( 'underscore' );
-	var Marionette      = require( 'marionette' );
-	var $               = require( 'jquery' );
-	var App             = require( 'App' );
-	var stripHtml       = require( 'common/helpers/stripHtml' );
+	var template   = require( 'text!../templates/uploadResourceView.html' );
+	var _          = require( 'underscore' );
+	var Marionette = require( 'marionette' );
+	var $          = require( 'jquery' );
+	var App        = require( 'App' );
+	var qq         = window.qq;
+	var Session    = require( 'Session' );
+	var stripHtml  = require( 'common/helpers/stripHtml' );
+	var Ladda      = require( 'ladda' );
 
-	var fileExtensions = [ '.jpg', '.gif', '.png', '.jpeg', '.doc', '.rtf', '.ppt', '.docx', '.pptx', '.xls', '.xlsx', '.odt', '.xps', '.flv', '.pdf', '.txt' ];
-	var url            = 'http://storage.pd360.com/DEV/uploads/file/';
+	require( 'fine-uploader' );
 
 	return Marionette.ItemView.extend( {
+
 		'template'   : _.template( template ),
+
 		'className'  : 'upload-resource',
-		'initialize' : function ( options ) {
-			this.groupModel = options.groupModel;
+
+		'ui' : {
+			'descInput'     : '.file-description',
+			'urlInput'      : 'input[name="url-input"]',
+			'fileInput'     : 'input[name="user_file"]',
+			'radioInput'    : 'input[name="upload-type"]',
+			'linkContainer' : '.upload-link-container',
+			'fileContainer' : '.upload-file-container'
 		},
 
-		'onShow' : function () {
-			$( '.file-input' ).attr( 'accept', fileExtensions );
-			$( '#resource-form' ).attr( 'method', 'post' );
+		'initialize' : function () {
+			_.bindAll( this, 'submitForm' );
 		},
 
 		'events' : {
-			'click .radio-link' : function ( event ) {
-				$( '.upload-content-file' ).hide();
-				$( '.file-error' ).hide();
-				$( '.upload-content-link' ).show();
-				$( '.upload-link' ).attr( 'required', true );
-			},
-			'click .radio-file' : function ( event ) {
-				$( '.upload-content-link' ).hide();
-				$( '.file-error' ).hide();
-				$( '.upload-content-file' ).show();
-				$( '.upload-link' ).removeAttr( 'required' );
-			},
 
 			'click .cancel-btn' : function () {
-				App.navigate( 'groups/' + this.groupModel.LicenseId + '/resources', { 'trigger' : true } );
-			},
-			'click .submit-btn' : function () {
-
-				var data = { };
-
-				data.description = stripHtml( $( '.file-description' ).val() );
-
-				if ( $( 'input.radio-file' )[ 0 ].checked ) {
-					data.file         = $( 'span.resource-preview' ).text();
-					data.resourceType = 'file';
-				} else {
-					data.file         = stripHtml( $( '.upload-link' ).val() );
-					data.resourceType = 'link';
-				}
-
-				if ( data.file === '' ) {
-					this.showError( 'Please enter resource to be uploaded' );
-				}
+				App.navigate( 'groups/' + this.model.get( 'LicenseId' ) + '/resources', { 'trigger' : true } );
 			},
 
-			'focusin input.upload-link' : function () {
-				$( '.file-error' ).hide();
-			},
+			'click .submit-btn'     : 'submitForm',
+			'change @ui.radioInput' : 'updateInputDisplay'
 
-			'focusout input.upload-link' : function () {
-				if ( $( '.upload-link' ).val() === '' ) {
-					this.showError( 'Please enter resource link' );
-				}
-			},
+		},
 
-			'change input[ type = file ]' : function ( ev ) {
-				var browser = window.navigator.userAgent;
-				var msie    = browser.indexOf( 'MSIE' );
-				if ( msie > 0 && parseInt( browser.substring( msie + 5, browser.indexOf( '.', msie ) ) ) < 10 ) {
-					this.inputChange();
-				} else {
-					this.checkFile( ev );
-				}
-			},
-			'click .fileinput-button' : function () {
-				$( '.file-input' ).click();
+		'updateInputDisplay' : function ( ev ) {
+			if ( this.ui.radioInput.filter( ':checked' ).val() === 'file') {
+				this.ui.linkContainer.hide();
+				this.ui.fileContainer.show();
+			} else {
+				this.ui.linkContainer.show();
+				this.ui.fileContainer.hide();
 			}
 		},
 
-		'setURL' : function ( data ) {
-			var fileExt     = data.FileName.match(  /.[^.]+$/, '' );
-			var newFileName = 'file_' + data.FileId + '_' + data.PersonnelId + fileExt[ 0 ];
-			var newUrl      = url + newFileName;
+		'onRender' : function () {
 
-			$( '#resource-form' ).attr( 'action', newUrl );
-			$( '#resource-form' ).submit( function () {
-				var formData = new FormData();
-				formData.append( 'user_file', this.file );
-				$.ajax( {
-					url         : newUrl,
-					type        : 'POST',
-					mimeType    : 'multipart/form-data',
-					data        : formData,
-					cache       : false,
-					processData : false,
-					success     : function () {
-						App.Groups.Upload.Controller.createGroupNews( data, data.Created );
-					}
+			// Hide the link option as the default selection is file
+			this.ui.linkContainer.hide();
+
+			var acceptFiles = [ '.jpg', '.gif', '.png', '.jpeg', '.doc', '.rtf', '.ppt', '.docx', '.pptx', '.xls', '.xlsx', '.odt', '.xps', '.flv', '.pdf', '.txt' ];
+			var allowedExtensions = _.map( acceptFiles, function ( file ) {
+				return file.slice( 1 );
+			} );
+
+			// setup the fineuploader
+			this.ui.fileInput.fineUploader( {
+
+				'autoUpload' : false,
+
+				'validation' : {
+					'allowedExtensions' : allowedExtensions,
+					'acceptFiles'       : acceptFiles,
+					'sizeLimit'         : 10485760
+				},
+
+				'messages' : {
+					'sizeError' : '{file} is too large, maximum file size is 10MB'
+				},
+
+				'showMessage' : function ( message ) {
+					App.errorHandler( {
+						'message' : message
+					} );
+				}
+
+			} );
+
+			// Set the allowedExtensions on the global obj...
+			qq.FineUploader.prototype._options = {
+				'validation' : {
+					'allowedExtensions' : allowedExtensions
+				}
+			};
+
+		},
+
+		'submitForm' : function () {
+
+			var data = { };
+
+			data.fileDescription = stripHtml( this.ui.descInput.val() );
+			data.resourceType = this.ui.radioInput.filter( ':checked' ).val();
+
+			if ( data.resourceType === 'file' ) {
+				// Validate the file extension and size
+				if ( !this.validateFile() ) {
+					return false;
+				}
+				data.fileName = this.ui.fileInput.val().split('\\').pop();
+			} else {
+				data.fileName = stripHtml( this.ui.urlInput.val() );
+			}
+
+			// Should be using Backbone.Validation here
+			var messages = {
+				'fileDescription' : 'File Description',
+				'fileName'        : 'Resource'
+			};
+
+			var error = false;
+			_.each( _.pairs( data ), function ( pair ) {
+				if ( pair[ 1 ] === '' ) {
+					App.errorHandler( {
+						'message' : 'Invalid or missing ' + messages[ pair[ 0 ] ]
+					} );
+					error = true;
+				}
+			} );
+
+			if ( error ) {
+				return false;
+			}
+
+			var l = Ladda.create(
+				document.querySelector( '.upload-actions > .submit-btn' )
+			);
+			l.start();
+
+			// Should be safe to add the file now
+			if ( data.resourceType === 'file' ) {
+				this.ui.fileInput.fineUploader( 'addFiles', this.ui.fileInput );
+			}
+
+			// Prepare to upload the file ( makes a lot of requests... )
+			var deferred = this.model.prepareResource( data );
+			App.when( deferred ).done( _.bind( function ( resource ) {
+				if ( data.resourceType === 'file' ) {
+					var fileExt = data.fileName.match(  /.[^.]+$/, '' );
+					var newFileName = 'file_' + resource.get( 'FileId' ) + '_' +
+					Session.personnelId() + fileExt[ 0 ];
+
+					$('input[name="user_file"]').fineUploader( 'setParams', {
+						'newFileName' : newFileName
+					} );
+
+					this.ui.fileInput.on( 'complete', _.bind( function ( event, id, name, res ) {
+						if ( res.success ) {
+							var msg = 'NEW Resource: ' + resource.get( 'FileName' ) + '- ' + resource.get( 'FileDescription' );
+							this.createNewsEntry( msg, l );
+						}
+					}, this ) );
+
+					var url = 'com/schoolimprovement/pd360/dao/groups/ResourceFileUpload.cfc?method=Upload';
+					this.ui.fileInput.fineUploader( 'setEndpoint', url );
+					this.ui.fileInput.fineUploader( 'uploadStoredFiles' );
+				} else {
+					var msg = 'NEW Resource: ' + resource.get( 'LinkURL' ) + ' - ' + resource.get( 'LinkDescription' );
+					this.createNewsEntry( msg, l );
+				}
+
+			}, this ) );
+		},
+
+		'validateFile' : function () {
+			// Check the file name and display an error if invalid. This is terrible
+			// as fineuploader doesn't provide access to the actual validation methods.
+			// Also the validation event triggers before the actual validation and
+			// doesn't provide any information if the validation was succesful.
+			// Seriously... whats the point of that?  (╯°□°)╯︵ ┻━┻
+			var validation = qq.FineUploader.prototype._getValidationDescriptor( this.ui.fileInput[ 0 ].files[ 0 ] );
+			if ( !qq.FineUploader.prototype._isAllowedExtension( validation.name ) ) {
+				App.errorHandler( {
+					'message' : validation.name + ' has an invalid extension. Valid extension(s): ' +
+					qq.FineUploader.prototype._options.validation.allowedExtensions.join( ', ' )
 				} );
-			}.bind( this ) );
-			$( '#resource-form' ).submit();
-		},
-
-		'showError' : function ( message ) {
-			$( '.file-error span' ).text( message );
-			$( '.file-error' ).show();
-			$( '.no-file' ).show();
-			$( '.resource-preview' ).text( '' );
-		},
-
-		'checkFile' : function ( ev ) {
-
-			if ( ev.currentTarget.files.length > 0 ) {
-				var file    = ev.currentTarget.files[ 0 ].name;
-				var fileExt = file.match( /.[^.]+$/, '' );
-				var fileSize = this.checkFileSize( ev.currentTarget.files[ 0 ].size );
-				var fileType = this.checkFileType( fileExt[ 0 ] );
-				if ( fileSize && fileType ) {
-					this.filePreview( ev.currentTarget.files[ 0 ].name );
-				}
-				this.file = ev.currentTarget.files[ 0 ];
+				return false;
 			}
-		},
 
-		'filePreview' : function ( file ) {
-			$( '.no-file' ).hide();
-			$( '.file-error' ).hide();
-			$( '.resource-preview' ).text( file );
-		},
-
-		'inputChange' : function () {
-			var file     = $( '.file-input' ).val();
-			var fileName = file.match( /[-_\w]+[.][\w]+$/i );
-			var fileExt  = file.match( /.[^.]+$/, '' );
-			var fileType = this.checkFileType( fileExt[ 0 ] );
-			if ( fileType ) {
-				this.filePreview( fileName );
+			// Check the file size and display an error if invalid
+			if ( validation.size > 10485760 ) {
+				App.errorHandler( {
+					'message' : validation.name + ' is too large, maximum file size is 10MB'
+				} );
+				return false;
 			}
+			return true;
 		},
 
-		'checkFileSize' : function ( fileSize ) {
-			if ( fileSize < 10485760 ) {
-				return true;
-			} else {
-				this.showError( 'File should not exceed 10MB' );
-			}
-		},
-
-		'checkFileType' : function ( fileExt ) {
-			if ( _.contains( fileExtensions, fileExt ) ) {
-				return true;
-			} else {
-				this.showError( 'You can\'t upload files of this type.' );
-			}
+		'createNewsEntry' : function ( msg, l ) {
+			// l is the ladda instance
+			var entry = this.model.createNewsEntry( msg );
+			entry.save( null, {
+				'success' : _.bind( function () {
+					l.stop();
+					App.navigate( 'groups/' + this.model.get( 'LicenseId' ) + '/resources', {
+						'trigger' : true
+					} );
+				}, this )
+			} );
 		}
+
 	} );
 } );

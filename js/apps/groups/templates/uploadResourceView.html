@@ -6,34 +6,34 @@
 		<div class="resource-type">
 			<span>Resource Type</span>
 			<div>
-				<span class='resource-file'><input type="radio" name="upload-type" value="file" class="radio-upload radio-file" checked>File</span><br>
-				<span class='resource-link'><input type="radio" name="upload-type" value="link" class="radio-upload radio-link">Link</span>
+				<span>
+					<input type="radio" name="upload-type" value="file" class="radio-upload" checked>
+					File
+				</span>
+				<br>
+				<span>
+					<input type="radio" name="upload-type" value="link" class="radio-upload">
+					Link
+				</span>
 			</div>
 		</div>
 
 		<div class="upload-resource-type">
-			<span class="upload-content-file resource-type-action-label" id="file-upload">Choose File</span>
-			<span class="upload-content-link resource-type-action-label">Paste Link</span>
 
-			<div class='upload-content-file' id="files">
-				<form class="form-input" enctype="multipart/form-data" id="resource-form">
-					<span class="btn btn-default fileinput-button">Browse</span>
-					<input name="user_file" type='file' class='file-input'>
-					<span class='no-file'>No File Chosen</span>
-					<span class='resource-preview'></span>
-				</form>
+			<div class="upload-file-container">
+				<span>Choose File</span> <br />
+				<input name="user_file" type="file">
 			</div>
 
-			<div class='upload-content-link resource-input'>
-				<input type='text' class='upload-link input-validation form-control' placeholder='Paste link here'>
+			<div class='upload-link-container'>
+				<span>Paste Link</span> <br />
+				<input type='text' name="url-input" class="form-control" placeholder="Paste link here">
 			</div>
 		</div>
 
-		<div class='file-error' hidden><span></span></div>
-
 		<div class='resource-description'>
 			<span>Description</span><br>
-			<textarea class="form-control file-description" placeholder='Enter description here' rows=8 cols=10></textarea>
+			<textarea class="form-control file-description" placeholder="Enter description here" rows=8 cols=10></textarea>
 		</div>
 	</div>
 </div>
@@ -41,6 +41,6 @@
 <div class="groups-form-content-bottom">
 	<div class="upload-actions">
 		<button type="button" class="btn btn-default cancel-btn">Cancel</button>
-		<button type="submit" class="btn btn-primary submit-btn">Submit</button>
+		<button type="submit" class="btn btn-primary submit-btn ladda-button" data-style="expand-right">Submit</button>
 	</div>
 </div>

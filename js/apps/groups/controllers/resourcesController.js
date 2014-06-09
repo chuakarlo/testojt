@@ -40,6 +40,7 @@ define( function ( require ) {
 				var resourcesLayout = new App.Groups.Views.GroupResourcesLayout( {
 					'groupModel' : this.model
 				} );
+
 				this.layout.groupsContentRegion.show( resourcesLayout );
 
 				var leaderCollection = new Backbone.Collection();

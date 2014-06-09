@@ -10,15 +10,13 @@ define( function ( require ) {
 			throw new Error( 'The groupId option is required' );
 		};
 
-		Mod.GroupLinkCollection = Backbone.CFCollection.extend( {
-
-			//'model' : App.Entities.GroupResourceLinkModel,
+		Mod.GroupResourcesCollection = Backbone.CFCollection.extend( {
 
 			'path'   : 'CommunityService',
 
 			'typeMap' : {
-				'leader' : 6,
-				'member' : 7
+				'leader' : 9,
+				'member' : 11
 			},
 
 			'initialize' : function ( models, options ) {
@@ -29,16 +27,16 @@ define( function ( require ) {
 				}
 
 				this.groupId = options.groupId;
-				this.linkType = options.linkType || 'leader';
+				this.fileType = options.fileType || 'leader';
 			},
 
 			'getReadOptions' : function () {
 				return {
-					'method' : 'getLinkUploadsByTypeAndLocationAndLinkType',
+					'method' : 'getFileUploadsByTypeAndLocationAndFileType',
 					'args'   : {
 						'locationTypeId' : 5,
 						'locationId'     : this.groupId,
-						'linkTypeId'     : this.typeMap[ this.linkType ],
+						'fileTypeId'     : this.typeMap[ this.fileType ],
 						'startRow'       : 0,
 						'maxRows'        : 500
 					}

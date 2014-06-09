@@ -45,9 +45,9 @@ define( function ( require ) {
 		'getTemplate' : function () {
 
 			// displays group leader tools, but not leave option for creator
-			var persId = Session.personnelId();
+			var persId = parseInt( Session.personnelId() );
 
-			if ( String( this.model.get( 'Creator' ) ) === persId ) {
+			if ( this.model.get( 'Creator' ) === persId ) {
 				return _.template( creatorTemplate );
 
 			// leaders that are not the creator should be allowed to leave group
