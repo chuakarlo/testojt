@@ -44,7 +44,8 @@ define( function ( require ) {
 			'click @ui.ddLink'                : 'hideCollapsibleMenu',
 			'submit form'                     : 'showSearchResults',
 			'hidden.bs.dropdown @ui.userMenu' : 'hideUserMenuAnimation',
-			'click @ui.help'                  : 'showHelp'
+			'click @ui.help'                  : 'showHelp',
+			'click #groups-tab'               : 'redirect'
 		},
 
 		'regions' : {
@@ -191,6 +192,13 @@ define( function ( require ) {
 			var url         = 'http://help.schoolimprovement.com/#context/' + [ email, fname, lname, personnelid, location ].join( '&' );
 
 			this.ui.help.attr( 'href', url );
+		},
+
+		'redirect' : function ( event ) {
+			event.preventDefault();
+			App.navigate( $( event.currentTarget ).attr( 'data-url' ), {
+				'trigger' : true
+			} );
 		}
 
 	} );

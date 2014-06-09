@@ -9,7 +9,7 @@ define( function ( require ) {
 	return Marionette.CompositeView.extend( {
 
 		'template'          : _.template( template ),
-		'id'                : 'groups',
+		'id'                : 'groupSection',
 		'itemView'          : GroupItemView,
 		'tagName'           : 'section',
 		'itemViewContainer' : '.groups-list',

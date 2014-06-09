@@ -10,7 +10,7 @@ define( function ( require ) {
 		'template'  : _.template( template ),
 
 		'regions' : {
-			'groupsRegion'       : '.groups',
+			'groupsRegion'       : '.groupSection',
 			'groupInvitesRegion' : '.group-invites'
 		}
 
