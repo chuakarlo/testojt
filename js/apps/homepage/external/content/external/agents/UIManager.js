@@ -47,13 +47,20 @@ define( function ( require ) {
 						}
 					} );
 				},
-				afterClone            : function () {
-					$( container ).currentClonedItem( function ( item ) {
+				beforeItemClone       : function ( elem ) {
+					var infoIcon = elem.find( '.sc-info-icon' );
+					var watchIcon = elem.find( '.sc-watch-later-icon' );
+					infoIcon.tooltip( 'destroy' );
+					watchIcon.tooltip( 'destroy' );
+				},
+				afterItemClone        : function ( elem ) {
+					var infoIcon = elem.find( '.sc-info-icon' );
+					var watchIcon = elem.find( '.sc-watch-later-icon' );
+					infoIcon.tooltip( { trigger : 'hover' } );
+					watchIcon.tooltip( { trigger : 'hover' } );
 
-						$( '.cloned-item span.sc-info-icon' ).off( 'click' ).on( 'click', function ( e ) {
-							showDetails( e );
-						} );
-
+					infoIcon.off( 'click' ).on( 'click', function ( e ) {
+						showDetails( e );
 					} );
 				},
 				lastPaneEvent         : function () {
