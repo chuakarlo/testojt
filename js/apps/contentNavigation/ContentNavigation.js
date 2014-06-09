@@ -13,14 +13,13 @@ define( function ( require ) {
 
 		App.module( 'ContentNavigation', function ( ContentNavigation ) {
 
-			require( 'common/views/SegmentCardsView' );
-			require( 'contentNavigation/entities/Entities' );
-			require( 'contentNavigation/views/Views' );
-			require( 'contentNavigation/controllers/PD360Controller' );
-			require( 'contentNavigation/controllers/UUVController' );
-			require( 'contentNavigation/controllers/CustomContentController' );
 			require( 'common/entities/Queue' );
-			var ContentLayout = require( 'contentNavigation/views/ContentNavigationPageLayout' );
+			require( 'common/views/SegmentCardsView' );
+			require( 'contentNavigation/views/Views' );
+			require( 'contentNavigation/entities/Entities' );
+			require( 'contentNavigation/controllers/UUVController' );
+			require( 'contentNavigation/controllers/PD360Controller' );
+			require( 'contentNavigation/controllers/CustomContentController' );
 
 			ContentNavigation.Router = AuthRouter.extend( {
 				'appRoutes' : {
@@ -30,7 +29,14 @@ define( function ( require ) {
 
 			var ContentNavigationController = Marionette.Controller.extend( {
 
+				'hasPendingRequest' : false,
+
+				'setPendingRequest' : function ( status ) {
+					this.hasPendingRequest = status;
+				},
+
 				'showContentNavigation' : function () {
+
 					App.request( 'pd360:hide' );
 					_.extend( this, Backbone.Events );
 
@@ -38,7 +44,6 @@ define( function ( require ) {
 					App.content.show( new App.Common.LoadingView() );
 
 					var librariesRequest = App.request( 'contentNavigation:libraries' );
-
 					App.when( librariesRequest ).then( function ( libraries ) {
 
 						if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
@@ -46,10 +51,10 @@ define( function ( require ) {
 						}
 
 						if ( !this.layout ) {
-							this.layout = new ContentLayout();
-							App.content.show( this.layout );
-
 							var librariesView = new App.ContentNavigation.Views.Libraries( { 'collection' : libraries } );
+							this.layout = new App.ContentNavigation.Views.PageLayout();
+
+							App.content.show( this.layout );
 							this.layout.librariesRegion.show( librariesView );
 
 							this.listenTo( this.layout, 'close', this.destroyControllers );
@@ -90,6 +95,7 @@ define( function ( require ) {
 				},
 
 				'destroyControllers' : function () {
+
 					$( window ).off( 'scroll.smack' );
 					this.activeLibrary.close();
 					this.activeLibrary = null;
@@ -101,12 +107,21 @@ define( function ( require ) {
 			} );
 
 			Vent.on( 'contentNavigation:switchLibrary', function ( model, defaultLibrary ) {
+
 				return API.switchLibrary( model, defaultLibrary );
+			} );
+
+			Vent.on( 'contentNavigation:setPendingRequest', function ( status ) {
+				return API.setPendingRequest( status );
 			} );
 
 			App.reqres.setHandler( 'contentNavigation:isCorrectRoute', function () {
 
 				return Backbone.history.fragment.match( /resources\/videos/ );
+			} );
+
+			App.reqres.setHandler( 'contentNavigation:hasPendingRequest', function () {
+				return API.hasPendingRequest;
 			} );
 
 			var API = new ContentNavigationController();

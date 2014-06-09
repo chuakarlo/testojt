@@ -14,38 +14,68 @@ define( function ( require ) {
 
 			'initialize' : function ( options ) {
 
+				App.request( 'pd360:hide' );
 				this.layout = options.layout;
 				_.defaults( this, Utils );
+
+				Vent.trigger( 'contentNavigation:setPendingRequest', true );
 
 				// reset filters and contents region
 				this.layout.sortByRegion.close();
 				this.layout.filtersRegion.close();
 				this.layout.segmentsRegion.close();
 
-				var categories = new App.ContentNavigation.Entities.UUVCategoriesCollection();
-				categories.add( App.ContentNavigation.Entities.UUVCategories );
-
-				var categoriesView = new App.ContentNavigation.Views.UUVCategories( { 'collection' : categories } );
-
-				this.layout.filtersRegion.show( categoriesView );
 				this.showLoading();
+				this.showCategoriesLoading();
 				this.setEventHandlers();
 
-				var queueRequest = App.request( 'common:getQueueContents' );
+				var queueRequest      = App.request( 'common:getQueueContents' );
+				var categoriesRequest = App.request( 'contentNavigation:uuv:getCategories' );
+
 				this.queryModel         = new App.ContentNavigation.Entities.UUVQueryModel();
 				this.UUVideosCollection = new App.ContentNavigation.Entities.UUVideosCollection();
 
 				this.UUVideosCollection.queryModel = this.queryModel;
 
-				App.when( queueRequest ).then( function ( queue ) {
+				App.when( queueRequest, categoriesRequest ).then( function ( queue, categories ) {
 
 					if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
 						return;
 					}
 
-					this.showVideos( queue );
+					this.showVideos( queue, categories );
 				}.bind( this ), this.showError );
 
+			},
+
+			'showVideos' : function ( queueContents, uuvCategories ) {
+
+				Vent.trigger( 'contentNavigation:updateScrollbar' );
+
+				var categoriesView = new App.ContentNavigation.Views.UUVCategories( { 'collection' : uuvCategories  } );
+
+				this.layout.filtersRegion.show( categoriesView );
+
+				// remove handlers for filters
+				this.showLoading();
+
+				this.segmentsView = new App.ContentNavigation.Views.Segments( {
+					'collection' : this.UUVideosCollection
+				} );
+
+				this.UUVideosCollection.reset();
+				this.UUVideosCollection.setArgs( 'Popular' );
+				var videosRequest = App.request( 'contentNavigation:uuv:getSegments', this.queryModel );
+
+				App.when( videosRequest ).then( function ( videos ) {
+
+					if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
+						return;
+					}
+
+					this.displayVideos( videos, queueContents );
+
+				}.bind( this ), this.showError );
 			},
 
 			'displayVideos' : function ( vids, queueContents ) {
@@ -70,6 +100,9 @@ define( function ( require ) {
 				this.closeLoading();
 				this.layout.segmentsRegion.show( this.segmentsView );
 
+				// set hasPendingRequest to false
+				Vent.trigger( 'contentNavigation:setPendingRequest', false );
+
 				// setup infinite scroll if last result is equal to 24
 				this.queryModel.set( 'lastResultsLength', videos.length );
 
@@ -83,32 +116,6 @@ define( function ( require ) {
 					}
 
 				}
-			},
-
-			'showVideos' : function ( queueContents ) {
-
-				Vent.trigger( 'contentNavigation:updateScrollbar' );
-
-				// remove handlers for filters
-				this.showLoading();
-
-				this.segmentsView = new App.ContentNavigation.Views.Segments( {
-					'collection' : this.UUVideosCollection
-				} );
-
-				this.UUVideosCollection.reset();
-				this.UUVideosCollection.setArgs( 'Popular' );
-				var videosRequest = App.request( 'contentNavigation:uuv:getSegments', this.queryModel );
-
-				App.when( videosRequest ).then( function ( videos ) {
-
-					if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
-						return;
-					}
-
-					this.displayVideos( videos, queueContents );
-
-				}.bind( this ), this.showError );
 			}
 
 		} );

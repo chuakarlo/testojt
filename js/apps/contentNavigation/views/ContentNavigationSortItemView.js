@@ -5,6 +5,7 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 	var Vent       = require( 'Vent' );
+	var App        = require( 'App' );
 
 	var template   = require( 'text!../templates/contentNavigationSortItemView.html' );
 
@@ -23,7 +24,13 @@ define( function ( require ) {
 		},
 
 		'updateSort' : function () {
-			var sort = this.model.attributes.value;
+
+			var sort              = this.model.attributes.value;
+			var hasPendingRequest = App.request( 'contentNavigation:hasPendingRequest' );
+
+			if ( hasPendingRequest ) {
+				return;
+			}
 
 			this.$el.parent().children( 'li' ).removeClass( 'selected' );
 			this.$el.addClass( 'selected' );

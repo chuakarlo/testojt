@@ -4,6 +4,7 @@ define( function ( require ) {
 	var _             = require( 'underscore' );
 	var Marionette    = require( 'marionette' );
 	var App           = require( 'App' );
+	var Vent          = require( 'Vent' );
 	var Utils         = require( 'contentNavigation/controllers/PD360ControllerUtils' );
 	var FiltersLayout = require( 'contentNavigation/views/ContentNavigationFiltersLayout' );
 	require( 'jquery.bum-smack' );
@@ -14,8 +15,16 @@ define( function ( require ) {
 
 			'initialize' : function ( options ) {
 
+				App.request( 'pd360:hide' );
 				this.layout = options.layout;
 				_.defaults( this, Utils );
+
+				Vent.trigger( 'contentNavigation:setPendingRequest', true );
+
+				// reset filters and contents region
+				this.layout.sortByRegion.close();
+				this.layout.filtersRegion.close();
+				this.layout.segmentsRegion.close();
 
 				var loading = new App.Common.LoadingView( {
 					'size'       : 'small',
@@ -123,6 +132,8 @@ define( function ( require ) {
 
 			'updateQueryData' : function ( filter, sort, clearCollection ) {
 				var reset = true;
+
+				Vent.trigger( 'contentNavigation:setPendingRequest', true );
 
 				if ( filter ) {
 					this.pd360VideosCollection.updateSearchData( filter );

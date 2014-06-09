@@ -6,7 +6,7 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var $          = require( 'jquery' );
 	var Vent       = require( 'Vent' );
-
+	var App        = require( 'App' );
 	var template   = require( 'text!../templates/contentNavigationCustomCategoryItemView.html' );
 
 	return Marionette.ItemView.extend( {
@@ -34,6 +34,12 @@ define( function ( require ) {
 		},
 
 		'changeCategory' : function () {
+
+			var hasPendingRequest = App.request( 'contentNavigation:hasPendingRequest' );
+
+			if ( hasPendingRequest ) {
+				return;
+			}
 
 			if ( this.model.get( 'isCategory' ) ) {
 				if ( this.$el.hasClass( 'cn-custom-category' ) ) {

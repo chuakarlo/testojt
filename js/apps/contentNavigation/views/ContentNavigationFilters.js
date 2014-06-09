@@ -2,6 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var Vent           = require( 'Vent' );
+	var App            = require( 'App' );
 	var _              = require( 'underscore' );
 	var Marionette     = require( 'marionette' );
 	var $              = require( 'jquery' );
@@ -43,6 +44,7 @@ define( function ( require ) {
 		},
 
 		'changeClear' : function () {
+
 			if ( !this.$el.find( 'li' ).hasClass( 'selected' ) ) {
 				this.$el.find( '.cn-clear-btn' ).attr( 'disabled', 'disabled' );
 			} else {
@@ -52,6 +54,12 @@ define( function ( require ) {
 
 		'clearFilters' : function ( e ) {
 			e.preventDefault();
+
+			var hasPendingRequest = App.request( 'contentNavigation:hasPendingRequest' );
+
+			if ( hasPendingRequest ) {
+				return;
+			}
 
 			this.$el.find( 'li' ).removeClass( 'selected' );
 			this.$el.find( '.cn-clear-btn' ).attr( 'disabled', 'disabled' );

@@ -5,6 +5,7 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 	var Vent       = require( 'Vent' );
+	var App        = require( 'App' );
 
 	var template   = require( 'text!../templates/contentNavigationUUVCategoryItemView.html' );
 
@@ -23,6 +24,12 @@ define( function ( require ) {
 		},
 
 		'changeCategory' : function () {
+
+			var hasPendingRequest = App.request( 'contentNavigation:hasPendingRequest' );
+
+			if ( hasPendingRequest ) {
+				return;
+			}
 
 			this.$el.parent().children( 'li' ).removeClass( 'selected' );
 			this.$el.addClass( 'selected' );

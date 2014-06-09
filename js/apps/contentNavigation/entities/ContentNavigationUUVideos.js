@@ -7,44 +7,12 @@ define( function ( require ) {
 
 	App.module( 'ContentNavigation.Entities', function ( Entities ) {
 
-		Entities.UUVCategories = [
-			{ 'id' : 'My Uploads', 'title' : 'My Uploads' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Popular', 'title' : 'Popular', 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Recommended For You', 'title' : 'Recommended For You' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Featured', 'title' : 'Featured' , 'library' : 'Sinet Internal Training' },
-
-			{ 'id' : 'Aha Moments', 'UUVideoTopicId' : 1, 'title' : 'Aha Moments' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Best Practices', 'UUVideoTopicId' : 2, 'title' : 'Best Practices', 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Celebrating Accomplishments', 'UUVideoTopicId' : 3, 'title' : 'Celebrating Accomplishments' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Classroom Management', 'UUVideoTopicId' : 4, 'title' : 'Classroom Management' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Coaching', 'UUVideoTopicId' : 5, 'title' : 'Coaching' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Community & Family Involvement', 'UUVideoTopicId' : 6, 'title' : 'Community & Family Involvement', 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Differentiation', 'UUVideoTopicId' : 7, 'title' : 'Differentiation' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Equity, Diversity, & Race', 'UUVideoTopicId' : 8, 'title' : 'Equity, Diversity, & Race' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Examining Student Work', 'UUVideoTopicId' : 9, 'title' : 'Examining Student Work' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Global Education', 'UUVideoTopicId' : 10, 'title' : 'Global Education', 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Inquiry & Project-Based Education', 'UUVideoTopicId' : 11, 'title' : 'Inquiry & Project-Based Education' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Instructional Strategies', 'UUVideoTopicId' : 12, 'title' : 'Instructional Strategies' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Intervention', 'UUVideoTopicId' : 13, 'title' : 'Intervention' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Just For Fun', 'UUVideoTopicId' : 14, 'title' : 'Just For Fun', 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Motivational', 'UUVideoTopicId' : 15, 'title' : 'Motivational' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Other', 'UUVideoTopicId' : 16, 'title' : 'Other' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'PLC & Collaboration', 'UUVideoTopicId' : 17, 'title' : 'PLC & Collaboration' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Powerful Leadership', 'UUVideoTopicId' : 18, 'title' : 'Powerful Leadership', 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Professional Development', 'UUVideoTopicId' : 19, 'title' : 'Professional Development' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'School Culture', 'UUVideoTopicId' : 20, 'title' : 'School Culture' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Student Engagement', 'UUVideoTopicId' : 21, 'title' : 'Student Engagement' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Success Stories', 'UUVideoTopicId' : 22, 'title' : 'Success Stories', 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Teachers Shine', 'UUVideoTopicId' : 23, 'title' : 'Teachers Shine' , 'library' : 'Sinet Internal Training' },
-			{ 'id' : 'Technology in the Classroom', 'UUVideoTopicId' : 24, 'title' : 'Technology in the Classroom' , 'library' : 'Sinet Internal Training' }
-		] ;
-
-		Entities.UUVCategoryModel = Backbone.Model.extend ( {
+		Entities.UUVCategoriesModel = Backbone.Model.extend ( {
 
 		} );
 
 		Entities.UUVCategoriesCollection = Backbone.Collection.extend( {
-			'model' : Entities.UUVCategoryModel
+			'model' : Entities.UUVCategoriesModel
 		} );
 
 		Entities.UUVQueryModel = Backbone.CFModel.extend( {
@@ -68,6 +36,9 @@ define( function ( require ) {
 		Entities.UUVideoModel = Backbone.CFModel.extend( {
 
 			'idAttribute' : 'UUVideoId',
+			'defaults'    : {
+				'VideoTypeId' : 2
+			},
 			'initialize'  : function () {
 				this.set( 'VideoTypeId', 2 );
 			}

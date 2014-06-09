@@ -130,6 +130,9 @@ define( function ( require ) {
 			this.closeLoading();
 			this.layout.segmentsRegion.show( this.segmentsView );
 
+			// set hasPendingRequest to false
+			Vent.trigger( 'contentNavigation:setPendingRequest', false );
+
 			//setup infinite scroll if videos.length === this.queryModel rows && this.pd360VideosCollection !== numFound
 			if ( this.pd360VideosCollection.length < this.pd360VideosCollection.queryModel.get( 'numFound' ) ) {
 				this.setupInfiniteScroll();

@@ -8,5 +8,6 @@ define( function ( require ) {
 	require( 'contentNavigation/entities/ContentNavigationCustomContentCategories' );
 	require( 'contentNavigation/entities/ContentNavigationSort' );
 	require( 'contentNavigation/entities/ContentNavigationCustomContent' );
+	require( 'contentNavigation/entities/ContentNavigationUUVCategories' );
 
 } );

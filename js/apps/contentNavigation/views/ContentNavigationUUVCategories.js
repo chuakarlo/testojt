@@ -18,6 +18,8 @@ define( function ( require ) {
 
 		'onShow' : function () {
 			$( this.$el ).find( 'li:nth-child( 2 )' ).addClass( 'selected' );
+
+			$( this.$el ).find( 'li:nth-child( 4 )' ).addClass( 'cn-uuv-category-separator' );
 		},
 
 		'ui' : {

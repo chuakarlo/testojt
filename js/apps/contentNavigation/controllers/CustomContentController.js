@@ -14,8 +14,12 @@ define( function ( require ) {
 
 			'initialize' : function ( options ) {
 
+				App.request( 'pd360:hide' );
 				this.layout             = options.layout;
 				this.customContentModel = options.model;
+				this.categories         = new App.ContentNavigation.Entities.CustomContentCollection();
+
+				Vent.trigger( 'contentNavigation:setPendingRequest', true );
 
 				// reset filters and contents region
 				this.layout.sortByRegion.close();
@@ -25,7 +29,6 @@ define( function ( require ) {
 				this.showLoading();
 				this.showFilterLoading();
 				this.setEventHandlers();
-				this.categories = new App.ContentNavigation.Entities.CustomContentCollection();
 
 				var categoriesRequest = App.request( 'contentNavigation:customContent:categories' , options.model );
 
@@ -41,7 +44,7 @@ define( function ( require ) {
 			},
 
 			'setEventHandlers' : function () {
-				// set event handlers
+
 				this.listenTo( Vent, 'contentNavigation:uuv:changeCategory', function ( ContentName ) {
 					this.changeCategory( ContentName );
 				}.bind( this ) );
@@ -55,13 +58,13 @@ define( function ( require ) {
 				this.queueContents = queueContents;
 
 				var library = libraries.toJSON();
-				var lib = _.flatten( library, true );
-				//categories.add( library );
+				var lib     = _.flatten( library, true );
 
 				_.each( lib, function ( models ) {
 
 					// lib is an array of arrays
 					_.each( models, function ( model ) {
+
 						model.isLibrary = true;
 						this.categories.add( model );
 						if ( model.Children.length ) {
@@ -76,34 +79,46 @@ define( function ( require ) {
 				this.closeLoading();
 
 				if ( this.categories.length ) {
-					var categoriesView = new App.ContentNavigation.Views.CustomCategories( { 'collection' : this.categories } );
-					this.layout.filtersRegion.show( categoriesView );
 
-					// Load default category, at categories.at( 1 );
+					var categoriesView = new App.ContentNavigation.Views.CustomCategories( {
+						'collection' : this.categories
+					} );
+
 					var firstCategory = this.categories.at( 1 ).get( 'ContentName' );
+
+					this.layout.filtersRegion.show( categoriesView );
 					this.changeCategory( firstCategory );
+
 				} else {
 
+					var segmentsView = new App.ContentNavigation.Views.Segments( {
+						'collection' : new App.ContentNavigation.Entities.CustomContentCollection()
+					} );
+
 					this.layout.filtersRegion.close();
-					var segmentsView = new App.ContentNavigation.Views.Segments( { 'collection' : new App.ContentNavigation.Entities.CustomContentCollection() } );
 					this.layout.segmentsRegion.show( segmentsView );
+
+					// set hasPendingRequest to false
+					Vent.trigger( 'contentNavigation:setPendingRequest', false );
 				}
 			},
 
 			'changeCategory' : function ( contentName ) {
 
 				var queueRequest = App.request( 'common:getQueueContents' );
-				// Load default category, at categories.at( 1 );
+				var category     = this.categories.findWhere( { 'ContentName' : contentName } );
+				var segments     = category.get( 'Children' );
+
+				Vent.trigger( 'contentNavigation:setPendingRequest', true );
+
 				if ( !this.videos ) {
-					this.videos   = new App.ContentNavigation.Entities.CustomContentCollection();
+					this.videos = new App.ContentNavigation.Entities.CustomContentCollection();
 				} else {
 					this.videos.reset();
 					this.layout.segmentsRegion.close();
 				}
-				var category = this.categories.findWhere( { 'ContentName' : contentName } );
-				var segments = category.get( 'Children' );
-				this.videos.add( segments );
 
+				this.videos.add( segments );
 				this.showLoading();
 
 				App.when( queueRequest ).then( function ( queue ) {
@@ -123,6 +138,9 @@ define( function ( require ) {
 					var segmentsView = new App.ContentNavigation.Views.Segments( { 'collection' : this.videos } );
 					this.layout.segmentsRegion.show( segmentsView );
 
+					// set hasPendingRequest to false
+					Vent.trigger( 'contentNavigation:setPendingRequest', false );
+
 					if ( this.videos.length ) {
 						this.noMoreVideos();
 					}
@@ -131,10 +149,9 @@ define( function ( require ) {
 			},
 
 			'onClose' : function () {
+
 				$( window ).off( 'scroll.smack' );
-
 				this.stopListening();
-
 				this.categories.reset();
 				this.categories = null;
 				this.layout = null;
@@ -155,39 +172,34 @@ define( function ( require ) {
 			},
 
 			'showLoading' : function () {
-				// Hide any error message
-				App.flashMessage.close();
 
-				// Show a loading view
+				App.flashMessage.close();
 				var loading = new App.Common.LoadingView( {
 					'size'       : 'small',
 					'background' : false,
 					'text'       : 'Loading Videos'
 				} );
-
 				this.layout.loadingRegion.show( loading );
 			},
 
 			'showFilterLoading' : function () {
-				// Hide any error message
-				App.flashMessage.close();
 
-				// Show a loading view
+				App.flashMessage.close();
 				var loading = new App.Common.LoadingView( {
 					'size'       : 'small',
 					'background' : false,
 					'text'       : 'Loading Categories'
 				} );
-
 				this.layout.filtersRegion.show( loading );
 			},
 
 			'closeLoading' : function () {
-				// Close the loading view
+
 				this.layout.loadingRegion.close();
 			},
 
 			'noMoreVideos' : function () {
+
 				$( window ).off( 'scroll.smack' );
 				var noMoreVideosView = new App.ContentNavigation.Views.NoMoreVideos();
 				this.layout.loadingRegion.show( noMoreVideosView );

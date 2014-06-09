@@ -43,7 +43,7 @@ define ( function ( require ) {
 			App.ContentNavigation.Entities.should.have.property( 'Filters' );
 			App.ContentNavigation.Entities.should.have.property( 'Libraries' );
 			App.ContentNavigation.Entities.should.have.property( 'PD360VideosCollection' );
-			App.ContentNavigation.Entities.should.have.property( 'UUVCategories' );
+			App.ContentNavigation.Entities.should.have.property( 'UUVCategoryCollection' );
 			App.ContentNavigation.Entities.should.have.property( 'CustomContentCategoryModel' );
 			App.ContentNavigation.Entities.should.have.property( 'FilterModel' );
 			App.ContentNavigation.Entities.should.have.property( 'LibraryModel' );

@@ -5,6 +5,7 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 	var Vent       = require( 'Vent' );
+	var App        = require( 'App' );
 	var template   = require( 'text!../templates/contentNavigationFilterItemView.html' );
 
 	return Marionette.ItemView.extend( {
@@ -23,7 +24,12 @@ define( function ( require ) {
 
 		'filterSegments' : function () {
 
-			var filter = this.model.attributes.title;
+			var filter            = this.model.attributes.title;
+			var hasPendingRequest = App.request( 'contentNavigation:hasPendingRequest' );
+
+			if ( hasPendingRequest ) {
+				return;
+			}
 
 			Vent.trigger( 'contentNavigation:resetBodyScroll' );
 

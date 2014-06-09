@@ -12,8 +12,6 @@ define( function ( require ) {
 		'onClose' : function () {
 			$( window ).off( 'scroll.smack' );
 
-			this.segmentsView.close();
-
 			this.UUVideosCollection.reset();
 			var args = this.UUVideosCollection.queryModel.get( 'args' );
 			if ( _.has( args, 'startRow' ) ) {
@@ -106,6 +104,18 @@ define( function ( require ) {
 			this.layout.loadingRegion.show( loading );
 		},
 
+		'showCategoriesLoading' : function () {
+
+			App.flashMessage.close();
+			var loading = new App.Common.LoadingView( {
+				'size'       : 'small',
+				'background' : false,
+				'text'       : 'Loading Categories'
+			} );
+
+			this.layout.filtersRegion.show( loading );
+		},
+
 		'closeLoading' : function () {
 			// Close the loading view
 			this.layout.loadingRegion.close();
@@ -127,12 +137,14 @@ define( function ( require ) {
 		},
 
 		'updateQueryData' : function ( category ) {
-			var title = category.get( 'title' );
+
+			var title = category.get( 'UUVideoTopic' );
 
 			// reset start and collection
 			$( window ).off( 'scroll.smack' );
 			this.UUVideosCollection.reset();
 			this.UUVideosCollection.queryModel.set( 'start', 0 );
+			Vent.trigger( 'contentNavigation:setPendingRequest', true );
 
 			if ( title === 'Popular' || title === 'My Uploads' || title === 'Recommended For You' || title === 'Featured' ) {
 				this.UUVideosCollection.resetStart();
