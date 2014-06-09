@@ -7,7 +7,6 @@ define( function ( require ) {
 	var template   = require( 'text!apps/homepage/external/widgets/external/focusObjective/templates/widgetItemView.html' );
 
 	var getConfig  = require( 'common/helpers/getConfig' );
-	var widgetCompositeController = require('apps/homepage/external/widgets/controllers/widgetCompositeController');
 
 	var widgetDirectory = 'resources/videos/';
 
@@ -24,7 +23,7 @@ define( function ( require ) {
 			};
 		},
 		'redirect'        : function ( e ) {
-			widgetCompositeController.doRedirect( e, widgetDirectory );
+			App.Homepage.Utils.redirect( e, widgetDirectory );
 			return false;
 		}
 	} );

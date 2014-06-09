@@ -7,7 +7,6 @@ define( function ( require ) {
 	var _                         = require( 'underscore' );
 	var UIManager                 = require( 'apps/homepage/external/widgets/external/agents/UIManager' );
 	var progressTemplate          = require( 'text!apps/homepage/external/widgets/external/courses/templates/progressItemTemplate.html' );
-	var widgetCompositeController = require('apps/homepage/external/widgets/controllers/widgetCompositeController');
 
 	var widgetDirectory = 'resources/learning/courses/';
 
@@ -53,7 +52,7 @@ define( function ( require ) {
 
 		},
 		'redirect'        : function ( e ) {
-			widgetCompositeController.doRedirect( e, widgetDirectory );
+			App.Homepage.Utils.redirect( e, widgetDirectory );
 			return false;
 		}
 	} );

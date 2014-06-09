@@ -11,5 +11,6 @@ define( function ( require ) {
 		Utils.timeDiff        = require( 'apps/homepage/utils/timeDiff' );
 		Utils.message         = require( 'apps/homepage/utils/message' );
 		Utils.navigate        = require( 'apps/homepage/utils/navigate' );
+		Utils.redirect        = require( 'apps/homepage/utils/redirect' );
 	} );
 } );

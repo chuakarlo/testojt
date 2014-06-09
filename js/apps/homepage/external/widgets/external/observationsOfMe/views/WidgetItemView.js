@@ -9,7 +9,6 @@ define( function ( require ) {
 
 	var className    = 'widget-item';
 	var templateBind = _.template( template );
-	var widgetCompositeController = require('apps/homepage/external/widgets/controllers/widgetCompositeController');
 
 	var widgetDirectory = 'resources/learning/observations/';
 
@@ -28,7 +27,7 @@ define( function ( require ) {
 			};
 		},
 		'redirect'        : function ( e ) {
-			widgetCompositeController.doRedirect( e, widgetDirectory );
+			App.Homepage.Utils.redirect( e, widgetDirectory );
 			return false;
 		}
 	} );

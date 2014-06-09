@@ -9,7 +9,6 @@ define( function ( require ) {
 	var footerTemplate            = require( 'text!apps/homepage/external/widgets/templates/widgetFooterTemplate.html' );
 	var widgetLookup              = require( 'apps/homepage/external/widgets/manifest' );
 	var WidgetItemCollection      = require( 'apps/homepage/external/widgets/collections/WidgetItemCollection' );
-	var widgetCompositeController = require('apps/homepage/external/widgets/controllers/widgetCompositeController');
 
 	var App                  = require('App');
 
@@ -41,7 +40,7 @@ define( function ( require ) {
 		view.$el.find( 'div.footer' ).append( footer );
 
 		view.$el.find( 'a.footerLink' ).on( 'click', function ( e ) {
-			widgetCompositeController.doRedirect( e );
+			App.Homepage.Utils.redirect( e );
 			return false;
 		} );
 

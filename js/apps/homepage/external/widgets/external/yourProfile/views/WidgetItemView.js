@@ -9,8 +9,6 @@ define( function ( require ) {
 
 	var getConfig  = require( 'common/helpers/getConfig' );
 
-	var widgetCompositeController = require('apps/homepage/external/widgets/controllers/widgetCompositeController');
-
 	var widgetDirectory = 'settings/';
 
 	var forcedCss = {
@@ -85,7 +83,7 @@ define( function ( require ) {
 			}
 		},
 		'redirect'        : function ( e ) {
-			widgetCompositeController.doRedirect( e, widgetDirectory );
+			App.Homepage.Utils.redirect( e, widgetDirectory );
 			return false;
 		}
 	} );
