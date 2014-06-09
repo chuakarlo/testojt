@@ -94,6 +94,8 @@ define( function ( require ) {
 			'redirectToLegacyPage' : function ( target, page, sub, opts ) {
 				var pd360Loaded = App.request( 'pd360:loaded' );
 
+				console.log( Backbone.history.fragment );
+
 				// Change document hash without triggering event so clicking the back button issue
 				App.navigate( Backbone.history.fragment + '/legacy' );
 
@@ -202,13 +204,13 @@ define( function ( require ) {
 					var portfoliosView = new PortfoliosView( {
 						collection : collection
 					} );
+
 					// bind to redirect event
 					portfoliosView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
 
 					// display Courses
 					helper._showView( portfoliosView );
 				} );
-
 			},
 
 			'showObservations' : function () {
@@ -251,6 +253,7 @@ define( function ( require ) {
 					} );
 
 					catalogsView.on( 'itemview:lt:training', helper.showTrainingCatalog );
+					catalogsView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
 
 					// display Catalogs
 					helper._showView( catalogsView );

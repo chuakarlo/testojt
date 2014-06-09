@@ -15,7 +15,8 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'click .catalog-training' : 'showTrainingCatalog'
+			'click .catalog-training' : 'showTrainingCatalog',
+			'click .catalog-course'   : 'showCourseCatalog'
 		},
 
 		'showTrainingCatalog' : function ( e ) {
@@ -24,12 +25,21 @@ define( function ( require ) {
 			this.trigger( 'lt:training' );
 		},
 
+		'showCourseCatalog' : function ( e ) {
+			e.preventDefault();
+
+			var self = this;
+
+			self.trigger( 'lt:redirect', 'courses', 'coursesBrowse', self.model.get( 'ResourceId' ) );
+		},
+
 		'setCatalogLinks' : function ( model ) {
 			model.catalogTraining = '';
 			if ( model.get( 'CatalogResourceTypeId' ) === 1 ) {
 				model.catalogLinks = '#resources/videos/' + model.get( 'ResourceId' );
 			} else if ( model.get( 'CatalogResourceTypeId' ) === 2 ) {
-				model.catalogLinks = 'https://www.pd360.com/pd360.cfm#tab=courses&page=coursesBrowse';
+				model.catalogLinks    = '#';
+				model.catalogTraining = 'catalog-course';
 			} else {
 				model.catalogLinks    = '#';
 				model.catalogTraining = 'catalog-training';

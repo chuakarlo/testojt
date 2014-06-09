@@ -5,7 +5,7 @@ define( function ( require ) {
 	var _             = require( 'underscore' );
 	var template      = require( 'text!apps/learningTargets/templates/objectives/focustitles.html' );
 	var TitleItemView = require( 'apps/learningTargets/views/objectives/focusfolders/FocusFolderItemView' );
-	var EmptyView     = require( 'apps/learningTargets/views/objectives/EmptyView' );
+	var EmptyView     = require( 'apps/learningTargets/views/EmptyView' );
 
 	return Marionette.CompositeView.extend( {
 		'template'          : _.template( template ),

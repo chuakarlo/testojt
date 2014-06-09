@@ -8,7 +8,6 @@ define( function ( require ) {
 	return Marionette.ItemView.extend( {
 
 		'template' : _.template( template ),
-		'tagName'  : 'tr',
 
 		initialize : function ( ) {
 			this.FocusTitle     = '';
