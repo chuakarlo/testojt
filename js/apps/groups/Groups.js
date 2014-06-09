@@ -36,6 +36,7 @@ define( function ( require ) {
 
 				'appRoutes' : {
 					'groups'                    : 'listGroups',
+					'groups/create'             : 'showCreateGroup',
 					'groups/:groupId'           : 'showGroupWall',
 					'groups/:groupId/wall'      : 'showGroupWall',
 					'groups/:groupId/forums'    : 'showGroupForums',
@@ -43,7 +44,6 @@ define( function ( require ) {
 					'groups/:groupId/members'   : 'showGroupMembers',
 					'groups/:groupId/info'      : 'showGroupInfo',
 					'groups/:groupId/leader'    : 'showGroupLeaderTools',
-					'groups.create'             : 'showCreateGroup',
 					'groups/:groupId/upload'    : 'uploadResource'
 				}
 

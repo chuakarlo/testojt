@@ -6,17 +6,24 @@ define( function ( require ) {
 	return function ( fileName, size ) {
 
 		var availableSizes = {
-			'sm'   : '320_',
-			'md'   : '960_',
-			'lg'   : '1200_',
+			'sm'   : '_320',
+			'md'   : '_960',
+			'lg'   : '_1200',
 			'orig' : ''
 		};
 
 		size = size || 'sm';
 
-		fileName = fileName || getConfig( 'groupBannerDefaultFileName' );
+		var webPath = getConfig( 'groupAvatarWebPath' );
 
-		return getConfig( 'groupAvatarWebPath' ) + availableSizes[ size ] + fileName;
+		if ( !fileName ) {
+			return webPath + getConfig( 'groupBannerDefaultFileName' );
+		}
+
+		var fileExtension = fileName.split( '.' ).pop();
+		var origFilename = fileName.slice( 0, fileName.lastIndexOf( '.' ) );
+
+		return webPath + origFilename + availableSizes[ size ] + '.' + fileExtension;
 
 	};
 
