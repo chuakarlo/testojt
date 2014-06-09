@@ -1,17 +1,19 @@
 define( function ( require ) {
 	'use strict';
 
-	var App              = require( 'App' );
-	var Marionette       = require( 'marionette' );
-	var _                = require( 'underscore' );
-	var progressTemplate = require( 'text!apps/homepage/external/widgets/external/courses/templates/progressItemTemplate.html' );
+	var App                       = require( 'App' );
+	var $                         = require( 'jquery' );
+	var Marionette                = require( 'marionette' );
+	var _                         = require( 'underscore' );
+	var UIManager                 = require( 'apps/homepage/external/widgets/external/agents/UIManager' );
+	var progressTemplate          = require( 'text!apps/homepage/external/widgets/external/courses/templates/progressItemTemplate.html' );
 	var widgetCompositeController = require('apps/homepage/external/widgets/controllers/widgetCompositeController');
 
 	var widgetDirectory = 'resources/learning/courses/';
 
 	function setTemplateHelpers ( model ) {
 		return {
-			'content'    : App.Homepage.Utils.limitCharacters( App.Homepage.Utils.modelGet( model, 'COURSENAME' ), 37 ),
+			'content'    : App.Homepage.Utils.modelGet( model, 'COURSENAME' ),
 			'completion' : App.Homepage.Utils.modelGet( model, 'PERCENTCOMPLETE', '0')
 		};
 	}
@@ -22,7 +24,20 @@ define( function ( require ) {
 		}
 	}
 
+	function adjustDescription ( that ) {
+		var content = UIManager.limitDescriptionByWidth( that.$el, that.model );
+		var eDesc   = that.$el.find( '.description>p' );
+		eDesc.text( content );
+	}
+
 	return Marionette.ItemView.extend( {
+		'initialize'      : function () {
+
+			$( window ).resize( function () {
+				adjustDescription( this );
+			}.bind( this ) );
+
+		},
 		'events'          : {
 			'click a.courseLink' : 'redirect'
 		},
@@ -32,7 +47,10 @@ define( function ( require ) {
 			return setTemplateHelpers ( this.model );
 		},
 		'onShow'          : function ( ) {
+
+			adjustDescription( this );
 			doOnShow( this, this.model );
+
 		},
 		'redirect'        : function ( e ) {
 			widgetCompositeController.doRedirect( e, widgetDirectory );

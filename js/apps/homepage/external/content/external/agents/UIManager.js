@@ -88,7 +88,6 @@ define( function ( require ) {
 	function addTooltip ( elem , options ) {
 		if ( !modernizr.touch ) {
 			elem.attr( 'title' , options.title || '' ).tooltip( options );
-			console.log( elem.attr( 'title' , options.title || '' ).tooltip( options ) );
 		}
 	}
 
