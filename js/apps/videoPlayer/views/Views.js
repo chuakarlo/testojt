@@ -7,6 +7,7 @@ define( function ( require ) {
 
 		Views.PageLayout           = require( 'videoPlayer/views/VideoPageLayout' );
 		Views.QuestionsView        = require( 'videoPlayer/views/question/QuestionsCompositeView' );
+		Views.NextSegmentView      = require( 'videoPlayer/views/segment/NextSegmentView' );
 		Views.NoItemView           = require( 'videoPlayer/views/NoItemView' );
 		Views.SegmentLabelItemView = require( 'videoPlayer/views/SegmentLabelItemView' );
 		Views.VideoPlayerView      = require( 'videoPlayer/views/player/VideoPlayerView' );

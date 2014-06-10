@@ -113,6 +113,7 @@ define( function ( require ) {
 					var layout   = sinon.stub( App.VideoPlayer.Views, 'PageLayout' ).returns( {
 						'playerRegion'         : { 'show' : showSpy },
 						'questionsRegion'      : { 'show' : showSpy },
+						'nextSegmentRegion'    : { 'show' : showSpy },
 						'videoButtonsRegion'   : { 'show' : showSpy },
 						'videoTabsRegion'      : { 'show' : showSpy },
 						'segmentLabelRegion'   : { 'show' : showSpy },
@@ -132,7 +133,7 @@ define( function ( require ) {
 					showStub.should.have.callCount( 1 );
 
 					// regions should have called show
-					showSpy.should.have.callCount( 8 );
+					showSpy.should.have.callCount( 9 );
 
 					// Restoring stubs
 					App.content.show.restore();

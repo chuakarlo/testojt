@@ -3,8 +3,9 @@ define( function ( require ) {
 
 	return function () {
 
-		var $          = require( 'jquery' );
-		var Backbone   = require( 'backbone' );
+		var $        = require( 'jquery' );
+		var Backbone = require( 'backbone' );
+
 		var App        = require( 'App' );
 		var AuthRouter = require( 'AuthRouter' );
 
@@ -71,6 +72,19 @@ define( function ( require ) {
 
 			App.vent.on( 'videoPlayer:playerView:init', function ( data ) {
 				videos.push( data );
+			} );
+
+			App.reqres.setHandler( 'videoPlayer:playerView:video', function () {
+				var currentId = parseInt( App.request( 'videoPlayer:videoId' ), 10 );
+				var currentVideo;
+
+				videos.forEach( function ( video ) {
+					if ( video.model.id === currentId ) {
+						currentVideo = video;
+					}
+				} );
+
+				return currentVideo;
 			} );
 
 			// Videojs isn't single-page-app friendly.
