@@ -31,6 +31,7 @@ define( function ( require ) {
 					'resources/learning/observations/:id'                           : 'showObservationsWithId',
 					'resources/learning/portfolio'                                  : 'showPortfolio',
 					'resources/learning/catalogs'                                   : 'showCatalogs',
+					// 'resources/learning/group-task'                                 : 'showGroups',
 					'resources/learning/focus-objectives'                           : 'showFocusObjectivesTitle',
 					'resources/learning/reflection-questions'                       : 'showReflectionQuestions',
 					'resources/learning/objectives/:focustitle/:ncesid/:statestdid' : 'showFocusObjectivesContent'
