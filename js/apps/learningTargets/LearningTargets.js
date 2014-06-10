@@ -34,7 +34,13 @@ define( function ( require ) {
 					// 'resources/learning/group-task'                                 : 'showGroups',
 					'resources/learning/focus-objectives'                           : 'showFocusObjectivesTitle',
 					'resources/learning/reflection-questions'                       : 'showReflectionQuestions',
-					'resources/learning/objectives/:focustitle/:ncesid/:statestdid' : 'showFocusObjectivesContent'
+					'resources/learning/objectives/:focustitle/:ncesid/:statestdid' : 'showFocusObjectivesContent',
+
+					'resources/learning/courses/legacy/:id'                         : 'showCourseLegacyContent',
+					'resources/learning/catalogs/legacy/:id'                        : 'showCourseLegacyContent',
+					'resources/learning/processes/legacy/:processid/:processtaskid' : 'showProcessesLegacyContent',
+					'resources/learning/portfolio/legacy/:id'                       : 'showPortfolioLegacyContent',
+					'resources/learning/observations/legacy/:id'                    : 'showObservationsLegacyContent'
 				}
 			} );
 

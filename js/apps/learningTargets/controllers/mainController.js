@@ -96,10 +96,23 @@ define( function ( require ) {
 			},
 
 			'redirectToLegacyPage' : function ( target, page, sub, opts ) {
-				var pd360Loaded = App.request( 'pd360:loaded' );
+				var extension = '';
 
-				// Change document hash without triggering event so clicking the back button issue
-				App.navigate( Backbone.history.fragment + '/legacy' );
+				if ( sub === 'coursesBrowse' || sub === 'homePortfolio' ) {
+					extension = '/' + opts;
+				} else if ( sub === 'observationProcessesOfMe' ) {
+					extension = '/' + opts.processId + '/' + opts.processTaskId;
+				} else if ( sub === 'observationOfMe' ) {
+					extension = '/' + opts.showPerFocus;
+				}
+
+				App.navigate( Backbone.history.fragment + '/legacy' + extension );
+
+				Main.helper.showLegacyContent( page, sub, opts );
+			},
+
+			'showLegacyContent' : function ( page, sub, opts ) {
+				var pd360Loaded = App.request( 'pd360:loaded' );
 
 				// Display loading view
 				App.content.show( new App.Common.LoadingView() );
@@ -138,6 +151,54 @@ define( function ( require ) {
 		};
 
 		Main.controller = {
+
+			'showCourseLegacyContent' : function () {
+				var helper    = Main.helper;
+				var pathArray = window.location.hash.split( '/' );
+				var id        = parseInt( pathArray[ pathArray.length - 1 ], 10 );
+				var page      = legacyPages.courses.page;
+				var subPage   = legacyPages.courses.subPage;
+
+				helper.showLegacyContent( page, subPage, id );
+			},
+
+			'showPortfolioLegacyContent' : function () {
+				var helper    = Main.helper;
+				var pathArray = window.location.hash.split( '/' );
+				var id        = parseInt( pathArray[ pathArray.length - 1 ], 10 );
+				var page      = legacyPages.portfolio.page;
+				var subPage   = legacyPages.portfolio.subPage;
+
+				helper.showLegacyContent( page, subPage, id );
+			},
+
+			'showProcessesLegacyContent' : function () {
+				var helper        = Main.helper;
+				var pathArray     = window.location.hash.split( '/' );
+				var processTaskId = parseInt( pathArray[ pathArray.length - 1 ], 10 );
+				var processId     = parseInt( pathArray[ pathArray.length - 2 ], 10 );
+				var page          = legacyPages.processes.page;
+				var subPage       = legacyPages.processes.subPage;
+				var opts          = {
+					processId     : processId,
+					processTaskId : processTaskId
+				};
+
+				helper.showLegacyContent( page, subPage, opts );
+			},
+
+			'showObservationsLegacyContent' : function () {
+				var helper       = Main.helper;
+				var pathArray    = window.location.hash.split( '/' );
+				var showPerFocus = parseInt( pathArray[ pathArray.length - 1 ], 10 );
+				var page         = legacyPages.observations.page;
+				var subPage      = legacyPages.observations.subPage;
+				var opts         = {
+					showPerFocus : showPerFocus
+				};
+
+				helper.showLegacyContent( page, subPage, opts );
+			},
 
 			'showMain' : function () {
 				App.navigate( 'resources/learning/processes', true );
@@ -275,6 +336,7 @@ define( function ( require ) {
 					var groupsView = new GroupsView( {
 						collection : collection
 					} );
+
 					// bind to redirect event
 					groupsView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
 
@@ -310,8 +372,7 @@ define( function ( require ) {
 			},
 
 			'showFocusObjectivesContent' : function ( focusTitle, ncesId, statestdId ) {
-				var helper = Main.helper;
-
+				var helper  = Main.helper;
 				var options = {
 					focustitle : focusTitle,
 					ncesid     : ncesId,
