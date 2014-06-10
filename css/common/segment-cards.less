@@ -16,12 +16,12 @@ li {
 		position              : relative;
 		height                : @sc-card-height;
 		word-wrap             : break-word;
+		border                : 1px solid @cn-gray-lighter;
 		border-radius         : 3px;
 		-moz-border-radius    : 3px;
 		-webkit-border-radius : 3px;
-        -webkit-box-shadow    : 0 0px 2px rgba(32, 37, 35, 0.3);
-        -moz-box-shadow       : 0 0px 2px rgba(32, 37, 35, 0.3);
-        box-shadow            : 0 0px 2px rgba(32, 37, 35, 0.3);
+		-ms-border-radius     : 3px;
+		-o-border-radius      : 3px;
 
 		div.sc-segment-image-container {
 			position      		  : relative;
@@ -31,6 +31,8 @@ li {
 			border-radius         : 3px 3px 0 0;
 		    -moz-border-radius    : 3px 3px 0 0;
 		    -webkit-border-radius : 3px 3px 0 0;
+		    -ms-border-radius     : 3px 3px 0 0;
+		    -o-border-radius      : 3px 3px 0 0;
 		    overflow              : hidden;
 
 			a {
@@ -161,7 +163,7 @@ li {
 			padding      		 : 15px 10px 5px 10px;
 			border-radius 		 : 3px;
 		    -moz-border-radius   : 3px;
-		   -webkit-border-radius : 3px;
+		    -webkit-border-radius : 3px;
 
 			p.sc-overlay-segment-name {
 				font-size    : 15px;
@@ -214,6 +216,6 @@ html.touch {
 	    -moz-user-select     : none;
 	    -ms-user-select      : none;
 	    user-select          : none;
-       -webkit-touch-callout : none;
+        -webkit-touch-callout : none;
 	}
 }
