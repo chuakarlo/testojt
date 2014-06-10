@@ -21,7 +21,7 @@ define( function ( require ) {
 		}
 
 		var fileExtension = fileName.split( '.' ).pop();
-		var origFilename = fileName.slice( 0, fileName.lastIndexOf( '.' ) );
+		var origFilename  = fileName.slice( 0, fileName.lastIndexOf( '.' ) );
 
 		return webPath + origFilename + availableSizes[ size ] + '.' + fileExtension;
 
