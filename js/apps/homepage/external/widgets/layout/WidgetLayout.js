@@ -105,7 +105,7 @@ define( function ( require ) {
 		'events' : {
 			'click div#widget-settings.closed'         : 'showWidgetSettingsPanel',
 			'click div#mobile-widget-settings.closed'  : 'showMobileWidgetSettings',
-			'click p#awesomeness'                      : 'showWidgetSettingsPanel',
+			'click span#awesomeness'                   : 'showWidgetSettingsPanel',
 			'click #placeholder-icon'                  : 'showWidgetSettingsPanel',
 			'click div#widget-settings.opened'         : 'closeWidgetSettingsPanel',
 			'click div#mobile-widget-settings.opened'  : 'closeMobileSettingsPanel',
