@@ -1,16 +1,18 @@
-<div class="fo-content">
-	<div class="fo-content-image">
-		<a href="#resources/videos/<%- ContentId %>" >
-	    <img src="<%- ImageURL %>" class="img-responsive">
-	    <span class="fa fa-play cn-play-icon"></span>
-	    <p class="cn-play-now">Play Now</p>
-	</a>
+<div class='fo-content radius-corner <%- completed.color %>'>
+	<div class='fo-content-video'>
+		<a href='#resources/videos/<%- ContentId %>' >
+			<img src='<%- ImageURL %>'>
+			<i class='fa fa-play cn-play-icon'></i>
+			<p class='cn-play-now'>Play Now</p>
+		</a>
 	</div>
-</div>
-<div class="fo-info">
-	<h3 title="<%- ContentName %>"><%- CName %></h3>
-	<div class="row">
-		<p class="col-xs-9 col-sm-8 col-md-8"><%- min %>:<%- sec %></p>
-		<p class="col-xs-3 col-sm-4 col-md-4"><%- VCompleted %></p>
+	<div class='fo-info'>
+		<h3 title='<%- ContentName %>'><%- CName %></h3>
+		<div class='row'>
+			<p class='pull-left'><%- SegmentLength %></p>
+			<p class='pull-right'>
+				<i class='fa fa-check <%- completed.icon %> text-success'> Done</i>
+			</p>
+		</div>
 	</div>
 </div>

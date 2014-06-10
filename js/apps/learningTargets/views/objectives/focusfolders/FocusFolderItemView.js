@@ -1,15 +1,16 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette = require( 'marionette' );
-	var template   = require( 'text!apps/learningTargets/templates/objectives/focusfolder.html' );
-	var _          = require( 'underscore' );
-	var $          = require( 'jquery' );
+	var Marionette      = require( 'marionette' );
+	var template        = require( 'text!apps/learningTargets/templates/objectives/focusfolder.html' );
+	var _               = require( 'underscore' );
+	var $               = require( 'jquery' );
+	var getAbbreviation = require( 'common/helpers/getAbbreviation' );
 
 	return Marionette.ItemView.extend( {
 		'template'  : _.template( template ),
 		'tagName'   : 'li',
-		'className' : 'col-xs-12 col-sm-4 col-md-4',
+		'className' : 'col-xs-6 col-sm-6 col-md-4',
 
 		'ui' : {
 			'InfoButton' : '.fo-showinfo'
@@ -26,6 +27,26 @@ define( function ( require ) {
 				this.$( '.fo-overlay-details' ).addClass( 'hide' );
 				$( e.currentTarget ).addClass( 'fa-info-circle text-muted' ).removeClass( 'fa-times-circle text-primary' );
 			}
+		},
+
+		'_setDescriptionIcon' : function ( model ) {
+			if ( model.StateStandardDescription.length <= 0 ) {
+				model.DescIcon = 'hide';
+			}
+
+			return model;
+		},
+
+		'templateHelpers' : function ( ) {
+			var model = this.model;
+			model.DescIcon = '';
+
+			model.SSTitle  = getAbbreviation ( model.get( 'StateStandardTitle' ), 30 );
+			if ( model.get( 'StateStandardDescription' ).length <= 0 ) {
+				model.DescIcon = 'hide';
+			}
+
+			return model;
 		}
 
 	} );

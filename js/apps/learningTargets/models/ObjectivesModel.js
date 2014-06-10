@@ -1,22 +1,19 @@
 define( function ( require ) {
 	'use strict';
 
-	var Backbone        = require( 'backbone' );
-	var getAbbreviation = require( 'common/helpers/getAbbreviation' );
+	var Backbone          = require( 'backbone' );
+	var getAbbreviation   = require( 'common/helpers/getAbbreviation' );
+	var convertSecsToMins = require( 'common/helpers/convertSecsToMins' );
 
 	return Backbone.Model.extend( {
 
 		'parse' : function ( model ) {
-			model.FolderTitle = '';
-			model.DescIcon    = '';
-
-			if ( !model.ContentId ) {
-				model.SSTitle = model.StateStandardTitle;
-				this._setStateStandardTitleLength( model );
-				this._setDescriptionIcon( model );
-			} else {
-				model.CName      = model.ContentName;
-				model.VCompleted = '';
+			if ( model.ContentId ) {
+				model.CName         = model.ContentName;
+				model.completed = {
+					'icon'  : 'hide',
+					'color' : ''
+				};
 
 				this._computeMinSec( model );
 				this._setContentNameLength( model );
@@ -28,39 +25,23 @@ define( function ( require ) {
 		},
 
 		'_computeMinSec' : function ( model ) {
-			var hr  = Math.floor( model.SegmentLengthInSeconds / 3600 );
-			var min = Math.floor( ( model.SegmentLengthInSeconds - hr * 3600 ) / 60 );
-			var s   = Math.floor( model.SegmentLengthInSeconds - ( hr * 3600 + min * 60 ) );
-
-			model.min = min;
-			model.sec = s > 9 ? s : '0' + s;
+			model.SegmentLength  = convertSecsToMins( model.SegmentLengthInSeconds );
 
 			return model;
 		},
 
 		'_setContentNameLength' : function ( model ) {
-			model.CName = getAbbreviation ( model.ContentName, 35 );
-			return model;
-		},
-
-		'_setStateStandardTitleLength' : function ( model ) {
-			model.SSTitle = getAbbreviation ( model.StateStandardTitle, 20 );
-
-			return model;
-		},
-
-		'_setDescriptionIcon' : function ( model ) {
-			if ( model.StateStandardDescription.length <= 0 ) {
-				model.DescIcon = 'hide';
-			}
-
+			model.CName = getAbbreviation ( model.ContentName, 40 );
 			return model;
 		},
 
 		'_setViewCompleted' : function ( model ) {
 
 			if ( model.ViewingCompleted ) {
-				model.VCompleted = 'completed';
+				model.completed = {
+					'icon'  : '',
+					'color' : 'success'
+				};
 			}
 
 			return model;
