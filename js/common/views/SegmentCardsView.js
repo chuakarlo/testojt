@@ -109,10 +109,12 @@ define( function ( require ) {
 				this.ui.infoIcon.addClass( 'blued fa-times-circle').removeClass( 'grayed fa-info-circle' );
 				tooltipText = 'Close';
 				this.ui.infoOverlay.fadeIn();
+				this.ui.watchIcon.addClass( 'grayed-overlay' );
 			} else {
 				this.ui.infoIcon.addClass( 'grayed fa-info-circle' ).removeClass( 'blued fa-times-circle' );
 				tooltipText = 'Description';
 				this.ui.infoOverlay.fadeOut();
+				this.ui.watchIcon.removeClass( 'grayed-overlay' );
 			}
 
 			this.addTooltip( this.ui.infoIcon , { 'title' : tooltipText  }  );
