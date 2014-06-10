@@ -43,7 +43,7 @@ define( function ( require ) {
 			//Start contentNavigation
 
 			//main
-			//'spec/apps/contentNavigation/ContentNavigationTest',
+			'spec/apps/contentNavigation/ContentNavigationTest',
 
 			//End contentNavigation
 

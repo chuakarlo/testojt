@@ -18,6 +18,14 @@ define( function ( require ) {
 	var MiniPersonnelView  = require( 'common/views/MiniPersonnel');
 	var stripHtml          = require( 'common/helpers/stripHtml' );
 
+	var Autolinker = require( 'autolinker' );
+
+	var autolinker = new Autolinker( {
+		newWindow   : false,
+		stripPrefix : false,
+		className   : 'link'
+	} );
+
 	return Marionette.CompositeView.extend( {
 
 		'itemView'          : GroupCommentView,
@@ -58,6 +66,8 @@ define( function ( require ) {
 			if ( this.model.get( 'NewsId' ) ) {
 				this.ui.replyBox.hide();
 			}
+
+			$( this.el ).find( 'p.wallNews' ).prepend( autolinker.link( this.model.get( 'Message' ) ) );
 		},
 
 		'showMiniPersonnel' : function ( event ) {
