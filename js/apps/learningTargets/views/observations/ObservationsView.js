@@ -14,6 +14,7 @@ define( function ( require ) {
 		'template'          : _.template( template ),
 		'itemView'          : observationsItemView,
 		'emptyView'         : EmptyView,
+		'className'         : 'lt-content-observations',
 		'itemViewContainer' : '.lt-list'
 	} );
 

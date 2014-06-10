@@ -9,10 +9,10 @@ define( function ( require ) {
 
 	return Marionette.CompositeView.extend( {
 		'tagName'           : 'div',
-		'className'         : 'lt-content-courses',
 		'template'          : _.template( template ),
 		'itemView'          : ReflectionQuestionsItemView,
 		'emptyView'         : EmptyView,
+		'className'         : 'lt-content-reflection-questions',
 		'itemViewContainer' : '.lt-list'
 	} );
 

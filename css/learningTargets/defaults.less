@@ -1,0 +1,134 @@
+.empty-box {
+	margin        : 0px;
+	padding       : 30px 30px;
+	border-radius : 3px;
+	text-align    : center;
+	font-size     : 18px;
+	background    : @lt-gray;
+	color         : @lt-dark-gray;
+}
+.empty-task {
+	margin     : 0px;
+	padding    : 5px 5px;
+	text-align : center;
+	font-size  : 18px;
+	color      : @lt-dark-gray;
+}
+
+.icon {
+	cursor: pointer;
+}
+.text-cursor {
+	cursor: default;
+}
+
+h3 {
+	font-size: 15px;
+	font-weight: 500;
+	padding-bottom:15px;
+	margin-left: 2px;
+}
+
+.lt-content {
+
+	.spinner-container {
+		padding : 20% 30%;
+	}
+	
+	& > .active {
+		background: @lt-gray;
+		text-decoration: none;
+	}
+
+	img.icon {
+		float:left;
+		margin-right:24px;
+	}
+	p {
+		color:@lt-dark-gray-2;
+		margin: 0;
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	span {
+		float:right;
+		padding:10px 0;
+		img {
+			position: relative;
+			top:4px;
+			margin-left: 10px;
+		}
+	}
+	strong {
+		font-weight: 700;
+	}
+	
+	li {
+		margin-bottom: -20px;
+
+		& > .lt-toggle-btn {
+			width: 100%;
+			z-index: 10;
+			overflow: auto;
+			display: block;
+			min-height: inherit;
+			padding: 20px 20px;
+			border-bottom: 1px solid @lt-gray-1;
+
+			.lt-hover-transition();
+
+			&:hover {
+				background: @lt-gray-4;
+			}
+
+			div.progress {
+				background-color: @lt-gray-3;
+			}
+			.course-title, .group-title, .reflection-questions-title {
+				cursor: pointer;
+				color: @lt-light-blue;
+			}
+
+			& > div {
+				margin: 0;
+				display: block;
+			}
+			.icon-img, .title-wrapper, .progress-wrapper {
+				display: inline-block;
+				vertical-align: middle;
+			}
+			.title-wrapper {
+				float: none;
+				text-align: left;
+				padding: 0 20px;
+			}
+			.progress-wrapper {
+				padding: 0;
+				float: none;
+				text-align: right;
+				overflow: visible;
+				div {
+					padding: inherit;
+				}
+				.progress {
+					width: 75%;
+				}
+				.progress, p {
+					margin: 0;
+					padding: 0;
+					display: inline-block;
+					vertical-align: middle;
+				}
+				p {
+					min-width: 40px;
+				}
+			}
+		}
+
+	}
+
+}
+	

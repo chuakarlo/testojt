@@ -11,6 +11,7 @@ define( function ( require ) {
 		'template'          : _.template( template ),
 		'itemView'          : portfoliosItemView,
 		'emptyView'         : EmptyView,
+		'className'         : 'lt-content-portfolios',
 		'itemViewContainer' : 'ul.lt-list'
 	} );
 

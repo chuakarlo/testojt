@@ -1,0 +1,107 @@
+@media (max-width: @screen-xs-max) {
+	body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
+		position : fixed;
+	}
+}
+
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+	.view-all {
+		float: none !important;
+		margin-top: 0 !important;
+	}
+	.lt-header {
+		text-align: center;
+	}
+	.lt-left-nav ul li a {
+		text-align: center;
+	}
+	.lt-left-nav > ul {
+		margin-right: 0px !important;
+		padding-bottom: 20px;
+		border-bottom: 1px solid @lt-gray-1;
+	}
+	.lt-content {
+	}
+}
+
+@media (max-width: @screen-xs-max) {
+	.lt-header {
+		text-align: center;
+	}
+	.lt-left-nav ul li a {
+		text-align: center;
+	}
+	.lt-left-nav > ul {
+		margin-right: 0px !important;
+		margin-bottom: 10px !important;
+		padding-bottom: 20px;
+		border-bottom: 1px solid @lt-gray-1;
+	}
+	.view-all {
+		float: none !important;
+		margin-top: 0 !important;
+	}
+	.lt-content {
+
+		ul.nav-objectives {
+			margin: 0;
+			padding: 0;
+			li {
+				margin : 0 0 10px;
+				list-style : none;
+				max-height : 300px;
+				overflow : visible;
+				& > .fo-content {
+					div.fo-content-image {
+						a {
+							color : @cn-white;
+							.cn-play-now, .cn-play-icon {
+								display: block !important;
+								color : @cn-white;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		li {
+			& > .lt-toggle-btn {
+				& > div {
+					display: block;
+					.icon-img {
+						vertical-align: middle;
+					}
+					.title-wrapper {
+						padding: 0 0 0 10px !important;
+						margin-left: 0 !important;
+						display: inline-block;
+						vertical-align: middle;
+					}
+					.progress-wrapper {
+						float: right !important;
+					}
+					.col-wrapper {
+						display: inline-block !important;
+						padding-left: 20px !important;
+					}
+				}
+			}
+			img.icon {
+				margin-right: 10px !important;
+			}
+		}
+
+		.fo-callout-info {
+			h4 {
+				min-height: 55px;
+				padding-top: 10px;
+			}
+			.back-button {
+				display: block;
+				padding-top: 17px;
+				padding-right: 0;
+			}
+		}
+	}
+}

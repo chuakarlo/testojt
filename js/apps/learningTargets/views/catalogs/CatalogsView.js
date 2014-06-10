@@ -11,7 +11,8 @@ define( function ( require ) {
 		'template'          : _.template( template ),
 		'itemView'          : CatalogsItemView,
 		'emptyView'         : EmptyView,
-		'itemViewContainer' : 'ul.lt-list'
+		'itemViewContainer' : 'ul.lt-list',
+		'className'         : 'lt-content-catalogs'
 	} );
 
 } );

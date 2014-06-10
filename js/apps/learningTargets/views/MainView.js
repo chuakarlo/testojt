@@ -12,8 +12,7 @@ define( function ( require ) {
 	return Marionette.ItemView.extend( {
 		'template'  : _.template( template ),
 		'className' : 'learning-targets',
-
-		'ui' : {
+		'ui'        : {
 			'nav'        : '.lt-left-nav',
 			'selectNav'  : 'select.selectpicker',
 			'viewAllBtn' : '.view-all'
@@ -23,6 +22,13 @@ define( function ( require ) {
 			'click @ui.viewAllBtn' : 'viewAll'
 		},
 
+		'contentsWithViewAllButton' : [
+			'group-task',
+			'focus-objectives',
+			'catalogs',
+			'reflection-questions'
+		],
+
 		'onSelect' : function ( e ) {
 			App.navigate( 'resources/learning/' + e.currentTarget.value, true );
 		},
@@ -30,7 +36,7 @@ define( function ( require ) {
 		'setupViewAllButton' : function ( content ) {
 			var viewAllBtn = this.ui.viewAllBtn;
 
-			if ( content === 'group-task' || content === 'focus-objectives' || content === 'catalogs' || content === 'reflection-questions' ) {
+			if ( this.contentsWithViewAllButton.indexOf( content ) > -1 ) {
 				return viewAllBtn.hide();
 			}
 
@@ -48,11 +54,10 @@ define( function ( require ) {
 		},
 
 		'activateTab' : function ( content, options ) {
-			var self                = this;
-			var learningTargetsMenu = self.$( '.selectpicker' );
+			var learningTargetsMenu = this.$( '.selectpicker' );
 
 			// remove class from current active li
-			$( self.ui.nav )
+			$( this.ui.nav )
 				.find( '.active' )
 				.removeClass( 'active' );
 
