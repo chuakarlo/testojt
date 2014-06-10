@@ -38,7 +38,7 @@ define( function ( require ) {
 			this.setURL( url );
 		},
 		'setURL'          : function ( url ) {
-			this.ui.helpLink.attr( 'href', url );
+			App.Homepage.Utils.navigate( url );
 		}
 
 	} );
