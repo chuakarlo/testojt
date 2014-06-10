@@ -85,16 +85,35 @@ define( function ( require ) {
 		},
 
 		'setSidebarHeight' : function () {
+
 			if ( $( window ).width() > 767 ) {
-				if ( $( window ).scrollTop() > 0 ) {
-					this.ui.sidebar.css( 'height', $( window ).height() - 20 );
-				} else {
-					this.ui.sidebar.css( 'height', $( window ).height() - 200 );
-				}
+				this.setSidebarHeightLandscape();
 			} else {
 				this.ui.sidebar.css( 'height', $( window ).height() );
 			}
 
+		},
+
+		'setSidebarHeightLandscape' : function () {
+			var isiPad = navigator.userAgent.match(/iPad/i);
+
+			if ( $( window ).scrollTop() > 0 ) {
+				if ( isiPad && $( window ).width() > 1023 ) {
+					this.ui.sidebar.css( 'height', $( window ).height() - 350 );
+				} else if ( isiPad && $( window ).width() <= 1023 ) {
+					this.ui.sidebar.css( 'height', $( window ).height() - 150 );
+				} else {
+					this.ui.sidebar.css( 'height', $( window ).height() - 20 );
+				}
+			} else {
+				if ( isiPad && $( window ).width() > 1023 ) {
+					this.ui.sidebar.css( 'height', $( window ).height() - 550 );
+				} else if ( isiPad && $( window ).width() <= 1023 ) {
+					this.ui.sidebar.css( 'height', $( window ).height() - 300 );
+				} else {
+					this.ui.sidebar.css( 'height', $( window ).height() - 200 );
+				}
+			}
 		},
 
 		'updateSidebarScroll' : function () {
@@ -108,13 +127,7 @@ define( function ( require ) {
 		'resetBodyScroll' : function () {
 			$( window ).scrollTop( 0 );
 
-			if ( this.ui.sidebar.hasClass( 'affix' ) ) {
-				this.ui.sidebar.removeClass( 'affix' ).addClass( 'affix-top' );
-			}
-
-			if ( this.ui.sidebar.hasClass( 'affix-bottom' ) ) {
-				this.ui.sidebar.removeClass( 'affix-bottom' ).addClass( 'affix-top' );
-			}
+			this.ui.sidebar.addClass( 'affix-top' ).removeClass( 'affix-bottom affix' );
 		},
 
 		'getSidebarHeight' : function () {
