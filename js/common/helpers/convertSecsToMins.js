@@ -9,7 +9,13 @@ define( function ( require ) {
 		var minutes = min;
 		var seconds = s > 9 ? s : '0' + s;
 
-		return minutes + ':' + seconds;
+		if ( hr > 0 ) {
+			minutes = min > 9 ? min : '0' + min;
+			return hr + ':' + minutes + ':' + seconds;
+		} else {
+			return minutes + ':' + seconds;
+		}
+
 	};
 
 } );
