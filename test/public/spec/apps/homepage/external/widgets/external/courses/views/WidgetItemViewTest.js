@@ -136,12 +136,6 @@ define( function ( require ) {
 			UserWidgetCompositeViewInstance.render();
 		} );
 
-		it( 'should limit the number of characters to 37 with elipses', function () {
-
-			var courseName = UserWidgetCompositeViewInstance.templateHelpers().content;
-			expect( courseName ).to.be.equal( 'CSvSC1 Talk About Teaching! with Char...' );
-		} );
-
 		it ( 'should be able to call redirect to learning courses', function () {
 			UserWidgetCompositeViewInstance.$el.find( 'a.courseLink' ).first().trigger( 'click' );
 			navigateStub.should.have.been.calledWithExactly( 'resources/learning/courses/17868', { 'trigger' : true } );
