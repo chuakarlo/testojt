@@ -9,6 +9,8 @@ define( function ( require ) {
 
 		Entities.UUVCategoryModel = Backbone.CFModel.extend( {
 
+			'idAttribute' : 'UUVideoTopicId'
+
 		} );
 
 		Entities.UUVCategoryCollection = Backbone.CFCollection.extend( {
@@ -27,10 +29,10 @@ define( function ( require ) {
 
 			'parse' : function ( data ) {
 				// My Uploads, Popular, Recommended For You, Featured : UUVideoTopic
-				data.unshift( { 'UUVideoTopic' : 'Featured' } );
-				data.unshift( { 'UUVideoTopic' : 'Recommended For You' } );
-				data.unshift( { 'UUVideoTopic' : 'Popular' } );
-				data.unshift( { 'UUVideoTopic' : 'My Uploads' } );
+				data.unshift( { 'UUVideoTopicId' : 100001, 'UUVideoTopic' : 'Featured' } );
+				data.unshift( { 'UUVideoTopicId' : 100002, 'UUVideoTopic' : 'Recommended For You' } );
+				data.unshift( { 'UUVideoTopicId' : 100003, 'UUVideoTopic' : 'Popular' } );
+				data.unshift( { 'UUVideoTopicId' : 100004, 'UUVideoTopic' : 'My Uploads' } );
 
 				return data;
 			}

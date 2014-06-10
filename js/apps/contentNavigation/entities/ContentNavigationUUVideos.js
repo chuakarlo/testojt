@@ -22,13 +22,19 @@ define( function ( require ) {
 				'lastResultsLength' : 0,
 				'method'            : 'getMostPopularUUVideos',
 				'path'              : 'com.schoolimprovement.pd360.dao.uuvideos.UUVideoGateway',
-				'id'                : Session.personnelId(),
-				'persId'            : Session.personnelId(),
+				'id'                : null,
+				'persId'            : null,
 				'start'             : 0,
 				'rows'              : 24,
 				'searchType'        : 'VideosUserUploaded',
 				'searchData'        : '',
 				'args'              : { }
+			},
+
+			'initialize' : function () {
+				var sessionID = Session.personnelId();
+				this.set( 'id', sessionID );
+				this.set( 'persId', sessionID );
 			}
 
 		} );
@@ -51,7 +57,7 @@ define( function ( require ) {
 				'path'   : 'uuvideos.UUVideoGateway',
 				'method' : 'getByCreatorId',
 				'args'   : {
-					'id' : Session.personnelId()
+					'id' : null
 				}
 			},
 			'Popular' : {
@@ -66,7 +72,7 @@ define( function ( require ) {
 				'path'   : 'UUVideoService',
 				'method' : 'getRecommendedUUVideos',
 				'args'   : {
-					'persId'   : Session.personnelId(),
+					'persId'   : null,
 					'startRow' : 0,
 					'maxRows'  : 24
 				}
@@ -83,7 +89,7 @@ define( function ( require ) {
 				'path'   : 'SearchService',
 				'method' : 'RespondSearchAPI',
 				'args'   : {
-					'persId'     : Session.personnelId(),
+					'persId'     : null,
 					'start'      : 0,
 					'rows'       : 24,
 					'searchType' : 'VideosUserUploaded',
@@ -104,9 +110,22 @@ define( function ( require ) {
 			},
 
 			'setArgs' : function ( Library ) {
+
+				var sessionID = Session.personnelId();
+				var args      = this[ Library ].args;
+
 				this.queryModel.set( 'path', this[ Library ].path );
 				this.queryModel.set( 'method', this[ Library ].method );
-				this.queryModel.set( 'args', this[ Library ].args );
+
+				if ( args.hasOwnProperty( 'persId' ) ) {
+					args.persId = sessionID;
+				}
+
+				if ( args.hasOwnProperty( 'id' ) ) {
+					args.id = sessionID;
+				}
+
+				this.queryModel.set( 'args', args );
 			},
 
 			'resetStart' : function () {
