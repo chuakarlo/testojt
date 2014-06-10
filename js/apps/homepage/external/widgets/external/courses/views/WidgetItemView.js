@@ -24,9 +24,8 @@ define( function ( require ) {
 	}
 
 	function adjustDescription ( that ) {
-		var content = UIManager.limitDescriptionByWidth( that.$el, that.model );
-		var eDesc   = that.$el.find( '.description>p' );
-		eDesc.text( content );
+		var eDesc = that.$el.find( '.description' );
+		UIManager.limitDescriptionByWidth( eDesc, '.widget-item', '.progress-circle-item' );
 	}
 
 	return Marionette.ItemView.extend( {

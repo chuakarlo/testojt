@@ -49,7 +49,8 @@
     "bootstrap-select-3": "https://github.com/silviomoreto/bootstrap-select.git",
     "tipsy": "~0.1.7",
     "adjustable-peek": "~1.0.1",
-    "Autolinker.js": "~0.11.0"
+    "Autolinker.js": "~0.11.0",
+    "jquery-dotdotdot" : "https://github.com/yamii/jQuery.dotdotdot.git#master"
   },
   "devDependencies": {
     "chai": "1.8.x",

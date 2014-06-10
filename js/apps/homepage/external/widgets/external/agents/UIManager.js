@@ -1,17 +1,20 @@
 define( function ( require ) {
 	'use strict';
 
-	var App = require( 'App' );
+	require( 'jquery-dotdotdot' );
 
 	return {
-		'limitDescriptionByWidth' : function ( container, model ) {
-			var nWidth  = container.find( '.description' ).width();
-			var content = model.attributes.COURSENAME;
+		'limitDescriptionByWidth' : function ( elem, containerByCSS, siblingByCSS ) {
+			var container = elem.closest( containerByCSS );
+			var sibling = container.find( siblingByCSS );
 
-			if ( nWidth > 0 ) {
-				content =  App.Homepage.Utils.limitCharacters( content, ( nWidth / 10 ) );
+			if ( container && sibling ) {
+				//25px - padding 10px + 10px for ellipsis
+				var maxWidth = container.width() - sibling.outerWidth() - 25;
+				elem.css ( { 'max-width' : maxWidth + 'px' } );
+				elem.dotdotdot();
 			}
-			return content;
+
 		}
 	};
 

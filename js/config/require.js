@@ -56,18 +56,19 @@ require.config( {
 		'validator-js'          : 'libs/validator-js/validator.min',
 		'backbone.touch'        : 'libs/backbone.touch/backbone.touch',
 
-		'pc-linq'           : 'libs/nakautot.linq/linq.min',
-		'pc-nivo'           : 'libs/nivo-slider/jquery.nivo.slider',
-		'pc-progressCircle' : 'libs/progress-circle/progress-circle',
-		'pc-mouseWheel'     : 'libs/perfect-scrollbar/jquery.mousewheel',
-		'pc-carouselSnap'   : 'libs/circular-snap-carousel/carousel-snap',
-		'pc-swipe'          : 'libs/circular-snap-carousel/jquery.touchSwipe',
-		'pc-htmlconcat'     : 'libs/htmlConcat/htmlconcat',
-		'pc-adjustablePeek' : 'libs/adjustable-peek/adjustable-peek',
-		'bootstro'          : 'libs/bootstro.js/bootstro',
-		'bootstrap-select'  : 'libs/bootstrap-select-3/bootstrap-select',
-		'tipsy'             : 'libs/tipsy/src/javascripts/jquery.tipsy',
-		'autolinker'        : 'libs/Autolinker.js/src/Autolinker',
+		'pc-linq'               : 'libs/nakautot.linq/linq.min',
+		'pc-nivo'               : 'libs/nivo-slider/jquery.nivo.slider',
+		'pc-progressCircle'     : 'libs/progress-circle/progress-circle',
+		'pc-mouseWheel'         : 'libs/perfect-scrollbar/jquery.mousewheel',
+		'pc-carouselSnap'       : 'libs/circular-snap-carousel/carousel-snap',
+		'pc-swipe'              : 'libs/circular-snap-carousel/jquery.touchSwipe',
+		'pc-htmlconcat'         : 'libs/htmlConcat/htmlconcat',
+		'pc-adjustablePeek'     : 'libs/adjustable-peek/adjustable-peek',
+		'jquery-dotdotdot'      : 'libs/jquery-dotdotdot/src/js/jquery.dotdotdot.min',
+		'bootstro'              : 'libs/bootstro.js/bootstro',
+		'bootstrap-select'      : 'libs/bootstrap-select-3/bootstrap-select',
+		'tipsy'                 : 'libs/tipsy/src/javascripts/jquery.tipsy',
+		'autolinker'            : 'libs/Autolinker.js/src/Autolinker',
 
 		// Base application level classes
 		'Session' : 'apps/user/models/SessionModel',
@@ -212,6 +213,11 @@ require.config( {
 		},
 
 		'pc-adjustablePeek' : {
+			'exports' : '$',
+			'deps'    : [ 'jquery' ]
+		},
+
+		'jquery-dotdotdot' : {
 			'exports' : '$',
 			'deps'    : [ 'jquery' ]
 		},

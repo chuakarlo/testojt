@@ -97,17 +97,21 @@
 			border-left : 3px solid @pc-blue-light;
 				div.duedate{
 					font-size : 10px;
-					color     : @pc-red
-;
+					color     : @pc-red;
 				}
 		}
 		div.olderdate{
 			border-left : 3px solid @pc-red;
 		}
 	}
-.footerLink {
+	.footerLink {
 	i{
-		margin-left : 20px;
+		margin-left : 8px;
+	}
+	span {
+		vertical-align : middle;
+		display        : inline-block;
+		padding-bottom : 12px;
 	}
 }
 	#active-holder {
@@ -139,10 +143,9 @@
 			}
 		}
 		.description {
-			width : 290px;
-			p {
-				padding-left : 10px;
-			}
+			max-width    : 300px;
+			height       : 20px;
+			padding-left : 10px;
 		}
 		.progress-circle-item {
 			width  : 35px;
@@ -155,8 +158,8 @@
 			margin-left: 10px;
 		}
 		.observation-name {
-			width: 180px;
-			overflow: hidden;
+			width    : 180px;
+			overflow : hidden;
 		}
 		.observation-date {
 			font-style : italic;
@@ -348,7 +351,8 @@
 		.footer {
 			padding    : 14px 0 14px 14px;
 			border-top : 1px solid #ebebeb;
-			height:  49px;
+			height     : 50px;
+
 			a:hover {
 				color: @widgetdarkblue;
 			}
@@ -781,5 +785,8 @@
 		font-size : 2em;
 		float     : right;
 		padding   : 0px 8px;
+	}
+	.footer-icon {
+		font-size : 2em;
 	}
 }
