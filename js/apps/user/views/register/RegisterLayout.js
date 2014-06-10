@@ -319,7 +319,7 @@ define( function ( require ) {
 			var messages = {
 
 				'emailUsed' : {
-					'message' : 'This e-mail is already in use. Your school / district may have already set up your account.<br>Please try to reset your <a href="/#forgotpassword">{password}</a>.'
+					'message' : 'This e-mail is already in use. Your school / district may have already set up your account.<br>Please try to reset your <a href="/#forgotPassword">password</a>.'
 				},
 
 				'fetchingEmailError' : {
