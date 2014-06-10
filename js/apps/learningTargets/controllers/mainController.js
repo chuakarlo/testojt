@@ -20,6 +20,7 @@ define( function ( require ) {
 		var mainView;
 		var contentRegion;
 		var currentPage;
+		var isTouchable = 'ontouchstart' in document.documentElement;
 
 		var legacyPages = {
 			'processes' : {
@@ -70,8 +71,11 @@ define( function ( require ) {
 					el : mainView.el.querySelector( '.lt-content' )
 				} );
 
+				if ( !isTouchable ) {
+					mainView.setupViewAllButton( content );
+				}
+
 				self.setupViewAllLink( content );
-				mainView.setupViewAllButton( content );
 				mainView.activateTab( content );
 			},
 
