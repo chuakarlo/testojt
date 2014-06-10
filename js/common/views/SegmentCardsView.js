@@ -95,7 +95,7 @@ define( function ( require ) {
 		'navigateToVideoPage' : function ( ev ) {
 			ev.preventDefault();
 
-			var uuv = this.UUVideoId ? '?uuv=true' : '';
+			var uuv = this.model.get( 'UUVideoId' ) ? '?uuv=true' : '';
 
 			App.navigate( '#resources/videos/' + this.model.id + uuv , { 'trigger' : true } );
 		},
