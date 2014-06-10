@@ -28,7 +28,9 @@ define( function ( require ) {
 	};
 
 	function defaultImage ( e ) {
-		$( e.currentTarget ).attr( 'src', getConfig( 'profileAvatarWebPath' ) + 'default.png' );
+		if ( $( e.currentTarget ).attr( 'src' ).split( '/' ).pop() !== 'default.png' ) {
+			$( e.currentTarget ).attr( 'src', getConfig( 'profileAvatarWebPath' ) + 'default.png' );
+		}
 	}
 
 	function renderAvatar ( avatarImg ) {
