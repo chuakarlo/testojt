@@ -108,15 +108,15 @@
 		}
 	}
 	.footerLink {
-	i{
-		margin-left : 8px;
+		i{
+			margin-left : 8px;
+		}
+		span {
+			vertical-align : middle;
+			display        : inline-block;
+			padding-bottom : 21px;
+		}
 	}
-	span {
-		vertical-align : middle;
-		display        : inline-block;
-		padding-bottom : 12px;
-	}
-}
 	#active-holder {
 		overflow : hidden;
 
@@ -127,6 +127,15 @@
 	}
 
 	//Group Activity
+
+	//possibly all widgets will use this settings
+	#courses .description {
+		max-width    : 300px;
+		height       : 20px;
+		padding-left : 10px;
+		height       : 35px;
+		padding-top  : 8px;
+	}
 
 	.group-activity-item, .focus-objective-item, .courses-item, .progress-item, .observation-of-me  {
 		height   : 35px;
@@ -146,9 +155,10 @@
 			}
 		}
 		.description {
-			max-width    : 300px;
-			height       : 20px;
-			padding-left : 10px;
+			width : 290px;
+			p {
+				padding-left : 10px;
+			}
 		}
 		.progress-circle-item {
 			width  : 35px;
@@ -354,7 +364,8 @@
 		.footer {
 			padding    : 14px 0 14px 14px;
 			border-top : 1px solid #ebebeb;
-			height     : 50px;
+			height     : 49px;
+			overflow   : hidden;
 
 			a:hover {
 				color: @widgetdarkblue;
@@ -790,6 +801,7 @@
 		padding   : 0px 8px;
 	}
 	.footer-icon {
+		overflow:  hidden;
 		font-size : 2em;
 	}
 }
