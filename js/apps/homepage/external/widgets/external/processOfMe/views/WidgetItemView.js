@@ -47,7 +47,7 @@ define( function ( require ) {
 				'textStatus'   : this.getTextDueStatus(),
 				'smallContent' : App.Homepage.Utils.limitCharacters( this.model.get( 'ProcessName' ), 25 ),
 				'ContentId'    : '#resources/learning/processes',
-				'creatorName'  : App.Homepage.Utils.limitCharacters( this.model.get( 'ProcessName' ), 35 ),
+				'creatorName'  : App.Homepage.Utils.limitCharacters( this.model.get( 'ProcessName' ), 40 ),
 				'getConfig'    : getConfig( 'contentThumbnailPath' )
 			};
 		},
