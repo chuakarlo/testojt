@@ -80,6 +80,10 @@ define( function ( require ) {
 				mainView.activateTab( content );
 			},
 
+			'capitalise' : function ( string ) {
+				return string.charAt( 0 ).toUpperCase() + string.slice( 1).toLowerCase();
+			},
+
 			'_apiRequest' : function ( type, callback, options ) {
 				var request = App.request( type, options );
 
@@ -87,9 +91,12 @@ define( function ( require ) {
 					// run callback with collections
 					callback( collections );
 				} ).fail( function () {
+					var pathArray             = window.location.hash.split( '/' );
+					var learningTargetsModule = Main.helper.capitalise( pathArray[ 2 ] );
+					var errorMessage          = 'There was an error loading in ' + learningTargetsModule + '.';
 
 					Main.helper._showView( new App.Common.ErrorView( {
-						'message' : 'There was an error loading view.',
+						'message' : errorMessage,
 						'flash'   : 'An error occurred. Please try again later.'
 					} ) );
 
