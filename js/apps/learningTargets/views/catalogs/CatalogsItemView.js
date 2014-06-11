@@ -47,6 +47,17 @@ define( function ( require ) {
 			}
 		},
 
+		'setIcons' : function ( model ) {
+			model.icon = '';
+			if ( model.get( 'CatalogResourceTypeId' ) === 1 ) {
+				model.icon = 'fa-youtube-play';
+			} else if ( model.get( 'CatalogResourceTypeId' ) === 2 ) {
+				model.icon = 'fa-university';
+			} else {
+				model.icon = 'fa-cubes';
+			}
+		},
+
 		'setCredits' : function ( model ) {
 			model.credits = '';
 			if ( model.get( 'CreditHours' ) > 1 ) {
@@ -61,6 +72,8 @@ define( function ( require ) {
 
 			self.setCatalogLinks ( self.model );
 			self.setCredits ( self.model );
+			self.setIcons ( self.model );
+
 			return self.model;
 		}
 	} );

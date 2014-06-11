@@ -1,9 +1,18 @@
 .lt-content-catalogs {
 
 	li > .lt-toggle-btn .title-wrapper {
+
 		&.lt-credits  {
-			text-align : right;
+			text-align    : right;
+			padding-right : 0 !important;
 		}
+	}
+
+	.fa {
+		color        : @lt-lighter-blue;
+		font-size    : 16px;
+		padding-left : 10px;
+		min-width    : 31px;
 	}
 
 	.text-field-right {
@@ -13,6 +22,19 @@
 
 	.field-group {
 		line-height : 25px;
+	}
+
+	ul.media-list {
+		border-top : 1px solid @lt-gray;
+	}
+
+	.lt-legend {
+		margin     : 0 10px 15px 0;
+		text-align : right;
+		&, .fa {
+			font-size : 12px;
+			color     : @lt-lighter-blue;
+		}
 	}
 
 }

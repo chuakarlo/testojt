@@ -5,13 +5,6 @@
 @lt-fo-container-folder-height : 180px;
 @lt-fo-content-video-height    : 150px;
 
-.success {
-	border: 1px solid #9fd753 !important;
-	.fo-info {
-		background-color: #f6fded !important;
-	}
-}
-
 .radius-corner {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -24,8 +17,14 @@
     box-shadow: 0 0 4px 0px #4a4a4a;
 }
 
+.box-shadows2 {
+	-webkit-box-shadow : 0 0px 2px rgba(32, 37, 35, 0.3);
+	-moz-box-shadow    : 0 0px 2px rgba(32, 37, 35, 0.3);
+	box-shadow         : 0 0px 2px rgba(32, 37, 35, 0.3);
+}
+
 .fo-callout {
-		margin: 20px 0;
+		margin: 20px 0 35px 0;
 		padding: 20px;
 		border-left: 3px solid #eee;
 		h4 {
@@ -35,9 +34,9 @@
 }
 .fo-callout-info {
 	background-color: #f4f8fa;
-	border-color: #5bc0de;
+	border-color: @lt-light-blue;
 	h4 {
-		color: #5bc0de;
+		color: @lt-light-blue;
 	}
 	.back-button {
 		cursor: pointer;
@@ -95,10 +94,17 @@ only screen and (min-width: 320px) and (max-width: 479px) {
 				.fo-content {
 					height: 100%;
 					overflow: hidden;
-					border: 1px solid #bebebe;
+					.box-shadows2;
+					&.success {
+						-webkit-box-shadow: 0 0px 2px @lt-lighter-green;
+						-moz-box-shadow: 0 0px 2px @lt-lighter-green;
+						box-shadow: 0 0px 2px @lt-lighter-green;
+						.fo-info {
+							background-color: #f6fded;
+						}
+					}
 					& > .fo-content-video {
 						height: @lt-fo-content-video-height;
-
 						overflow-y: hidden;
 						position : relative;
 						color : @cn-white;
@@ -147,21 +153,21 @@ only screen and (min-width: 320px) and (max-width: 479px) {
 					}
 					& > .fo-info {
 						border-radius: 0 0 5px 5px;
-						background: #f5f5f5;
+						background : #f3f5f6;
 						position : relative;
 						height: auto;
 						overflow-y: visible;
 						padding: 0 10px;
 						margin: 0;
 						h3 {
-							margin: 0;
-							padding: 13px 0 0;
-							height: 50px;
-							display: block;
-							font-weight: 300;
-							line-height: 1.3;
-							font-size: 14px;
-							color: #333333;
+							margin      : 0;
+							padding     : 13px 0 0;
+							height      : 50px;
+							display     : block;
+							font-weight : 300;
+							line-height : 1.3;
+							font-size   : 14px;
+							color       : #333333;
 						}
 						div.row {
 							margin: 0;
@@ -203,7 +209,7 @@ only screen and (min-width: 320px) and (max-width: 479px) {
 				}
 				.fo-folder-info {
 					position: relative;
-					border: 1px solid @cn-gray;
+					.box-shadows2;
 					.fo-header {
 						overflow: visible;
 						display: block;
@@ -211,6 +217,7 @@ only screen and (min-width: 320px) and (max-width: 479px) {
 						padding : 5px 10px 0;
 						.fa-info-circle, .fa-times-circle {
 							font-size : 20px;
+							color     : @lt-gray-3;
 						}
 						.fa-info-circle:hover {
 							color: #3dadef;
@@ -221,7 +228,7 @@ only screen and (min-width: 320px) and (max-width: 479px) {
 							right: 10px;
 						}
 						.fa-times-circle:hover {
-							color: #999999;
+							color: @lt-dark-gray;
 						}
 					}
 					.fo-title {
@@ -229,7 +236,7 @@ only screen and (min-width: 320px) and (max-width: 479px) {
 						.fa-folder, .fa-folder-open {
 							font-size : 80px;
 							text-align : center;
-							color: #d8d8d8;
+							color: @lt-gray-3;
 						}
 						a {
 							text-align: center;
@@ -237,17 +244,21 @@ only screen and (min-width: 320px) and (max-width: 479px) {
 							&:hover {
 								text-decoration: none;
 							}
+							i {
+								.lt-color-transition();
+							}
 							i:hover {
-								color: #acacac;
+								color: @lt-gray-3-darker;
 							}
 						}
 						h3 {
-							min-height: 35px;
-							max-height: 35px;
-							padding-bottom: 0;
-							margin: 2px 0;
-							display:block;
-							vertical-align: middle;
+							min-height     : 35px;
+							max-height     : 35px;
+							padding-bottom : 0;
+							margin         : 2px 0;
+							display        : block;
+							vertical-align : middle;
+							font-size      : 14px;
 						}
 					}
 					.fo-overlay-details {
@@ -270,7 +281,7 @@ only screen and (min-width: 320px) and (max-width: 479px) {
 							font-weight: 300;
 						}
 						.fo-overlay-description {
-							padding: 5px 0;
+							padding: 8px 0 5px 0;
 							font-size: 14px;
 							font-weight: 300;
 							line-height: 1.3em;
