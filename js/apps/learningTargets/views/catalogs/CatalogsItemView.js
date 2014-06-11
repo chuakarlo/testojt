@@ -36,6 +36,7 @@ define( function ( require ) {
 		'setCatalogLinks' : function ( model ) {
 			model.catalogTraining = '';
 			if ( model.get( 'CatalogResourceTypeId' ) === 1 ) {
+				model.catalogTraining = 'catalog-video';
 				model.catalogLinks = '#resources/videos/' + model.get( 'ResourceId' );
 			} else if ( model.get( 'CatalogResourceTypeId' ) === 2 ) {
 				model.catalogLinks    = '#';
@@ -44,14 +45,22 @@ define( function ( require ) {
 				model.catalogLinks    = '#';
 				model.catalogTraining = 'catalog-training';
 			}
+		},
 
+		'setCredits' : function ( model ) {
+			model.credits = '';
+			if ( model.get( 'CreditHours' ) > 1 ) {
+				model.credits = 'credits';
+			} else {
+				model.credits = 'credit';
+			}
 		},
 
 		'templateHelpers' : function ( ) {
 			var self = this;
 
 			self.setCatalogLinks ( self.model );
-
+			self.setCredits ( self.model );
 			return self.model;
 		}
 	} );
