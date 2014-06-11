@@ -1,12 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var App              = require( 'App' );
-	var $                = require( 'jquery' );
-	var Marionette       = require( 'marionette' );
-	var _                = require( 'underscore' );
-	var UIManager        = require( 'apps/homepage/external/widgets/external/agents/UIManager' );
-	var progressTemplate = require( 'text!apps/homepage/external/widgets/external/courses/templates/progressItemTemplate.html' );
+	var App                       = require( 'App' );
+	var $                         = require( 'jquery' );
+	var Marionette                = require( 'marionette' );
+	var _                         = require( 'underscore' );
+	var progressTemplate          = require( 'text!apps/homepage/external/widgets/external/courses/templates/progressItemTemplate.html' );
 
 	var widgetDirectory = 'resources/learning/courses/legacy';
 
@@ -23,16 +22,12 @@ define( function ( require ) {
 		}
 	}
 
-	function adjustDescription ( that ) {
-		var eDesc = that.$el.find( '.description' );
-		UIManager.limitDescriptionByWidth( eDesc, '.widget-item', '.progress-circle-item' );
-	}
-
 	return Marionette.ItemView.extend( {
 		'initialize'      : function () {
 
 			$( window ).resize( function () {
-				adjustDescription( this );
+				App.Homepage.Utils.limitCharsByDOMLength( this.$el,'.description',
+					'.progress-circle-item' );
 			}.bind( this ) );
 
 		},
@@ -46,7 +41,8 @@ define( function ( require ) {
 		},
 		'onShow'          : function ( ) {
 
-			adjustDescription( this );
+			App.Homepage.Utils.limitCharsByDOMLength( this.$el,'.description',
+				'.progress-circle-item' );
 			doOnShow( this, this.model );
 
 		},
