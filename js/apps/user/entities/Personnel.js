@@ -106,11 +106,13 @@ define( function ( require ) {
 			},
 
 			'setupRegistrationValidation' : function () {
+
 				_.extend( this.validation, {
 
 					'Password' : {
 						'required'  : true,
-						'minLength' : 4
+						'minLength' : 4,
+						'maxLength' : 12
 					},
 
 					'Password2' : [

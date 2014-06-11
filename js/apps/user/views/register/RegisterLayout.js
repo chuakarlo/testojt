@@ -10,6 +10,9 @@ define( function ( require ) {
 
 	var template = require( 'text!user/templates/register/registerLayout.html' );
 
+	//custom plugin
+	var checkPasswordLength = require( 'user/plugins/checkPasswordLength' );
+
 	require( 'validation' );
 	require( 'backbone.stickit' );
 
@@ -26,7 +29,8 @@ define( function ( require ) {
 			'change @ui.email'    : 'checkEmail',
 			'change @ui.country'  : 'updateStates',
 			'change @ui.state'    : 'updateDistricts',
-			'change @ui.district' : 'updateSchools'
+			'change @ui.district' : 'updateSchools',
+			'keyup @ui.password'  : 'checkPasswordLength'
 		},
 
 		'ui' : {
@@ -34,7 +38,8 @@ define( function ( require ) {
 			'country'  : '[name="Country"]',
 			'state'    : '[name="State"]',
 			'district' : '[name=DistrictName]',
-			'school'   : '[name="ClientId"]'
+			'school'   : '[name="ClientId"]',
+			'password' : '[name="Password"]'
 		},
 
 		// The 'other' ids for that have special handling
@@ -160,6 +165,10 @@ define( function ( require ) {
 
 			}
 
+		},
+
+		'checkPasswordLength' : function ( e ) {
+			checkPasswordLength( e.target, 12 );
 		},
 
 		'disableSelect' : function ( element ) {

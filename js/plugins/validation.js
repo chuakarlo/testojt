@@ -29,6 +29,8 @@ define( function ( require ) {
 				.attr( 'class', 'help-block')
 				.html( error )
 			);
+
+			$el.focus();
 		}
 
 	} );
