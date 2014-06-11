@@ -6,13 +6,13 @@ define( function ( require ) {
 	var Backbone = require( 'backbone' );
 	var App      = require( 'App' );
 
-	require( 'videoPlayer/entities/Content' );
+	var VideoResourceModel = require( 'videoPlayer/models/VideoResourceModel' );
 
 	App.module( 'VideoPlayer.Entities', function ( Entities ) {
 
 		Entities.Segments = Backbone.CFCollection.extend( {
 
-			'model' : Entities.Content,
+			'model' : VideoResourceModel,
 
 			'path'  : 'ContentService',
 

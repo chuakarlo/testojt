@@ -33,21 +33,16 @@ define( function ( require ) {
 			'videoUrl' : function () {
 				var url;
 
-				if ( ! this.Uploaded ) {
-					var bitrates  = ',304,552,800,1152,1552,1952,2448,';
-					var extension = '.mp4.csmil/master.m3u8';
-					var folder    = this.FileName.split( '.' )[ 0 ];
-					var file      = this.FileName.split( '.' )[ 0 ] + '_';
+				if ( !this.Uploaded ) {
+					var bitrates    = ',304,552,800,1152,1552,1952,2448,';
+					var extension   = '.mp4.csmil/master.m3u8';
+					var folder      = this.FileName.split( '.' )[ 0 ];
+					var file        = this.FileName.split( '.' )[ 0 ] + '_';
+					var contentType = { '3' : 'PD360', '6' : 'CC360' };
 
 					// set video base URL
 					url = 'http://schoolimp-vh.akamaihd.net/i/PD360/media/video/';
-
-					if ( this.ContentTypeId === 3 ) {
-						url += 'PD360/';
-					} else if ( this.ContentTypeId === 6 ) {
-						url += 'CC360/';
-					}
-
+					url += contentType[ this.ContentTypeId ] + '/';
 					url += this.SKU + '/';
 					url += folder + '/';
 					url += file + bitrates + extension;
@@ -59,14 +54,12 @@ define( function ( require ) {
 			},
 
 			'getCC' : function () {
-				var url    = 'PD360/media/video/';
-				var folder = this.FileName.split( '.' )[ 0 ];
-				var file   = folder;
-				if ( this.ContentTypeId === 3 ) {
-					url += 'PD360/';
-				} else if ( this.ContentTypeId === 6 ) {
-					url += 'CC360/';
-				}
+				var url         = 'PD360/media/video/';
+				var folder      = this.FileName.split( '.' )[ 0 ];
+				var file        = folder;
+				var contentType = { '3' : 'PD360', '6' : 'CC360' };
+
+				url += contentType[ this.ContentTypeId ] + '/';
 				url += this.SKU + '/';
 				url += folder + '/';
 				url += file + '.vtt';
@@ -93,8 +86,9 @@ define( function ( require ) {
 				'autoplay'  : true,
 				'techOrder' : [ 'flash', 'html5' ]
 			}, function () {
-				$( 'div.vjs-captions-button.vjs-menu-button.vjs-control > div.vjs-menu' ).remove();
-				document.getElementsByClassName( 'vjs-captions-button vjs-menu-button vjs-control' )[ 0 ].setAttribute( 'style', 'display: none;' );
+				// Bug fix for defect #5187 : CC button flashes on IE.
+				this.controlBar.captionsButton.hide();
+				this.controlBar.captionsButton.el().setAttribute( 'aria-pressed', 'true' );
 
 				// Check if flash is supported so,
 				// volume() won't throw an error if flash player isn't available.
@@ -114,8 +108,12 @@ define( function ( require ) {
 
 			} );
 
-			player.on( 'firstplay', function () {
-				player.removeChild( 'loadingSpinner' );
+			player.on( 'timeupdate', function removeSpinner () {
+				// Bug fix to remove loading spinner in Safari when video starts playing.
+				if ( player.currentTime() > 1 ) {
+					player.removeChild( 'loadingSpinner' );
+					player.off( 'timeupdate', removeSpinner );
+				}
 			} );
 
 			player.on( 'loadedmetadata', function () {
@@ -164,14 +162,12 @@ define( function ( require ) {
 		},
 
 		'isMobile' : function () {
-			return videojs.IS_IOS ||
-				videojs.IS_ANDROID ||
-				videojs.IS_OLD_ANDROID;
+			return $.browser.mobile || $.browser.ipad;
 		},
 
 		'initNextSegment' : function () {
 			if ( this.model.next ) {
-				if ( $.browser.mobile ||  $.browser.ipad ) {
+				if ( $.browser.mobile || $.browser.ipad ) {
 					this.listenTo( this, 'render', this.displayBlock );
 				} else {
 					this.listenTo( this, 'afterPlayerInit', this.displayOverlay );
