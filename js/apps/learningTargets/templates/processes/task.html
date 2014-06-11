@@ -1,9 +1,7 @@
-<div class="row">
-	<div class="col-xs-3 step-item">
-		<a id="<%- ProcessTaskId %>" href="#" class="lt-process-step" title="more info">
-			Next Step <%- ProcessTaskId %>
-		</a>
-	</div>
-	<div class="col-xs-5 step-item"><%- CompleteByDate %></div>
-	<div class="col-xs-4 step-item text-<%- StepStatus.color %>"><%- StepStatus.message %></div>
-</div>
+<td>
+	<a id="<%- ProcessTaskId %>" href="#" class="lt-process-step" title="more info">
+		<%- ProcessTaskId %>
+	</a>
+</td>
+<td ><%- TrimedDate %></td>
+<td class="process-status-<%- StepStatus.color %>" ><%- StepStatus.message %></td>

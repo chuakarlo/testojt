@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	var Backbone = require( 'backbone' );
 	var _        = require( 'underscore' );
+	var moment   = require( 'moment' );
 
 	return Backbone.Model.extend( {
 
@@ -42,6 +43,7 @@ define( function ( require ) {
 				if ( !ProcessStatus.message ) {
 					tasksObj.StepStatus  = self._getStatus( taskCompletedDate, currentDate, 'Past Due' );
 				}
+				tasksObj.TrimedDate = moment( tasksObj.CompleteByDate ).format( 'M/D/YY' );
 			} );
 
 			return model;

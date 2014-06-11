@@ -17,6 +17,7 @@ define( function ( require ) {
 	var $                       = require( 'jquery' );
 
 	App.module( 'LearningTargets.Main', function ( Main ) {
+
 		var mainView;
 		var contentRegion;
 		var currentPage;

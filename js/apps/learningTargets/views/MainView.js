@@ -22,7 +22,7 @@ define( function ( require ) {
 			'click @ui.viewAllBtn' : 'viewAll'
 		},
 
-		'contentsWithViewAllButton' : [
+		'contentsWithoutViewAllButton' : [
 			'group-task',
 			'focus-objectives',
 			'catalogs',
@@ -36,7 +36,7 @@ define( function ( require ) {
 		'setupViewAllButton' : function ( content ) {
 			var viewAllBtn = this.ui.viewAllBtn;
 
-			if ( this.contentsWithViewAllButton.indexOf( content ) > -1 ) {
+			if ( this.contentsWithoutViewAllButton.indexOf( content ) > -1 ) {
 				return viewAllBtn.hide();
 			}
 
