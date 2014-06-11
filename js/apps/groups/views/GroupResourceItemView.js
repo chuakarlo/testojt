@@ -102,10 +102,6 @@ define( function ( require ) {
 					var hashedUrl = results[ 0 ];
 
 					// POST request for file download
-					// TODO: modify code below for the downloading of resource
-					// use configData.FileURL instead of hardcoded postURL
-					var postURL = 'http://cebudev.pd360.com/FileServer.cfm';
-
 					var _post = function ( path, params, method ) {
 						method = method || 'post';
 
@@ -128,7 +124,7 @@ define( function ( require ) {
 						form.submit();
 					};
 
-					_post( postURL, { 'FilePath' : hashedUrl, 'OriginalFileName' : fileName } );
+					_post( configData.FileURL, { 'FilePath' : hashedUrl, 'OriginalFileName' : fileName } );
 
 				}.bind( this ) ).fail( App.errorHandler );
 
