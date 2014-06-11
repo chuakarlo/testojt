@@ -17,12 +17,9 @@ define( function ( require ) {
 	var $                       = require( 'jquery' );
 
 	App.module( 'LearningTargets.Main', function ( Main ) {
-
 		var mainView;
 		var contentRegion;
 		var currentPage;
-		var isTouchable = 'ontouchstart' in document.documentElement;
-
 		var legacyPages = {
 			'processes' : {
 				'page'    : 'observation',
@@ -72,16 +69,9 @@ define( function ( require ) {
 					el : mainView.el.querySelector( '.lt-content' )
 				} );
 
-				if ( !isTouchable ) {
-					mainView.setupViewAllButton( content );
-				}
-
+				mainView.setupViewAllButton( content );
 				self.setupViewAllLink( content );
 				mainView.activateTab( content );
-			},
-
-			'capitalise' : function ( string ) {
-				return string.charAt( 0 ).toUpperCase() + string.slice( 1).toLowerCase();
 			},
 
 			'_apiRequest' : function ( type, callback, options ) {
@@ -91,12 +81,9 @@ define( function ( require ) {
 					// run callback with collections
 					callback( collections );
 				} ).fail( function () {
-					var pathArray             = window.location.hash.split( '/' );
-					var learningTargetsModule = Main.helper.capitalise( pathArray[ 2 ] );
-					var errorMessage          = 'There was an error loading in ' + learningTargetsModule + '.';
 
 					Main.helper._showView( new App.Common.ErrorView( {
-						'message' : errorMessage,
+						'message' : 'There was an error loading view.',
 						'flash'   : 'An error occurred. Please try again later.'
 					} ) );
 
