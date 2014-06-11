@@ -106,11 +106,6 @@ define( function ( require ) {
 			UserWidgetCompositeViewInstance.render();
 		} );
 
-		it( 'should limit the number of characters to 37 with elipses', function () {
-			var focusObjective = UserWidgetCompositeViewInstance.templateHelpers().content;
-			expect( focusObjective ).to.be.equal( 'Defining the Professional Learning Co...' );
-		} );
-
 		it ( 'should be able to call redirect', function () {
 			UserWidgetCompositeViewInstance.$el.find( 'a.focusObjectiveLink' ).first().trigger( 'click' );
 			navigateStub.should.have.been.calledWithExactly( 'resources/videos/671', { 'trigger' : true } );

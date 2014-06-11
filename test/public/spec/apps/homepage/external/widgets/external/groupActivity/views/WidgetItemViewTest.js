@@ -155,11 +155,6 @@ define( function ( require ) {
 			expect( UserWidgetCompositeViewInstance ).to.be.an.instanceof( WidgetItemView );
 		} );
 
-		it( 'should limit the number of characters to 37 with elipses', function () {
-			var focusObjective = UserWidgetCompositeViewInstance.templateHelpers().creatorName;
-			expect( focusObjective ).to.be.equal( 'Testfoo This is a very long name that...' );
-		} );
-
 		it ( 'should be able to call redirect', function () {
 			UserWidgetCompositeViewInstance.render();
 			UserWidgetCompositeViewInstance.$el.find( 'a.groupActivityLink' ).first().trigger( 'click' );
