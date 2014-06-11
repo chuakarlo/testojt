@@ -1,11 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var App                       = require( 'App' );
-	var $                         = require( 'jquery' );
-	var Marionette                = require( 'marionette' );
-	var _                         = require( 'underscore' );
-	var progressTemplate          = require( 'text!apps/homepage/external/widgets/external/courses/templates/progressItemTemplate.html' );
+	var App              = require( 'App' );
+	var $                = require( 'jquery' );
+	var Marionette       = require( 'marionette' );
+	var _                = require( 'underscore' );
+	var progressTemplate = require( 'text!apps/homepage/external/widgets/external/courses/templates/progressItemTemplate.html' );
 
 	var widgetDirectory = 'resources/learning/courses/legacy';
 
@@ -38,10 +38,10 @@ define( function ( require ) {
 		},
 		'redirect'        : function ( e ) {
 			e.preventDefault();
-			var self        = this;
+			var self = this;
 			var pd360Loaded = App.request( 'pd360:loaded' );
 			var LoadingView = new App.Common.LoadingView() ;
-			var CourseID    = self.model.get( 'COURSEID' );
+			var CourseID = self.model.get( 'COURSEID' );
 
 			App.content.show( LoadingView );
 			App.navigate( widgetDirectory + '/' + CourseID );

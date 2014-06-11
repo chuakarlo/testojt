@@ -8,7 +8,7 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var Session    = require( 'Session' );
 
-	var widgetLookup = require( 'apps/homepage/external/widgets/manifest' );
+	var widgetLookup = App.Homepage.Widgets.allWidgets;
 
 	function setTemplateHelpers ( view ) {
 		view.widgets = widgetLookup()[ view.model.get( 'WidgetId' ) ];

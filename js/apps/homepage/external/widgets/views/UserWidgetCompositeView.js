@@ -1,16 +1,15 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette                = require( 'marionette' );
-	var Backbone                  = require( 'backbone' );
-	var _                         = require( 'underscore' );
-	var template                  = require( 'text!apps/homepage/external/widgets/templates/userWidgetCompositeView.html' );
-	var ItemView                  = require( 'apps/homepage/external/widgets/views/EmptyWidgetView' );
-	var footerTemplate            = require( 'text!apps/homepage/external/widgets/templates/widgetFooterTemplate.html' );
-	var widgetLookup              = require( 'apps/homepage/external/widgets/manifest' );
-	var WidgetItemCollection      = require( 'apps/homepage/external/widgets/collections/WidgetItemCollection' );
-
-	var App                  = require('App');
+	var Marionette           = require( 'marionette' );
+	var Backbone             = require( 'backbone' );
+	var _                    = require( 'underscore' );
+	var App                  = require( 'App' );
+	var template             = require( 'text!apps/homepage/external/widgets/templates/userWidgetCompositeView.html' );
+	var ItemView             = require( 'apps/homepage/external/widgets/views/EmptyWidgetView' );
+	var footerTemplate       = require( 'text!apps/homepage/external/widgets/templates/widgetFooterTemplate.html' );
+	var WidgetItemCollection = require( 'apps/homepage/external/widgets/collections/WidgetItemCollection' );
+	var widgetLookup         = App.Homepage.Widgets.allWidgets;
 
 	function returnCollection ( view, collection, widgets ) {
 		return collection;

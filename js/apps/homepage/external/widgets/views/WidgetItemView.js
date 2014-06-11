@@ -8,7 +8,7 @@ define( function ( require ) {
 	var template                = require( 'text!apps/homepage/external/widgets/templates/widgetItemView.html' );
 	var widgetMobileItemView    = require( 'text!apps/homepage/external/widgets/templates/widgetMobileItemView.html' );
 	var sequenceOverlayTemplate = require( 'text!apps/homepage/external/widgets/templates/widgetSequenceOverlayTemplate.html' );
-	var widgetLookup            = require( 'apps/homepage/external/widgets/manifest' );
+	var widgetLookup            = App.Homepage.Widgets.allWidgets;
 
 	function setTemplateHelpers ( view ) {
 		view.widgets = widgetLookup()[ view.model.get( 'WidgetId' ) ];

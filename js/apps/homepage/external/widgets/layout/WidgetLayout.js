@@ -18,7 +18,7 @@ define( function ( require ) {
 	var template                  = require( 'text!apps/homepage/external/widgets/templates/widgetLayoutView.html' );
 
 	var panelStatuses = [ 'opened', 'closed' ];
-	var widgets       = require( 'apps/homepage/external/widgets/manifest' )().splice(1);
+	var widgets       = App.Homepage.Widgets.allWidgets().splice(1);
 
 	//early load for performance
 	require( 'pc-adjustablePeek' );

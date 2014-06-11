@@ -1,8 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	return function () {
+	var App = require( 'App' );
 
+	function LoadAllWidgets () {
 		var parent = [ ];
 
 		require( 'apps/homepage/external/widgets/external/null/base' ).registerWidget( parent );
@@ -14,5 +15,10 @@ define( function ( require ) {
 		require( 'apps/homepage/external/widgets/external/processOfMe/base' ).registerWidget( parent );
 
 		return parent;
-	};
+	}
+
+	App.module( 'Homepage.Widgets', function ( Widgets ) {
+		Widgets.allWidgets = LoadAllWidgets;
+	} );
+
 });

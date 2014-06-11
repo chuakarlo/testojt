@@ -13,6 +13,10 @@ define( function ( require ) {
 
 			// load utils
 			require( './utils/utils' );
+
+			// load widgets
+			require( './external/widgets/manifest' );
+
 			// load homepage
 			require( './controllers/homeController' );
 

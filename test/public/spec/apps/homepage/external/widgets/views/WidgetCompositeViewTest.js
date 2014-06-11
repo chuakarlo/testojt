@@ -3,11 +3,12 @@ define( function ( require ) {
 
 	describe ( 'WidgetCompositeView Test', function () {
 
-		var Marionette = require( 'marionette' );
-		var Remoting   = require( 'Remoting' );
-		var widgets    = require( 'apps/homepage/external/widgets/manifest' )().splice(1);
 		var sinon      = window.sinon;
 		var App        = require( 'App' );
+		var Marionette = require( 'marionette' );
+		var Remoting   = require( 'Remoting' );
+		var widgets    = App.Homepage.Widgets.allWidgets().splice(1);
+
 		//collections
 		var UserWidgetCollection = require( 'apps/homepage/external/widgets/collections/UserWidgetCollection' );
 		var WidgetComposite      = require( 'apps/homepage/external/widgets/views/WidgetCompositeView' );
