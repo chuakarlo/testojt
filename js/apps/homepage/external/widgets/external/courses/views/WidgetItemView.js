@@ -48,10 +48,10 @@ define( function ( require ) {
 		},
 		'redirect'        : function ( e ) {
 			e.preventDefault();
-			var self = this;
+			var self        = this;
 			var pd360Loaded = App.request( 'pd360:loaded' );
 			var LoadingView = new App.Common.LoadingView() ;
-			var CourseID = self.model.get( 'COURSEID' );
+			var CourseID    = self.model.get( 'COURSEID' );
 
 			App.content.show( LoadingView );
 			App.navigate( widgetDirectory + '/' + CourseID );
@@ -61,6 +61,12 @@ define( function ( require ) {
 				$( '.content-wrapper' ).html( '' );
 				App.request( 'pd360:navigate', 'courses', 'coursesBrowse', {  'COURSEID' : CourseID } );
 			} );
+			App.Homepage.Utils.redirect( e, widgetDirectory );
+			return false;
+		},
+
+		'onRender'        : function ( ) {
+			$('.courses').tooltip( 'hide' );
 		}
 	} );
 } );
