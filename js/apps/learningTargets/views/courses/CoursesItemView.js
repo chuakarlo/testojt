@@ -2,8 +2,6 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette = require( 'marionette' );
-	var App        = require( 'App' );
-	var Backbone   = require( 'backbone' );
 	var template   = require( 'text!apps/learningTargets/templates/courses/course.html' );
 	var _          = require( 'underscore' );
 	var $          = require( 'jquery' );
@@ -47,15 +45,6 @@ define( function ( require ) {
 			$(eCircle).find( '.fill' )
 				.css( 'width', '0.99em' )
 				.css( 'height', '0.99em' );
-
-			var self = this;
-			if ( self.model.get( 'COURSEID' ) === self.model.collection.selectedCourseId ) {
-
-				self.$el.find( '.course-title' ).trigger( 'click' );
-				var test =  App.getCurrentRoute();
-				Backbone.history.navigate( 'home', { 'trigger' : false } );
-				Backbone.history.navigate( test , { 'trigger' : false } );
-			}
 		}
 
 	} );

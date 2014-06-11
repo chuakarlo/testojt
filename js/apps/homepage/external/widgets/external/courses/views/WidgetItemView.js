@@ -1,14 +1,14 @@
 define( function ( require ) {
 	'use strict';
 
-	var App                       = require( 'App' );
-	var $                         = require( 'jquery' );
-	var Marionette                = require( 'marionette' );
-	var _                         = require( 'underscore' );
-	var UIManager                 = require( 'apps/homepage/external/widgets/external/agents/UIManager' );
-	var progressTemplate          = require( 'text!apps/homepage/external/widgets/external/courses/templates/progressItemTemplate.html' );
+	var App              = require( 'App' );
+	var $                = require( 'jquery' );
+	var Marionette       = require( 'marionette' );
+	var _                = require( 'underscore' );
+	var UIManager        = require( 'apps/homepage/external/widgets/external/agents/UIManager' );
+	var progressTemplate = require( 'text!apps/homepage/external/widgets/external/courses/templates/progressItemTemplate.html' );
 
-	var widgetDirectory = 'resources/learning/courses/';
+	var widgetDirectory = 'resources/learning/courses/legacy';
 
 	function setTemplateHelpers ( model ) {
 		return {
@@ -51,8 +51,20 @@ define( function ( require ) {
 
 		},
 		'redirect'        : function ( e ) {
-			App.Homepage.Utils.redirect( e, widgetDirectory );
-			return false;
+			e.preventDefault();
+			var self = this;
+			var pd360Loaded = App.request( 'pd360:loaded' );
+			var LoadingView = new App.Common.LoadingView() ;
+			var CourseID = self.model.get( 'COURSEID' );
+
+			App.content.show( LoadingView );
+			App.navigate( widgetDirectory + '/' + CourseID );
+
+			App.when( pd360Loaded ).done( function () {
+				LoadingView.close();
+				$( '.content-wrapper' ).html( '' );
+				App.request( 'pd360:navigate', 'courses', 'coursesBrowse', {  'COURSEID' : CourseID } );
+			} );
 		}
 	} );
 } );
