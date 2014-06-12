@@ -38,11 +38,17 @@ define( function ( require ) {
 		'sidebarShow' : function ( ev ) {
 			$( 'html' ).addClass( 'disable-scroll' );
 			this.ui.sidebar.addClass( 'sidebar-open' ).removeClass( 'hidden-xs' );
+			$( '.navbar-brand' ).addClass( 'non-clickable' );
 		},
 
 		'sidebarHide' : function ( ev ) {
 			$( 'html' ).removeClass( 'disable-scroll' );
 			this.ui.sidebar.removeClass( 'sidebar-open' ).addClass( 'hidden-xs' );
+
+			setTimeout( function () {
+				$( '.navbar-brand' ).removeClass( 'non-clickable' );
+			}, 500 );
+
 		},
 
 		'onShow' : function ( ) {
