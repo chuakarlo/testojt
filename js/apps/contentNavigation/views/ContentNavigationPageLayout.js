@@ -7,6 +7,9 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var template   = require( 'text!../templates/contentNavigationLayout.html' );
 
+	require( 'jquery.mousewheel' );
+	require( 'jquery.pscrollbar' );
+
 	return Marionette.Layout.extend( {
 
 		'tagName' : 'section',
@@ -35,13 +38,13 @@ define( function ( require ) {
 			'click @ui.sidebarHide' : 'sidebarHide'
 		},
 
-		'sidebarShow' : function ( ev ) {
+		'sidebarShow' : function () {
 			$( 'html' ).addClass( 'disable-scroll' );
 			this.ui.sidebar.addClass( 'sidebar-open' ).removeClass( 'hidden-xs' );
 			$( '.navbar-brand' ).addClass( 'non-clickable' );
 		},
 
-		'sidebarHide' : function ( ev ) {
+		'sidebarHide' : function () {
 			$( 'html' ).removeClass( 'disable-scroll' );
 			this.ui.sidebar.removeClass( 'sidebar-open' ).addClass( 'hidden-xs' );
 
@@ -63,7 +66,7 @@ define( function ( require ) {
 					this.reloadSidebar();
 					this.updateSidebarScroll();
 					this.setStickyFilterToggle();
-				}.bind( this ), 500 );
+				}.bind( this ), 100 );
 			}.bind( this ) );
 
 			this.listenTo( Vent, 'contentNavigation:updateScrollbar', function () {
