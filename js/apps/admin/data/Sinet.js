@@ -151,7 +151,7 @@ define( function ( require ) {
 			'id'   : 'SmilFileGenerator'
 		},
 		{
-			'name' : 'State Focus Objectives',
+			'name' : 'Focus Objectives Templates',
 			'id'   : 'StateTemplateFocusObjectives'
 		},
 		{
