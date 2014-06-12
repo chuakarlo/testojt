@@ -333,11 +333,11 @@ define( function ( require ) {
 			} );
 
 			Vent.on( 'group:leaveGroup', function ( model ) {
-				return APIController.leaveGroup( model );
+				Groups.Edit.Controller.leaveGroup( model );
 			} );
 
 			Vent.on( 'group:joinGroup', function ( model ) {
-				return APIController.joinGroup( model );
+				Groups.Edit.Controller.joinGroup( model );
 			} );
 
 			Vent.on( 'group:ignoreGroup', function ( model ) {

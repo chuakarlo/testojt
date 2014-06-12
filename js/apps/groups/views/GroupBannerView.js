@@ -67,9 +67,9 @@ define( function ( require ) {
 
 					if ( !this.model.isMember ) {
 						if ( this.model.get( 'PrivateGroup' ) !== 0 ) {
-							return 'Join';
-						} else {
 							return 'Request';
+						} else {
+							return 'Join';
 						}
 					} else {
 						return 'Leave';
