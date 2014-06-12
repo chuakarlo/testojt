@@ -42,6 +42,10 @@ define( function ( require ) {
 				this.$el.addClass( this.showOptions.className );
 			}
 
+			if ( this.showOptions.backdrop ) {
+				//fixed for flickering modal in android native browser
+				this.$el.attr( 'data-backdrop', this.showOptions.backdrop );
+			}
 			// Call the original show method
 			Marionette.Region.prototype.show.apply( this, arguments );
 		},

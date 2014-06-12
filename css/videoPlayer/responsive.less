@@ -1,7 +1,51 @@
-//tab container specific width overrides
-@media ( min-width : 362px ) and ( max-width : @screen-xs-max ){
-	#video-player-page #tab-container #video-tabs .nav-tabs li {
-		width : 49% !important;
+/* scroll button should be implemented on a mobile device is if there is only 1 card deck displayed
+*/
+@media ( max-width : 320px ) {
+	#video-player-page {
+		.slick {
+			> button {
+				visibility : visible !important;
+			}
+			.slick-next {
+				right : 5px;
+			}
+		}
+		#video-resource {
+			.prevNext{
+				visibility : visible !important;
+			}
+			.nextLink {
+				right : 5px !important;
+			}
+		}
+		.slick-prev, .slick-next,.prevNext, .prevNext2 {
+			&:before {
+				padding   : 5px 8px !important;
+				color     : #fff;
+				font-size : 14px;
+			}
+		}
+	}
+	.share-modal .modal-footer {
+		padding : 10px 5px 11px;
+	}
+}
+@media ( min-width : 321px ) and ( max-width : @screen-xs-max ) {
+	#video-player-page {
+		.slick:hover > button {
+			visibility : hidden !important;
+		}
+		#video-resource .prevNext{
+			visibility : hidden !important;
+		}
+	}
+}
+/* tab container specific width overrides */
+@media ( min-width : 361px ) and ( max-width : @screen-xs-max ) {
+	#video-player-page {
+		#tab-container #video-tabs .nav-tabs li {
+			width : 49% !important;
+		}
 	}
 }
 @media ( max-width : 600px ) {
@@ -24,7 +68,7 @@
 			font-size : 1.3em;
 		}
 		.fa-block-info {
-			top: 8px !important;
+			top : 8px !important;
 		}
 	}
 }
@@ -39,16 +83,12 @@
 		#video-content {
 			height : 250px;
 		}
-		#tab-content .row li {
-			width  : 288px !important;
-		}
 		.fa-block-info {
-			top: 8px !important;
+			top : 8px !important;
 		}
 	}
 }
 
-// 601px - 767px
 @media ( min-width : 601px ) and ( max-width : @screen-xs-max ) {
 	#video-player-page {
 		#video-content {
@@ -56,8 +96,7 @@
 		}
 	}
 }
-
-//video page responsive
+/* video page responsive */
 @media ( max-width : @screen-xs-max ) {
 	#video-player-page {
 		#video-player-header {
@@ -78,7 +117,6 @@
 				font-size : 13px;
 			}
 		}
-		//tab-container
 		#tab-container #video-buttons .button-container {
 				width : 100%;
 				#user-queue {
@@ -112,7 +150,7 @@
 					font : 18px arial,sans-serif;
 				}
 
-				#vjs-title-overlay{
+				#vjs-title-overlay {
 					font : 14px arial,sans-serif;
 				}
 
@@ -137,7 +175,7 @@
 					display       : inline-block;
 					margin-bottom : 0px !important;
 					border-left   : none !important;
-					padding       : 0% 2%;
+					padding       : 0% 1.9%;
 				}
 			}
 		}
@@ -150,7 +188,6 @@
 	}
 }
 
-// 768px - 991px
 @media ( min-width : @screen-sm-min ) and ( max-width : @screen-sm-max ) {
 	#video-player-page {
 		#video-content {
@@ -167,7 +204,6 @@
 			color : initial;
 		}
 
-		//video tabs
 		#video-tabs {
 			width : 58%;
 		}
@@ -198,7 +234,6 @@
 	}
 }
 
-// 992px
 @media ( min-width : @screen-md-min ) {
 	#video-player-page {
 		#video-player {
@@ -217,8 +252,8 @@
 
 		#next-segment {
 			position : absolute;
-			top : 450px;
-			width: 100%;
+			top      : 450px;
+			width    : 100%;
 		}
 
 		.tab-header-mobile {
@@ -226,8 +261,9 @@
 		}
 
 	}
-}//end of video page responsive
-//slick holder overrides
+}/* end of video page responsive */
+
+/* slick holder overrides */
 @media ( min-width : 1170px ) {
 	#video-player-page {
 		#video-segment, #related-videos {
@@ -237,18 +273,18 @@
 				padding-top : 5px;
 
 				.slick-track {
-					margin-left: -13px;
+					margin-left : -13px;
 				}
 			}
 		}
 	}
 }
-//modal responsive
+/* info modal responsive */
 @media ( max-width : 480px ) and ( min-width : 320px ) {
 	#video-player-page {
 		.info-modal {
 			h2 {
-				font-size: 15px !important;
+				font-size : 15px !important;
 			}
 		}
 

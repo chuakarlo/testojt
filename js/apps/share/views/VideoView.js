@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
+	var $          = require( 'jquery' );
 
 	var template      = require( 'text!share/templates/VideoTemplate.html' );
 	var timeFormatter = require( 'common/helpers/convertSecsToMins' );
@@ -40,7 +41,7 @@ define( function ( require ) {
 		'templateHelpers' : function () {
 			return {
 				'imageUrl'      : this.getImageUrl(),
-				'segmentLength' : timeFormatter( this.model.get( 'SegmentLengthInSeconds' ) )
+				'segmentLength' : $.browser.safari && $.browser.android ? '' : 'Duration: ' + timeFormatter( this.model.get( 'SegmentLengthInSeconds' ) )
 			};
 		}
 

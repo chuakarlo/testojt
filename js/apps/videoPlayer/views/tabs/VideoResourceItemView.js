@@ -6,10 +6,11 @@ define( function ( require ) {
 	var $           = require( 'jquery' );
 	var App         = require( 'App' );
 	var PreviewView = require( 'videoPlayer/views/tabs/PreviewItemView' );
+	var NotifyView  = require( 'videoPlayer/views/tabs/NotifyItemView' );
 	var template    = require( 'text!videoPlayer/templates/tabs/videoResourceItemView.html' );
 
 	require( 'jquery-browser' );
-
+/*global ActiveXObject: false */
 	return Marionette.ItemView.extend( {
 
 		'template' : _.template( template ),
@@ -46,11 +47,36 @@ define( function ( require ) {
 			e.preventDefault();
 			//disable click in mobile devices
 			if ( this.clickEnable === true && this.model.get( 'previewPath') !== '' ) {
-				var pdfPreview = new PreviewView( { 'model' : this.model } );
-				App.modalRegion.show( pdfPreview, {
-					'className' : 'pdf-preview-modal'
-				} );
+				//check if ie has adobe reader installed
+				if ( $.browser.name === 'msie' && !this.checkForPdfPlugin() ) {
+					var notifyView = new NotifyView();
+					App.modalRegion.show( notifyView );
+				} else {
+					var pdfPreview = new PreviewView( { 'model' : this.model } );
+					App.modalRegion.show( pdfPreview, {
+						'className' : 'pdf-preview-modal'
+					} );
+				}
 			}
+		},
+
+		'checkForPdfPlugin' : function () {
+			var isAdobe = this.getPDFPlugin();
+			return ( ( isAdobe !== null ) && ( isAdobe !== undefined ) ) ? true : false;
+		},
+
+		//get pdf plugin in ie
+		'getPDFPlugin' : function () {
+			// load the activeX control
+			// AcroPDF.PDF is used by version 7 and later
+			// PDF.PdfCtrl is used by version 6 and earlier
+			return this.getActiveXObject( 'AcroPDF.PDF' ) || this.getActiveXObject( 'PDF.PdfCtrl' );
+		},
+
+		'getActiveXObject' : function ( name ) {
+			try {
+				return new ActiveXObject( name );
+			} catch ( e ) {}
 		}
 
 	} );

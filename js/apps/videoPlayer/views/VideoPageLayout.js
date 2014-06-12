@@ -1,9 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var _            = require( 'underscore' );
-	var Marionette   = require( 'marionette' );
-	var App          = require( 'App' );
+	var $          = require( 'jquery' );
+	var _          = require( 'underscore' );
+	var Marionette = require( 'marionette' );
+	var App        = require( 'App' );
 
 	var InfoItemView = require( 'videoPlayer/views/VideoInfoItemView' );
 	var template     = require( 'text!videoPlayer/templates/videoPageLayout.html' );
@@ -38,10 +39,14 @@ define( function ( require ) {
 			e.preventDefault();
 
 			var infoItemView = new InfoItemView( { 'model' : this.model } );
+			var options = { 'className' : 'info-modal' };
 
-			App.modalRegion.show( infoItemView, {
-				'className' : 'info-modal'
-			} );
+			//check if android native browser and set data-backdrop to static
+			if ( $.browser.safari && $.browser.android ) {
+				_.extend( options, { 'backdrop' : 'static' } );
+			}
+
+			App.modalRegion.show( infoItemView, options );
 
 		}
 

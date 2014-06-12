@@ -15,22 +15,6 @@
 		.slick-track {
 			padding : 0px;
 		}
-		.slick-prev:before, .slick-next:before {
-			font-family: FontAwesome !important;
-			background  : rgba(110, 110, 110, 0.3);
-			padding     : 10px 12px;
-			color       : @vp-white;
-			font-size   : 20px;
-			text-shadow : -1px 0px 0px #b9bcc1;
-		}
-
-		.slick-prev, .slick-next {
-			border   : 0 none;
-			cursor   : pointer;
-			display  : none;
-			position : absolute;
-			top      : 50%;
-		}
 		.slick-next:before {
 			content : "\f105";
 		}
@@ -40,15 +24,53 @@
 		}
 
 		.slick-prev {
-			left       : 0px;
-			visibility : hidden;
+			left : 0px;
 		}
 
 		.slick-next {
-			height     : inherit;
-			width      : inherit;
-			right      : 0px;
-			visibility : hidden;
+			right : 0px;
 		}
 	}
+	//common carousel arrows
+	.slick-prev, .slick-next,.prevNext, .prevNext2 {
+			height     : inherit;
+			width      : inherit;
+			border     : 0 none;
+			cursor     : pointer;
+			visibility : hidden;
+			position   : absolute;
+			top        : 50%;
+			color      : @vp-gray-light;
+			z-index    : 10000;
+			background : @vp-white;
+			&:before {
+				font-family           : FontAwesome !important;
+				background-color      : #aaa;
+				background-image      : -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, @vp-white),color-stop(1,#DDD));
+				background-image      : -webkit-linear-gradient(top, @vp-white,#DDD);
+				background-image      : linear-gradient(top, @vp-white,#DDD);
+				-webkit-border-radius : 2px 0 0 2px;
+				border-radius         : 2px 0 0 2px;
+				color                 : @vp-white;
+				cursor                : pointer !important;
+				display               : inline-block;
+				filter                : progid:DXImageTransform.Microsoft.gradient(startColorStr='#303030',EndColorStr='#262626');
+				font-weight           : bold;
+				outline               : 0;
+				text-align            : center;
+				text-shadow           : 0 -1px 0 rgba(0,0,0,.5);
+				font-size             : 25px;
+				text-shadow           : -1px 0px 0px rgba(0, 0, 0, 0.3);
+				padding               : 4px 12px 4px 10px;
+			}
+			&.slick-prev:before, &.slick-next:before, &.prevNext:before, &.prevNext2:before {
+				padding       : 4px 10px 4px 13px;
+				border-radius : 0 2px 2px 0;
+			}
+			&:hover:before {
+				background-image : -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, #DDD),color-stop(1,@vp-white));
+				background-image : -webkit-linear-gradient(top, #DDD,@vp-white);
+				background-image : linear-gradient(top, #DDD,@vp-white);
+			}
+		}
 }
