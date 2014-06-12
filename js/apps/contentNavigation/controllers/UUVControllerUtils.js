@@ -151,8 +151,8 @@ define( function ( require ) {
 				this.UUVideosCollection.setArgs( title );
 			} else {
 				this.UUVideosCollection.resetStart();
-				this.UUVideosCollection.updateSearchData( category.get( 'UUVideoTopicId' ) );
 				this.UUVideosCollection.setArgs( 'Other Categories' );
+				this.UUVideosCollection.updateSearchData( category.get( 'UUVideoTopicId' ) );
 			}
 
 			this.layout.segmentsRegion.close();
