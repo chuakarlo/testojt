@@ -1,6 +1,8 @@
 define( function ( require ) {
 	'use strict';
 
+	require( 'jquery-placeholder' );
+
 	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
 	var Ladda      = require( 'ladda' );
@@ -59,6 +61,11 @@ define( function ( require ) {
 				this.ui.remember.prop( 'checked', 'checked' );
 				this.ui.username.val( $.cookie( 'remember' ) );
 			}
+		},
+
+		'onShow' : function () {
+			this.ui.username.placeholder();
+			this.ui.password.placeholder();
 		},
 
 		'rememberMe' : function ( event ) {
