@@ -1,12 +1,12 @@
 <div>
-	<div class="cn-header cn-header-filter">
+	<div class="cn-header cn-header-filter cn-filter-box-top">
 		<ul>
 			<li><button class="btn btn-default cn-collapse open"><span class="fa fa-minus"></span></button></li>
-			<li><h4><%- filterName %></h4></li>
+			<li><h4  class="cn-filter-title"><%- filterName %></h4></li>
 			<li><button class="btn btn-default cn-clear-btn" disabled>Clear</button></li>
 		</ul>
 	</div>
-	<div class="cn-filter-container-<%- filterName.toLowerCase() %>">
+	<div class="cn-filter-container-<%- filterName.toLowerCase() %> cn-filter-box-bottom">
 		<ul class="cn-content-filter cn-filter-list<%- split %>"></ul>
 	</div>
 </div>

@@ -1,10 +1,10 @@
 #content-navigation-page {
 
 	.cn-header {
-		border-top : 1px solid @cn-gray;
-		background : @cn-gray-lightest;
-		padding    : 1px 10px;
-		margin     : 5px 0px;
+		border-bottom : 1px solid @cn-gray;
+		background    : @cn-gray-lightest;
+		padding       : 1px 10px;
+		margin        : 5px 0 0 0;
 
 		ul {
 			margin-left   : -40px;
@@ -161,6 +161,32 @@
 
 		.btn {
 			min-width : inherit;
+		}
+
+		.cn-filter-title {
+			font-weight : normal
+		}
+
+		.cn-filter-box-bottom {
+			border                : 1px solid #ebebeb;
+			border-top            : none;
+			border-radius         : 0 0 @cn-base-padding/2 @cn-base-padding/2;
+			-webkit-border-radius : 0 0 @cn-base-padding/2 @cn-base-padding/2;
+			-moz-border-radius    : 0 0 @cn-base-padding/2 @cn-base-padding/2;
+			-o-border-radius      : 0 0 @cn-base-padding/2 @cn-base-padding/2;
+			-ms-border-radius     : 0 0 @cn-base-padding/2 @cn-base-padding/2;
+			margin-bottom         : @cn-base-margin/2;
+			padding-top           : 1px;
+		}
+
+		.cn-filter-box-top {
+			background            : @cn-gray-light;
+			border                : 1px solid #ebebeb;
+			border-radius         : @cn-base-padding/2 @cn-base-padding/2 0 0;
+			-webkit-border-radius : @cn-base-padding/2 @cn-base-padding/2 0 0;
+			-moz-border-radius    : @cn-base-padding/2 @cn-base-padding/2 0 0;
+			-o-border-radius      : @cn-base-padding/2 @cn-base-padding/2 0 0;
+			-ms-border-radius     : @cn-base-padding/2 @cn-base-padding/2 0 0;
 		}
 
 		@media ( min-width : @screen-sm-min ) {
