@@ -23,14 +23,7 @@ define( function ( require ) {
 	}
 
 	return Marionette.ItemView.extend( {
-		'initialize'      : function () {
 
-			$( window ).resize( function () {
-				App.Homepage.Utils.limitCharsByDOMLength( this.$el,'.description',
-					'.progress-circle-item' );
-			}.bind( this ) );
-
-		},
 		'events'          : {
 			'click a.courseLink' : 'redirect'
 		},
@@ -41,10 +34,7 @@ define( function ( require ) {
 		},
 		'onShow'          : function ( ) {
 
-			App.Homepage.Utils.limitCharsByDOMLength( this.$el,'.description',
-				'.progress-circle-item' );
 			doOnShow( this, this.model );
-
 		},
 		'redirect'        : function ( e ) {
 			e.preventDefault();
