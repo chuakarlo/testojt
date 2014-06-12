@@ -141,8 +141,6 @@ define( function ( require ) {
 					this.noMoreVideos();
 				}
 			}
-
-			Vent.trigger( 'contentNavigation:updateScrollbar' );
 		}
 	};
 

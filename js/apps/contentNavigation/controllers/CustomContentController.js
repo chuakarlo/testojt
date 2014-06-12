@@ -32,6 +32,8 @@ define( function ( require ) {
 
 				var categoriesRequest = App.request( 'contentNavigation:customContent:categories' , options.model );
 
+				Vent.trigger( 'contentNavigation:updateScrollbar' );
+
 				App.when( categoriesRequest ).then( function ( categories ) {
 
 					if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
@@ -51,8 +53,6 @@ define( function ( require ) {
 			},
 
 			'showVideos' : function ( libraries, queueContents ) {
-
-				Vent.trigger( 'contentNavigation:updateScrollbar' );
 
 				this.showLoading();
 				this.queueContents = queueContents;

@@ -28,7 +28,7 @@
 				}
 
 				&:nth-child( 2 ) {
-					margin-top: 7px;
+					margin-top : 7px;
 				}
 
 				&:nth-child( 3 ) {
@@ -115,7 +115,7 @@
 		height        : 42px;
 
 		.cn-sidebar-show {
-			cursor        : pointer;
+			cursor : pointer;
 
 			span {
 				margin-top : -26px;
@@ -150,8 +150,9 @@
 		margin-bottom  : 25px;
 		overflow       : hidden;
 		@media( max-width : @screen-xs-max ) {
-			overflow-y: scroll !important;
-			overflow-x: hidden;
+			overflow-y                 : scroll !important;
+			-webkit-overflow-scrolling : touch;
+			overflow-x                 : hidden;
 		}
 		padding-top    : 5px;
 		padding-bottom : 5px;
@@ -268,7 +269,7 @@
 
 			&.nested-list {
 				li:not( :first-child ) {
-					padding-left: 40px;
+					padding-left : 40px;
 					@media ( min-width : @screen-xs-max ) {
 						&:hover {
 							.hovered;

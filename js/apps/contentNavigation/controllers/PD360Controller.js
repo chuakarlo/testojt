@@ -109,6 +109,9 @@ define( function ( require ) {
 				} );
 
 				var videosRequest = App.request( 'contentNavigation:pd360Videos', this.queryModel );
+
+				Vent.trigger( 'contentNavigation:updateScrollbar' );
+
 				App.when( videosRequest ).then( function ( videos ) {
 
 					if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {

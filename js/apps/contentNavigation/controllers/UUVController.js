@@ -50,8 +50,6 @@ define( function ( require ) {
 
 			'showVideos' : function ( queueContents, uuvCategories ) {
 
-				Vent.trigger( 'contentNavigation:updateScrollbar' );
-
 				var categoriesView = new App.ContentNavigation.Views.UUVCategories( { 'collection' : uuvCategories  } );
 
 				this.layout.filtersRegion.show( categoriesView );
@@ -66,6 +64,8 @@ define( function ( require ) {
 				this.UUVideosCollection.reset();
 				this.UUVideosCollection.setArgs( 'Popular' );
 				var videosRequest = App.request( 'contentNavigation:uuv:getSegments', this.queryModel );
+
+				Vent.trigger( 'contentNavigation:updateScrollbar' );
 
 				App.when( videosRequest ).then( function ( videos ) {
 

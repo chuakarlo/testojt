@@ -27,7 +27,7 @@ define( function ( require ) {
 			'sidebarShow'    : '.cn-sidebar-show',
 			'sidebarHide'    : '.cn-sidebar-hide',
 			'sidebar'        : '.cn-sidebar',
-			'sidebarWrapper' : 'div.cn-sidebar-wrapper'
+			'sidebarWrapper' : '.cn-sidebar-wrapper'
 		},
 
 		'events' : {
@@ -48,8 +48,8 @@ define( function ( require ) {
 		'onShow' : function ( ) {
 			var timer = null;
 
-			this.updateSidebarScroll();
 			this.reloadSidebar();
+			this.updateSidebarScroll();
 
 			$( window ).on( 'resize scroll' ,function ( ) {
 				clearTimeout( timer );
@@ -57,7 +57,7 @@ define( function ( require ) {
 					this.reloadSidebar();
 					this.updateSidebarScroll();
 					this.setStickyFilterToggle();
-				}.bind( this ), 0 );
+				}.bind( this ), 500 );
 			}.bind( this ) );
 
 			this.listenTo( Vent, 'contentNavigation:updateScrollbar', function () {
