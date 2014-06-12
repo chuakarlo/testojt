@@ -7,20 +7,7 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 		'template' : _.template( template ),
-		'tagName'  : 'li',
-		'ui'       : {
-			'linkBtn' : '.lt-link'
-		},
-
-		'events' : {
-			'click @ui.linkBtn' : 'showLegacyApp'
-		},
-
-		'showLegacyApp' : function ( e ) {
-			e.preventDefault();
-			var self = this;
-			self.trigger( 'lt:redirect', 'home', 'homePortfolio', self.model.get( 'LEARNINGPLANID' ) );
-		}
+		'tagName'  : 'li'
 
 	} );
 

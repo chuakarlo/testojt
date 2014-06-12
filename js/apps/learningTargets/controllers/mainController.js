@@ -102,17 +102,8 @@ define( function ( require ) {
 			},
 
 			'redirectToLegacyPage' : function ( target, page, sub, opts ) {
-				var extension = '';
 
-				if ( sub === 'coursesBrowse' || sub === 'homePortfolio' ) {
-					extension = '/' + opts;
-				} else if ( sub === 'observationProcessesOfMe' ) {
-					extension = '/' + opts.processId + '/' + opts.processTaskId;
-				} else if ( sub === 'observationOfMe' ) {
-					extension = '/' + opts.showPerFocus;
-				}
-
-				App.navigate( Backbone.history.fragment + '/legacy' + extension );
+				App.navigate( Backbone.history.fragment + '/legacy' );
 
 				Main.helper.showLegacyContent( page, sub, opts );
 			},
@@ -158,52 +149,17 @@ define( function ( require ) {
 
 		Main.controller = {
 
-			'showCourseLegacyContent' : function () {
-				var helper    = Main.helper;
-				var pathArray = window.location.hash.split( '/' );
-				var id        = parseInt( pathArray[ pathArray.length - 1 ], 10 );
-				var page      = legacyPages.courses.page;
-				var subPage   = legacyPages.courses.subPage;
+			'showLegacyPageContent' : function ( page, pageid, subpageid ) {
+				var helper = Main.helper;
+				var opts   = pageid;
+				if ( subpageid ) {
+					opts = {
+						processId     : pageid,
+						processTaskId : subpageid
+					};
+				}
 
-				helper.showLegacyContent( page, subPage, id );
-			},
-
-			'showPortfolioLegacyContent' : function () {
-				var helper    = Main.helper;
-				var pathArray = window.location.hash.split( '/' );
-				var id        = parseInt( pathArray[ pathArray.length - 1 ], 10 );
-				var page      = legacyPages.portfolio.page;
-				var subPage   = legacyPages.portfolio.subPage;
-
-				helper.showLegacyContent( page, subPage, id );
-			},
-
-			'showProcessesLegacyContent' : function () {
-				var helper        = Main.helper;
-				var pathArray     = window.location.hash.split( '/' );
-				var processTaskId = parseInt( pathArray[ pathArray.length - 1 ], 10 );
-				var processId     = parseInt( pathArray[ pathArray.length - 2 ], 10 );
-				var page          = legacyPages.processes.page;
-				var subPage       = legacyPages.processes.subPage;
-				var opts          = {
-					processId     : processId,
-					processTaskId : processTaskId
-				};
-
-				helper.showLegacyContent( page, subPage, opts );
-			},
-
-			'showObservationsLegacyContent' : function () {
-				var helper       = Main.helper;
-				var pathArray    = window.location.hash.split( '/' );
-				var showPerFocus = parseInt( pathArray[ pathArray.length - 1 ], 10 );
-				var page         = legacyPages.observations.page;
-				var subPage      = legacyPages.observations.subPage;
-				var opts         = {
-					showPerFocus : showPerFocus
-				};
-
-				helper.showLegacyContent( page, subPage, opts );
+				helper.showLegacyContent( legacyPages[ page ].page, legacyPages[ page ].subPage, opts );
 			},
 
 			'showMain' : function () {
@@ -252,9 +208,6 @@ define( function ( require ) {
 						collection : collection
 					} );
 
-					// bind to redirect event
-					processesView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
-
 					// display Processes
 					helper._showView( processesView );
 				} );
@@ -273,9 +226,6 @@ define( function ( require ) {
 					var portfoliosView = new PortfoliosView( {
 						collection : collection
 					} );
-
-					// bind to redirect event
-					portfoliosView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
 
 					// display Courses
 					helper._showView( portfoliosView );
@@ -322,7 +272,6 @@ define( function ( require ) {
 					} );
 
 					catalogsView.on( 'itemview:lt:training', helper.showTrainingCatalog );
-					catalogsView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
 
 					// display Catalogs
 					helper._showView( catalogsView );

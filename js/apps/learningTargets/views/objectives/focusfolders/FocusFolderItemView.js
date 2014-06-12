@@ -22,9 +22,9 @@ define( function ( require ) {
 		'showDescription' : function ( e ) {
 			if ( $( e.currentTarget ).hasClass( 'text-muted') ) {
 				$( e.currentTarget ).addClass( 'fa-times-circle text-primary' ).removeClass( 'fa-info-circle text-muted' );
-				this.$( '.fo-overlay-details' ).fadeIn( 'slow', 'linear' );
+				this.$( '.fo-overlay-details' ).show();
 			} else {
-				this.$( '.fo-overlay-details' ).fadeToggle( 'slow', 'linear' );
+				this.$( '.fo-overlay-details' ).hide();
 				$( e.currentTarget ).addClass( 'fa-info-circle text-muted' ).removeClass( 'fa-times-circle text-primary' );
 			}
 		},

@@ -31,16 +31,12 @@ define( function ( require ) {
 					'resources/learning/observations/:id'                           : 'showObservationsWithId',
 					'resources/learning/portfolio'                                  : 'showPortfolio',
 					'resources/learning/catalogs'                                   : 'showCatalogs',
-					// 'resources/learning/group-task'                                 : 'showGroups',
+					// 'resources/learning/group-task'                              : 'showGroups',					-- remove due to not part of waimea version
 					'resources/learning/focus-objectives'                           : 'showFocusObjectivesTitle',
 					'resources/learning/reflection-questions'                       : 'showReflectionQuestions',
 					'resources/learning/objectives/:focustitle/:ncesid/:statestdid' : 'showFocusObjectivesContent',
 
-					'resources/learning/courses/legacy/:id'                         : 'showCourseLegacyContent',
-					'resources/learning/catalogs/legacy/:id'                        : 'showCourseLegacyContent',
-					'resources/learning/processes/legacy/:processid/:processtaskid' : 'showProcessesLegacyContent',
-					'resources/learning/portfolio/legacy/:id'                       : 'showPortfolioLegacyContent',
-					'resources/learning/observations/legacy/:id'                    : 'showObservationsLegacyContent'
+					'resources/learning/:page/:pageid(/:subpageid)/legacy'         : 'showLegacyPageContent'
 				}
 			} );
 

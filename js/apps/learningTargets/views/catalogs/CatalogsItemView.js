@@ -5,6 +5,36 @@ define( function ( require ) {
 	var template   = require( 'text!apps/learningTargets/templates/catalogs/catalog.html' );
 	var _          = require( 'underscore' );
 
+	var setLink =  {
+		'Link1' : function ( resourceId ) {
+			var opts = {
+				'icon'            : 'fa-youtube-play',
+				'catalogTraining' : 'catalog-video',
+				'catalogLinks'    : '#resources/videos/' + resourceId
+			};
+			return opts;
+		},
+
+		'Link2' : function ( resourceId ) {
+			var opts = {
+				'icon'            : 'fa-university',
+				'catalogTraining' : 'catalog-course',
+				'catalogLinks'    : '#resources/learning/catalogs/' + resourceId + '/legacy'
+			};
+
+			return opts;
+		},
+
+		'Link3' : function ( ) {
+			var opts = {
+				'icon'            : 'fa-cubes',
+				'catalogTraining' : 'catalog-training',
+				'catalogLinks'    : '#catalog-training'
+			};
+			return opts;
+		}
+	};
+
 	return Marionette.ItemView.extend( {
 		'template'     : _.template( template ),
 
@@ -15,8 +45,7 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'click .catalog-training' : 'showTrainingCatalog',
-			'click .catalog-course'   : 'showCourseCatalog'
+			'click .catalog-training' : 'showTrainingCatalog'
 		},
 
 		'showTrainingCatalog' : function ( e ) {
@@ -25,45 +54,14 @@ define( function ( require ) {
 			this.trigger( 'lt:training' );
 		},
 
-		'showCourseCatalog' : function ( e ) {
-			e.preventDefault();
-
-			var self = this;
-
-			self.trigger( 'lt:redirect', 'courses', 'coursesBrowse', self.model.get( 'ResourceId' ) );
-		},
-
 		'setCatalogLinks' : function ( model ) {
-			model.catalogTraining = '';
-			if ( model.get( 'CatalogResourceTypeId' ) === 1 ) {
-				model.catalogTraining = 'catalog-video';
-				model.catalogLinks = '#resources/videos/' + model.get( 'ResourceId' );
-			} else if ( model.get( 'CatalogResourceTypeId' ) === 2 ) {
-				model.catalogLinks    = '#';
-				model.catalogTraining = 'catalog-course';
-			} else {
-				model.catalogLinks    = '#';
-				model.catalogTraining = 'catalog-training';
-			}
-		},
-
-		'setIcons' : function ( model ) {
-			model.icon = '';
-			if ( model.get( 'CatalogResourceTypeId' ) === 1 ) {
-				model.icon = 'fa-youtube-play';
-			} else if ( model.get( 'CatalogResourceTypeId' ) === 2 ) {
-				model.icon = 'fa-university';
-			} else {
-				model.icon = 'fa-cubes';
-			}
+			_.extend( model, setLink[ 'Link' + model.get( 'CatalogResourceTypeId' ) ]( model.get( 'ResourceId' ) ) );
 		},
 
 		'setCredits' : function ( model ) {
-			model.credits = '';
+			model.credits = 'credit';
 			if ( model.get( 'CreditHours' ) > 1 ) {
 				model.credits = 'credits';
-			} else {
-				model.credits = 'credit';
 			}
 		},
 
@@ -72,7 +70,6 @@ define( function ( require ) {
 
 			self.setCatalogLinks ( self.model );
 			self.setCredits ( self.model );
-			self.setIcons ( self.model );
 
 			return self.model;
 		}

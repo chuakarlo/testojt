@@ -26,8 +26,7 @@ define( function ( require ) {
 			return this;
 		},
 		'events' : {
-			'click @ui.drawerToggleButton' : 'toggleDrawer',
-			'click @ui.processStep'        : 'showProcessStep'
+			'click @ui.drawerToggleButton' : 'toggleDrawer'
 		},
 
 		'toggleDrawer' : function ( e ) {
@@ -39,15 +38,6 @@ define( function ( require ) {
 			$( toggleBtn ).toggleClass( 'active' );
 
 			$( toggleContent ).slideToggle( 300 );
-		},
-
-		'showProcessStep' : function ( e ) {
-			e.preventDefault();
-			var self          = this;
-			var processId     = self.model.get( 'ProcessId' );
-			var processTaskId = e.currentTarget.attributes[ 0 ].nodeValue;
-
-			self.trigger( 'lt:redirect', 'observation', 'observationProcessesOfMe', { 'processId' : processId, 'processTaskId' : processTaskId } );
 		}
 
 	} );
