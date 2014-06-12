@@ -24,8 +24,7 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'click @ui.thumbnail' : 'previewFile',
-			'click @ui.download'  : 'downloadFile'
+			'click @ui.thumbnail' : 'previewFile'
 		},
 
 		'initialize' : function () {
@@ -52,10 +51,6 @@ define( function ( require ) {
 					'className' : 'pdf-preview-modal'
 				} );
 			}
-		},
-
-		'downloadFile' : function () {
-			//to do
 		}
 
 	} );

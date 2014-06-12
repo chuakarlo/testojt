@@ -112,32 +112,95 @@ define( function ( require ) {
 
 		} );
 
-		describe( '.getResources', function () {
-			var fakeData;
+		describe.only( '.getResources', function () {
+			var content;
+			var stub;
+			var resources;
+
+			var testTranscript = 'testTranscript.pdf';
+			var testAudio      = 'testAudio.mp3';
+			var testBook       = 'testBook.pdf';
+			var url            = 'http://test.com/';
 
 			before( function () {
-				fakeData = {
-					'GuidebookFileName' : 'test'
+				// set up config to return specific path values
+				stub = sinon.stub().returns( url );
+
+				App.reqres.setHandler( 'session:config', stub );
+
+				content = {
+					'GuidebookFileName'  : testBook,
+					'AudioFileName'      : testAudio,
+					'TranscriptFileName' : testTranscript
 				};
 
-				model = new App.VideoPlayer.Entities.Content();
-				model.set( fakeData );
+				model = new App.VideoPlayer.Entities.Content( content );
+				resources = model.getResources();
 			} );
 
 			after( function () {
-				model = null;
+				App.reqres.removeHandler( 'session:config' );
+
+				resources  = null;
+				model      = null;
+				stub       = null;
+				url        = null;
+				testBook   = null;
+				testAudio  = null;
+				testTranscript = null;
 			} );
 
-			it( 'does return array of model resources', function () {
-				var resources = model.getResources();
+			it( 'should request storage config paths', function () {
+				stub.should.have.callCount( 3 );
+			} );
+
+			it( 'should return array of model resources', function () {
 				resources.should.be.a( 'array' );
-				resources.should.have.length( 1 );
+				resources.should.have.length( 3 );
 			} );
 
-		} );
+			it( 'should return guidebook object with correct properties', function () {
+				// get the first one in the array, guidebook
+				var guidebook = resources.shift();
+				guidebook.should.have.property( 'previewPath' );
+				guidebook.should.have.property( 'downloadPath' );
+				guidebook.should.have.property( 'thumbnail' );
+				guidebook.should.have.property( 'name' );
 
-		describe( '.setQueue', function () {
-			// code
+				guidebook.previewPath.should.equal( 'http://upload.content.pd360.com/PD360/media/gb/' + testBook );
+				guidebook.downloadPath.should.equal( url + testBook );
+				guidebook.thumbnail.should.equal( '/img/guidebook.jpg' );
+				guidebook.name.should.equal( testBook );
+			} );
+
+			it( 'should return audio object with correct properties', function () {
+				// get the first one in the array, audio
+				var audio = resources.shift();
+				audio.should.have.property( 'previewPath' );
+				audio.should.have.property( 'downloadPath' );
+				audio.should.have.property( 'thumbnail' );
+				audio.should.have.property( 'name' );
+
+				audio.previewPath.should.equal( '' );
+				audio.downloadPath.should.equal( url + testAudio );
+				audio.thumbnail.should.equal( '/img/audio.jpg' );
+				audio.name.should.equal( testAudio );
+			} );
+
+			it( 'should return transcript object with correct properties', function () {
+				// get the first one in the array, transcript
+				var transcript = resources.shift();
+				transcript.should.have.property( 'previewPath' );
+				transcript.should.have.property( 'downloadPath' );
+				transcript.should.have.property( 'thumbnail' );
+				transcript.should.have.property( 'name' );
+
+				transcript.previewPath.should.equal( 'http://upload.content.pd360.com/PD360/media/transcripts/' + testTranscript );
+				transcript.downloadPath.should.equal( url + testTranscript );
+				transcript.thumbnail.should.equal( '/img/transcribe.jpg' );
+				transcript.name.should.equal( testTranscript );
+			} );
+
 		} );
 
 	} );

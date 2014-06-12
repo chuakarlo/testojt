@@ -6,6 +6,8 @@ define( function ( require ) {
 	var App      = require( 'App' );
 	var Session  = require( 'Session' );
 
+	var getConfig = require( 'common/helpers/getConfig' );
+
 	App.module( 'VideoPlayer.Entities', function ( Entities ) {
 
 		Entities.Content = Backbone.CFModel.extend( {
@@ -79,19 +81,23 @@ define( function ( require ) {
 				var results = [
 					{
 						'previewPath'  : config.video.previewUrl + 'gb/' + this.get( 'GuidebookFileName' ),
-						'downloadPath' : '/gb/' + this.get( 'GuidebookFileName' ),
-						'thumbnail'    : '/img/guidebook.jpg'
+						'downloadPath' : getConfig( 'guideBookStoragePath' ) + this.get( 'GuidebookFileName' ),
+						'thumbnail'    : '/img/guidebook.jpg',
+						'name'         : this.get( 'GuidebookFileName' )
 					}, {
 						'previewPath'  : '',
-						'downloadPath' : '/mp3/' + this.get( 'AudioFileName' ),
-						'thumbnail'    : '/img/audio.jpg'
+						'downloadPath' : getConfig( 'contentAudioPath' ) + this.get( 'AudioFileName' ),
+						'thumbnail'    : '/img/audio.jpg',
+						'name'         : this.get( 'AudioFileName' )
 					}, {
 						'previewPath'  : config.video.previewUrl + 'transcripts/' + this.get( 'TranscriptFileName' ),
-						'downloadPath' : '/transcripts/' + this.get( 'TranscriptFileName' ),
-						'thumbnail'    : '/img/transcribe.jpg'
+						'downloadPath' : getConfig( 'contentTranscriptPath' ) + this.get( 'TranscriptFileName' ),
+						'thumbnail'    : '/img/transcribe.jpg',
+						'name'         : this.get( 'TranscriptFileName' )
 					}
 				];
 
+				// if a path does not exist for the resource, do not return it
 				results = _.filter( results, function ( result ) {
 					var arrPath = result.downloadPath.split( '/' );
 
