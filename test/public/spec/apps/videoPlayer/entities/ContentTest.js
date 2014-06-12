@@ -112,7 +112,7 @@ define( function ( require ) {
 
 		} );
 
-		describe.only( '.getResources', function () {
+		describe( '.getResources', function () {
 			var content;
 			var stub;
 			var resources;
