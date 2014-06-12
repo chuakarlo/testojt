@@ -181,7 +181,7 @@ define( function ( require ) {
 				audio.should.have.property( 'thumbnail' );
 				audio.should.have.property( 'name' );
 
-				audio.previewPath.should.equal( '' );
+				audio.previewPath.should.equal( url + testAudio );
 				audio.downloadPath.should.equal( url + testAudio );
 				audio.thumbnail.should.equal( '/img/audio.jpg' );
 				audio.name.should.equal( testAudio );

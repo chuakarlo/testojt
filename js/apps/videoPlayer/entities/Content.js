@@ -78,22 +78,30 @@ define( function ( require ) {
 			'getResources' : function () {
 				var config = App.request( 'videoPlayer:config' );
 
+				var guideBookStoragePath  = getConfig( 'guideBookStoragePath' );
+				var contentAudioPath      = getConfig( 'contentAudioPath' );
+				var contentTranscriptPath = getConfig( 'contentTranscriptPath' );
+
+				var guidebookFileName  = this.get( 'GuidebookFileName' );
+				var audioFileName      = this.get( 'AudioFileName');
+				var transcriptFileName = this.get( 'TranscriptFileName');
+
 				var results = [
 					{
-						'previewPath'  : config.video.previewUrl + 'gb/' + this.get( 'GuidebookFileName' ),
-						'downloadPath' : getConfig( 'guideBookStoragePath' ) + this.get( 'GuidebookFileName' ),
+						'previewPath'  : config.video.previewUrl + 'gb/' + guidebookFileName,
+						'downloadPath' : guideBookStoragePath + guidebookFileName,
 						'thumbnail'    : '/img/guidebook.jpg',
-						'name'         : this.get( 'GuidebookFileName' )
+						'name'         : guidebookFileName
 					}, {
-						'previewPath'  : '',
-						'downloadPath' : getConfig( 'contentAudioPath' ) + this.get( 'AudioFileName' ),
+						'previewPath'  : contentAudioPath + audioFileName,
+						'downloadPath' : contentAudioPath + audioFileName,
 						'thumbnail'    : '/img/audio.jpg',
-						'name'         : this.get( 'AudioFileName' )
+						'name'         : audioFileName
 					}, {
-						'previewPath'  : config.video.previewUrl + 'transcripts/' + this.get( 'TranscriptFileName' ),
-						'downloadPath' : getConfig( 'contentTranscriptPath' ) + this.get( 'TranscriptFileName' ),
+						'previewPath'  : config.video.previewUrl + 'transcripts/' + transcriptFileName,
+						'downloadPath' : contentTranscriptPath + transcriptFileName,
 						'thumbnail'    : '/img/transcribe.jpg',
-						'name'         : this.get( 'TranscriptFileName' )
+						'name'         : transcriptFileName
 					}
 				];
 
