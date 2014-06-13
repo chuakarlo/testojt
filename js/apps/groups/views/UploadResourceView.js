@@ -158,6 +158,7 @@ define( function ( require ) {
 						if ( res.success ) {
 							var msg = 'NEW Resource: ' + resource.get( 'FileName' ) + '- ' + resource.get( 'FileDescription' );
 							this.createNewsEntry( msg, l );
+							this.model.updateSearchIndex();
 						}
 					}, this ) );
 

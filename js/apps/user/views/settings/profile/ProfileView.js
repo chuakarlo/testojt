@@ -337,6 +337,8 @@ define( function ( require ) {
 						'type'    : 'success'
 					} );
 
+					// Update the search results for this profile
+					this.profileModel.updateSearchIndex();
 					// update any changes to name, etc
 					this.render();
 

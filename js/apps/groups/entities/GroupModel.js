@@ -350,8 +350,8 @@ define( function ( require ) {
 			},
 
 			/**
-			* Update the search index for this group. This should only be
-			* called once.
+			* Update the search index for this group. This also takes care
+			* of index resources.
 			* @returns {Deferred}
 			*/
 			'updateSearchIndex' : function () {

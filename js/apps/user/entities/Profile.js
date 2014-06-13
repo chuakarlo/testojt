@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	var Backbone = require( 'backbone' );
 	var Session  = require( 'Session' );
+	var Remoting = require( 'Remoting' );
 	var App      = require( 'App' );
 	var $        = require( 'jquery' );
 
@@ -29,6 +30,18 @@ define( function ( require ) {
 					'objectPath' : 'core.ClientPersonnelProfile',
 					'args'       : this.toJSON()
 				};
+			},
+
+			'updateSearchIndex' : function () {
+				var data = {
+					'path'   : 'SearchService',
+					'method' : 'updateClientPersonnelSearchIndex',
+					'args'   : {
+						'personnelId' : Session.personnelId()
+					}
+				};
+
+				return Remoting.fetch( data );
 			}
 
 		} );
