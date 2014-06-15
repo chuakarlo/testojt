@@ -1,8 +1,10 @@
 define( function () {
 	'use strict';
 
-	return function ( url ) {
-		window.open( url );
-		return false;
+	return {
+		'navigate' : function ( url ) {
+			window.open( url );
+			return false;
+		}
 	};
 } );

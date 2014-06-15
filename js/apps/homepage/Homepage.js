@@ -19,6 +19,8 @@ define( function ( require ) {
 
 			// load homepage
 			require( './controllers/homeController' );
+			// load content
+			require( './external/content2/manifest' );
 
 			// configure groups routes
 			Homepage.Router = AuthRouter.extend( {

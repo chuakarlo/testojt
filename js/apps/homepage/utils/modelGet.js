@@ -5,8 +5,10 @@ define( function () {
 		return value ? value : def;
 	}
 
-	return function ( model, key, def ) {
-		def = def || '';
-		return model ? checkKey( model.get( key ), def ) : def;
+	return {
+		'modelGet' : function ( model, key, def ) {
+			def = def || '';
+			return model ? checkKey( model.get( key ), def ) : def;
+		}
 	};
 } );

@@ -6,8 +6,10 @@ define( function () {
 		'desc' : -1
 	};
 
-	return function ( model, key, mode ) {
-		var modeOp = mode ? modeMap[ mode ] : modeMap.desc;
-		return modeOp * ( new Date( model.get( key ) ).getTime() );
+	return {
+		'compareDate' : function ( model, key, mode ) {
+			var modeOp = mode ? modeMap[ mode ] : modeMap.desc;
+			return modeOp * ( new Date( model.get( key ) ).getTime() );
+		}
 	};
 } );
