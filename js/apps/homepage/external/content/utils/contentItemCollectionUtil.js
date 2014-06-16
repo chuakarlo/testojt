@@ -2,8 +2,9 @@
 define( function ( require ) {
 	'use strict';
 
-	var $   = require( 'jquery' );
-	var App = require( 'App' );
+	var $        = require( 'jquery' );
+	var App      = require( 'App' );
+	var Backbone = require( 'backbone' );
 
 	var EmptyContentCollectionView = require( 'apps/homepage/external/content/views/EmptyContentCollectionView' );
 	var UIManager                  = require( 'apps/homepage/external/content/external/agents/UIManager' );
@@ -80,9 +81,9 @@ define( function ( require ) {
 					}
 				},
 				'error'   : function () {
-					App.vent.trigger ( 'flash:message', {
-						'message' : 'An error occurred. Please try again later.'
-					} );
+					view.collection = new Backbone.Collection( [ 1 ] );
+					view.itemView = EmptyContentCollectionView;
+					view.render();
 				}
 			} );
 		},
