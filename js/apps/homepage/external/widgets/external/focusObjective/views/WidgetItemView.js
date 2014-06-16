@@ -18,7 +18,7 @@ define( function ( require ) {
 		'className'       : 'col-md-12 no-padding widget-item',
 		'templateHelpers' : function () {
 			return {
-				'content'   : App.Homepage.Utils.limitCharacters( this.model.get( 'ContentName' ), 37 ),
+				'content'   : this.model.get( 'ContentName' ),
 				'getConfig' : getConfig( 'contentThumbnailPath' )
 			};
 		},

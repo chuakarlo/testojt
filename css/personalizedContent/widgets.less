@@ -126,13 +126,8 @@
 		}
 	}
 
-	//Group Activity
-
-	//possibly all widgets will use this settings
-	#courses .description,
-	#groupActivity .description,
-	#observationsOfMe .observation-name {
-		max-width     : 290px;
+	.description-widgets( @width ) {
+		max-width     : @width;
 		padding-left  : 10px;
 		height        : 35px;
 		padding-top   : 8px;
@@ -140,9 +135,19 @@
 		white-space   : nowrap;
 	}
 
-	#observationsOfMe .observation-name {
-		max-width : 190px;
+	#courses .description {
+		.description-widgets( 290px );
 	}
+
+	#observationsOfMe .observation-name {
+		.description-widgets( 190px );
+	}
+
+	#groupActivity .description,
+	#focusObjective .description {
+		.description-widgets( 240px );
+	}
+
 	.group-activity-item, .focus-objective-item, .courses-item, .progress-item, .observation-of-me  {
 		height   : 35px;
 		overflow : hidden;
@@ -158,12 +163,6 @@
 			border-radius : 5px;
 			img {
 				width       : 35px;
-			}
-		}
-		.description {
-			width : 290px;
-			p {
-				padding-left : 10px;
 			}
 		}
 		.progress-circle-item {
@@ -190,7 +189,6 @@
 			width: 17px;
 			background : url(../img/fa-eye-icon.png) no-repeat;
 			background-size : contain;
-
 		}
 	}
 
@@ -227,7 +225,6 @@
 				}
 		}
 
-
 		.percent-holder {
 
 			padding-left : 0px;
@@ -239,13 +236,11 @@
 				width    : 90px;
 			}
 			.profile-str {
-
 				padding     : 0px;
 				float       : none;
 				width       : 100%;
 				font-size   : 13px;
 				line-height : 18px;
-
 			}
 		}
 	}

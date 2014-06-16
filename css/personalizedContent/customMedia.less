@@ -43,17 +43,23 @@
 					font-size : 11px;
 				}
 
-				.progress-item .description,
-				.group-activity-item .description ,
-				.observation-name {
+				.widget-description-custom( @width ) {
 					height    : 31px;
-					max-width : 200px;
+					max-width : @width
+				}
+
+				.progress-item .description {
+					.widget-description-custom( 200px )
 				}
 
 				.observation-name {
-					max-width : 130px;
+					.widget-description-custom( 130px )
 				}
 
+				.group-activity-item .description ,
+				.focus-objective-item .description {
+					.widget-description-custom( 160px )
+				}
 			}
 
 			.widget-wrapper.widget-placeholder {
