@@ -14,6 +14,7 @@ define( function ( require ) {
 	var UserWidgetCollectionView  = require( 'apps/homepage/external/widgets/views/UserWidgetCollectionView' );
 	var WidgetCompositeView       = require( 'apps/homepage/external/widgets/views/WidgetCompositeView' );
 	var MobileWidgetCompositeView = require( 'apps/homepage/external/widgets/views/MobileWidgetCompositeView' );
+	var TabletWidgetCompositeView = require( 'apps/homepage/external/widgets/views/TabletWidgetCompositeView' );
 	var template                  = require( 'text!apps/homepage/external/widgets/templates/widgetLayoutView.html' );
 
 	var panelStatuses = [ 'opened', 'closed' ];
@@ -103,12 +104,19 @@ define( function ( require ) {
 			doInitialize( this );
 		},
 		'events' : {
+			// Displaying Widget Panel
 			'click div#widget-settings.closed'         : 'showWidgetSettingsPanel',
-			'click div#mobile-widget-settings.closed'  : 'showMobileWidgetSettings',
-			'click span#awesomeness'                   : 'showWidgetSettingsPanel',
+			'click div#xs-widget-settings.closed'      : 'showMobileWidgetSettings',
+			'click div#sm-widget-settings.closed'      : 'showSmallWidgetSettings',
+			'click div#md-widget-settings.closed'      : 'showMediumWidgetSettings',
+			'click p#awesomeness'                      : 'showWidgetSettingsPanel',
 			'click #placeholder-icon'                  : 'showWidgetSettingsPanel',
+
+			// Closing Widget Panel
 			'click div#widget-settings.opened'         : 'closeWidgetSettingsPanel',
-			'click div#mobile-widget-settings.opened'  : 'closeMobileSettingsPanel',
+			'click div#xs-widget-settings.opened'      : 'closeMobileSettingsPanel',
+			'click div#sm-widget-settings.opened'      : 'closeSmallSettingsPanel',
+			'click div#md-widget-settings.opened'      : 'closeMediumSettingsPanel',
 			'focusout #widgets-settings-panel-wrapper' : 'blurAction',
 			'click #widgets-settings-panel-wrapper'    : 'focusAction'
 		},
@@ -117,7 +125,9 @@ define( function ( require ) {
 		'regions'   : {
 			'userWidgets'          : '#user-widgets #active-widgets',
 			'widgetSettings'       : '#widgets-settings-panel-wrapper',
-			'mobileWidgetSettings' : '#mobile-widgets-settings-panel'
+			'mobileWidgetSettings' : '#xs-widgets-panel-wrapper',
+			'smallWidgetSettings'  : '#sm-widgets-panel-wrapper',
+			'mediumWidgetSettings' : '#md-widgets-panel-wrapper'
 		},
 
 		'showWidgetSettingsPanel' : function ( e ) {
@@ -137,6 +147,30 @@ define( function ( require ) {
 			this.changePanelStatus( panelBtn, panelStatuses[ 1 ], panelStatuses[ 0 ] );
 		},
 
+		'showSmallWidgetSettings' : function ( e ) {
+			var panelBtn            = $( e.currentTarget );
+			var widgetCompositeView = new TabletWidgetCompositeView( {
+				'collection'                 : this.widgetCollection,
+				'widgetCollection'           : this.widgetCollection,
+				'userWidgetCollection'       : this.userWidgetCollection,
+				'actualUserWidgetCollection' : this.actualUserWidgetCollection
+			} );
+			this.smallWidgetSettings.show( widgetCompositeView );
+			this.changePanelStatus( panelBtn, panelStatuses[ 1 ], panelStatuses[ 0 ] );
+		},
+
+		'showMediumWidgetSettings' : function ( e ) {
+			var panelBtn            = $( e.currentTarget );
+			var widgetCompositeView = new TabletWidgetCompositeView( {
+				'collection'                 : this.widgetCollection,
+				'widgetCollection'           : this.widgetCollection,
+				'userWidgetCollection'       : this.userWidgetCollection,
+				'actualUserWidgetCollection' : this.actualUserWidgetCollection
+			} );
+			this.mediumWidgetSettings.show( widgetCompositeView );
+			this.changePanelStatus( panelBtn, panelStatuses[ 1 ], panelStatuses[ 0 ] );
+		},
+
 		'closeWidgetSettingsPanel' : function ( e ) {
 			doCloseWidgetSettingsPanel( this, e );
 			if ( $( 'ul.active-widgets-container li' ).length === 0 ) {
@@ -148,6 +182,18 @@ define( function ( require ) {
 		'closeMobileSettingsPanel' : function ( e ) {
 			var panelBtn = $( e.currentTarget );
 			this.mobileWidgetSettings.close();
+			this.changePanelStatus( panelBtn, panelStatuses[ 0 ], panelStatuses[ 1 ] );
+		},
+
+		'closeMediumSettingsPanel' : function ( e ) {
+			var panelBtn = $( e.currentTarget );
+			this.mediumWidgetSettings.close();
+			this.changePanelStatus( panelBtn, panelStatuses[ 0 ], panelStatuses[ 1 ] );
+		},
+
+		'closeSmallSettingsPanel' : function ( e ) {
+			var panelBtn = $( e.currentTarget );
+			this.smallWidgetSettings.close();
 			this.changePanelStatus( panelBtn, panelStatuses[ 0 ], panelStatuses[ 1 ] );
 		},
 

@@ -498,7 +498,7 @@
 		display : none;
 	}
 
-	#widget-settings, #mobile-widget-settings {
+	.widget-settings-icon {
 		display                : inline-block;
 		vertical-align         : middle;
 		display                : inline-block;
@@ -517,7 +517,7 @@
 		}
 	}
 
-	#widget-settings.active, #widget-settings:hover, #mobile-widget-settings.active, #widget-settings.opened, #mobile-widget-settings.opened, #mobile-widget-settings:hover {
+	.widget-settings-icon.active, .widget-settings-icon:hover, .widget-settings-icon.opened {
 		color         : @pc-white;
 		background    : #00A8FF;
 	}
@@ -565,15 +565,14 @@
 	}
 
 	// Widget settings panel
-	#widgets-settings-panel, #mobile-widgets-settings-panel {
+	.widget-panels {
 		background-color : #2b2d30;
 		margin           : auto;
 		color            : @pc-white;
 		padding-bottom   : 5px;
 		padding-top      : 1px;
 	}
-	#mobile-widgets-settings-panel {
-		display : none;
+	.widget-panels {
 		padding : 0px;
 	}
 	#widget-settings-header {
@@ -584,7 +583,7 @@
 			padding       : 0px 40px;
 			li {
 				padding-bottom : 15px;
-				margin-right   : -5px;
+				margin-right   : 20px;
 				cursor         : pointer;
 				&:hover {
 					color : @widgetblue;
@@ -617,7 +616,7 @@
 	#widget-settings-selection {
 		text-align   : center;
 		margin       : auto;
-		height       : 380px;
+		height       : 355px;
 		padding      : 0 20px 0 40px;
 		border-right : 2px solid #7d7d7d;
 	}
@@ -782,7 +781,60 @@
 		}
 	}
 
-	// Tablet
+	// * Tablet *
+	// Medium
+	#md-widgets-panel-wrapper {
+		#widget-settings-header {
+			li {
+				margin-right : 20px;
+			}
+		}
+		#widget-settings-selection {
+			padding : 0 0px 0 0px;
+		}
+		.actions.visible-md button {
+			min-width : 130px;
+		}
+	}
+
+	// Small
+	#sm-widgets-panel-wrapper {
+		#widget-settings-wrapper {
+			height : 600px;
+			#widget-settings-header {
+				li {
+					margin-right : 5px;
+				}
+			}
+			#widget-settings-selection {
+				padding : 0 0px 0 0px;
+				height  : 490px;
+			}
+			#widget-settings-preview {
+				text-align : center;
+				.img-thumbnail {
+					float : none;
+				}
+				.description {
+					float : none;
+				}
+				.actions {
+					position   : relative;
+					margin-top : 30px;
+					button {
+						min-width : 85px;
+						font-size : 20px
+					}
+					button.action-close-btn {
+						font-size      : 14px;
+						padding-top    : 4px;
+						padding-bottom : 4px;
+					}
+				}
+			}
+		}
+	}
+
 	#widgets-settings-panel-wrapper.visible-sm #widgets-settings-panel {
 		height : 800px;
 	}

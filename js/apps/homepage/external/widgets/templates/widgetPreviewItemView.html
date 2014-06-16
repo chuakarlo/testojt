@@ -3,14 +3,22 @@
 	<h4><%- WidgetName %></h4>
 	<p><%- Description %></p>
 </div>
-<div class="description visible-md" style="max-width: 18em;">
+<div class="description visible-md" style="max-width: 13em;">
 	<h4><%- WidgetName %></h4>
 	<p><%- Description %></p>
 </div>
 
 <div id="widget-limit-message" class="clear alert alert-danger"></div>
 
-<div class="actions hidden-sm">
+<div class="actions visible-lg">
+	<button type="button" data-id="<%- WidgetId %>" class="cancel btn btn-default">Close</button>
+	<button type="button" data-id="<%- WidgetId %>" class="<%- action %> action-btn btn"><%- actionValue %></button>
+	<button type="button" data-id="<%- WidgetId %>" class="<%- action %>-and-close action-close-btn btn btn-primary">
+		<%- actionValue %> & Close
+	</button>
+</div>
+
+<div class="actions visible-md">
 	<button type="button" data-id="<%- WidgetId %>" class="cancel btn btn-default">Close</button>
 	<button type="button" data-id="<%- WidgetId %>" class="<%- action %> action-btn btn"><%- actionValue %></button>
 	<button type="button" data-id="<%- WidgetId %>" class="<%- action %>-and-close action-close-btn btn btn-primary">
