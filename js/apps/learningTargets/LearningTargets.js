@@ -13,7 +13,6 @@ define( function ( require ) {
 		require ( 'apps/learningTargets/entities/Portfolios' );
 		require ( 'apps/learningTargets/entities/Processes' );
 		require ( 'apps/learningTargets/entities/Catalogs' );
-		// require ( 'apps/learningTargets/entities/Groups' );
 		require ( 'apps/learningTargets/entities/CatalogDescriptions' );
 		require ( 'apps/learningTargets/entities/ReflectionQuestions' );
 
@@ -31,7 +30,6 @@ define( function ( require ) {
 					'resources/learning/observations/:id'                           : 'showObservationsWithId',
 					'resources/learning/portfolio'                                  : 'showPortfolio',
 					'resources/learning/catalogs'                                   : 'showCatalogs',
-					// 'resources/learning/group-task'                              : 'showGroups',					-- remove due to not part of waimea version
 					'resources/learning/focus-objectives'                           : 'showFocusObjectivesTitle',
 					'resources/learning/reflection-questions'                       : 'showReflectionQuestions',
 					'resources/learning/objectives/:focustitle/:ncesid/:statestdid' : 'showFocusObjectivesContent',
