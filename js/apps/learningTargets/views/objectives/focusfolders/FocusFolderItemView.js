@@ -30,7 +30,8 @@ define( function ( require ) {
 		},
 
 		'_setDescriptionIcon' : function ( model ) {
-			if ( model.StateStandardDescription.length <= 0 ) {
+			model.DescIcon = '';
+			if ( model.get( 'StateStandardDescription' ).length <= 0 ) {
 				model.DescIcon = 'hide';
 			}
 
@@ -39,10 +40,9 @@ define( function ( require ) {
 
 		'templateHelpers' : function ( ) {
 			var model = this.model;
-			model.DescIcon = '';
 
 			model.SSTitle  = getAbbreviation ( model.get( 'StateStandardTitle' ), 50 );
-			model.DescIcon = this._setDescriptionIcon( model.get( 'StateStandardDescription' ) );
+			this._setDescriptionIcon( model );
 
 			return model;
 		}
