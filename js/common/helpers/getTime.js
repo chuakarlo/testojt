@@ -8,7 +8,7 @@ define( function ( require ) {
 	// function to format the display value
 	// concat zero if less than 10 e.g '09'
 	var setTimeValue = function ( timevalue ) {
-		if ( timevalue > 10 ) {
+		if ( timevalue >= 10 ) {
 			return timevalue;
 		}
 		return '0' + timevalue;
