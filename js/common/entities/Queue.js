@@ -171,7 +171,7 @@ define( function ( require ) {
 				App.vent.trigger( 'common:queued', model );
 				App.vent.trigger( 'flash:message', {
 					'type'    : 'success',
-					'message' : 'Added to Watch Later'
+					'message' : 'Added to Queue'
 				} );
 
 			} ).fail( function ( error ) {
@@ -198,7 +198,7 @@ define( function ( require ) {
 				App.vent.trigger( 'common:dequeued', model );
 				App.vent.trigger( 'flash:message', {
 					'type'    : 'success',
-					'message' : 'Removed from Watch Later'
+					'message' : 'Removed from Queue'
 				} );
 
 			} ).fail( function ( error ) {

@@ -136,10 +136,10 @@ define( function ( require ) {
 		'matchedSegmentsToQueue' : function () {
 			if ( this.model.get( 'queued' ) ) {
 				this.ui.watchIcon.removeClass( 'grayed' ).addClass( 'blued' );
-				this.addTooltip( this.ui.watchIcon ,  { 'title' :  'Remove from Watch Later List' } );
+				this.addTooltip( this.ui.watchIcon ,  { 'title' :  'Remove from Queue' } );
 			} else {
 				this.ui.watchIcon.removeClass( 'blued' ).addClass( 'grayed' );
-				this.addTooltip( this.ui.watchIcon , { 'title' : 'Add to Watch Later List' } );
+				this.addTooltip( this.ui.watchIcon , { 'title' : 'Add to Queue' } );
 			}
 
 			this.ui.loadingIcon.hide().spin( false );
