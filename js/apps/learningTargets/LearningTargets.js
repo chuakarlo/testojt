@@ -35,8 +35,8 @@ define( function ( require ) {
 					'resources/learning/focus-objectives'                           : 'showFocusObjectivesTitle',
 					'resources/learning/reflection-questions'                       : 'showReflectionQuestions',
 					'resources/learning/objectives/:focustitle/:ncesid/:statestdid' : 'showFocusObjectivesContent',
+					'resources/learning/:page/:pageid(/:subpageid)/legacy'          : 'showLegacyPageContent'
 
-					'resources/learning/:page/:pageid(/:subpageid)/legacy'         : 'showLegacyPageContent'
 				}
 			} );
 

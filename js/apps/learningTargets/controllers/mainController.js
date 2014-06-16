@@ -31,6 +31,11 @@ define( function ( require ) {
 				'subPage' : 'coursesBrowse'
 			},
 
+			'catalogs' : {
+				'page'    : 'courses',
+				'subPage' : 'coursesBrowse'
+			},
+
 			'portfolio' : {
 				'page'    : 'home',
 				'subPage' : 'homePortfolio'
@@ -101,7 +106,6 @@ define( function ( require ) {
 			},
 
 			'redirectToLegacyPage' : function ( target, page, sub, opts ) {
-
 				App.navigate( Backbone.history.fragment + '/legacy' );
 
 				Main.helper.showLegacyContent( page, sub, opts );
@@ -151,10 +155,17 @@ define( function ( require ) {
 			'showLegacyPageContent' : function ( page, pageid, subpageid ) {
 				var helper = Main.helper;
 				var opts   = pageid;
-				if ( subpageid ) {
+
+				if ( page === 'processes' ) {
 					opts = {
 						processId     : pageid,
 						processTaskId : subpageid
+					};
+				} else if ( page === 'courses' || page === 'portfolio' || page === 'catalogs' ) {
+					opts = parseInt( pageid, 10 );
+				} else if ( page === 'observations' ) {
+					opts = {
+						showPerFocus : pageid
 					};
 				}
 
