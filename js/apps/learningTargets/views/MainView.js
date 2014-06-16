@@ -51,6 +51,11 @@ define( function ( require ) {
 		'onRender' : function () {
 			// should fix event delegation issue when redirecting to the legacy page
 			this.delegateEvents();
+
+			if ( !window.swfobject.hasFlashPlayerVersion( '1' ) ) {
+				this.ui.viewAllBtn.addClass( 'hide' );
+			}
+
 		},
 
 		'activateTab' : function ( content, options ) {

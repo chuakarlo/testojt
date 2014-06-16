@@ -74,10 +74,7 @@ define( function ( require ) {
 					el : mainView.el.querySelector( '.lt-content' )
 				} );
 
-				if ( window.swfobject.hasFlashPlayerVersion( '1' ) ) {
-					mainView.setupViewAllButton( content );
-				}
-
+				mainView.setupViewAllButton( content );
 				self.setupViewAllLink( content );
 				mainView.activateTab( content );
 			},
