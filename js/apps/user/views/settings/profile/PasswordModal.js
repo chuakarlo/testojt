@@ -83,9 +83,7 @@ define( function ( require ) {
 								'type'    : 'success'
 							} );
 						} else {
-							App.vent.trigger( 'flash:message', {
-								'message' : 'Password does not match stored password. Please try again.'
-							} );
+							$( '.error-message' ).show();
 						}
 
 					}.bind( this ),
