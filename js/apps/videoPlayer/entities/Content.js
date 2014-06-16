@@ -2,9 +2,11 @@ define( function ( require ) {
 	'use strict';
 
 	var _        = require( 'underscore' );
+	var moment   = require( 'moment' );
 	var Backbone = require( 'backbone' );
 	var App      = require( 'App' );
 	var Session  = require( 'Session' );
+	var Remoting = require( 'Remoting' );
 
 	var getConfig = require( 'common/helpers/getConfig' );
 
@@ -30,6 +32,36 @@ define( function ( require ) {
 
 				this.setVideoTypeId( 1 );
 				this.setVideoUrl();
+			},
+
+			'getViewingId' : function () {
+				var now = moment().format( 'MMM DD, YYYY h:mm:ss a' );
+
+				var request = {
+					'path'       : 'core.ViewingProgressGateway',
+					'objectPath' : 'core.ViewingProgress',
+					'method'     : 'Create',
+					'args'       : {
+						'PersonnelId'        : Session.personnelId(),
+						'ContentId'          : this.get( 'ContentId' ),
+						'ContentName'        : '',
+						'EditionName'        : '',
+						'ProgramName'        : '',
+						'FileName'           : '',
+						'ContentDescription' : '',
+						'ViewingId'          : 0,
+						'BeganViewingDate'   : now,
+						'SecondsCompleted'   : 0
+					}
+				};
+
+				var viewingId = Remoting.fetch( request );
+
+				App.when( viewingId ).done( function ( resp ) {
+
+					this.set( 'ViewingId', resp[ 0 ].ViewingId );
+
+				}.bind( this ) );
 			},
 
 			'getReadOptions' : function () {
@@ -63,7 +95,7 @@ define( function ( require ) {
 					'args'   : {
 						'PersonnelId'      : Session.personnelId(),
 						'ContentId'        : this.id,
-						'ViewingId'        : 1,
+						'ViewingId'        : this.get( 'ViewingId' ),
 						'SecondsCompleted' : this.getCurrentTime(),
 						'licId'            : this.get( 'licenseId' ),
 						'taskId'           : this.get( 'taskId' )
@@ -170,6 +202,8 @@ define( function ( require ) {
 							videoContent.set( 'licenseId', queryObject.licenseId );
 							videoContent.set( 'taskId', queryObject.taskId );
 						}
+
+						videoContent.getViewingId();
 
 						defer.resolve( videoContent );
 					},
