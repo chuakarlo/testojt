@@ -28,7 +28,7 @@ define( function ( require ) {
 			var sort              = this.model.attributes.value;
 			var hasPendingRequest = App.request( 'contentNavigation:hasPendingRequest' );
 
-			if ( hasPendingRequest ) {
+			if ( hasPendingRequest || this.$el.hasClass( 'selected' ) ) {
 				return;
 			}
 

@@ -37,7 +37,7 @@ define( function ( require ) {
 
 			var hasPendingRequest = App.request( 'contentNavigation:hasPendingRequest' );
 
-			if ( hasPendingRequest ) {
+			if ( hasPendingRequest || this.$el.hasClass( 'selected' ) ) {
 				return;
 			}
 
