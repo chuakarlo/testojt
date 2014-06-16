@@ -5,7 +5,6 @@
 	var Marionette = require( 'marionette' );
 	var App        = require( 'App' );
 	var sinon      = window.sinon;
-
 	require( 'apps/learningTargets/LearningTargets' );
 
 	var CoursesView = require( 'apps/learningTargets/views/courses/CoursesView' );
@@ -18,7 +17,7 @@
 			// creates a dummy COMMON submodule
 			App.module( 'Common', function ( common, App ) {
 				loadingView = common.LoadingView;
-				common.LoadingView = function() {
+				common.LoadingView = function () {
 					return {
 						'loading' : 'view'
 					};
@@ -39,16 +38,18 @@
 			App.LearningTargets.should.be.an.instanceof( Marionette.Module );
 		} );
 
-
 		// Test Main submodule
 		describe( 'Main controller', function () {
-			var setContent, showView, request, courseView;
+			var setContent;
+			var showView;
+			var request;
+			var courseView;
 
 			var helper = App.LearningTargets.Main.helper;
 
 			before( function () {
 				courseView = new CoursesView( {
-					collection : new Backbone.Collection.extend(),
+					collection       : new Backbone.Collection.extend(),
 					selectedCourseId : 0
 				} );
 				setContent = sinon.stub( helper, '_setContent' );
@@ -75,7 +76,6 @@
 				App.LearningTargets.Main.should.have.property( 'controller' );
 				App.LearningTargets.Main.should.be.an.instanceof( Marionette.Module );
 			} );
-
 
 			// Test Controller methods
 			describe( 'method `showMain`', function () {
@@ -117,27 +117,6 @@
 				} );
 
 			} );
-
-			describe( 'method `showProcesses`', function () {
-
-				before( function () {
-					App.LearningTargets.Main.controller.showProcesses();
-				} );
-
-				it( 'should setup content for `processes`', function () {
-					setContent.should.have.been.calledWith( 'processes' );
-				} );
-
-				it( 'should display loading view', function () {
-					showView.should.have.been.calledWith( { 'loading' : 'view' } );
-				} );
-
-				it( 'should send request to API', function () {
-					request.should.have.been.calledWith( 'lt:processes' );
-				} );
-
-			} );
-
 			describe( 'method `showPortfolio`', function () {
 				before( function () {
 					App.LearningTargets.Main.controller.showPortfolio();

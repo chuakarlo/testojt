@@ -13,7 +13,7 @@ define( function ( require ) {
 		'tagName'           : 'div',
 		'className'         : 'lt-content-processes',
 		'emptyView'         : EmptyView,
-		'itemViewContainer' : '.lt-list'
+		'itemViewContainer' : '.lt-accordion'
 	} );
 
 } );

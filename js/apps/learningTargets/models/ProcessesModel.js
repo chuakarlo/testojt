@@ -43,7 +43,7 @@ define( function ( require ) {
 				if ( !ProcessStatus.message ) {
 					tasksObj.StepStatus  = self._getStatus( taskCompletedDate, currentDate, 'Past Due' );
 				}
-				tasksObj.TrimedDate = moment( tasksObj.CompleteByDate ).format( 'M/D/YY' );
+				tasksObj.TrimedDate = moment( tasksObj.CompleteByDate ).format( 'MMM D, YYYY' );
 			} );
 
 			return model;

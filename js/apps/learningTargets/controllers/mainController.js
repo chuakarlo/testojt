@@ -14,11 +14,13 @@ define( function ( require ) {
 	var ObjectivesFolderView    = require( 'apps/learningTargets/views/objectives/focusfolders/FocusFolderView' );
 	var ObjectivesContentView   = require( 'apps/learningTargets/views/objectives/contents/ContentView' );
 	var ReflectionQuestionsView = require( 'apps/learningTargets/views/reflectionQuestions/ReflectionQuestionsView' );
+	var LegendView              = require( 'apps/learningTargets/views/legends/LegendView' );
 	var $                       = require( 'jquery' );
 
 	App.module( 'LearningTargets.Main', function ( Main ) {
 		var mainView;
 		var contentRegion;
+		var legendRegion;
 		var currentPage;
 		var legacyPages = {
 			'processes' : {
@@ -48,6 +50,7 @@ define( function ( require ) {
 		};
 
 		Main.regions = {
+			'Legend'  : Backbone.Marionette.Region.extend( { } ),
 			'Content' : Backbone.Marionette.Region.extend( { } )
 		};
 
@@ -57,11 +60,23 @@ define( function ( require ) {
 				contentRegion.show( view );
 			},
 
+			'_setLegend' : function ( options ) {
+
+				legendRegion = new Main.regions.Legend( {
+					el :  mainView.el.querySelector( '.lt-legend' )
+				} );
+
+				var view = new LegendView( options );
+
+				legendRegion.show( view._initItemView() );
+
+			},
+
 			'_setContent' : function ( content, options ) {
 				var self = this;
 				// hide pd360 flash
-				App.request( 'pd360:hide' );
 
+				App.request( 'pd360:hide' );
 				// show main view
 				if ( !mainView ) {
 					mainView = new MainView();
@@ -209,12 +224,29 @@ define( function ( require ) {
 				// show a loading view while data is fetching
 				helper._showView( new App.Common.LoadingView() );
 
+				var options  = {
+					'legends' : [
+						{
+							'icon'  : 'fa-check lt-complete',
+							'label' : 'Current'
+						},
+
+						{
+							'icon'  : 'fa-clock-o lt-past-due',
+							'label' : 'Not Current'
+						}
+					]
+				};
+
+				helper._setLegend( options );
+
 				helper._apiRequest( 'lt:processes', function ( collection ) {
 
 					var processesView = new ProcessesView( {
 						collection : collection
 					} );
-
+					// bind to redirect event
+					processesView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
 					// display Processes
 					helper._showView( processesView );
 				} );

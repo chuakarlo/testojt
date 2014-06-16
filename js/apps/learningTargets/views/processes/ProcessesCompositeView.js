@@ -7,37 +7,43 @@ define( function ( require ) {
 	var TasksItemView = require( 'apps/learningTargets/views/processes/TasksItemView' );
 	var EmptyView     = require( 'apps/learningTargets/views/processes/EmptyTask' );
 	var _             = require( 'underscore' );
-	var $             = require( 'jquery' );
 
 	return Marionette.CompositeView.extend( {
 		'template'          : _.template( template ),
-		'tagName'           : 'li',
+		'tagName'           : 'div',
 		'itemView'          : TasksItemView,
 		'emptyView'         : EmptyView,
+		'className'         : 'lt-toggle-btn',
 		'itemViewContainer' : '.lt-toggle-content',
 
 		'ui'                : {
-			'drawerToggleButton' : '.lt-toggle-btn',
-			'linkBtn'            : '.lt-link',
-			'processStep'        : '.lt-process-step'
+			'activateAccordion' : '.lt-accordion-tab',
+			'linkBtn'           : '.lt-link',
+			'processStep'       : '.lt-process-step'
 		},
+
 		'initialize' : function () {
 			this.collection = new Backbone.Collection( this.model.get( 'Tasks' ) );
 			return this;
 		},
 		'events' : {
-			'click @ui.drawerToggleButton' : 'toggleDrawer'
+			'click @ui.activateAccordion' : 'toggleAccordion',
+			'click @ui.processStep'       : 'showProcessStep'
 		},
 
-		'toggleDrawer' : function ( e ) {
+		'toggleAccordion' : function ( e ) {
 			e.preventDefault();
+			this.$el.toggleClass( 'active' );
+			this.$el.find('.lt-title-holder').toggleClass( 'title-active' );
+		},
 
-			var toggleBtn     = $( e.currentTarget );
-			var toggleContent = toggleBtn.siblings( '.lt-toggle-content' )[ 0 ];
+		'showProcessStep' : function ( e ) {
+			e.preventDefault();
+			var self          = this;
+			var processId     = self.model.get( 'ProcessId' );
+			var processTaskId = e.currentTarget.attributes[ 0 ].nodeValue;
 
-			$( toggleBtn ).toggleClass( 'active' );
-
-			$( toggleContent ).slideToggle( 300 );
+			self.trigger( 'lt:redirect', 'observation', 'observationProcessesOfMe', { 'processId' : processId, 'processTaskId' : processTaskId } );
 		}
 
 	} );

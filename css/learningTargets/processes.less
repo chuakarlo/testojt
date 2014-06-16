@@ -1,51 +1,78 @@
 .lt-content-processes {
-	
+
 	.empty-task {
-		border: 1px solid @lt-gray-1;
+		border-top : none;
+		font-size : 14px;
+		padding   : 20px;
 	}
 
 	.lt-process-table-holder {
 		padding: 10px;
 	}
 
-	.process-status-danger {
-		border-right: 3px solid @lt-light-red;
-	}
-	.process-status-success {
-		border-right: 3px solid @lt-green;
-	}
-
-	.text-danger {
-		color: @lt-red;
-	}
-	.text-success {
-		color: @lt-green;
-	}
-
 	.active {
-		border-right: 1px solid @lt-gray-1;
-		border-left: 1px solid @lt-gray-1;
-		border-top: none;
-		background: @lt-gray-4;
+		border-right  : 1px solid @lt-gray-1;
+		border-left   : 1px solid @lt-gray-1;
+		border-top    : none;
 	}
 
-	.drawer {
-		display: none;
+	.lt-toggle-btn {
+
 		width: 100%;
-		margin: 0;
+		z-index: 10;
+		overflow: auto;
+		display: block;
+		min-height: inherit;
+		padding: 20px 10px;
+		border-bottom: 1px solid @lt-gray-1;
+		font-size: 14px;
+		.lt-hover-transition();
+			
+	}
+
+	.lt-accordion {
+		border-top: 1px solid @lt-gray-1;
+	}
+	
+	.lt-title-holder {
+		a > i {
+			margin-right: 10px;
+		}
+	}
+
+	.title-active {
+		border-bottom: 1px solid @lt-gray-1;
+		padding-bottom: 15px;
+	}
+
+	table {
+		width: 100%;
+		margin: 10px 0 0 0;
+
+		.process-status-danger {
+			border-right: 4px solid @lt-light-red;
+		}
+		.process-status-success {
+			border-right: 4px solid @lt-green;
+		}
+
 		tr {
-			border-bottom: 1px solid @lt-gray-1;
+
+			th {
+				text-align: center;
+			}
+
 			td {
 				border-top: none;
 				padding: 5px;
 				text-align: center;
 			}
+
 			td:first-child {
-				border-left: 1px solid @lt-gray-1;
 				border-right: 1px solid @lt-gray-1;
 			}
+
 		}
 
-				
 	}
 }
