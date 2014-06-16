@@ -51,12 +51,10 @@ define( function ( require ) {
 				$( '.content-wrapper' ).html( '' );
 				App.request( 'pd360:navigate', 'courses', 'coursesBrowse', {  'COURSEID' : CourseID } );
 			} );
-			App.Homepage.Utils.redirect( e, widgetDirectory );
-			return false;
 		},
 
 		'onRender'        : function ( ) {
-			$('.courses').tooltip( 'hide' );
+			this.$('.courses').tooltip( 'hide' );
 		}
 	} );
 } );
