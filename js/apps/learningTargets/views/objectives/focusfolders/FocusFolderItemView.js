@@ -42,9 +42,7 @@ define( function ( require ) {
 			model.DescIcon = '';
 
 			model.SSTitle  = getAbbreviation ( model.get( 'StateStandardTitle' ), 50 );
-			if ( model.get( 'StateStandardDescription' ).length <= 0 ) {
-				model.DescIcon = 'hide';
-			}
+			model.DescIcon = this._setDescriptionIcon( model.get( 'StateStandardDescription' ) );
 
 			return model;
 		}

@@ -16,13 +16,11 @@ define( function ( require ) {
 		},
 		'tagName'  : 'li',
 		'ui'       : {
-			'drawerToggleButton' : '.lt-toggle-btn',
-			'linkBtn'            : '.lt-link'
+			'drawerToggleButton' : '.lt-toggle-btn'
 		},
 
 		'events' : {
-			'click @ui.drawerToggleButton' : 'toggleDrawer',
-			'click @ui.linkBtn'            : 'showLegacyApp'
+			'click @ui.drawerToggleButton' : 'toggleDrawer'
 		},
 
 		'toggleDrawer' : function ( e ) {
@@ -70,15 +68,6 @@ define( function ( require ) {
 
 			}.bind( this ) ).fail( App.errorHandler );
 
-		},
-
-		'showLegacyApp' : function ( e ) {
-			e.preventDefault();
-			var self = this;
-
-			self.trigger( 'lt:redirect', 'observation', 'observationProcessesOfMe', {
-				'soughtProcessId' : self.model.get( 'ProcessId' )
-			} );
 		}
 
 	} );
