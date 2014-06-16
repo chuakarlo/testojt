@@ -43,10 +43,14 @@ define( function ( require ) {
 
 		'fetch' : function ( options ) {
 			App.when( fetchingModels( this.start ) ).done( function ( models ) {
+				if ( !(models[ 0 ].length === 1 && typeof models[ 0 ][ 0 ] === 'string') ) {
+					var innerModel = new Backbone.Collection( models[ 0 ] );
+					innerModel.queueCollection = models[ 1 ];
+					options.success( innerModel );
 
-				var innerModel = new Backbone.Collection( models[ 0 ] );
-				innerModel.queueCollection = models[ 1 ];
-				options.success( innerModel );
+				} else {
+					options.error( 'No Results Found' );
+				}
 
 			} ).fail( function ( ) {
 
