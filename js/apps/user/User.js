@@ -60,7 +60,7 @@ define( function ( require ) {
 				App.request( 'pd360:hide' );
 
 				if ( App.request( 'session:authenticated' ) ) {
-					return App.navigate( 'home', { 'trigger' : true } );
+					return App.navigate( 'home', { 'trigger' : true, 'replace' : true } );
 				}
 
 				User.Login.Controller.showLogin();
@@ -167,7 +167,7 @@ define( function ( require ) {
 
 		Vent.on( 'login:show', function ( requested ) {
 			requestedRoute = requested;
-			App.navigate( 'login', { 'trigger' : true } );
+			App.navigate( 'login', { 'trigger' : true, 'replace' : true } );
 		} );
 
 		Vent.on( 'login:success', function ( forceRoute ) {
@@ -175,10 +175,10 @@ define( function ( require ) {
 			forceRoute = forceRoute || requestedRoute;
 
 			if ( forceRoute ) {
-				App.navigate( forceRoute, { 'trigger' : true } );
+				App.navigate( forceRoute, { 'trigger' : true, 'replace' : true } );
 				requestedRoute = null;
 			} else {
-				App.navigate( 'home', { 'trigger' : true } );
+				App.navigate( 'home', { 'trigger' : true, 'replace' : true } );
 			}
 		} );
 

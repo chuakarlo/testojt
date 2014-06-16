@@ -55,7 +55,7 @@ define( function ( require ) {
 				// If they have authenticated, and tried to access an unavailable route redirect home.
 				if ( App.request( 'session:personnel' ) ) {
 
-					App.navigate( 'home', { 'trigger' : true } );
+					App.navigate( 'home', { 'trigger' : true, 'replace' : true } );
 
 					if ( fragment ) {
 						App.errorHandler( { 'message' : 'Sorry, `' + fragment + '` is currently unavailable or does not exist.' } );
