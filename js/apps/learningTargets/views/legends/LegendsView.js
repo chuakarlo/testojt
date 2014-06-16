@@ -16,6 +16,7 @@ define( function ( require ) {
 
 		'initialize' : function ( ) {
 			this.collection = new Backbone.Collection( this.options.legends );
+
 			return this;
 		}
 

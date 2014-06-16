@@ -1,13 +1,14 @@
 define( function ( require ) {
 	'use strict';
 
-	var linkSetters =  [
+	var linkSetters = [
 		function ( resourceId ) {
 			var opts = {
 				'icon'            : 'fa-youtube-play',
 				'catalogTraining' : 'catalog-video',
 				'catalogLinks'    : '#resources/videos/' + resourceId
 			};
+
 			return opts;
 		},
 
@@ -27,6 +28,7 @@ define( function ( require ) {
 				'catalogTraining' : 'catalog-training',
 				'catalogLinks'    : '#catalog-training'
 			};
+
 			return opts;
 		}
 	];

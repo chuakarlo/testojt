@@ -9,13 +9,16 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 		'template'        : _.template( template ),
+
 		'templateHelpers' : function () {
 			return {
 				'LicenseId' : this.model.get( 'LICENSEID' )
 			};
 		},
-		'tagName'  : 'li',
-		'ui'       : {
+
+		'tagName' : 'li',
+
+		'ui' : {
 			'drawerToggleButton' : '.lt-toggle-btn'
 		},
 
@@ -36,7 +39,7 @@ define( function ( require ) {
 			var licenseId   = this.model.get( 'LICENSEID' );
 			var getTaskTree = App.request( 'lt:tasktree', licenseId );
 			var detailsElem = $( '#data-' +  licenseId );
-			//
+
 			// show loading text or spinner
 			detailsElem.text( 'Loading...' );
 

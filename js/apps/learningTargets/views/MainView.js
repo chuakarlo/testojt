@@ -12,11 +12,13 @@ define( function ( require ) {
 	return Marionette.ItemView.extend( {
 		'template'  : _.template( template ),
 		'className' : 'learning-targets',
+
 		'ui'        : {
 			'nav'        : '.lt-left-nav',
 			'selectNav'  : 'select.selectpicker',
 			'viewAllBtn' : '.view-all'
 		},
+
 		'events' : {
 			'change @ui.selectNav' : 'onSelect',
 			'click @ui.viewAllBtn' : 'viewAll'
@@ -74,6 +76,7 @@ define( function ( require ) {
 			$( learningTargetsMenu ).val( content );
 			$( learningTargetsMenu ).selectpicker( 'render' );
 		}
+
 	} );
 
 } );

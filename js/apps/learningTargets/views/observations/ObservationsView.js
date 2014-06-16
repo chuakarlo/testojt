@@ -11,6 +11,7 @@ define( function ( require ) {
 		'initialize'        : function () {
 			this.collection.selectedObeservationId = this.options.selectedObeservationId;
 		},
+
 		'template'          : _.template( template ),
 		'itemView'          : observationsItemView,
 		'emptyView'         : EmptyView,

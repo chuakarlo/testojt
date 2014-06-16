@@ -15,6 +15,7 @@ define( function ( require ) {
 		'ui' : {
 			'InfoButton' : '.fo-showinfo'
 		},
+
 		'events' : {
 			'click @ui.InfoButton' : 'showDescription'
 		},

@@ -11,7 +11,6 @@ define( function ( require ) {
 		'template'          : _.template ( template ),
 		'itemView'          : TitleItemView,
 		'emptyView'         : EmptyView,
-
 		'tagName'           : 'div',
 		'className'         : 'objectives-content',
 		'itemViewContainer' : 'ul.nav-objectives',
@@ -24,7 +23,7 @@ define( function ( require ) {
 			'click @ui.BackButton' : 'previousFolder'
 		},
 
-		initialize : function () {
+		'initialize' : function () {
 			this.FocusTitle     = '';
 			this.showFocusTitle = 'hide';
 
@@ -34,11 +33,11 @@ define( function ( require ) {
 			}
 		},
 
-		previousFolder : function () {
+		'previousFolder' : function () {
 			window.history.back();
 		},
 
-		templateHelpers : function () {
+		'templateHelpers' : function () {
 			return {
 				FocusTitle     : this.FocusTitle,
 				showFocusTitle : this.showFocusTitle
@@ -46,4 +45,5 @@ define( function ( require ) {
 		}
 
 	} );
+
 } );

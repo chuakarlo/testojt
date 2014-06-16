@@ -11,6 +11,7 @@ define( function ( require ) {
 		'initialize'        : function () {
 			this.collection.selectedCourseId = this.options.selectedCourseId;
 		},
+
 		'tagName'           : 'div',
 		'className'         : 'lt-content-courses',
 		'template'          : _.template( template ),

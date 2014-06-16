@@ -34,8 +34,8 @@ define( function ( require ) {
 					'resources/learning/reflection-questions'                       : 'showReflectionQuestions',
 					'resources/learning/objectives/:focustitle/:ncesid/:statestdid' : 'showFocusObjectivesContent',
 					'resources/learning/:page/:pageid(/:subpageid)/legacy'          : 'showLegacyPageContent'
-
 				}
+
 			} );
 
 			App.addInitializer ( function () {

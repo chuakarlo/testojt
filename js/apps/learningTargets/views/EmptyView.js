@@ -6,13 +6,7 @@ define( function ( require ) {
 	var template   = require( 'text!apps/learningTargets/templates/empty.html' );
 
 	return Marionette.ItemView.extend( {
-
-		'template' : _.template( template ),
-
-		'initialize' : function () {
-
-		}
-
+		'template' : _.template( template )
 	} );
 
 } );

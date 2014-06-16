@@ -9,7 +9,6 @@ define( function ( require ) {
 		'template'  : _.template( template ),
 		'tagName'   : 'span',
 		'className' : 'text-right'
-
 	} );
 
 } );

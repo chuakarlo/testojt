@@ -7,11 +7,10 @@ define( function ( require ) {
 	var setCatalogLinks = require( '../../helpers/setCatalogLinks' );
 
 	return Marionette.ItemView.extend( {
-		'template'     : _.template( template ),
+		'template' : _.template( template ),
+		'tagName'  : 'li',
 
-		'tagName'      : 'li',
-
-		'ui'       : {
+		'ui' : {
 			'drawerToggleButton' : '.lt-toggle-btn'
 		},
 
@@ -45,5 +44,7 @@ define( function ( require ) {
 
 			return self.model;
 		}
+
 	} );
+
 } );

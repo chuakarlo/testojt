@@ -11,7 +11,6 @@ define( function ( require ) {
 		'template'          : _.template( template ),
 		'emptyView'         : EmptyView,
 		'itemViewContainer' : 'ul.nav-objectives',
-
 		'tagName'           : 'div',
 		'itemView'          : TitleItemView,
 		'className'         : 'objectives-folder',
@@ -46,4 +45,5 @@ define( function ( require ) {
 		}
 
 	} );
+
 } );
