@@ -31,7 +31,7 @@ define( function ( require ) {
 		'getImageUrl' : function () {
 			// user uploaded video
 			if ( this.model.get( 'Uploaded' ) ) {
-				return 'img/pd-360.jpg';
+				return 'img/pd-360.png';
 			}
 
 			return getConfig( 'contentThumbnailPath' ) + this.model.get( 'ImageURL' );

@@ -57,7 +57,7 @@ define( function ( require ) {
 			},
 
 			'imageUrl' : function () {
-				var imgURL = this.ImageURL ? 'http://resources.pd360.com/PD360/media/thumb/' + this.ImageURL : 'img/pd-360.jpg';
+				var imgURL = this.ImageURL ? 'http://resources.pd360.com/PD360/media/thumb/' + this.ImageURL : 'img/pd-360.png';
 
 				return imgURL;
 			},
