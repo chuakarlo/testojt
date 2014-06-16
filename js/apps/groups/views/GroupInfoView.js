@@ -21,7 +21,9 @@ define( function ( require ) {
 			'showMoredetails' : '.show-more-details',
 			'hideMoredetails' : '.hide-more-details',
 			'membersLink'     : '#link-members',
-			'groupGoals'      : '#group-goals'
+			'groupGoals'      : '#group-goals',
+			'memberList'      : '.members',
+			'memberCount'     : '.memberCount'
 		},
 
 		'events' : {
@@ -29,9 +31,10 @@ define( function ( require ) {
 			'click @ui.hideMoredetails' : 'toggleDetails'
 		},
 
-		'initialize' : function () {
+		'initialize' : function ( options ) {
 			// strip html before deciding whether to show goals section or not
 			this.model.set( 'Objectives', stripHtml( this.model.get( 'Objectives' ) ) );
+			this.isMember = options.isMember;
 		},
 
 		'onRender' : function () {
@@ -44,6 +47,12 @@ define( function ( require ) {
 			// display the goals section
 			if ( this.model.get( 'Objectives' ) !== '' ) {
 				this.ui.groupGoals.toggle();
+			}
+
+			if ( !this.isMember ) {
+				this.ui.memberList.hide();
+			} else {
+				this.ui.memberCount.hide();
 			}
 
 		},

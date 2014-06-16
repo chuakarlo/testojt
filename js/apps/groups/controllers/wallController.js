@@ -44,7 +44,6 @@ define( function ( require ) {
 			},
 
 			'showGroup' : function ( collection, isMember ) {
-
 				this.wallCollection.updateStartRow();
 
 				var commentsView = new App.Groups.Views.CommentsCollection( {
@@ -56,13 +55,10 @@ define( function ( require ) {
 				// We listen to the close event so we can disable the bum smack
 				this.listenTo( commentsView, 'close', this.close );
 
-				this.layout.groupsContentRegion.show( commentsView );
-
-				this.setupInfiniteScroll();
-
 				// Check if this user is a member to show additional sections
-				if ( isMember ) {
-
+				if ( isMember[ 0 ] ) {
+					this.layout.groupsContentRegion.show( commentsView );
+					this.setupInfiniteScroll();
 					commentsView.showCreateSection();
 
 				}

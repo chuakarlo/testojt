@@ -22,11 +22,14 @@ define( function ( require ) {
 
 			'getData' : function ( groupId ) {
 				this.lastGroupId = groupId;
-				App.when( this.model.userIsAdmin( Session.personnelId() ))
-					.done( this.showGroup );
+				App.when(
+					this.model.userIsAdmin( Session.personnelId() ),
+					this.model.userIsGroupMember( Session.personnelId() )
+
+				).done( this.showGroup );
 			},
 
-			'showGroup' : function ( isAdmin ) {
+			'showGroup' : function ( isAdmin, isMember ) {
 				// Check to see if this is the current group being viewed,
 				// otherwise fetch and display the appropriate data.
 
@@ -45,11 +48,12 @@ define( function ( require ) {
 				this.layout.headerRegion.show( headerView );
 
 				// group sub navigation ( tabs )
-				var subNavView = new App.Groups.Views.SubNav( {
-					'model' : this.model
-				} );
-
-				this.layout.subNavRegion.show( subNavView );
+				if ( isMember[ 0 ] ) {
+					var subNavView = new App.Groups.Views.SubNav( {
+						'model' : this.model
+					} );
+					this.layout.subNavRegion.show( subNavView );
+				}
 
 			}
 

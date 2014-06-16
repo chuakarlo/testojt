@@ -1,9 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	var $          = require( 'jquery' );
-	var _          = require( 'underscore' );
-	var App        = require( 'App' );
+	var _       = require( 'underscore' );
+	var App     = require( 'App' );
+	var Session = require( 'Session' );
 
 	require( 'common/controllers/BaseController' );
 
@@ -18,18 +18,23 @@ define( function ( require ) {
 			},
 
 			'getData' : function ( groupId ) {
-				this.layout.groupsContentRegion.show( new App.Common.LoadingView() );
-				$.when( this.model.getMembers( 100 ) )
-					.done( this.showGroup );
+				//this.layout.groupsContentRegion.show( new App.Common.LoadingView() );
+				App.when(
+					this.model.getMembers( 100 ),
+					this.model.userIsGroupMember( Session.personnelId() )
+				).done( this.showGroup );
 			},
 
-			'showGroup' : function ( collection ) {
+			'showGroup' : function ( collection, isMember ) {
 				var membersView = new App.Groups.Views.Members( {
 					'model'      : this.model,
 					'collection' : collection
 				} );
 
-				this.layout.groupsContentRegion.show( membersView );
+				if ( isMember[ 0 ] ) {
+					this.layout.groupsContentRegion.show( membersView );
+				}
+
 			}
 
 		} );

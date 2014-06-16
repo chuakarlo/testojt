@@ -4,6 +4,7 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var _          = require( 'underscore' );
 	var Backbone   = require( 'backbone' );
+	var Session    = require( 'Session' );
 
 	require( 'groups/views/GroupResourcesLayout');
 	require( 'common/controllers/BaseController' );
@@ -25,7 +26,8 @@ define( function ( require ) {
 					this.model.getLeaderResources(),
 					this.model.getMemberResources(),
 					this.model.getLeaderLinks(),
-					this.model.getMemberLinks()
+					this.model.getMemberLinks(),
+					this.model.userIsGroupMember( Session.personnelId() )
 				).done( this.showGroup );
 
 			},
@@ -34,37 +36,38 @@ define( function ( require ) {
 					leaderResourcesCollection,
 					memberResourcesCollection,
 					leaderLinkCollection,
-					memberLinkCollection
+					memberLinkCollection,
+					isMember
 				) {
 
-				var resourcesLayout = new App.Groups.Views.GroupResourcesLayout( {
-					'groupModel' : this.model
-				} );
+				if ( isMember[ 0 ] ) {
+					var resourcesLayout = new App.Groups.Views.GroupResourcesLayout( {
+						'groupModel' : this.model
+					} );
+					this.layout.groupsContentRegion.show( resourcesLayout );
 
-				this.layout.groupsContentRegion.show( resourcesLayout );
+					var leaderCollection = new Backbone.Collection();
 
-				var leaderCollection = new Backbone.Collection();
+					leaderCollection.add( leaderResourcesCollection.models );
+					leaderCollection.add( leaderLinkCollection.models );
 
-				leaderCollection.add( leaderResourcesCollection.models );
-				leaderCollection.add( leaderLinkCollection.models );
+					var resourcesView = new App.Groups.Views.Resources( {
+						'collection' : leaderCollection
+					} );
 
-				var resourcesView = new App.Groups.Views.Resources( {
-					'collection' : leaderCollection
-				} );
+					resourcesLayout.leaderRegion.show( resourcesView );
 
-				resourcesLayout.leaderRegion.show( resourcesView );
+					var memberCollection = new Backbone.Collection();
 
-				var memberCollection = new Backbone.Collection();
+					memberCollection.add( memberResourcesCollection.models );
+					memberCollection.add( memberLinkCollection.models );
 
-				memberCollection.add( memberResourcesCollection.models );
-				memberCollection.add( memberLinkCollection.models );
+					var resourcesMembersView = new App.Groups.Views.ResourcesMembers( {
+						'collection' : memberCollection
+					} );
 
-				var resourcesMembersView = new App.Groups.Views.ResourcesMembers( {
-					'collection' : memberCollection
-				} );
-
-				resourcesLayout.memberRegion.show( resourcesMembersView );
-
+					resourcesLayout.memberRegion.show( resourcesMembersView );
+				}
 			}
 
 		} );

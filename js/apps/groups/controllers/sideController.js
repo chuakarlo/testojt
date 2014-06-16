@@ -1,8 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	var App        = require( 'App' );
-	var _          = require( 'underscore' );
+	var App     = require( 'App' );
+	var _       = require( 'underscore' );
+	var Session = require( 'Session' );
 
 	require( 'common/controllers/BaseController' );
 
@@ -24,18 +25,20 @@ define( function ( require ) {
 
 				App.when(
 					this.model.getMembers( 8 ),
-					this.model.getLastUpdate()
+					this.model.getLastUpdate(),
+					this.model.userIsGroupMember( Session.personnelId() )
 				).done( this.showGroup );
 
 			},
 
-			'showGroup' : function ( collection, lastUpdate ) {
+			'showGroup' : function ( collection, lastUpdate, isMember ) {
 
 				this.model.set( 'lastUpdated', lastUpdate[ 0 ]);
 
 				var infoView = new App.Groups.Views.Info( {
 					'model'      : this.model,
-					'collection' : collection
+					'collection' : collection,
+					'isMember'   : isMember[ 0 ]
 				} );
 
 				if ( this.displayLocation === 'side' ) {
