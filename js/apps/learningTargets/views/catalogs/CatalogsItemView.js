@@ -1,39 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette = require( 'marionette' );
-	var template   = require( 'text!apps/learningTargets/templates/catalogs/catalog.html' );
-	var _          = require( 'underscore' );
-
-	var setLink =  {
-		'Link1' : function ( resourceId ) {
-			var opts = {
-				'icon'            : 'fa-youtube-play',
-				'catalogTraining' : 'catalog-video',
-				'catalogLinks'    : '#resources/videos/' + resourceId
-			};
-			return opts;
-		},
-
-		'Link2' : function ( resourceId ) {
-			var opts = {
-				'icon'            : 'fa-university',
-				'catalogTraining' : 'catalog-course',
-				'catalogLinks'    : '#resources/learning/catalogs/' + resourceId + '/legacy'
-			};
-
-			return opts;
-		},
-
-		'Link3' : function ( ) {
-			var opts = {
-				'icon'            : 'fa-cubes',
-				'catalogTraining' : 'catalog-training',
-				'catalogLinks'    : '#catalog-training'
-			};
-			return opts;
-		}
-	};
+	var Marionette      = require( 'marionette' );
+	var template        = require( 'text!apps/learningTargets/templates/catalogs/catalog.html' );
+	var _               = require( 'underscore' );
+	var setCatalogLinks = require( '../../helpers/setCatalogLinks' );
 
 	return Marionette.ItemView.extend( {
 		'template'     : _.template( template ),
@@ -55,7 +26,7 @@ define( function ( require ) {
 		},
 
 		'setCatalogLinks' : function ( model ) {
-			_.extend( model, setLink[ 'Link' + model.get( 'CatalogResourceTypeId' ) ]( model.get( 'ResourceId' ) ) );
+			_.extend( model, setCatalogLinks( model ) );
 		},
 
 		'setCredits' : function ( model ) {

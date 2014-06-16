@@ -2,6 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var App                     = require( 'App' );
+	var $                       = require( 'jquery' );
 	var Backbone                = require( 'backbone' );
 	var MainView                = require( 'apps/learningTargets/views/MainView' );
 	var GroupsView              = require( 'apps/learningTargets/views/groups/GroupsView' );
@@ -15,7 +16,7 @@ define( function ( require ) {
 	var ObjectivesContentView   = require( 'apps/learningTargets/views/objectives/contents/ContentView' );
 	var ReflectionQuestionsView = require( 'apps/learningTargets/views/reflectionQuestions/ReflectionQuestionsView' );
 	var LegendView              = require( 'apps/learningTargets/views/legends/LegendView' );
-	var $                       = require( 'jquery' );
+	var setRequestOptions       = require( '../helpers/setRequestOptions' );
 
 	App.module( 'LearningTargets.Main', function ( Main ) {
 		var mainView;
@@ -165,21 +166,13 @@ define( function ( require ) {
 		Main.controller = {
 
 			'showLegacyPageContent' : function ( page, pageid, subpageid ) {
-				var helper = Main.helper;
-				var opts   = pageid;
+				var options = {
+					pageid    : pageid,
+					subpageid : subpageid
+				};
 
-				if ( page === 'processes' ) {
-					opts = {
-						processId     : pageid,
-						processTaskId : subpageid
-					};
-				} else if ( page === 'courses' || page === 'portfolio' || page === 'catalogs' ) {
-					opts = parseInt( pageid, 10 );
-				} else if ( page === 'observations' ) {
-					opts = {
-						showPerFocus : pageid
-					};
-				}
+				var helper = Main.helper;
+				var opts   = setRequestOptions( page, options );
 
 				helper.showLegacyContent( legacyPages[ page ].page, legacyPages[ page ].subPage, opts );
 			},
