@@ -20,7 +20,6 @@ define( function ( require ) {
 		var mainView;
 		var contentRegion;
 		var currentPage;
-		var isMobile = navigator.userAgent.match( /(iPhone|iPod|iPad|Android|BlackBerry|Windows Phone)/ );
 		var legacyPages = {
 			'processes' : {
 				'page'    : 'observation',
@@ -70,7 +69,7 @@ define( function ( require ) {
 					el : mainView.el.querySelector( '.lt-content' )
 				} );
 
-				if ( !isMobile ) {
+				if ( window.swfobject.hasFlashPlayerVersion( '1' ) ) {
 					mainView.setupViewAllButton( content );
 				}
 

@@ -49,7 +49,7 @@ define( function ( require ) {
 		},
 
 		'onRender' : function () {
-			// should fix event delegation issue when rediretcing to the legacy page
+			// should fix event delegation issue when redirecting to the legacy page
 			this.delegateEvents();
 		},
 
