@@ -11,7 +11,7 @@
 
 		require( 'ColdFusion' );
 		require( 'jquery-cookie' );
-		require( 'jquery-placeholder' );
+		require( 'placeholderjs' );
 		require( 'modernizr' );
 		require( 'bootstrap' );
 		require( 'backbone.touch' );

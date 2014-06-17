@@ -16,7 +16,6 @@
     "jqueryui": "1.10.4",
     "jquery.bum-smack": "https://github.com/mrjoelkemp/jquery.bum-smack.git#~1.1.0",
     "jquery-cookie": "1.4.0",
-    "jquery-placeholder": "~2.0.8",
     "json3": "3.2.x",
     "lodash": "1.3.x",
     "modernizr": "2.7.1",

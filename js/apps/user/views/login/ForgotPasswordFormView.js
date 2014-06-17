@@ -15,10 +15,6 @@ define( function ( require ) {
 			'submit form' : 'onSubmitForm'
 		},
 
-		'onRender' : function () {
-			this.$( 'input' ).placeholder();
-		},
-
 		'onSubmitForm' : function ( event ) {
 
 			event.preventDefault( );

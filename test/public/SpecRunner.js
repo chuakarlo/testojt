@@ -9,7 +9,7 @@
 		require( 'App' );
 		require( 'ColdFusion' );
 		require( 'jquery-cookie' );
-		require( 'jquery-placeholder' );
+		require( 'placeholderjs' );
 
 		var sinon        = require( 'sinon-chai' );
 		var suite        = require( 'spec/suite' );

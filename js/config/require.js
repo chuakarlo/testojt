@@ -34,7 +34,6 @@ require.config( {
 		'jquery.mousewheel'     : 'libs/perfect-scrollbar/src/jquery.mousewheel',
 		'jquery'                : 'libs/jquery/dist/jquery',
 		'jquery-cookie'         : 'libs/jquery-cookie/jquery.cookie',
-		'jquery-placeholder'    : 'libs/jquery-placeholder/jquery.placeholder',
 		'marionette'            : 'libs/backbone.marionette/lib/core/amd/backbone.marionette',
 		'moment'                : 'libs/momentjs/moment',
 		'moment-timezone'       : 'libs/moment-timezone/moment-timezone',
@@ -55,7 +54,6 @@ require.config( {
 		'jquery-browser'        : 'libs/jquery.browser/dist/jquery.browser.min',
 		'validator-js'          : 'libs/validator-js/validator.min',
 		'backbone.touch'        : 'libs/backbone.touch/backbone.touch',
-
 		'pc-linq'               : 'libs/nakautot.linq/linq.min',
 		'pc-nivo'               : 'libs/nivo-slider/jquery.nivo.slider',
 		'pc-progressCircle'     : 'libs/progress-circle/progress-circle',
@@ -70,7 +68,7 @@ require.config( {
 		'autolinker'            : 'libs/Autolinker.js/src/Autolinker',
 		'placeholderjs-main'    : 'libs/placeholderjs/lib/main',
 		'placeholderjs-utils'   : 'libs/placeholderjs/lib/utils',
-		'placeholderjs-jquery'  : 'libs/placeholderjs/lib/adapters/placeholders.jquery',
+		'placeholderjs'    : 'libs/placeholderjs/lib/adapters/placeholders.jquery',
 
 		// Base application level classes
 		'Session' : 'apps/user/models/SessionModel',
@@ -141,10 +139,6 @@ require.config( {
 		},
 
 		'jquery-cookie' : {
-			'deps' : [ 'jquery' ]
-		},
-
-		'jquery-placeholder' : {
 			'deps' : [ 'jquery' ]
 		},
 
@@ -232,8 +226,13 @@ require.config( {
 			'deps' : [ 'jquery' ]
 		},
 
-		'placeholderjs-jquery' : {
-			'deps' : [ 'jquery', 'placeholderjs-utils', 'placeholderjs-main' ]
+		'placeholderjs-main' : {
+			'exports' : 'placeholderjs-main',
+			'deps'    : [ 'placeholderjs-utils' ]
+		},
+
+		'placeholderjs' : {
+			'deps' : [ 'placeholderjs-main', 'jquery' ]
 		}
 
 	}

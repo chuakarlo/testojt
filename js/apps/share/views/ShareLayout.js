@@ -1,11 +1,8 @@
 define( function ( require ) {
 	'use strict';
 
-	require( 'jquery-placeholder' );
-
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
-	var App        = require( 'App' );
 
 	var template = require( 'text!share/templates/ShareLayout.html' );
 
@@ -44,6 +41,8 @@ define( function ( require ) {
 
 		'onSearchKeyup' : function ( e ) {
 			e.preventDefault();
+			e.stopPropagation();
+
 			this.toggleSearchClear();
 
 			var results = this.searchResults.currentView;
@@ -58,7 +57,9 @@ define( function ( require ) {
 				var selectedIdx = items.index( selected );
 
 				if ( items.length ) {
-					switch ( e.which ) {
+					var key = e.which || e.keyCode;
+
+					switch ( key ) {
 						case 38: // key up
 						case 40: // key down
 							var el;
@@ -92,6 +93,8 @@ define( function ( require ) {
 							this.debouncedSearch();
 						}
 					}
+				} else {
+					this.debouncedSearch();
 				}
 			} else {
 				this.debouncedSearch();
@@ -109,7 +112,7 @@ define( function ( require ) {
 				return model.id === undefined;
 			} );
 
-			App.vent.trigger( 'share:selectedItem', models[ idx ] );
+			this.trigger( 'share:selectedItem', models[ idx ] );
 		},
 
 		'templateHelpers' : function () {
@@ -120,11 +123,6 @@ define( function ( require ) {
 		},
 
 		'onShow' : function () {
-			// focus on search input
-			this.ui.searchInput.trigger( 'focus' );
-
-			this.ui.searchInput.placeholder();
-			this.ui.message.placeholder();
 			this.toggleSearchClear();
 		},
 

@@ -48,7 +48,7 @@ define( function ( require ) {
 			this.listenTo( selectedItemsView, 'itemview:item:remove', this.removeItem );
 
 			// listen for the selection of either a group or person
-			this.listenTo( App.vent, 'share:selectedItem', this.selectItem );
+			this.listenTo( shareModal, 'share:selectedItem', this.selectItem );
 
 			// show the selected items, will auto populate when adding/removing
 			shareModal.selectedItems.show( selectedItemsView );

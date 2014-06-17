@@ -22,6 +22,11 @@ define( function ( require ) {
 			this.$el.children( 'li:eq(1)' ).addClass( 'selected' );
 		},
 
+		// quirks for IE11 to make jquery tipsy works as expected
+		'onClose' : function () {
+			this.$el.height( 0 );
+		},
+
 		'getItemView' : function ( item ) {
 			if ( item.get( 'PersonnelId' ) ) {
 				return PersonView;

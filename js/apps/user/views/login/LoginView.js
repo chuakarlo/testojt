@@ -1,8 +1,6 @@
 define( function ( require ) {
 	'use strict';
 
-	require( 'placeholderjs-jquery' );
-
 	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
 	var Ladda      = require( 'ladda' );
@@ -92,7 +90,7 @@ define( function ( require ) {
 
 						l.stop();
 
-						//Clear password field and focus on username field.
+						// clear password field and focus on the username field
 						this.ui.password.val( '' );
 						this.ui.username.focus();
 
@@ -102,7 +100,8 @@ define( function ( require ) {
 					}.bind( this )
 				} );
 			} else {
-				this.ui.username.focus();
+				// focus on the first element with error
+				this.$el.find( '.has-error:first' ).children( 'input' ).focus();
 			}
 
 		}
