@@ -61,6 +61,10 @@ define( function ( require ) {
 				contentRegion.show( view );
 			},
 
+			'_showLegend' : function ( view ) {
+				legendRegion.show( view );
+			},
+
 			'_setContent' : function ( content, options ) {
 				var self = this;
 				// hide pd360 flash
@@ -78,17 +82,9 @@ define( function ( require ) {
 					el : mainView.el.querySelector( '.lt-content' )
 				} );
 
-				if ( options ) {
-
-					legendRegion = new Main.regions.Legend( {
-						el :  mainView.el.querySelector( '.lt-legend' )
-					} );
-
-					var view = new LegendsView( options );
-
-					legendRegion.show( view._initItemView() );
-
-				}
+				legendRegion = new Main.regions.Legend( {
+					el :  mainView.el.querySelector( '.lt-legend' )
+				} );
 
 				mainView.setupViewAllButton( content );
 				self.setupViewAllLink( content );
@@ -211,14 +207,13 @@ define( function ( require ) {
 			'showProcesses' : function () {
 				var helper = Main.helper;
 
-				// set content
+				// set legends options
 				var options  = {
 					'legends' : [
 						{
 							'icon'  : 'fa-check lt-complete',
 							'label' : 'Current'
 						},
-
 						{
 							'icon'  : 'fa-clock-o lt-past-due',
 							'label' : 'Not Current'
@@ -226,9 +221,9 @@ define( function ( require ) {
 					]
 				};
 
-				helper._setContent( 'processes', options );
+				helper._setContent( 'processes' );
 
-				// show a loading view while data is fetching
+				// show a loading view while fetching data
 				helper._showView( new App.Common.LoadingView() );
 
 				helper._apiRequest( 'lt:processes', function ( collection ) {
@@ -236,10 +231,15 @@ define( function ( require ) {
 					var processesView = new ProcessesView( {
 						collection : collection
 					} );
+
 					// bind to redirect event
 					processesView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
+
 					// display Processes
 					helper._showView( processesView );
+
+					// show legend after content is displayed
+					helper._showLegend( new LegendsView( options ) );
 				} );
 			},
 

@@ -6,8 +6,10 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 
 	return Marionette.ItemView.extend( {
-		'template' : _.template( template ),
-		'tagName'  : 'span'
+		'template'  : _.template( template ),
+		'tagName'   : 'span',
+		'className' : 'text-right'
+
 	} );
 
 } );
