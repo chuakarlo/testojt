@@ -12,6 +12,7 @@ define( function ( require ) {
 	require( 'user/controllers/settingsController' );
 	require( 'user/controllers/registerController' );
 	require( 'user/controllers/eulaController' );
+	require( 'user/controllers/privacyController' );
 	require( 'user/controllers/forgotPasswordController' );
 	require( 'user/controllers/successController' );
 	require( 'user/entities/License' );
@@ -43,6 +44,7 @@ define( function ( require ) {
 
 			'appRoutes' : {
 				'eula'             : 'showEula',
+				'privacy'          : 'showPrivacy',
 				'login'            : 'showLogin',
 				'logout'           : 'showLogout',
 				'register'         : 'showRegister',
@@ -86,6 +88,12 @@ define( function ( require ) {
 				}
 
 				User.Eula.Controller.showEula();
+			},
+
+			'showPrivacy' : function () {
+				App.request( 'pd360:hide' );
+
+				User.Privacy.Controller.showPrivacy();
 			},
 
 			'showLogout' : function () {
