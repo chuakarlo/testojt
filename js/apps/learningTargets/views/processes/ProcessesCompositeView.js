@@ -31,6 +31,12 @@ define( function ( require ) {
 			'click @ui.processStep'       : 'showProcessStep'
 		},
 
+		'onRender' : function () {
+			if ( this.collection.length === 0 ) {
+				this.$el.find( '.lt-table-header' ).hide();
+			}
+		},
+
 		'toggleAccordion' : function ( e ) {
 			e.preventDefault();
 			this.$el.toggleClass( 'active' );

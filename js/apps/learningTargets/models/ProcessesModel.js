@@ -20,11 +20,13 @@ define( function ( require ) {
 		'_getStatus' : function ( duedate, currentdate, initial ) {
 			var status = {
 				message : initial || false,
-				color   : 'danger'
+				color   : 'danger',
+				icon    : 'lt-past-due fa-clock-o'
 			};
 			if ( duedate >= currentdate) {
 				status.message = 'Current' || true;
 				status.color   = 'success';
+				status.icon    = 'lt-complete fa-check';
 			}
 			return status;
 		},
