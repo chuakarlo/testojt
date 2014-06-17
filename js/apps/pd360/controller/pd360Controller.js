@@ -102,7 +102,7 @@ define( function ( require ) {
 				// the method won't be available and will throw an error
 				try {
 					pd360.logoutFromContainer();
-				} catch ( error ) {}
+				} catch ( error ) { }
 
 				App.flashContent.close();
 

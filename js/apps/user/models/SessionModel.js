@@ -151,6 +151,9 @@ define( function ( require ) {
 		// removes persistence
 		'destroy' : function ( options ) {
 
+			// Log out of flash
+			Vent.trigger( 'pd360:logout' );
+
 			// remove Coldfusion cookies
 			this.removeCookie( cfCookie );
 			this.removeCookie( 'CFID' );
@@ -158,9 +161,6 @@ define( function ( require ) {
 			this.removeCookie( useWizardsCookie );
 			this.removeCookie( usernameCookie );
 			this.removeCookie( personnelCookie );
-
-			// Log out of flash
-			Vent.trigger( 'pd360:logout' );
 
 			// trigger session change for menus, etc
 			Vent.trigger( 'session:destroy' );
