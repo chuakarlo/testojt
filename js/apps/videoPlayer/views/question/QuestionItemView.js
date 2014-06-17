@@ -76,7 +76,7 @@ define( function ( require ) {
 		'saveModel' : function () {
 			var answerText = this.ui.textInput.val().trim();
 			var prevAnswer = this.model.get( 'AnswerText' );
-			if ( answerText === '' || answerText === prevAnswer ) {
+			if ( answerText === prevAnswer ) {
 				return;
 			}
 			this.ui.notifier.html( this.saveProgress );

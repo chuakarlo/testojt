@@ -8,6 +8,7 @@ define( function ( require ) {
 	var _        = require( 'underscore' );
 	var App      = require( 'App' );
 	var Session  = require( 'Session' );
+	var Remoting = require( 'Remoting' );
 
 	require( 'videoPlayer/entities/Content' );
 
@@ -29,7 +30,9 @@ define( function ( require ) {
 				'ContentId'              : 0,
 				'ContentParentId'        : 0,
 				'ContentTypeId'          : 0,
-				'SegmentLengthInSeconds' : 0
+				'SegmentLengthInSeconds' : 0,
+				'licId'                  : 0,
+				'taskId'                 : 0
 			},
 
 			'initialize' : function ( model, options ) {
@@ -63,11 +66,10 @@ define( function ( require ) {
 				};
 			},
 
-			'getUpdateOptions' : function () {
-				var now         = moment().tz( 'MST7MDT' ).format( 'MMMM D, YYYY H:mm:ss A' );
-				var viewingDate = this.get( 'BeganViewingDate' ) ? this.get( 'BeganViewingDate' ) : now;
+			'getViewingId' : function () {
+				var now = moment().tz( 'MST7MDT' ).format( 'MMM D, YYYY h:mm:ss a' );
 
-				return {
+				var request = {
 					'path'       : 'uuvideos.UUVideoViewingProgressGateway',
 					'objectPath' : 'uuvideos.UUVideoViewingProgress',
 					'method'     : 'create',
@@ -75,7 +77,30 @@ define( function ( require ) {
 						'PersonnelId'      : Session.personnelId(),
 						'UUVideoId'        : this.id,
 						'ViewingId'        : 0,
-						'BeganViewingDate' : viewingDate
+						'BeganViewingDate' : now
+					}
+				};
+
+				var viewingId = Remoting.fetch( request );
+
+				App.when( viewingId ).done( function ( resp ) {
+
+					this.set( 'ViewingId', resp[ 0 ].ViewingId );
+
+				}.bind( this ) );
+			},
+
+			'getUpdateOptions' : function () {
+				return {
+					'path'   : 'RespondService',
+					'method' : 'RespondUpdatedViewingTimeWithStatusCheck',
+					'args'   : {
+						'PersonnelId'      : Session.personnelId(),
+						'ContentId'        : this.id,
+						'ViewingId'        : this.get( 'ViewingId' ),
+						'SecondsCompleted' : this.getCurrentTime(),
+						'licId'            : this.get( 'licenseId' ),
+						'taskId'           : this.get( 'taskId' )
 					}
 				};
 			}
@@ -83,6 +108,7 @@ define( function ( require ) {
 		} );
 
 		var API = {
+
 			'getContent' : function ( options ) {
 				var defer = App.Deferred();
 
@@ -91,6 +117,8 @@ define( function ( require ) {
 				content.fetch( {
 
 					'success' : function () {
+						content.getViewingId();
+
 						defer.resolve( content );
 					},
 
@@ -102,6 +130,7 @@ define( function ( require ) {
 
 				return defer.promise();
 			}
+
 		};
 
 		App.reqres.setHandler( 'video:userUploaded', function ( videoId ) {

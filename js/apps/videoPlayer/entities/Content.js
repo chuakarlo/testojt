@@ -35,7 +35,7 @@ define( function ( require ) {
 			},
 
 			'getViewingId' : function () {
-				var now = moment().format( 'MMM DD, YYYY h:mm:ss a' );
+				var now = moment().tz( 'MST7MDT' ).format( 'MMM DD, YYYY h:mm:ss a' );
 
 				var request = {
 					'path'       : 'core.ViewingProgressGateway',

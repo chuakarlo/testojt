@@ -88,9 +88,9 @@ define( function ( require ) {
 				this.controlBar.captionsButton.hide();
 				this.controlBar.captionsButton.el().setAttribute( 'aria-pressed', 'true' );
 
-				// Check if flash is supported so,
-				// volume() won't throw an error if flash player isn't available.
-				if ( videojs.Flash.isSupported() ) {
+				// Check if flash is supported or if we're in Safari browser so
+				// volume() won't throw an error if flash plugin or native hls player isn't available.
+				if ( videojs.Flash.isSupported() || $.browser.safari ) {
 					// Bug in flash player where volume returns 0
 					// but actual video has sound and ui shown is minimum.
 					// Manually set player volume to correct volume ui.
