@@ -17,9 +17,7 @@ define( function ( require ) {
 		'itemViewContainer' : '.lt-toggle-content',
 
 		'ui'                : {
-			'activateAccordion' : '.lt-accordion-tab',
-			'linkBtn'           : '.lt-link',
-			'processStep'       : '.lt-process-step'
+			'activateAccordion' : '.lt-accordion-tab'
 		},
 
 		'initialize' : function () {
@@ -27,8 +25,7 @@ define( function ( require ) {
 			return this;
 		},
 		'events' : {
-			'click @ui.activateAccordion' : 'toggleAccordion',
-			'click @ui.processStep'       : 'showProcessStep'
+			'click @ui.activateAccordion' : 'toggleAccordion'
 		},
 
 		'onRender' : function () {
@@ -41,15 +38,6 @@ define( function ( require ) {
 			e.preventDefault();
 			this.$el.toggleClass( 'active' );
 			this.$el.find('.lt-title-holder').toggleClass( 'title-active' );
-		},
-
-		'showProcessStep' : function ( e ) {
-			e.preventDefault();
-			var self          = this;
-			var processId     = self.model.get( 'ProcessId' );
-			var processTaskId = e.currentTarget.attributes[ 0 ].nodeValue;
-
-			self.trigger( 'lt:redirect', 'observation', 'observationProcessesOfMe', { 'processId' : processId, 'processTaskId' : processTaskId } );
 		}
 
 	} );

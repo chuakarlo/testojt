@@ -192,9 +192,6 @@ define( function ( require ) {
 						selectedCourseId : parseInt( id, 10 )
 					} );
 
-					// bind to redirect event
-					coursesView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
-
 					// display Courses
 					helper._showView( coursesView );
 				} );
@@ -232,9 +229,6 @@ define( function ( require ) {
 						collection : collection
 					} );
 
-					// bind to redirect event
-					processesView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
-
 					// display Processes
 					helper._showView( processesView );
 
@@ -257,7 +251,7 @@ define( function ( require ) {
 						collection : collection
 					} );
 
-					// display Courses
+					// display Portfolio
 					helper._showView( portfoliosView );
 				} );
 			},
@@ -280,9 +274,7 @@ define( function ( require ) {
 						selectedObeservationId : parseInt( id, 10 )
 					} );
 
-					// bind to redirect event
-					observationsView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
-
+					// display Observations
 					helper._showView( observationsView );
 				} );
 			},
@@ -322,10 +314,7 @@ define( function ( require ) {
 						collection : collection
 					} );
 
-					// bind to redirect event
-					groupsView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
-
-					// display Courses
+					// display Groups
 					helper._showView( groupsView );
 				} );
 
@@ -401,9 +390,6 @@ define( function ( require ) {
 					var reflectionQuestionsView = new ReflectionQuestionsView( {
 						collection : collection
 					} );
-
-					// bind to redirect event
-					reflectionQuestionsView.on( 'itemview:lt:redirect', helper.redirectToLegacyPage );
 
 					// display Reflection Questions
 					helper._showView( reflectionQuestionsView );
