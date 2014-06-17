@@ -17,10 +17,7 @@ define( function ( require ) {
 				startOnCenter : false,
 				rotate        : true,
 				beforeShift   : function () {},
-				afterShift    : function () {},
-				onInitialize  : function () {
-					container.show();
-				}
+				afterShift    : function () {}
 			} );
 		} );
 	}
@@ -33,13 +30,17 @@ define( function ( require ) {
 	function adjustWidgetMargin ( container ) {
 		require( [ 'pc-adjustablePeek' ], function ( $ ) {
 			$( container ).adjustablePeek( {
-				'containerId' : 'active-widgets',
-				'itemClass'   : 'widget-specific',
-				'minPeek'     : MIN_WIDGET_PEEK,
-				'maxPeek'     : MAX_WIDGET_PEEK,
-				'maxMargin'   : MAX_ALLOWABLE_MARGIN,
-				'afterAdjust' : function () {
+				'containerId'  : 'active-widgets',
+				'itemClass'    : 'widget-specific',
+				'minPeek'      : MIN_WIDGET_PEEK,
+				'maxPeek'      : MAX_WIDGET_PEEK,
+				'maxMargin'    : MAX_ALLOWABLE_MARGIN,
+				'beforeAdjust' : function () {
+					container.hide();
+				},
+				'afterAdjust'  : function () {
 					addCarousel( container, 'active-widgets' );
+					container.show();
 				}
 			} );
 		} );
@@ -51,8 +52,6 @@ define( function ( require ) {
 		'className' : 'active-widgets-container no-padding',
 
 		'onBeforeRender' : function ( parent ) {
-
-			this.$el.hide();
 
 			var self  = this;
 			var count = 3 - this.collection.length;
