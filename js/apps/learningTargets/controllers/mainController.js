@@ -282,6 +282,23 @@ define( function ( require ) {
 			'showCatalogs' : function () {
 				var helper = Main.helper;
 
+				var options = {
+					'legends' : [
+						{
+							'icon'  : 'fa-youtube-play',
+							'label' : 'Video'
+						},
+						{
+							'icon'  : 'fa-cubes',
+							'label' : 'Training'
+						},
+						{
+							'icon'  : 'fa-university',
+							'label' : 'PD360 Course'
+						}
+					]
+				};
+
 				// set content
 				helper._setContent( 'catalogs' );
 
@@ -297,6 +314,7 @@ define( function ( require ) {
 
 					// display Catalogs
 					helper._showView( catalogsView );
+					helper._showLegend( new LegendsView( options ) );
 				} );
 			},
 

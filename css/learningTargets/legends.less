@@ -1,6 +1,17 @@
+.lt-legend {
+	margin-bottom : 10px;
+}
 .lt-legend-container {
+	.fa {
+		padding : 0 2px 5px 5px;
+	}
 	& > span {
-		padding: 0 2px 0 5px;
+		display: inline-block;
+		vertical-align: top;
+		zoom: 1; /* Fix for IE7 */
+		*display: inline; /* Fix for IE7 */
+		padding : 0 2px 0 5px;
+		color   : @lt-dark-gray-1;
 	}
 	.lt-complete {
 		color: @lt-green;
