@@ -18,8 +18,8 @@ define( function ( require ) {
 					return moment( this.EndTime ).format( 'dddd MMMM DD, YYYY' );
 				},
 				getTimeDiff  : function () {
-					var start = moment( this.StartTime ).format( 'HH:mm A' );
-					var end = moment( this.EndTime ).format( 'HH:mm A' );
+					var start = moment( this.StartTime ).format( 'hh:mm A' );
+					var end = moment( this.EndTime ).format( 'hh:mm A' );
 					return start + ' - ' + end;
 				}
 			};
