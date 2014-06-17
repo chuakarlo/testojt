@@ -24,8 +24,8 @@ define( function ( require ) {
 		'className'  : 'groups-create',
 
 		'events'    : {
-			'click button.cancel' : 'cancelCreateGroupClicked',
-			'submit form'         : 'createGroupClicked'
+			'click button.cancel-btn' : 'cancelCreateGroupClicked',
+			'submit form'             : 'createGroupClicked'
 		},
 
 		'bindings' : {
