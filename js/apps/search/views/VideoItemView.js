@@ -1,9 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var _         = require( 'underscore' );
-	var template  = require( 'text!../templates/VideoItemView.html' );
-	var getConfig = require( 'common/helpers/getConfig' );
+	var _                 = require( 'underscore' );
+	var template          = require( 'text!../templates/VideoItemView.html' );
+	var getConfig         = require( 'common/helpers/getConfig' );
+	var convertSecsToMins = require( 'common/helpers/convertSecsToMins' );
 
 	var SearchResultItemView = require( './SearchResultItemView' );
 
@@ -19,22 +20,37 @@ define( function ( require ) {
 
 			var data = {
 				'time'        : this.getFormattedTime(),
-				'ContentId'   : this.model.get('ContentId'),
-				'ContentName' : this.shortenTitle( this.model.get( 'ContentName' ) ),
-				'ImageURL'    : getConfig( 'contentThumbnailPath' ) + this.model.get( 'ImageURL' )
+				'ContentId'   : this.getId(),
+				'ContentName' : this.getTitle(),
+				'ImageURL'    : this.getImage()
 			};
 			return data;
 		},
 
 		'getFormattedTime' : function () {
+			var sec = this.model.get( 'SegmentLengthInSeconds' );
 
-			var length = this.model.get( 'SegmentLengthInSeconds' );
-			var hr  = Math.floor( length / 3600 );
-			var min = Math.floor( (length - hr * 3600 ) / 60 );
-			var sec = Math.floor( length - ( hr * 3600 + min * 60 ) );
+			return sec ? convertSecsToMins( sec ) : '';
+		},
 
-			sec = (sec > 9) ? sec : '0' + sec;
-			return min + ':' + sec;
+		'getId' : function () {
+			var uuv = this.model.get( 'UUVideoId' ) ? '?uuv=true' : '';
+
+			return ( this.model.get( 'ContentId' ) || this.model.get( 'UUVideoId' ) ) + uuv;
+		},
+
+		'getTitle' : function () {
+			var contentName = this.model.get( 'ContentName' );
+			var name        = this.model.get( 'Name' );
+
+			return this.model.get( 'ContentName' ) ? this.shortenTitle( contentName ) : this.shortenTitle( name );
+		},
+
+		'getImage' : function () {
+			var image  = this.model.get( 'ImageURL' );
+			var imgURL = image ? getConfig( 'contentThumbnailPath' ) + image : 'img/thumbnail-default.jpg';
+
+			return imgURL;
 		},
 
 		'onShow' : function () {
