@@ -61,18 +61,6 @@ define( function ( require ) {
 				contentRegion.show( view );
 			},
 
-			'_setLegend' : function ( options ) {
-
-				legendRegion = new Main.regions.Legend( {
-					el :  mainView.el.querySelector( '.lt-legend' )
-				} );
-
-				var view = new LegendView( options );
-
-				legendRegion.show( view._initItemView() );
-
-			},
-
 			'_setContent' : function ( content, options ) {
 				var self = this;
 				// hide pd360 flash
@@ -90,6 +78,17 @@ define( function ( require ) {
 					el : mainView.el.querySelector( '.lt-content' )
 				} );
 
+				if ( options.legends ) {
+
+					legendRegion = new Main.regions.Legend( {
+						el :  mainView.el.querySelector( '.lt-legend' )
+					} );
+
+					var view = new LegendView( options );
+
+					legendRegion.show( view._initItemView() );
+
+				}
 				mainView.setupViewAllButton( content );
 				self.setupViewAllLink( content );
 				mainView.activateTab( content );
@@ -212,11 +211,6 @@ define( function ( require ) {
 				var helper = Main.helper;
 
 				// set content
-				helper._setContent( 'processes' );
-
-				// show a loading view while data is fetching
-				helper._showView( new App.Common.LoadingView() );
-
 				var options  = {
 					'legends' : [
 						{
@@ -231,7 +225,10 @@ define( function ( require ) {
 					]
 				};
 
-				helper._setLegend( options );
+				helper._setContent( 'processes', options );
+
+				// show a loading view while data is fetching
+				helper._showView( new App.Common.LoadingView() );
 
 				helper._apiRequest( 'lt:processes', function ( collection ) {
 

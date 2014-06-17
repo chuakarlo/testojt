@@ -185,6 +185,24 @@
 
 			} );
 
+			describe( 'method `showProcesses`', function () {
+				before( function () {
+					App.LearningTargets.Main.controller.showProcesses();
+				} );
+
+				it( 'should setup content for `processes`', function () {
+					setContent.should.have.been.calledWith( 'processes' );
+				} );
+
+				it( 'should display loading view', function () {
+					showView.should.have.been.calledWith( { 'loading' : 'view' } );
+				} );
+
+				it( 'should send request to API', function () {
+					request.should.have.been.calledWith( 'lt:processes' );
+				} );
+			} );
+
 		} );
 
 	} );
