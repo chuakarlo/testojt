@@ -1,29 +1,30 @@
+/* eslint max-nested-callbacks: [2, 5] */
 'use strict';
 
 var suite = require( 'selenium-runner' ).suite;
 
-suite( function( env ) {
+suite( function ( env ) {
 
-	describe( 'Footer', function() {
+	describe( 'Footer', function () {
 
 		var browser;
 
-		beforeEach( function() {
+		beforeEach( function () {
 
 			browser = env.browser;
 
 		} );
 
-		it( 'should show the default footer branding image when not logged in', function( done ) {
+		it( 'should show the default footer branding image when not logged in', function ( done ) {
 			browser
 				.elementByCssSelector( '.footer-img-region > img')
-				.getAttribute('src').should.eventually.contain('img/pd-360.png')
+				.getAttribute('src').should.eventually.contain('img/logo.png')
 				.nodeify( done );
 		} );
 
-		describe( 'Logging in with no branding', function() {
+		describe( 'Logging in with no branding', function () {
 
-			after( function( done ) {
+			after( function ( done ) {
 				// Open User Menu and Click Logout
 				browser
 				.elementByCssSelector( '.user-menu a.dropdown-toggle' ).click()
@@ -34,7 +35,7 @@ suite( function( env ) {
 
 			} );
 
-			it( 'should not change the footer image', function( done ) {
+			it( 'should not change the footer image', function ( done ) {
 
 				browser
 
@@ -47,16 +48,16 @@ suite( function( env ) {
 					//.elementByXPath( '//*[@id="main-content"]/div/h1' ).text().should.eventually.become( 'Home' )
 					.elementIfExists('id', 'Home-page-view')
 					.elementByCssSelector( '.footer-img-region > img')
-					.getAttribute('src').should.eventually.contain('img/pd-360.png')
+					.getAttribute('src').should.eventually.contain('img/logo.png')
 					.nodeify( done );
 
 			} );
 
 		} );
 
-		describe( 'Logging in with branding', function() {
+		describe( 'Logging in with branding', function () {
 
-			it( 'should change the footer image', function( done ) {
+			it( 'should change the footer image', function ( done ) {
 
 				browser
 
@@ -73,9 +74,9 @@ suite( function( env ) {
 
 			} );
 
-			describe( 'Logging out with branding', function() {
+			describe( 'Logging out with branding', function () {
 
-				it( 'should remove the branding image back to the default', function( done ) {
+				it( 'should remove the branding image back to the default', function ( done ) {
 
 					browser
 					.elementByCssSelector( '.user-menu a.dropdown-toggle' ).click()
@@ -85,7 +86,7 @@ suite( function( env ) {
 					.sleep( 4000 )
 
 					.elementByCssSelector( '.footer-img-region > img')
-					.getAttribute('src').should.eventually.contain('img/pd-360.png')
+					.getAttribute('src').should.eventually.contain('img/logo.png')
 					.nodeify( done );
 				} );
 			} );

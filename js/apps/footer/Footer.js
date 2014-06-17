@@ -74,7 +74,7 @@ define( function ( require ) {
 					// Display the default PD 360 Image
 					var imageView = new ImageView( {
 						'model' : new Backbone.Model( {
-							'BrandingImage' : 'img/pd-360.png'
+							'BrandingImage' : 'img/logo.png'
 						} )
 					} );
 
