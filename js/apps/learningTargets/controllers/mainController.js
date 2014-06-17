@@ -144,17 +144,20 @@ define( function ( require ) {
 			},
 
 			'showTrainingCatalog' : function ( view ) {
+
+				var descriptionView = new DescriptionView( );
+
 				if ( view.model.get( 'CatalogResourceTypeId' ) === 3 ) {
 					Main.helper._apiRequest( 'lt:description', function ( collection ) {
 
-						var descriptionView = new DescriptionView( {
-							model : collection.models[ 0 ]
-						} );
-
-						App.modalRegion.show( descriptionView );
+						descriptionView.model = collection.models[ 0 ];
+						descriptionView.render();
 
 					}, view.model );
 				}
+
+				App.modalRegion.show( descriptionView );
+
 			}
 
 		};

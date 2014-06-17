@@ -1,6 +1,5 @@
 define( function ( require ) {
 	'use strict';
-
 	var Marionette       = require( 'marionette' );
 	var template         = require( 'text!apps/learningTargets/templates/catalogs/catalogs.html' );
 	var CatalogsItemView = require( 'apps/learningTargets/views/catalogs/CatalogsItemView' );
