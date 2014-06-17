@@ -15,7 +15,7 @@ define( function ( require ) {
 	var ObjectivesFolderView    = require( 'apps/learningTargets/views/objectives/focusfolders/FocusFolderView' );
 	var ObjectivesContentView   = require( 'apps/learningTargets/views/objectives/contents/ContentView' );
 	var ReflectionQuestionsView = require( 'apps/learningTargets/views/reflectionQuestions/ReflectionQuestionsView' );
-	var LegendView              = require( 'apps/learningTargets/views/legends/LegendView' );
+	var LegendsView             = require( 'apps/learningTargets/views/legends/LegendsView' );
 	var setRequestOptions       = require( '../helpers/setRequestOptions' );
 
 	App.module( 'LearningTargets.Main', function ( Main ) {
@@ -78,17 +78,18 @@ define( function ( require ) {
 					el : mainView.el.querySelector( '.lt-content' )
 				} );
 
-				if ( options.legends ) {
+				if ( options ) {
 
 					legendRegion = new Main.regions.Legend( {
 						el :  mainView.el.querySelector( '.lt-legend' )
 					} );
 
-					var view = new LegendView( options );
+					var view = new LegendsView( options );
 
 					legendRegion.show( view._initItemView() );
 
 				}
+
 				mainView.setupViewAllButton( content );
 				self.setupViewAllLink( content );
 				mainView.activateTab( content );
