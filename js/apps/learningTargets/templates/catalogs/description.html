@@ -5,43 +5,43 @@
 				<h4 class="modal-title" id="myModalLabel"><%- ResourceName %></h4>
 			</div>
 			<div class="modal-body">
-				<div class="row field-group">
-					<div class="col-xs-4 col-sm-4 col-md-4 text-field-right"><strong>Unit Type:</strong></div>
-					<div class="col-xs-8 col-sm-8 col-md-8">Training</div>
+				<div class="col field-group">
+					<div class="col-xs-3 text-field-right">Unit Type:</div>
+					<div class="col-xs-8">Training</div>
 				</div>
-				<div class="row field-group">
-					<div class="col-xs-4 col-sm-4 col-md-4 text-field-right"><strong>Facilitator:</strong></div>
-					<div class="col-xs-8 col-sm-8 col-md-8">
-						<p><%- FacilitatorFirstName %> <%- FacilitatorLastName %></p>
+				<div class="col field-group">
+					<div class="col-xs-3 text-field-right">Facilitator:</div>
+					<div class="col-xs-8">
+						<%- FacilitatorFirstName %> <%- FacilitatorLastName %>
 					</div>
 				</div>
-				<div class="row field-group">
-					<div class="col-xs-4 col-sm-4 col-md-4 text-field-right"><strong>Title:</strong></div>
-					<div class="col-xs-8 col-sm-8 col-md-8"><%- ResourceName %></div>
+				<div class="col field-group">
+					<div class="col-xs-3 text-field-right">Title:</div>
+					<div class="col-xs-8"><%- ResourceName %></div>
 				</div>
-				<div class="row field-group">
-					<div class="col-xs-4 col-sm-4 col-md-4 text-field-right"><strong>Description:</strong></div>
-					<div class="col-xs-8 col-sm-8 col-md-8"><%- ResourceDesc %></div>
+				<div class="col field-group">
+					<div class="col-xs-3 text-field-right">Description:</div>
+					<div class="col-xs-8"><%- ResourceDesc %></div>
 				</div>
-				<div class="row field-group">
-					<div class="col-xs-4 col-sm-4 col-md-4 text-field-right"><strong>Start Date:</strong></div>
-					<div class="col-xs-8 col-sm-8 col-md-8"><%- StartDate %></div>
+				<div class="col field-group">
+					<div class="col-xs-3 text-field-right">Start Date:</div>
+					<div class="col-xs-8"><%- getStartTime() %></div>
 				</div>
-				<div class="row field-group">
-					<div class="col-xs-4 col-sm-4 col-md-4 text-field-right"><strong>End Date:</strong></div>
-					<div class="col-xs-8 col-sm-8 col-md-8"><%- EndDate %></div>
+				<div class="col field-group">
+					<div class="col-xs-3 text-field-right">End Date:</div>
+					<div class="col-xs-8"><%- getEndTime() %></div>
 				</div>
-				<div class="row field-group">
-					<div class="col-xs-4 col-sm-4 col-md-4 text-field-right"><strong>Time:</strong></div>
-					<div class="col-xs-8 col-sm-8 col-md-8"><%- getStartTime() %> - <%- getEndTime() %></div>
+				<div class="col field-group">
+					<div class="col-xs-3 text-field-right">Time:</div>
+					<div class="col-xs-8"><%- getTimeDiff() %></div>
 				</div>
-				<div class="row field-group">
-					<div class="col-xs-4 col-sm-4 col-md-4 text-field-right"><strong>Location:</strong></div>
-					<div class="col-xs-8 col-sm-8 col-md-8"><%- LocationDescription %></div>
+				<div class="col field-group">
+					<div class="col-xs-3 text-field-right">Location:</div>
+					<div class="col-xs-8"><%- LocationDescription %></div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary btn-large" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>

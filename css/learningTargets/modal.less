@@ -1,0 +1,35 @@
+.modal-dialog {
+	margin-top : 20%;
+}
+.modal-header {
+	padding : 15px 15px 10px;
+}
+.modal-title {
+	padding-left : 5px;
+}
+.modal-body {
+	padding : 15px 20px;
+	.text-field-right {
+		width          : 110px;
+		text-transform : uppercase;
+		font-size      : 12px;
+		line-height    : 19px;
+
+	}
+	.field-group {
+		overflow : auto;
+		&:nth-child( odd ) {
+			background : @lt-gray-4;
+		}
+		& > div {
+				padding: 6px 10px 3px;
+			&:first-child {
+				padding-bottom : 2px;
+				border-right   : 2px solid #fff;
+			}
+		}
+	}
+}
+.modal-footer {
+	margin-top : 0px;
+}
