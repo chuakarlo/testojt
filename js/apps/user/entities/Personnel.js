@@ -35,7 +35,7 @@ define( function ( require ) {
 
 			'defaults' : {
 				'PersonnelId'        : 0,
-				'ClientId'           : 0,
+				'ClientId'           : '',
 				'RoleTypeId'         : 0,
 				'EmailAddress'       : '',
 				'LoginName'          : '',
