@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	require( 'jquery-placeholder' );
+	require( 'placeholderjs-jquery' );
 
 	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
@@ -63,11 +63,6 @@ define( function ( require ) {
 			}
 		},
 
-		'onShow' : function () {
-			this.ui.username.placeholder();
-			this.ui.password.placeholder();
-		},
-
 		'rememberMe' : function ( event ) {
 			// if the checkbox is unchecked remove the cookie
 			if ( !this.ui.remember.is( ':checked' ) ) {
@@ -83,6 +78,7 @@ define( function ( require ) {
 			this.model.set( 'Username', this.ui.username.val() );
 
 			if ( this.model.isValid( true ) ) {
+
 				var l = Ladda.create( document.querySelector( '#login-button' ) );
 				l.start();
 
@@ -93,13 +89,20 @@ define( function ( require ) {
 					'remember' : this.ui.remember.is( ':checked' ),
 
 					'error' : function ( jqXHR, status, error ) {
+
 						l.stop();
 
+						//Clear password field and focus on username field.
+						this.ui.password.val( '' );
+						this.ui.username.focus();
+
 						App.vent.trigger( 'flash:message', {
-							'message' : 'An error occurred. Please try again later.'
+							'message' : jqXHR.personnel.DisplayText
 						} );
 					}.bind( this )
 				} );
+			} else {
+				this.ui.username.focus();
 			}
 
 		}

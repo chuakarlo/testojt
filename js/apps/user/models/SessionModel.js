@@ -38,8 +38,7 @@ define( function ( require ) {
 
 				// Redirect to login if SSO error occurred
 				if ( jqXHR.personnel.ErrorId ) {
-					App.errorHandler( { 'message' : jqXHR.personnel.DisplayText } );
-					options.ladda.stop();
+					options.error( jqXHR, status, error );
 					return;
 				}
 
