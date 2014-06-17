@@ -4,7 +4,10 @@
 	'use strict';
 
 	define( function ( require ) {
+		var $   = require( 'jquery' );
 		var App = require( 'App' );
+
+		$.ajaxSetup( { 'cache' : false } );
 
 		require( 'ColdFusion' );
 		require( 'jquery-cookie' );
