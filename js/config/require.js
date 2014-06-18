@@ -66,9 +66,7 @@ require.config( {
 		'bootstrap-select'      : 'libs/bootstrap-select-3/bootstrap-select',
 		'tipsy'                 : 'libs/tipsy/src/javascripts/jquery.tipsy',
 		'autolinker'            : 'libs/Autolinker.js/src/Autolinker',
-		'placeholderjs-main'    : 'libs/placeholderjs/lib/main',
-		'placeholderjs-utils'   : 'libs/placeholderjs/lib/utils',
-		'placeholderjs'    : 'libs/placeholderjs/lib/adapters/placeholders.jquery',
+		'placeholderjs'         : 'libs/placeholderjs/build/placeholders.jquery',
 
 		// Base application level classes
 		'Session' : 'apps/user/models/SessionModel',
@@ -226,13 +224,8 @@ require.config( {
 			'deps' : [ 'jquery' ]
 		},
 
-		'placeholderjs-main' : {
-			'exports' : 'placeholderjs-main',
-			'deps'    : [ 'placeholderjs-utils' ]
-		},
-
 		'placeholderjs' : {
-			'deps' : [ 'placeholderjs-main', 'jquery' ]
+			'deps' : [ 'jquery' ]
 		}
 
 	}
