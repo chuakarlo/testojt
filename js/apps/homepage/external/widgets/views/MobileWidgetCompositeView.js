@@ -12,6 +12,7 @@ define( function ( require ) {
 
 	var template             = require( 'text!apps/homepage/external/widgets/templates/mobileWidgetCompositeView.html' );
 	var MobileWidgetItemView = require( 'apps/homepage/external/widgets/views/MobileWidgetItemView' );
+	var message = App.Homepage.Utils.message;
 
 	var widgetAPI = function ( personnelId, widgetIds ) {
 		return {
@@ -34,6 +35,17 @@ define( function ( require ) {
 		'template'          : _.template( template ),
 		'itemView'          : MobileWidgetItemView,
 		'itemViewContainer' : '#widget-mobile-selection ul',
+		'templateHelpers' : function () {
+			return {
+				'widgetColName' : message.widgetName,
+				'allWidgetName' : message.allWidgetName,
+				'activeName'    : message.activeName,
+				'inactiveName'  : message.inactiveName,
+				'closeName'     : message.closeName,
+				'saveName'      : message.saveName,
+				'saveAndName'   : message.saveAndName
+			};
+		},
 		'itemViewOptions' : function () {
 			return {
 				'userWidgetCollection'       : this.options.userWidgetCollection,

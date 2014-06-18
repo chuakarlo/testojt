@@ -4,17 +4,22 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
 	var template   = require( 'text!apps/homepage/external/widgets/templates/widgetPreviewItemView.html' );
+	var App        = require('App');
+
+	var message    = App.Homepage.Utils.message;
 
 	function doSetTemplateHelpers ( view ) {
 		var action    = view.getWidgetAction();
 		var modelData = view.model;
 
 		return {
-			'action'      : action,
-			'imgSrc'      : modelData.get('imgSrc')(),
-			'WidgetName'  : modelData.get('WidgetName')(),
-			'Description' : modelData.get('Description')(),
-			'actionValue' : action.toLowerCase().replace( /\b[a-z]/g, function ( letter ) {
+			'closeName'    : message.closeName,
+			'andCloseName' : message.andCloseName,
+			'action'       : action,
+			'imgSrc'       : modelData.get('imgSrc')(),
+			'WidgetName'   : modelData.get('WidgetName')(),
+			'Description'  : modelData.get('Description')(),
+			'actionValue'  : action.toLowerCase().replace( /\b[a-z]/g, function ( letter ) {
 				return letter.toUpperCase();
 			} )
 		};

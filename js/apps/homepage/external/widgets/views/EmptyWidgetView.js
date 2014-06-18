@@ -1,12 +1,14 @@
 define( function ( require ) {
 	'use strict';
 
+	var App        = require( 'App' );
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
-	var App        = require( 'App' );
 	var template   = require( 'text!apps/homepage/external/widgets/templates/EmptyWidgetView.html' );
 
 	var className = 'col-md-12 no-padding empty-widget-holder';
+
+	var Utils = App.Homepage.Utils;
 
 	return Marionette.ItemView.extend( {
 		'template'        : _.template( template ),
@@ -21,8 +23,11 @@ define( function ( require ) {
 		},
 		'templateHelpers' : function () {
 			return {
-				'content' : this.EmptyMessage,
-				'icon'    : this.EmptyType
+				'content'         : this.EmptyMessage,
+				'icon'            : this.EmptyType,
+				'emptyWidgetMsg'  : Utils.message.emptyWidgetMsg,
+				'emptywidgetHelp' : Utils.message.emptywidgetHelp
+
 			};
 		},
 		'redirectToHelp'  : function () {

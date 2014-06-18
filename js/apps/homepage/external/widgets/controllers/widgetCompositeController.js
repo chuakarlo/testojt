@@ -11,6 +11,8 @@ define( function ( require ) {
 	var Remoting = require( 'Remoting' );
 	var Session  = require( 'Session' );
 
+	var Utils = App.Homepage.Utils;
+
 	var iconBtnActions    = [ 'active', 'inactive' ];
 	var iconBtnWithGlyphs = {
 		'active'   : iconBtnActions[ 0 ] + ' fa fa-minus',
@@ -44,7 +46,7 @@ define( function ( require ) {
 		} ).fail( function ( error ) {
 
 			App.vent.trigger( 'flash:message', {
-				'message' : 'An error occurred. Please try again later.'
+				'message' : Utils.message.err
 			} );
 
 		} );

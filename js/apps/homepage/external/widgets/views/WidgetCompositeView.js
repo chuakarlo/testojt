@@ -14,6 +14,8 @@ define( function ( require ) {
 	var panelStatuses     = [ 'opened', 'closed' ];
 	var widgetSettingsBtn = $( '#widget-settings' );
 
+	var message = App.Homepage.Utils.message;
+
 	function closeMessage () {
 		var err = $( '.flash-close' );
 		if ( err ) {
@@ -36,6 +38,15 @@ define( function ( require ) {
 		'id'              : 'widgets-settings-panel',
 		'template'        : _.template( template ),
 		'itemView'        : WidgetCompositeView,
+		'templateHelpers' : function () {
+			return {
+				'widgetsName'   : message.widgetsName,
+				'allWidgetName' : message.allWidgetName,
+				'activeName'    : message.activeName,
+				'inactiveName'  : message.inactiveName,
+				'closeName'     : message.closeName
+			};
+		},
 		'itemViewOptions' : function () {
 			return {
 				'userWidgetCollection'       : this.options.userWidgetCollection,

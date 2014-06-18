@@ -18,7 +18,9 @@ define( function ( require ) {
 	var template                  = require( 'text!apps/homepage/external/widgets/templates/widgetLayoutView.html' );
 
 	var panelStatuses = [ 'opened', 'closed' ];
+
 	var widgets       = App.Homepage.Widgets.allWidgets().splice(1);
+	var message = App.Homepage.Utils.message;
 
 	//early load for performance
 	require( 'pc-adjustablePeek' );
@@ -125,6 +127,11 @@ define( function ( require ) {
 			'widgetSettings'       : '#widgets-settings-panel-wrapper',
 			'mobileWidgetSettings' : '#xs-widgets-panel-wrapper',
 			'tabletWidgetSettings' : '#tablet-widgets-panel-wrapper'
+		},
+		'templateHelpers' : function () {
+			return {
+				'whatToDoNextName' : message.whatToDoNextName
+			};
 		},
 
 		'showWidgetSettingsPanel' : function ( e ) {

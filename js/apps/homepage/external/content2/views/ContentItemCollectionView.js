@@ -67,7 +67,7 @@ define( function ( require ) {
 					},
 					'error'   : function () {
 						App.vent.trigger ( 'flash:message', {
-							'message' : 'An error occurred. Please try again later.'
+							'message' : Utils.message.errorMsg
 						} );
 						this.emptyView = EmptyContentCollectionView;
 						this.render();
