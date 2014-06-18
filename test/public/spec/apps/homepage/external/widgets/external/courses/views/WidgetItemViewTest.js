@@ -138,7 +138,7 @@ define( function ( require ) {
 
 		it ( 'should be able to call redirect to learning courses', function () {
 			UserWidgetCompositeViewInstance.$el.find( 'a.courseLink' ).first().trigger( 'click' );
-			navigateStub.should.have.been.calledWithExactly( 'resources/learning/courses/legacy/17868' );
+			navigateStub.should.have.been.calledWithExactly( 'resources/learning/courses/17868/legacy' );
 		} );
 
 	});

@@ -69,7 +69,7 @@ define( function ( require ) {
 		it ( 'should be able to call redirect', function () {
 			UserWidgetCompositeViewInstance.render();
 			UserWidgetCompositeViewInstance.$el.find( 'a.observationLink' ).first().trigger( 'click' );
-			navigateStub.should.have.been.calledWithExactly( 'resources/learning/observations/664979', { 'trigger' : true } );
+			navigateStub.should.have.been.calledWithExactly( 'resources/learning/observations/664979/legacy', { 'trigger' : true } );
 		} );
 
 	});
