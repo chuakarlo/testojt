@@ -52,8 +52,12 @@
 			position         : absolute;
 			top              : 134px;
 			z-index          : 1;
-			left             : 108px;
 			cursor           : pointer;
+			margin           : auto;
+			top              : 0;
+			left             : 0;
+			bottom           : 0;
+			right            : 19px;
 			.bg-img-trans;
 			&:hover {
 				opacity: .8;
@@ -200,9 +204,10 @@
 		}
 		.your-profile-container{
 
-		padding : 15px;
-		width   : 100%;
-		height  : 70%;
+		padding  : 15px;
+		width    : 100%;
+		height   : 70%;
+		position : absolute;
 
 		.avatar-holder {
 			padding:0px;
@@ -289,7 +294,7 @@
 			.empty-widget-holder {
 				font-size : 14px;
 				color     : @pc-gray-dark;
-				top       : 20%;
+				top       : 18%;
 				border    : none;
 				#emptywidgetHelp {
 					cursor : pointer;
@@ -311,7 +316,8 @@
 
 				}
 				p {
-					line-height : 25px;
+					line-height   : 25px;
+					margin-bottom : 3px;
 				}
 			}
 
@@ -429,19 +435,24 @@
 				.bg-color-trans;
 				.color-trans;
 			}
-			margin      : auto;
-			padding-top : 15px;
-			text-align  : center;
+
+			position   : absolute;
+			right      : 0;
+			left       : 0;
+			text-align : center;
+			top        : 91%;
+			text-align : center;
+
 			.your-profile-icons{
 				position : relative;
-			span{
-					bottom   : -35px;
-					left     : 0;
-					margin   : auto;
-					position : absolute;
-					width    : 100%;
-					font-size: 12px;
-				}
+				span {
+						bottom   : -35px;
+						left     : 0;
+						margin   : auto;
+						position : absolute;
+						width    : 100%;
+						font-size: 12px;
+					}
 			}
 			a{
 		    color : @widgetblue;
