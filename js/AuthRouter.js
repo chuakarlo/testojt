@@ -10,19 +10,20 @@ define( function ( require ) {
 	var AuthRouter = FilteredRouter.extend( {
 
 		'before' : {
+
+			'^admin' : function () {
+				return this.authCheck();
+			},
+
+			'^eula' : function () {
+				return this.authCheck();
+			},
+
 			'^groups' : function () {
 				return this.checkAll();
 			},
 
-			'^resources' : function () {
-				return this.checkAll();
-			},
-
-			'^settings' : function () {
-				return this.checkAll();
-			},
-
-			'^search' : function () {
+			'^messages' : function () {
 				return this.checkAll();
 			},
 
@@ -30,12 +31,16 @@ define( function ( require ) {
 				return this.checkAll();
 			},
 
-			'^eula' : function () {
-				return this.authCheck();
+			'^resources' : function () {
+				return this.checkAll();
 			},
 
-			'^admin' : function () {
-				return this.authCheck();
+			'^search' : function () {
+				return this.checkAll();
+			},
+
+			'^settings' : function () {
+				return this.checkAll();
 			}
 
 		},
