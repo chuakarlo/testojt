@@ -30,7 +30,7 @@ define( function ( require ) {
 			return 'Get notified when there’s activity in one of your groups. Click on a group to go to that group’s activity wall.';
 		},
 		'imgSrc'          : function () {
-			return 'http://i1032.photobucket.com/albums/a405/shinjiescorido/src_group_zps11338045.png';
+			return '/img/src_group_zps11338045.png';
 		},
 		'icon'            : function () {
 			return this.imgSrc();

@@ -30,7 +30,7 @@ define( function ( require ) {
 			return 'Access your profile settings, licenses, and personal usage report. Plus, get a snapshot of how complete your profile is. Remember, the more complete your profile, the more useful PD 360 is for you.';
 		},
 		'imgSrc'          : function () {
-			return 'http://i1032.photobucket.com/albums/a405/shinjiescorido/src_userSettings_zpse7ae34fc.png';
+			return '/img/src_userSettings_zpse7ae34fc.png';
 		},
 		'icon'            : function () {
 			return this.imgSrc();

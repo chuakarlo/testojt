@@ -31,7 +31,7 @@ define( function ( require ) {
 			return 'See a list of videos that are in your focus objectives folders. Click on a video to watch it.';
 		},
 		'imgSrc'          : function () {
-			return 'http://i1032.photobucket.com/albums/a405/shinjiescorido/src_focusObjectives_zpsfa2cacc5.png';
+			return '/img/src_focusObjectives_zpsfa2cacc5.png';
 		},
 		'icon'            : function () {
 			return this.imgSrc();
