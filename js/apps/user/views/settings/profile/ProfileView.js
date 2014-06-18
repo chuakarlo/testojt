@@ -214,7 +214,7 @@ define( function ( require ) {
 			var folder = indexToChar( id % 26 );
 
 			// the name of the file to store on akamai. Extension will be added by upload endpoint
-			var filename = folder + '/' + id;
+			var filename = folder + '/' + id + '_' + Date.now();
 
 			this.ui.uploader.fineUploader( {
 
@@ -226,7 +226,8 @@ define( function ( require ) {
 
 				'request' : {
 					'params' : {
-						'newFilename' : filename
+						'newFilename' : filename,
+						'oldFilename' : this.profileModel.get( 'Avatar' )
 					},
 
 					'forceMultipart' : false,
