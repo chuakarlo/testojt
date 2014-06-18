@@ -91,7 +91,7 @@ define( function ( require ) {
 						l.stop();
 
 						// clear password field and focus on the username field
-						this.ui.password.val( '' );
+						this.ui.password.val( '' ).focus();
 						this.ui.username.focus();
 
 						App.vent.trigger( 'flash:message', {

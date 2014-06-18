@@ -287,7 +287,7 @@ define( function ( require ) {
 		'register' : function ( event ) {
 			event.preventDefault();
 
-			if ( this.model.isValid( true ) ) {
+			if ( this.model.isValid( true ) && !App.request( 'session:authenticated' ) ) {
 				var l = Ladda.create( document.querySelector( '#register-button' ) );
 				l.start();
 
@@ -318,6 +318,8 @@ define( function ( require ) {
 
 				});
 
+			} else {
+				this.showFlashMessage( 'creationError' );
 			}
 		},
 

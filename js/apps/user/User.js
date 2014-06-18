@@ -71,6 +71,10 @@ define( function ( require ) {
 			'showRegister' : function () {
 				App.request( 'pd360:hide' );
 
+				if ( App.request( 'session:authenticated' ) ) {
+					return App.navigate( 'home', { 'trigger' : true, 'replace' : true } );
+				}
+
 				User.Register.Controller.showRegister();
 			},
 
@@ -179,15 +183,12 @@ define( function ( require ) {
 		} );
 
 		Vent.on( 'login:success', function ( forceRoute ) {
-			// if there was a requested route before login
-			forceRoute = forceRoute || requestedRoute;
+			// if there was a requested route before login defaults to home if none.
+			forceRoute = forceRoute || requestedRoute || 'home';
 
-			if ( forceRoute ) {
-				App.navigate( forceRoute, { 'trigger' : true, 'replace' : true } );
-				requestedRoute = null;
-			} else {
-				App.navigate( 'home', { 'trigger' : true, 'replace' : true } );
-			}
+			App.navigate( forceRoute, { 'trigger' : true, 'replace' : true } );
+			requestedRoute = null;
+
 		} );
 
 		App.vent.on( 'sendpassword:success', function () {
