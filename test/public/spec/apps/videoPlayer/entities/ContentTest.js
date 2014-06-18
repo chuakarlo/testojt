@@ -167,7 +167,7 @@ define( function ( require ) {
 				guidebook.should.have.property( 'thumbnail' );
 				guidebook.should.have.property( 'name' );
 
-				guidebook.previewPath.should.equal( 'http://upload.content.pd360.com/PD360/media/gb/' + testBook );
+				guidebook.previewPath.should.equal( url + testBook );
 				guidebook.downloadPath.should.equal( url + testBook );
 				guidebook.thumbnail.should.equal( '/img/guidebook.jpg' );
 				guidebook.name.should.equal( testBook );
@@ -195,7 +195,7 @@ define( function ( require ) {
 				transcript.should.have.property( 'thumbnail' );
 				transcript.should.have.property( 'name' );
 
-				transcript.previewPath.should.equal( 'http://upload.content.pd360.com/PD360/media/transcripts/' + testTranscript );
+				transcript.previewPath.should.equal( url + testTranscript );
 				transcript.downloadPath.should.equal( url + testTranscript );
 				transcript.thumbnail.should.equal( '/img/transcribe.jpg' );
 				transcript.name.should.equal( testTranscript );

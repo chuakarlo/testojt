@@ -108,7 +108,6 @@ define( function ( require ) {
 			},
 
 			'getResources' : function () {
-				var config = App.request( 'videoPlayer:config' );
 
 				var guideBookStoragePath  = getConfig( 'guideBookStoragePath' );
 				var contentAudioPath      = getConfig( 'contentAudioPath' );
@@ -120,7 +119,7 @@ define( function ( require ) {
 
 				var results = [
 					{
-						'previewPath'  : config.video.previewUrl + 'gb/' + guidebookFileName,
+						'previewPath'  : guideBookStoragePath + guidebookFileName,
 						'downloadPath' : guideBookStoragePath + guidebookFileName,
 						'thumbnail'    : '/img/guidebook.jpg',
 						'name'         : guidebookFileName
@@ -130,7 +129,7 @@ define( function ( require ) {
 						'thumbnail'    : '/img/audio.jpg',
 						'name'         : audioFileName
 					}, {
-						'previewPath'  : config.video.previewUrl + 'transcripts/' + transcriptFileName,
+						'previewPath'  : contentTranscriptPath + transcriptFileName,
 						'downloadPath' : contentTranscriptPath + transcriptFileName,
 						'thumbnail'    : '/img/transcribe.jpg',
 						'name'         : transcriptFileName
