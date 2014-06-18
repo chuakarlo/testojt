@@ -154,6 +154,11 @@
 			}
 		}
 
+		//DO NOT REMOVE OR ELSE ABSOLUTE-POSITIONED SUB-ELEMENTS WILL BREAK!
+		.cn-sidebar-wrapper {
+			position : relative;
+		}
+
 		margin-bottom  : 25px;
 		overflow       : hidden;
 		@media( max-width : @screen-xs-max ) {
@@ -323,14 +328,9 @@
 					width : 50%;
 
 					&.right {
-						width       : ~"calc( 50% - 15px )";
-						width       : ~"-moz-calc( 50% - 15px )";
-						width       : ~"-webkit-calc( 50% - 15px )";
-						width       : ~"-ms-calc( 50% - 15px )";
-						width       : ~"-o-calc( 50% - 15px )";
 						border-left : 1px solid @cn-gray-dark;
 						position    : absolute;
-						right       : 16px;
+						right       : 1px;
 					}
 				}
 			}
