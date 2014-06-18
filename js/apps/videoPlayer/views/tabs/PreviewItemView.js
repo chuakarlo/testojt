@@ -17,9 +17,10 @@ define( function ( require ) {
 		'templateHelpers' : {
 
 			'getContent' : function () {
-				// Chrome pdf in iframe has issues with displaying
+				var browser = $.browser.name;
+				// Chrome and IE pdf in iframe has issues with displaying
 				// pdf files. Use `embed` tag instead.
-				if ( $.browser.name === 'chrome' ) {
+				if ( browser === 'chrome' || browser === 'msie' ) {
 					return '<embed id="modal-iframe" src=' + this.previewPath + '></embed>';
 				} else {
 					return '<iframe id="modal-iframe" src=' + this.previewPath + '></iframe>';

@@ -11,34 +11,32 @@
 }
 .pdf-preview-modal {
 	.transition-mixin;
-	.modal-dialog {
-		width : 80%;
-		.modal-content {
-			height : 720px;
-			#modal-iframe {
-				width      : 100%;
-				min-height : 720px;
-			}
-			.close-modal {
-					display               : inline-block;
-					position              : absolute;
-					border                : inherit;
-					top                   : -15px;
-					right                 : -15px;
-					background            : black;
-					color                 : white;
-					height                : 35px;
-					width                 : 35px;
-					line-height           : 29px;
-					font-size             : 32px;
-					text-decoration       : none;
-					text-align            : center;
-					font-weight           : normal;
-					-webkit-border-radius : 35px;
-					-moz-border-radius    : 35px;
-					-o-border-radius      : 35px;
-					border-radius         : 35px;
-			}
+	.modal-dialog .modal-content {
+		height : 720px;
+		#modal-iframe {
+			width      : 100%;
+			min-height : 720px;
+		}
+		.close-modal {
+				display               : inline-block;
+				position              : absolute;
+				border                : inherit;
+				top                   : -22px;
+				right                 : -22px;
+				cursor                : pointer;
+				background            : black;
+				color                 : white;
+				height                : 35px;
+				width                 : 35px;
+				line-height           : 29px;
+				font-size             : 32px;
+				text-decoration       : none;
+				text-align            : center;
+				font-weight           : normal;
+				-webkit-border-radius : 35px;
+				-moz-border-radius    : 35px;
+				-o-border-radius      : 35px;
+				border-radius         : 35px;
 		}
 	}
 }
@@ -53,9 +51,6 @@
 	}
 	h2 {
 		font-size : 20px !important;
-	}
-	.modal-header .close {
-		margin-left : 2px;
 	}
 }
 	/* partial fix for bootstrap modal shifting to the left(https://github.com/twbs/bootstrap/issues/8768) */

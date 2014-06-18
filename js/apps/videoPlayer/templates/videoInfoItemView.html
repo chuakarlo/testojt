@@ -1,15 +1,16 @@
 <div class="modal-content col-xs-12">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h2 class="modal-title"><%- ContentName %></h2>
 	</div>
 	<div class="modal-body">
 		<div class="row">
 			<div class="col-xs-12">
 				<p><%- description() %></p>
-				<hr />
 				<p><%- duration() %></p>
 			</div>
 		</div>
+	</div>
+	<div class="modal-footer">
+		<button data-dismiss="modal" class="btn btn-primary">Close</button>
 	</div>
 </div>
