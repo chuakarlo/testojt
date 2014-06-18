@@ -51,7 +51,7 @@ define( function ( require ) {
 		'itemView'  : UserWidgetItemView,
 		'className' : 'active-widgets-container no-padding',
 
-		'onBeforeRender' : function ( parent ) {
+		'onRender' : function ( parent ) {
 
 			var self  = this;
 			var count = 3 - this.collection.length;
