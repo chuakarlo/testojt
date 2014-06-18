@@ -73,6 +73,8 @@ define( function ( require ) {
 					var videosRequest = App.request( 'contentNavigation:pd360Videos', this.queryModel );
 					var queueRequest  = App.request( 'common:getQueueContents' );
 
+					Vent.trigger( 'contentNavigation:setPendingRequest', true );
+
 					App.when( videosRequest, queueRequest ).then( function ( videos, queueContents ) {
 
 						if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
