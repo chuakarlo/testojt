@@ -12,6 +12,8 @@ define( function ( require ) {
 	var className     = 'col-md-12 no-padding widget-item';
 	var templateBind  = _.template( template );
 
+	var message = App.Homepage.Utils.message;
+
 	return Marionette.ItemView.extend( {
 		'template'         : templateBind,
 		'className'        : function () {
@@ -74,9 +76,9 @@ define( function ( require ) {
 		'getTextDueStatus' : function () {
 			var completeByDate = this.model.get( 'CompleteByDate' );
 			if ( moment().isAfter( completeByDate ) ) {
-				return 'Past Due : ';
+				return message.processOfMePastDue;
 			} else {
-				return 'Due : ';
+				return message.processOfMeDue;
 			}
 		}
 

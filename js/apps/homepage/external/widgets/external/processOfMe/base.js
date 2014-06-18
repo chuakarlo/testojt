@@ -3,9 +3,14 @@ define( function ( require ) {
 
 	var App             = require( 'App' );
 	var BaseObj         = require( 'apps/homepage/BaseObject' );
-	var instance        = new BaseObj();
 	var WidgetItemView  = require( 'apps/homepage/external/widgets/external/processOfMe/views/WidgetItemView' );
 	var CollectionItems = require( 'apps/homepage/external/widgets/external/processOfMe/collections/WidgetCollection' );
+	var Messages        = require( 'text!apps/homepage/external/widgets/external/observationsOfMes/configuration/messages.json' );
+
+	var instance        = new BaseObj();
+
+	App.Homepage.Utils.loadMessages( Messages );
+	var message = App.Homepage.Utils.message;
 
 	function doGetCollection ( callback, options ) {
 		var collection = new CollectionItems( options );
@@ -22,13 +27,13 @@ define( function ( require ) {
 	return instance.extend( {
 		'WidgetId'        : 6,
 		'WidgetName'      : function () {
-			return 'Process Of Me';
+			return message.processOfMeTitle;
 		},
 		'header'          : function () {
 			return this.WidgetName();
 		},
 		'Description'     : function () {
-			return 'See a list of videos that are in your focus objectives folders. Click on a video to watch it.';
+			return message.processOfMeDescription;
 		},
 		'imgSrc'          : function () {
 			return '/img/homepage-widgets/processOfMe.png';
@@ -44,13 +49,13 @@ define( function ( require ) {
 		'_mainUrl'        : 'resources/learning/processes',
 		'_id'             : 'processOfMe',
 		'EmptyMessage'    : function () {
-			return 'No available videos to show.';
+			return message.processOfMeEmptyMsg;
 		},
 		'EmptyType'       : function () {
 			return 'fa-video-camera';
 		},
 		'_footer'         : function () {
-			return 'See All Processes';
+			return message.processOfMeFooter;
 		}
 	} );
 } );

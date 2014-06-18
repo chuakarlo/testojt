@@ -3,9 +3,14 @@ define( function ( require ) {
 
 	var App             = require( 'App' );
 	var BaseObj         = require( 'apps/homepage/BaseObject' );
-	var instance        = new BaseObj();
 	var WidgetItemView  = require( 'apps/homepage/external/widgets/external/observationsOfMe/views/WidgetItemView' );
 	var CollectionItems = require( 'apps/homepage/external/widgets/external/observationsOfMe/collections/WidgetCollection' );
+	var Messages        = require( 'text!apps/homepage/external/widgets/external/observationsOfMes/configuration/messages.json' );
+
+	var instance        = new BaseObj();
+
+	App.Homepage.Utils.loadMessages( Messages );
+	var message = App.Homepage.Utils.message;
 
 	function doGetCollection ( callback, options ) {
 		var collection = new CollectionItems( options );
@@ -21,13 +26,13 @@ define( function ( require ) {
 	return instance.extend( {
 		'WidgetId'        : 5,
 		'WidgetName'      : function () {
-			return 'Observations Of Me';
+			return message.observationsTitle;
 		},
 		'header'          : function () {
 			return this.WidgetName();
 		},
 		'Description'     : function () {
-			return 'Get a glance at observations you’ve recently received. See the dates as well as any related recommended PD units.';
+			return message.observationsDescription;
 		},
 		'imgSrc'          : function () {
 			return '/img/src_Observations_zps8bc3f1ab.png';
@@ -48,7 +53,7 @@ define( function ( require ) {
 			return 'fa-eye-empty';
 		},
 		'_footer'         : function ( ) {
-			return 'See In Observations';
+			return message.observationsFooter;
 		},
 		'_mainUrl'        : 'resources/learning/observations'
 	} );

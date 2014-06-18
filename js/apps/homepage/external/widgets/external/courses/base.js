@@ -6,6 +6,10 @@ define( function ( require ) {
 	var instance        = new BaseObj();
 	var WidgetItemView  = require( 'apps/homepage/external/widgets/external/courses/views/WidgetItemView' );
 	var CollectionItems = require( 'apps/homepage/external/widgets/external/courses/collections/WidgetCollection' );
+	var Messages        = require( 'text!apps/homepage/external/widgets/external/courses/configuration/messages.json' );
+
+	App.Homepage.Utils.loadMessages(Messages);
+	var message = App.Homepage.Utils.message;
 
 	function doGetCollection ( callback, options ) {
 		var collection = new CollectionItems( options );
@@ -21,13 +25,13 @@ define( function ( require ) {
 	return instance.extend( {
 		'WidgetId'        : 1,
 		'WidgetName'      : function () {
-			return 'Courses';
+			return message.coursesTitle;
 		},
 		'header'          : function () {
 			return this.WidgetName();
 		},
 		'Description'     : function () {
-			return 'See the courses you haven’t completed. Click on an unfinished course to pick up right where you left off.';
+			return message.coursesDescription;
 		},
 		'imgSrc'          : function () {
 			return '/img/src_courses_zps2b594805.png';
@@ -42,7 +46,7 @@ define( function ( require ) {
 		},
 		'_id'             : 'courses',
 		'_footer'         : function ( ) {
-			return 'See All Courses';
+			return message.coursesFooter;
 		},
 		'EmptyMessage'    : function () {
 			return '';

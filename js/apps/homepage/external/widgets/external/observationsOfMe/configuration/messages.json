@@ -1,0 +1,6 @@
+{
+	"observationsTitle"       : "Observations Of Me",
+	"observationsDescription" : "Get a glance at observations you’ve recently received. See the dates as well as any related recommended PD units.",
+	"observationsFooter"      : "See in Observations",
+	"observationsErrMsg"      : "An error occurred getting observations of me. Please try again later."
+}

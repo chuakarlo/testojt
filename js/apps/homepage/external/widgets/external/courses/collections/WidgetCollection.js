@@ -6,6 +6,8 @@ define ( function ( require ) {
 	var Session  = require( 'Session' );
 	var App      = require( 'App' );
 
+	var message = App.Homepage.Utils.message;
+
 	function widgetRequest ( personnelId ) {
 		return {
 			'path'   : 'com.schoolimprovement.pd360.dao.CourseService',
@@ -29,7 +31,7 @@ define ( function ( require ) {
 				options.success( new Collection( models[ 0 ] ) );
 			} ).fail( function ( error ) {
 				App.vent.trigger( 'flash:message', {
-					'message' : 'An error occurred getting courses. Please try again later.'
+					'message' : message.coursesErrMsg
 				} );
 			} );
 		}

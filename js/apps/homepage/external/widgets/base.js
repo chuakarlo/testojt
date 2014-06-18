@@ -8,7 +8,7 @@ define( function ( require ) {
 
 	instance._id = 'widgets';
 
-	var messages = require( 'text!apps/homepage/external/widgets/configuration/message.json' );
+	var messages = require( 'text!apps/homepage/external/widgets/configuration/messages.json' );
 	App.Hompage.Utils.loadMessages(messages);
 
 	return instance.extend( {

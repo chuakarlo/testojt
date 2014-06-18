@@ -6,6 +6,8 @@ define ( function (require ) {
 	var Session  = require( 'Session' );
 	var App      = require( 'App' );
 
+	var message = App.Homepage.Utils.message;
+
 	function widgetRequest ( personnelId ) {
 		return {
 			'path'   : 'com.schoolimprovement.pd360.dao.RespondService',
@@ -28,7 +30,7 @@ define ( function (require ) {
 			} ).fail( function ( error ) {
 
 				App.vent.trigger( 'flash:message', {
-					'message' : 'An error occurred getting focus objectives. Please try again later.'
+					'message' : message.focusObjectiveErrMsg
 				} );
 
 			} );

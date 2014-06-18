@@ -11,6 +11,8 @@ define( function ( require ) {
 
 	var widgetDirectory = 'settings/';
 
+	var message = App.Homepage.Utils.message;
+
 	var forcedCss = {
 		'width'  : '1em',
 		'height' : '1em'
@@ -67,8 +69,11 @@ define( function ( require ) {
 		'templateHelpers' : function ( ) {
 			var percentage = this.getPercentage( this.model.attributes );
 			return {
-				'description' : statusDescription[ percentage > 99 ],
-				'percentage'  : percentage
+				'description'                : statusDescription[ percentage > 99 ],
+				'percentage'                 : percentage,
+				'yourProfileName'            : message.yourProfileName,
+				'yourProfilePersonalRepName' : message.yourProfilePersonalRepName,
+				'yourProfileLicenses'        : message.yourProfileLicenses
 			};
 		},
 		'getPercentage'   : function ( m ) {

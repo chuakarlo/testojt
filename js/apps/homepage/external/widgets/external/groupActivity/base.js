@@ -6,6 +6,10 @@ define( function ( require ) {
 	var instance        = new BaseObj();
 	var WidgetItemView  = require( 'apps/homepage/external/widgets/external/groupActivity/views/WidgetItemView' );
 	var CollectionItems = require( 'apps/homepage/external/widgets/external/groupActivity/collections/WidgetCollection' );
+	var Messages        = require( 'text!apps/homepage/external/widgets/external/groupActivity/configuration/messages.json' );
+
+	App.Homepage.Utils.loadMessages(Messages);
+	var message = App.Homepage.Utils.message;
 
 	function doGetCollection ( callback, options ) {
 		var collection = new CollectionItems( options );
@@ -21,13 +25,13 @@ define( function ( require ) {
 	return instance.extend( {
 		'WidgetId'        : 3,
 		'WidgetName'      : function () {
-			return 'Group Activity';
+			return message.groupActivityTitle;
 		},
 		'header'          : function () {
 			return this.WidgetName();
 		},
 		'Description'     : function () {
-			return 'Get notified when there’s activity in one of your groups. Click on a group to go to that group’s activity wall.';
+			return message.groupActivityDescription;
 		},
 		'imgSrc'          : function () {
 			return '/img/src_group_zps11338045.png';
@@ -48,7 +52,7 @@ define( function ( require ) {
 			return 'fa-group';
 		},
 		'_footer'         : function ( ) {
-			return 'See All Groups';
+			return message.groupActivityFooter;
 		},
 		'_mainUrl'        : 'groups'
 	} );
