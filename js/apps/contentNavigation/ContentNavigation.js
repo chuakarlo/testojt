@@ -57,6 +57,8 @@ define( function ( require ) {
 							App.content.show( this.layout );
 							this.layout.librariesRegion.show( librariesView );
 
+							$( 'html' ).addClass( 'cn' );
+
 							this.listenTo( this.layout, 'close', this.destroyControllers );
 						}
 
@@ -95,7 +97,7 @@ define( function ( require ) {
 				},
 
 				'destroyControllers' : function () {
-
+					$( 'html' ).removeClass( 'cn' );
 					$( window ).off( 'scroll.smack' );
 					this.activeLibrary.close();
 					this.activeLibrary = null;
