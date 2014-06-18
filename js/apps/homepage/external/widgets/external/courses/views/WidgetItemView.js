@@ -6,7 +6,7 @@ define( function ( require ) {
 	var _                = require( 'underscore' );
 	var progressTemplate = require( 'text!apps/homepage/external/widgets/external/courses/templates/progressItemTemplate.html' );
 
-	var widgetDirectory = 'resources/learning/courses';
+	var widgetDirectory = 'resources/learning/courses/';
 	var forcedCss = {
 		'width'  : '1em',
 		'height' : '1em'
