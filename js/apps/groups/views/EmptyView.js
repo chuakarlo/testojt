@@ -12,7 +12,14 @@ define( function ( require ) {
 		'className'  : 'groups-invites-empty-view',
 
 		'initialize' : function () {
-			this.options.parentOptions.$el.find('h2').hide();
+			if ( this.options.parentOptions ) {
+				this.options.parentOptions.$el.find('h2').hide();
+			}
+
+			if ( this.options.groupOptions ) {
+				this.options.groupOptions.$el.find('h2').html( 'You are not a member of any groups.' );
+			}
+
 		}
 
 	} );

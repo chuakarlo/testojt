@@ -5,6 +5,7 @@ define( function ( require ) {
 	var Marionette    = require( 'marionette' );
 	var GroupItemView = require( '../views/GroupItemView' );
 	var template      = require( 'text!../templates/groupsView.html' );
+	var EmptyView     = require( '../views/EmptyView' );
 
 	return Marionette.CompositeView.extend( {
 
@@ -13,6 +14,11 @@ define( function ( require ) {
 		'itemView'          : GroupItemView,
 		'tagName'           : 'section',
 		'itemViewContainer' : '.groups-list',
+		'emptyView'			: EmptyView,
+
+		'itemViewOptions' : function () {
+			return { groupOptions : this };
+		},
 
 		'templateHelpers' : function () {
 
