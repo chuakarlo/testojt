@@ -89,6 +89,10 @@ define( function ( require ) {
 					videos = vids.slice( 1 );
 				}
 
+				if ( !vids.at( 0 ).has( 'numFound' ) && !vids.at( 0 ).has( 'UUVideoId' ) ) {
+					videos = vids.slice( 1 );
+				}
+
 				videos.forEach( function ( model ) {
 
 					var _id = model.get( 'UUVideoId' );
