@@ -16,7 +16,8 @@ define( function ( require ) {
 			require( 'apps/homepage/utils/navigate'),
 			require( 'apps/homepage/utils/redirect'),
 			require( 'apps/homepage/utils/stringExec'),
-			require( 'apps/homepage/utils/proceedHomeAction')
+			require( 'apps/homepage/utils/proceedHomeAction'),
+			require( 'apps/homepage/utils/chunk')
 		];
 
 		$.extend.apply( null, allUtils );
@@ -33,7 +34,7 @@ define( function ( require ) {
 			'func' : function () {}
 		};
 
-		Utils.activeCollections = {};
+		Utils.activeCollections = { };
 
 		Utils.addActiveCollection = function ( key, view ) {
 			Utils.activeCollections[ key ] = view.collection;

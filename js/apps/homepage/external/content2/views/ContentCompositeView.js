@@ -8,7 +8,7 @@ define( function ( require ) {
 	var template   = require( 'text!apps/homepage/external/content2/templates/contentCompositeView.html' );
 
 	return Marionette.CompositeView.extend( {
-		'itemView'        : require( 'apps/homepage/external/content2/views/ContentItemCollectionView' ),
+		'itemView'        : require( 'apps/homepage/external/content2/views/ContentItemCompositeView' ),
 		'className'       : 'vid-container',
 		'template'        : _.template( template ),
 		'templateHelpers' : function () {
