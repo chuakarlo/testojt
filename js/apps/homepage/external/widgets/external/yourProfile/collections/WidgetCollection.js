@@ -35,7 +35,7 @@ define( function ( require ) {
 			'EmailAddress'          : model.EmailAddress,
 			'Title'                 : model.Title || model.Position,
 			'ProfessionalStartDate' : model.ProfessionalStartDate,
-			'RoleTypeId'            : model.RoleTypeId,
+			'EducatorType'          : model.EducatorType,
 			'GradeLevelId'          : model.GradeLevelId,
 			'CCSubjectId'           : model.CCSubjectId
 		};

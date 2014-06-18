@@ -6,6 +6,7 @@ define( function ( require ) {
 	var Remoting = require( 'Remoting' );
 	var Session  = require( 'Session' );
 	var Backbone = require( 'backbone' );
+	var $        = require( 'jquery' );
 
 	var manifest              = require( 'apps/homepage/manifest' );
 	var SectionCollectionView = require( 'apps/homepage/views/SectionCollectionView' );
@@ -54,7 +55,7 @@ define( function ( require ) {
 
 				if ( App.request( 'homepage:isHomeRoute' ) ) {
 					setUserProfileReqres( models[ 0 ] );
-					setUserTagsReqRes( models[ 1 ] );
+					setUserTagsReqRes( $.extend( { }, models[ 0 ], models[ 1 ]) );
 
 					var externalSections = manifest();
 					var collection       = new Backbone.Collection(externalSections);

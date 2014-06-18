@@ -20,7 +20,6 @@ define( function ( require ) {
 		var userTags = [ ];
 
 		pushTags( userTags, userData.gradeLevels, model, 'GradeLevelId', 0 );
-		pushTags( userTags, userData.gradeLevels, model, 'EducationLevelId', 0 );
 		pushTags( userTags, userData.educatorTypes, model, 'EducatorType', '' );
 		pushTags( userTags, userData.subjects, model, 'CCSubjectId', 0 );
 

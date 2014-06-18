@@ -27,8 +27,8 @@ define( function ( require ) {
 		],
 		'educatorTypes' : {
 			''  : '',
-			'S' : 'School Administrator',
-			'I' : 'Instructional Coach',
+			'A' : 'School Administrator',
+			'C' : 'Instructional Coach',
 			'D' : 'District Administrator',
 			'O' : 'Other',
 			'T' : 'Teacher'
