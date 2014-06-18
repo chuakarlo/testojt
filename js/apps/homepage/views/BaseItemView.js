@@ -22,12 +22,8 @@ define( function ( require ) {
 		},
 
 		'onShow' : function () {
-
-			if ( 'ontouchstart' in document.documentElement ) {
-				$( '#Home-page-view' ).addClass( 'touchable' );
-			}
-
 			this.showWizzard();
+			$( 'body' ).scrollTop( 0 );
 		},
 
 		'showWizzard' : function () {

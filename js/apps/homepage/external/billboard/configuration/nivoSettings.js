@@ -6,7 +6,6 @@ define( function ( require ) {
 	var billboardHolder = '#billboard-container';
 	var nivoNextNav     = '.nivo-nextNav';
 	var nivoPrevNav     = '.nivo-prevNav';
-	var homePage        = '#Home-page-view';
 
 	var initSwipe = function ( element ) {
 
@@ -28,7 +27,7 @@ define( function ( require ) {
 
 		$( billboardHolder ).hide().fadeIn( 500 );
 		var collectionLength = $( '.nivo-controlNav' ).children().length;
-		var bHide            = $( homePage ).hasClass( 'touchable' ) || ( collectionLength < 2 );
+		var bHide            = $( 'html' ).hasClass( 'touch' ) || ( collectionLength < 2 );
 		if ( bHide ) {
 			$( '.nivo-directionNav' ).hide();
 		}
@@ -42,7 +41,7 @@ define( function ( require ) {
 	return function () {
 		return {
 			pauseTime    : 5000,
-			animSpeed    : $( homePage ).hasClass( 'touchable' ) ? 10 : 1000,
+			animSpeed    : $( 'html' ).hasClass( 'touch' ) ? 10 : 1000,
 			effect       : 'fade',
 			pauseOnHover : true,
 			afterLoad    : afterLoad,
