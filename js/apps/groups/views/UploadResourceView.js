@@ -58,9 +58,11 @@ define( function ( require ) {
 			// Hide the link option as the default selection is file
 			this.ui.linkContainer.hide();
 
-			var acceptFiles = [ '.jpg', '.gif', '.png', '.jpeg', '.doc', '.rtf', '.ppt', '.docx', '.pptx', '.xls', '.xlsx', '.odt', '.xps', '.flv', '.pdf', '.txt' ];
-			var allowedExtensions = _.map( acceptFiles, function ( file ) {
-				return file.slice( 1 );
+			var config = App.request( 'session:config' );
+
+			var allowedExtensions = config.validFileUploadExtensions.split( ',' );
+			var acceptFiles = _.map( allowedExtensions, function ( ext ) {
+				return '.' + ext;
 			} );
 
 			// setup the fineuploader
@@ -170,7 +172,12 @@ define( function ( require ) {
 					this.createNewsEntry( msg, l );
 				}
 
-			}, this ) );
+			}, this ) )
+			.fail( function () {
+				App.errorHandler( {
+					'message' : 'There was an ERROR creating your resource. Please try again later.'
+				} );
+			});
 		},
 
 		'validateFile' : function () {
@@ -202,12 +209,30 @@ define( function ( require ) {
 			// l is the ladda instance
 			var entry = this.model.createNewsEntry( msg );
 			entry.save( null, {
-				'success' : _.bind( function () {
+				'success' : function ( model ) {
 					l.stop();
-					App.navigate( 'groups/' + this.model.get( 'LicenseId' ) + '/resources', {
+					App.navigate( 'groups/' + model.get( 'LicenseId' ) + '/resources', {
 						'trigger' : true
 					} );
-				}, this )
+				},
+
+				'error' : function ( model ) {
+					var msg = 'There may have been a problem creating the group wall notification' +
+					' for your resource. The resource is still available in the resources tab.' +
+					' You will be redirected shortly.';
+
+					App.vent.trigger( 'flash:message', {
+						'type'    : 'warning',
+						'message' : msg,
+						'timeout' : 12000
+					} );
+					setTimeout( function () {
+						App.navigate( 'groups/' + model.get( 'LicenseId' ) + '/resources', {
+							'trigger' : true
+						} );
+					}, 12000 );
+					l.stop();
+				}
 			} );
 		}
 
