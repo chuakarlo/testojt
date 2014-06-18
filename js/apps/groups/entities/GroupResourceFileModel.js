@@ -60,7 +60,7 @@ define( function ( require ) {
 				var fileName = this.get( 'FileName' );
 				var ext = fileName.substr( fileName.lastIndexOf( '.' ), fileName.length );
 				return 'file_' + this.get( 'FileId' ) +
-					'_' + Session.personnelId() + ext;
+					'_' + this.get( 'Creator' ) + ext;
 			},
 
 			'generateDownloadUrl' : function () {
