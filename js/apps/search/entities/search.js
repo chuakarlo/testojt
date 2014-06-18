@@ -19,7 +19,7 @@ define( function ( require ) {
 
 			'initialize' : function () {
 				// Set the results to 0 if they change tabs
-				this.on('change:activer', function ( model, val ) {
+				this.on('change:active', function ( model, val ) {
 					if (!val) {
 						this.set('results', 0);
 					}
@@ -58,8 +58,6 @@ define( function ( require ) {
 		//------------------------------------
 		// Search Result Entities
 		//------------------------------------
-
-		Mod.ColleagueModel = Backbone.Model.extend();
 
 		Mod.CommunityModel = Backbone.Model.extend();
 
@@ -142,10 +140,6 @@ define( function ( require ) {
 					var parsedModels = [ ];
 
 					parsedModels.push(
-						this.createModels( res.COLLEAGUES, Mod.ColleagueModel, 'users')
-					);
-
-					parsedModels.push(
 						this.createModels( res.COMMUNITY, Mod.CommunityModel, 'communities')
 					);
 
@@ -191,10 +185,6 @@ define( function ( require ) {
 
 						case 'Communities' :
 							models = this.createModels( res, Mod.CommunityModel, 'communities');
-							break;
-
-						case 'People' :
-							models = this.createModels( res, Mod.ColleagueModel, 'users');
 							break;
 
 					}

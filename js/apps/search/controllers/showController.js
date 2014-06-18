@@ -38,10 +38,6 @@ define( function ( require ) {
 				this.navCollection = new App.Entities.SearchNavCollection();
 				this.navCollection.set( [
 					{
-						'id'     : 'Users',
-						'filter' : 'People'
-					},
-					{
 						'id'     : 'Groups',
 						'filter' : 'Groups'
 					},

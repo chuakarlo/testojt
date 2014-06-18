@@ -6,7 +6,6 @@ define( function ( require ) {
 	var Marionette           = require( 'marionette' );
 	var searchResultItemView = require( './SearchResultItemView' );
 
-	var ColleagueItemView = require( './ColleagueItemView' );
 	var CommunityItemView = require( './CommunityItemView' );
 	var GroupItemView     = require( './GroupItemView' );
 	var VideoItemView     = require( './VideoItemView' );
@@ -29,9 +28,7 @@ define( function ( require ) {
 
 			// Check which type of model needs to be displayed
 			// and return the proper view.
-			if (item instanceof App.Entities.ColleagueModel) {
-				return ColleagueItemView;
-			} else if (item instanceof App.Entities.CommunityModel) {
+			if (item instanceof App.Entities.CommunityModel) {
 				return CommunityItemView;
 			} else if (item instanceof App.Entities.SearchGroupModel) {
 				return GroupItemView;
