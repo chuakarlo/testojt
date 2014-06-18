@@ -108,17 +108,14 @@ define( function ( require ) {
 		},
 
 		'changeItemUIXS' : function ( e ) {
-			var widgetItem     = this.$( e.currentTarget ).parent();
 			var widgetItemIcon = this.$( e.currentTarget );
 			var widgetStatus   = this.$( e.currentTarget ).attr( 'id' );
 
 			if ( widgetStatus === 'active' ) {
-				widgetItem.attr( 'class', widgetStatuses[ 1 ] + '-widget-mobile' );
 				widgetItemIcon.attr( 'id', widgetStatuses[ 1 ] );
 				this.switchClass( widgetItemIcon, widgetStatuses[ 0 ] + '-xs', widgetStatuses[ 1 ] + '-xs' );
 				this.switchClass( widgetItemIcon, widgetIconClass[ 1 ], widgetIconClass[ 0 ] );
 			} else {
-				widgetItem.attr( 'class', widgetStatuses[ 0 ] + '-widget-mobile' );
 				widgetItemIcon.attr( 'id', widgetStatuses[ 0 ] );
 				this.switchClass( widgetItemIcon, widgetStatuses[ 1 ] + '-xs', widgetStatuses[ 0 ] + '-xs' );
 				this.switchClass( widgetItemIcon, widgetIconClass[ 0 ], widgetIconClass[ 1 ] );

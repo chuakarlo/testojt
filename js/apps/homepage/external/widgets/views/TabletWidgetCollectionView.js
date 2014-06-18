@@ -51,7 +51,7 @@ define( function ( require ) {
 		'getOptionCollection' : function () {
 			return {
 				'All'      : this.options.widgetCollection,
-				'Active'   : new Backbone.Collection( this.getWidgetsByStatus( true ) ),
+				'Active'   : new Backbone.Collection( this.getOrderedActiveWidgets() ),
 				'Inactive' : new Backbone.Collection( this.getWidgetsByStatus( false ) )
 			};
 		},
@@ -59,9 +59,18 @@ define( function ( require ) {
 		'getWidgetsByStatus' : function ( status ) {
 			var self = this;
 			return this.options.widgetCollection.filter( function ( model ) {
-				var data = self.options.userWidgetCollection.get( model.get( 'WidgetId' ) );
+				var data = self.options.actualUserWidgetCollection.get( model.get( 'WidgetId' ) );
 				return ( typeof data !== 'undefined' ) === status;
 			} );
+		},
+
+		'getOrderedActiveWidgets' : function () {
+			var self          = this;
+			var activeWidgets = [ ];
+			this.options.actualUserWidgetCollection.models.forEach( function ( model ) {
+				activeWidgets.push( self.options.widgetCollection.get( model.id ) );
+			} );
+			return activeWidgets;
 		},
 
 		'reRenderView' : function () {

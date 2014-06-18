@@ -55,7 +55,7 @@ define( function ( require ) {
 
 		'cancelAllChanges' : function () {
 			this.options.userWidgetCollection.reset( this.options.actualUserWidgetCollection.models );
-			this.switchClass( $( '#mobile-widget-settings' ), 'opened', 'closed' );
+			this.switchClass( $( '#xs-widget-settings' ), 'opened', 'closed' );
 			this.closeWidgetSettingsPanel();
 		},
 
@@ -75,7 +75,7 @@ define( function ( require ) {
 		'saveAllandClose' : function () {
 			this.options.actualUserWidgetCollection.reset( this.options.userWidgetCollection.models );
 			this.updateUserWidgets();
-			this.switchClass( $( '#mobile-widget-settings' ), 'opened', 'closed' );
+			this.switchClass( $( '#xs-widget-settings' ), 'opened', 'closed' );
 			this.closeWidgetSettingsPanel();
 		},
 
