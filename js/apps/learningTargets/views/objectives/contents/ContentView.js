@@ -29,10 +29,9 @@ define( function ( require ) {
 			this.showFocusTitle = 'hide';
 
 			if (this.options.data) {
-				this.FocusTitle     = this.options.data.focustitle;
+				this.FocusTitle     = decodeURIComponent( this.options.data.focustitle );
 				this.showFocusTitle = '';
 			}
-
 		},
 
 		previousFolder : function () {
