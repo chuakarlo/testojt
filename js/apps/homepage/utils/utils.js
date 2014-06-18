@@ -17,7 +17,8 @@ define( function ( require ) {
 			require( 'apps/homepage/utils/redirect'),
 			require( 'apps/homepage/utils/stringExec'),
 			require( 'apps/homepage/utils/proceedHomeAction'),
-			require( 'apps/homepage/utils/chunk')
+			require( 'apps/homepage/utils/chunk'),
+			require( 'apps/homepage/utils/verification' )
 		];
 
 		$.extend.apply( null, allUtils );

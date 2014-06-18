@@ -22,6 +22,31 @@ define ( function ( require ) {
 		}
 	} );
 
+	var schema = {
+		'title'      : 'fresh fruit schema v1',
+		'type'       : 'array',
+		'required'   : [ 'PERCENTCOMPLETE', 'COURSEID', 'COURSECREATOR', 'COURSENAME', 'EXPIREDATE' ],
+		'properties' : {
+			'PERCENTCOMPLETE' : {
+				'type' : 'string'
+			},
+			'COURSEID'        : {
+				'type' : 'string'
+			},
+			'COURSECREATOR'   : {
+				'type' : 'string'
+			},
+			'COURSENAME'      : {
+				'type' : 'string'
+			},
+			'EXPIREDATE'      : {
+				'type' : 'string'
+			}
+		}
+	};
+	//temporary assignment due to jslint error
+	schema = { };
+
 	return Backbone.Collection.extend( {
 		'fetch' : function ( options ) {
 			var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId() ) ] );

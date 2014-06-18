@@ -5,14 +5,17 @@ require.config( {
 	'paths' : {
 
 		// Tests
-		'SpecRunner'    : '../test/public/SpecRunner',
-		'spec'          : '../test/public/spec',
-		'polyfills'     : '../test/public/polyfills',
-		'chai'          : 'libs/chai/chai',
-		'sinon'         : 'libs/sinonjs/sinon',
-		'sinon-chai'    : 'libs/sinon-chai/lib/sinon-chai',
-		'chai-backbone' : 'libs/chai-backbone/chai-backbone',
-		'chai-changes'  : 'libs/chai-changes/chai-changes',
+		'SpecRunner'       : '../test/public/SpecRunner',
+		'spec'             : '../test/public/spec',
+		'polyfills'        : '../test/public/polyfills',
+		'chai'             : 'libs/chai/chai',
+		'sinon'            : 'libs/sinonjs/sinon',
+		'sinon-chai'       : 'libs/sinon-chai/lib/sinon-chai',
+		'chai-backbone'    : 'libs/chai-backbone/chai-backbone',
+		'chai-changes'     : 'libs/chai-changes/chai-changes',
+		'tv4'              : 'libs/tv4/tv4',
+		'chai-json-schema' : 'libs/chai-json-schema/index',
+		'jsonpointer'      : 'libs/jsonpointer.js/src/jsonpointer',
 
 		// Libraries
 		'async'                 : 'libs/async/lib/async',
@@ -226,6 +229,18 @@ require.config( {
 
 		'placeholderjs' : {
 			'deps' : [ 'jquery' ]
+		},
+
+		'tv4' : {
+			'exports' : 'tv4'
+		},
+
+		'jsonpointer' : {
+			'exports' : 'jsonpointer'
+		},
+
+		'chai-json-schema' : {
+			'deps' : [ 'chai', 'tv4', 'jsonpointer' ]
 		}
 
 	}
