@@ -25,8 +25,8 @@ define( function ( require ) {
 	};
 
 	var statusDescription = {
-		false : 'Your profile is almost complete! The more we know about you, the better the content.',
-		true  : 'Your profile is complete!'
+		false : message.statusDescfalse,
+		true  : message.statusDesctrue
 	};
 
 	function defaultImage ( e ) {

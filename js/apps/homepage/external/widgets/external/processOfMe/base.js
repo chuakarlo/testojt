@@ -5,7 +5,7 @@ define( function ( require ) {
 	var BaseObj         = require( 'apps/homepage/BaseObject' );
 	var WidgetItemView  = require( 'apps/homepage/external/widgets/external/processOfMe/views/WidgetItemView' );
 	var CollectionItems = require( 'apps/homepage/external/widgets/external/processOfMe/collections/WidgetCollection' );
-	var Messages        = require( 'text!apps/homepage/external/widgets/external/observationsOfMes/configuration/messages.json' );
+	var Messages        = require( 'text!apps/homepage/external/widgets/external/processOfMe/configuration/messages.json' );
 
 	var instance        = new BaseObj();
 

@@ -3,9 +3,14 @@ define( function ( require ) {
 
 	var App             = require( 'App' );
 	var BaseObj         = require( 'apps/homepage/BaseObject' );
-	var instance        = new BaseObj();
 	var WidgetItemView  = require( 'apps/homepage/external/widgets/external/yourProfile/views/WidgetItemView' );
 	var CollectionItems = require( 'apps/homepage/external/widgets/external/yourProfile/collections/WidgetCollection' );
+	var Messages        = require( 'text!apps/homepage/external/widgets/external/yourProfile/configuration/messages.json' );
+
+	var instance        = new BaseObj();
+
+	App.Homepage.Utils.loadMessages( Messages );
+	var message = App.Homepage.Utils.message;
 
 	function doGetCollection ( callback, options ) {
 		var collection = new CollectionItems( options );
@@ -21,13 +26,13 @@ define( function ( require ) {
 	return instance.extend( {
 		'WidgetId'        : 4,
 		'WidgetName'      : function () {
-			return 'User Settings';
+			return message.userSettingsName;
 		},
 		'header'          : function () {
 			return this.WidgetName();
 		},
 		'Description'     : function () {
-			return 'Access your profile settings, licenses, and personal usage report. Plus, get a snapshot of how complete your profile is. Remember, the more complete your profile, the more useful PD 360 is for you.';
+			return message.userSettingsDesc;
 		},
 		'imgSrc'          : function () {
 			return '/img/src_userSettings_zpse7ae34fc.png';
@@ -48,7 +53,7 @@ define( function ( require ) {
 			return 'fa-user';
 		},
 		'_footer'         : function ( ) {
-			return 'Edit Settings';
+			return message.userSettingsFooter;
 		},
 		'_mainUrl'        : 'settings/profile'
 	} );
