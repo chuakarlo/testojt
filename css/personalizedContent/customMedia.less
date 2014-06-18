@@ -99,6 +99,67 @@
 	}
 }
 
+@media ( min-width : 992px ) and ( max-width : 1200px ) {
+	#widget-settings-header {
+		li {
+			margin-right : 20px;
+		}
+	}
+	#widget-settings-selection {
+		ul {
+			padding : 0px;
+		}
+	}
+	.actions.visible-md button {
+		min-width : 130px;
+	}
+}
+
+@media ( min-width : 768px ) and ( max-width : 992px ) {
+	#Home-page-view {
+		#widget-settings-wrapper {
+			height : 600px;
+			#widget-settings-header {
+				ul {
+					li {
+						margin-right : 5px !important;
+					}
+				}
+			}
+			#widget-settings-selection {
+				padding : 0 0px 0 0px;
+				height  : 490px;
+				li:nth-child(3) {
+					margin-top : 12px;
+				}
+			}
+			#widget-settings-preview {
+				text-align : center;
+				.img-thumbnail {
+					float : none;
+				}
+				.description {
+					float  : none;
+					height : 160px;
+				}
+				.actions {
+					position   : relative;
+					margin-top : 30px;
+					button {
+						min-width : 85px;
+						font-size : 20px
+					}
+					button.action-close-btn {
+						font-size      : 14px;
+						padding-top    : 4px;
+						padding-bottom : 4px;
+					}
+				}
+			}
+		}
+	}
+}
+
 //*
 //Billboard
 //*

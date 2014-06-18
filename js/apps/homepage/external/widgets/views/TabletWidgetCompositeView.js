@@ -58,6 +58,7 @@ define( function ( require ) {
 			var selectedView = headerBtn.attr( 'id' );
 
 			this.changeHeaderNav( headerBtn );
+			this.$el.find( '#widget-settings-preview' ).empty();
 			App.vent.trigger( 'homepage:changeWidgetView', selectedView );
 		},
 

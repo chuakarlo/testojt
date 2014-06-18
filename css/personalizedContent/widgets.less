@@ -511,9 +511,9 @@
 		}
 	}
 
-	.widget-settings-icon.active, .widget-settings-icon:hover, .widget-settings-icon.opened {
-		color         : @pc-white;
-		background    : #00A8FF;
+	.widget-settings-icon.active, .widget-settings-icon.opened {
+		color            : @pc-white !important;
+		background-color : #00A8FF;
 	}
 
 	#inactive-widgets {
@@ -718,114 +718,72 @@
 		h4 {
 			border-bottom : 1px solid #FFF;
 			padding       : 0px 0px 10px 0px;
+			font-size     : 25px;
 		}
 		select {
-			background-color : transparent;
+			background-color : #f7f8f9;
 			border           : 1px solid #FFF;
+			height           : 36px;
+			font-size        : 14px;
+			width            : 140px;
+			margin-left      : 20px;
 		}
 	}
+	#xs-widgets-panel-wrapper {
+		color            : #4b505c;
+		background-color : transparent;
+		#widget-mobile-selection {
+			ul {
+				list-style-type : none;
+				padding         : 0px;
+				margin          : 0px;
+				li {
+					padding          : 14px;
+					border-bottom    : 1px solid #e6e8ea;
+					background-color : #f7f8f9;
+					i {
+						border      : 1px solid;
+						padding     : 6px;
+						font-size   : 12px;
+						font-weight : bolder;
+						margin-top  : -4px;
+					}
+					.active i {
 
-	#widget-mobile-selection {
-		ul {
-			list-style-type : none;
-			padding         : 0px;
-			margin          : 0px;
-			li {
-				padding       : 14px;
-				border-bottom : 1px solid #4f96c7;
-				i {
-					border      : 1px solid;
-					padding     : 6px;
-					font-size   : 12px;
-					font-weight : bolder;
-					margin-top  : -4px;
+					}
 				}
 			}
-			.active-widget-mobile {
-				background-color : #2fafea;
+		}
+		#widget-mobile-actions {
+			text-align       : center;
+			padding          : 17px 0px 20px 0px;
+			background-color : #545966;
+			button {
+				font-size : 12px;
+				min-width : 69px !important;
+				height    : 42px;
+				margin    : 0px 3px;
+				color     : @pc-white;
+				padding   : 0px 0px;
 			}
-			.inactive-widget-mobile {
-				background-color   : #dfe0e1;
-				border-bottom      : 1px solid #b9b9b9;
-				border-left-color  : #b9b9b9;
-				border-right-color : #b9b9b9;
+			.cancel {
+				background-color : transparent;
 			}
-		}
-	}
-
-	#widget-mobile-actions {
-		text-align : center;
-		padding    : 10px 0px 20px 0px;
-		button {
-			font-size : 12px;
-			min-width : 69px !important;
-			height    : 28px;
-			margin    : 0px 3px;
-			color     : @pc-white;
-			padding   : 0px 0px;
-		}
-		.cancel {
-			background-color : transparent;
-		}
-		.action-btn {
-			background-color : #7d818b;
-		}
-		.action-close-btn {
-			font-size : 9px;
+			.action-btn {
+				background-color : #7d818b;
+			}
+			.action-close-btn {
+				font-size : 9px;
+			}
 		}
 	}
 
 	// * Tablet *
-	// Medium
-	#md-widgets-panel-wrapper {
-		#widget-settings-header {
-			li {
-				margin-right : 20px;
-			}
-		}
-		#widget-settings-selection {
-			padding : 0 0px 0 0px;
-		}
-		.actions.visible-md button {
-			min-width : 130px;
-		}
-	}
-
-	// Small
-	#sm-widgets-panel-wrapper {
-		#widget-settings-wrapper {
-			height : 600px;
-			#widget-settings-header {
-				li {
-					margin-right : 5px;
-				}
-			}
-			#widget-settings-selection {
-				padding : 0 0px 0 0px;
-				height  : 490px;
-			}
-			#widget-settings-preview {
-				text-align : center;
-				.img-thumbnail {
-					float : none;
-				}
-				.description {
-					float : none;
-				}
-				.actions {
-					position   : relative;
-					margin-top : 30px;
-					button {
-						min-width : 85px;
-						font-size : 20px
-					}
-					button.action-close-btn {
-						font-size      : 14px;
-						padding-top    : 4px;
-						padding-bottom : 4px;
-					}
-				}
-			}
+	// Large
+	#queue-header.visible-lg {
+		.widget-settings-icon:hover {
+			color            : @pc-white;
+			background-color : @pc-white !important;
 		}
 	}
 

@@ -107,16 +107,14 @@ define( function ( require ) {
 			// Displaying Widget Panel
 			'click div#widget-settings.closed'         : 'showWidgetSettingsPanel',
 			'click div#xs-widget-settings.closed'      : 'showMobileWidgetSettings',
-			'click div#sm-widget-settings.closed'      : 'showSmallWidgetSettings',
-			'click div#md-widget-settings.closed'      : 'showMediumWidgetSettings',
+			'click div#tablet-widget-settings.closed'  : 'showTabletWidgetSettings',
 			'click p#awesomeness'                      : 'showWidgetSettingsPanel',
 			'click #placeholder-icon'                  : 'showWidgetSettingsPanel',
 
 			// Closing Widget Panel
 			'click div#widget-settings.opened'         : 'closeWidgetSettingsPanel',
 			'click div#xs-widget-settings.opened'      : 'closeMobileSettingsPanel',
-			'click div#sm-widget-settings.opened'      : 'closeSmallSettingsPanel',
-			'click div#md-widget-settings.opened'      : 'closeMediumSettingsPanel',
+			'click div#tablet-widget-settings.opened'  : 'closeTabletSettingsPanel',
 			'focusout #widgets-settings-panel-wrapper' : 'blurAction',
 			'click #widgets-settings-panel-wrapper'    : 'focusAction'
 		},
@@ -126,8 +124,7 @@ define( function ( require ) {
 			'userWidgets'          : '#user-widgets #active-widgets',
 			'widgetSettings'       : '#widgets-settings-panel-wrapper',
 			'mobileWidgetSettings' : '#xs-widgets-panel-wrapper',
-			'smallWidgetSettings'  : '#sm-widgets-panel-wrapper',
-			'mediumWidgetSettings' : '#md-widgets-panel-wrapper'
+			'tabletWidgetSettings' : '#tablet-widgets-panel-wrapper'
 		},
 
 		'showWidgetSettingsPanel' : function ( e ) {
@@ -147,7 +144,7 @@ define( function ( require ) {
 			this.changePanelStatus( panelBtn, panelStatuses[ 1 ], panelStatuses[ 0 ] );
 		},
 
-		'showSmallWidgetSettings' : function ( e ) {
+		'showTabletWidgetSettings' : function ( e ) {
 			var panelBtn            = $( e.currentTarget );
 			var widgetCompositeView = new TabletWidgetCompositeView( {
 				'collection'                 : this.widgetCollection,
@@ -155,19 +152,7 @@ define( function ( require ) {
 				'userWidgetCollection'       : this.userWidgetCollection,
 				'actualUserWidgetCollection' : this.actualUserWidgetCollection
 			} );
-			this.smallWidgetSettings.show( widgetCompositeView );
-			this.changePanelStatus( panelBtn, panelStatuses[ 1 ], panelStatuses[ 0 ] );
-		},
-
-		'showMediumWidgetSettings' : function ( e ) {
-			var panelBtn            = $( e.currentTarget );
-			var widgetCompositeView = new TabletWidgetCompositeView( {
-				'collection'                 : this.widgetCollection,
-				'widgetCollection'           : this.widgetCollection,
-				'userWidgetCollection'       : this.userWidgetCollection,
-				'actualUserWidgetCollection' : this.actualUserWidgetCollection
-			} );
-			this.mediumWidgetSettings.show( widgetCompositeView );
+			this.tabletWidgetSettings.show( widgetCompositeView );
 			this.changePanelStatus( panelBtn, panelStatuses[ 1 ], panelStatuses[ 0 ] );
 		},
 
@@ -185,15 +170,9 @@ define( function ( require ) {
 			this.changePanelStatus( panelBtn, panelStatuses[ 0 ], panelStatuses[ 1 ] );
 		},
 
-		'closeMediumSettingsPanel' : function ( e ) {
+		'closeTabletSettingsPanel' : function ( e ) {
 			var panelBtn = $( e.currentTarget );
-			this.mediumWidgetSettings.close();
-			this.changePanelStatus( panelBtn, panelStatuses[ 0 ], panelStatuses[ 1 ] );
-		},
-
-		'closeSmallSettingsPanel' : function ( e ) {
-			var panelBtn = $( e.currentTarget );
-			this.smallWidgetSettings.close();
+			this.tabletWidgetSettings.close();
 			this.changePanelStatus( panelBtn, panelStatuses[ 0 ], panelStatuses[ 1 ] );
 		},
 
