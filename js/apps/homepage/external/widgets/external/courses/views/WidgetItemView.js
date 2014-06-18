@@ -7,7 +7,7 @@ define( function ( require ) {
 	var _                = require( 'underscore' );
 	var progressTemplate = require( 'text!apps/homepage/external/widgets/external/courses/templates/progressItemTemplate.html' );
 
-	var widgetDirectory = 'resources/learning/courses/legacy';
+	var widgetDirectory = 'resources/learning/courses';
 
 	function setTemplateHelpers ( model ) {
 		return {
@@ -44,7 +44,7 @@ define( function ( require ) {
 			var CourseID = self.model.get( 'COURSEID' );
 
 			App.content.show( LoadingView );
-			App.navigate( widgetDirectory + '/' + CourseID );
+			App.navigate( widgetDirectory + '/' + CourseID + '/legacy');
 
 			App.when( pd360Loaded ).done( function () {
 				LoadingView.close();
