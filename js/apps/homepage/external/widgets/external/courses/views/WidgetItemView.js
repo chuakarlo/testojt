@@ -6,8 +6,11 @@ define( function ( require ) {
 	var _                = require( 'underscore' );
 	var progressTemplate = require( 'text!apps/homepage/external/widgets/external/courses/templates/progressItemTemplate.html' );
 
-	var widgetDirectory = 'resources/learning/courses/';
-
+	var widgetDirectory = 'resources/learning/courses';
+	var forcedCss = {
+		'width'  : '1em',
+		'height' : '1em'
+	};
 	function setTemplateHelpers ( model ) {
 		return {
 			'content'    : App.Homepage.Utils.modelGet( model, 'COURSENAME' ),
@@ -17,7 +20,9 @@ define( function ( require ) {
 
 	function doOnShow ( view, model ) {
 		if ( model ) {
-			App.Homepage.Utils.progressCircle( view.$el, '.courses', model.get( 'PERCENTCOMPLETE' ) );
+			App.Homepage.Utils.progressCircle( view.$el, '.courses', model.get( 'PERCENTCOMPLETE' ), null, function ( $ ) {
+				$( '.progress-circle-item' ).find( '.fill, .bar' ).css( forcedCss );
+			} );
 		}
 	}
 
@@ -32,7 +37,6 @@ define( function ( require ) {
 			return setTemplateHelpers ( this.model );
 		},
 		'onShow'          : function ( ) {
-
 			doOnShow( this, this.model );
 		},
 		'redirect'        : function ( e ) {
