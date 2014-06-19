@@ -5,6 +5,7 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var Backbone   = require( 'backbone' );
 	var Utils      = App.Homepage.Utils;
+	var $          = require( 'jquery' );
 
 	var EmptyContentCollectionView = require( 'apps/homepage/external/content2/views/EmptyContentCollectionView' );
 	var ItemView                   = require( 'apps/homepage/external/content2/views/ContentRowItemView' );
@@ -44,6 +45,7 @@ define( function ( require ) {
 							Utils.addActiveCollection( collectionId , that );
 							that.render();
 							bindListeners( that );
+							$( '#' + that.model.get( 'id' ) + '-count' ).text( collection.length ).parent().removeClass( 'invisible' );
 						});
 					},
 					'error'   : function () {
@@ -60,6 +62,9 @@ define( function ( require ) {
 			var that = this;
 			Utils.proceedHomeAction( function () {
 				that.$el.find( '.content-button' ).tooltip();
+				that.$el.carousel( {
+					'interval' : false
+				} );
 			});
 		}
 	} );
