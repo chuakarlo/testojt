@@ -9,7 +9,7 @@ define( function ( require ) {
 	instance._id = 'widgets';
 
 	var messages = require( 'text!apps/homepage/external/widgets/configuration/messages.json' );
-	App.Hompage.Utils.loadMessages(messages);
+	App.Homepage.Utils.loadMessages(messages);
 
 	return instance.extend( {
 		'getExternalView' : WidgetLayout
