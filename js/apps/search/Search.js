@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	return function () {
 
+		var AuthRouter          = require( 'AuthRouter' );
 		var Marionette          = require( 'marionette' );
 		var App                 = require( 'App' );
 		var SearchResultsLayout = require( 'search/views/SearchResultsLayout' );
@@ -14,7 +15,7 @@ define( function ( require ) {
 			require( 'search/controllers/showController' );
 
 			// configure search routes
-			Search.Router = Marionette.AppRouter.extend( {
+			Search.Router = AuthRouter.extend( {
 
 				'appRoutes' : {
 					'search'                : 'showSearchResults',
