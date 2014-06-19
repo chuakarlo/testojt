@@ -2,6 +2,20 @@
 	body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
 		position : fixed;
 	}
+	.modal-body {
+		div.field-group {
+			div:first-child {
+				width         : 100%;
+				border-right  : none;
+				border-bottom : 1px solid @lt-white;
+			}
+			&:nth-child(even) {
+				div:first-child {
+					border-bottom : 1px solid @lt-gray;
+				}
+			}
+		}
+	}
 }
 
 @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
