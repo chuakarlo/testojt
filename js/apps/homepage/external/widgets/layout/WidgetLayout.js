@@ -14,23 +14,13 @@ define( function ( require ) {
 	var UserWidgetCollectionView  = require( 'apps/homepage/external/widgets/views/UserWidgetCollectionView' );
 	var WidgetCompositeView       = require( 'apps/homepage/external/widgets/views/WidgetCompositeView' );
 	var MobileWidgetCompositeView = require( 'apps/homepage/external/widgets/views/MobileWidgetCompositeView' );
-	var TabletWidgetCompositeView = require( 'apps/homepage/external/widgets/views/TabletWidgetCompositeView' );
 	var template                  = require( 'text!apps/homepage/external/widgets/templates/widgetLayoutView.html' );
 
 	var panelStatuses = [ 'opened', 'closed' ];
-
 	var widgets       = App.Homepage.Widgets.allWidgets().splice(1);
-	var message = App.Homepage.Utils.message;
 
 	//early load for performance
 	require( 'pc-adjustablePeek' );
-
-	function closeMessage () {
-		var err = $( '.flash-close' );
-		if ( err ) {
-			err.click();
-		}
-	}
 
 	function fetchingModels ( personnelId ) {
 		return {
@@ -63,6 +53,7 @@ define( function ( require ) {
 					view.userWidgets.show( userWidgetCollectionView );
 				} );
 			}
+
 		} ).fail( function ( error ) {
 
 			App.vent.trigger( 'flash:message', {
@@ -70,24 +61,6 @@ define( function ( require ) {
 			} );
 
 		} );
-	}
-
-	function doShowWidgetSettingsPanel ( view, e ) {
-		var panelBtn            = $( '#widget-settings' );
-		var widgetCompositeView = new WidgetCompositeView( {
-			'collection'                 : view.widgetCollection,
-			'widgetCollection'           : view.widgetCollection,
-			'userWidgetCollection'       : view.userWidgetCollection,
-			'actualUserWidgetCollection' : view.actualUserWidgetCollection
-		} );
-		view.widgetSettings.show( widgetCompositeView );
-		view.changePanelStatus( panelBtn, panelStatuses[ 1 ], panelStatuses[ 0 ] );
-	}
-
-	function doCloseWidgetSettingsPanel ( view, e ) {
-		var panelBtn = $( e.currentTarget );
-		view.widgetSettings.close();
-		view.changePanelStatus( panelBtn, panelStatuses[ 0 ], panelStatuses[ 1 ] );
 	}
 
 	function changePanelStatus ( btn, from, to ) {
@@ -109,33 +82,34 @@ define( function ( require ) {
 			// Displaying Widget Panel
 			'click div#widget-settings.closed'         : 'showWidgetSettingsPanel',
 			'click div#xs-widget-settings.closed'      : 'showMobileWidgetSettings',
-			'click div#tablet-widget-settings.closed'  : 'showTabletWidgetSettings',
-			'click p#awesomeness'                      : 'showWidgetSettingsPanel',
+			'click #mobile-awesomeness'                : 'showMobileWidgetSettings',
+			'click #awesomeness'                       : 'showWidgetSettingsPanel',
 			'click #placeholder-icon'                  : 'showWidgetSettingsPanel',
 
 			// Closing Widget Panel
 			'click div#widget-settings.opened'         : 'closeWidgetSettingsPanel',
-			'click div#xs-widget-settings.opened'      : 'closeMobileSettingsPanel',
-			'click div#tablet-widget-settings.opened'  : 'closeTabletSettingsPanel',
-			'focusout #widgets-settings-panel-wrapper' : 'blurAction',
-			'click #widgets-settings-panel-wrapper'    : 'focusAction'
+			'click div#widget-settings-overlay'        : 'closeWidgetSettingsPanel',
+			'click div#xs-widget-settings.opened'      : 'closeMobileSettingsPanel'
 		},
 		'className' : 'widget-container',
 		'template'  : _.template( template ),
 		'regions'   : {
 			'userWidgets'          : '#user-widgets #active-widgets',
 			'widgetSettings'       : '#widgets-settings-panel-wrapper',
-			'mobileWidgetSettings' : '#xs-widgets-panel-wrapper',
-			'tabletWidgetSettings' : '#tablet-widgets-panel-wrapper'
-		},
-		'templateHelpers' : function () {
-			return {
-				'whatToDoNextName' : message.whatToDoNextName
-			};
+			'mobileWidgetSettings' : '#xs-widgets-panel-wrapper'
 		},
 
-		'showWidgetSettingsPanel' : function ( e ) {
-			doShowWidgetSettingsPanel( this, e );
+		'showWidgetSettingsPanel' : function () {
+			var panelBtn            = $( '#widget-settings' );
+			var widgetCompositeView = new WidgetCompositeView( {
+				'collection'                 : this.widgetCollection,
+				'widgetCollection'           : this.widgetCollection,
+				'userWidgetCollection'       : this.userWidgetCollection,
+				'actualUserWidgetCollection' : this.actualUserWidgetCollection
+			} );
+			this.widgetSettings.show( widgetCompositeView );
+			this.changePanelStatus( panelBtn, panelStatuses[ 1 ], panelStatuses[ 0 ] );
+			this.$el.find( '#widget-settings-overlay' ).show();
 			$( '#widgets-settings-panel-wrapper' ).focus().css('outline', 'none');
 		},
 
@@ -148,38 +122,20 @@ define( function ( require ) {
 				'actualUserWidgetCollection' : this.actualUserWidgetCollection
 			} );
 			this.mobileWidgetSettings.show( widgetCompositeView );
+			this.$el.find( '#widget-settings-overlay' ).show();
 			this.changePanelStatus( panelBtn, panelStatuses[ 1 ], panelStatuses[ 0 ] );
 		},
 
-		'showTabletWidgetSettings' : function ( e ) {
-			var panelBtn            = $( e.currentTarget );
-			var widgetCompositeView = new TabletWidgetCompositeView( {
-				'collection'                 : this.widgetCollection,
-				'widgetCollection'           : this.widgetCollection,
-				'userWidgetCollection'       : this.userWidgetCollection,
-				'actualUserWidgetCollection' : this.actualUserWidgetCollection
-			} );
-			this.tabletWidgetSettings.show( widgetCompositeView );
-			this.changePanelStatus( panelBtn, panelStatuses[ 1 ], panelStatuses[ 0 ] );
-		},
-
-		'closeWidgetSettingsPanel' : function ( e ) {
-			doCloseWidgetSettingsPanel( this, e );
-			if ( $( 'ul.active-widgets-container li' ).length === 0 ) {
-				this.initialize();
-			}
-			closeMessage();
+		'closeWidgetSettingsPanel' : function () {
+			var panelBtn = $( '#widget-settings' );
+			this.widgetSettings.close();
+			this.$el.find( '#widget-settings-overlay' ).hide();
+			this.changePanelStatus( panelBtn, panelStatuses[ 0 ], panelStatuses[ 1 ] );
 		},
 
 		'closeMobileSettingsPanel' : function ( e ) {
 			var panelBtn = $( e.currentTarget );
 			this.mobileWidgetSettings.close();
-			this.changePanelStatus( panelBtn, panelStatuses[ 0 ], panelStatuses[ 1 ] );
-		},
-
-		'closeTabletSettingsPanel' : function ( e ) {
-			var panelBtn = $( e.currentTarget );
-			this.tabletWidgetSettings.close();
 			this.changePanelStatus( panelBtn, panelStatuses[ 0 ], panelStatuses[ 1 ] );
 		},
 

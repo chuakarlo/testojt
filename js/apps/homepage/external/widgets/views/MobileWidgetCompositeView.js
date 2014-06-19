@@ -14,6 +14,12 @@ define( function ( require ) {
 	var MobileWidgetItemView = require( 'apps/homepage/external/widgets/views/MobileWidgetItemView' );
 	var message = App.Homepage.Utils.message;
 
+	var selectPickerOption = {
+		'columnSize' : 'col-xs-4'
+	};
+
+	require( 'bootstrap-select' );
+
 	var widgetAPI = function ( personnelId, widgetIds ) {
 		return {
 			'path'   : 'com.schoolimprovement.pd360.dao.core.WidgetGateway',
@@ -30,7 +36,8 @@ define( function ( require ) {
 			'change #widget-mobile-header select'                 : 'changeView',
 			'click #widget-mobile-actions .cancel'                : 'cancelAllChanges',
 			'click #widget-mobile-actions .mobile-save'           : 'saveAll',
-			'click #widget-mobile-actions .mobile-save-and-close' : 'saveAllandClose'
+			'click #widget-mobile-actions .mobile-save-and-close' : 'saveAllandClose',
+			'click #widget-settings-overlay'                      : 'closeWidgetSettingsPanel'
 		},
 		'template'          : _.template( template ),
 		'itemView'          : MobileWidgetItemView,
@@ -62,12 +69,13 @@ define( function ( require ) {
 
 			this.collection = this.getOptionCollection()[ widgetSelectVal ];
 			this.render();
-			this.selectOptionByValue( widgetSelectVal );
+			this.ui.widgetSelect.addClass( selectPickerOption.columnSize ).selectpicker( 'setStyle' );
+			this.ui.widgetSelect.val( widgetSelectVal );
+			this.ui.widgetSelect.selectpicker( 'render' );
 		},
 
 		'cancelAllChanges' : function () {
 			this.options.userWidgetCollection.reset( this.options.actualUserWidgetCollection.models );
-			this.switchClass( $( '#xs-widget-settings' ), 'opened', 'closed' );
 			this.closeWidgetSettingsPanel();
 		},
 
@@ -80,14 +88,15 @@ define( function ( require ) {
 
 				this.collection = this.getOptionCollection()[ widgetSelectVal ];
 				this.render();
-				this.selectOptionByValue( widgetSelectVal );
+				this.ui.widgetSelect.addClass( selectPickerOption.columnSize ).selectpicker( 'setStyle' );
+				this.ui.widgetSelect.val( widgetSelectVal );
+				this.ui.widgetSelect.selectpicker( 'render' );
 			}
 		},
 
 		'saveAllandClose' : function () {
 			this.options.actualUserWidgetCollection.reset( this.options.userWidgetCollection.models );
 			this.updateUserWidgets();
-			this.switchClass( $( '#xs-widget-settings' ), 'opened', 'closed' );
 			this.closeWidgetSettingsPanel();
 		},
 
@@ -147,7 +156,15 @@ define( function ( require ) {
 		},
 
 		'closeWidgetSettingsPanel' : function () {
+			this.switchClass( $( '#xs-widget-settings' ), 'opened', 'closed' );
+			this.$el.find( '#widget-settings-overlay' ).hide();
 			this.close();
+		},
+
+		'onRender' : function () {
+			this.$el.find( '#widget-settings-overlay' ).show();
+			this.ui.widgetSelect.addClass( selectPickerOption.columnSize ).selectpicker( 'setStyle' );
+			this.ui.widgetSelect.selectpicker( 'render' );
 		}
 	} );
 

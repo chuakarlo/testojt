@@ -1,14 +1,14 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette              = require( 'marionette' );
-	var $                       = require( 'jquery' );
-	var _                       = require( 'underscore' );
-	var App                     = require( 'App' );
-	var template                = require( 'text!apps/homepage/external/widgets/templates/widgetItemView.html' );
-	var widgetMobileItemView    = require( 'text!apps/homepage/external/widgets/templates/widgetMobileItemView.html' );
-	var sequenceOverlayTemplate = require( 'text!apps/homepage/external/widgets/templates/widgetSequenceOverlayTemplate.html' );
-	var widgetLookup            = App.Homepage.Widgets.allWidgets;
+	var Marionette = require( 'marionette' );
+	// var $          = require( 'jquery' );
+	var _          = require( 'underscore' );
+
+	var App        = require( 'App' );
+	var Session    = require( 'Session' );
+
+	var widgetLookup = App.Homepage.Widgets.allWidgets;
 
 	function setTemplateHelpers ( view ) {
 		view.widgets = widgetLookup()[ view.model.get( 'WidgetId' ) ];
@@ -34,24 +34,16 @@ define( function ( require ) {
 	}
 
 	function doGetWidgetStatus ( view ) {
-		var status = 'inactive';
-		if ( view.options.userWidgetCollection._byId[ view.model.get( 'WidgetId' ) ] ) {
-			status = 'active';
-		}
-		return status;
+		return view.options.userWidgetCollection._byId[ view.model.get( 'WidgetId' ) ] ? 'active' : 'inactive';
 	}
 
 	function doGetWidgetIcon ( view ) {
-		var icon = 'plus';
-		if ( view.options.userWidgetCollection._byId[ view.model.get( 'WidgetId' ) ] ) {
-			icon = 'minus';
-		}
-		return icon;
+		return view.options.userWidgetCollection._byId[ view.model.get( 'WidgetId' ) ] ? 'minus' : 'plus';
 	}
 
 	function doShowSequenceOverlay ( view ) {
 		var widgetKey        = view.getKeyByWidgetId();
-		var sequenceTemplate = _.template( sequenceOverlayTemplate, { 'sequence' : widgetKey } );
+		var sequenceTemplate = _.template( require( 'text!apps/homepage/external/widgets/templates/widgetSequenceOverlayTemplate.html' ), { 'sequence' : widgetKey } );
 
 		if ( widgetKey ) {
 			view.$el.prepend( sequenceTemplate );
@@ -68,38 +60,66 @@ define( function ( require ) {
 		}
 	}
 
-	return Marionette.CompositeView.extend( {
+	function processWidgetAction ( view, e, cond, action, errMsg ) {
+		if ( !view[ cond ]() ) {
+			view.changeWidgetStatusBy( action );
+			view.showWidgetPreview( e );
+		} else {
+			view.showMessageToUser( App.Homepage.Utils.message[ errMsg ], 'error' );
+		}
+	}
+
+	return Marionette.ItemView.extend( {
+		'events' : {
+			'click .widget-icon-btn.active'   : 'deactivateWidget',
+			'click .widget-icon-btn.inactive' : 'activateWidget'
+		},
 		'tagName'         : 'li',
+		'template'        : _.template( require( 'text!apps/homepage/external/widgets/templates/widgetItemView.html' ) ),
 		'className'       : 'img-thumbnail',
-		'template'        : _.template( template ),
 		'templateHelpers' : function () {
 			return setTemplateHelpers( this );
 		},
 
-		'onRender' : function ( options ) {
-			if ( App.request( 'homepage:isHomeRoute' ) ) {
-				doOnRender( this );
-				this.showSequenceOverlay();
-			}
+		'activateWidget' : function ( e ) {
+			processWidgetAction( this, e, 'widgetLimitExceeded', 'add', 'widgetLimitError' );
 		},
 
-		'onShow' : function () {
-			this.addMobileItems();
+		'deactivateWidget' : function ( e ) {
+			processWidgetAction( this, e, 'widgetMinimumReached', 'remove', 'widgetMinError' );
+		},
+
+		'changeWidgetStatusBy' : function ( mode ) {
+			var widget = {
+				'PersonnelId' : Session.personnelId(),
+				'WidgetId'    : this.model.id
+			};
+			var model  = mode === 'remove' ? this.model.id : widget;
+
+			this.options.userWidgetCollection[ mode ]( model );
+		},
+
+		'widgetLimitExceeded' : function () {
+			return this.options.userWidgetCollection.length >= 3 ? true : false;
+		},
+
+		'widgetMinimumReached' : function () {
+			return this.options.userWidgetCollection.length === 1 ? true : false;
+		},
+
+		'showWidgetPreview' : function ( e ) {
+			App.vent.trigger( 'homepage:showWidgetPreview', e );
+		},
+
+		'showMessageToUser' : function ( message, type ) {
+			App.vent.trigger( 'flash:message', {
+				'message' : message,
+				'type'    : type
+			} );
 		},
 
 		'showSequenceOverlay' : function () {
 			doShowSequenceOverlay( this );
-		},
-
-		'addMobileItems' : function () {
-			var mobileTemplate        = _.template( widgetMobileItemView );
-			var mobileTemplateHelpers = {
-				'WidgetId'     : this.model.id,
-				'WidgetName'   : this.model.get( 'WidgetName' )(),
-				'WidgetIcon'   : this.getWidgetIcon(),
-				'WidgetStatus' : this.getWidgetStatus()
-			};
-			$( '#widget-mobile-selection ul' ).append( mobileTemplate( mobileTemplateHelpers ) );
 		},
 
 		'getKeyByWidgetId' : function () {
@@ -116,6 +136,13 @@ define( function ( require ) {
 
 		'getWidgetIcon' : function () {
 			return doGetWidgetIcon( this );
+		},
+
+		'onRender' : function ( options ) {
+			if ( App.request( 'homepage:isHomeRoute' ) ) {
+				doOnRender( this );
+				this.showSequenceOverlay();
+			}
 		}
 	} );
 

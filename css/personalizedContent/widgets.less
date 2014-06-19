@@ -36,6 +36,22 @@
 		min-height : @height;
 	}
 
+	#widget-settings-overlay {
+		border   : 1px solid;
+		position : absolute;
+		height   : 100%;
+		width    : 100%;
+		top      : 0px;
+		left     : 0px;
+		display  : none;
+		z-index  : 50;
+	}
+
+	#widgets-settings-panel-wrapper {
+		position : relative;
+		z-index  : 60;
+	}
+
 	.widget-wrapper {
 		overflow : auto;
 		border   : 1px solid @pc-gray-lighter;
@@ -733,7 +749,6 @@
 
 	// Mobile
 	#widget-mobile-header {
-		text-align : center;
 		h4 {
 			border-bottom : 1px solid #FFF;
 			padding       : 0px 0px 10px 0px;
@@ -744,13 +759,34 @@
 			border           : 1px solid #FFF;
 			height           : 36px;
 			font-size        : 14px;
-			width            : 140px;
-			margin-left      : 40px;
 		}
+		.col-xs-4 {
+			width : 29.333333%;
+		}
+		.bootstrap-select.btn-group .dropdown-menu {
+			min-height : auto;
+			min-width  : 140px;
+		}
+		.dropdown-menu {
+			left : auto;
+		}
+		ul {
+			li {
+				margin: 0px;
+			}
+		}
+	}
+	#xs-widget-settings {
+		position : relative;
+		z-index  : 60;
 	}
 	#xs-widgets-panel-wrapper {
 		color            : #4b505c;
 		background-color : transparent;
+		#xs-widgets-wrapper {
+			position : relative;
+			z-index  : 60;
+		}
 		#widget-mobile-selection {
 			ul {
 				list-style-type : none;
@@ -811,16 +847,6 @@
 			color            : @pc-white;
 			background-color : #00A8FF;
 		}
-	}
-
-	#widgets-settings-panel-wrapper.visible-sm #widgets-settings-panel {
-		height : 800px;
-	}
-	#widget-settings-content.visible-sm {
-		height : 600px;
-	}
-	.actions.visible-sm button {
-		width : 60px;
 	}
 
 	.greatericon {

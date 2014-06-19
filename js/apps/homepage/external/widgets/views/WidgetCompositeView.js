@@ -2,182 +2,141 @@ define( function ( require ) {
 	'use strict';
 
 	var Marionette = require( 'marionette' );
+	var Backbone   = require( 'backbone' );
 	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
-	var App        = require( 'App' );
 
-	var WidgetCompositeView     = require( 'apps/homepage/external/widgets/views/WidgetItemView' );
-	var template                = require( 'text!apps/homepage/external/widgets/templates/widgetCompositeView.html' );
-	var utils                   = require( 'apps/homepage/external/widgets/controllers/widgetCompositeController' );
-	var utilsUpperFirstLetter   = require( 'apps/homepage/utils/upperFirstLetter' );
+	var App      = require( 'App' );
+	var Remoting = require( 'Remoting' );
+	var Session  = require( 'Session' );
 
-	var panelStatuses     = [ 'opened', 'closed' ];
-	var widgetSettingsBtn = $( '#widget-settings' );
+	var template              = require( 'text!apps/homepage/external/widgets/templates/widgetCompositeView.html' );
+	var WidgetCollectionView  = require( 'apps/homepage/external/widgets/views/WidgetCollectionView' );
+	var WidgetPreviewItemView = require( 'apps/homepage/external/widgets/views/WidgetPreviewItemView' );
 
-	var message = App.Homepage.Utils.message;
-
-	function closeMessage () {
-		var err = $( '.flash-close' );
-		if ( err ) {
-			err.click();
-		}
-	}
+	var widgetAPI = function ( personnelId, widgetIds ) {
+		return {
+			'path'   : 'com.schoolimprovement.pd360.dao.core.WidgetGateway',
+			'method' : 'addWidgetsByPersonnelId',
+			'args'   : {
+				'personnelId' : personnelId,
+				'widgetIds'   : widgetIds
+			}
+		};
+	};
 
 	return Marionette.CompositeView.extend( {
+		'initialize' : function ( options ) {
+			var self = this;
+
+			this.collection = new Backbone.Collection( { 'widgets' : this.collection } );
+			App.vent.on( 'homepage:showWidgetPreview', function ( e ) {
+				self.showWidgetPreview( e );
+			} );
+		},
 		'events' : {
-			'click #widget-settings-selection li'       : 'showWidgetPreview',
-			'click #widget-settings-header li#all'      : 'showAllWidgets',
-			'click #widget-settings-header li#active'   : 'showActiveWidgets',
-			'click #widget-settings-header li#inactive' : 'showInactiveWidgets',
-			'mousedown .actions .save'                  : 'saveAll',
-			'mousedown .actions .save-and-close'        : 'saveAllClose',
-			'mousedown .actions .cancel'                : 'resetAll',
-			'click .widget-icon-btn.inactive'           : 'activateWidget',
-			'click .widget-icon-btn.active'             : 'deactivateWidget'
+			'click #widget-settings-selection li'         : 'showWidgetPreview',
+			'click .widget-icon-btn'                      : 'showWidgetPreview',
+			'click #widget-settings-header li:not(.main)' : 'changeView',
+			'click .cancel'                               : 'cancelAllChanges',
+			'click .save'                                 : 'saveAll',
+			'click .save-and-close'                       : 'saveAllandClose'
 		},
-		'id'              : 'widgets-settings-panel',
-		'template'        : _.template( template ),
-		'itemView'        : WidgetCompositeView,
-		'templateHelpers' : function () {
-			return {
-				'widgetsName'   : message.widgetsName,
-				'allWidgetName' : message.allWidgetName,
-				'activeName'    : message.activeName,
-				'inactiveName'  : message.inactiveName,
-				'closeName'     : message.closeName
-			};
-		},
+		'template'          : _.template( template ),
+		'itemView'          : WidgetCollectionView,
+		'itemViewContainer' : '#widget-settings-selection',
 		'itemViewOptions' : function () {
 			return {
+				'widgetCollection'           : this.options.widgetCollection,
 				'userWidgetCollection'       : this.options.userWidgetCollection,
 				'actualUserWidgetCollection' : this.options.actualUserWidgetCollection
 			};
 		},
-		'itemViewContainer' : '#widget-settings-selection',
 
-		'ui' : {
-			'widgetSettingsHeader' : '#widget-settings-header ul',
-			'widgetPreview'        : '#widget-settings-preview'
+		'changeView' : function ( e ) {
+			var headerBtn    = $( e.currentTarget );
+			var selectedView = headerBtn.attr( 'id' );
+
+			this.changeHeaderNav( headerBtn );
+			this.$el.find( '#widget-settings-preview' ).empty();
+			this.options.userWidgetCollection.reset( this.options.actualUserWidgetCollection.models );
+			App.vent.trigger( 'homepage:changeWidgetView', selectedView );
+		},
+
+		'cancelAllChanges' : function () {
+			this.options.userWidgetCollection.reset( this.options.actualUserWidgetCollection.models );
+			this.switchClass( $( '.widget-settings-icon' ), 'opened', 'closed' );
+			this.closeWidgetSettingsPanel();
 		},
 
 		'saveAll' : function ( e ) {
-			utils.doSaveAll( this );
-			return false;
+			var currentWidgetView = this.$el.find( '.selected' ).attr( 'id' );
+
+			this.options.actualUserWidgetCollection.reset( this.options.userWidgetCollection.models );
+			this.updateUserWidgets();
+			App.vent.trigger( 'homepage:changeWidgetView', currentWidgetView );
 		},
 
-		'saveAllClose' : function ( e ) {
-			utils.doSaveAll( this );
-			$( 'div#widget-settings.opened' ).click();
-			return false;
+		'saveAllandClose' : function () {
+			this.options.actualUserWidgetCollection.reset( this.options.userWidgetCollection.models );
+			this.updateUserWidgets();
+			this.switchClass( $( '.widget-settings-icon' ), 'opened', 'closed' );
+			this.closeWidgetSettingsPanel();
 		},
 
-		'resetAll' : function ( e ) {
-			utils.doResetAll( this );
-			$( 'div#widget-settings.opened' ).click();
-			return false;
-		},
+		'updateUserWidgets' : function () {
+			var self      = this;
+			var widgetIds = this.pushWidgetIds();
 
-		'showAllWidgets' : function ( e ) {
-			closeMessage();
-			utils.doShowAllWidgets( this, e );
-		},
-
-		'showActiveWidgets' : function ( e ) {
-			closeMessage();
-			utils.doShowActiveWidgets( this, e );
-		},
-
-		'showInactiveWidgets' : function ( e ) {
-			closeMessage();
-			utils.doShowInactiveWidgets( this, e );
-		},
-
-		'showWidgetPreview' : function ( e ) {
-			utils.doShowWidgetPreview( this, e );
-		},
-
-		'getActiveWidgets' : function () {
-			return utils.doGetActiveWidgets( this );
-		},
-
-		'getInactiveWidgets' : function () {
-			return utils.doGetInactiveWidgets( this );
-		},
-
-		'getModelByClickEvent' : function ( e ) {
-			return utils.doGetModelByClickEvent( this, e );
-		},
-
-		'activateWidget' : function ( e ) {
-			utils.doActivateWidget( this, e );
-			return false;
-		},
-
-		'activateWidgetAndClose' : function ( e ) {
-			utils.doActivateWidget( this, e );
-		},
-
-		'deactivateWidget' : function ( e ) {
-			utils.doDeactivateWidget( this, e );
-			return false;
-		},
-
-		'deactivateWidgetAndClose' : function ( e ) {
-			utils.doDeactivateWidget( this, e );
-		},
-
-		'closeWidgetPanel' : function () {
-			this.close();
-			widgetSettingsBtn.removeClass( panelStatuses[ 0 ] );
-			widgetSettingsBtn.addClass( panelStatuses[ 1 ] );
-			closeMessage();
-		},
-
-		'addToWidgetCollection' : function ( model ) {
-			utils.doAddToWidgetCollection( this, model );
-		},
-
-		'removeToWidgetCollection' : function ( model ) {
-			utils.doRemoveToWidgetCollection( this, model );
-		},
-
-		'onTab' : function ( tab ) {
-			var currentTabId = this.$el.find( 'li.selected' ).attr( 'id' );
-			return currentTabId === tab ? true : false;
-		},
-
-		'hidePreviewErrorMsg' : function ( e ) {
-			utils.doHidePreviewErrorMsg( this, e );
-		},
-
-		'displayLimitError' : function ( e ) {
-			App.vent.trigger( 'flash:message', {
-				'message' : App.Homepage.Utils.message.widgetLimitError,
-				'type'    : 'error'
+			App.when( Remoting.fetch( widgetAPI( Session.personnelId(), widgetIds ) ) ).done( function () {
+				self.showMessageToUser( App.Homepage.Utils.message.widgetChangeSave, 'success' );
+			} ).fail( function ( error ) {
+				self.showMessageToUser( App.Homepage.Utils.message.widgetSaveError, 'error' );
 			} );
 		},
 
-		'changeButtonAttr' : function ( from, to ) {
-			utils.doChangeButtonAttr( this, from, to );
+		'pushWidgetIds' : function () {
+			var widgetIds = [ ];
+			this.options.actualUserWidgetCollection.models.forEach( function ( model ) {
+				widgetIds.push( model.id );
+			} );
+			return widgetIds;
 		},
 
-		'upperFirstLetter' : function ( text ) {
-			return utilsUpperFirstLetter( text );
+		'showWidgetPreview' : function ( e ) {
+			var widgetPreviewItemView = new WidgetPreviewItemView( {
+				'model'                : this.getModelByClickEvent( e ),
+				'userWidgetCollection' : this.options.userWidgetCollection
+			} );
+
+			this.$el.find( '#widget-settings-preview' ).html( widgetPreviewItemView.render().el );
 		},
 
-		'changeWidgetIconBtnAttr' : function ( model, from, to ) {
-			utils.doChangeWidgetIconBtnAttr( this, model, from, to );
+		'showMessageToUser' : function ( message, type ) {
+			App.vent.trigger( 'flash:message', {
+				'message' : message,
+				'type'    : type
+			} );
 		},
 
-		'changeSelectedNavBtn' : function ( e ) {
-			utils.doChangeSelectedNavBtn( e );
+		'changeHeaderNav' : function ( element ) {
+			element.parent().find( '.selected' ).removeClass( 'selected' );
+			element.addClass( 'selected' );
 		},
 
-		'changeWidgetSelectedTab' : function ( currentTabId ) {
-			this.$el.find( 'li.selected' ).removeClass( 'selected' );
-			this.$el.find( '#' + currentTabId ).addClass( 'selected' );
+		'getModelByClickEvent' : function ( e ) {
+			var widgetId = $( e.currentTarget ).attr( 'data-id' );
+			return this.collection.models[ 0 ].get( 'widgets' ).get( widgetId );
+		},
+
+		'switchClass' : function ( btn, oldClass, newClass ) {
+			btn.removeClass( oldClass );
+			btn.addClass( newClass );
+		},
+
+		'closeWidgetSettingsPanel' : function () {
+			this.close();
 		}
-
 	} );
 
 } );

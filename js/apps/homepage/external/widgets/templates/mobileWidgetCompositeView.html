@@ -1,22 +1,25 @@
-<div id="widget-mobile-header">
-	<h4>
-		<%- widgetColName %>
-		<select>
-			<option value="All Widgets"><%- allWidgetName %></option>
-			<option value="Active"><%- activeName %></option>
-			<option value="Inactive"><%- inactiveName %></option>
-		</select>
-	</h4>
-</div>
+<div id="widget-settings-overlay"></div>
+<div id="xs-widgets-wrapper">
+	<div id="widget-mobile-header">
+		<h4>
+			Widgets
+			<select>
+				<option value="All Widgets">All</option>
+				<option value="Active">Active</option>
+				<option value="Inactive">Inactive</option>
+			</select>
+		</h4>
+	</div>
 
-<div id="widget-mobile-selection">
-	<ul></ul>
+	<div id="widget-mobile-selection">
+		<ul></ul>
 
-	<div id="widget-mobile-actions">
-		<button type="button" class="cancel btn btn-default"><%- closeName %></button>
-		<button type="button" class="mobile-save action-btn btn"><%- saveName %></button>
-		<button type="button" class="mobile-save-and-close action-close-btn btn btn-primary">
-			<%- saveAndName %><br/><%- closeName %>
-		</button>
+		<div id="widget-mobile-actions">
+			<button type="button" class="cancel btn btn-default">Close</button>
+			<button type="button" class="mobile-save action-btn btn">Save</button>
+			<button type="button" class="mobile-save-and-close action-close-btn btn btn-primary">
+				Save &<br/>Close
+			</button>
+		</div>
 	</div>
 </div>
