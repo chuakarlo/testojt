@@ -71,6 +71,7 @@ define( function ( require ) {
 
 			return {
 				'description'                : statusDescription[ percentage > 99 ],
+				'complete'                   : ( percentage > 99 ) ? 'true' : 'false',
 				'percentage'                 : percentage,
 				'yourProfileName'            : message.yourProfileName,
 				'yourProfilePersonalRepName' : message.yourProfilePersonalRepName,

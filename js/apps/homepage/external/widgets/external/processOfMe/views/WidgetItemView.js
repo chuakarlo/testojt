@@ -31,13 +31,12 @@ define( function ( require ) {
 		},
 		'templateHelpers'  : function () {
 			return {
-				'due'          : this.getDueDate(),
-				'dateStatus'   : this.getDateStatus(),
-				'textStatus'   : this.getTextDueStatus(),
-				'smallContent' : App.Homepage.Utils.limitCharacters( this.model.get( 'ProcessName' ), 25 ),
-				'ContentId'    : '#resources/learning/processes',
-				'creatorName'  : App.Homepage.Utils.limitCharacters( this.model.get( 'ProcessName' ), 40 ),
-				'getConfig'    : getConfig( 'contentThumbnailPath' )
+				'due'         : this.getDueDate(),
+				'dateStatus'  : this.getDateStatus(),
+				'textStatus'  : this.getTextDueStatus(),
+				'ContentId'   : '#resources/learning/processes',
+				'creatorName' : this.model.get( 'ProcessName' ),
+				'getConfig'   : getConfig( 'contentThumbnailPath' )
 			};
 		},
 		'getDueDate'       : function () {

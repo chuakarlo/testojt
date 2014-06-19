@@ -1,11 +1,9 @@
 <a href="#" data-url="<%- ProcessId %>/legacy" class="courseLink">
-	<div class="progress-item">
+	<div class="process-item">
 		<div class="description">
-				<div class="hidden-sm hidden-xs"><%- creatorName %></div>
-				<div class="visible-sm visible-xs" ><%- smallContent %></div>
-				<br class="hidden-sm hidden-xs" />
-				<div class="duedate <%- dateStatus %>"><%- textStatus %><%- due %></div>
+			<div class="creator"><%- creatorName %></div>
+			<i class="fa fa-angle-right pull-right"></i>
+			<div class="duedate <%- dateStatus %>"><%- textStatus %><%- due %></div>
 		</div>
-		<i class="fa fa-angle-right greatericon"></i>
 	</div>
 </a>

@@ -111,25 +111,6 @@
 		}
 	}
 
-	li#processOfMe{
-		div.widget-item{
-			border-left : 3px solid @pc-blue-light;
-				div.progress-item{
-					padding: 0 10px;
-				}
-				div.duedate{
-					font-size : 10px;
-					color     : @pc-blue-light;
-				}
-		}
-		div.olderdate{
-			border-left : 3px solid @pc-red;
-			div.duedate{
-				font-size : 10px;
-				color     : @pc-red;
-			}
-		}
-	}
 	#active-holder {
 		overflow : hidden;
 
@@ -161,7 +142,40 @@
 		.description-widgets( 65% );
 	}
 
-	.group-activity-item, .focus-objective-item, .courses-item, .progress-item, .observation-of-me  {
+
+	#processOfMe {
+		.description {
+			width : 100%;
+		}
+		.fa {
+			font-size : 2em;
+			padding   : 4px 10px 4px 0;
+		}
+		.widget-item {
+			border-left : 3px solid @pc-blue-light;
+		}
+		.duedate{
+			font-size : 10px;
+			color     : @pc-blue-light;
+			position  : absolute;
+			bottom    : 15%;
+			left      : 10px;
+		}
+		.creator {
+			.description-widgets( 90% );
+			padding-top : 0;
+		}
+		.olderdate{
+			border-left : 3px solid @pc-red;
+			.duedate{
+				font-size : 10px;
+				color     : @pc-red;
+			}
+		}
+	}
+
+	.group-activity-item, .focus-objective-item, .courses-item,
+	.progress-item, .observation-of-me , .process-item {
 		height   : 35px;
 		overflow : hidden;
 		div {
@@ -249,14 +263,19 @@
 				margin   : 0 auto;
 			}
 			.prog-circle {
-				left : 21%;
+				left : 25%;
 			}
+
 			.profile-str {
 				padding     : 0px;
 				float       : none;
 				width       : 100%;
 				font-size   : 13px;
 				line-height : 18px;
+			}
+
+			.profile-str.true {
+				text-align : center;
 			}
 		}
 	}
@@ -848,21 +867,22 @@
 		}
 	}
 
-	.greatericon {
-		font-size : 2em;
-		float     : right;
-		padding   : 0px 8px;
+	.footerLink:hover{
+		text-decoration: none;
+		div {
+			text-decoration: underline;
+		}
 	}
 
 	.footerLink {
 		overflow : hidden;
-		width : auto;
-		height : auto;
+		width    : auto;
+		height   : auto;
 		.footer-icon {
 			margin-left    : 8px;
 			font-size      : 2em;
 		}
-		span {
+		div, span {
 			vertical-align : middle;
 		}
 	}
