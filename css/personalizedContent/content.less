@@ -88,10 +88,16 @@
 		position      : relative;
 		h2 {
 			color : @pc-gray-dark;
-			#your-queue-header, #recommended-header {
+			#your-queue-header, #recommended-header, #queue-header{
 				color : @pc-black-lighter;
+				@media ( max-width: @screen-md-max ) {
+					font-size: 20px;
+				}
+
 			}
 		}
+
+
 	}
 
 	h2 {
