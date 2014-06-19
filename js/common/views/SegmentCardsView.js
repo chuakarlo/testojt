@@ -8,6 +8,7 @@ define( function ( require ) {
 	var getAbbreviation   = require( '../helpers/getAbbreviation' );
 	var stripHtml         = require( '../helpers/stripHtml' );
 	var convertSecsToMins = require( '../helpers/convertSecsToMins' );
+	var getConfig         = require( 'common/helpers/getConfig' );
 	var modernizr         = window.Modernizr;
 
 	require( 'jquery.spin' );
@@ -57,7 +58,8 @@ define( function ( require ) {
 			},
 
 			'imageUrl' : function () {
-				var imgURL = this.ImageURL ? 'http://resources.pd360.com/PD360/media/thumb/' + this.ImageURL : 'img/thumbnail-default.jpg';
+
+				var imgURL = this.ImageURL ? getConfig( 'contentThumbnailPath' ) + this.ImageURL : 'img/thumbnail-default.jpg';
 
 				return imgURL;
 			},
