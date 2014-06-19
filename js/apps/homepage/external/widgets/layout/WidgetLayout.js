@@ -114,7 +114,7 @@ define( function ( require ) {
 		},
 
 		'showMobileWidgetSettings' : function ( e ) {
-			var panelBtn            = $( e.currentTarget );
+			var panelBtn            = $( '#xs-widget-settings' );
 			var widgetCompositeView = new MobileWidgetCompositeView( {
 				'collection'                 : this.widgetCollection,
 				'widgetCollection'           : this.widgetCollection,
@@ -134,7 +134,7 @@ define( function ( require ) {
 		},
 
 		'closeMobileSettingsPanel' : function ( e ) {
-			var panelBtn = $( e.currentTarget );
+			var panelBtn = $( '#xs-widget-settings' );
 			this.mobileWidgetSettings.close();
 			this.changePanelStatus( panelBtn, panelStatuses[ 0 ], panelStatuses[ 1 ] );
 		},
