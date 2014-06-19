@@ -126,9 +126,10 @@ define( function ( require ) {
 									that.closeLoading();
 								},
 
-								'error' : function () {
-									console.log('error');
-								}
+								'error' : App.errorHandler.bind( App, {
+									'message' : 'There was a problem loading your' +
+									' search results. Please try again later.'
+								} )
 							});
 						} );
 				}
@@ -156,24 +157,25 @@ define( function ( require ) {
 					'searchType' : filter
 				} );
 
-				// Show a loading view while we get some results
-				this.showLoading();
-
 				var searchCollectionView = new SearchResultCollectionView({
 					'collection' : this.searchCollection
 				});
 
+				// Show a loading view while we get some results
+				this.showLoading();
+
 				// Fetch the initial data
 				this.searchCollection.fetch( {
+					'filter'  : filter,
 					'remove'  : false,
 					'success' : _.bind( function () {
 
+						this.closeLoading();
 						// Update the count first so inifite scroll knows if it
 						// needs to setup
 						this.searchCollection.queryModel.updateStart();
 
 						this.layout.results.show(searchCollectionView);
-						this.closeLoading();
 						this.setupInfiniteScroll();
 
 					}, this),
@@ -181,8 +183,9 @@ define( function ( require ) {
 					'error' : function () {
 						this.closeLoading();
 
-						App.vent.trigger( 'flash:message', {
-							'message' : 'An error occurred. Please try again later.'
+						App.errorHandler( {
+							'message' : 'There was a problem loading your' +
+							' search results. Please try again later.'
 						} );
 					}.bind( this )
 				} );

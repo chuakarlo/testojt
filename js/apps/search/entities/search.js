@@ -120,7 +120,10 @@ define( function ( require ) {
 
 			'parse' : function ( res, options ) {
 
-				var searchType = this.queryModel.get( 'searchType' );
+				// We can't pull from the query model incase there was an
+				// additional search performed. Pass the filter in when
+				// fetching the data.
+				var searchType = options.filter;
 
 				if ( searchType === 'All' ) {
 
