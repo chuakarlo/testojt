@@ -59,10 +59,11 @@
 		position           : absolute;
 		left               : 0px;
 		bottom             : 0px;
+		top                : 0px;
+		right              : 0px;
+		margin             : auto 0;
 		color              : @pc-white;
-		width              : 100%;
 		z-index            : 7;
-		padding            : 5px 10px;
 		opacity            : 0.8;
 		overflow           : hidden;
 		display            : none;
@@ -80,12 +81,14 @@
 			display : inline !important;
 		}
 		img {
-			display  : block;
+			display  : inline-block;
 			width    : 10%;
 			left     : auto;
-			position : relative;
-			top      : auto;
-			margin   : 0 auto;
+			position : absolute;
+			top      : 0;
+			right    : 45.7%;
+			margin   : auto 0;
+			bottom   : 0;
 		}
 	}
 	.nivo-html-caption {
@@ -96,18 +99,17 @@
 		overflow : visible;
 		clear    : both;
 		a {
-			position           : absolute;
-			top                : 45%;
-			z-index            : 9;
-			cursor             : pointer;
-			display            : block;
-			border             : 0;
-			opacity            : 0;
-			-webkit-transition : all 200ms ease-in-out;
-			-moz-transition    : all 200ms ease-in-out;
-			-o-transition      : all 200ms ease-in-out;
-			transition         : all 200ms ease-in-out;
-
+			position                : absolute;
+			top                     : 45%;
+			z-index                 : 9;
+			cursor                  : pointer;
+			display                 : block;
+			border                  : 0;
+			opacity                 : 0;
+			-webkit-transition      : all 200ms ease-in-out;
+			-moz-transition         : all 200ms ease-in-out;
+			-o-transition           : all 200ms ease-in-out;
+			transition              : all 200ms ease-in-out;
 			display                 : inline-block;
 			font-family             : FontAwesome;
 			font-style              : normal;
@@ -137,7 +139,9 @@
 				padding : 0 15px;
 			}
 		}
-
+		a:hover {
+			text-decoration : none;
+		}
 	}
 
 	/* Control nav styles (e.g. 1,2,3...) */
@@ -169,7 +173,6 @@
 	}
 	.slider-wrapper:hover .nivo-directionNav a { opacity: 1; }
 	.nivo-caption {
-		height : 60%;
 		a.videoplay {
 		}
 		h1 {
