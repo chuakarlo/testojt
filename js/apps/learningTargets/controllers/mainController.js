@@ -1,166 +1,32 @@
 define( function ( require ) {
 	'use strict';
 
-	var App                     = require( 'App' );
-	var $                       = require( 'jquery' );
-	var Backbone                = require( 'backbone' );
-	var MainView                = require( 'apps/learningTargets/views/MainView' );
+	var App      = require( 'App' );
+	var Backbone = require( 'backbone' );
+
 	var GroupsView              = require( 'apps/learningTargets/views/groups/GroupsView' );
 	var CoursesView             = require( 'apps/learningTargets/views/courses/CoursesView' );
 	var CatalogsView            = require( 'apps/learningTargets/views/catalogs/CatalogsView' );
 	var ProcessesView           = require( 'apps/learningTargets/views/processes/ProcessesView' );
 	var PortfoliosView          = require( 'apps/learningTargets/views/portfolios/PortfoliosView' );
-	var DescriptionView         = require( 'apps/learningTargets/views/catalogs/DescriptionView' );
 	var ObservationsView        = require( 'apps/learningTargets/views/observations/ObservationsView' );
 	var ObjectivesFolderView    = require( 'apps/learningTargets/views/objectives/focusfolders/FocusFolderView' );
 	var ObjectivesContentView   = require( 'apps/learningTargets/views/objectives/contents/ContentView' );
 	var ReflectionQuestionsView = require( 'apps/learningTargets/views/reflectionQuestions/ReflectionQuestionsView' );
 	var LegendsView             = require( 'apps/learningTargets/views/legends/LegendsView' );
-	var setRequestOptions       = require( '../helpers/setRequestOptions' );
+
+	var setRequestOptions = require( '../helpers/setRequestOptions' );
+	var setLegacyPages    = require( '../helpers/setLegacyPages' );
+	var mainHelpers       = require( '../helpers/mainHelpers' );
 
 	App.module( 'LearningTargets.Main', function ( Main ) {
-		var mainView;
-		var contentRegion;
-		var legendRegion;
-		var currentPage;
-		var legacyPages = {
-			'processes' : {
-				'page'    : 'observation',
-				'subPage' : 'observationProcessesOfMe'
-			},
-
-			'courses' : {
-				'page'    : 'courses',
-				'subPage' : 'coursesBrowse'
-			},
-
-			'catalogs' : {
-				'page'    : 'courses',
-				'subPage' : 'coursesBrowse'
-			},
-
-			'portfolio' : {
-				'page'    : 'home',
-				'subPage' : 'homePortfolio'
-			},
-
-			'observations' : {
-				'page'    : 'observation',
-				'subPage' : 'observationOfMe'
-			}
-		};
 
 		Main.regions = {
 			'Legend'  : Backbone.Marionette.Region.extend( { } ),
 			'Content' : Backbone.Marionette.Region.extend( { } )
 		};
 
-		Main.helper = {
-
-			'_showView' : function ( view ) {
-				contentRegion.show( view );
-			},
-
-			'_showLegend' : function ( view ) {
-				legendRegion.show( view );
-			},
-
-			'_setContent' : function ( content, options ) {
-				var self = this;
-				// hide pd360 flash
-
-				App.request( 'pd360:hide' );
-				// show main view
-				if ( !mainView ) {
-					mainView = new MainView();
-					mainView.on( 'lt:viewall', self.handleViewallLink.bind( self ) );
-				}
-
-				App.content.show( mainView );
-
-				contentRegion = new Main.regions.Content( {
-					el : mainView.el.querySelector( '.lt-content' )
-				} );
-
-				legendRegion = new Main.regions.Legend( {
-					el :  mainView.el.querySelector( '.lt-legend' )
-				} );
-
-				mainView.setupViewAllButton( content );
-				self.setupViewAllLink( content );
-				mainView.activateTab( content );
-			},
-
-			'capitalise' : function ( string ) {
-				return string.charAt( 0 ).toUpperCase() + string.slice( 1).toLowerCase();
-			},
-
-			'_apiRequest' : function ( type, callback, options ) {
-				var request = App.request( type, options );
-
-				App.when( request ).done( function ( collections ) {
-					// run callback with collections
-					callback( collections );
-				} ).fail( function () {
-					var pathArray             = window.location.hash.split( '/' );
-					var learningTargetsModule = Main.helper.capitalise( pathArray[ 2 ] );
-					var errorMessage          = 'There was an error loading in ' + learningTargetsModule + '.';
-
-					Main.helper._showView( new App.Common.ErrorView( {
-						'message' : errorMessage,
-						'flash'   : 'An error occurred. Please try again later.'
-					} ) );
-
-				} );
-			},
-
-			'redirectToLegacyPage' : function ( target, page, sub, opts ) {
-				App.navigate( Backbone.history.fragment + '/legacy' );
-
-				Main.helper.showLegacyContent( page, sub, opts );
-			},
-
-			'showLegacyContent' : function ( page, sub, opts ) {
-				var pd360Loaded = App.request( 'pd360:loaded' );
-
-				// Display loading view
-				App.content.show( new App.Common.LoadingView() );
-
-				// navigate to legacy page
-				App.when( pd360Loaded ).done( function () {
-					App.content.show( new ProcessesView() );
-					$( '.content-wrapper' ).html( '' );
-					App.request( 'pd360:navigate', page, sub, opts );
-				} );
-			},
-
-			'handleViewallLink' : function ( view ) {
-				var self = this;
-				self.redirectToLegacyPage( view, currentPage.page, currentPage.subPage );
-			},
-
-			'setupViewAllLink' : function ( content ) {
-				currentPage = legacyPages[ content ];
-			},
-
-			'showTrainingCatalog' : function ( view ) {
-
-				var descriptionView = new DescriptionView( );
-
-				if ( view.model.get( 'CatalogResourceTypeId' ) === 3 ) {
-					Main.helper._apiRequest( 'lt:description', function ( collection ) {
-
-						descriptionView.model = collection.models[ 0 ];
-						descriptionView.render();
-
-					}, view.model );
-				}
-
-				App.modalRegion.show( descriptionView );
-
-			}
-
-		};
+		mainHelpers( Main );
 
 		Main.controller = {
 
@@ -173,7 +39,7 @@ define( function ( require ) {
 				var helper = Main.helper;
 				var opts   = setRequestOptions( page, options );
 
-				helper.showLegacyContent( legacyPages[ page ].page, legacyPages[ page ].subPage, opts );
+				helper.showLegacyContent( setLegacyPages( page ).page, setLegacyPages( page ).subPage, opts );
 			},
 
 			'showMain' : function () {
