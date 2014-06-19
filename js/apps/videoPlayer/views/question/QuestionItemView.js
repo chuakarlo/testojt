@@ -38,14 +38,14 @@ define( function ( require ) {
 		'templateHelpers' : {
 
 			'sanitizedAnswer' : function () {
-				function safeString ( unsafe ) {
+				function safeStringify ( unsafe ) {
 					return String( unsafe )
 						.replace( /<\/script/g, '<\\/script' )
 						.replace( /<!--/g, '<\\!--' );
 				}
 
 				// Replacing /%nl%/ string pattern to make newline
-				return _.unescape( safeString( this.AnswerText.replace( /%nl%/g, '\n' ) ) );
+				return _.unescape( safeStringify( this.AnswerText ).replace( /%nl%/g, '\n' ) );
 			}
 
 		},
