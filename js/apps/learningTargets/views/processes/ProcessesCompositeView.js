@@ -15,29 +15,29 @@ define( function ( require ) {
 		'emptyView'         : EmptyView,
 		'className'         : 'lt-toggle-btn',
 		'itemViewContainer' : '.lt-toggle-content',
-
 		'ui'                : {
-			'activateAccordion' : '.lt-accordion-tab'
+			'panelCollapse' : '.panel-collapse',
+			'titleHolder'   : '.lt-title-holder'
 		},
-
 		'initialize' : function () {
 			this.collection = new Backbone.Collection( this.model.get( 'Tasks' ) );
 			return this;
 		},
-		'events' : {
-			'click @ui.activateAccordion' : 'toggleAccordion'
-		},
 
 		'onRender' : function () {
+			var self = this;
+
 			if ( this.collection.length === 0 ) {
 				this.$el.find( '.lt-table-header' ).hide();
 			}
-		},
-
-		'toggleAccordion' : function ( e ) {
-			e.preventDefault();
-			this.$el.toggleClass( 'active' );
-			this.$el.find('.lt-title-holder').toggleClass( 'title-active' );
+			this.ui.panelCollapse.on('show.bs.collapse', function () {
+				self.$el.addClass( 'active' );
+				self.ui.titleHolder.addClass( 'title-active' );
+			} );
+			this.ui.panelCollapse.on('hide.bs.collapse', function () {
+				self.$el.removeClass( 'active' );
+				self.ui.titleHolder.removeClass( 'title-active' );
+			} );
 		}
 
 	} );

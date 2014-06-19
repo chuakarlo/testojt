@@ -16,11 +16,12 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'click .catalog-training' : 'showTrainingCatalog'
+			'click .catalog-training-anchor' : 'showTrainingCatalog'
 		},
 
 		'showTrainingCatalog' : function ( e ) {
 			e.preventDefault();
+			e.stopPropagation();
 			this.trigger( 'lt:training' );
 		},
 
