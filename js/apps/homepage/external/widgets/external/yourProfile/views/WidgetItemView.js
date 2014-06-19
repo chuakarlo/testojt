@@ -24,11 +24,6 @@ define( function ( require ) {
 		'thickness'       : 3
 	};
 
-	var statusDescription = {
-		false : message.statusDescfalse,
-		true  : message.statusDesctrue
-	};
-
 	function defaultImage ( e ) {
 		if ( $( e.currentTarget ).attr( 'src' ).split( '/' ).pop() !== 'default.png' ) {
 			$( e.currentTarget ).attr( 'src', getConfig( 'profileAvatarWebPath' ) + 'default.png' );
@@ -68,6 +63,12 @@ define( function ( require ) {
 		'className'       : 'col-md-12 no-padding user-settings',
 		'templateHelpers' : function ( ) {
 			var percentage = this.getPercentage( this.model.attributes );
+
+			var statusDescription = {
+				false : message.statusDescfalse,
+				true  : message.statusDesctrue
+			};
+
 			return {
 				'description'                : statusDescription[ percentage > 99 ],
 				'percentage'                 : percentage,
