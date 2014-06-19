@@ -13,6 +13,14 @@ define( function ( require ) {
 	var MiniPersonnelView  = require( 'common/views/MiniPersonnel' );
 	var stripHtml          = require( 'common/helpers/stripHtml' );
 
+	var Autolinker = require( 'autolinker' );
+
+	var autolinker = new Autolinker( {
+		newWindow   : false,
+		stripPrefix : false,
+		className   : 'link'
+	} );
+
 	return Marionette.ItemView.extend( {
 
 		'tagName' : 'li',
@@ -30,6 +38,10 @@ define( function ( require ) {
 		initialize : function () {
 			// strip html before deciding whether to show goals section or not
 			this.model.set( 'Message', stripHtml( this.model.get( 'Message' ) ) );
+		},
+
+		'onRender' : function () {
+			$( this.el ).find( 'p.wall-comment' ).prepend( autolinker.link( this.model.get( 'Message' ) ) );
 		},
 
 		'getTemplate' : function () {

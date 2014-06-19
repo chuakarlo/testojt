@@ -67,7 +67,7 @@ define( function ( require ) {
 				this.ui.replyBox.hide();
 			}
 
-			$( this.el ).find( 'p.wallNews' ).prepend( autolinker.link( this.model.get( 'Message' ) ) );
+			$( this.el ).find( 'p.wall-news' ).prepend( autolinker.link( this.model.get( 'Message' ) ) );
 		},
 
 		'showMiniPersonnel' : function ( event ) {
