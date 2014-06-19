@@ -38,7 +38,7 @@ define( function ( require ) {
 
 		view.$el.find( 'div.footer' ).append( footer );
 
-		view.$el.find( 'a.footerLink' ).on( 'click', function ( e ) {
+		view.$el.on( 'click touchstart', 'a.footerLink', function ( e ) {
 			App.Homepage.Utils.redirect( e );
 			return false;
 		} );
