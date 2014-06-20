@@ -75,11 +75,13 @@ define( function ( require ) {
 			'validation' : {
 
 				'FirstName' : {
-					'required' : true
+					'required'  : true,
+					'maxLength' : 20
 				},
 
 				'LastName' : {
-					'required' : true
+					'required'  : true,
+					'maxLength' : 20
 				},
 
 				'EmailAddress' : [

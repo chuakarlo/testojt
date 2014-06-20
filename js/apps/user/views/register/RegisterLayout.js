@@ -10,9 +10,6 @@ define( function ( require ) {
 
 	var template = require( 'text!user/templates/register/registerLayout.html' );
 
-	//custom plugin
-	var checkPasswordLength = require( 'user/plugins/checkPasswordLength' );
-
 	require( 'validation' );
 	require( 'backbone.stickit' );
 
@@ -25,15 +22,17 @@ define( function ( require ) {
 		},
 
 		'events' : {
+			'blur @ui.input'      : 'validateInput',
+			'keyup @ui.input'     : 'validateInput',
 			'submit'              : 'register',
 			'change @ui.email'    : 'checkEmail',
 			'change @ui.country'  : 'updateStates',
 			'change @ui.state'    : 'updateDistricts',
-			'change @ui.district' : 'updateSchools',
-			'keyup @ui.password'  : 'checkPasswordLength'
+			'change @ui.district' : 'updateSchools'
 		},
 
 		'ui' : {
+			'input'    : 'input',
 			'email'    : 'input[name=EmailAddress]',
 			'country'  : '[name="Country"]',
 			'state'    : '[name="State"]',
@@ -147,7 +146,7 @@ define( function ( require ) {
 
 				App.when( usedRequest ).done( function ( used ) {
 
-					App.flashMessage.close();
+					this.showFlashMessage( 'emailNotUsed' );
 
 					if ( used.length > 2 ) {
 						this.showFlashMessage( 'emailUsed' );
@@ -167,8 +166,8 @@ define( function ( require ) {
 
 		},
 
-		'checkPasswordLength' : function ( e ) {
-			checkPasswordLength( e.target, 12 );
+		'validateInput' : function ( event ) {
+			require( 'common/helpers/validateInput')( event, this );
 		},
 
 		'disableSelect' : function ( element ) {
@@ -319,7 +318,7 @@ define( function ( require ) {
 				});
 
 			} else {
-				this.showFlashMessage( 'creationError' );
+				this.showFlashMessage( 'invalidForm' );
 			}
 		},
 
@@ -330,7 +329,12 @@ define( function ( require ) {
 			var messages = {
 
 				'emailUsed' : {
-					'message' : 'This e-mail is already in use. Your school / district may have already set up your account.<br>Please try to reset your <a href="/#forgotPassword">password</a>.'
+					'message' : 'The e-mail (' + this.ui.email.val() + ') is already in use. Your school / district may have already set up your account.<br>Please try to reset your <a href="/#forgotPassword">password</a>.'
+				},
+
+				'emailNotUsed' : {
+					'message' : 'The e-mail (' + this.ui.email.val() + ') is not currently in use.',
+					'type'    : 'success'
 				},
 
 				'fetchingEmailError' : {
@@ -338,7 +342,7 @@ define( function ( require ) {
 				},
 
 				'checkingEmail' : {
-					'message' : 'Checking for e-mail in use.',
+					'message' : 'Checking e-mail (' + this.ui.email.val() + ') to see if it is already in use.',
 					'type'    : 'warning',
 					'timeout' : false
 				},
@@ -359,6 +363,10 @@ define( function ( require ) {
 
 				'fetchingSchoolsError' : {
 					'message' : 'An error occurred fetching schools. Please try again later.'
+				},
+
+				'invalidForm' : {
+					'message' : 'Please correct invalid form entries.'
 				}
 
 			};

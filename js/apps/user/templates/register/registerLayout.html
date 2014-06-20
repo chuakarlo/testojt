@@ -4,33 +4,31 @@
 <div class="form-container user-registration">
 	<form role="form" class="form-horizontal">
 		<div class="form-group">
-			<label class="control-label col-sm-3" for="firstname">First Name <span class="text-danger">&#10031;</span></label>
+			<label class="control-label col-sm-3" for="firstname">First Name <span class="text-danger">*</span></label>
 			<div class="col-sm-9">
-				<input type="text" class="form-control" id="firstname" name="FirstName" maxlength="20">
+				<input type="text" class="form-control" id="firstname" name="FirstName">
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-3" for="lastname">Last Name <span class="text-danger">&#10031;</span></label>
+			<label class="control-label col-sm-3" for="lastname">Last Name <span class="text-danger">*</span></label>
 			<div class="col-sm-9">
-				<input type="text" class="form-control" id="lastname" name="LastName" maxlength="20">
+				<input type="text" class="form-control" id="lastname" name="LastName">
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-3" for="email">Email <span class="text-danger">&#10031;</span></label>
+			<label class="control-label col-sm-3" for="email">Email <span class="text-danger">*</span></label>
 			<div class="col-sm-9">
 				<input type="email" class="form-control" id="email" name="EmailAddress" maxlength="128">
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-3" for="password"><br/>Password <span class="text-danger">&#10031;</span></label>
-
+			<label class="control-label col-sm-3" for="password">Password <span class="text-danger">*</span></label>
 			<div class="col-sm-9">
-				<span class="pull-right character-length">(12 character limit)</span>
 				<input type="password" class="form-control" id="password" name="Password">
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-3" for="password2">Re-type Password <span class="text-danger">&#10031;</span></label>
+			<label class="control-label col-sm-3" for="password2">Re-type Password <span class="text-danger">*</span></label>
 			<div class="col-sm-9">
 				<input type="password" class="form-control" id="password2" name="Password2">
 			</div>
@@ -48,38 +46,39 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-3" for="country">Country <span class="text-danger">&#10031;</span></label>
+			<label class="control-label col-sm-3" for="country">Country <span class="text-danger">*</span></label>
 			<div class="col-sm-9">
 				<select id="country" name="Country" class="form-control"></select>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-3" for="state">State / Province <span class="text-danger">&#10031;</span></label>
+			<label class="control-label col-sm-3" for="state">State / Province <span class="text-danger">*</span></label>
 			<div class="col-sm-9">
 				<select id="state" name="State" class="form-control" disabled></select>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-3" for="district-name">District Name <span class="text-danger">&#10031;</span></label>
+			<label class="control-label col-sm-3" for="district-name">District Name <span class="text-danger">*</span></label>
 			<div class="col-sm-9">
 				<select id="district-name" name="DistrictName" class="form-control" disabled></select>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-3" for="school-name">School Name <span class="text-danger">&#10031;</span></label>
+			<label class="control-label col-sm-3" for="school-name">School Name <span class="text-danger">*</span></label>
 			<div class="col-sm-9">
 				<select id="school-name" name="ClientId" class="form-control" disabled></select>
 			</div>
 		</div>
 		<div class="form-group">
 			<!-- <label class="control-label col-sm-3">Agreement</label> -->
-			<label class="control-label col-sm-3" for="eula">Agreement <span class="text-danger">&#10031;</span></label>
+			<label class="control-label col-sm-3" for="eula">Agreement <span class="text-danger">*</span></label>
 
 			<div class="col-sm-9">
 				<p class="help-block">By creating an account, you accept our license agreement.</p>
 				<div id="eula-content"></div>
 				<div>
-					<span class="text-danger">&#10031; Required</span>
+					<br/>
+					<span class="text-danger">* Required</span>
 				</div>
 			</div>
 		</div>
