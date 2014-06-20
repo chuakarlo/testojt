@@ -43,7 +43,7 @@ define( function ( require ) {
 					return;
 				}
 
-				this.setCookie( useWizardsCookie, jqXHR.UseWizards );
+				this.setCookie( useWizardsCookie, jqXHR.personnel.UseWizards );
 
 				if ( jqXHR.personnel.PersonnelId ) {
 					// Set the cookies before we trigger success
