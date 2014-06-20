@@ -41,6 +41,10 @@ define( function ( require ) {
 
 			'^settings' : function () {
 				return this.checkAll();
+			},
+
+			'^logout' : function () {
+				return this.authCheck( 'logout' );
 			}
 
 		},
@@ -49,10 +53,14 @@ define( function ( require ) {
 			return this.authCheck() && this.eulaCheck();
 		},
 
-		'authCheck' : function () {
+		'authCheck' : function ( route ) {
 
 			if ( !App.request( 'session:checkSession' ) ) {
-				Vent.trigger( 'login:show', Backbone.history.fragment );
+				if ( route === 'logout' ) {
+					Vent.trigger( 'login:show' );
+				} else {
+					Vent.trigger( 'login:show', Backbone.history.fragment );
+				}
 				return false;
 			}
 
