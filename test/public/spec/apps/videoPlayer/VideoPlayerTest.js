@@ -86,7 +86,10 @@ define( function ( require ) {
 
 			describe( '.showVideoResources', function () {
 
-				var model      = new App.VideoPlayer.Entities.Content();
+				var model = new App.VideoPlayer.Entities.Content( null, {
+					'getViewingId' : sinon.stub().returns( 0 )
+				} );
+
 				var collection = new App.VideoPlayer.Entities.RelatedVideos();
 
 				before( function () {

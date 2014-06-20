@@ -18,6 +18,7 @@ define( function ( require ) {
 
 	var App    = require( 'App' );
 	var config = App.request( 'videoPlayer:config' );
+	var getConfig = require( 'common/helpers/getConfig' );
 
 	var template = require( 'text!videoPlayer/templates/player/playerItemView.html' );
 
@@ -46,7 +47,7 @@ define( function ( require ) {
 					url += folder + '/';
 					url += file + bitrates + extension;
 				} else {
-					url = config.video.previewUrl + 'video/ugc/' + this.FileName;
+					url = getConfig( 'CDNURL' ) + '/PD360/media/video/ugc/' + this.FileName;
 				}
 
 				return url;
@@ -146,7 +147,7 @@ define( function ( require ) {
 				// Show 45 second video duration static display
 				player.staticDisplay( {
 					'timeToShow'   : config.video.previewLimit,
-					'imageUrl'     : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.get( 'ImageURL' ),
+					'imageUrl'     : getConfig( 'contentThumbnailPath' ) + this.model.get( 'ImageURL' ),
 					'imageOpacity' : 0.5,
 					'imageHeight'  : '100%',
 					'imageWidth'   : '100%',
@@ -156,7 +157,7 @@ define( function ( require ) {
 		},
 
 		'startTracking' : function ( player ) {
-			if ( !this.model.get( 'limited' ) ) {
+			if ( !this.model.get( 'limited' ) && !this.model.get( 'Uploaded' ) ) {
 				// Here we'll track the player time manually
 				// so we won't depend on the player element
 				// being available in reporting video progress

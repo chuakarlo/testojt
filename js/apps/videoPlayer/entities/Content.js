@@ -35,7 +35,8 @@ define( function ( require ) {
 			},
 
 			'getViewingId' : function () {
-				var now = moment().tz( 'MST7MDT' ).format( 'MMM DD, YYYY h:mm:ss a' );
+				var defer = App.Deferred();
+				var now   = moment().tz( 'MST7MDT' ).format( 'MMM DD, YYYY h:mm:ss a' );
 
 				var request = {
 					'path'       : 'core.ViewingProgressGateway',
@@ -58,10 +59,13 @@ define( function ( require ) {
 				var viewingId = Remoting.fetch( request );
 
 				App.when( viewingId ).done( function ( resp ) {
-
 					this.set( 'ViewingId', resp[ 0 ].ViewingId );
+					defer.resolve();
+				}.bind( this ) ).fail( function () {
+					defer.reject();
+				} );
 
-				}.bind( this ) );
+				return defer.promise();
 			},
 
 			'getReadOptions' : function () {
@@ -201,8 +205,6 @@ define( function ( require ) {
 							videoContent.set( 'licenseId', queryObject.licenseId );
 							videoContent.set( 'taskId', queryObject.taskId );
 						}
-
-						videoContent.getViewingId();
 
 						defer.resolve( videoContent );
 					},

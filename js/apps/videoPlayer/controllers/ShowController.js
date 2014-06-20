@@ -48,7 +48,9 @@ define( function ( require ) {
 				var queueContentsRequest = App.request( 'common:getQueueContents' );
 				var segmentsRequest      = App.request( 'videoPlayer:segments', videoModel.toJSON() );
 
-				App.when( questionsRequest, queueContentsRequest, segmentsRequest, relatedVideosRequest ).done( function ( questions, queueContents, segments, relatedVideos ) {
+				var viewingId = videoModel.getViewingId();
+
+				App.when( questionsRequest, queueContentsRequest, segmentsRequest, relatedVideosRequest, viewingId ).done( function ( questions, queueContents, segments, relatedVideos ) {
 					if ( !App.request( 'videoPlayer:isVideosRoute' ) ) {
 						return;
 					}

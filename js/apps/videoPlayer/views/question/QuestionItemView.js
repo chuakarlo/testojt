@@ -4,6 +4,7 @@ define( function ( require ) {
 	require( 'jquery.autogrow' );
 	require( 'videoPlayer/config' );
 
+	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
 	var template   = require( 'text!videoPlayer/templates/questionItemView.html' );
@@ -79,14 +80,14 @@ define( function ( require ) {
 			if ( answerText === prevAnswer ) {
 				return;
 			}
-			this.ui.notifier.html( this.saveProgress );
+			this.notify( this.saveProgress );
 			this.model.set( 'AnswerText', answerText );
 			this.model.save( null, {
 				'success' : function ( model ) {
-					this.ui.notifier.html( this.saveSuccess );
+					this.notify( this.saveSuccess );
 				}.bind( this ),
 				'error'   : function () {
-					this.ui.notifier.html( this.saveError );
+					this.notify( this.saveError );
 				}.bind( this )
 			} );
 		},
@@ -101,7 +102,13 @@ define( function ( require ) {
 
 		'startAutosave' : function () {
 			this.autosaving = true;
-			this.interval = setInterval( this.saveModel.bind( this ), config.autosaveInterval );
+			this.interval = setInterval( function () {
+				try {
+					this.saveModel();
+				} catch ( error ) {
+					clearInterval( this.interval );
+				}
+			}.bind( this ), config.autosaveInterval );
 		},
 
 		'onFocus' : function () {
@@ -111,8 +118,16 @@ define( function ( require ) {
 
 		'onBlur' : function () {
 			this.autosaving = false;
-			this.saveModel();
+			try {
+				this.saveModel();
+			} catch ( error ) { }
 			clearInterval( this.interval );
+		},
+
+		'notify' : function ( message ) {
+			if ( this.ui.notifier instanceof $ ) {
+				this.ui.notifier.html( message );
+			}
 		}
 
 	} );

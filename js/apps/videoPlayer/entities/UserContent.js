@@ -117,8 +117,6 @@ define( function ( require ) {
 				content.fetch( {
 
 					'success' : function () {
-						content.getViewingId();
-
 						defer.resolve( content );
 					},
 
