@@ -54,6 +54,10 @@ define( function ( require ) {
 					this.ui.resourceTab.parent().addClass( 'active' );
 					break;
 
+				case 'forums' :
+					this.ui.forumTab.parent().addClass( 'active' );
+					break;
+
 				case 'info' :
 					this.ui.infoTab.parent().addClass( 'active' );
 					break;

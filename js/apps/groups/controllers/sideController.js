@@ -23,12 +23,17 @@ define( function ( require ) {
 
 			'getData' : function ( groupId ) {
 
-				App.when(
-					this.model.getMembers( 8 ),
-					this.model.getLastUpdate(),
-					this.model.userIsGroupMember( Session.personnelId() )
-				).done( this.showGroup );
+				if ( this.lastGroupId !== groupId ) {
 
+					this.lastGroupId = groupId;
+
+					App.when(
+						this.model.getMembers( 8 ),
+						this.model.getLastUpdate(),
+						this.model.userIsGroupMember( Session.personnelId() )
+					).done( this.showGroup );
+
+				}
 			},
 
 			'showGroup' : function ( collection, lastUpdate, isMember ) {

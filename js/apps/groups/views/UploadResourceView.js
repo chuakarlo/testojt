@@ -158,7 +158,7 @@ define( function ( require ) {
 
 					this.ui.fileInput.on( 'complete', _.bind( function ( event, id, name, res ) {
 						if ( res.success ) {
-							var msg = 'NEW Resource: ' + resource.get( 'FileName' ) + '- ' + resource.get( 'FileDescription' );
+							var msg = 'NEW Resource: ' + resource.get( 'FileName' ) + ' - ' + resource.get( 'FileDescription' );
 							this.createNewsEntry( msg, l );
 							this.model.updateSearchIndex();
 						}

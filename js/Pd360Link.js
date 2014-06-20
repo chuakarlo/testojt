@@ -49,6 +49,8 @@ define( function ( require ) {
 		//-----------------------
 		// GROUP LINKS
 		//-----------------------
+		} else if ( _.has( link, 'LISTGROUPS' ) ) {
+			url = '#groups';
 		} else if ( _.has( link, 'JOINGROUP' ) ) {
 			url = '#groups/' + link.JOINGROUP;
 		}

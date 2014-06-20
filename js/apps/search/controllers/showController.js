@@ -95,7 +95,7 @@ define( function ( require ) {
 				this.searchCollection.queryModel = this.queryModel;
 			},
 
-			'setupInfiniteScroll' : function () {
+			'setupInfiniteScroll' : function ( filter ) {
 				// When the window scroll bar gets to 200px from the bottom
 				// of the window, fetch the next set of results.
 				var that = this;
@@ -115,14 +115,15 @@ define( function ( require ) {
 							that.showLoading();
 							// Reset starting point
 							that.searchCollection.fetch( {
-								'reset'   : false,
-								'remove'  : false,
+								'filter' : filter,
+								'reset'  : false,
+								'remove' : false,
 
 								'success' : function () {
 									that.searchCollection.queryModel.updateStart();
 									// TODO
 									// check length of queryModel results here.
-									that.setupInfiniteScroll();
+									that.setupInfiniteScroll( filter );
 									that.closeLoading();
 								},
 
@@ -176,7 +177,7 @@ define( function ( require ) {
 						this.searchCollection.queryModel.updateStart();
 
 						this.layout.results.show(searchCollectionView);
-						this.setupInfiniteScroll();
+						this.setupInfiniteScroll( filter );
 
 					}, this),
 

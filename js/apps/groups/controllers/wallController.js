@@ -26,6 +26,7 @@ define( function ( require ) {
 			},
 
 			'getData' : function ( groupId ) {
+
 				// This will hold all of our wall posts.
 				this.wallCollection = new App.Entities.WallCommentCollection([ ], {
 					'groupId' : groupId

@@ -13,23 +13,22 @@ define( function ( require ) {
 		require( 'groups/controllers/createController' );
 		require( 'groups/controllers/editController' );
 		require( 'groups/controllers/wallController' );
+		require( 'groups/controllers/leaderController' );
 		require( 'groups/controllers/headerController' );
 		require( 'groups/controllers/sideController' );
 		require( 'groups/controllers/resourcesController' );
 		require( 'groups/controllers/membersController' );
+		require( 'groups/controllers/forumController' );
+		require( 'groups/controllers/uploadResourceController' );
 		require( 'groups/views/Views' );
+		require( 'groups/entities/GroupCollection' );
+		require( 'groups/entities/GroupInviteCollection' );
 
 		// ## Groups App
 		App.module( 'Groups', function ( Groups ) {
 
 			var AuthRouter = require( 'AuthRouter' );
 			// load group
-			require( 'groups/controllers/listController' );
-			require( 'groups/controllers/editController' );
-			require( 'groups/views/Views' );
-			require( 'groups/entities/GroupCollection' );
-			require( 'groups/entities/GroupInviteCollection' );
-			require( 'groups/controllers/uploadResourceController' );
 
 			// configure groups routes
 			Groups.Router = AuthRouter.extend( {
@@ -72,7 +71,11 @@ define( function ( require ) {
 
 				},
 
-				'setup' : function ( groupId ) {
+				'setup' : function ( groupId, showInfo ) {
+
+					if ( !_.isBoolean( showInfo ) ) {
+						showInfo = true;
+					}
 					// Close the flash
 					App.request( 'pd360:hide' );
 
@@ -93,7 +96,16 @@ define( function ( require ) {
 						}
 
 						// Show the header and side views
-						this.showHeaderAndSide( groupId );
+						this.showHeader( groupId );
+
+						// Do we want to show the side crap?
+						if ( showInfo ) {
+							// We want the info on the side not the tabbed view
+							this.showGroupInfo( groupId, 'side' );
+						} else {
+							// shut er down
+							this.layout.groupInfoRegion.close();
+						}
 
 						def.resolve();
 					}, this ) );
@@ -101,7 +113,7 @@ define( function ( require ) {
 					return def.promise();
 				},
 
-				'showHeaderAndSide' : function ( groupId ) {
+				'showHeader' : function ( groupId ) {
 
 					if ( !this.headerController ) {
 						this.headerController = new Groups.Show.HeaderController( {
@@ -109,24 +121,23 @@ define( function ( require ) {
 							'model'  : this.model
 						} );
 					}
+					this.headerController.getData( groupId );
 
-					if ( !this.sideController ) {
-						this.sideController = new Groups.Show.SideController( {
-							'layout' : this.layout,
-							'model'  : this.model
-						} );
-					}
+				},
 
-					var controllers = [
-						this.headerController,
-						this.sideController
-					];
+				'showGroupLeaderTools' : function ( groupId ) {
+					groupId = parseInt( groupId );
 
-					_.each( controllers, function ( ctrl ) {
-						if ( ctrl.lastGroupId !== groupId ) {
-							ctrl.getData( groupId );
+					App.when( this.setup( groupId, false ) ).done( _.bind( function () {
+						if ( !this.leaderController ) {
+							this.leaderController = new Groups.Show.LeaderController( {
+								'layout' : this.layout,
+								'model'  : this.model
+							} );
 						}
-					} );
+
+						this.leaderController.getData( groupId );
+					}, this ) );
 				},
 
 				'showGroupWall' : function ( groupId ) {
@@ -143,9 +154,8 @@ define( function ( require ) {
 							} );
 						}
 
-						if ( this.wallController.lastGroupId !== groupId ) {
-							this.wallController.getData( groupId );
-						}
+						this.layout.groupsContentRegion.show( new App.Common.LoadingView () );
+						this.wallController.getData( groupId );
 
 					}, this ) );
 
@@ -164,31 +174,34 @@ define( function ( require ) {
 							} );
 						}
 
-						if ( this.membersController.lastGroupId !== groupId ) {
-							this.membersController.getData( groupId );
-						}
+						this.layout.groupsContentRegion.show( new App.Common.LoadingView () );
+						this.membersController.getData( groupId );
 
 					}, this ) );
 				},
 
-				'showGroupInfo' : function ( groupId ) {
+				'showGroupInfo' : function ( groupId, location ) {
+
+					location = location || 'tab';
 					groupId = parseInt( groupId );
 
-					App.when( this.setup( groupId ) ).done( _.bind( function () {
+					if ( !this.infoController ) {
+						this.infoController = new Groups.Show.SideController( {
+							'layout'          : this.layout,
+							'model'           : this.model,
+							'displayLocation' : location
+						} );
+					}
 
-						if ( !this.infoController ) {
-							this.infoController = new Groups.Show.SideController( {
-								'layout'          : this.layout,
-								'model'           : this.model,
-								'displayLocation' : 'tab'
-							} );
-						}
+					// If we don't have a current view in the info region,
+					// we probably need to reset the last group id to make
+					// sure it renders again
+					if ( !this.layout.groupInfoRegion.currentView ) {
+						this.infoController.lastGroupId = null;
+					}
 
-						if ( this.infoController.lastGroupId !== groupId ) {
-							this.membersController.getData( groupId );
-						}
+					this.infoController.getData( groupId );
 
-					}, this ) );
 				},
 
 				'showGroupResources' : function ( groupId ) {
@@ -204,17 +217,28 @@ define( function ( require ) {
 							} );
 						}
 
-						if ( this.resourcesController.lastGroupId !== groupId ) {
-							this.resourcesController.getData( groupId );
-						}
+						this.layout.groupsContentRegion.show( new App.Common.LoadingView () );
+						this.resourcesController.getData( groupId );
 
 					}, this ) );
 				},
 
 				'showGroupForums' : function ( groupId ) {
-					App.navigate( 'resources/communities/5/' + groupId, {
-						'trigger' : true
-					} );
+
+					groupId = parseInt( groupId );
+
+					App.when( this.setup( groupId, false ) ).done( _.bind( function () {
+						if ( !this.forumController ) {
+							this.forumController = new Groups.Show.ForumController( {
+								'layout' : this.layout,
+								'model'  : this.model
+							} );
+						}
+
+						this.forumController.showForums();
+
+					}, this ) );
+
 				},
 
 				'onLayoutClose' : function () {
@@ -224,28 +248,21 @@ define( function ( require ) {
 					this.headerController.close();
 					this.headerController = null;
 
-					this.sideController.close();
-					this.sideController = null;
+					var controllers = [
+						'infoController',
+						'wallController',
+						'resourcesController',
+						'forumController',
+						'membersController',
+						'leaderController'
+					];
 
-					if ( this.wallController ) {
-						this.wallController.close();
-						this.wallController = null;
-					}
-
-					if ( this.resourcesController ) {
-						this.resourcesController.close();
-						this.resourcesController = null;
-					}
-
-					if ( this.infoController ) {
-						this.infoController.close();
-						this.infoController = null;
-					}
-
-					if ( this.membersController ) {
-						this.membersController.close();
-						this.membersController = null;
-					}
+					_.each( controllers, function ( ctrl ) {
+						if ( _.has( this, ctrl ) && this[ ctrl ] ) {
+							this[ ctrl ].close();
+							this[ ctrl ] = null;
+						}
+					}, this );
 
 				},
 
@@ -270,47 +287,6 @@ define( function ( require ) {
 
 				'joinGroup' : function ( model ) {
 					Groups.Edit.Controller.joinGroup( model );
-				},
-
-				'showGroupLeaderTools' : function ( groupId ) {
-
-					groupId = parseInt( groupId );
-
-					if ( !this.model || this.model.get( 'LicenseId') !== groupId ) {
-
-						this.model = new App.Entities.GroupModel( {
-							'LicenseId' : groupId
-						} );
-					}
-
-					this.model.fetch( {
-						'success' : function ( model, res, options) {
-							var persId = Session.personnelId();
-							var pd360Loaded = App.request( 'pd360:loaded' );
-
-							App.content.show( new App.Common.LoadingView() );
-
-							App.when(
-								model.userIsAdmin( persId ),
-								model.userIsCreator( persId ),
-								pd360Loaded
-							).done( function ( groupAdmin, groupCreator ) {
-
-								if ( groupAdmin === true || groupCreator === true ) {
-									App.content.close();
-									App.request( 'pd360:navigate', 'communities', 'groupsBrowse', {
-										'LicenseId' : groupId
-									} );
-								} else {
-									App.navigate( 'home', {
-										'trigger' : true
-									} );
-								}
-							} );
-
-						}
-					} );
-
 				},
 
 				'uploadResource' : function ( groupId ) {

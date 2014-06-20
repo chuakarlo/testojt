@@ -16,7 +16,6 @@ define( function ( require ) {
 			'initialize' : function ( options ) {
 				this.layout = options.layout || null;
 				this.model = options.model;
-				this.lastGroupId = null;
 
 				_.bindAll( this, 'showGroup');
 			},
