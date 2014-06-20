@@ -20,6 +20,7 @@ define( function ( require ) {
 
 		Main.helper = {
 			'_showView' : function ( view ) {
+				legendRegion.reset();
 				contentRegion.show( view );
 			},
 
