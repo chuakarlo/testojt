@@ -92,6 +92,13 @@
 	}
 }
 
+.dropdown-menu {
+	& > li.user-setting {
+		padding: 10px 0px 10px 5px;
+		font-size: 15px;
+	}
+}
+
 // --------------------------------
 // Notification badge and icon
 // --------------------------------
@@ -147,7 +154,7 @@
 
 			// Small Screen
 			@media ( max-width: @screen-xs-max ) {
-				padding: 5px 15px 5px 25px;
+				padding: 10px 15px 10px 25px;
 
 				&:hover,
 				&:focus {
@@ -161,9 +168,11 @@
 
 				a.tile {
 					color: #fff;
+					font-size: 15px;
 
 					.title {
 						margin-bottom: 0;
+						margin-top: 4px;
 					}
 				}
 			}
