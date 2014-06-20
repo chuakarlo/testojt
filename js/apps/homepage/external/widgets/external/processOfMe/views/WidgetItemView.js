@@ -12,8 +12,6 @@ define( function ( require ) {
 	var widgetDirectory = 'resources/learning/observations/';
 	var templateBind  = _.template( template );
 
-	var message = App.Homepage.Utils.message;
-
 	return Marionette.ItemView.extend( {
 		'template'         : templateBind,
 		'className'        : function () {
@@ -63,9 +61,9 @@ define( function ( require ) {
 		'getTextDueStatus' : function () {
 			var completeByDate = this.model.get( 'CompleteByDate' );
 			if ( moment().isAfter( completeByDate ) ) {
-				return message.processOfMePastDue;
+				return App.Homepage.Utils.message.processOfMePastDue;
 			} else {
-				return message.processOfMeDue;
+				return App.Homepage.Utils.message.processOfMeDue;
 			}
 		}
 

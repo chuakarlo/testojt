@@ -9,7 +9,6 @@ define( function ( require ) {
 	var ItemView             = require( 'apps/homepage/external/widgets/views/EmptyWidgetView' );
 	var footerTemplate       = require( 'text!apps/homepage/external/widgets/templates/widgetFooterTemplate.html' );
 	var WidgetItemCollection = require( 'apps/homepage/external/widgets/collections/WidgetItemCollection' );
-	var widgetLookup         = App.Homepage.Widgets.allWidgets;
 
 	function returnCollection ( view, collection, widgets ) {
 		return collection;
@@ -49,7 +48,7 @@ define( function ( require ) {
 	}
 
 	function setTemplateHelpers ( view ) {
-		var widgets = widgetLookup()[ view.model.get( 'WidgetId' ) ];
+		var widgets = App.Homepage.Widgets.allWidgets()[ view.model.get( 'WidgetId' ) ];
 		return {
 			'header' : widgets.header(),
 			'footer' : ''
@@ -57,7 +56,7 @@ define( function ( require ) {
 	}
 
 	function doInitialize ( view ) {
-		var widgets = widgetLookup()[ view.model.get( 'WidgetId' ) ];
+		var widgets = App.Homepage.Widgets.allWidgets()[ view.model.get( 'WidgetId' ) ];
 		view.itemView   = widgets.getExternalView;
 		view.collection = new WidgetItemCollection();
 
@@ -67,7 +66,7 @@ define( function ( require ) {
 	}
 
 	function doOnRender ( view ) {
-		var widgets = widgetLookup()[ view.model.get( 'WidgetId' ) ];
+		var widgets = App.Homepage.Widgets.allWidgets()[ view.model.get( 'WidgetId' ) ];
 		view.$el.attr( { 'id' : widgets._id } );
 	}
 

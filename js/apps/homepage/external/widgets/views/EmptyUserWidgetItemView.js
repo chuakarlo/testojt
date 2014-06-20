@@ -6,17 +6,15 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var template   = require( 'text!apps/homepage/external/widgets/templates/emptyWidgetItemView.html' );
 
-	var message    = App.Homepage.Utils.message;
-
 	return Marionette.ItemView.extend( {
 		'tagName'         : 'li',
 		'template'        : _.template( template ),
 		'className'       : 'widget-specific widget-placeholder-wrapper',
 		'templateHelpers' : function () {
 			return {
-				'emptyMsg'    : message.emptyMsg,
-				'makeUseMsg1' : message.makeUseMsg1,
-				'makeUseMsg2' : message.makeUseMsg2
+				'emptyMsg'    : App.Homepage.Utils.message.emptyMsg,
+				'makeUseMsg1' : App.Homepage.Utils.message.makeUseMsg1,
+				'makeUseMsg2' : App.Homepage.Utils.message.makeUseMsg2
 			};
 		}
 	} );

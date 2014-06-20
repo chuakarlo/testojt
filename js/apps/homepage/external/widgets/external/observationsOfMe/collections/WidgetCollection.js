@@ -7,8 +7,6 @@ define ( function ( require ) {
 	var Session     = require( 'Session' );
 	var App         = require( 'App' );
 
-	var message = App.Homepage.Utils.message;
-
 	function widgetRequest ( personnelId ) {
 		return {
 			'path'   : 'com.schoolimprovement.pd360.dao.ObservationService',
@@ -37,7 +35,7 @@ define ( function ( require ) {
 			} ).fail( function ( error ) {
 
 				App.vent.trigger( 'flash:message', {
-					'message' : message.observationsErrMsg
+					'message' : App.Homepage.Utils.message.observationsErrMsg
 				} );
 
 			} );

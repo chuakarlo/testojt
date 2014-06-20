@@ -9,9 +9,6 @@ define( function ( require ) {
 
 	var instance        = new BaseObj();
 
-	App.Homepage.Utils.loadMessages( Messages );
-	var message = App.Homepage.Utils.message;
-
 	function doGetCollection ( callback, options ) {
 		var collection = new CollectionItems( options );
 
@@ -27,13 +24,13 @@ define( function ( require ) {
 	return instance.extend( {
 		'WidgetId'        : 6,
 		'WidgetName'      : function () {
-			return message.processOfMeTitle;
+			return App.Homepage.Utils.message.processOfMeTitle;
 		},
 		'header'          : function () {
 			return this.WidgetName();
 		},
 		'Description'     : function () {
-			return message.processOfMeDescription;
+			return App.Homepage.Utils.message.processOfMeDescription;
 		},
 		'imgSrc'          : function () {
 			return '/img/homepage-widgets/processOfMe.png';
@@ -44,18 +41,19 @@ define( function ( require ) {
 		'em'              : 7,
 		'getExternalView' : WidgetItemView, // items template
 		'getCollection'   : function ( callback, options ) {
+			App.Homepage.Utils.loadMessages( Messages );
 			doGetCollection( callback, options );
 		},
 		'_mainUrl'        : 'resources/learning/processes',
 		'_id'             : 'processOfMe',
 		'EmptyMessage'    : function () {
-			return message.processOfMeEmptyMsg;
+			return App.Homepage.Utils.message.processOfMeEmptyMsg;
 		},
 		'EmptyType'       : function () {
 			return 'fa-video-camera';
 		},
 		'_footer'         : function () {
-			return message.processOfMeFooter;
+			return App.Homepage.Utils.message.processOfMeFooter;
 		}
 	} );
 } );

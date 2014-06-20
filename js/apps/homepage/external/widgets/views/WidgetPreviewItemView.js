@@ -6,15 +6,13 @@ define( function ( require ) {
 	var template   = require( 'text!apps/homepage/external/widgets/templates/widgetPreviewItemView.html' );
 	var App        = require('App');
 
-	var message    = App.Homepage.Utils.message;
-
 	function doSetTemplateHelpers ( view ) {
 		var action    = view.getWidgetAction();
 		var modelData = view.model;
 
 		return {
-			'closeName'    : message.closeName,
-			'andCloseName' : message.andCloseName,
+			'closeName'    : App.Homepage.Utils.message.closeName,
+			'andCloseName' : App.Homepage.Utils.message.andCloseName,
 			'action'       : action,
 			'imgSrc'       : modelData.get('imgSrc')(),
 			'WidgetName'   : modelData.get('WidgetName')(),

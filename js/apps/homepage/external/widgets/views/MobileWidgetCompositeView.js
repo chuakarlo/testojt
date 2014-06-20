@@ -12,7 +12,6 @@ define( function ( require ) {
 
 	var template             = require( 'text!apps/homepage/external/widgets/templates/mobileWidgetCompositeView.html' );
 	var MobileWidgetItemView = require( 'apps/homepage/external/widgets/views/MobileWidgetItemView' );
-	var message = App.Homepage.Utils.message;
 
 	var selectPickerOption = {
 		'columnSize' : 'col-xs-4'
@@ -44,13 +43,13 @@ define( function ( require ) {
 		'itemViewContainer' : '#widget-mobile-selection ul',
 		'templateHelpers' : function () {
 			return {
-				'widgetColName' : message.widgetName,
-				'allWidgetName' : message.allWidgetName,
-				'activeName'    : message.activeName,
-				'inactiveName'  : message.inactiveName,
-				'closeName'     : message.closeName,
-				'saveName'      : message.saveName,
-				'saveAndName'   : message.saveAndName
+				'widgetColName' : App.Homepage.Utils.message.widgetName,
+				'allWidgetName' : App.Homepage.Utils.message.allWidgetName,
+				'activeName'    : App.Homepage.Utils.message.activeName,
+				'inactiveName'  : App.Homepage.Utils.message.inactiveName,
+				'closeName'     : App.Homepage.Utils.message.closeName,
+				'saveName'      : App.Homepage.Utils.message.saveName,
+				'saveAndName'   : App.Homepage.Utils.message.saveAndName
 			};
 		},
 		'itemViewOptions' : function () {
@@ -145,7 +144,7 @@ define( function ( require ) {
 
 		'showMessageToUser' : function ( message, type ) {
 			App.vent.trigger( 'flash:message', {
-				'message' : message,
+				'message' : App.Homepage.Utils.message,
 				'type'    : type
 			} );
 		},

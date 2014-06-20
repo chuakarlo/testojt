@@ -8,9 +8,11 @@ define( function ( require ) {
 	var instance = new BaseObj();
 
 	instance._id = 'recommended';
-	App.Homepage.Utils.loadMessages(messages);
 
 	return instance.extend({
-		'getExternalView' : itemView
+		'getExternalView' : function () {
+			App.Homepage.Utils.loadMessages( messages );
+			return itemView;
+		}
 	} );
 } );

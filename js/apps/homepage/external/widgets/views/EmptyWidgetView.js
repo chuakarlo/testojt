@@ -8,8 +8,6 @@ define( function ( require ) {
 
 	var className = 'col-md-12 no-padding empty-widget-holder';
 
-	var Utils = App.Homepage.Utils;
-
 	return Marionette.ItemView.extend( {
 		'template'        : _.template( template ),
 		'ui'              : {
@@ -25,8 +23,8 @@ define( function ( require ) {
 			return {
 				'content'         : this.EmptyMessage,
 				'icon'            : this.EmptyType,
-				'emptyWidgetMsg'  : Utils.message.emptyWidgetMsg,
-				'emptywidgetHelp' : Utils.message.emptywidgetHelp
+				'emptyWidgetMsg'  : App.Homepage.Utils.message.emptyWidgetMsg,
+				'emptywidgetHelp' : App.Homepage.Utils.message.emptywidgetHelp
 
 			};
 		},

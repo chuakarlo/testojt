@@ -27,7 +27,7 @@ define( function ( require ) {
 		} );
 
 		Utils.loadMessages = function ( json ) {
-			$.extend( Utils.message, JSON.parse( json ) );
+			Utils.message = $.extend( Utils.message, JSON.parse( json ) );
 		};
 
 		Utils.defaults = {

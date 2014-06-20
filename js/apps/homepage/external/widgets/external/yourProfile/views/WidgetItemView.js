@@ -11,8 +11,6 @@ define( function ( require ) {
 
 	var widgetDirectory = 'settings/';
 
-	var message = App.Homepage.Utils.message;
-
 	var forcedCss = {
 		'width'  : '1em',
 		'height' : '1em'
@@ -65,17 +63,17 @@ define( function ( require ) {
 			var percentage = this.getPercentage( this.model.attributes );
 
 			var statusDescription = {
-				false : message.statusDescfalse,
-				true  : message.statusDesctrue
+				false : App.Homepage.Utils.message.statusDescfalse,
+				true  : App.Homepage.Utils.message.statusDesctrue
 			};
 
 			return {
 				'description'                : statusDescription[ percentage > 99 ],
 				'complete'                   : ( percentage > 99 ) ? 'true' : 'false',
 				'percentage'                 : percentage,
-				'yourProfileName'            : message.yourProfileName,
-				'yourProfilePersonalRepName' : message.yourProfilePersonalRepName,
-				'yourProfileLicenses'        : message.yourProfileLicenses
+				'yourProfileName'            : App.Homepage.Utils.message.yourProfileName,
+				'yourProfilePersonalRepName' : App.Homepage.Utils.message.yourProfilePersonalRepName,
+				'yourProfileLicenses'        : App.Homepage.Utils.message.yourProfileLicenses
 			};
 		},
 		'getPercentage'   : function ( m ) {

@@ -17,8 +17,7 @@ define( function ( require ) {
 	var template                  = require( 'text!apps/homepage/external/widgets/templates/widgetLayoutView.html' );
 
 	var panelStatuses = [ 'opened', 'closed' ];
-	var widgets       = App.Homepage.Widgets.allWidgets().splice(1);
-
+	var widgets;
 	//early load for performance
 	require( 'pc-adjustablePeek' );
 
@@ -36,6 +35,9 @@ define( function ( require ) {
 		App.when( Remoting.fetch( fetchingModels( Session.personnelId() ) ) ).done( function ( models ) {
 
 			if ( App.request( 'homepage:isHomeRoute' ) ) {
+
+				widgets = App.Homepage.Widgets.allWidgets().splice(1);
+
 				if ( !models || !models[ 0 ] || models[ 0 ].length === 0 ) {
 					models[ 0 ] = [ { WidgetId : 5 }, { WidgetId : 4 }, { WidgetId : 2 } ];
 				}

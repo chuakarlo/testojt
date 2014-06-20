@@ -9,9 +9,6 @@ define( function ( require ) {
 
 	var instance        = new BaseObj();
 
-	App.Homepage.Utils.loadMessages( Messages );
-	var message = App.Homepage.Utils.message;
-
 	function doGetCollection ( callback, options ) {
 		var collection = new CollectionItems( options );
 		collection.fetch( {
@@ -26,13 +23,13 @@ define( function ( require ) {
 	return instance.extend( {
 		'WidgetId'        : 5,
 		'WidgetName'      : function () {
-			return message.observationsTitle;
+			return App.Homepage.Utils.message.observationsTitle;
 		},
 		'header'          : function () {
 			return this.WidgetName();
 		},
 		'Description'     : function () {
-			return message.observationsDescription;
+			return App.Homepage.Utils.message.observationsDescription;
 		},
 		'imgSrc'          : function () {
 			return '/img/src_Observations_zps8bc3f1ab.png';
@@ -43,6 +40,7 @@ define( function ( require ) {
 		'em'              : 7,
 		'getExternalView' : WidgetItemView,
 		'getCollection'   : function ( callback, options ) {
+			App.Homepage.Utils.loadMessages( Messages );
 			doGetCollection ( callback, options );
 		},
 		'_id'             : 'observationsOfMe',
@@ -53,7 +51,7 @@ define( function ( require ) {
 			return 'fa-eye-empty';
 		},
 		'_footer'         : function ( ) {
-			return message.observationsFooter;
+			return App.Homepage.Utils.message.observationsFooter;
 		},
 		'_mainUrl'        : 'resources/learning/observations'
 	} );

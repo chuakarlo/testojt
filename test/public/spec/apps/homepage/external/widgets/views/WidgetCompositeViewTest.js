@@ -7,7 +7,6 @@ define( function ( require ) {
 		var App        = require( 'App' );
 		var Marionette = require( 'marionette' );
 		var Remoting   = require( 'Remoting' );
-		var widgets    = App.Homepage.Widgets.allWidgets().splice(1);
 
 		//collections
 		var UserWidgetCollection = require( 'apps/homepage/external/widgets/collections/UserWidgetCollection' );
@@ -151,6 +150,7 @@ define( function ( require ) {
 			var collection           = [ yourProfile, observation, courses, groupActivity ];
 			var userWidgetCollection = [ yourProfile, observation ];
 
+			var widgets    = App.Homepage.Widgets.allWidgets().splice(1);
 			var widgetComposite = new WidgetComposite ( {
 				'collection'                 : new WidgetCollection( widgets ),
 				'widgetCollection'           : new WidgetCollection( collection ),

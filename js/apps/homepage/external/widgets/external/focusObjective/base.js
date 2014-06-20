@@ -8,9 +8,6 @@ define( function ( require ) {
 	var CollectionItems = require( 'apps/homepage/external/widgets/external/focusObjective/collections/WidgetCollection' );
 	var Messages        = require( 'text!apps/homepage/external/widgets/external/focusObjective/configuration/messages.json' );
 
-	App.Homepage.Utils.loadMessages(Messages);
-	var message = App.Homepage.Utils.message;
-
 	function doGetCollection ( callback, options ) {
 		var collection = new CollectionItems( options );
 
@@ -26,13 +23,13 @@ define( function ( require ) {
 	return instance.extend( {
 		'WidgetId'        : 2,
 		'WidgetName'      : function () {
-			return message.focusObjectiveTitle;
+			return App.Homepage.Utils.message.focusObjectiveTitle;
 		},
 		'header'          : function () {
 			return this.WidgetName();
 		},
 		'Description'     : function () {
-			return	message.focusObjectiveDescription;
+			return	App.Homepage.Utils.message.focusObjectiveDescription;
 		},
 		'imgSrc'          : function () {
 			return '/img/src_focusObjectives_zpsfa2cacc5.png';
@@ -43,6 +40,7 @@ define( function ( require ) {
 		'em'              : 7,
 		'getExternalView' : WidgetItemView, // items template
 		'getCollection'   : function ( callback, options ) {
+			App.Homepage.Utils.loadMessages(Messages);
 			doGetCollection( callback, options );
 		},
 		'_mainUrl'        : 'resources/learning/focus-objectives',
@@ -54,7 +52,7 @@ define( function ( require ) {
 			return 'fa-video-camera';
 		},
 		'_footer'         : function ( ) {
-			return message.focusObjectiveFooter;
+			return App.Homepage.Utils.message.focusObjectiveFooter;
 		}
 	} );
 } );

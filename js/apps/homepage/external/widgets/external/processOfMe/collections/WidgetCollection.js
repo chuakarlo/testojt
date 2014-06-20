@@ -6,8 +6,6 @@ define ( function (require ) {
 	var Session  = require( 'Session' );
 	var App      = require( 'App' );
 
-	var message = App.Homepage.Utils.message;
-
 	function widgetRequest ( personnelId ) {
 		return {
 			'path'   : 'com.schoolimprovement.pd360.dao.process.ProcessGateway',
@@ -27,7 +25,7 @@ define ( function (require ) {
 				options.success( new Backbone.Collection( models[ 0 ] ) );
 			} ).fail( function ( error ) {
 				App.vent.trigger( 'flash:message', {
-					'message' : message.processOfMeErrMsg
+					'message' : App.Homepage.Utils.message.processOfMeErrMsg
 				} );
 			} );
 		}

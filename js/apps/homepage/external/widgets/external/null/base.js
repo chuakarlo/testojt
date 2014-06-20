@@ -6,21 +6,19 @@ define( function ( require ) {
 	var Messages        = require( 'text!apps/homepage/external/widgets/external/null/configuration/messages.json' );
 	var instance     = new BaseObj();
 
-	App.Homepage.Utils.loadMessages(Messages);
-	var message = App.Homepage.Utils.message;
-
 	instance._id = 'widgets';
 
 	return instance.extend( {
 		'WidgetId'    : 0,
 		'WidgetName'  : function () {
-			return message.nullTitle;
+			App.Homepage.Utils.loadMessages(Messages);
+			return App.Homepage.Utils.message.nullTitle;
 		},
 		'header'      : function () {
-			return message.nullTitle;
+			return App.Homepage.Utils.message.nullTitle;
 		},
 		'footer'      : function () {
-			return message.nullFooter;
+			return App.Homepage.Utils.message.nullFooter;
 		},
 		'Description' : function () {
 			return '';

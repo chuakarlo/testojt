@@ -9,9 +9,6 @@ define( function ( require ) {
 
 	var instance        = new BaseObj();
 
-	App.Homepage.Utils.loadMessages( Messages );
-	var message = App.Homepage.Utils.message;
-
 	function doGetCollection ( callback, options ) {
 		var collection = new CollectionItems( options );
 		collection.fetch( {
@@ -26,13 +23,13 @@ define( function ( require ) {
 	return instance.extend( {
 		'WidgetId'        : 4,
 		'WidgetName'      : function () {
-			return message.userSettingsName;
+			return App.Homepage.Utils.message.userSettingsName;
 		},
 		'header'          : function () {
 			return this.WidgetName();
 		},
 		'Description'     : function () {
-			return message.userSettingsDesc;
+			return App.Homepage.Utils.message.userSettingsDesc;
 		},
 		'imgSrc'          : function () {
 			return '/img/src_userSettings_zpse7ae34fc.png';
@@ -43,6 +40,7 @@ define( function ( require ) {
 		'em'              : 8.5,
 		'getExternalView' : WidgetItemView,
 		'getCollection'   : function ( callback, options ) {
+			App.Homepage.Utils.loadMessages( Messages );
 			doGetCollection ( callback, options );
 		},
 		'_id'             : 'yourProfile',
@@ -53,7 +51,7 @@ define( function ( require ) {
 			return 'fa-user';
 		},
 		'_footer'         : function ( ) {
-			return message.userSettingsFooter;
+			return App.Homepage.Utils.message.userSettingsFooter;
 		},
 		'_mainUrl'        : 'settings/profile'
 	} );

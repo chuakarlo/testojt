@@ -8,10 +8,8 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var Session    = require( 'Session' );
 
-	var widgetLookup = App.Homepage.Widgets.allWidgets;
-
 	function setTemplateHelpers ( view ) {
-		view.widgets = widgetLookup()[ view.model.get( 'WidgetId' ) ];
+		view.widgets = App.Homepage.Widgets.allWidgets()[ view.model.get( 'WidgetId' ) ];
 		return {
 			'widgetStatus' : view.getWidgetStatus(),
 			'widgetIcon'   : view.getWidgetIcon(),
