@@ -2,6 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var _          = require( 'underscore' );
+	var $          = require( 'jquery' );
 	var Backbone   = require( 'backbone' );
 	var Marionette = require( 'marionette' );
 	var template   = require( 'text!user/templates/eula/eulaLayout.html' );
@@ -13,6 +14,7 @@ define( function ( require ) {
 	require( 'timezone' );
 	require( 'validation' );
 	require( 'backbone.stickit' );
+	require( 'user/SessionHelper' );
 
 	return Marionette.Layout.extend( {
 
@@ -68,8 +70,9 @@ define( function ( require ) {
 				this.model.save( null, {
 
 					'success' : function () {
+						// Add a cookie showing the user has accepted the EULA
+						$.cookie( App.request('session:cookies', 'eula' ), now );
 						l.stop();
-						App.request( 'session:personnel' ).LicenseAccepted = now;
 						App.navigate( 'home', { 'trigger' : true } );
 					},
 

@@ -2,6 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var _          = require( 'underscore' );
+	var $          = require( 'jquery' );
 	var Session    = require( 'Session' );
 	var Vent       = require( 'Vent' );
 	var App        = require( 'App' );
@@ -201,7 +202,7 @@ define( function ( require ) {
 
 		// set handler when requesting if EULA is accepted
 		App.reqres.setHandler( 'session:eulaAccepted', function () {
-			return App.request( 'session:personnel', 'LicenseAccepted' );
+			return $.cookie( App.request( 'session:cookies', 'eula' ) );
 		} );
 
 		// set handler when requesting if session is authenticated

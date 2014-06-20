@@ -15,6 +15,7 @@ define( function ( require ) {
 
 	var usernameCookie   = cookies.username;
 	var personnelCookie  = cookies.personnel;
+	var eulaCookie       = cookies.eula;
 	var cfCookie         = cookies.cf;
 	var useWizardsCookie = cookies.useWizards;
 	var cookieOptions    = { 'path' : '/' };
@@ -58,7 +59,9 @@ define( function ( require ) {
 						}
 					}
 
+					// Add the Personnel ID and EULA cookies
 					this.setCookie( personnelCookie, jqXHR.personnel.PersonnelId );
+					this.setCookie( eulaCookie, jqXHR.personnel.LicenseAccepted );
 
 					this.requestedRoute = null;
 					// After the session is initialized trigger the other events
@@ -161,6 +164,7 @@ define( function ( require ) {
 			this.removeCookie( useWizardsCookie );
 			this.removeCookie( usernameCookie );
 			this.removeCookie( personnelCookie );
+			this.removeCookie( eulaCookie );
 
 			// trigger session change for menus, etc
 			Vent.trigger( 'session:destroy' );
