@@ -91,6 +91,9 @@ define( function ( require ) {
 					{
 						'pattern' : 'email',
 						'msg'     : 'A valid email is required'
+					},
+					{
+						'maxLength' : 128
 					}
 				]
 

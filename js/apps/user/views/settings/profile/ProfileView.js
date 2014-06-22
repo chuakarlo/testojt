@@ -27,6 +27,7 @@ define( function ( require ) {
 		'tagName' : 'form',
 
 		'ui' : {
+			'input'     : 'input',
 			'firstname' : '#firstname',
 			'lastname'  : '#lastname',
 			'email'     : '#email',
@@ -42,6 +43,8 @@ define( function ( require ) {
 		},
 
 		'events' : {
+			'blur @ui.input'     : 'validateInput',
+			'keyup @ui.input'    : 'validateInput',
 			'click @ui.save'     : 'saveInfo',
 			'click @ui.password' : 'changePassword'
 		},
@@ -65,6 +68,10 @@ define( function ( require ) {
 						{
 							'minLength' : 4,
 							'msg'       : 'New password must be at least 4 characters'
+						},
+						{
+							'maxLength' : 12,
+							'msg'       : 'New password must be at most 12 characters'
 						},
 						{
 							'fn' : function ( value, attr, computedState ) {
@@ -186,6 +193,10 @@ define( function ( require ) {
 
 			} );
 
+		},
+
+		'validateInput' : function ( event ) {
+			require( 'common/helpers/validateInput')( event, this );
 		},
 
 		// ProfessionalStartDate is formated as a date but user can only select year
@@ -345,6 +356,8 @@ define( function ( require ) {
 
 				}.bind( this ) );
 
+			} else {
+				App.vent.trigger( 'flash:message', { 'message' : 'Please correct invalid form entries.' } );
 			}
 		},
 

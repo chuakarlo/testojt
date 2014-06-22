@@ -22,6 +22,7 @@ define( function ( require ) {
 		'className' : 'modal-dialog modal-md',
 
 		'ui' : {
+			'input'   : 'input',
 			'current' : '#current-password',
 			'updated' : '#update-password',
 			'verify'  : '#verify-password',
@@ -29,7 +30,9 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'click @ui.save' : 'savePassword'
+			'blur @ui.input'  : 'validateInput',
+			'keyup @ui.input' : 'validateInput',
+			'click @ui.save'  : 'savePassword'
 		},
 
 		'bindings' : {
@@ -44,6 +47,10 @@ define( function ( require ) {
 
 		'onRender' : function () {
 			this.stickit();
+		},
+
+		'validateInput' : function ( event ) {
+			require( 'common/helpers/validateInput')( event, this );
 		},
 
 		'savePassword' : function ( event ) {
