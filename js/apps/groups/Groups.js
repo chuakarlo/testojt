@@ -154,7 +154,10 @@ define( function ( require ) {
 							} );
 						}
 
-						this.layout.groupsContentRegion.show( new App.Common.LoadingView () );
+						if ( this.model.isMember ) {
+							this.layout.groupsContentRegion.show( new App.Common.LoadingView () );
+						}
+
 						this.wallController.getData( groupId );
 
 					}, this ) );
@@ -196,7 +199,7 @@ define( function ( require ) {
 					// If we don't have a current view in the info region,
 					// we probably need to reset the last group id to make
 					// sure it renders again
-					if ( !this.layout.groupInfoRegion.currentView ) {
+					if ( _.has( this.layout.groupInfoRegion, 'currentView') ) {
 						this.infoController.lastGroupId = null;
 					}
 

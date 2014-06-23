@@ -6,6 +6,7 @@ define( function ( require ) {
 	var $        = require( 'jquery' );
 	var Vent     = require( 'Vent' );
 	var _        = require( 'underscore' );
+	var Backbone = require( 'backbone' );
 
 	App.module( 'Groups.Edit', function ( Edit ) {
 
@@ -53,7 +54,7 @@ define( function ( require ) {
 
 				App.when( fetchingData ).done( function ( results ) {
 
-					App.navigate( 'groups', { 'trigger' : true } );
+					Backbone.history.loadUrl(Backbone.history.fragment);
 
 				} ).fail( App.errorHandler );
 

@@ -204,9 +204,6 @@ define( function ( require ) {
 					return true;
 				} ) );
 
-				// app navigate should have been called
-				navigate.should.have.callCount( 1 );
-				navigate.should.have.been.calledWithExactly( 'groups', { 'trigger' : true } );
 			} );
 
 			it( '`ignoreGroup` should call remoting', function () {
