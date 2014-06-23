@@ -68,13 +68,17 @@ define( function () {
 			return this;
 		},
 
-		'register' : function ( parent, sharedData ) {
+		'register' : function ( parent, sharedData, callback ) {
 
 			this.sharedData = sharedData;
 			parent.push( {
 				baseObject : this,
 				id         : this._id
 			} );
+
+			if ( callback ) {
+				callback();
+			}
 		},
 
 		'registerWidget' : function ( parent ) {
