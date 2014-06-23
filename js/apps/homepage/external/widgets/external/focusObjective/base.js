@@ -16,6 +16,11 @@ define( function ( require ) {
 				if ( App.request( 'homepage:isHomeRoute' ) ) {
 					callback ( collection );
 				}
+			},
+			'error'   : function  ( err ) {
+				App.vent.trigger( 'flash:message', {
+					'message' : err.message
+				} );
 			}
 		} );
 	}

@@ -16,6 +16,55 @@ define ( function (require ) {
 		};
 	}
 
+	var schema = {
+		'title'      : 'focus objective schema v1',
+		'type'       : 'object',
+		'required'   : [
+			'ContentName',
+			'SegmentLengthInSeconds',
+			'Children',
+			'ContentId',
+			'ImageURL',
+			'TranscriptFileName',
+			'GuidebookFileName',
+			'ContentTypeId',
+			'AudioFileName',
+			'ContentDescription'
+		],
+		'properties' : {
+			'ContentName'            : {
+				'type' : 'string'
+			},
+			'SegmentLengthInSeconds' : {
+				'type' : 'number'
+			},
+			'Children'               : {
+				'type' : 'array'
+			},
+			'ContentId'              : {
+				'type' : 'number'
+			},
+			'ImageURL'               : {
+				'type' : 'string'
+			},
+			'TranscriptFileName'     : {
+				'type' : 'string'
+			},
+			'GuidebookFileName'      : {
+				'type' : 'string'
+			},
+			'ContentTypeId'          : {
+				'type' : 'number'
+			},
+			'AudioFileName'          : {
+				'type' : 'string'
+			},
+			'ContentDescription'     : {
+				'type' : 'string'
+			}
+		}
+	};
+
 	return Backbone.Collection.extend( {
 		'fetch' : function ( options ) {
 
@@ -23,7 +72,14 @@ define ( function (require ) {
 
 			App.when( fetchingModels ).done( function ( models ) {
 
-				options.success( new Backbone.Collection( models[ 0 ] ) );
+				App.Homepage.Utils.jsonVal( schema, models[ 0 ], function ( err ) {
+					// console.log( models[ 0 ]);
+					if ( !err ) {
+						options.success( new Backbone.Collection( models[ 0 ] ) );
+					} else {
+						options.error( err );
+					}
+				} );
 
 			} ).fail( function ( error ) {
 
