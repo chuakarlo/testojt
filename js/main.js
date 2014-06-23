@@ -20,6 +20,18 @@
 		require( 'analytics' );
 		require( 'pc-progressCircle' );
 
+		var title = document.title;
+		// internet explorer bug.
+		// http://stackoverflow.com/questions/4562423/ie-title-changes-to-afterhash-if-the-page-has-a-url-with-and-has-flash-s
+		if ( $.browser.msie ) {
+			// checks every 100ms if the title has changed.
+			window.setInterval( function () {
+				if ( document.title !== title ) {
+					document.title = title;
+				}
+			}, 100 );
+		}
+
 		App.start();
 	} );
 
