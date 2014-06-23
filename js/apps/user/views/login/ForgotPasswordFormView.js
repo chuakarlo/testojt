@@ -6,6 +6,7 @@ define( function ( require ) {
 	var template   = require( 'text!user/templates/login/forgotPasswordFormView.html' );
 	var Backbone   = require( 'backbone' );
 	require( 'validation' );
+	require( 'backbone.syphon' );
 
 	return Marionette.ItemView.extend( {
 
