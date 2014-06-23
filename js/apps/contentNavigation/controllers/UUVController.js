@@ -89,7 +89,7 @@ define( function ( require ) {
 					videos = vids.slice( 1 );
 				}
 
-				if ( !vids.at( 0 ).has( 'numFound' ) && !vids.at( 0 ).has( 'UUVideoId' ) ) {
+				if ( vids.length && !vids.at( 0 ).has( 'numFound' ) && !vids.at( 0 ).has( 'UUVideoId' ) ) {
 					videos = vids.slice( 1 );
 				}
 
