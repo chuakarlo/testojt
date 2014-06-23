@@ -38,6 +38,10 @@ define( function ( require ) {
 			var mainCompletedDate = this._convertToTimeStamp( model.CompleteByDate );
 			var ProcessStatus     = this._getStatus( mainCompletedDate, currentDate, '' );
 
+			model.Tasks.sort( function ( a, b ) {
+				return a.ProcessTaskId - b.ProcessTaskId;
+			} );
+
 			_.map( model.Tasks, function ( tasksObj ) {
 				var taskCompletedDate = self._convertToTimeStamp( tasksObj.CompleteByDate );
 

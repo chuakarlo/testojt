@@ -23,6 +23,7 @@ define( function ( require ) {
 			e.preventDefault();
 			e.stopPropagation();
 			this.trigger( 'lt:training' );
+			return false;
 		},
 
 		'setCatalogLinks' : function ( model ) {

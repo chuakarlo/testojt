@@ -108,6 +108,10 @@ define( function ( require ) {
 
 			'showTrainingCatalog' : function ( view ) {
 
+				if ( $.browser.safari && $.browser.android ) {
+					$('#modal-content').attr('data-backdrop','static');
+				}
+
 				var descriptionView = new DescriptionView( );
 
 				if ( view.model.get( 'CatalogResourceTypeId' ) === 3 ) {
