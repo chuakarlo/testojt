@@ -121,6 +121,7 @@ define( function ( require ) {
 						descriptionView.render();
 
 					}, view.model );
+					Backbone.history.navigate( Backbone.history.fragment + '/modal' );
 				}
 
 				App.modalRegion.show( descriptionView );

@@ -1,5 +1,7 @@
 define( function ( require ) {
 	'use strict';
+
+	var Backbone   = require( 'backbone' );
 	var Marionette = require( 'marionette' );
 	var template   = require( 'text!apps/learningTargets/templates/catalogs/description.html' );
 	var empty      = require( 'text!apps/learningTargets/templates/catalogs/empty.html' );
@@ -28,6 +30,20 @@ define( function ( require ) {
 	return Marionette.ItemView.extend( {
 
 		'template'        : _.template( empty ),
+		'ui' : {
+			'closeTrainingModal' : '.btn'
+		},
+
+		'events' : {
+			'click @ui.closeTrainingModal' : 'closeTraining'
+		},
+
+		'closeTraining' : function ( e ) {
+			e.preventDefault();
+
+			Backbone.history.navigate( 'resources/learning/catalogs', true );
+		},
+
 		'onRender'        : function () {
 			if ( !this.model ) {
 				this.$el.find( '.spinner-icon-container' ).spin( spinnerMediumOptions );

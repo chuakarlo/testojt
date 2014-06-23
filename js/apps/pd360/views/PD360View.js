@@ -2,6 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var _          = require( 'underscore' );
+	var $          = require( 'jquery' );
 	var Marionette = require( 'marionette' );
 	var Vent       = require( 'Vent' );
 
@@ -42,6 +43,24 @@ define( function ( require ) {
 		'template' : _.template( template ),
 
 		'id' : 'wrapper',
+
+		'templateHelpers' : {
+			'displayMessage' : function () {
+				var flashContent = {
+					'message' : 'Flash Player version 10.2.159 or later is required to view this content',
+					'image'   : ''
+				};
+
+				if ( $.browser.mobile || $.browser.ipad ) {
+					flashContent = {
+						'message' : 'This page is not available on your mobile device. Please try again later from a laptop or desktop computer.',
+						'image'   : 'hide'
+					};
+				}
+
+				return flashContent;
+			}
+		},
 
 		// if they have the minimum required flash version, create the swf
 		// `flash` parameter represents the id of the div element on the template
