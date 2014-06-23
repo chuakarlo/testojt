@@ -1,7 +1,6 @@
 define( function ( require ) {
 	'use strict';
 
-	require( 'jquery.autogrow' );
 	require( 'videoPlayer/config' );
 
 	var $          = require( 'jquery' );
@@ -64,7 +63,6 @@ define( function ( require ) {
 
 				this.ui.notifier.html( '' );
 			}
-			this.ui.textInput.css( 'overflow', 'hidden' ).autogrow();
 		},
 
 		'onKeyUp' : function () {

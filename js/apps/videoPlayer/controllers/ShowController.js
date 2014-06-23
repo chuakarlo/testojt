@@ -101,18 +101,20 @@ define( function ( require ) {
 
 					// if there are other segments available
 					if ( !segments.isEmpty() ) {
-						// get all segments ids of other segments
+						var segmentsView = new App.VideoPlayer.Views.VideoCollectionView( {
+							'collection' : segments
+						} );
+						layout.segmentLabelRegion.show( new App.VideoPlayer.Views.SegmentLabelItemView() );
+						layout.videoSegmentsRegion.show( segmentsView );
+
+						// Get the next sorted video segment by ContentId.
 						var segmentIds = segments.pluck( 'ContentId' );
-						// find where is the id of next segment in segmentsIds
 						var index = _.sortedIndex(  segmentIds , videoModel.id );
 						if ( index < segmentIds.length ) {
-							// add the next segment to video model for overlay at the end of vid
 							videoModel.next = segments.at( index );
-
 							var nextSegmentView = new App.VideoPlayer.Views.NextSegmentView( {
 								'model' : videoModel.next
 							} );
-
 							layout.nextSegmentRegion.show( nextSegmentView );
 						}
 					}
@@ -122,15 +124,6 @@ define( function ( require ) {
 						'model' : videoModel
 					} );
 					layout.videoButtonsRegion.show( videoButtonsView );
-
-					// show video segments
-					if ( !segments.isEmpty() ) {
-						var segmentsView = new App.VideoPlayer.Views.VideoCollectionView( {
-							'collection' : segments
-						} );
-						layout.segmentLabelRegion.show( new App.VideoPlayer.Views.SegmentLabelItemView() );
-						layout.videoSegmentsRegion.show( segmentsView );
-					}
 
 					// show video resources
 					var resources     = App.request( 'videoPlayer:getVideoResources', videoModel );

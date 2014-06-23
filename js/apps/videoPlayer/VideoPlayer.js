@@ -97,7 +97,8 @@ define( function ( require ) {
 						data.player.off( 'timeupdate' );
 						data.player.stopTrackingProgress();
 
-						if ( data.model.get( 'currentTime' ) > 0 ) {
+						if ( data.model.get( 'currentTime' ) > 0 &&
+							!data.model.get( 'Uploaded' ) ) {
 							data.model.save();
 						}
 
