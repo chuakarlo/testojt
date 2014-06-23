@@ -31,6 +31,11 @@ define( function ( require ) {
 							itemView.$el.find( '.spinner-container' ).remove();
 						} );
 					}
+				},
+				'error'   : function ( err ) {
+					App.vent.trigger( 'flash:message', {
+						'message' : err.message
+					} );
 				}
 			} );
 		},

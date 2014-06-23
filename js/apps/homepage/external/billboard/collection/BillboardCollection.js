@@ -4,7 +4,9 @@ define( function ( require ) {
 	var Backbone = require( 'backbone' );
 	var Remoting = require( 'Remoting' );
 	var App      = require( 'App' );
+	var $        = require( 'jquery' );
 
+	var schema         = require( 'apps/homepage/external/billboard/configuration/billboardSchema' );
 	var BillBoardModel = require( 'apps/homepage/external/billboard/model/BillboardModel' );
 
 	function billboardRequest ( typeId ) {
@@ -28,15 +30,24 @@ define( function ( require ) {
 
 			App.when( fetchingModels ).done( function ( models ) {
 
-				options.success( new Collection( models[ 0 ].concat( models[ 1 ] ) ) );
+				var collection = $.extend( models[ 0 ], models[ 1 ] );
+				var error = 'Billboard: empty data' ;
+
+				App.Homepage.Utils.jsonVal( schema, collection, function ( err ) {
+					error = err;
+					if ( !err ) {
+						options.success( new Collection( collection ) );
+						return;
+					}
+					options.error( error );
+				} );
 
 			} ).fail( function ( error ) {
-
 				App.vent.trigger( 'flash:message', {
 					'message' : 'An error occurred getting billboard pictures. Please try again later.'
 				} );
-
 			} );
+
 		}
 	} );
 } );

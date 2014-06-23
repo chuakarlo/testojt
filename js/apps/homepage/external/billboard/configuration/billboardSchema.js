@@ -1,0 +1,46 @@
+define( function ( require ) {
+	'use strict';
+
+	return {
+
+		'title'      : 'Billboard Schema',
+		'type'       : 'object',
+		'required'   : [
+			'CoverFlowId',
+			'CoverFlowTitle',
+			'CoverFlowTypeId',
+			'Description',
+			'ImageURL',
+			'LinkURL',
+			'VideoURL'
+		],
+		'properties' : {
+			'CoverFlowId'     : {
+				'type' : 'number'
+			},
+			'CoverFlowTitle'  : {
+				'type' : 'string'
+			},
+			'CoverFlowTypeId' : {
+				'type' : 'number'
+			},
+			'Description'     : {
+				'type' : 'string'
+			},
+			'ImageURL'        : {
+				'type'   : 'string',
+				'format' : 'uri'
+			},
+			'LinkURL'         : {
+				'type'   : 'string',
+				'format' : 'uri'
+			},
+			'VideoURL'        : {
+				'type'   : 'string',
+				'format' : 'uri'
+			}
+		}
+
+	};
+
+} );
