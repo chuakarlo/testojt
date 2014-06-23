@@ -5,6 +5,7 @@ define( function ( require ) {
 	var Backbone   = require( 'backbone' );
 	var App        = require( 'App' );
 	var Ladda      = require( 'ladda' );
+	var moment     = require( 'moment' );
 	var _          = require( 'underscore' );
 	var $          = require( 'jquery' );
 
@@ -12,6 +13,7 @@ define( function ( require ) {
 
 	require( 'validation' );
 	require( 'backbone.stickit' );
+	require( 'timezone' );
 
 	return Marionette.Layout.extend( {
 
@@ -24,6 +26,7 @@ define( function ( require ) {
 		'events' : {
 			'blur @ui.input'      : 'validateInput',
 			'keyup @ui.input'     : 'validateInput',
+			'change @ui.agree'    : 'toggleAcceptButton',
 			'submit'              : 'register',
 			'change @ui.email'    : 'checkEmail',
 			'change @ui.country'  : 'updateStates',
@@ -33,6 +36,8 @@ define( function ( require ) {
 
 		'ui' : {
 			'input'    : 'input',
+			'agree'    : '#agree-cb',
+			'register' : '#register-button',
 			'email'    : 'input[name=EmailAddress]',
 			'country'  : '[name="Country"]',
 			'state'    : '[name="State"]',
@@ -162,6 +167,22 @@ define( function ( require ) {
 
 				}.bind( this ));
 
+			}
+
+		},
+
+		'toggleAcceptButton' : function ( event ) {
+
+			this.model.set( 'LicenseAccepted', '' );
+			this.model.set( 'LicenseInitials', '' );
+			this.ui.register.prop( 'disabled', true );
+
+			if ( this.ui.agree.is( ':checked' ) ) {
+				var now = moment().tz( 'MST7MDT' ).format( 'MMMM D, YYYY H:mm:ss' );
+
+				this.model.set( 'LicenseAccepted', now );
+				this.model.set( 'LicenseInitials', 'created' );
+				this.ui.register.prop( 'disabled', false );
 			}
 
 		},
