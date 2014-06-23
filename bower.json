@@ -28,7 +28,6 @@
     "text": "2.0.10",
     "swfobject": "*",
     "rotate": "https://jqueryrotate.googlecode.com/files/jQueryRotate.js",
-    "jquery.autogrow": "https://github.com/Eskrima/jquery.autogrow.git#~0.1.1",
     "videojs": "https://github.com/School-Improvement-Network/video.js.git#build",
     "jquery-mousewheel": "~3.1.9",
     "backbone.filterable-collection": "0.1.4",

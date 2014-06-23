@@ -24,16 +24,16 @@ define( function ( require ) {
 				return {
 					'method' : 'getProgramFromSegment',
 					'args'   : {
-						'ContentId'       : this.ContentId,
-						'ContentParentId' : this.ContentParentId,
-						'ContentTypeId'   : this.ContentTypeId
+						'ContentId'       : this.contentId,
+						'ContentParentId' : this.contentParentId,
+						'ContentTypeId'   : this.contentTypeId
 					}
 				};
 			},
 
 			'parse' : function ( response ) {
 				return _.filter( response, function ( segment ) {
-					if ( segment.ContentId !== this.ContentId ) {
+					if ( segment.ContentId !== this.id ) {
 						return segment;
 					}
 				}.bind( this ) );
@@ -47,9 +47,10 @@ define( function ( require ) {
 				var defer = $.Deferred();
 
 				var segments = new Entities.Segments( [ ], {
-					'ContentId'       : content.ContentId,
-					'ContentParentId' : content.ContentParentId,
-					'ContentTypeId'   : content.ContentTypeId
+					'id'              : content.id,
+					'contentId'       : content.get( 'ContentId' ),
+					'contentParentId' : content.get( 'ContentParentId' ),
+					'contentTypeId'   : content.get( 'ContentTypeId' )
 				} );
 
 				segments.fetch( {

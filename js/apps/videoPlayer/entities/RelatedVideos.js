@@ -28,7 +28,7 @@ define( function ( require ) {
 						'start'      : 0,
 						'rows'       : 24,
 						'searchType' : 'RelatedContent',
-						'searchData' : this.Tags.join( ',' ),
+						'searchData' : this.tags.join( ',' ),
 						'sort'       : 'created desc'
 					}
 				};
@@ -37,7 +37,14 @@ define( function ( require ) {
 			'parse' : function ( response ) {
 				// Removed first index in the array which is
 				// not part of the data.
-				return _.rest( response );
+				var segments = _.rest( response );
+
+				// exclude current segment from the list of related videos
+				return _.filter( segments, function ( segment ) {
+					if ( segment.ContentId !== this.id ) {
+						return segment;
+					}
+				}.bind( this ) );
 			}
 
 		} );
@@ -47,7 +54,10 @@ define( function ( require ) {
 			'getRelatedVideos' : function ( content ) {
 				var defer = App.Deferred();
 
-				var relatedVideos = new Entities.RelatedVideos( [ ], content );
+				var relatedVideos = new Entities.RelatedVideos( [ ], {
+					'id'   : content.id,
+					'tags' : content.get( 'Tags' )
+				} );
 
 				relatedVideos.fetch( {
 

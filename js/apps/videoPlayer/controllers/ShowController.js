@@ -44,9 +44,9 @@ define( function ( require ) {
 			'showVideoResources' : function ( videoModel ) {
 
 				var questionsRequest     = App.request( 'videoPlayer:questions', videoModel.id );
-				var relatedVideosRequest = App.request( 'videoPlayer:relatedVideos', videoModel.toJSON() );
+				var relatedVideosRequest = App.request( 'videoPlayer:relatedVideos', videoModel );
 				var queueContentsRequest = App.request( 'common:getQueueContents' );
-				var segmentsRequest      = App.request( 'videoPlayer:segments', videoModel.toJSON() );
+				var segmentsRequest      = App.request( 'videoPlayer:segments', videoModel );
 
 				var viewingId = videoModel.getViewingId();
 

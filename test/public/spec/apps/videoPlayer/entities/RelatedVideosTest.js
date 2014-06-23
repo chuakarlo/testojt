@@ -10,14 +10,20 @@ define( function ( require ) {
 
 	describe( 'RelatedVideos Entity', function () {
 
+		var model;
 		var collection;
 
 		before( function () {
 			var stub = sinon.stub().returns( false );
 			App.reqres.setHandler( 'pd360:available', stub );
 
-			collection = new App.VideoPlayer.Entities.RelatedVideos( [ ], {
+			model = new App.VideoPlayer.Entities.Content( {
 				'Tags' : [ 'ELA', '6th grade' ]
+			} );
+
+			collection = new App.VideoPlayer.Entities.RelatedVideos( [ ], {
+				'id'   : 7949,
+				'tags' : model.get( 'Tags' )
 			} );
 		} );
 
@@ -75,9 +81,7 @@ define( function ( require ) {
 			var ajax;
 
 			var fetch = function ( done ) {
-				var fetching = App.request( 'videoPlayer:relatedVideos', {
-					'Tags' : [ 'ELA', '6th grade' ]
-				} );
+				var fetching = App.request( 'videoPlayer:relatedVideos', model );
 
 				$.when( fetching ).always( function ( res ) {
 					result = res;
