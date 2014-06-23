@@ -1,18 +1,25 @@
 define(function () {
 	'use strict';
 
-	var chai;
+	return {
+		'jsonVal' : function (schema, data, callback, limit ) {
+			require( [ 'chai-json-schema' ], function ( jsonSchema ) {
+				var chai = require('chai');
+				chai.use( jsonSchema );
 
-	return function (schema, data, callback) {
-		require([ 'chai-json-schema' ], function () {
-			var ret = true;
-			try {
-				chai.expect(data).to.be.jsonSchema(schema);
-			} catch ( err ) {
-				ret = err;
-			}
-			console.log( ret );
-			callback( ret );
-		});
+				if ( Array.isArray( data ) ) {
+
+					for (var i = 0; i < ( limit || data.length ); i++) {
+						try {
+							chai.expect( data[i] ).to.be.jsonSchema(schema);
+						} catch ( err ) {
+							callback( err );
+							break;
+						}
+					}
+					callback();
+				}
+			} );
+		}
 	};
-});
+} );

@@ -231,14 +231,6 @@ require.config( {
 			'deps' : [ 'jquery' ]
 		},
 
-		'tv4' : {
-			'exports' : 'tv4'
-		},
-
-		'jsonpointer' : {
-			'exports' : 'jsonpointer'
-		},
-
 		'chai-json-schema' : {
 			'deps' : [ 'chai', 'tv4', 'jsonpointer' ]
 		}
