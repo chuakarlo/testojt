@@ -56,7 +56,12 @@ define( function ( require ) {
 
 			} )
 
-			.fail( App.errorHandler );
+			.fail( function ( error ) {
+
+				// call logout on fail to clear cookies and redirect to login
+				App.navigate( 'logout', { 'trigger' : true } );
+
+			} );
 
 		};
 

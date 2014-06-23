@@ -111,6 +111,9 @@ define( function ( require ) {
 						window.location.origin = window.location.protocol + '//' + window.location.hostname + ( window.location.port ? ':' + window.location.port: '' );
 					}
 
+					// replace the logout with home in the history, so the back button doesn't log you out
+					App.navigate( 'home', { 'trigger' : false, 'replace' : true } );
+
 					var currentLocation = window.location.origin + window.location.pathname;
 
 					// this is to reload the application
