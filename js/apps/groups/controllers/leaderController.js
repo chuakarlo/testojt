@@ -32,7 +32,7 @@ define( function ( require ) {
 							pd360Loaded
 						).done( _.bind( function ( groupAdmin, groupCreator ) {
 
-							if ( groupAdmin === true || groupCreator === true ) {
+							if ( groupAdmin[ 0 ] === true || groupCreator === true ) {
 								this.showTools();
 							} else {
 								App.navigate( 'home', {
