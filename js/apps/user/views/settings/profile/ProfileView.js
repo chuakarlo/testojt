@@ -99,7 +99,7 @@ define( function ( require ) {
 				'model' : new PasswordModel()
 			} );
 
-			App.modalRegion.show( passwordModalView );
+			App.modalRegion.show( passwordModalView , { 'className' : 'password-modal' });
 		},
 
 		'initialize' : function ( options ) {

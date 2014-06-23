@@ -19,3 +19,24 @@
 	}
 
 }
+//override for iphone landscape view
+@media screen and ( min-width : 480px ) and( max-width : @screen-xs-max ) and ( orientation : landscape ) {
+	.password-modal {
+		.modal-header {
+			padding : 8px;
+		}
+		.modal-body {
+			padding : 0px 15px 0px 15px;
+			.form-container .error-message-container {
+				margin-bottom : 1%;
+			}
+			.form-group {
+			 margin-bottom : 0px;
+			}
+		}
+		.modal-footer {
+			margin-top : 5px;
+			padding    : 7px 15px 8px;
+		}
+	}
+}
