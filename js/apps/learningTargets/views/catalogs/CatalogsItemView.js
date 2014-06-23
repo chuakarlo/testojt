@@ -5,6 +5,7 @@ define( function ( require ) {
 	var template        = require( 'text!apps/learningTargets/templates/catalogs/catalog.html' );
 	var _               = require( 'underscore' );
 	var setCatalogLinks = require( '../../helpers/setCatalogLinks' );
+	var $               = require( 'jquery' );
 
 	return Marionette.ItemView.extend( {
 		'template' : _.template( template ),
@@ -43,6 +44,16 @@ define( function ( require ) {
 			self.setCredits ( self.model );
 
 			return self.model;
+		},
+
+		'onRender' : function () {
+			$( '#modal-content' ).on( 'show.bs.modal', function () {
+				$( '#footer' ).css( 'position','relative' );
+			} );
+
+			$( '#modal-content' ).on( 'hidden.bs.modal', function () {
+				$( '#footer' ).css( 'position','absolute' );
+			} );
 		}
 
 	} );
