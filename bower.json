@@ -45,7 +45,8 @@
     "tipsy": "~0.1.7",
     "adjustable-peek": "~1.0.1",
     "Autolinker.js": "~0.11.0",
-    "placeholderjs": "https://github.com/rtorino/Placeholders.js.git#master"
+    "placeholderjs": "https://github.com/rtorino/Placeholders.js.git#master",
+    "jquery-touchswipe": "~1.6.0"
   },
   "devDependencies": {
     "chai": "1.8.x",

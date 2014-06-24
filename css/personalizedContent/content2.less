@@ -1,0 +1,163 @@
+// *
+// Content CSS (Your Queue and Recommended)
+//*
+
+#Home-page-view {
+
+	overflow: auto;
+
+	.vid-container {
+		padding : 10px 0 25px 0;
+	}
+
+	.resource-list-heading {
+		height        : 30px;
+		margin-bottom : @res-heading;
+		position      : relative;
+		h2 {
+			color : @pc-black-lighter;
+		}
+		.count-all {
+			color : @pc-gray-dark;
+		}
+	}
+
+	h2 {
+		font-weight : @font-common;
+		margin      : @pc-min;
+		padding     : @pc-min;
+		font-size   : 24px;
+		line-height : 30px;
+	}
+
+	//*
+	// Empty View
+	//*
+	.empty-view {
+		margin-top : 75px;
+		text-align : center;
+	}
+	.empty-queue {
+		color: @pc-gray-darkest;
+	}
+
+	//*
+	//* Bootstrap Carousel
+	//*
+
+	.carousel.slide {
+		.carousel-inner-wrapper {
+			padding : 0 15px;
+			.carousel-inner {
+				.item li {
+					list-style-type : none;
+				}
+				.empty-content {
+					text-align : center;
+					padding    : 50px 0px 100px 0px;
+				}
+			}
+		}
+	}
+
+	// overwrite bootstrap grid
+	.carousel-list( @width ) {
+		li {
+			width : @width;
+		}
+	}
+	.carousel.visible-lg {
+		.carousel-list( 25% );
+	}
+
+	.carousel.visible-md {
+		.carousel-list( 33.3333% );
+	}
+
+	.carousel.visible-sm {
+		.carousel-list( 50% );
+	}
+
+	.carousel.visible-xs {
+		.carousel-list( 100% );
+	}
+
+	.carousel-control {
+		background-image : none;
+		top              : 47%;
+		bottom           : 37%;
+		width            : 4%;
+		.fa-angle-left {
+			left : 0;
+		}
+		.fa-angle-right {
+			right : 0;
+		}
+	}
+	.carousel-control .fa{
+		height   : 100%;
+		position : absolute;
+		width    : 39px;
+		height   : 0;
+		border   : 0 none;
+		cursor   : pointer;
+		position : absolute;
+		display : none;
+		top      : 13%;
+		z-index  : 10000;
+		color    : @pc-gray-light;
+
+		&.fa:before {
+			background-color : #aaa;
+			background-image : -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, @pc-white),color-stop(1,#DDD));
+			background-image : -webkit-linear-gradient(top, @pc-white,#DDD);
+			background-image : linear-gradient(top, @pc-white,#DDD);
+			background       : -moz-linear-gradient( top, @pc-white, #DDD );
+			background       : -ms-linear-gradient(top,@pc-white, #DDD);
+			filter           : progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=@pc-white, endColorstr=#DDD);
+			color            : @pc-white;
+			cursor           : pointer !important;
+			display          : inline-block;
+			filter           : progid:DXImageTransform.Microsoft.gradient(startColorStr='#303030',EndColorStr='#262626');
+			font-weight      : bold;
+			outline          : 0;
+			text-align       : center;
+			text-shadow      : 0 -1px 0 rgba(0,0,0,.5);
+			font-size        : 25px;
+			text-shadow      : -1px 0px 0px rgba(0, 0, 0, 0.3);
+			padding          : 2px 9px;
+		}
+
+		&.fa:hover:before {
+			background-image : -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, #DDD),color-stop(1,@pc-white));
+			background-image : -webkit-linear-gradient(top, #DDD,@pc-white);
+			background-image : linear-gradient(top, #DDD,@pc-white);
+			background       : -moz-linear-gradient(top,#DDD, @pc-white);
+			background       : -ms-linear-gradient(top,#DDD, @pc-white);
+			filter           : progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#DDD, endColorstr=@pc-white);
+		}
+
+		&.fa-angle-left:before {
+			left : 0;
+			-webkit-border-radius : 2px 0 0 2px;
+			border-radius         : 2px 0 0 2px;
+		}
+
+		&.fa-angle-right:before {
+			right: 0;
+			-webkit-border-radius : 0 2px 2px 0;
+			border-radius         :0 2px 2px 0;
+		}
+	}
+
+	//*
+	// Hover
+	//
+	#your-queue:hover .carousel,
+	#recommended:hover .carousel {
+		.carousel-control .fa {
+			display : inline-block;
+		}
+	}
+
+}

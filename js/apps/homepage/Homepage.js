@@ -12,14 +12,12 @@ define( function ( require ) {
 			require( './utils/homepageRoute' );
 			// load utils
 			require( './utils/utils' );
-
 			// load widgets
 			require( './external/widgets/manifest' );
-
 			// load homepage
 			require( './controllers/homeController' );
 			// load content
-			require( './external/content2/manifest' );
+			require( './external/content3/manifest' );
 
 			// configure groups routes
 			Homepage.Router = AuthRouter.extend( {

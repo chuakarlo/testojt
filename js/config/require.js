@@ -59,7 +59,7 @@ require.config( {
 		'pc-progressCircle'     : 'libs/progress-circle/progress-circle',
 		'pc-mouseWheel'         : 'libs/perfect-scrollbar/jquery.mousewheel',
 		'pc-carouselSnap'       : 'libs/circular-snap-carousel/carousel-snap',
-		'pc-swipe'              : 'libs/circular-snap-carousel/jquery.touchSwipe',
+		'pc-swipe'              : 'libs/jquery-touchswipe/jquery.touchSwipe.min',
 		'pc-htmlconcat'         : 'libs/htmlConcat/htmlconcat',
 		'pc-adjustablePeek'     : 'libs/adjustable-peek/adjustable-peek',
 		'bootstro'              : 'libs/bootstro.js/bootstro',
