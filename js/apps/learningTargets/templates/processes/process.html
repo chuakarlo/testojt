@@ -1,7 +1,13 @@
 <div class="lt-title-holder">
     <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%- ProcessId %>" class="lt-accordion-tab">
-      <i class="fa <%- ProcessStatus.icon %>"></i>
-      <%- ProcessName %>
+
+		<div class="row">
+			<i class="fa <%- ProcessStatus.icon %>"></i>
+			<p class="title-wrapper process-name col-xs-11 col-sm-11 col-md-11">
+				<%- ProcessName %>
+			</p>
+		</div>
+
     </a>
 </div>
 
