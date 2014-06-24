@@ -15,7 +15,6 @@
 		require( 'modernizr' );
 		require( 'bootstrap' );
 		require( 'backbone.touch' );
-		require( 'rotate' );
 		require( 'modules' );
 		require( 'analytics' );
 		require( 'pc-progressCircle' );

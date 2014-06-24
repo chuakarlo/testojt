@@ -45,7 +45,6 @@ require.config( {
 		'videojs'               : 'libs/videojs/video.dev',
 		'underscore'            : 'libs/lodash/lodash',
 		'validation'            : 'plugins/validation',
-		'rotate'                : 'libs/rotate/index',
 		'ColdFusion'            : 'plugins/Backbone.CF',
 		'config'                : 'config/index',
 		'fine-uploader'         : 'libs/fine-uploader/build/jquery.fineuploader.min',
@@ -149,10 +148,6 @@ require.config( {
 
 		'jquery.pscrollbar' : {
 			'deps' : [ 'jquery' , 'jquery.mousewheel' ]
-		},
-
-		'rotate' : {
-			'deps' : [ 'jquery' ]
 		},
 
 		'slick' : {

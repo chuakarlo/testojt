@@ -11,8 +11,6 @@ define( function ( require ) {
 		'loggedOut' : require( 'text!header/templates/navLoggedOut.html' )
 	};
 
-	var userMenuOpen = false;
-
 	return Marionette.Layout.extend( {
 
 		'templates' : {
@@ -43,13 +41,11 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'click @ui.userMenu'              : 'toggleUserMenu',
-			'click @ui.ddLink'                : 'hideCollapsibleMenu',
-			'submit form'                     : 'showSearchResults',
-			'click @ui.searchIcon'            : 'showSearchResults',
-			'hidden.bs.dropdown @ui.userMenu' : 'hideUserMenuAnimation',
-			'click @ui.help'                  : 'showHelp',
-			'click #groups-tab'               : 'redirect'
+			'click @ui.ddLink'     : 'hideCollapsibleMenu',
+			'submit form'          : 'showSearchResults',
+			'click @ui.searchIcon' : 'showSearchResults',
+			'click @ui.help'       : 'showHelp',
+			'click #groups-tab'    : 'redirect'
 		},
 
 		'regions' : {
@@ -96,83 +92,6 @@ define( function ( require ) {
 			$( '#navbar .navbar-collapse.in' ).removeClass( 'in' );
 			if ( !hideOnly ) {
 				App.navigate( event.currentTarget.hash.substr( 1 ), { 'trigger' : true } );
-			}
-		},
-
-		'toggleUserMenu' : function ( event ) {
-			if ( this.ui.drawer.is( ':visible' ) ) {
-				return this.hideUserMenuAnimation( event );
-			}
-
-			return this.showUserMenuAnimation( event );
-		},
-
-		'hideUserMenuAnimation' : function ( event ) {
-			if ( userMenuOpen ) {
-
-				this.ui.bar1.stop().rotate( {
-					'animateTo' : 0,
-					'duration'  : 250
-				} );
-				this.ui.bar2.stop().rotate( {
-					'animateTo' : 0,
-					'duration'  : 250
-				} );
-				this.ui.bar3.stop().rotate( {
-					'animateTo' : 0,
-					'duration'  : 250
-				} );
-				this.ui.menuBar.stop().animate( {
-					'opacity' : 1
-				}, 250, function () {
-
-					this.ui.bar1.animate( {
-						'top' : 12
-					}, 250 );
-					this.ui.bar2.animate( {
-						'top' : 22
-					}, 250 );
-					this.ui.bar3.animate( {
-						'top' : 32
-					}, 250 );
-
-				}.bind( this ) );
-
-				userMenuOpen = false;
-
-			}
-		},
-
-		'showUserMenuAnimation' : function ( event ) {
-			if ( !userMenuOpen ) {
-
-				this.ui.menuBar.stop().animate( {
-					'top'   : 22,
-					'width' : 23,
-					'left'  : 22
-				}, 200, function () {
-					this.ui.menuBar.animate( {
-						'left'  : 24,
-						'width' : 19
-					}, 200, function () {
-						this.ui.bar1.rotate( {
-							'animateTo' : -132,
-							'duration'  : 250
-						} );
-						this.ui.bar2.rotate( {
-							'animateTo' : -48,
-							'duration'  : 250
-						} );
-						this.ui.bar3.rotate( {
-							'animateTo' : -48,
-							'duration'  : 250
-						} );
-
-					}.bind( this ) );
-				}.bind( this ) );
-
-				userMenuOpen = true;
-
 			}
 		},
 

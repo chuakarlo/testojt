@@ -66,7 +66,6 @@
 
 		.user-menu {
 			background-color: @pd360-green-dark !important;
-			width: 70px;
 
 			&.open > a {
 				background-color: #000 !important;
@@ -238,24 +237,83 @@ div.phone-search {
 }
 
 // MENU TO X Animation
-#bar1, #bar2, #bar3 {
-	width      : 19px;
-	height     : 2px;
-	background : white;
-	position   : absolute;
-	left       : 24px;
-	z-index    : 4;
+/* Change this to watch in slo-mo */
+@transition-duration: 0.5s;
 
-	.transform-origin( 9.5px 0px );
-	.rotate( 0deg );
+@size         : 100%;
+@toggled-size : .75;
+
+@bar-width  : 30px;
+@bar-height : 4px;
+
+@pagebg : #ffffff;
+
+.navicon-button {
+  display     : inline-block;
+  position    : relative;
+  padding     : 22px 10px !important;
+  .transition( @transition-duration/2 );
+  cursor      : pointer;
+  user-select : none;
+  opacity     : .99;
+  height      : 50px;
+
+  .navicon:before, .navicon:after {
+    .transition( @transition-duration/2 );
+  }
+
+  &:hover {
+    .transition( @transition-duration );
+    opacity    : .95;
+
+    .navicon:before, .navicon:after {
+      .transition( @transition-duration/2 );
+    }
+
+    .navicon:after { top: -.825rem; }
+    .navicon:before { top: .825rem; }
+  }
 }
 
-#bar1 {
-	top : 12px;
+.navicon {
+  position      : relative;
+  width         : @bar-width;
+  height        : @bar-height;
+  background    : @pagebg;
+  .transition( @transition-duration/10 );
+  border-radius : @bar-height/2;
+
+  &:after, &:before {
+    display       : block;
+    content       : "";
+    height        : @bar-height;
+    width         : @bar-width;
+    background    : @pagebg;
+    position      : absolute;
+    z-index       : -1;
+    .transition( @transition-duration );
+    border-radius : @bar-height/2;
+  }
+
+  &:after { top: -8px; }
+  &:before { top: 8px; }
 }
-#bar2 {
-	top : 22px;
+
+.open:not(.steps) .navicon:before,
+.open:not(.steps) .navicon:after {
+  top: 0 !important;
 }
-#bar3 {
-	top : 32px;
+
+/* × and + */
+.user-menu.open {
+  .x {
+    .navicon {
+      background : transparent;
+
+      &:after { .rotate(45deg); }
+      &:before { .rotate(-45deg); }
+    }
+  }
 }
+
+

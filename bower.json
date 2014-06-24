@@ -26,7 +26,6 @@
     "spin.js": "2.0.0",
     "text": "2.0.10",
     "swfobject": "*",
-    "rotate": "https://jqueryrotate.googlecode.com/files/jQueryRotate.js",
     "videojs": "https://github.com/School-Improvement-Network/video.js.git#build",
     "backbone.validation": "https://github.com/thedersen/backbone.validation.git#~0.9.x",
     "slick-carousel": "https://github.com/School-Improvement-Network/slick.git#master",
