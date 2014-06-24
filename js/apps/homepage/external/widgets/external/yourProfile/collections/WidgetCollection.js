@@ -1,11 +1,12 @@
 define( function ( require ) {
 	'use strict';
 
-	var Backbone    = require( 'backbone' );
-	var Remoting    = require( 'Remoting' );
-	var Session     = require( 'Session' );
-	var App         = require( 'App' );
-	var $           = require( 'jquery' );
+	var Backbone = require( 'backbone' );
+	var Remoting = require( 'Remoting' );
+	var Session  = require( 'Session' );
+	var App      = require( 'App' );
+	var $        = require( 'jquery' );
+	var schema   = require( 'text!apps/homepage/external/widgets/external/yourProfile/configuration/yourProfileSchema.json' );
 
 	function widgetRequest ( personnelId ) {
 		return {
@@ -53,9 +54,19 @@ define( function ( require ) {
 			var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId( ) ), widgetRequestSecondary( Session.personnelId( ) ) ] );
 
 			App.when( fetchingModels ).done( function ( models ) {
-				var mergedModels    = $.extend( { }, models[ 0 ], models[ 1 ]);
-				var newMergedModels = chopDataToNewModel( mergedModels );
-				options.success( new Collection( newMergedModels ) );
+
+				var mergedModels = $.extend( { }, models[ 0 ], models[ 1 ] );
+				schema           = JSON.parse( schema );
+
+				App.Homepage.Utils.jsonVal ( schema, [ mergedModels ], function ( err ) {
+					if ( !err ) {
+						var newMergedModels = chopDataToNewModel( mergedModels );
+						options.success( new Collection( newMergedModels ) );
+					} else {
+						options.error( err );
+					}
+				} );
+
 			}).fail( function ( error ) {
 
 				App.vent.trigger( 'flash:message', {
