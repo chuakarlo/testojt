@@ -6,12 +6,9 @@ define( function ( require ) {
 	var Remoting = require( 'Remoting' );
 	var Session  = require( 'Session' );
 	var Backbone = require( 'backbone' );
-	var $        = require( 'jquery' );
 
 	var manifest              = require( 'apps/homepage/manifest' );
 	var SectionCollectionView = require( 'apps/homepage/views/SectionCollectionView' );
-
-	var setUserTags = require( 'apps/homepage/utils/setUserTags' );
 
 	// to show the user's personal info, grab the ClientPersonnel object
 	function clientProfileParams ( personnelId ) {
@@ -38,12 +35,6 @@ define( function ( require ) {
 		} );
 	}
 
-	function setUserTagsReqRes ( model ) {
-		App.reqres.setHandler( 'homepage:userTags', function () {
-			return setUserTags( model );
-		} );
-	}
-
 	return {
 		'loadHomepage' : function ( layout ) {
 
@@ -55,7 +46,6 @@ define( function ( require ) {
 
 				if ( App.request( 'homepage:isHomeRoute' ) ) {
 					setUserProfileReqres( models[ 0 ] );
-					setUserTagsReqRes( $.extend( { }, models[ 0 ], models[ 1 ]) );
 
 					var externalSections = manifest();
 					var collection       = new Backbone.Collection(externalSections);
