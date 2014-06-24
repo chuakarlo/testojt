@@ -10,8 +10,6 @@ define( function ( require ) {
 	var personTooltipTpl = require( 'text!share/templates/personItemTooltip.html' );
 	var groupTooltipTpl  = require( 'text!share/templates/groupItemTooltip.html' );
 
-	require( 'tipsy' );
-
 	return Marionette.ItemView.extend( {
 
 		'template'  : _.template( template ),
@@ -19,7 +17,7 @@ define( function ( require ) {
 
 		'ui' : {
 			'removeItem'   : '.input-group-addon',
-			'selectedItem' : '.form-control'
+			'selectedItem' : '.input-group'
 		},
 
 		'triggers' : {
@@ -27,14 +25,11 @@ define( function ( require ) {
 		},
 
 		'onShow' : function () {
-			this.ui.selectedItem.tipsy( {
-				'html'     : true,
-				'fallback' : this._getTooltipTpl( this.model ),
-				'gravity'  : 's',
-				'delayIn'  : 0,
-				'delayOut' : 0,
-				'opacity'  : 2
-			} );
+			this.ui.selectedItem.tooltip({
+				'html'      : true,
+				'placement' : 'top',
+				'title'     : this._getTooltipTpl( this.model )
+			});
 		},
 
 		'templateHelpers' : {

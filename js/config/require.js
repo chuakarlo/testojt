@@ -66,7 +66,6 @@ require.config( {
 		'pc-adjustablePeek'     : 'libs/adjustable-peek/adjustable-peek',
 		'bootstro'              : 'libs/bootstro.js/bootstro',
 		'bootstrap-select'      : 'libs/bootstrap-select-3/bootstrap-select',
-		'tipsy'                 : 'libs/tipsy/src/javascripts/jquery.tipsy',
 		'autolinker'            : 'libs/Autolinker.js/src/Autolinker',
 		'placeholderjs'         : 'libs/placeholderjs/build/placeholders.jquery',
 
@@ -220,10 +219,6 @@ require.config( {
 
 		'backbone.touch' : {
 			'deps' : [ 'jquery', 'backbone', 'underscore' ]
-		},
-
-		'tipsy' : {
-			'deps' : [ 'jquery' ]
 		},
 
 		'placeholderjs' : {

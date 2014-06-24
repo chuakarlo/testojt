@@ -16,23 +16,25 @@
 			padding : 0px;
 		}
 		.slick-next:before {
-			content : "\f105";
+			content       : "\f105";
+			border-radius : 0 2px 2px 0;
 		}
 
 		.slick-prev:before {
-			content : "\f104";
+			content       : "\f104";
+			border-radius : 2px 0 0 2px
 		}
 
 		.slick-prev {
-			left : 0px;
+			left : -9px;
 		}
 
 		.slick-next {
-			right : 0px;
+			right : -9px;
 		}
 	}
 	//common carousel arrows
-	.slick-prev, .slick-next,.prevNext, .prevNext2 {
+	.slick-prev, .slick-next, .prevNext, .prevNext2 {
 			height     : inherit;
 			width      : inherit;
 			border     : 0 none;
@@ -63,7 +65,8 @@
 				text-shadow           : -1px 0px 0px rgba(0, 0, 0, 0.3);
 				padding               : 4px 12px 4px 10px;
 			}
-			&.slick-prev:before, &.slick-next:before, &.prevNext:before, &.prevNext2:before {
+
+			&.nextLink:before, &.nextLink2:before {
 				padding       : 4px 10px 4px 13px;
 				border-radius : 0 2px 2px 0;
 			}
