@@ -98,7 +98,7 @@ define( function ( require ) {
 			if ( $( window ).width() > 767 ) {
 				this.setSidebarHeightLandscape();
 			} else {
-				this.ui.sidebar.css( 'height', $( window ).height() );
+				this.ui.sidebar.css( 'height', '100%' );
 			}
 
 		},
@@ -106,7 +106,7 @@ define( function ( require ) {
 		'setSidebarHeightLandscape' : function () {
 
 			if ( $( window ).scrollTop() > 0 ) {
-				this.ui.sidebar.css( 'height', $( window ).height() - 20 );
+				this.ui.sidebar.css( 'height', $( window ).height() - 25 );
 			} else {
 				this.ui.sidebar.css( 'height', $( window ).height() - 200 );
 			}
