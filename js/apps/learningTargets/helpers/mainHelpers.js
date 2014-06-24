@@ -21,6 +21,15 @@ define( function ( require ) {
 		Main.helper = {
 			'_showView' : function ( view ) {
 				legendRegion.reset();
+
+				if ( view.ui ) {
+					if ( view.ui.spinner ) {
+						contentRegion.show( view );
+						return false;
+					}
+				}
+
+				mainView.reactivateNav();
 				contentRegion.show( view );
 			},
 
@@ -29,6 +38,7 @@ define( function ( require ) {
 			},
 
 			'_setContent' : function ( content, options ) {
+
 				var self = this;
 				// hide pd360 flash
 

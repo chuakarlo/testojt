@@ -16,7 +16,9 @@ define( function ( require ) {
 		'ui'        : {
 			'nav'        : '.lt-left-nav',
 			'selectNav'  : 'select.selectpicker',
-			'viewAllBtn' : '.view-all'
+			'viewAllBtn' : '.view-all',
+			'links'      : '.lt-left-nav > ul > li > a',
+			'liLink'     : '.lt-left-nav > ul > li'
 		},
 
 		'events' : {
@@ -30,6 +32,8 @@ define( function ( require ) {
 			'catalogs',
 			'reflection-questions'
 		],
+
+		'fetchingStatus' : false,
 
 		'onSelect' : function ( e ) {
 			App.navigate( 'resources/learning/' + e.currentTarget.value, true );
@@ -61,20 +65,33 @@ define( function ( require ) {
 		},
 
 		'activateTab' : function ( content, options ) {
+
+			this.ui.links.bind( 'click.select', function () {
+				return false;
+			});
+
 			var learningTargetsMenu = this.$( '.selectpicker' );
 
-			// remove class from current active li
-			$( this.ui.nav )
-				.find( '.active' )
-				.removeClass( 'active' );
+			if ( !this.fetchingStatus ) {
+				// remove class from current active li
+				$( this.ui.nav )
+					.find( '.active' )
+					.removeClass( 'active' );
 
-			// activate selected tab
-			$( '.' + content ).addClass( 'active' );
-
+				// activate selected tab
+				$( '.' + content ).addClass( 'active' );
+				this.ui.liLink.siblings().not('.active').addClass( 'deactivate' );
+			}
 			// render bootstrap selectbox
 			$( learningTargetsMenu ).addClass( 'col-xs-12' ).selectpicker( 'setStyle' );
 			$( learningTargetsMenu ).val( content );
 			$( learningTargetsMenu ).selectpicker( 'render' );
+		},
+
+		'reactivateNav' : function () {
+			this.ui.links.unbind('click.select');
+			this.ui.liLink.siblings().not('.active').removeClass( 'deactivate' );
+			this.fetchingStatus = false;
 		}
 
 	} );
