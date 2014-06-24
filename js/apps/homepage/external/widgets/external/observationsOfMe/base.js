@@ -5,7 +5,6 @@ define( function ( require ) {
 	var BaseObj         = require( 'apps/homepage/BaseObject' );
 	var WidgetItemView  = require( 'apps/homepage/external/widgets/external/observationsOfMe/views/WidgetItemView' );
 	var CollectionItems = require( 'apps/homepage/external/widgets/external/observationsOfMe/collections/WidgetCollection' );
-	var Messages        = require( 'text!apps/homepage/external/widgets/external/observationsOfMe/configuration/messages.json' );
 
 	var instance        = new BaseObj();
 
@@ -40,7 +39,6 @@ define( function ( require ) {
 		'em'              : 7,
 		'getExternalView' : WidgetItemView,
 		'getCollection'   : function ( callback, options ) {
-			App.Homepage.Utils.loadMessages( Messages );
 			doGetCollection ( callback, options );
 		},
 		'_id'             : 'observationsOfMe',

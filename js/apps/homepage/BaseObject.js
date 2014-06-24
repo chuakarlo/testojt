@@ -81,8 +81,11 @@ define( function () {
 			}
 		},
 
-		'registerWidget' : function ( parent ) {
+		'registerWidget' : function ( parent, callback ) {
 			parent.push( this );
+			if ( callback ) {
+				callback();
+			}
 		}
 	};
 

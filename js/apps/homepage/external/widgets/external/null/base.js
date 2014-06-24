@@ -3,7 +3,6 @@ define( function ( require ) {
 
 	var App = require('App');
 	var BaseObj      = require( 'apps/homepage/BaseObject' );
-	var Messages        = require( 'text!apps/homepage/external/widgets/external/null/configuration/messages.json' );
 	var instance     = new BaseObj();
 
 	instance._id = 'widgets';
@@ -11,7 +10,6 @@ define( function ( require ) {
 	return instance.extend( {
 		'WidgetId'    : 0,
 		'WidgetName'  : function () {
-			App.Homepage.Utils.loadMessages(Messages);
 			return App.Homepage.Utils.message.nullTitle;
 		},
 		'header'      : function () {

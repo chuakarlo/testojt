@@ -6,7 +6,6 @@ define( function ( require ) {
 	var instance        = new BaseObj();
 	var WidgetItemView  = require( 'apps/homepage/external/widgets/external/focusObjective/views/WidgetItemView' );
 	var CollectionItems = require( 'apps/homepage/external/widgets/external/focusObjective/collections/WidgetCollection' );
-	var Messages        = require( 'text!apps/homepage/external/widgets/external/focusObjective/configuration/messages.json' );
 
 	function doGetCollection ( callback, options ) {
 		var collection = new CollectionItems( options );
@@ -45,7 +44,6 @@ define( function ( require ) {
 		'em'              : 7,
 		'getExternalView' : WidgetItemView, // items template
 		'getCollection'   : function ( callback, options ) {
-			App.Homepage.Utils.loadMessages(Messages);
 			doGetCollection( callback, options );
 		},
 		'_mainUrl'        : 'resources/learning/focus-objectives',
