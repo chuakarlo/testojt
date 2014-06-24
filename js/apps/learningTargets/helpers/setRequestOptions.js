@@ -5,23 +5,38 @@ define( function ( require ) {
 
 	var optSetters = {
 		'processes' : function ( options ) {
-			var opts = {
-				processId     : options.pageid,
-				processTaskId : options.subpageid
-			};
+			var opts = null;
+
+			if ( options !== null ) {
+				opts = {
+					processId     : options.pageid,
+					processTaskId : options.subpageid
+				};
+			}
+
 			return opts;
 		},
 
 		'observations' : function ( options ) {
-			var opts = {
-				showPerFocus : options.pageid
-			};
+			var opts = null;
+
+			if ( options.pageid !== null ) {
+				opts = {
+					showPerFocus : options.pageid
+				};
+			}
 
 			return opts;
 		},
 
 		'default' : function ( options ) {
-			return parseInt( options.pageid, 10 );
+			var opts = null;
+
+			if ( options !== null ) {
+				opts = parseInt( options.pageid, 10 );
+			}
+
+			return opts;
 		}
 	};
 

@@ -46,7 +46,7 @@ define( function ( require ) {
 				App.navigate( 'resources/learning/processes', true );
 			},
 
-			'showCoursesWithId' : function ( id ) {
+			'showCourses' : function () {
 				var helper = Main.helper;
 
 				// set content
@@ -57,17 +57,12 @@ define( function ( require ) {
 
 				helper._apiRequest( 'lt:courses', function ( collection ) {
 					var coursesView = new CoursesView( {
-						collection       : collection,
-						selectedCourseId : parseInt( id, 10 )
+						collection : collection
 					} );
 
 					// display Courses
 					helper._showView( coursesView );
 				} );
-			},
-
-			'showCourses' : function () {
-				this.showCoursesWithId( 0 );
 			},
 
 			'showProcesses' : function () {
@@ -126,10 +121,6 @@ define( function ( require ) {
 			},
 
 			'showObservations' : function () {
-				this.showObservationsWithId( 0 );
-			},
-
-			'showObservationsWithId' : function ( id ) {
 				var helper = Main.helper;
 				helper._setContent( 'observations' );
 
@@ -139,8 +130,7 @@ define( function ( require ) {
 				helper._apiRequest( 'lt:observations', function ( collection ) {
 
 					var observationsView = new ObservationsView( {
-						collection             : collection,
-						selectedObeservationId : parseInt( id, 10 )
+						collection : collection
 					} );
 
 					// display Observations
