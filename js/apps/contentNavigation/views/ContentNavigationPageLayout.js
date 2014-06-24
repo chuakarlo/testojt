@@ -104,24 +104,11 @@ define( function ( require ) {
 		},
 
 		'setSidebarHeightLandscape' : function () {
-			var isiPad = navigator.userAgent.match(/iPad/i);
 
 			if ( $( window ).scrollTop() > 0 ) {
-				if ( isiPad && $( window ).width() > 1023 ) {
-					this.ui.sidebar.css( 'height', $( window ).height() - 350 );
-				} else if ( isiPad && $( window ).width() <= 1023 ) {
-					this.ui.sidebar.css( 'height', $( window ).height() - 150 );
-				} else {
-					this.ui.sidebar.css( 'height', $( window ).height() - 20 );
-				}
+				this.ui.sidebar.css( 'height', $( window ).height() - 20 );
 			} else {
-				if ( isiPad && $( window ).width() > 1023 ) {
-					this.ui.sidebar.css( 'height', $( window ).height() - 550 );
-				} else if ( isiPad && $( window ).width() <= 1023 ) {
-					this.ui.sidebar.css( 'height', $( window ).height() - 300 );
-				} else {
-					this.ui.sidebar.css( 'height', $( window ).height() - 200 );
-				}
+				this.ui.sidebar.css( 'height', $( window ).height() - 200 );
 			}
 		},
 
