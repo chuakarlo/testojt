@@ -23,8 +23,8 @@ define( function ( require ) {
 			model.set( 'queued', true );
 		},
 		'EmptyMessage' : {
-			'heading' : 'No video added to your queue.',
-			'details' : 'Select any content by clicking watch later icon to add.'
+			'heading' : 'Add videos to your queue',
+			'details' : 'by clicking the Add to Queue icon on any video thumbnail.'
 		}
 	};
 } );
