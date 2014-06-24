@@ -8,15 +8,13 @@ define( function ( require ) {
 
 	var recommendedRequest = function ( start ) {
 		return {
-			'path'   : 'com.schoolimprovement.pd360.dao.SearchService',
-			'method' : 'RespondSearchAPI',
+			'path'   : 'com.schoolimprovement.pd360.dao.RespondService',
+			'method' : 'RespondSearchRecommendedContent',
 			'args'   : {
-				'persId'     : Session.personnelId(),
-				'searchType' : 'VideosCore',
-				'start'      : start,
-				'rows'       : 24,
-				'searchData' : App.request( 'homepage:userTags' ),
-				'sort'       : 'created desc'
+				'personnelid' : Session.personnelId(),
+				'start'       : start,
+				'rows'        : 24,
+				'sort'        : 'created desc'
 			}
 		};
 	};
