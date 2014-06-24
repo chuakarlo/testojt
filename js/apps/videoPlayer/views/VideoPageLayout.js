@@ -26,7 +26,6 @@ define( function ( require ) {
 		'regions' : {
 			'playerRegion'         : '#video-player',
 			'questionsRegion'      : '#video-questions',
-			'nextSegmentRegion'    : '#next-segment',
 			'videoButtonsRegion'   : '#video-buttons',
 			'videoTabsRegion'      : '#video-tabs',
 			'videoResourcesRegion' : '#video-resource',

@@ -74,19 +74,6 @@ define( function ( require ) {
 				videos.push( data );
 			} );
 
-			App.reqres.setHandler( 'videoPlayer:playerView:video', function () {
-				var currentId = parseInt( App.request( 'videoPlayer:videoId' ), 10 );
-				var currentVideo;
-
-				videos.forEach( function ( video ) {
-					if ( video.model.id === currentId ) {
-						currentVideo = video;
-					}
-				} );
-
-				return currentVideo;
-			} );
-
 			// Videojs isn't single-page-app friendly.
 			// When navigating away from video player page, dispose the
 			// videojs instance to avoid errors on 'undefined' variables

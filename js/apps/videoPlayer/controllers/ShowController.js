@@ -79,6 +79,24 @@ define( function ( require ) {
 						model.setQueue( queueContentsIds );
 					} );
 
+					// if there are other segments available
+					if ( !segments.isEmpty() ) {
+						var segmentsView = new App.VideoPlayer.Views.VideoCollectionView( {
+							'collection' : segments
+						} );
+						layout.segmentLabelRegion.show( new App.VideoPlayer.Views.SegmentLabelItemView() );
+						layout.videoSegmentsRegion.show( segmentsView );
+
+						// get all segments ids of other segments
+						var segmentIds = segments.pluck( 'ContentId' );
+						// find where is the id of next segment in segmentsIds
+						var index = _.sortedIndex(  segmentIds , videoModel.id );
+						if ( index < segmentIds.length ) {
+							// add the next segment to video model for overlay at the end of vid
+							videoModel.next = segments.at( index );
+						}
+					}
+
 					// Videojs player view
 					var videoPlayerView = new App.VideoPlayer.Views.VideoPlayerView( {
 						'model' : videoModel
@@ -98,26 +116,6 @@ define( function ( require ) {
 						'collection' : questionsCollection
 					} );
 					layout.questionsRegion.show( questionsView );
-
-					// if there are other segments available
-					if ( !segments.isEmpty() ) {
-						var segmentsView = new App.VideoPlayer.Views.VideoCollectionView( {
-							'collection' : segments
-						} );
-						layout.segmentLabelRegion.show( new App.VideoPlayer.Views.SegmentLabelItemView() );
-						layout.videoSegmentsRegion.show( segmentsView );
-
-						// Get the next sorted video segment by ContentId.
-						var segmentIds = segments.pluck( 'ContentId' );
-						var index = _.sortedIndex(  segmentIds , videoModel.id );
-						if ( index < segmentIds.length ) {
-							videoModel.next = segments.at( index );
-							var nextSegmentView = new App.VideoPlayer.Views.NextSegmentView( {
-								'model' : videoModel.next
-							} );
-							layout.nextSegmentRegion.show( nextSegmentView );
-						}
-					}
 
 					// show video buttons view
 					var videoButtonsView = new App.VideoPlayer.Views.VideoButtonsView( {
