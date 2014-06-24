@@ -39,10 +39,8 @@ define ( function (require ) {
 			var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId() ) ] );
 
 			App.when( fetchingModels ).done( function ( models ) {
-				options.success( new Backbone.Collection( models[ 0 ] ) );
 				App.Homepage.Utils.jsonVal( ValidationSchema, models[0].slice(0,5), function ( err ) {
 					if ( !err ) {
-						//App.vent.trigger( 'flash:message', {
 						options.success( new Backbone.Collection( models[0].slice(0,5) ) );
 						return;
 					}

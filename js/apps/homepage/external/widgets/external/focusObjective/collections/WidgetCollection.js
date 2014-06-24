@@ -73,7 +73,6 @@ define ( function (require ) {
 			App.when( fetchingModels ).done( function ( models ) {
 
 				App.Homepage.Utils.jsonVal( schema, models[ 0 ], function ( err ) {
-					// console.log( models[ 0 ]);
 					if ( !err ) {
 						options.success( new Backbone.Collection( models[ 0 ] ) );
 					} else {
