@@ -15,9 +15,10 @@ define( function ( require ) {
 	var WidgetCompositeView       = require( 'apps/homepage/external/widgets/views/WidgetCompositeView' );
 	var MobileWidgetCompositeView = require( 'apps/homepage/external/widgets/views/MobileWidgetCompositeView' );
 	var template                  = require( 'text!apps/homepage/external/widgets/templates/widgetLayoutView.html' );
-
-	var panelStatuses = [ 'opened', 'closed' ];
+	var schema                    = require( 'text!apps/homepage/external/widgets/configuration/widgetSchema.json' );
+	var panelStatuses             = [ 'opened', 'closed' ];
 	var widgets;
+
 	//early load for performance
 	require( 'pc-adjustablePeek' );
 
@@ -37,22 +38,29 @@ define( function ( require ) {
 			if ( App.request( 'homepage:isHomeRoute' ) ) {
 
 				widgets = App.Homepage.Widgets.allWidgets().splice(1);
+				schema  = JSON.parse( schema );
 
-				if ( !models || !models[ 0 ] || models[ 0 ].length === 0 ) {
-					models[ 0 ] = [ { WidgetId : 5 }, { WidgetId : 4 }, { WidgetId : 2 } ];
+				if ( !models || models.length < 0 ) {
+					models[ 0 ] = [];
 				}
 
-				view.widgetCollection           = new WidgetCollection( widgets );
-				view.userWidgetCollection       = new WidgetCollection( view.getUserWidgetCollection( models[ 0 ] ) );
-				view.actualUserWidgetCollection = new WidgetCollection( view.getUserWidgetCollection( models[ 0 ] ) );
+				App.Homepage.Utils.jsonVal( schema, models[ 0 ], function ( err ) {
+					if ( err ) {
+						models[ 0 ] = [ { WidgetId : 5 }, { WidgetId : 4 }, { WidgetId : 2 } ];
+					}
 
-				var userWidgetCollectionView = new UserWidgetCollectionView( { 'collection' : view.actualUserWidgetCollection } );
-				view.userWidgets.show( userWidgetCollectionView );
+					view.widgetCollection           = new WidgetCollection( widgets );
+					view.userWidgetCollection       = new WidgetCollection( view.getUserWidgetCollection( models[ 0 ] ) );
+					view.actualUserWidgetCollection = new WidgetCollection( view.getUserWidgetCollection( models[ 0 ] ) );
 
-				userWidgetCollectionView.collection.on( 'reset', function () {
-					userWidgetCollectionView.$el.empty();
-					view.userWidgets.close();
+					var userWidgetCollectionView = new UserWidgetCollectionView( { 'collection' : view.actualUserWidgetCollection } );
 					view.userWidgets.show( userWidgetCollectionView );
+
+					userWidgetCollectionView.collection.on( 'reset', function () {
+						userWidgetCollectionView.$el.empty();
+						view.userWidgets.close();
+						view.userWidgets.show( userWidgetCollectionView );
+					} );
 				} );
 			}
 
