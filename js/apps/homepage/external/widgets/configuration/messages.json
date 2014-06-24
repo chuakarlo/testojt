@@ -20,9 +20,7 @@
 	"whatToDoNextName" : "What to Do Next",
 
 	"widgetLimitError" : "You have reached the maximum number of widgets.",
-	"widgetMinError"   : "Action not allowed. You must have at least one active widget",
+	"widgetMinError"   : "This action is not allowed. You must have at least one active widget",
 	"widgetChangeSave" : "Changes has been saved.",
 	"widgetSaveError"  : "An error occurred. Please try again later."
-
-
 }
