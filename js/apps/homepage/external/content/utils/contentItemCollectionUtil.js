@@ -80,7 +80,10 @@ define( function ( require ) {
 						injectAttributes( view, base, collection, data, callback );
 					}
 				},
-				'error'   : function () {
+				'error'   : function ( err ) {
+					App.vent.trigger( 'flash:message', {
+						'message' : err.message
+					} );
 					view.collection = new Backbone.Collection( [ 1 ] );
 					view.itemView = EmptyContentCollectionView;
 					view.render();
