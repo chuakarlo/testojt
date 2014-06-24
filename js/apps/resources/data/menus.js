@@ -51,7 +51,7 @@ define( function ( require ) {
 	};
 
 	var training = {
-		'name'   : 'PD 360 Training',
+		'name'   : 'Edivation Training',
 		'icon'   : 'sinet-training',
 		'url'    : 'http://help.schoolimprovement.com/training',
 		'id'     : 'link-more-training',
