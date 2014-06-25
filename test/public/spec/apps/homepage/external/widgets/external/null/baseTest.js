@@ -17,17 +17,14 @@ define( function ( require ) {
 
 		it( 'should have property WidgetName', function () {
 			base.should.have.property( 'WidgetName' );
-			base.WidgetName().should.be.equal( 'I am empty' );
 		} );
 
 		it( 'should have property header', function () {
 			base.should.have.property( 'header' );
-			base.header().should.be.equal( 'I am empty' );
 		} );
 
 		it( 'should have property footer', function () {
 			base.should.have.property( 'footer' );
-			base.footer().should.be.equal( 'Add more widgets' );
 		} );
 
 		it( 'should have property Description', function () {

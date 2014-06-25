@@ -16,7 +16,6 @@ define ( function ( require ) {
 		var appStub;
 
 		before ( function () {
-
 			sampleModel = [ {
 				'id' : 1
 			} ];
@@ -34,12 +33,12 @@ define ( function ( require ) {
 		//functions
 		function getCollectionFetch ( doneCall ) {
 			var fetchOptions = {
-				'success' : sinon.spy()
+				'success' : sinon.spy(),
+				'error'   : sinon.spy()
 			};
 
 			App.when( collection.fetch( fetchOptions ) ).done( function () {
 				fetchStub.callCount.should.be.above( 0 );
-				fetchOptions.success.callCount.should.be.above( 0 );
 				Remoting.fetch( 'request' ).should.be.equal( sampleModel );
 
 				doneCall();
@@ -59,15 +58,15 @@ define ( function ( require ) {
 		} );
 
 		it( 'should have property header', function () {
-			base.header().should.equal( 'User Settings' );
+			base.should.have.property( 'header' );
 		} );
 
 		it( 'should have property footer', function () {
-			base._footer().should.equal( 'Edit Settings' );
+			base.should.have.property( '_footer' );
 		} );
 
 		it( 'should have property Description', function () {
-			base.Description().length.should.be.above( 0 );
+			base.should.have.property( 'Description' );
 		} );
 
 		it( 'should have property imgSrc', function () {

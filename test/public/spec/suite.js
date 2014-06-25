@@ -84,58 +84,58 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/entities/RelatedVideosTest.js',
 			'spec/apps/videoPlayer/entities/SegmentsTest.js',
 			'spec/apps/videoPlayer/entities/UserContentTest.js',
-			'spec/apps/videoPlayer/entities/VideoResourcesTest.js'
+			'spec/apps/videoPlayer/entities/VideoResourcesTest.js',
 
-			// //Homepage
-			// 'spec/apps/homepage/external/content/controllers/contentCompositeControllerTest.js',
-			// 'spec/apps/homepage/external/content/views/ContentCompositeViewTest.js',
-			// 'spec/apps/homepage/external/content/views/ContentItemViewTest.js',
+			//Homepage
+			'spec/apps/homepage/external/content/controllers/contentCompositeControllerTest.js',
+			'spec/apps/homepage/external/content/views/ContentCompositeViewTest.js',
+			'spec/apps/homepage/external/content/views/ContentItemViewTest.js',
 
-			// //HomePage - Billboard
-			// 'spec/apps/homepage/external/billboard/collection/BillboardCollectionTest.js',
-			// 'spec/apps/homepage/external/billboard/configuration/nivoSettingsTest.js',
-			// 'spec/apps/homepage/external/billboard/views/BillboardItemViewTest.js',
-			// 'spec/apps/homepage/external/billboard/baseTest.js',
+			//HomePage - Billboard
+			'spec/apps/homepage/external/billboard/collection/BillboardCollectionTest.js',
+			'spec/apps/homepage/external/billboard/configuration/nivoSettingsTest.js',
+			'spec/apps/homepage/external/billboard/views/BillboardItemViewTest.js',
+			'spec/apps/homepage/external/billboard/baseTest.js',
 
-			// //HomePage - Widgets
-			// 'spec/apps/homepage/external/widgets/baseTest.js',
-			// 'spec/apps/homepage/external/widgets/layout/WidgetLayoutTest.js',
-			// 'spec/apps/homepage/external/widgets/views/WidgetCompositeViewTest.js',
-			// 'spec/apps/homepage/external/widgets/views/WidgetPreviewItemViewTest.js',
+			//HomePage - Widgets
+			'spec/apps/homepage/external/widgets/baseTest.js',
+			'spec/apps/homepage/external/widgets/layout/WidgetLayoutTest.js',
+			'spec/apps/homepage/external/widgets/views/WidgetCompositeViewTest.js',
+			'spec/apps/homepage/external/widgets/views/WidgetPreviewItemViewTest.js',
 
-			// //HomePage - Courses
-			// 'spec/apps/homepage/external/widgets/external/courses/baseTest.js',
-			// 'spec/apps/homepage/external/widgets/external/courses/views/WidgetItemViewTest.js',
-			// //HomePage - Focus Objectives
-			// 'spec/apps/homepage/external/widgets/external/focusObjective/baseTest.js',
-			// 'spec/apps/homepage/external/widgets/external/focusObjective/views/WidgetItemViewTest.js',
+			//HomePage - Courses
+			'spec/apps/homepage/external/widgets/external/courses/baseTest.js',
+			'spec/apps/homepage/external/widgets/external/courses/views/WidgetItemViewTest.js',
+			//HomePage - Focus Objectives
+			'spec/apps/homepage/external/widgets/external/focusObjective/baseTest.js',
+			'spec/apps/homepage/external/widgets/external/focusObjective/views/WidgetItemViewTest.js',
 
-			// //HomePage - Group Activity
-			// 'spec/apps/homepage/external/widgets/external/groupActivity/baseTest.js',
-			// 'spec/apps/homepage/external/widgets/external/groupActivity/views/WidgetItemViewTest.js',
+			//HomePage - Group Activity
+			'spec/apps/homepage/external/widgets/external/groupActivity/baseTest.js',
+			'spec/apps/homepage/external/widgets/external/groupActivity/views/WidgetItemViewTest.js',
 
-			// //HomePage - Observation of Me
-			// 'spec/apps/homepage/external/widgets/external/observationsOfMe/baseTest.js',
-			// 'spec/apps/homepage/external/widgets/external/observationsOfMe/views/WidgetItemViewTest.js',
+			//HomePage - Observation of Me
+			'spec/apps/homepage/external/widgets/external/observationsOfMe/baseTest.js',
+			'spec/apps/homepage/external/widgets/external/observationsOfMe/views/WidgetItemViewTest.js',
 
-			// //HomePage - User Settings
-			// 'spec/apps/homepage/external/widgets/external/yourProfile/baseTest.js',
-			// 'spec/apps/homepage/external/widgets/external/yourProfile/views/WidgetItemViewTest.js',
+			//HomePage - User Settings
+			'spec/apps/homepage/external/widgets/external/yourProfile/baseTest.js',
+			'spec/apps/homepage/external/widgets/external/yourProfile/views/WidgetItemViewTest.js',
 
-			// // Homepage - Your Queue
-			// 'spec/apps/homepage/external/content/external/your-queue/baseTest.js',
-			// 'spec/apps/homepage/external/content/external/your-queue/collections/QueueCollectionTest.js',
-			// 'spec/apps/homepage/external/content/external/your-queue/controllers/baseControllerTest.js',
-			// 'spec/apps/homepage/external/content/external/your-queue/controllers/queueControllerTest.js',
-			// 'spec/apps/homepage/external/content/external/your-queue/models/QueueModelTest.js',
+			// Homepage - Your Queue
+			'spec/apps/homepage/external/content/external/your-queue/baseTest.js',
+			'spec/apps/homepage/external/content/external/your-queue/collections/QueueCollectionTest.js',
+			'spec/apps/homepage/external/content/external/your-queue/controllers/baseControllerTest.js',
+			'spec/apps/homepage/external/content/external/your-queue/controllers/queueControllerTest.js',
+			'spec/apps/homepage/external/content/external/your-queue/models/QueueModelTest.js',
 
-			// //Homepage - Recommended Content
-			// 'spec/apps/homepage/external/content/external/recommended/baseTest.js',
-			// 'spec/apps/homepage/external/content/external/recommended/collections/RecommendedCollectionTest.js',
+			//Homepage - Recommended Content
+			'spec/apps/homepage/external/content/external/recommended/baseTest.js',
+			'spec/apps/homepage/external/content/external/recommended/collections/RecommendedCollectionTest.js',
 
-			// //Homepage - null
-			// 'spec/apps/homepage/external/widgets/external/null/baseTest.js',
-			// 'spec/apps/homepage/external/widgets/views/EmptyWidgetViewTest.js'
+			//Homepage - null
+			'spec/apps/homepage/external/widgets/external/null/baseTest.js',
+			'spec/apps/homepage/external/widgets/views/EmptyWidgetViewTest.js'
 		]
 
 	};

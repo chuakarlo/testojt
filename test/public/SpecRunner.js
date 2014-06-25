@@ -31,10 +31,6 @@
 
 		} );
 
-		//Load Homepage Widget Module first
-		// require( 'common/views' );
-		// require( '../js/apps/homepage/external/widgets/manifest' );
-
 	} );
 
 } ).call( this );

@@ -1,8 +1,6 @@
 define( function ( require ) {
 	'use strict';
 
-	var Backbone = require( 'backbone' );
-
 	return function () {
 
 		var App        = require( 'App' );
@@ -11,6 +9,7 @@ define( function ( require ) {
 		// ## Homepage App
 		App.module( 'Homepage', function ( Homepage, App ) {
 
+			require( './utils/homepageRoute' );
 			// load utils
 			require( './utils/utils' );
 
@@ -39,10 +38,6 @@ define( function ( require ) {
 			App.addInitializer( function () {
 				new Homepage.Router( {
 					'controller' : API
-				} );
-
-				App.reqres.setHandler( 'homepage:isHomeRoute', function () {
-					return Backbone.history.fragment === 'home';
 				} );
 			} );
 
