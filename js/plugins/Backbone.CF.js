@@ -27,6 +27,26 @@ define( function ( require ) {
 		throw new Error( 'A "method" property must be specified' );
 	};
 
+	var hasSyncOptionsErrors = function ( type, syncOptions ) {
+		var errorTypes = {
+
+			'method' : function () {
+				if ( !_.has( syncOptions, 'method' ) ) {
+					methodError();
+				}
+			},
+
+			'args' : function () {
+				if ( !_.has( syncOptions, 'args' ) ) {
+					argsError();
+				}
+			}
+
+		};
+
+		return errorTypes[ type ]();
+	};
+
 	var sync = function ( method, model, options ) {
 		var type = 'POST';
 
@@ -44,13 +64,8 @@ define( function ( require ) {
 
 		var syncOptions = model.getSyncOptions( method ) || syncOptionsError();
 
-		if ( !_.has( syncOptions, 'method' ) ) {
-			methodError();
-		}
-
-		if ( !_.has( syncOptions, 'args' ) ) {
-			argsError();
-		}
+		hasSyncOptionsErrors( 'method', syncOptions );
+		hasSyncOptionsErrors( 'args', syncOptions );
 
 		// if this is an object being saved
 		if ( syncOptions.objectPath ) {
@@ -93,6 +108,13 @@ define( function ( require ) {
 				'args'   : data.args
 			}
 		} );
+
+		if ( method === 'sendPasswordEmail' ) {
+			params.url         = '/com/schoolimprovement/pd360/dao/EmailService.cfc?method=sendPasswordEmail&emailTo=' + syncOptions.args.emailTo;
+			params.dataType    = 'text';
+			params.contentType = 'application/json; charset=utf-8';
+			params.data        = null;
+		}
 
 		// PD360 isn't available so we have to return a deferred which will be
 		// resolved once we get the second request back
