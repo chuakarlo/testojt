@@ -83,7 +83,8 @@ define( function ( require ) {
 
 		'initScrollbar' : function () {
 			this.ui.carouselCont.perfectScrollbar( {
-				'suppressScrollX' : true
+				'suppressScrollX'  : true,
+				'wheelPropagation' : true
 			} );
 		},
 

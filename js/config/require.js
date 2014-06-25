@@ -28,7 +28,6 @@ require.config( {
 		'carouselSnap'          : 'libs/carouselSnap/js/carousel-snap',
 		'backbone.wreqr'        : 'libs/backbone.wreqr/lib/amd/backbone.wreqr',
 		'bootstrap'             : 'libs/bootstrap/dist/js/bootstrap.min',
-		'filterable.collection' : 'libs/backbone.filterable-collection/src/backbone.filterable-collection',
 		'jquery.bum-smack'      : 'libs/jquery.bum-smack/src/jquery.bum-smack',
 		'spin'                  : 'libs/spin.js/spin',
 		'jquery.spin'           : 'libs/spin.js/jquery.spin',
