@@ -13,10 +13,10 @@ define( function ( require ) {
 			var isQueue = this.options._id === 'your-queue';
 			var heading = !isQueue ?
 				'No recommended videos.' :
-				'Add videos to your queue';
+				'You currently do not have any videos in your queue.';
 			var details = !isQueue ?
 				'Update your user setting to get recommended content.' :
-				'by clicking the <span class="label label-sm label-default">Add to Queue</span> icon on any video thumbnail.';
+				'Items can be added to your queue by clicking <span class="label label-sm label-default">Add to Queue</span> <span class="sc-watch-later-icon grayed fa fa-clock-o"></span> when browsing content';
 			this.$el.find( '.empty-content h3' ).html( heading );
 			this.$el.find( '.empty-content p' ).html( details );
 		}
