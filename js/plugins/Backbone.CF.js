@@ -65,6 +65,7 @@ define( function ( require ) {
 		var syncOptions = model.getSyncOptions( method ) || syncOptionsError();
 
 		hasSyncOptionsErrors( 'method', syncOptions );
+
 		hasSyncOptionsErrors( 'args', syncOptions );
 
 		// if this is an object being saved
@@ -109,7 +110,7 @@ define( function ( require ) {
 			}
 		} );
 
-		if ( method === 'sendPasswordEmail' ) {
+		if ( data.method === 'sendPasswordEmail' ) {
 			params.url         = '/com/schoolimprovement/pd360/dao/EmailService.cfc?method=sendPasswordEmail&emailTo=' + syncOptions.args.emailTo;
 			params.dataType    = 'text';
 			params.contentType = 'application/json; charset=utf-8';
