@@ -134,12 +134,15 @@ define( function ( require ) {
 				player.videoReplay();
 
 				if ( this.model.next ) {
-					player.videoOverlay( {
-						'imageUrl'     : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.next.get( 'ImageURL' ),
-						'imageOpacity' : 0.75,
-						'clickUrl'     : '#resources/videos/' + this.model.next.get( 'ContentId' ),
-						'overlayText'  : '<div id="video-up-next"><p id="vjs-p-overlay">Up Next:</p><p id="vjs-title-overlay">' + this.model.next.get( 'ContentName' ) + '</p></div>'
-					} );
+
+					if ( !utils.isMobile() ) {
+						player.videoOverlay( {
+							'imageUrl'     : 'http://resources.pd360.com/PD360/media/thumb/' + this.model.next.get( 'ImageURL' ),
+							'imageOpacity' : 0.75,
+							'clickUrl'     : '#resources/videos/' + this.model.next.get( 'ContentId' ),
+							'overlayText'  : '<div id="video-up-next"><p id="vjs-p-overlay">Up Next:</p><p id="vjs-title-overlay">' + this.model.next.get( 'ContentName' ) + '</p></div>'
+						} );
+					}
 				}
 			} else {
 				// Show 45 second video duration static display

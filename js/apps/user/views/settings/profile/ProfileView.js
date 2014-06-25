@@ -32,7 +32,6 @@ define( function ( require ) {
 			'lastname'  : '#lastname',
 			'email'     : '#email',
 			'title'     : '#title',
-			'save'      : '#save',
 			'uploader'  : '.fine-uploader',
 			'password'  : '#change-password'
 		},
@@ -45,7 +44,7 @@ define( function ( require ) {
 		'events' : {
 			'blur @ui.input'     : 'validateInput',
 			'keyup @ui.input'    : 'validateInput',
-			'click @ui.save'     : 'saveInfo',
+			'submit'             : 'saveInfo',
 			'click @ui.password' : 'changePassword'
 		},
 
@@ -99,7 +98,7 @@ define( function ( require ) {
 				'model' : new PasswordModel()
 			} );
 
-			App.modalRegion.show( passwordModalView , { 'className' : 'password-modal' });
+			App.modalRegion.show( passwordModalView , { 'className' : 'password-modal' } );
 		},
 
 		'initialize' : function ( options ) {
@@ -196,7 +195,7 @@ define( function ( require ) {
 		},
 
 		'validateInput' : function ( event ) {
-			require( 'common/helpers/validateInput')( event, this );
+			require( 'common/helpers/validateInput' )( event, this );
 		},
 
 		// ProfessionalStartDate is formated as a date but user can only select year
