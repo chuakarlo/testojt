@@ -17,10 +17,10 @@ define( function ( require ) {
 
 		'tagName' : 'li',
 
-		'className' : 'col-md-3',
+		'className' : 'col-xs-4',
 
 		'ui' : {
-			'thumbnail' : '.video-resources-thumb > img',
+			'thumbnail' : '.video-resources-thumb',
 			'download'  : '.download-icon'
 		},
 
@@ -45,8 +45,15 @@ define( function ( require ) {
 
 		'previewFile' : function ( e ) {
 			e.preventDefault();
-			//disable click in mobile devices
-			if ( this.clickEnable === true && this.model.get( 'previewPath') !== '' ) {
+
+			var previewPath = this.model.get( 'previewPath' );
+
+			if ( previewPath === '' ) {
+				return;
+			}
+
+			// disable preview popup in mobile devices
+			if ( this.clickEnable === true ) {
 				//check if ie has adobe reader installed
 				if ( $.browser.name === 'msie' && !this.checkForPdfPlugin() ) {
 					var notifyView = new NotifyView();
@@ -57,6 +64,8 @@ define( function ( require ) {
 						'className' : 'pdf-preview-modal'
 					} );
 				}
+			} else {
+				window.open( previewPath );
 			}
 		},
 
