@@ -77,12 +77,16 @@ define( function ( require ) {
 			this.listenTo( this, 'afterPlayerInit', this.startTracking );
 		},
 
+		'setAutoPlay' : function () {
+			return !this.isMobile();
+		},
+
 		'initializePlayer' : function () {
 			var self = this;
 
 			var player = videojs( 'video-content', {
 				'controls'  : true,
-				'autoplay'  : true,
+				'autoplay'  : this.setAutoPlay(),
 				'techOrder' : [ 'flash', 'html5' ]
 			}, function () {
 				// Bug fix for defect #5187 : CC button flashes on IE.
