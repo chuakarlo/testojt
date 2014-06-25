@@ -6,7 +6,6 @@ define( function ( require ) {
 	var Session  = require( 'Session' );
 	var App      = require( 'App' );
 	var $        = require( 'jquery' );
-	var schema   = require( 'text!apps/homepage/external/widgets/external/yourProfile/configuration/yourProfileSchema.json' );
 
 	function widgetRequest ( personnelId ) {
 		return {
@@ -56,15 +55,16 @@ define( function ( require ) {
 			App.when( fetchingModels ).done( function ( models ) {
 
 				var mergedModels = $.extend( { }, models[ 0 ], models[ 1 ] );
-				schema           = JSON.parse( schema );
-
-				App.Homepage.Utils.jsonVal ( schema, [ mergedModels ], function ( err ) {
+				App.Homepage.Utils.jsonVal ( function ( err ) {
 					if ( !err ) {
 						var newMergedModels = chopDataToNewModel( mergedModels );
 						options.success( new Collection( newMergedModels ) );
 					} else {
 						options.error( err );
 					}
+				}, {
+					'schema' : require( 'text!apps/homepage/external/widgets/external/yourProfile/configuration/yourProfileSchema.json' ),
+					'data'   : [ mergedModels ]
 				} );
 
 			}).fail( function ( error ) {

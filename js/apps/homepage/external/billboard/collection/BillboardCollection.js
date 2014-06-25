@@ -1,12 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var Backbone = require( 'backbone' );
-	var Remoting = require( 'Remoting' );
-	var App      = require( 'App' );
-	var $        = require( 'jquery' );
-
-	var schema         = require( 'apps/homepage/external/billboard/configuration/billboardSchema' );
+	var Backbone       = require( 'backbone' );
+	var Remoting       = require( 'Remoting' );
+	var App            = require( 'App' );
+	var $              = require( 'jquery' );
 	var BillBoardModel = require( 'apps/homepage/external/billboard/model/BillboardModel' );
 
 	function billboardRequest ( typeId ) {
@@ -31,15 +29,16 @@ define( function ( require ) {
 			App.when( fetchingModels ).done( function ( models ) {
 
 				var collection = $.extend( models[ 0 ], models[ 1 ] );
-				var error = 'Billboard: empty data' ;
 
-				App.Homepage.Utils.jsonVal( schema, collection, function ( err ) {
-					error = err;
+				App.Homepage.Utils.jsonVal( function ( err ) {
 					if ( !err ) {
 						options.success( new Collection( collection ) );
-						return;
+					} else {
+						options.error( err );
 					}
-					options.error( error );
+				}, {
+					'schema' : require( 'text!apps/homepage/external/billboard/configuration/billboardSchema.json' ),
+					'data'   : collection
 				} );
 
 			} ).fail( function ( error ) {

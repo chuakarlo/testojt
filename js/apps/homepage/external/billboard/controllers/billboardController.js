@@ -34,7 +34,7 @@ define( function ( require ) {
 				},
 				'error'   : function ( err ) {
 					App.vent.trigger( 'flash:message', {
-						'message' : err.message
+						'message' : 'Billboard : ' + err.message
 					} );
 				}
 			} );

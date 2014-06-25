@@ -1,6 +1,6 @@
 {
-	"title" : "Widget Schema",
-	"type" : "object",
+	"title"    : "Widget Schema",
+	"type"     : "object",
 	"required" : [
 		"PresentationOrder",
 		"WidgetId"

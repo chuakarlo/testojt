@@ -15,7 +15,6 @@ define( function ( require ) {
 	var WidgetCompositeView       = require( 'apps/homepage/external/widgets/views/WidgetCompositeView' );
 	var MobileWidgetCompositeView = require( 'apps/homepage/external/widgets/views/MobileWidgetCompositeView' );
 	var template                  = require( 'text!apps/homepage/external/widgets/templates/widgetLayoutView.html' );
-	var schema                    = require( 'text!apps/homepage/external/widgets/configuration/widgetSchema.json' );
 	var panelStatuses             = [ 'opened', 'closed' ];
 	var widgets;
 
@@ -37,14 +36,11 @@ define( function ( require ) {
 
 			if ( App.request( 'homepage:isHomeRoute' ) ) {
 
-				widgets = App.Homepage.Widgets.allWidgets().splice(1);
-				schema  = JSON.parse( schema );
-
+				widgets    = App.Homepage.Widgets.allWidgets().splice(1);
 				if ( !models || models.length < 0 ) {
 					models[ 0 ] = [];
 				}
-
-				App.Homepage.Utils.jsonVal( schema, models[ 0 ], function ( err ) {
+				App.Homepage.Utils.jsonVal( function ( err ) {
 					if ( err ) {
 						models[ 0 ] = [ { WidgetId : 5 }, { WidgetId : 4 }, { WidgetId : 2 } ];
 					}
@@ -61,6 +57,10 @@ define( function ( require ) {
 						view.userWidgets.close();
 						view.userWidgets.show( userWidgetCollectionView );
 					} );
+
+				}, {
+					'schema' : require( 'text!apps/homepage/external/widgets/configuration/widgetSchema.json' ),
+					'data'   : models[ 0 ]
 				} );
 			}
 
