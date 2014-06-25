@@ -70,6 +70,7 @@ define( function ( require ) {
 						if ( model.Children.length ) {
 							_.each( model.Children, function ( category ) {
 								category.isCategory = true;
+								category.parentId = model.ContentId;
 								this.categories.add( category );
 							}.bind( this ) );
 						}

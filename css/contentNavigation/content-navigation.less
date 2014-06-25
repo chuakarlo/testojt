@@ -308,7 +308,7 @@
 			}
 
 			&.nested-list {
-				li:not( :first-child ) {
+				li:not( .cn-custom-library ) {
 					padding-left : 40px;
 					@media ( min-width : @screen-xs-max ) {
 						&:hover {
@@ -317,7 +317,7 @@
 					}
 				}
 
-				li:first-child {
+				.cn-custom-library {
 					font-weight : 600;
 				}
 			}
