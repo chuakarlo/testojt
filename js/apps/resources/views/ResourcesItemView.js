@@ -22,7 +22,7 @@ define( function ( require ) {
 
 		'getTarget' : function () {
 			if ( this.model.get( 'target' ) ) {
-				return 'target="' + this.model.get( 'target' ) + '"';
+				return 'target=' + this.model.get( 'target' );
 			}
 
 			return '';
@@ -34,7 +34,9 @@ define( function ( require ) {
 			};
 		},
 
-		'showTraining' : function () {
+		'showTraining' : function ( event ) {
+			event.preventDefault();
+
 			var personnel   = App.request( 'session:personnel' );
 			var email       = 'email='       + personnel.EmailAddress;
 			var fname       = 'fname='       + personnel.FirstName;
@@ -43,6 +45,7 @@ define( function ( require ) {
 			var url         = 'http://help.schoolimprovement.com/training#context/' + [ email, fname, lname, personnelid ].join( '&' );
 
 			this.ui.help.attr( 'href', url );
+			window.open( url );
 		}
 
 	} );

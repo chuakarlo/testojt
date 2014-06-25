@@ -29,7 +29,7 @@ define( function ( require ) {
 			'userMenu'     : '.user-menu',
 			'menuBar'      : '.menu-bar',
 			'drawer'       : '#menu',
-			'ddLink'       : '.navbar-collapse.in a:not(.dropdown-toggle)',
+			'ddLink'       : '.navbar-collapse.in .dropdown a:not(.dropdown-toggle)',
 			'bar1'         : '#bar1',
 			'bar2'         : '#bar2',
 			'bar3'         : '#bar3',
@@ -86,10 +86,13 @@ define( function ( require ) {
 			return this.templates.loggedOut;
 		},
 
-		'hideCollapsibleMenu' : function ( event ) {
+		'hideCollapsibleMenu' : function ( event, hideOnly ) {
 			event.preventDefault();
+
 			$( '#navbar .navbar-collapse.in' ).removeClass( 'in' );
-			App.navigate( event.currentTarget.hash.substr( 1 ), { 'trigger' : true } );
+			if ( !hideOnly ) {
+				App.navigate( event.currentTarget.hash.substr( 1 ), { 'trigger' : true } );
+			}
 		},
 
 		'toggleUserMenu' : function ( event ) {
@@ -179,6 +182,9 @@ define( function ( require ) {
 		},
 
 		'showHelp' : function ( event ) {
+			event.preventDefault();
+			this.hideCollapsibleMenu( event, true );
+
 			if ( !App.request( 'session:authenticated' ) ) {
 				return;
 			}
@@ -192,10 +198,13 @@ define( function ( require ) {
 			var url         = 'http://help.schoolimprovement.com/#context/' + [ email, fname, lname, personnelid, location ].join( '&' );
 
 			this.ui.help.attr( 'href', url );
+			window.open( url );
 		},
 
 		'redirect' : function ( event ) {
 			event.preventDefault();
+			this.hideCollapsibleMenu( event, true );
+
 			App.navigate( $( event.currentTarget ).attr( 'data-url' ), {
 				'trigger' : true
 			} );

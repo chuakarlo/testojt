@@ -35,7 +35,6 @@ define( function ( require ) {
 					var thereNowRequest = App.request( 'user:isThereNow' );
 					var obsRequest      = App.request( 'user:hasObsAccess' );
 
-
 					App.when( adminRequest, thereNowRequest, obsRequest ).done( function ( isAdmin, isThereNow, hasObservation ) {
 
 						if ( isAdmin === true ) {

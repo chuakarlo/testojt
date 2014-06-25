@@ -30,10 +30,10 @@ define( function ( require ) {
 	};
 
 	var observation = {
-		'name'   : 'Observation 360',
-		'icon'   : 'sinet-observation',
-		'url'    : '#resources/observation/me',
-		'id'     : 'link-more-observation',
+		'name' : 'Observation 360',
+		'icon' : 'sinet-observation',
+		'url'  : '#resources/observation/me',
+		'id'   : 'link-more-observation'
 	};
 
 	var userUploaded = {
