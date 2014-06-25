@@ -52,7 +52,8 @@ define( function ( require ) {
 
 		'doReRenderView' : function ( view ) {
 			if ( !view.collection.length ) {
-				view.emptyView = EmptyContentCollectionView;
+				view.emptyView       = EmptyContentCollectionView;
+				view.itemViewOptions = { '_id' : view.model.get( 'id' ) };
 			}
 			view.render();
 		},

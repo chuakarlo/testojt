@@ -39,6 +39,7 @@ define( function ( require ) {
 		// Check if collection is empty to render the emptyContentCollectionView
 		if ( !view.collection.length ) {
 			view.emptyView = EmptyContentCollectionView;
+			view.itemViewOptions = { '_id' : view.model.get( 'id' ) };
 		}
 		UIManager.applyCircularScroll( view.$el, id, view, base, count );
 	}
@@ -60,6 +61,7 @@ define( function ( require ) {
 
 			if ( view.collection.length === 0 ) {
 				view.emptyView = EmptyContentCollectionView;
+				view.itemViewOptions = { '_id' : view.model.get( 'id' ) };
 			}
 			view.render();
 
@@ -86,6 +88,7 @@ define( function ( require ) {
 					} );
 					view.collection = new Backbone.Collection( [ 1 ] );
 					view.itemView = EmptyContentCollectionView;
+					view.itemViewOptions = { '_id' : view.model.get( 'id' ) };
 					view.render();
 				}
 			} );
