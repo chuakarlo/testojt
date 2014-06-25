@@ -1,6 +1,6 @@
 {
 	"groupActivityTitle"       : "Group Activity",
-	"groupActivityDescription" : "Get notified when there’s activity in one of your groups. Click on a group to go to that group’s activity wall.",
+	"groupActivityDescription" : "See a list of your most recent group activity. Click on a group to be directed to the group page.",
 	"groupActivityFooter"      : "See All Groups",
 	"groupActivityErrMsg"      : "An error occurred getting group activity. Please try again later."
 }
