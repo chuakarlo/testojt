@@ -46,7 +46,6 @@ define( function ( require ) {
 		if ( _.contains( defaults, content ) ) {
 			content = 'default';
 		}
-
 		return optSetters[ content ]( reqOpts );
 	};
 
