@@ -22,16 +22,16 @@ define ( function ( require ) {
 		}
 	} );
 
-	var schema = {
-		'title'      : 'fresh fruit schema v1',
-		'type'       : 'array',
+	var ValidationSchema = {
+		'title'      : 'Courses Validation Schema',
+		'type'       : 'object',
 		'required'   : [ 'PERCENTCOMPLETE', 'COURSEID', 'COURSECREATOR', 'COURSENAME', 'EXPIREDATE' ],
 		'properties' : {
 			'PERCENTCOMPLETE' : {
-				'type' : 'string'
+				'type' : 'number'
 			},
 			'COURSEID'        : {
-				'type' : 'string'
+				'type' : 'number'
 			},
 			'COURSECREATOR'   : {
 				'type' : 'string'
@@ -44,14 +44,20 @@ define ( function ( require ) {
 			}
 		}
 	};
-	//temporary assignment due to jslint error
-	schema = { };
 
 	return Backbone.Collection.extend( {
 		'fetch' : function ( options ) {
 			var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId() ) ] );
 			App.when( fetchingModels ).done( function ( models ) {
-				options.success( new Collection( models[ 0 ] ) );
+				App.Homepage.Utils.jsonVal( ValidationSchema, models[0], function ( err ) {
+					if ( !err ) {
+						options.success( new Collection( models[0] ) );
+						return;
+					}
+					App.vent.trigger( 'flash:message', {
+						'message' : 'Courses widget: JSon error'
+					} );
+				} );
 			} ).fail( function ( error ) {
 				App.vent.trigger( 'flash:message', {
 					'message' : App.Homepage.Utils.message.coursesErrMsg
