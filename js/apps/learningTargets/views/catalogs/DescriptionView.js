@@ -41,7 +41,7 @@ define( function ( require ) {
 		'closeTraining' : function ( e ) {
 			e.preventDefault();
 
-			Backbone.history.navigate( 'resources/learning/catalogs', true );
+			Backbone.history.navigate( 'resources/learning/catalogs' );
 		},
 
 		'onRender'        : function () {

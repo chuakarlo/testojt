@@ -141,6 +141,8 @@ define( function ( require ) {
 			'showCatalogs' : function () {
 				var helper = Main.helper;
 
+				Backbone.history.navigate( 'resources/learning/catalogs' );
+
 				var options = {
 					'legends' : [
 						{
