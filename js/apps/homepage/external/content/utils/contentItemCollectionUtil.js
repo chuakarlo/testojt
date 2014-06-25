@@ -40,8 +40,9 @@ define( function ( require ) {
 		if ( !view.collection.length ) {
 			view.emptyView = EmptyContentCollectionView;
 			view.itemViewOptions = { '_id' : view.model.get( 'id' ) };
+		} else {
+			UIManager.applyCircularScroll( view.$el, id, view, base, count );
 		}
-		UIManager.applyCircularScroll( view.$el, id, view, base, count );
 	}
 
 	return {
@@ -60,6 +61,7 @@ define( function ( require ) {
 			$( queueSelector + ' ul li' ).trigger( 'removeQueueElements', recommendedItemView.model );
 
 			if ( view.collection.length === 0 ) {
+				view.$el.empty();
 				view.emptyView = EmptyContentCollectionView;
 				view.itemViewOptions = { '_id' : view.model.get( 'id' ) };
 			}
