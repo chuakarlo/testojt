@@ -26,9 +26,10 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'focus @ui.searchInput' : 'onSearchKeyup',
-			'keyup @ui.searchInput' : 'onSearchKeyup',
-			'click @ui.searchClear' : 'hideSearchClear'
+			'focus @ui.searchInput'   : 'onSearchKeyup',
+			'keyup @ui.searchInput'   : 'onSearchKeyup',
+			'click @ui.searchClear'   : 'hideSearchClear',
+			'keydown @ui.searchInput' : 'fixIEIssue'
 		},
 
 		'triggers' : {
@@ -37,6 +38,15 @@ define( function ( require ) {
 
 		'initialize' : function () {
 			_.bindAll( this, 'onSearchKeyup' );
+		},
+
+		// quirks to fix modal issue in IE
+		'fixIEIssue' : function ( e ) {
+			var key = e.which || e.keyCode;
+
+			if ( key === 13 ) {
+				return false;
+			}
 		},
 
 		'onSearchKeyup' : function ( e ) {
