@@ -47,6 +47,16 @@ define( function ( require ) {
 		return errorTypes[ type ]();
 	};
 
+	var setSendPasswordParams = function ( method, params, syncOptions ) {
+		if ( method === 'sendPasswordEmail' ) {
+			params.url         = '/com/schoolimprovement/pd360/dao/EmailService.cfc?method=sendPasswordEmail&emailTo=' + syncOptions.args.emailTo;
+			params.dataType    = 'text';
+			params.contentType = 'application/json; charset=utf-8';
+			params.data        = null;
+		}
+		return params;
+	};
+
 	var sync = function ( method, model, options ) {
 		var type = 'POST';
 
@@ -110,12 +120,7 @@ define( function ( require ) {
 			}
 		} );
 
-		if ( data.method === 'sendPasswordEmail' ) {
-			params.url         = '/com/schoolimprovement/pd360/dao/EmailService.cfc?method=sendPasswordEmail&emailTo=' + syncOptions.args.emailTo;
-			params.dataType    = 'text';
-			params.contentType = 'application/json; charset=utf-8';
-			params.data        = null;
-		}
+		params = setSendPasswordParams( data.method, params, syncOptions );
 
 		// PD360 isn't available so we have to return a deferred which will be
 		// resolved once we get the second request back
