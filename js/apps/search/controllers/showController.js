@@ -9,6 +9,7 @@ define( function ( require ) {
 	// Views
 	var SearchResultCollectionView = require( 'search/views/SearchResultCollectionView' );
 	var SearchNavCollectionView    = require( 'search/views/SearchNavCollectionView' );
+	var EmptyResultView            = require( 'search/views/EmptyResultView');
 
 	require( 'search/entities/search' );
 
@@ -138,6 +139,12 @@ define( function ( require ) {
 			},
 
 			'showSearchResults' : function ( query, filter ) {
+				// Show empty results if no query was passed
+				if ( !query ) {
+					this.showEmptyResult();
+					return;
+				}
+
 				// Set the query text
 				this.layout.ui.query.html(query);
 
@@ -203,6 +210,10 @@ define( function ( require ) {
 					'text'       : 'Loading Results'
 				} );
 				this.layout.loading.show(loading);
+			},
+
+			'showEmptyResult' : function () {
+				this.layout.results.show( new EmptyResultView() );
 			},
 
 			'closeLoading' : function () {
