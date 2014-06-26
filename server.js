@@ -18,7 +18,7 @@ var files    = path.join( process.cwd() );
 var root     = ( config && config.url ) || 'http://cebudev.pd360.com';
 var reStatic = /.jpg|.vtt/;
 
-util.log( 'root URL for proxy server is', root );
+util.log( 'root URL for proxy server is: ' + root );
 
 var resourceProxy = function ( request, response, next ) {
 	var url = 'http://resources.pd360.com/' + request.url;
