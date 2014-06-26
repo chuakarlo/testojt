@@ -67,11 +67,11 @@ define( function ( require ) {
 			var licenseIds   = [ ];
 			var personnelIds = [ ];
 
-			var message = this.getMessage();
+			var message = this.shareModal.ui.message.val() + ' ' + this.url;
 
 			// split the selectedItems array into two arrays, persons and groups
 			this.selectedItems.each( function ( elem ) {
-				( elem.isPerson ? persons : groups ).push( elem );
+				( elem.isPerson() ? persons : groups ).push( elem );
 			} );
 
 			// get the personnel ids to share to
@@ -97,13 +97,6 @@ define( function ( require ) {
 				'success' : this.shareSuccess,
 				'error'   : this.shareFailure
 			} );
-		},
-
-		'getMessage' : function () {
-			var message = this.shareModal.ui.message.val();
-			var url     = '<a href="' + encodeURI( this.url ) + '"></a>';
-
-			return message + ' ' + _.escape( url );
 		},
 
 		'shareSuccess' : function () {
