@@ -1,5 +1,7 @@
 define( function ( require, exports, module ) {
 	'use strict';
+	var $ = require( 'jquery' );
+	require( 'jquery-browser' );
 
 	module.exports = {
 
@@ -22,6 +24,10 @@ define( function ( require, exports, module ) {
 			formattedTime = hours + ':' + minutes + ':' + seconds;
 
 			return formattedTime;
+		},
+
+		'isMobile' : function () {
+			return $.browser.mobile || $.browser.ipad;
 		}
 
 	};

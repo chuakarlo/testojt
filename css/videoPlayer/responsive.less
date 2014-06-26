@@ -3,22 +3,19 @@
 @media ( max-width : 320px ) {
 	#video-player-page {
 		.slick {
-			> button {
-				visibility : visible !important;
-			}
 			.slick-next {
 				right : 5px;
 			}
+			.slick-prev {
+				left : 0;
+			}
 		}
-		#video-resource {
-			.prevNext{
+		.mobile {
+			.slick-prev, .slick-next {
 				visibility : visible !important;
 			}
-			.nextLink {
-				right : 5px !important;
-			}
 		}
-		.slick-prev, .slick-next,.prevNext, .prevNext2 {
+		.slick-prev, .slick-next {
 			&:before {
 				padding   : 5px 8px !important;
 				color     : #fff;
@@ -33,16 +30,6 @@
 	}
 }
 
-@media ( min-width : 321px ) and ( max-width : 768px ) {
-	#video-player-page {
-		.slick:hover > button {
-			visibility : hidden !important;
-		}
-		#video-resource .prevNext{
-			visibility : hidden !important;
-		}
-	}
-}
 /* tab container specific width overrides */
 @media ( min-width : 361px ) and ( max-width : @screen-xs-max ) {
 	#video-player-page {

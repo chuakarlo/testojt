@@ -8,8 +8,8 @@ define( function ( require ) {
 	var PreviewView = require( 'videoPlayer/views/tabs/PreviewItemView' );
 	var NotifyView  = require( 'videoPlayer/views/tabs/NotifyItemView' );
 	var template    = require( 'text!videoPlayer/templates/tabs/videoResourceItemView.html' );
+	var utils       = require( 'videoPlayer/utils/utils' );
 
-	require( 'jquery-browser' );
 /*global ActiveXObject: false */
 	return Marionette.ItemView.extend( {
 
@@ -30,7 +30,7 @@ define( function ( require ) {
 
 		'initialize' : function () {
 			this.clickEnable = true;
-			if ( $.browser.mobile ||  $.browser.ipad ) {
+			if ( utils.isMobile() ) {
 				this.clickEnable = false;
 			}
 		},

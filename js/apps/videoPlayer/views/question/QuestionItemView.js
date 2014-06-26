@@ -56,7 +56,7 @@ define( function ( require ) {
 		},
 
 		'onShow' : function () {
-			if ( this.model.get( 'QuestionTypeId') === 2 && this.textLock ) {
+			if ( this.model.get( 'QuestionTypeId' ) === 2 && this.textLock ) {
 				this.ui.textInput.val( config.message )
 					.addClass( 'video-question-lock' )
 					.attr( 'disabled', 'disabled' );

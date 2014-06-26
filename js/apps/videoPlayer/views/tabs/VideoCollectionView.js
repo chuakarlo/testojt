@@ -7,7 +7,7 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var Marionette = require( 'marionette' );
 	var NoItemView = require( 'videoPlayer/views/NoItemView' );
-
+	var utils      = require( 'videoPlayer/utils/utils' );
 	var config     = App.request( 'videoPlayer:config' );
 
 	return Marionette.CollectionView.extend( {
@@ -21,6 +21,9 @@ define( function ( require ) {
 		'emptyView' : NoItemView,
 
 		'onShow' : function () {
+			if ( utils.isMobile() ) {
+				this.$el.addClass( 'mobile' );
+			}
 			if ( this.collection.length !== 0 ) {
 				this.$el.slick( config.slick );
 			}

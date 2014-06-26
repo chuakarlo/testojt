@@ -12,9 +12,10 @@ define( function ( require ) {
 	require( 'videoPlayer/plugins/videoReplay' );
 	require( 'videoPlayer/plugins/staticDisplay' );
 
-	var App    = require( 'App' );
-	var config = App.request( 'videoPlayer:config' );
+	var App       = require( 'App' );
+	var config    = App.request( 'videoPlayer:config' );
 	var getConfig = require( 'common/helpers/getConfig' );
+	var utils     = require( 'videoPlayer/utils/utils' );
 
 	var template = require( 'text!videoPlayer/templates/player/playerItemView.html' );
 
@@ -74,11 +75,10 @@ define( function ( require ) {
 		},
 
 		'setAutoPlay' : function () {
-			return !this.isMobile();
+			return !utils.isMobile();
 		},
 
 		'initializePlayer' : function () {
-			var self = this;
 
 			var player = videojs( 'video-content', {
 				'controls'  : true,
@@ -100,7 +100,7 @@ define( function ( require ) {
 				this.loadingSpinner.show();
 				this.controlBar.addChild( 'videoReplay' );
 				// Make sure custom control is hidden in mobile devices.
-				if ( self.isMobile() ) {
+				if ( utils.isMobile() ) {
 					this.removeChild( 'loadingSpinner' );
 					this.controlBar.hide();
 				}
@@ -172,10 +172,6 @@ define( function ( require ) {
 					this.model.save();
 				}.bind( this ) );
 			}
-		},
-
-		'isMobile' : function () {
-			return $.browser.mobile || $.browser.ipad;
 		}
 
 	} );

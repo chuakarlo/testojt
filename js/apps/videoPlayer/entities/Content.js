@@ -108,7 +108,7 @@ define( function ( require ) {
 			},
 
 			'getCurrentTime' : function () {
-				return parseInt( this.get( 'currentTime' ) , 10);
+				return parseInt( this.get( 'currentTime' ) , 10 );
 			},
 
 			'getResources' : function () {
@@ -118,8 +118,8 @@ define( function ( require ) {
 				var contentTranscriptPath = getConfig( 'contentTranscriptPath' );
 
 				var guidebookFileName  = this.get( 'GuidebookFileName' );
-				var audioFileName      = this.get( 'AudioFileName');
-				var transcriptFileName = this.get( 'TranscriptFileName');
+				var audioFileName      = this.get( 'AudioFileName' );
+				var transcriptFileName = this.get( 'TranscriptFileName' );
 
 				var results = [
 					{

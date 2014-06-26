@@ -12,7 +12,7 @@ define( function ( require ) {
 
 		'template' : _.template( template ),
 
-		'className' : 'modal-dialog modal-lg',
+		'className' : 'modal-dialog',
 
 		'templateHelpers' : {
 

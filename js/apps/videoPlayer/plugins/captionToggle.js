@@ -41,7 +41,7 @@ define( function ( require ) {
 			// Catch error on text track not found and remove cc button.
 			self.on( 'error' , function ( e ) {
 				var klass = $( e.target ).attr( 'class' );
-				if ( klass === 'vjs-captions vjs-text-track' && e.type === 'error') {
+				if ( klass === 'vjs-captions vjs-text-track' && e.type === 'error' ) {
 					ccBtn.remove();
 				}
 			} );

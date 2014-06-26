@@ -33,8 +33,7 @@
 			right : -9px;
 		}
 	}
-	//common carousel arrows
-	.slick-prev, .slick-next, .prevNext, .prevNext2 {
+	.slick-prev, .slick-next  {
 			height     : inherit;
 			width      : inherit;
 			border     : 0 none;
@@ -46,7 +45,7 @@
 			z-index    : 10000;
 			background : @vp-white;
 			&:before {
-				font-family           : FontAwesome !important;
+				font-family           : FontAwesome;
 				background-color      : #aaa;
 				background-image      : -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, @vp-white),color-stop(1,#DDD));
 				background-image      : -webkit-linear-gradient(top, @vp-white,#DDD);
@@ -66,10 +65,6 @@
 				padding               : 4px 12px 4px 10px;
 			}
 
-			&.nextLink:before, &.nextLink2:before {
-				padding       : 4px 10px 4px 13px;
-				border-radius : 0 2px 2px 0;
-			}
 			&:hover:before {
 				background-image : -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, #DDD),color-stop(1,@vp-white));
 				background-image : -webkit-linear-gradient(top, #DDD,@vp-white);

@@ -8,7 +8,7 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 
 	var QuestionsItemView = require( 'videoPlayer/views/question/QuestionItemView' );
-	var NoItemView        = require( 'videoPlayer/views/NoItemView');
+	var NoItemView        = require( 'videoPlayer/views/NoItemView' );
 
 	var template = require( 'text!videoPlayer/templates/questionsCompositeView.html' );
 
@@ -86,7 +86,7 @@ define( function ( require ) {
 				'2' : 'Follow-up Questions'
 			};
 			var model = this.collection.at( index );
-			this.ui.headerTitle.text( header[ model.get( 'QuestionTypeId') ] );
+			this.ui.headerTitle.text( header[ model.get( 'QuestionTypeId' ) ] );
 		},
 
 		'showPagination' : function () {

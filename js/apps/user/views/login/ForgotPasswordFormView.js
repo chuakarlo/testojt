@@ -4,9 +4,8 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
 	var template   = require( 'text!user/templates/login/forgotPasswordFormView.html' );
-	var Backbone   = require( 'backbone' );
+	var $          = require( 'jquery' );
 	require( 'validation' );
-	require( 'backbone.syphon' );
 
 	return Marionette.ItemView.extend( {
 
@@ -17,11 +16,15 @@ define( function ( require ) {
 		},
 
 		'onSubmitForm' : function ( event ) {
-
 			event.preventDefault( );
-			var data      = Backbone.Syphon.serialize( this );
+			var data = this.serialize();
 			this.model.set( data , { validate : true } );
+		},
 
+		'serialize' : function () {
+			return {
+				email : $( 'input[ name = "email" ]' ).val()
+			};
 		}
 
 	} );

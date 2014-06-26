@@ -1,7 +1,6 @@
 define( function ( require ) {
 	'use strict';
 
-	var $                 = require( 'jquery' );
 	var _                 = require( 'underscore' );
 	var Marionette        = require( 'marionette' );
 	var template          = require( 'text!videoPlayer/templates/videoInfoItemView.html' );
@@ -17,7 +16,8 @@ define( function ( require ) {
 		'templateHelpers' : {
 
 			'duration' : function () {
-				return $.browser.safari && $.browser.android ? '' : 'Duration: ' + convertSecsToMins( this.SegmentLengthInSeconds );
+				var duration = this.SegmentLengthInSeconds;
+				return duration === 0 ? '' : 'Duration: ' + convertSecsToMins( duration );
 			},
 
 			'description' : function () {
