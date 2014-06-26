@@ -72,7 +72,7 @@ define( function ( require ) {
 				'start'      : 0,
 				'rows'       : 24,
 				'searchType' : 'All',
-				'sort'       : 'created desc',
+				'sort'       : 'score desc',
 				'searchData' : ''
 			},
 
@@ -118,6 +118,10 @@ define( function ( require ) {
 				return temp;
 			},
 
+			'comparator' : function ( a, b ) {
+				return -( a.get( 'SolrScore' ) - b.get( 'SolrScore' ) );
+			},
+
 			'parse' : function ( res, options ) {
 
 				// We can't pull from the query model incase there was an
@@ -159,11 +163,8 @@ define( function ( require ) {
 
 					// Flatten the first level
 					parsedModels = _.flatten(parsedModels, true);
-					// Mixem up!
-					parsedModels = _.shuffle(parsedModels);
 
-					// Just add it to the collection instead of returning
-					this.add(parsedModels);
+					return parsedModels;
 
 				} else {
 					// Clear the last numFound so backbone can trigger the
