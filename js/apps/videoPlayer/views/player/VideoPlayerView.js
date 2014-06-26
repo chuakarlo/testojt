@@ -1,11 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	require( 'moment-timezone' );
-	require( 'timezone' );
-
 	var $          = require( 'jquery' );
-	var moment     = require( 'moment' );
 	var _          = require( 'underscore' );
 	var videojs    = require( 'videojs' );
 	var Marionette = require( 'marionette' );
@@ -118,17 +114,6 @@ define( function ( require ) {
 					player.off( 'timeupdate', removeSpinner );
 				}
 			} );
-
-			player.on( 'loadedmetadata', function () {
-				var now = moment().tz( 'MST7MDT' ).format( 'MMMM D, YYYY H:mm:ss A' );
-
-				// set model's start viewing date for tracking
-				this.model.set( 'BeganViewingDate', now );
-
-				// this content has no segment length attribute,
-				// use videojs to determine the segment duration
-				this.model.set( 'SegmentLengthInSeconds', player.duration() );
-			}.bind( this ) );
 
 			this.trigger( 'afterPlayerInit', player );
 

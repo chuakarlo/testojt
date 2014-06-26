@@ -4,11 +4,8 @@ define( function ( require ) {
 	require( 'moment-timezone' );
 	require( 'timezone' );
 
-	var moment   = require( 'moment' );
 	var _        = require( 'underscore' );
 	var App      = require( 'App' );
-	var Session  = require( 'Session' );
-	var Remoting = require( 'Remoting' );
 
 	require( 'videoPlayer/entities/Content' );
 
@@ -67,42 +64,7 @@ define( function ( require ) {
 			},
 
 			'getViewingId' : function () {
-				var now = moment().tz( 'MST7MDT' ).format( 'MMM D, YYYY h:mm:ss a' );
-
-				var request = {
-					'path'       : 'uuvideos.UUVideoViewingProgressGateway',
-					'objectPath' : 'uuvideos.UUVideoViewingProgress',
-					'method'     : 'create',
-					'args'       : {
-						'PersonnelId'      : Session.personnelId(),
-						'UUVideoId'        : this.id,
-						'ViewingId'        : 0,
-						'BeganViewingDate' : now
-					}
-				};
-
-				var viewingId = Remoting.fetch( request );
-
-				App.when( viewingId ).done( function ( resp ) {
-
-					this.set( 'ViewingId', resp[ 0 ].ViewingId );
-
-				}.bind( this ) );
-			},
-
-			'getUpdateOptions' : function () {
-				return {
-					'path'   : 'RespondService',
-					'method' : 'RespondUpdatedViewingTimeWithStatusCheck',
-					'args'   : {
-						'PersonnelId'      : Session.personnelId(),
-						'ContentId'        : this.id,
-						'ViewingId'        : this.get( 'ViewingId' ),
-						'SecondsCompleted' : this.getCurrentTime(),
-						'licId'            : this.get( 'licenseId' ),
-						'taskId'           : this.get( 'taskId' )
-					}
-				};
+				return 0;
 			}
 
 		} );
