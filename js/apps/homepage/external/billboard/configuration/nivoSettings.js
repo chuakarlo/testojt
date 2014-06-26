@@ -40,8 +40,8 @@ define( function ( require ) {
 
 	return function () {
 		return {
-			pauseTime    : 5000,
-			animSpeed    : $( 'html' ).hasClass( 'touch' ) ? 10 : 1000,
+			pauseTime    : 3000,
+			animSpeed    : $( 'html' ).hasClass( 'touch' ) ? 10 : 100,
 			effect       : 'fade',
 			pauseOnHover : true,
 			afterLoad    : afterLoad,

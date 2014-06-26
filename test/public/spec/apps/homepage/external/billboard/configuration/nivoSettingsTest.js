@@ -19,7 +19,7 @@ define ( function ( require ) {
 		before( function ( done ) {
 
 			desiredSettings = {
-				pauseTime    : 5000,
+				pauseTime    : 3000,
 				effect       : 'fade',
 				pauseOnHover : true,
 				animSpeed    : '1000'
