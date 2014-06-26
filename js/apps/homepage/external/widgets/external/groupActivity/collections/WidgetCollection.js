@@ -44,7 +44,7 @@ define ( function ( require ) {
 			var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId() ) ] );
 
 			App.when( fetchingModels ).done( function ( models ) {
-				App.Homepage.Utils.jsonVal( ValidationSchema, models[0], function ( err ) {
+				App.Homepage.Utils.jsonVal( function ( err ) {
 					if ( !err ) {
 						options.success( new Collection( models[0] ) );
 						return;
@@ -52,6 +52,9 @@ define ( function ( require ) {
 					App.vent.trigger( 'flash:message', {
 						'message' : 'Group Activity widget: JSon error'
 					} );
+				}, {
+					'schema' : ValidationSchema,
+					'data'   : models[0]
 				} );
 			} ).fail( function ( error ) {
 				App.vent.trigger( 'flash:message', {
