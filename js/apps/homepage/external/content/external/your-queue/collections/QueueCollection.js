@@ -44,12 +44,15 @@ define( function ( require ) {
 			}
 		};
 
-		App.Homepage.Utils.jsonVal( ContentIdSchema, data, function ( err ) {
+		App.Homepage.Utils.jsonVal( function ( err ) {
 			if ( err ) {
 				callback( null, false );
 			} else {
 				callback( null, true );
 			}
+		}, {
+			'schema' : ContentIdSchema,
+			'data'   : data
 		} );
 	}
 	return Backbone.Collection.extend( {
