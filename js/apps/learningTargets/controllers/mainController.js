@@ -155,7 +155,7 @@ define( function ( require ) {
 						},
 						{
 							'icon'  : 'fa-university',
-							'label' : 'PD360 Course'
+							'label' : 'Edivation Course'
 						}
 					]
 				};
