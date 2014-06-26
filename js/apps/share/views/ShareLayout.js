@@ -26,10 +26,11 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'focus @ui.searchInput'   : 'onSearchKeyup',
-			'keyup @ui.searchInput'   : 'onSearchKeyup',
-			'click @ui.searchClear'   : 'hideSearchClear',
-			'keydown @ui.searchInput' : 'fixIEIssue'
+			'focus @ui.searchInput'    : 'onSearchKeyup',
+			'keyup @ui.searchInput'    : 'onSearchKeyup',
+			'click @ui.searchClear'    : 'hideSearchClear',
+			'keydown @ui.searchInput'  : 'fixIEIssue',
+			'focusout @ui.searchInput' : 'clearVirtualKeyboard'
 		},
 
 		'triggers' : {
@@ -47,6 +48,12 @@ define( function ( require ) {
 			if ( key === 13 ) {
 				return false;
 			}
+		},
+
+		'clearVirtualKeyboard' : function () {
+			//This prevents white area to appear after the virtual keyboard
+			//of iPad air is disposed in landscape orientation.
+			window.scrollTo(0,0);
 		},
 
 		'onSearchKeyup' : function ( e ) {
