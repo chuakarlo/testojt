@@ -150,7 +150,7 @@ define( function ( require ) {
 
 		'addTooltip' : function ( elem , options ) {
 			if ( !modernizr.touch ) {
-				elem.attr( 'title' , options.title || '' ).tooltip( options );
+				elem.tooltip( options );
 			}
 		},
 
