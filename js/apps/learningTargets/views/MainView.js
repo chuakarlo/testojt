@@ -29,7 +29,6 @@ define( function ( require ) {
 		'contentsWithoutViewAllButton' : [
 			'group-task',
 			'focus-objectives',
-			'catalogs',
 			'reflection-questions'
 		],
 
