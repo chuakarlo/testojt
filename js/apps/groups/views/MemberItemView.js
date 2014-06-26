@@ -15,11 +15,11 @@ define( function ( require ) {
 		'className' : 'col-xs-6 col-sm-4 col-md-3',
 
 		'ui' : {
-			'member' : '.group-member'
+			'member' : '.fake-link'
 		},
 
 		'events' : {
-			'mouseenter @ui.member' : 'showMiniPersonnel'
+			'click @ui.member' : 'showMiniPersonnel'
 		},
 
 		'showMiniPersonnel' : function ( event ) {
@@ -27,7 +27,7 @@ define( function ( require ) {
 			// and let the popover library handle the click so we
 			// don't have to fetch the model or create the view every
 			// time.
-			$( this.el ).off( 'mouseenter', '.group-member' );
+			$( this.el ).off( 'click', '.fake-link' );
 
 			var model = new MiniPersonnelModel( {
 				'persId' : this.model.get( 'PersonnelId' )
@@ -41,11 +41,15 @@ define( function ( require ) {
 			this.ui.member.popover( {
 				'html'      : true,
 				'placement' : 'top',
-				'trigger'   : 'hover',
+				'trigger'   : 'click',
 				'content'   : function () {
 					return view.render().el;
 				}
 			} );
+
+			this.ui.member.on( 'show.bs.popover', _.bind( function () {
+				this.trigger( 'show:popover' );
+			}, this ) );
 
 			// Since spin.js requires element to be in the dom, wait until
 			// the popover has been shown to add the spin icon.

@@ -127,9 +127,12 @@ define( function ( require ) {
 
 				if ( searchType === 'All' ) {
 
+					// Clear the last numFound so backbone can trigger the
+					// event again.
+					this.queryModel.set( 'numFound', 0 );
+
 					if ( res.RESULTS === 'No Results Found') {
 						// We didn't find any results if there is only 1
-						this.queryModel.set('numFound', 0);
 						return;
 					} else {
 						// Set the results which keeps track of how many
@@ -163,9 +166,12 @@ define( function ( require ) {
 					this.add(parsedModels);
 
 				} else {
+					// Clear the last numFound so backbone can trigger the
+					// event again.
+					this.queryModel.set( 'numFound', 0 );
+
 					if (res.length === 1) {
 						// We didn't find any results if there is only 1
-						this.queryModel.set('numFound', 0);
 						return;
 					} else {
 						// Set the results which keeps track of how many

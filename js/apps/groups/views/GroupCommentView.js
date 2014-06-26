@@ -31,8 +31,8 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'click @ui.removeReply'  : 'removeReply',
-			'mouseenter @ui.creator' : 'showMiniPersonnel'
+			'click @ui.removeReply' : 'removeReply',
+			'click @ui.creator'     : 'showMiniPersonnel'
 		},
 
 		initialize : function () {
@@ -56,11 +56,11 @@ define( function ( require ) {
 		},
 
 		'showMiniPersonnel' : function ( event ) {
-			// We disable the event that just captured the mouseenter
+			// We disable the event that just captured the click
 			// and let the popover library handle the click so we
 			// don't have to fetch the model or create the view every
 			// time.
-			$( this.el ).off( 'mouseenter', '.child-creator-name' );
+			$( this.el ).off( 'click', '.child-creator-name' );
 
 			var model = new MiniPersonnelModel( {
 				'persId' : this.model.get('Creator')
@@ -74,11 +74,15 @@ define( function ( require ) {
 			this.ui.creator.popover( {
 				'html'      : true,
 				'placement' : 'top',
-				'trigger'   : 'hover',
+				'trigger'   : 'click',
 				'content'   : function () {
 					return view.render().el;
 				}
 			} );
+
+			this.ui.creator.on( 'show.bs.popover', _.bind( function () {
+				this.trigger( 'show:popover' );
+			}, this ) );
 
 			// Since spin.js requires element to be in the dom, wait until
 			// the popover has been shown to add the spin icon.

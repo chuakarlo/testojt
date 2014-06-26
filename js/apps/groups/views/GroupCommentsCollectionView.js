@@ -34,6 +34,18 @@ define( function ( require ) {
 
 		'initialize' : function ( options ) {
 			this.user = options.user;
+
+			this.on( 'itemview:show:popover', this.closePopovers );
+		},
+
+		'closePopovers' : function ( itemView, viewWithPopover ) {
+			// This will close any popovers on other children views for this
+			// collection view
+			this.children.each( function ( c ) {
+				if ( c !== viewWithPopover ) {
+					c.closePopovers( viewWithPopover );
+				}
+			} );
 		},
 
 		'appendHtml' : function ( collectionView, itemView, index ) {

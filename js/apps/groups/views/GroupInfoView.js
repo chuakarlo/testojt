@@ -35,6 +35,8 @@ define( function ( require ) {
 			// strip html before deciding whether to show goals section or not
 			this.model.set( 'Objectives', stripHtml( this.model.get( 'Objectives' ) ) );
 			this.isMember = options.isMember;
+
+			this.on( 'itemview:show:popover', this.closePopovers );
 		},
 
 		'onRender' : function () {
@@ -55,6 +57,20 @@ define( function ( require ) {
 				this.ui.memberCount.hide();
 			}
 
+		},
+
+		'closePopovers' : function ( currentView ) {
+			// This will close any popovers on other children views for this
+			// collection view
+			this.children.each( function ( c ) {
+				if ( c !== currentView ) {
+					// We have to actually check to see if it's visible instead
+					// of just calling hide
+					if ( c.ui.member.next( 'div.popover:visible' ).length ) {
+						c.ui.member.popover( 'hide' );
+					}
+				}
+			} );
 		},
 
 		// Hide show group description

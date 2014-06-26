@@ -42,7 +42,7 @@ define( function ( require ) {
 		'events' : {
 			'submit form'             : 'replyComment',
 			'click @ui.removeComment' : 'removeComment',
-			'mouseenter @ui.creator'  : 'showMiniPersonnel'
+			'click @ui.creator'       : 'showMiniPersonnel'
 		},
 
 		'initialize' : function ( options ) {
@@ -59,6 +59,10 @@ define( function ( require ) {
 
 			this.user = options.user;
 
+			this.on( 'itemview:show:popover', function ( viewWithPopover ) {
+				this.trigger( 'show:popover', viewWithPopover );
+			} );
+
 		},
 
 		'onRender' : function () {
@@ -70,13 +74,33 @@ define( function ( require ) {
 			$( this.el ).find( 'p.wall-news' ).prepend( autolinker.link( this.model.get( 'Message' ) ) );
 		},
 
+		'closePopovers' : function ( viewWithPopover ) {
+			// This will close any popovers on other children views for this
+			// collection view
+			if ( this !== viewWithPopover ) {
+				if ( this.ui.creator.next( 'div.popover:visible' ).length ) {
+					this.ui.creator.popover( 'hide' );
+				}
+			}
+
+			this.children.each( function ( c ) {
+				if ( c !== viewWithPopover ) {
+					// We have to actually check to see if it's visible instead
+					// of just calling hide
+					if ( c.ui.creator.next( 'div.popover:visible' ).length ) {
+						c.ui.creator.popover( 'hide' );
+					}
+				}
+			} );
+		},
+
 		'showMiniPersonnel' : function ( event ) {
 
 			// We disable the event that just captured the mouseenter
 			// and let the popover library handle the click so we
 			// don't have to fetch the model or create the view every
 			// time.
-			$( this.el ).off( 'mouseenter', '.creator-name' );
+			$( this.el ).off( 'click', '.creator-name' );
 
 			var model = new MiniPersonnelModel( {
 				'persId' : this.model.get( 'Creator' )
@@ -90,11 +114,15 @@ define( function ( require ) {
 			this.ui.creator.popover( {
 				'html'      : true,
 				'placement' : 'top',
-				'trigger'   : 'hover',
+				'trigger'   : 'click',
 				'content'   : function () {
 					return view.render().el;
 				}
 			} );
+
+			this.ui.creator.on( 'show.bs.popover', _.bind( function () {
+				this.trigger( 'show:popover', this );
+			}, this ) );
 
 			// Since spin.js requires element to be in the dom, wait until
 			// the popover has been shown to add the spin icon.

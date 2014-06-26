@@ -200,7 +200,6 @@ define( function ( require ) {
 					// we probably need to reset the last group id to make
 					// sure it renders again
 					if ( !_.has( this.layout.groupInfoRegion, 'currentView') ) {
-						console.log( 'it doesnt have a currentView');
 						this.infoController.lastGroupId = null;
 					}
 

@@ -21,6 +21,22 @@ define( function ( require ) {
 			'click .btn-primary' : 'loadAllMembers'
 		},
 
+		'initialize' : function () {
+			this.on( 'itemview:show:popover', this.closePopovers );
+		},
+
+		'closePopovers' : function ( viewWithPopover ) {
+			this.children.each( function ( c ) {
+				if ( c !== viewWithPopover ) {
+					// We have to actually check to see if it's visible instead
+					// of just calling hide
+					if ( c.ui.member.next( 'div.popover:visible' ).length ) {
+						c.ui.member.popover( 'hide' );
+					}
+				}
+			} );
+		},
+
 		'onShow' : function () {
 			this.ui.moreMembers.hide();
 			// if the collection has exactly 100 members,
