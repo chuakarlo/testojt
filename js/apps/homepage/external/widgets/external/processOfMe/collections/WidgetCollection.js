@@ -5,23 +5,6 @@ define ( function (require ) {
 	var Remoting         = require( 'Remoting' );
 	var Session          = require( 'Session' );
 	var App              = require( 'App' );
-	var ValidationSchema = {
-		'title'      : 'process of me schema',
-		'type'       : 'object',
-		'required'   : [ 'ProcessName', 'CompleteByDate', 'ProcessId' ],
-		'properties' : {
-			'ProcessName'    : {
-				'type' : 'string'
-			},
-			'CompleteByDate' : {
-				'type' : 'string'
-			},
-			'ProcessId'      : {
-				'type'        : 'number',
-				'uniqueItems' : true
-			}
-		}
-	};
 
 	function widgetRequest ( personnelId ) {
 		return {
@@ -39,14 +22,18 @@ define ( function (require ) {
 			var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId() ) ] );
 
 			App.when( fetchingModels ).done( function ( models ) {
-				App.Homepage.Utils.jsonVal( ValidationSchema, models[0].slice(0,5), function ( err ) {
+				App.Homepage.Utils.jsonVal( function ( err ) {
 					if ( !err ) {
-						options.success( new Backbone.Collection( models[0].slice(0,5) ) );
+						options.success( new Backbone.Collection( models[ 0 ].slice( 0,5 ) ) );
 						return;
+					}else {
+						App.vent.trigger( 'flash:message', {
+							'message' : 'Process of Me Widget: ' + err.message
+						} );
 					}
-					App.vent.trigger( 'flash:message', {
-						'message' : 'Process of me widget: JSon error'
-					} );
+				}, {
+					'schema' : require( 'text!apps/homepage/external/widgets/external/processOfMe/configuration/processSchema.json' ),
+					'data'   : models[ 0 ].slice( 0,5 )
 				} );
 			} ).fail( function ( error ) {
 				App.vent.trigger( 'flash:message', {

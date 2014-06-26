@@ -1,0 +1,17 @@
+{
+	"title"      : "process of me schema",
+	"type"       : "object",
+	"required"   : [ "ProcessName", "CompleteByDate", "ProcessId" ],
+	"properties" : {
+		"ProcessName"    : {
+			"type" : "string"
+		},
+		"CompleteByDate" : {
+			"type" : "string"
+		},
+		"ProcessId"      : {
+			"type"        : "number",
+			"uniqueItems" : true
+		}
+	}
+}
