@@ -28,7 +28,7 @@ define( function ( require ) {
 					eulaLayout.eulaRegion.show( new EulaContent() );
 
 					App.vent.trigger( 'flash:message', {
-						'message' : 'Before proceeding to PD 360, you must accept the terms of the End User License Agreement.',
+						'message' : 'Before proceeding, you must accept the terms of the End User License Agreement.',
 						'type'    : 'error'
 					} );
 

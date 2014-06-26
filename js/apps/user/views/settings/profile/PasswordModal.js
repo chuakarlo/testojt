@@ -85,6 +85,9 @@ define( function ( require ) {
 							$( '#modal-content' ).modal( 'hide' );
 							this.close();
 
+							// Updated the password reset information for the current session
+							App.request( 'session:personnel' ).PasswordReset = 1;
+
 							App.vent.trigger( 'flash:message', {
 								'message' : 'Your password has been changed.',
 								'type'    : 'success'

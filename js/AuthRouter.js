@@ -15,6 +15,7 @@ define( function ( require ) {
 				return this.authCheck();
 			},
 
+			// EULA check redirects to this route
 			'^eula' : function () {
 				return this.authCheck();
 			},
@@ -39,8 +40,9 @@ define( function ( require ) {
 				return this.checkAll();
 			},
 
+			// Password check redirects to a route here
 			'^settings' : function () {
-				return this.checkAll();
+				return this.authCheck() && this.eulaCheck();
 			},
 
 			'^logout' : function () {
@@ -50,7 +52,7 @@ define( function ( require ) {
 		},
 
 		'checkAll' : function () {
-			return this.authCheck() && this.eulaCheck();
+			return this.authCheck() && this.eulaCheck() && this.passwordCheck();
 		},
 
 		'authCheck' : function ( route ) {
@@ -76,6 +78,23 @@ define( function ( require ) {
 			}
 
 			return true;
+		},
+
+		'passwordCheck' : function () {
+
+			var PasswordReset = App.request( 'session:personnel', 'PasswordReset' );
+			var RoleTypeId    = App.request( 'session:personnel', 'RoleTypeId' );
+
+			if ( PasswordReset === 0 && RoleTypeId !== 4 ) {
+
+				App.navigate( 'settings/profile', { 'trigger' : true } );
+
+				App.errorHandler( { 'message' : 'Before proceeding, you must change your password.' } );
+
+				return false;
+			}
+			return true;
+
 		}
 
 	} );
