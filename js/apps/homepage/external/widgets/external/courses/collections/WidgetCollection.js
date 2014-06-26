@@ -22,41 +22,22 @@ define ( function ( require ) {
 		}
 	} );
 
-	var ValidationSchema = {
-		'title'      : 'Courses Validation Schema',
-		'type'       : 'object',
-		'required'   : [ 'PERCENTCOMPLETE', 'COURSEID', 'COURSECREATOR', 'COURSENAME', 'EXPIREDATE' ],
-		'properties' : {
-			'PERCENTCOMPLETE' : {
-				'type' : 'number'
-			},
-			'COURSEID'        : {
-				'type' : 'number'
-			},
-			'COURSECREATOR'   : {
-				'type' : 'string'
-			},
-			'COURSENAME'      : {
-				'type' : 'string'
-			},
-			'EXPIREDATE'      : {
-				'type' : 'string'
-			}
-		}
-	};
-
 	return Backbone.Collection.extend( {
 		'fetch' : function ( options ) {
 			var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId() ) ] );
 			App.when( fetchingModels ).done( function ( models ) {
-				App.Homepage.Utils.jsonVal( ValidationSchema, models[0], function ( err ) {
+				App.Homepage.Utils.jsonVal( function ( err ) {
 					if ( !err ) {
 						options.success( new Collection( models[0] ) );
 						return;
+					} else {
+						App.vent.trigger( 'flash:message', {
+							'message' : 'Courses widget: JSon error'
+						} );
 					}
-					App.vent.trigger( 'flash:message', {
-						'message' : 'Courses widget: JSon error'
-					} );
+				},{
+					'schema' : require( 'text!apps/homepage/external/widgets/external/courses/configuration/coursesSchema.json' ),
+					'data'   : models[ 0 ]
 				} );
 			} ).fail( function ( error ) {
 				App.vent.trigger( 'flash:message', {
