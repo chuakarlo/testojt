@@ -1,0 +1,24 @@
+{
+	"title"      : "Header Recommended Schema",
+	"type"       : "object",
+	"required"   : [
+		"maxScore",
+		"name",
+		"numFound",
+		"start"
+	],
+	"properties" : {
+		"maxScore" : {
+			"type" : "number"
+		},
+		"name"     : {
+			"type" : "string"
+		},
+		"numFound" : {
+			"type" : "number"
+		},
+		"start"    : {
+			"type" : "number"
+		}
+	}
+}

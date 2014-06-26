@@ -6,98 +6,6 @@ define( function ( require ) {
 	var Session  = require( 'Session' );
 	var App      = require( 'App' );
 
-	var recommendedSchema = function () {
-		return {
-			'header'  : function () {
-				return {
-					'title'      : 'Header Recommended Schema',
-					'type'       : 'object',
-					'required'   : [
-						'maxScore',
-						'name',
-						'numFound',
-						'start'
-					],
-					'properties' : {
-						'maxScore' : {
-							'type' : 'number'
-						},
-						'name'     : {
-							'type' : 'string'
-						},
-						'numFound' : {
-							'type' : 'number'
-						},
-						'start'    : {
-							'type' : 'number'
-						}
-					}
-				};
-			},
-			'content' : function () {
-				return {
-					'title'      : 'Recommended Schema',
-					'type'       : 'object',
-					'required'   : [
-						'AudioFileName',
-						'ContentDescription',
-						'ContentId',
-						'ContentName',
-						'ContentTypeId',
-						'Created',
-						'FileName',
-						'GuidebookFileName',
-						'ImageURL',
-						'Modified',
-						'PreviewVideoName',
-						'SearchData',
-						'SegmentLengthInSeconds'
-					],
-					'properties' : {
-						'AudioFileName'          : {
-							'type' : 'string'
-						},
-						'ContentDescription'     : {
-							'type' : 'string'
-						},
-						'ContentId'              : {
-							'type' : 'number'
-						},
-						'ContentName'            : {
-							'type' : 'string'
-						},
-						'ContentTypeId'          : {
-							'type' : 'number'
-						},
-						'Created'                : {
-							'type' : 'string'
-						},
-						'FileName'               : {
-							'type' : 'string'
-						},
-						'GuidebookFileName'      : {
-							'type' : 'string'
-						},
-						'ImageURL'               : {
-							'type' : 'string'
-						},
-						'Modified'               : {
-							'type' : 'string'
-						},
-						'PreviewVideoName'       : {
-							'type' : 'string'
-						},
-						'SearchData'             : {
-							'type' : 'string'
-						},
-						'SegmentLengthInSeconds' : {
-							'type' : 'number'
-						}
-					}
-				};
-			}
-		};
-	};
 	var recommendedRequest = function ( start ) {
 		return {
 			'path'   : 'com.schoolimprovement.pd360.dao.RespondService',
@@ -125,12 +33,15 @@ define( function ( require ) {
 	};
 
 	var checkRecommended = function ( models, options, innerModel ) {
-		App.Homepage.Utils.jsonVal( recommendedSchema().content(), models [ 0 ], function ( err ) {
+		App.Homepage.Utils.jsonVal( function ( err ) {
 			if ( !err ) {
 				options.success( innerModel );
 			}else {
 				options.error( err );
 			}
+		}, {
+			'schema' : require( 'text!apps/homepage/external/content/external/recommended/configuration/recommendedSchema.json' ),
+			'data'   : models [ 0 ]
 		} );
 	};
 
@@ -149,12 +60,15 @@ define( function ( require ) {
 					innerModel.queueCollection = models[ 1 ];
 					var temp = models[ 0 ].splice( 0, 1 );
 
-					App.Homepage.Utils.jsonVal( recommendedSchema().header(), temp, function ( err ) {
+					App.Homepage.Utils.jsonVal( function ( err ) {
 						if ( err ) {
 							options.error( err );
 						}else {
 							checkRecommended( models, options, innerModel );
 						}
+					}, {
+						'schema' : require( 'text!apps/homepage/external/content/external/recommended/configuration/contentheaderSchema.json' ),
+						'data'   : temp
 					} );
 
 				}else {
