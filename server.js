@@ -11,14 +11,14 @@ var config;
 try {
 	config = require( './config' );
 } catch ( error ) {
-	console.log( 'no config file found for the proxy server' );
+	util.log( 'no config file found for the proxy server' );
 }
 
 var files    = path.join( process.cwd() );
 var root     = ( config && config.url ) || 'http://cebudev.pd360.com';
 var reStatic = /.jpg|.vtt/;
 
-console.log( 'root URL for proxy server is', root );
+util.log( 'root URL for proxy server is', root );
 
 var resourceProxy = function ( request, response, next ) {
 	var url = 'http://resources.pd360.com/' + request.url;
@@ -29,12 +29,7 @@ var resourceProxy = function ( request, response, next ) {
 	request.pipe( fetch( url ) ).pipe( response );
 };
 
-// this project's files
-app.use( express.static( files ) );
-// proxy request to pd360
-app.use( resourceProxy );
-// proxy to staging for all other files
-app.use( '/', function ( request, response, next ) {
+var proxyStaging = function ( request, response, next ) {
 	var url = root + request.path;
 
 	if ( process.env.TRAVIS !== 'true' ) {
@@ -46,7 +41,20 @@ app.use( '/', function ( request, response, next ) {
 		'url'    : url,
 		'qs'     : request.query,
 		'json'   : true
+	}, function ( error, res, body ) {
+		if ( error ) {
+			util.log( 'Catched unhandled stream error in pipe ' + error );
+			util.log( 'Reconnecting...' );
+			proxyStaging( request, response, this );
+		}
 	} ) ).pipe( response );
-} );
+};
+
+// this project's files
+app.use( express.static( files ) );
+// proxy request to pd360
+app.use( resourceProxy );
+// proxy to staging for all other files
+app.use( '/', proxyStaging );
 
 server.listen( '8080' );

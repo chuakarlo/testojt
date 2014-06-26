@@ -27,7 +27,7 @@ define( function ( require ) {
 		throw new Error( 'A "method" property must be specified' );
 	};
 
-	var hasSyncOptionsErrors = function ( type, syncOptions ) {
+	var hasSyncOptionsErrors = function ( syncTypes, syncOptions ) {
 		var errorTypes = {
 
 			'method' : function () {
@@ -44,39 +44,71 @@ define( function ( require ) {
 
 		};
 
-		return errorTypes[ type ]();
+		_.each( syncTypes, function ( type ) {
+			return errorTypes[ type ]();
+		} );
 	};
 
-	var setSendPasswordParams = function ( method, params, syncOptions ) {
+	var setSendPasswordParameters = function ( method, params, syncOptions ) {
 		if ( method === 'sendPasswordEmail' ) {
-			params.url         = '/com/schoolimprovement/pd360/dao/EmailService.cfc?method=sendPasswordEmail&emailTo=' + syncOptions.args.emailTo;
+			var url = '/com/schoolimprovement/pd360/dao/EmailService.cfc?method=sendPasswordEmail&emailTo=';
+			params.url         = url + syncOptions.args.emailTo;
 			params.dataType    = 'text';
 			params.contentType = 'application/json; charset=utf-8';
 			params.data        = null;
 		}
+
+		return params;
+	};
+
+	var setupGetSignitureParameters = function ( config, data ) {
+		return JSON.stringify( {
+			'method'      : config.method,
+			'CFToken'     : Session.token(),
+			'personnelId' : data.personnelId || Session.personnelId(), // allows unathenticated request to use personnelId (i.e: reset password)
+			'args'        : {
+				'method' : data.method,
+				'args'   : data.args
+			}
+		} );
+	};
+
+	var setupParameters = function ( config, data, params, syncOptions ) {
+		params.data = setupGetSignitureParameters( config, data );
+		params      = setSendPasswordParameters( data.method, params, syncOptions );
+		return params;
+	};
+
+	var getParamsUrl = function ( params ) {
+		params.url = config.url || urlError();
+		return params.url;
+	};
+
+	var initializeParams = function ( params ) {
+		params.url         = getParamsUrl( params );
+		params.processData = false;
+		params.contentType = 'application/json';
 		return params;
 	};
 
 	var sync = function ( method, model, options ) {
-		var type = 'POST';
-
-		var params = {
+		var def         = new Backbone.$.Deferred();
+		var type        = 'POST';
+		var syncTypes   = [ 'method', 'args' ];
+		var syncOptions = '';
+		var path        = '';
+		var data        = '';
+		var done        = '';
+		var success     = '';
+		var params      = {
 			'type'     : type,
 			'dataType' : 'json'
 		};
 
-		if ( !options.url ) {
-			params.url = config.url || urlError();
-		}
+		params      = initializeParams( params );
+		syncOptions = model.getSyncOptions( method ) || syncOptionsError();
 
-		params.processData = false;
-		params.contentType = 'application/json';
-
-		var syncOptions = model.getSyncOptions( method ) || syncOptionsError();
-
-		hasSyncOptionsErrors( 'method', syncOptions );
-
-		hasSyncOptionsErrors( 'args', syncOptions );
+		hasSyncOptionsErrors( syncTypes, syncOptions );
 
 		// if this is an object being saved
 		if ( syncOptions.objectPath ) {
@@ -84,9 +116,8 @@ define( function ( require ) {
 			params.url             = config.objectUrl;
 		}
 
-		var path = _.result( model, 'path' ) || pathError();
-
-		var data = {
+		path = _.result( model, 'path' ) || pathError();
+		data = {
 			'path' : config.base + path
 		};
 
@@ -110,25 +141,9 @@ define( function ( require ) {
 			params.url = config.url;
 		}
 
-		params.data = JSON.stringify( {
-			'method'      : config.method,
-			'CFToken'     : Session.token(),
-			'personnelId' : data.personnelId || Session.personnelId(), // allows unathenticated request to use personnelId (i.e: reset password)
-			'args'        : {
-				'method' : data.method,
-				'args'   : data.args
-			}
-		} );
-
-		params = setSendPasswordParams( data.method, params, syncOptions );
-
-		// PD360 isn't available so we have to return a deferred which will be
-		// resolved once we get the second request back
-		var def = new Backbone.$.Deferred();
-
-		var success = options.success;
-
-		var done = function ( data, status, jqXHR ) {
+		params  = setupParameters( config, data, params, syncOptions );
+		success = options.success;
+		done    = function ( data, status, jqXHR ) {
 			// Since parent call wraps the success, and handles parsing of
 			// the data, we need to resolve the deferred after fetch
 			// updates the model. This allows us to pass the model with the
