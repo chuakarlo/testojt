@@ -31,7 +31,6 @@ define ( function (require ) {
 					}
 				}, {
 					'schema' : require( 'text!apps/homepage/external/widgets/external/focusObjective/configuration/focusObjectiveSchema.json' ),
-					// 'schema' : require( 'text!apps/homepage/external/billboard/configuration/billboardSchema.json' ),
 					'data'   : models[ 0 ]
 				} );
 

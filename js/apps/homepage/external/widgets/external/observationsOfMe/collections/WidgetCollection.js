@@ -6,26 +6,7 @@ define ( function ( require ) {
 	var $                = require( 'jquery' );
 	var Session          = require( 'Session' );
 	var App              = require( 'App' );
-	var ValidationSchema = {
-		'title'      : 'observations of me schema',
-		'type'       : 'object',
-		'required'   : [ 'OBSERVATIONDATE', 'NUMBEROFPRESCRIBEDPD', 'OBSERVATIONNAME', 'OBSERVATIONID' ],
-		'properties' : {
-			'OBSERVATIONDATE'      : {
-				'type' : 'string'
-			},
-			'NUMBEROFPRESCRIBEDPD' : {
-				'type' : 'number'
-			},
-			'OBSERVATIONNAME'      : {
-				'type' : 'string'
-			},
-			'OBSERVATIONID'        : {
-				'type'        : 'number',
-				'uniqueItems' : true
-			}
-		}
-	};
+
 	function widgetRequest ( personnelId ) {
 		return {
 			'path'   : 'com.schoolimprovement.pd360.dao.ObservationService',
@@ -48,7 +29,7 @@ define ( function ( require ) {
 			var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId() ) ] );
 
 			$.when( fetchingModels ).done( function ( models ) {
-				App.Homepage.Utils.jsonVal( ValidationSchema, models[ 0 ], function ( err ) {
+				App.Homepage.Utils.jsonVal( function ( err ) {
 					if ( !err ) {
 						options.success( new Collection( models[ 0 ] ) );
 						return;
@@ -57,6 +38,9 @@ define ( function ( require ) {
 							'message' : 'Obervations of me widget: JSon error'
 						} );
 					}
+				}, {
+					'schema' : require( 'text!apps/homepage/external/widgets/external/observationsOfMe/configuration/observationsOfMeSchema.json' ),
+					'data'   : models [ 0 ]
 				} );
 
 			} ).fail( function ( error ) {
