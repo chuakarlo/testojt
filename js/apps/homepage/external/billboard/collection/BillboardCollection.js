@@ -28,7 +28,9 @@ define( function ( require ) {
 
 			App.when( fetchingModels ).done( function ( models ) {
 
-				var collection = $.extend( models[ 0 ], models[ 1 ] );
+				var collection = [];
+				$.merge( collection, models[ 0 ] );
+				$.merge( collection, models[ 1 ] );
 
 				App.Homepage.Utils.jsonVal( function ( err ) {
 					if ( !err ) {
