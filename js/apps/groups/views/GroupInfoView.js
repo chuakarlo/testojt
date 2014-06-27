@@ -77,8 +77,8 @@ define( function ( require ) {
 		// Hide show group description
 		'toggleDetails' : function () {
 
-			$('#details-abb').toggle();
-			$('#details-full').toggle();
+			$( '#details-abb' ).toggle();
+			$( '#details-full' ).toggle();
 
 		},
 

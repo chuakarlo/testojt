@@ -40,7 +40,7 @@
     "grunt-blanket-mocha": "~0.4.0",
     "minimist": "0.0.8",
     "readdirp": "^1.0.1",
-    "jscs": "^1.4.0",
+    "jscs": "^1.5.6",
     "vow": "~0.4.3"
   },
   "dependencies": {

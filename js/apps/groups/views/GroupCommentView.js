@@ -64,7 +64,7 @@ define( function ( require ) {
 			$( this.el ).off( 'click', '.child-creator-name' );
 
 			var model = new MiniPersonnelModel( {
-				'persId' : this.model.get('Creator')
+				'persId' : this.model.get( 'Creator' )
 			} );
 
 			var view = new MiniPersonnelView( {
@@ -84,7 +84,7 @@ define( function ( require ) {
 			// Since spin.js requires element to be in the dom, wait until
 			// the popover has been shown to add the spin icon.
 			this.ui.creator.on( 'shown.bs.popover', _.bind( function () {
-				$(view.ui.spinner).spin();
+				$( view.ui.spinner ).spin();
 				App.vent.trigger( 'show:popover', this );
 			}, this ) );
 
@@ -106,7 +106,7 @@ define( function ( require ) {
 
 		'onBeforeClose' : function () {
 			// Make sure to destroy the popover events
-			this.ui.creator.popover('destroy');
+			this.ui.creator.popover( 'destroy' );
 		},
 
 		'removeReply' : function ( e ) {

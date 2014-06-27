@@ -9,13 +9,13 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var moment     = require( 'moment' );
 
-	var template           = require( 'text!../templates/groupCommentsView.html' );
-	var usersTemplate      = require( 'text!../templates/usersGroupCommentsView.html' );
-	var newsTemplate = require( 'text!../templates/NewsItemView.html');
+	var template      = require( 'text!../templates/groupCommentsView.html' );
+	var usersTemplate = require( 'text!../templates/usersGroupCommentsView.html' );
+	var newsTemplate  = require( 'text!../templates/NewsItemView.html' );
 
 	var GroupCommentView   = require( 'groups/views/GroupCommentView' );
-	var MiniPersonnelModel = require( 'common/entities/MiniPersonnel');
-	var MiniPersonnelView  = require( 'common/views/MiniPersonnel');
+	var MiniPersonnelModel = require( 'common/entities/MiniPersonnel' );
+	var MiniPersonnelView  = require( 'common/views/MiniPersonnel' );
 	var stripHtml          = require( 'common/helpers/stripHtml' );
 
 	var Autolinker = require( 'autolinker' );
@@ -119,7 +119,7 @@ define( function ( require ) {
 			// Since spin.js requires element to be in the dom, wait until
 			// the popover has been shown to add the spin icon.
 			this.ui.creator.on( 'shown.bs.popover', _.bind( function () {
-				$(view.ui.spinner).spin();
+				$( view.ui.spinner ).spin();
 				App.vent.trigger( 'show:popover', this );
 			}, this ) );
 
@@ -198,7 +198,7 @@ define( function ( require ) {
 				'reply' : true
 			} );
 
-			replyModel.save(null, {
+			replyModel.save( null, {
 
 				'success' : _.bind( function () {
 
@@ -219,7 +219,7 @@ define( function ( require ) {
 
 					this.model.collection.newCommentFetch( options );
 
-				}, this)
+				}, this )
 			} );
 
 		},

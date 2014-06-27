@@ -51,9 +51,9 @@ define( function ( require ) {
 			// This is kind of hacky but it lets us insert new comments at the
 			// top of the collection view.
 			if ( this.collection.first() === itemView.model ) {
-				$('.comments-list', collectionView.$el).prepend( itemView.el );
+				$( '.comments-list', collectionView.$el ).prepend( itemView.el );
 			} else {
-				$('.comments-list', collectionView.$el).append( itemView.el );
+				$( '.comments-list', collectionView.$el ).append( itemView.el );
 			}
 		},
 
@@ -77,7 +77,7 @@ define( function ( require ) {
 				'MessageId'       : 1,
 				'LicenseId'       : this.model.get( 'LicenseId' ),
 				'Message'         : msg,
-				'Creator'         : Session.personnelId(0),
+				'Creator'         : Session.personnelId( 0 ),
 				'CreatorAvatar'   : this.user.Avatar
 			} );
 
