@@ -199,13 +199,6 @@ define( function ( require ) {
 				videoContent.fetch( {
 
 					'success' : function () {
-						var queryObject = App.request( 'videoPlayer:queryObject' );
-
-						if ( queryObject.licenseId && queryObject.taskId ) {
-							videoContent.set( 'licenseId', queryObject.licenseId );
-							videoContent.set( 'taskId', queryObject.taskId );
-						}
-
 						defer.resolve( videoContent );
 					},
 

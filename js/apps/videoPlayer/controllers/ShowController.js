@@ -28,6 +28,17 @@ define( function ( require ) {
 
 				App.when( getVideoContent ).done( function ( videoContent ) {
 
+					if ( !App.request( 'videoPlayer:isVideosRoute' ) ) {
+						return;
+					}
+
+					var queryObject = App.request( 'videoPlayer:queryObject' );
+
+					if ( queryObject.licenseId && queryObject.taskId ) {
+						videoContent.set( 'licenseId', queryObject.licenseId );
+						videoContent.set( 'taskId', queryObject.taskId );
+					}
+
 					this.showVideoResources( videoContent );
 
 				}.bind( this ) ).fail( function ( error ) {

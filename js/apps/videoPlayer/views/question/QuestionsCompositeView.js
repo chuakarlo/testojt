@@ -2,7 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	require( 'slick' );
-	require( 'jquery.pscrollbar' );
+	require( 'videoPlayer/plugins/putCursorAtEnd' );
 
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
@@ -64,7 +64,6 @@ define( function ( require ) {
 		'onShow' : function () {
 			this.showCarousel();
 			this.showPagination();
-			this.initScrollbar();
 		},
 
 		'showCarousel' : function () {
@@ -78,13 +77,6 @@ define( function ( require ) {
 				'speed'          : 100,
 				'slide'          : 'li',
 				'onAfterChange'  : this.afterCarouselChange.bind( this )
-			} );
-		},
-
-		'initScrollbar' : function () {
-			this.ui.carouselCont.perfectScrollbar( {
-				'suppressScrollX'  : true,
-				'wheelPropagation' : true
 			} );
 		},
 
@@ -128,6 +120,8 @@ define( function ( require ) {
 		'afterCarouselChange' : function ( elem, page ) {
 			this.updatePagination( page + 1 );
 			this.updateHeader( page );
+			this.children.findByIndex( page )
+				.ui.textInput.putCursorAtEnd();
 		}
 
 	} );
