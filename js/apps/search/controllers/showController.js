@@ -1,15 +1,16 @@
 define( function ( require ) {
 	'use strict';
 
-	var $                          = require( 'jquery' );
-	var _                          = require( 'underscore' );
-	var Marionette                 = require( 'marionette' );
-	var App                        = require( 'App' );
+	var $          = require( 'jquery' );
+	var _          = require( 'underscore' );
+	var Marionette = require( 'marionette' );
+	var App        = require( 'App' );
+	var stripHtml  = require( 'common/helpers/stripHtml' );
 
 	// Views
 	var SearchResultCollectionView = require( 'search/views/SearchResultCollectionView' );
 	var SearchNavCollectionView    = require( 'search/views/SearchNavCollectionView' );
-	var EmptyResultView            = require( 'search/views/EmptyResultView');
+	var EmptyResultView            = require( 'search/views/EmptyResultView' );
 
 	require( 'search/entities/search' );
 
@@ -33,7 +34,7 @@ define( function ( require ) {
 			'initialize' : function () {
 
 				// Call the parent init
-				Mod.BaseController.prototype.initialize.apply(this, arguments);
+				Mod.BaseController.prototype.initialize.apply( this, arguments );
 
 				// create our nav collection
 				this.navCollection = new App.Entities.SearchNavCollection();
@@ -73,7 +74,7 @@ define( function ( require ) {
 				this.layout.nav.show( searchNav );
 			},
 
-			'updateResultCount' : function (model, val) {
+			'updateResultCount' : function ( model, val ) {
 				this.navCollection.setResultCount( val );
 			}
 
@@ -84,7 +85,7 @@ define( function ( require ) {
 			'initialize' : function () {
 
 				// Call the parent init
-				Mod.BaseController.prototype.initialize.apply(this, arguments);
+				Mod.BaseController.prototype.initialize.apply( this, arguments );
 
 				// Create our query model
 				this.queryModel = new App.Entities.SearchQueryModel();
@@ -132,7 +133,7 @@ define( function ( require ) {
 									'message' : 'There was a problem loading your' +
 									' search results. Please try again later.'
 								} )
-							});
+							} );
 						} );
 				}
 
@@ -145,8 +146,8 @@ define( function ( require ) {
 					return;
 				}
 
-				// Set the query text
-				this.layout.ui.query.html(query);
+				// Set the query text, but remove html
+				this.layout.ui.query.html( stripHtml( query ) );
 
 				// Clear any results we have
 				this.searchCollection.reset();
@@ -165,9 +166,9 @@ define( function ( require ) {
 					'searchType' : filter
 				} );
 
-				var searchCollectionView = new SearchResultCollectionView({
+				var searchCollectionView = new SearchResultCollectionView( {
 					'collection' : this.searchCollection
-				});
+				} );
 
 				// Show a loading view while we get some results
 				this.showLoading();
@@ -183,10 +184,10 @@ define( function ( require ) {
 						// needs to setup
 						this.searchCollection.queryModel.updateStart();
 
-						this.layout.results.show(searchCollectionView);
+						this.layout.results.show( searchCollectionView );
 						this.setupInfiniteScroll( filter );
 
-					}, this),
+					}, this ),
 
 					'error' : function () {
 						this.closeLoading();
@@ -209,7 +210,7 @@ define( function ( require ) {
 					'background' : true,
 					'text'       : 'Loading Results'
 				} );
-				this.layout.loading.show(loading);
+				this.layout.loading.show( loading );
 			},
 
 			'showEmptyResult' : function () {
