@@ -1,6 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
+	var App            = require( 'App' );
 	var _              = require( 'underscore' );
 	var $              = require( 'jquery' );
 	var Marionette     = require( 'marionette' );
@@ -36,7 +37,7 @@ define( function ( require ) {
 			this.model.set( 'Objectives', stripHtml( this.model.get( 'Objectives' ) ) );
 			this.isMember = options.isMember;
 
-			this.on( 'itemview:show:popover', this.closePopovers );
+			this.listenTo( App.vent, 'show:popover', this.closePopovers );
 		},
 
 		'onRender' : function () {

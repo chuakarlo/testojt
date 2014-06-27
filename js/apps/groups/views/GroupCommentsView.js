@@ -59,10 +59,6 @@ define( function ( require ) {
 
 			this.user = options.user;
 
-			this.on( 'itemview:show:popover', function ( viewWithPopover ) {
-				this.trigger( 'show:popover', viewWithPopover );
-			} );
-
 		},
 
 		'onRender' : function () {
@@ -96,7 +92,7 @@ define( function ( require ) {
 
 		'showMiniPersonnel' : function ( event ) {
 
-			// We disable the event that just captured the mouseenter
+			// We disable the event that just captured the click
 			// and let the popover library handle the click so we
 			// don't have to fetch the model or create the view every
 			// time.
@@ -120,15 +116,12 @@ define( function ( require ) {
 				}
 			} );
 
-			this.ui.creator.on( 'show.bs.popover', _.bind( function () {
-				this.trigger( 'show:popover', this );
-			}, this ) );
-
 			// Since spin.js requires element to be in the dom, wait until
 			// the popover has been shown to add the spin icon.
-			this.ui.creator.on( 'shown.bs.popover', function () {
+			this.ui.creator.on( 'shown.bs.popover', _.bind( function () {
 				$(view.ui.spinner).spin();
-			} );
+				App.vent.trigger( 'show:popover', this );
+			}, this ) );
 
 			// Show the popover before we fetch the model, it should show a
 			// loading view

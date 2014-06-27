@@ -1,6 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
+	var App                = require( 'App' );
 	var _                  = require( 'underscore' );
 	var $                  = require( 'jquery' );
 	var Marionette         = require( 'marionette' );
@@ -47,15 +48,12 @@ define( function ( require ) {
 				}
 			} );
 
-			this.ui.member.on( 'show.bs.popover', _.bind( function () {
-				this.trigger( 'show:popover' );
-			}, this ) );
-
 			// Since spin.js requires element to be in the dom, wait until
 			// the popover has been shown to add the spin icon.
-			this.ui.member.on( 'shown.bs.popover', function () {
+			this.ui.member.on( 'shown.bs.popover', _.bind( function () {
 				$( view.ui.spinner ).spin();
-			} );
+				App.vent.trigger( 'show:popover', this );
+			}, this ) );
 
 			// Show the popover before we fetch the model, it should show a
 			// loading view

@@ -35,16 +35,15 @@ define( function ( require ) {
 		'initialize' : function ( options ) {
 			this.user = options.user;
 
-			this.on( 'itemview:show:popover', this.closePopovers );
+			this.listenTo( App.vent, 'show:popover', this.closePopovers );
+			// this.on( 'itemview:show:popover', this.closePopovers );
 		},
 
-		'closePopovers' : function ( itemView, viewWithPopover ) {
+		'closePopovers' : function ( viewWithPopover ) {
 			// This will close any popovers on other children views for this
 			// collection view
 			this.children.each( function ( c ) {
-				if ( c !== viewWithPopover ) {
-					c.closePopovers( viewWithPopover );
-				}
+				c.closePopovers( viewWithPopover );
 			} );
 		},
 

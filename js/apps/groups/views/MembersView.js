@@ -1,6 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
+	var App            = require( 'App' );
 	var _              = require( 'underscore' );
 	var Marionette     = require( 'marionette' );
 	var MemberItemView = require( '../views/MemberItemView' );
@@ -22,7 +23,7 @@ define( function ( require ) {
 		},
 
 		'initialize' : function () {
-			this.on( 'itemview:show:popover', this.closePopovers );
+			this.listenTo( App.vent, 'show:popover', this.closePopovers );
 		},
 
 		'closePopovers' : function ( viewWithPopover ) {
