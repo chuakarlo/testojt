@@ -215,18 +215,18 @@ div.phone-search {
 // Navbar toggle
 // --------------------------------
 .navbar-toggle {
-	margin-right: 0;
-	padding: 0px 20px;
-	background-color: #8dc73f;
-	border: 1px solid transparent;
-	border-radius: 0;
-	margin: 0;
-	height: @navbar-height;
+	margin-right     : 0;
+	padding          : 0px 20px;
+	background-color : #8dc73f;
+	border           : 1px solid transparent;
+	border-radius    : 0;
+	margin           : 0;
+	height           : @navbar-height;
 
 	// Bars
 	.icon-bar {
-		width: 18px;
-		margin: 9px 0;
+		width  : 18px;
+		margin : 9px 0;
 	}
 }
 
@@ -235,31 +235,24 @@ div.phone-search {
 }
 
 // MENU TO X Animation
-#bar1 { width:19px; height:2px; background:white; position: absolute; top:12px; left:24px; z-index: 4;
-	-webkit-transform: rotate( 00deg );
-	-webkit-transform-origin: 9.5px 0px;
-	-moz-transform: rotate( 0deg );
-	-moz-transform-origin: 9.5px 0px;
-	-ms-transform: rotate( 0deg );
-	-ms-transform-origin: 9.5px 0px;
-	transform: rotate( 0deg );
-	transform-origin: 9.5px 0px; }
-#bar2 { width:19px; height:2px; background:white; position: absolute; top:22px; left:24px;  z-index: 4;
-	-webkit-transform: rotate( 0deg );
-	-webkit-transform-origin: 9.5px 0px;
-	-moz-transform: rotate( 0deg );
-	-moz-transform-origin: 9.5px 0px;
-	-ms-transform: rotate( 0deg );
-	-ms-transform-origin: 9.5px 0px;
-	transform: rotate( 0deg );
-	transform-origin: 9.5px 0px; }
-#bar3 { width:19px; height:2px; background:white; position: absolute; top:32px; left:24px; z-index: 4;
-	-webkit-transform: rotate( 0deg );
-	-webkit-transform-origin: 9.5px 0px;
-	-moz-transform: rotate( 0deg );
-	-moz-transform-origin: 9.5px 0px;
-	-ms-transform: rotate( 0deg );
-	-ms-transform-origin: 9.5px 0px;
-	transform: rotate( 0deg );
-	transform-origin: 9.5px 0px;
+#bar1, #bar2, #bar3 {
+	width      : 19px;
+	height     : 2px;
+	background : white;
+	position   : absolute;
+	left       : 24px;
+	z-index    : 4;
+
+	.transform-origin( 9.5px 0px );
+	.rotate( 0deg );
+}
+
+#bar1 {
+	top : 12px;
+}
+#bar2 {
+	top : 22px;
+}
+#bar3 {
+	top : 32px;
 }

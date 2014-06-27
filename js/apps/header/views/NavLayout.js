@@ -4,12 +4,14 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
 	var $          = require( 'jquery' );
-	var App        = require ('App');
+	var App        = require ( 'App' );
 
 	var templates = {
 		'loggedIn'  : require( 'text!header/templates/nav.html' ),
 		'loggedOut' : require( 'text!header/templates/navLoggedOut.html' )
 	};
+
+	var userMenuOpen = false;
 
 	return Marionette.Layout.extend( {
 
@@ -106,24 +108,23 @@ define( function ( require ) {
 		},
 
 		'hideUserMenuAnimation' : function ( event ) {
-			this.ui.bar1.stop().rotate( {
-				'animateTo' : 0,
-				'duration'  : 250
-			} );
-			this.ui.bar2.stop().rotate( {
-				'animateTo' : 0,
-				'duration'  : 250
-			} );
-			this.ui.bar3.stop().rotate( {
-				'animateTo' : 0,
-				'duration'  : 250
-			} );
-			this.ui.menuBar.stop().animate( {
-				'opacity' : 1
-			}, 251, function () {
+			if ( userMenuOpen ) {
 
-				// Only try to close if the bars still exist
-				if ( $(this.ui.bar1.selector).length > 0 ) {
+				this.ui.bar1.stop().rotate( {
+					'animateTo' : 0,
+					'duration'  : 250
+				} );
+				this.ui.bar2.stop().rotate( {
+					'animateTo' : 0,
+					'duration'  : 250
+				} );
+				this.ui.bar3.stop().rotate( {
+					'animateTo' : 0,
+					'duration'  : 250
+				} );
+				this.ui.menuBar.stop().animate( {
+					'opacity' : 1
+				}, 250, function () {
 
 					this.ui.bar1.animate( {
 						'top' : 12
@@ -135,36 +136,44 @@ define( function ( require ) {
 						'top' : 32
 					}, 250 );
 
-				}
+				}.bind( this ) );
 
-			}.bind( this ) );
+				userMenuOpen = false;
+
+			}
 		},
 
 		'showUserMenuAnimation' : function ( event ) {
-			this.ui.menuBar.stop().animate( {
-				'top'   : 22,
-				'width' : 23,
-				'left'  : 22
-			}, 200, function () {
-				this.ui.menuBar.animate( {
-					'left'  : 24,
-					'width' : 19
-				}, 200, function () {
-					this.ui.bar1.rotate( {
-						'animateTo' : -132,
-						'duration'  : 250
-					} );
-					this.ui.bar2.rotate( {
-						'animateTo' : -48,
-						'duration'  : 250
-					} );
-					this.ui.bar3.rotate( {
-						'animateTo' : -48,
-						'duration'  : 250
-					} );
+			if ( !userMenuOpen ) {
 
+				this.ui.menuBar.stop().animate( {
+					'top'   : 22,
+					'width' : 23,
+					'left'  : 22
+				}, 200, function () {
+					this.ui.menuBar.animate( {
+						'left'  : 24,
+						'width' : 19
+					}, 200, function () {
+						this.ui.bar1.rotate( {
+							'animateTo' : -132,
+							'duration'  : 250
+						} );
+						this.ui.bar2.rotate( {
+							'animateTo' : -48,
+							'duration'  : 250
+						} );
+						this.ui.bar3.rotate( {
+							'animateTo' : -48,
+							'duration'  : 250
+						} );
+
+					}.bind( this ) );
 				}.bind( this ) );
-			}.bind( this ) );
+
+				userMenuOpen = true;
+
+			}
 		},
 
 		'showSearchResults' : function ( event ) {
