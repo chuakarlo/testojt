@@ -23,7 +23,7 @@ define( function ( require ) {
 				color   : 'danger',
 				icon    : 'lt-past-due fa-clock-o'
 			};
-			if ( duedate >= currentdate) {
+			if ( duedate >= currentdate ) {
 				status.message = 'Current' || true;
 				status.color   = 'success';
 				status.icon    = 'lt-complete fa-check';
@@ -60,7 +60,7 @@ define( function ( require ) {
 			var mainCompletedDate = this._convertToTimeStamp( model.CompleteByDate );
 
 			if ( !model.ProcessStatus.length ) {
-				model.ProcessStatus = this._getStatus ( mainCompletedDate, currentDate, 'Not Current');
+				model.ProcessStatus = this._getStatus ( mainCompletedDate, currentDate, 'Not Current' );
 			}
 
 			return model;

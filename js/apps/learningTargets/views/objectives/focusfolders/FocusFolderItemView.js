@@ -21,7 +21,7 @@ define( function ( require ) {
 		},
 
 		'showDescription' : function ( e ) {
-			if ( $( e.currentTarget ).hasClass( 'text-muted') ) {
+			if ( $( e.currentTarget ).hasClass( 'text-muted' ) ) {
 				$( e.currentTarget ).addClass( 'fa-times-circle text-primary' ).removeClass( 'fa-info-circle text-muted' );
 				this.$( '.fo-overlay-details' ).show();
 			} else {

@@ -32,8 +32,6 @@ define( function ( require ) {
 			'reflection-questions'
 		],
 
-		'fetchingStatus' : false,
-
 		'onSelect' : function ( e ) {
 			App.navigate( 'resources/learning/' + e.currentTarget.value, true );
 		},
@@ -67,30 +65,30 @@ define( function ( require ) {
 
 			this.ui.links.bind( 'click.select', function () {
 				return false;
-			});
+			} );
 
-			var learningTargetsMenu = this.$( '.selectpicker' );
+			// remove class from current active li
+			$( this.ui.nav )
+				.find( '.active' )
+				.removeClass( 'active' );
 
-			if ( !this.fetchingStatus ) {
-				// remove class from current active li
-				$( this.ui.nav )
-					.find( '.active' )
-					.removeClass( 'active' );
+			// activate selected tab
+			$( '.' + content ).addClass( 'active' );
+			this.ui.liLink.siblings().not( '.active' ).addClass( 'deactivate' );
 
-				// activate selected tab
-				$( '.' + content ).addClass( 'active' );
-				this.ui.liLink.siblings().not('.active').addClass( 'deactivate' );
-			}
 			// render bootstrap selectbox
-			$( learningTargetsMenu ).addClass( 'col-xs-12' ).selectpicker( 'setStyle' );
-			$( learningTargetsMenu ).val( content );
-			$( learningTargetsMenu ).selectpicker( 'render' );
+			this.ui.selectNav.addClass( 'col-xs-12' ).selectpicker( 'setStyle' );
+			this.ui.selectNav.val( content );
+			this.ui.selectNav.selectpicker( 'render' );
+			this.ui.selectNav.prop( 'disabled' ,true );
+			this.ui.selectNav.selectpicker( 'refresh' );
 		},
 
 		'reactivateNav' : function () {
-			this.ui.links.unbind('click.select');
-			this.ui.liLink.siblings().not('.active').removeClass( 'deactivate' );
-			this.fetchingStatus = false;
+			this.ui.selectNav.prop( 'disabled',false );
+			this.ui.selectNav.selectpicker( 'refresh' );
+			this.ui.links.unbind( 'click.select' );
+			this.ui.liLink.siblings().not( '.active' ).removeClass( 'deactivate' );
 		}
 
 	} );

@@ -27,7 +27,7 @@ define( function ( require ) {
 			this.FocusTitle     = '';
 			this.showFocusTitle = 'hide';
 
-			if (this.options.data) {
+			if ( this.options.data ) {
 				this.FocusTitle     = decodeURIComponent( this.options.data.focustitle );
 				this.showFocusTitle = '';
 			}

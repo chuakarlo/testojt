@@ -34,12 +34,12 @@ define( function ( require ) {
 				this.$el.find( '.lt-table-header' ).hide();
 			}
 
-			this.ui.panelCollapse.on('show.bs.collapse', function () {
+			this.ui.panelCollapse.on( 'show.bs.collapse', function () {
 				self.$el.addClass( 'active' );
 				self.ui.titleHolder.addClass( 'title-active' );
 			} );
 
-			this.ui.panelCollapse.on('hide.bs.collapse', function () {
+			this.ui.panelCollapse.on( 'hide.bs.collapse', function () {
 				self.$el.removeClass( 'active' );
 				self.ui.titleHolder.removeClass( 'title-active' );
 			} );

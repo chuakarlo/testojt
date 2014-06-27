@@ -6,7 +6,6 @@ define( function ( require ) {
 	var Backbone        = require( 'backbone' );
 
 	var MainView        = require( 'apps/learningTargets/views/MainView' );
-	var ProcessesView   = require( 'apps/learningTargets/views/processes/ProcessesView' );
 	var DescriptionView = require( 'apps/learningTargets/views/catalogs/DescriptionView' );
 
 	var setLegacyPages = require( '../helpers/setLegacyPages' );
@@ -22,7 +21,6 @@ define( function ( require ) {
 		Main.helper = {
 			'_showView' : function ( view ) {
 				legendRegion.reset();
-
 				if ( view.ui && view.ui.spinner ) {
 					contentRegion.show( view );
 					return false;
@@ -90,7 +88,6 @@ define( function ( require ) {
 
 			'redirectToLegacyPage' : function ( target, page, sub, opts ) {
 				App.navigate( Backbone.history.fragment + '/legacy' );
-
 				Main.helper.showLegacyContent( page, sub, opts );
 			},
 
@@ -102,8 +99,7 @@ define( function ( require ) {
 
 				// navigate to legacy page
 				App.when( pd360Loaded ).done( function () {
-					App.content.show( new ProcessesView() );
-					$( '.content-wrapper' ).html( '' );
+					App.content.reset( );
 					App.request( 'pd360:navigate', page, sub, opts );
 				} );
 			},
@@ -120,7 +116,7 @@ define( function ( require ) {
 			'showTrainingCatalog' : function ( view ) {
 
 				if ( $.browser.safari && $.browser.android ) {
-					$('#modal-content').attr('data-backdrop','static');
+					$( '#modal-content' ).attr( 'data-backdrop', 'static' );
 				}
 
 				var descriptionView = new DescriptionView( );
