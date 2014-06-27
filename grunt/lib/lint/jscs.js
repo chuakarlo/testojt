@@ -11,7 +11,7 @@ var filter     = require( '../filter' );
 var diff       = require( '../diff' );
 var cb         = require( '../cb' );
 
-function lint (files, callback ) {
+function lint ( files, callback ) {
 	console.log(); console.log( 'JSCS:'.bold );
 
 	if ( !files.length ) {
@@ -36,10 +36,11 @@ function lint (files, callback ) {
 	vow.allResolved( checks ).spread( function () {
 
 		checks.forEach( function ( check, index ) {
-			if ( check._res._errorList.length ) {
-				console.log(); console.log( check._res._file._filename.underline );
 
-				check._res._errorList.forEach( function ( error, index ) {
+			if ( check._value._errorList.length ) {
+				console.log(); console.log( check._value._file._filename );
+
+				check._value._errorList.forEach( function ( error, index ) {
 					console.log( ( '  ' + error.line + ':' + error.column ).grey + '\terror\t'.red + error.message );
 
 					errors++;
