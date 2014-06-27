@@ -1,102 +1,19 @@
 define( function ( require ) {
 	'use strict';
 
-	var Backbone = require( 'backbone' );
-	var Session  = require( 'Session' );
-	var App      = require( 'App' );
-	var _        = require( 'underscore' );
-	var config   = require( 'config' );
-
-	var urlError = function () {
-		throw new Error('A "url" property or function must be specified');
-	};
-
-	var pathError = function () {
-		throw new Error( 'A "path" property or function must be specified' );
-	};
-
-	var syncOptionsError = function () {
-		throw new Error( 'A "getSyncOptions" function must return a value' );
-	};
-
-	var argsError = function () {
-		throw new Error( 'A "args" property must be specified' );
-	};
-
-	var methodError = function () {
-		throw new Error( 'A "method" property must be specified' );
-	};
-
-	var hasSyncOptionsErrors = function ( syncTypes, syncOptions ) {
-		var errorTypes = {
-
-			'method' : function () {
-				if ( !_.has( syncOptions, 'method' ) ) {
-					methodError();
-				}
-			},
-
-			'args' : function () {
-				if ( !_.has( syncOptions, 'args' ) ) {
-					argsError();
-				}
-			}
-
-		};
-
-		_.each( syncTypes, function ( type ) {
-			return errorTypes[ type ]();
-		} );
-	};
-
-	var setSendPasswordParameters = function ( method, params, syncOptions ) {
-		if ( method === 'sendPasswordEmail' ) {
-			var url = '/com/schoolimprovement/pd360/dao/EmailService.cfc?method=sendPasswordEmail&emailTo=';
-			params.url         = url + syncOptions.args.emailTo;
-			params.dataType    = 'text';
-			params.contentType = 'application/json; charset=utf-8';
-			params.data        = null;
-		}
-
-		return params;
-	};
-
-	var setupGetSignitureParameters = function ( config, data ) {
-		return JSON.stringify( {
-			'method'      : config.method,
-			'CFToken'     : Session.token(),
-			'personnelId' : data.personnelId || Session.personnelId(), // allows unathenticated request to use personnelId (i.e: reset password)
-			'args'        : {
-				'method' : data.method,
-				'args'   : data.args
-			}
-		} );
-	};
-
-	var setupParameters = function ( config, data, params, syncOptions ) {
-		params.data = setupGetSignitureParameters( config, data );
-		params      = setSendPasswordParameters( data.method, params, syncOptions );
-		return params;
-	};
-
-	var getParamsUrl = function ( params ) {
-		params.url = config.url || urlError();
-		return params.url;
-	};
-
-	var initializeParams = function ( params ) {
-		params.url         = getParamsUrl( params );
-		params.processData = false;
-		params.contentType = 'application/json';
-		return params;
-	};
+	var Backbone    = require( 'backbone' );
+	var App         = require( 'App' );
+	var _           = require( 'underscore' );
+	var config      = require( 'config' );
+	var bcfHelper   = require( 'plugins/helpers/bcfHelpers' );
+	var errorHelper = require( 'plugins/helpers/errorHelpers' );
 
 	var sync = function ( method, model, options ) {
+		var helper      = bcfHelper();
+		var errHelper   = errorHelper();
 		var def         = new Backbone.$.Deferred();
 		var type        = 'POST';
-		var syncTypes   = [ 'method', 'args' ];
 		var syncOptions = '';
-		var path        = '';
 		var data        = '';
 		var done        = '';
 		var success     = '';
@@ -105,10 +22,10 @@ define( function ( require ) {
 			'dataType' : 'json'
 		};
 
-		params      = initializeParams( params );
-		syncOptions = model.getSyncOptions( method ) || syncOptionsError();
+		params      = helper.initializeParams( params );
+		syncOptions = helper.getSyncOptions( model, method );
 
-		hasSyncOptionsErrors( syncTypes, syncOptions );
+		errHelper.hasSyncOptionsErrors( [ 'method', 'args' ], syncOptions );
 
 		// if this is an object being saved
 		if ( syncOptions.objectPath ) {
@@ -116,12 +33,7 @@ define( function ( require ) {
 			params.url             = config.objectUrl;
 		}
 
-		path = _.result( model, 'path' ) || pathError();
-		data = {
-			'path' : config.base + path
-		};
-
-		_.extend( data, syncOptions );
+		data = helper.setupData( helper.getPath( model ), syncOptions, config );
 
 		if ( App.request( 'pd360:available' ) ) {
 
@@ -136,12 +48,7 @@ define( function ( require ) {
 			return xhr;
 		}
 
-		// if this is an object, we need to get a signature using a different url
-		if ( syncOptions.objectPath ) {
-			params.url = config.url;
-		}
-
-		params  = setupParameters( config, data, params, syncOptions );
+		params  = helper.setupParameters( config, data, params, syncOptions );
 		success = options.success;
 		done    = function ( data, status, jqXHR ) {
 			// Since parent call wraps the success, and handles parsing of
@@ -152,11 +59,11 @@ define( function ( require ) {
 				func( data, status, jqXHR );
 				def.resolve( data, status, jqXHR );
 			} );
+
 			success( data, status, jqXHR );
 		};
 
 		options.success = function ( sig ) {
-
 			_.extend( data, {
 				'signature' : sig
 			} );
@@ -175,6 +82,7 @@ define( function ( require ) {
 		};
 
 		Backbone.ajax( _.extend( params, options ) );
+
 		// Return the deferred since we don't care about the first request
 		return def.promise();
 	};
