@@ -108,7 +108,7 @@ define( function ( require ) {
 
 		it ( 'should be able to call redirect', function () {
 			UserWidgetCompositeViewInstance.$el.find( 'a.focusObjectiveLink' ).first().trigger( 'click' );
-			navigateStub.should.have.been.calledWithExactly( 'resources/videos/671/legacy', { 'trigger' : true } );
+			navigateStub.should.have.been.calledWithExactly( 'resources/videos/671', { 'trigger' : true } );
 		} );
 
 	});
