@@ -13,7 +13,6 @@ define( function ( require ) {
 	var ObjectivesFolderView    = require( 'apps/learningTargets/views/objectives/focusfolders/FocusFolderView' );
 	var ObjectivesContentView   = require( 'apps/learningTargets/views/objectives/contents/ContentView' );
 	var ReflectionQuestionsView = require( 'apps/learningTargets/views/reflectionQuestions/ReflectionQuestionsView' );
-	var LegendsView             = require( 'apps/learningTargets/views/legends/LegendsView' );
 
 	var setRequestOptions = require( '../helpers/setRequestOptions' );
 	var setLegacyPages    = require( '../helpers/setLegacyPages' );
@@ -97,7 +96,8 @@ define( function ( require ) {
 					helper._showView( processesView );
 
 					// show legend after content is displayed
-					helper._showLegend( new LegendsView( options ) );
+					options.collection = collection;
+					helper._showLegend( options );
 				} );
 			},
 
@@ -175,7 +175,11 @@ define( function ( require ) {
 
 					// display Catalogs
 					helper._showView( catalogsView );
-					helper._showLegend( new LegendsView( options ) );
+
+					// show legend after content is displayed
+					options.collection = collection;
+					helper._showLegend( options );
+
 				} );
 			},
 

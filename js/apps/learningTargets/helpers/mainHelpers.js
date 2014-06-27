@@ -9,7 +9,8 @@ define( function ( require ) {
 	var ProcessesView   = require( 'apps/learningTargets/views/processes/ProcessesView' );
 	var DescriptionView = require( 'apps/learningTargets/views/catalogs/DescriptionView' );
 
-	var setLegacyPages  = require( '../helpers/setLegacyPages' );
+	var setLegacyPages = require( '../helpers/setLegacyPages' );
+	var LegendsView    = require( 'apps/learningTargets/views/legends/LegendsView' );
 
 	var mainView;
 	var currentPage;
@@ -22,19 +23,19 @@ define( function ( require ) {
 			'_showView' : function ( view ) {
 				legendRegion.reset();
 
-				if ( view.ui ) {
-					if ( view.ui.spinner ) {
-						contentRegion.show( view );
-						return false;
-					}
+				if ( view.ui && view.ui.spinner ) {
+					contentRegion.show( view );
+					return false;
 				}
 
 				mainView.reactivateNav();
 				contentRegion.show( view );
 			},
 
-			'_showLegend' : function ( view ) {
-				legendRegion.show( view );
+			'_showLegend' : function ( options ) {
+				if ( options.collection.length > 0 ) {
+					legendRegion.show(  new LegendsView( options ) );
+				}
 			},
 
 			'_setContent' : function ( content, options ) {
