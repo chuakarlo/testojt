@@ -14,8 +14,13 @@
 	.process-name {
 		float          : none;
 		vertical-align : middle;
-		width          : 90%;
+		width          : 80%;
 		display        : inline-block;
+		color          : @lt-light-blue;
+
+		&:hover {
+			color : @lt-light-blue-2;
+		}
 
 	}
 
@@ -47,6 +52,10 @@
 		font-size: 14px;
 		.lt-hover-transition();
 
+		&:hover {
+			background : @lt-gray-4;
+		}
+
 	}
 
 	.lt-accordion {
@@ -54,9 +63,12 @@
 	}
 
 	.lt-title-holder {
-		a > i {
-			margin-right: 10px;
+		a > div > i {
+			margin-right : 10px;
+			padding-left : 20px;
 		}
+
+		overflow : hidden;
 	}
 
 	.title-active {
