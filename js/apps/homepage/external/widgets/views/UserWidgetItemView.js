@@ -9,8 +9,8 @@ define( function ( require ) {
 	var tagName = 'li';
 
 	return Marionette.CollectionView.extend( {
-		'tagName'  : tagName,
-		'template' : function () {
+		'tagName'         : tagName,
+		'template'        : function () {
 			return _.template( template );
 		},
 		'templateHelpers' : function () {

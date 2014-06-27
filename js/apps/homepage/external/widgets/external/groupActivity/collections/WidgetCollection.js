@@ -46,7 +46,7 @@ define ( function ( require ) {
 			App.when( fetchingModels ).done( function ( models ) {
 				App.Homepage.Utils.jsonVal( function ( err ) {
 					if ( !err ) {
-						options.success( new Collection( models[0] ) );
+						options.success( new Collection( models[ 0 ] ) );
 						return;
 					}
 					App.vent.trigger( 'flash:message', {
@@ -54,7 +54,7 @@ define ( function ( require ) {
 					} );
 				}, {
 					'schema' : ValidationSchema,
-					'data'   : models[0]
+					'data'   : models[ 0 ]
 				} );
 			} ).fail( function ( error ) {
 				App.vent.trigger( 'flash:message', {

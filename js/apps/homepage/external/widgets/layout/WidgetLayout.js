@@ -38,7 +38,7 @@ define( function ( require ) {
 
 				widgets    = App.Homepage.Widgets.allWidgets().splice(1);
 				if ( !models || models.length < 0 ) {
-					models[ 0 ] = [];
+					models[ 0 ] = [ ];
 				}
 				App.Homepage.Utils.jsonVal( function ( err ) {
 					if ( err ) {

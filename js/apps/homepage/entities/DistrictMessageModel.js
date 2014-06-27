@@ -1,4 +1,4 @@
-define( function( require ) {
+define( function ( require ) {
 	'use strict';
 
 	var Backbone = require( 'backbone' );
@@ -8,17 +8,17 @@ define( function( require ) {
 
 		'path' : 'core.LicenseMessageGateway',
 
-		'getReadOptions' : function() {
+		'getReadOptions' : function () {
 			return {
 				'method' : 'getValidByLicenseIds',
-				'args' : this.toJSON()
+				'args'   : this.toJSON()
 			};
 		},
 
-		'parse' : function( res ) {
+		'parse' : function ( res ) {
 			// Return only the first one?
 			if (res.length)	{
-				var license = res[0];
+				var license = res[ 0 ];
 				// Strip the HTML
 				license.Message = license.Message.replace(/<\/?[^>]+(>|$)/g, '');
 				return license;
@@ -26,7 +26,7 @@ define( function( require ) {
 		},
 
 		// Check to see if the message contains text and is not expired
-		'isValidMessage' : function() {
+		'isValidMessage' : function () {
 			if ( !this.get( 'Message' )) {
 				return false;
 			}

@@ -28,7 +28,7 @@ define ( function ( require ) {
 			App.when( fetchingModels ).done( function ( models ) {
 				App.Homepage.Utils.jsonVal( function ( err ) {
 					if ( !err ) {
-						options.success( new Collection( models[0] ) );
+						options.success( new Collection( models[ 0 ] ) );
 						return;
 					} else {
 						App.vent.trigger( 'flash:message', {

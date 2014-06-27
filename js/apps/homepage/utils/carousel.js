@@ -24,7 +24,7 @@ define( function ( require ) {
 	return {
 
 		'carouselApplySettings' : function ( $carousel, options ) {
-			options = $.extend( {}, OPTIONS_DEFAULT, options );
+			options = $.extend( { }, OPTIONS_DEFAULT, options );
 
 			$carousel.carousel( {
 				'interval' : options.interval

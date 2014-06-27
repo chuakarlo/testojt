@@ -7,7 +7,7 @@ define( function ( require ) {
 	instance._id = 'billboard';
 
 	return instance.extend( {
-		'getExternalView': itemView
+		'getExternalView' : itemView
 	} );
 
 } );

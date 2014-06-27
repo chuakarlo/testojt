@@ -9,8 +9,8 @@ define( function ( require ) {
 	var homeSelector = '#home';
 
 	return Marionette.Layout.extend( {
-		'template'   : _.template( template ),
-		'regions'    : {
+		'template' : _.template( template ),
+		'regions'  : {
 			'home' : homeSelector
 		}
 	} );

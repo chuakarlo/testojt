@@ -28,7 +28,7 @@ define( function ( require ) {
 
 			App.when( fetchingModels ).done( function ( models ) {
 
-				var collection = [];
+				var collection = [ ];
 				$.merge( collection, models[ 0 ] );
 				$.merge( collection, models[ 1 ] );
 
