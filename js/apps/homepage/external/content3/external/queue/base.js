@@ -11,10 +11,14 @@ define( function ( require ) {
 		return name.toLowerCase().charAt( name.length - 1 ) !== 's' ? 's' : '';
 	}
 
+	function getName () {
+		return App.request( 'homepage:userProfile' ).FirstName.split( ' ' );
+	}
+
 	return {
 		'id'           : 'your-queue',
 		'header'       : function () {
-			var firstName = App.request( 'homepage:userProfile' ).FirstName;
+			var firstName = getName()[0];
 			return firstName + '\'' + setOwnership( firstName ) + ' Queue';
 		},
 		'contentDesc'  : 'Your queue displays content that you select to watch later. When you find content that you want to add to your queue, click Add to Queue.',
