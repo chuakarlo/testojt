@@ -22,7 +22,14 @@ define( function ( require ) {
 		'templateHelpers' : {
 
 			'getFileNameOrURL' : function () {
-				return ( this.FileName ) ? this.FileName : this.LinkURL;
+				if ( this.FileName ) {
+					return this.FileName;
+				} else {
+					if ( this.LinkURL.indexOf( 'http://' ) !== -1 ) {
+						return this.LinkURL;
+					}
+					return 'http://' + this.LinkURL;
+				}
 			},
 
 			'getResourceDescription' : function () {
