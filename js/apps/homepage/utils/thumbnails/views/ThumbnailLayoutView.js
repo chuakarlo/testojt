@@ -9,43 +9,67 @@ define( function ( require ) {
 	var template                = require( 'text!apps/homepage/utils/thumbnails/templates/thumbnailLayoutView.html' );
 	var ThumbnailCollectionView = require( 'apps/homepage/utils/thumbnails/views/ThumbnailCollectionView' );
 
-	function slideNavsData ( id ) {
-		return {
-			'largeSlide'  : {
-				'size' : 'lg'
-			},
-			'mediumSlide' : {
-				'size' : 'md'
-			},
-			'smallSlide'  : {
-				'size' : 'sm'
-			},
-			'xSmallSlide' : {
-				'size' : 'xs'
-			}
-		};
+	var slideNavsData = {
+		'largeSlide'  : {
+			'size' : 'lg',
+			'max'  : 4
+		},
+		'mediumSlide' : {
+			'size' : 'md',
+			'max'  : 3
+		},
+		'smallSlide'  : {
+			'size' : 'sm',
+			'max'  : 2
+		},
+		'xSmallSlide' : {
+			'size' : 'xs',
+			'max'  : 1
+		}
+	};
+
+	function fetchFunction ( target, source, key ) {
+		target[ key ] = source.get( key ) || function () {};
 	}
 
-	function showAll ( view, region, collection, chunkSize ) {
-		var thumbnailChunk      = App.Homepage.Utils.chunk( collection, chunkSize );
-		var thumbnailCollection = new Backbone.Collection( thumbnailChunk );
+	function passtThrough ( obj ) {
+		return obj;
+	}
 
-		thumbnailCollection.contentId    = view.model.get( 'base' ).get( 'id' );
-		thumbnailCollection.contentSize  = slideNavsData()[ region ].size;
-		thumbnailCollection.EmptyMessage = view.model.get( 'base' ).get( 'EmptyMessage' );
-		thumbnailCollection.modelSet     = view.model.get( 'base' ).get( 'modelSet' ) || function () {};
-		view[ region ].show( new ThumbnailCollectionView( thumbnailCollection ) );
+	function showAll ( view, region, collection ) {
+		var thumbnailChunk      = App.Homepage.Utils.chunk( collection, slideNavsData[ region ].max );
+		var thumbnailCollection = new Backbone.Collection( thumbnailChunk );
+		var source = view.model.get( 'base' );
+
+		thumbnailCollection.contentId    = source.get( 'id' );
+		thumbnailCollection.contentSize  = slideNavsData[ region ].size;
+		thumbnailCollection.contentMax   = slideNavsData[ region ].max;
+		thumbnailCollection.EmptyMessage = source.get( 'EmptyMessage' );
+
+		fetchFunction( thumbnailCollection, source, 'modelSet' );
+
+		var itemView = new ThumbnailCollectionView( thumbnailCollection );
+		view[ region ].show( itemView );
+		view.processedData.push( itemView.collection );
 	}
 
 	return Marionette.Layout.extend( {
 		'initialize' : function () {
 			var that = this;
-			var id   = this.model.get( 'base' ).get( 'id' );
+			var base = this.model.get( 'base' );
 			var data = this.model.get( 'data' ).models;
+
+			var id         = base.get( 'id' );
+			var fetchLogic = base.get( 'fetchLogic' ) || passtThrough;
+
+			data = fetchLogic( data );
+
+			fetchFunction( this, base, 'afterRender' );
 
 			this.templateHelpers = {
 				'id' : id
 			};
+			this.processedData = [ ];
 
 			this.addRegion( 'largeSlide', '#' + id + '-pd360-slide-lg .carousel-inner-wrapper');
 			this.addRegion( 'mediumSlide', '#' + id + '-pd360-slide-md .carousel-inner-wrapper');
@@ -54,10 +78,16 @@ define( function ( require ) {
 
 			this.onRender = function () {
 				// Show all thumbnails
-				showAll( that, 'largeSlide', data, 4 );
-				showAll( that, 'mediumSlide', data, 3 );
-				showAll( that, 'smallSlide', data, 2 );
-				showAll( that, 'xSmallSlide', data, 1 );
+				showAll( that, 'largeSlide', data );
+				showAll( that, 'mediumSlide', data );
+				showAll( that, 'smallSlide', data );
+				showAll( that, 'xSmallSlide', data );
+
+				App.reqres.setHandler( 'homepage:content:' + id + ':carousel', function () {
+					return that.processedData;
+				} );
+
+				that.afterRender( that.processedData );
 			};
 		},
 		'template'   : _.template( template )

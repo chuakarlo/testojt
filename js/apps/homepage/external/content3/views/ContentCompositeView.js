@@ -15,7 +15,6 @@ define( function ( require ) {
 				'success' : function ( collection ) {
 					self.collection = new Backbone.Collection( { 'data' : collection, base : self.model } );
 					self.render();
-					self.$el.find( '.count' ).text( collection.length );
 				},
 				'error'   : function ( err ) {
 					console.log( err );

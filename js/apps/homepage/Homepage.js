@@ -16,6 +16,8 @@ define( function ( require ) {
 			require( './external/widgets/manifest' );
 			// load homepage
 			require( './controllers/homeController' );
+			// load listeners
+			require( './external/content3/agents/Listener' );
 			// load content
 			require( './external/content3/manifest' );
 

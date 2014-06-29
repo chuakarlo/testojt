@@ -1,43 +1,94 @@
 define( function ( require ) {
 	'use strict';
 
-	var $     = require( 'jquery' );
-	var App   = require( 'App' );
-	var Utils = App.Homepage.Utils;
+	var $        = require( 'jquery' );
+	var App      = require( 'App' );
+	var Backbone = require( 'backbone' );
 
-	var homeListener = {
-		queued        : 'queued',
-		add           : 'add',
-		remove        : 'remove',
-		commonQueue   : 'common:queued',
-		commonDequeue : 'common:dequeued'
-	};
-
-	function queue ( model, mode ) {
-		var collection = Utils.activeCollections[ 'content:your-queue' ];
-		model.set( homeListener.queued, mode === homeListener.add );
-		collection[ mode ]( model );
-		$( '#your-queue-count' ).text( collection.length );
-	}
-
-	function deQueue ( model ) {
-		var collection = Utils.activeCollections[ 'content:recommended' ];
-		var recommendedModel = collection.get( model.id );
-		if ( recommendedModel ) {
-			recommendedModel.set( homeListener.queued, false );
+	function propagateCollection ( fetchedColl, allData ) {
+		if ( allData.contentMax !== 1 ) {
+			if ( allData.innerCollections ) {
+				var last      = allData.innerCollections.slice( -1 )[ 0 ];
+				var remaining = allData.contentMax - last.length;
+				if ( remaining !== 0 ) {
+					last.add( fetchedColl );
+				} else {
+					allData.add( new Backbone.Collection( [ fetchedColl ] ) );
+				}
+			} else {
+				allData.add( new Backbone.Collection( [ fetchedColl ] ) );
+			}
 		}
 	}
 
-	App.vent.on( homeListener.commonQueue, function ( model ) {
-		Utils.proceedHomeAction( function () {
-			queue ( model, homeListener.add );
+	// function popData ( id, allData ) {
+	// 	var popped = false;
+	// 	for ( var i = 0, length = allData.innerCollections.length; i < length; i++ ) {
+	// 		if ( !popped ) {
+	// 			if ( allData.innerCollections[ i ].get( id ) ) {
+	// 				allData.innerCollections[ i ].remove( id );
+	// 				popped = true;
+	// 			}
+	// 		}
+	// 		if ( !allData.innerCollections ) {
+	// 			break;
+	// 		}
+	// 		if ( popped ) {
+	// 			if ( i + 1 < length ) {
+	// 				var first = allData.innerCollections[ i + 1 ].first();
+	// 				if ( first ) {
+	// 					var top = first.attributes;
+	// 					allData.innerCollections[ i ].add( top );
+	// 					allData.innerCollections[ i + 1 ].remove( top.id );
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
+
+	// function popDataSingle ( id, allData ) {
+	// 	for ( var i = 0, length = allData.innerCollections.length; i < length; i++ ) {
+	// 		if ( allData.innerCollections[ i ].get( id ) ) {
+	// 			allData.innerCollections[ i ].remove( id );
+	// 		}
+	// 	}
+	// }
+
+	function updateCount ( increment ) {
+		var oldCount = App.request( 'homepage:content:queue:total' );
+		$( '#your-queue-count' ).html( oldCount + increment );
+		App.reqres.setHandler( 'homepage:content:queue:total', function () {
+			return oldCount + increment;
+		} );
+	}
+
+	App.vent.on( 'common:queued', function ( model ) {
+		App.Homepage.Utils.proceedHomeAction( function () {
+			if ( App.reqres.hasHandler( 'homepage:content:your-queue:carousel' ) ) {
+				var allData = App.request( 'homepage:content:your-queue:carousel' );
+				var newData = [ model.attributes ];
+				propagateCollection ( newData, allData[ 0 ] );
+				propagateCollection ( newData, allData[ 1 ] );
+				propagateCollection ( newData, allData[ 2 ] );
+				propagateCollection ( newData, allData[ 3 ] );
+
+				updateCount( 1 );
+			}
 		} );
 	} );
 
-	App.vent.on( homeListener.commonDequeue, function ( model ) {
-		Utils.proceedHomeAction( function () {
-			queue( model, homeListener.remove );
-			deQueue( model );
+	App.vent.on( 'common:dequeued', function ( model ) {
+		App.Homepage.Utils.proceedHomeAction( function () {
+			if ( App.reqres.hasHandler( 'homepage:content:your-queue:carousel' ) ) {
+				// var allData = App.request( 'homepage:content:your-queue:carousel' );
+				// var id = model.get( 'id' );
+				// popData( id, allData[ 0 ] );
+				// popData( id, allData[ 1 ] );
+				//popData( id, allData[ 2 ] );
+				//popDataSingle( id, allData[ 3 ] );
+
+				updateCount ( -1 );
+			}
 		} );
 	} );
 

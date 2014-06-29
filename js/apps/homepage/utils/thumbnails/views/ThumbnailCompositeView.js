@@ -20,9 +20,21 @@ define( function ( require ) {
 			var newData     = convert( this.model.attributes );
 			this.collection = new Backbone.Collection( newData );
 
+			this.model.collection.innerCollections = this.model.collection.innerCollections || [ ];
+			this.model.collection.innerCollections.push( this.collection );
+
 			for ( var index = 0, length = this.collection.length; index < length; index++ ) {
-				var model = this.collection.models[ index ];
-				model.set( 'id', model.get( 'ContentId' ) || model.get( 'UUVideoId' ) );
+				var model       = this.collection.models[ index ];
+				var id          = model.get( 'ContentId' );
+				var VideoTypeId = 1;
+
+				if ( !id ) {
+					id          = model.get( 'UUVideoId' );
+					VideoTypeId = 2;
+				}
+
+				model.set( 'id', id );
+				model.set( 'VideoTypeId', VideoTypeId );
 				model.set( 'fromHomepage', true );
 				options.modelSet( model );
 			}

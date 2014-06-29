@@ -35,6 +35,15 @@ define( function ( require ) {
 		},
 		'modelSet'     : function ( model ) {
 			model.set( 'queued', true );
+		},
+		'fetchLogic'   : function ( collection ) {
+			App.reqres.setHandler( 'homepage:content:queue:total', function () {
+				return collection.length;
+			} );
+			return collection;
+		},
+		'afterRender'  : function ( collection ) {
+			$( '#your-queue-count' ).html( App.request( 'homepage:content:queue:total' ) );
 		}
 	};
 } );

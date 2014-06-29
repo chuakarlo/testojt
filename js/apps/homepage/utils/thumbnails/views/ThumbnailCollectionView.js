@@ -10,22 +10,26 @@ define( function ( require ) {
 	var thumbnailSlideNavsTemplate = require( 'text!apps/homepage/utils/thumbnails/templates/thumbnailSlideNavs.html' );
 
 	return Marionette.CollectionView.extend( {
-		'initialize'       : function ( options ) {
+		'initialize'      : function ( options ) {
 			this.collection  = options;
 			this.contentId   = options.contentId;
 			this.contentSize = options.contentSize;
+			this.collection.bind('add', this.onModelAdded, this);
 		},
-		'className'        : 'carousel-inner',
-		'itemView'         : ThumbnailCompositeView,
+		'onModelAdded'    : function ( addedModel ) {
+			console.log( 'modal fires' );
+			console.log( addedModel );
+		},
+		'className'       : 'carousel-inner',
+		'itemView'        : ThumbnailCompositeView,
 		'itemViewOptions' : function () {
 			return {
 				'emptyMessage' : this.collection.EmptyMessage,
 				'modelSet'     : this.collection.modelSet
 			};
 		},
-		'emptyView'        : ThumbnailEmptyView,
-
-		'onShow' : function () {
+		'emptyView'       : ThumbnailEmptyView,
+		'onShow'          : function () {
 			var slideNavsTemplate = _.template( thumbnailSlideNavsTemplate, {
 				'contentId'   : this.contentId,
 				'contentSize' : this.contentSize
