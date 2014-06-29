@@ -17,17 +17,17 @@ define( function ( require ) {
 
 		'parse' : function ( res ) {
 			// Return only the first one?
-			if (res.length)	{
+			if ( res.length )	{
 				var license = res[ 0 ];
 				// Strip the HTML
-				license.Message = license.Message.replace(/<\/?[^>]+(>|$)/g, '');
+				license.Message = license.Message.replace( /<\/?[^>]+(>|$)/g, '' );
 				return license;
 			}
 		},
 
 		// Check to see if the message contains text and is not expired
 		'isValidMessage' : function () {
-			if ( !this.get( 'Message' )) {
+			if ( !this.get( 'Message' ) ) {
 				return false;
 			}
 

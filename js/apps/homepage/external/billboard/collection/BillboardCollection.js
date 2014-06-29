@@ -24,7 +24,7 @@ define( function ( require ) {
 	return Backbone.Collection.extend( {
 		'fetch' : function ( options ) {
 
-			var fetchingModels = Remoting.fetch( [ billboardRequest(1), billboardRequest(2) ] );
+			var fetchingModels = Remoting.fetch( [ billboardRequest( 1 ), billboardRequest( 2 ) ] );
 
 			App.when( fetchingModels ).done( function ( models ) {
 

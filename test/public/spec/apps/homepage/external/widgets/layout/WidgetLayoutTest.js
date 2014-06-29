@@ -8,7 +8,7 @@ define( function ( require ) {
 		var sinon        = window.sinon;
 		var App          = require( 'App' );
 		var $            = require( 'jquery' );
-		var WidgetLayout = require('apps/homepage/external/widgets/layout/WidgetLayout');
+		var WidgetLayout = require( 'apps/homepage/external/widgets/layout/WidgetLayout' );
 		var Remoting     = require( 'Remoting' );
 
 		var layout;
@@ -102,13 +102,7 @@ define( function ( require ) {
 				changePanelStatus.callCount.should.be.at.least( 1 );
 			} );
 
-			it( 'should be able to call .changePanelStatus on close' , function ( ) {
-
-				layout.closeWidgetSettingsPanel( eventspy );
-				changePanelStatus.callCount.should.be.at.least( 2 );
-			} );
-
 		} );
 
-	});
-});
+	} );
+} );
