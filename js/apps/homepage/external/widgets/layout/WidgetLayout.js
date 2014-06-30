@@ -132,12 +132,13 @@ define( function ( require ) {
 				'actualUserWidgetCollection' : this.actualUserWidgetCollection
 			} );
 			this.mobileWidgetSettings.show( widgetCompositeView );
-			this.$el.find( '#widget-settings-overlay' ).show();
 			this.changePanelStatus( panelBtn, panelStatuses[ 1 ], panelStatuses[ 0 ] );
+			this.$el.find( '#widget-settings-overlay' ).show();
 		},
 
 		'closeWidgetSettingsPanel' : function () {
 			var panelBtn = $( '#widget-settings' );
+			this.userWidgetCollection.reset( this.actualUserWidgetCollection.models );
 			this.widgetSettings.close();
 			this.$el.find( '#widget-settings-overlay' ).hide();
 			this.changePanelStatus( panelBtn, panelStatuses[ 0 ], panelStatuses[ 1 ] );
@@ -145,6 +146,7 @@ define( function ( require ) {
 
 		'closeMobileSettingsPanel' : function ( e ) {
 			var panelBtn = $( '#xs-widget-settings' );
+			this.userWidgetCollection.reset( this.actualUserWidgetCollection.models );
 			this.mobileWidgetSettings.close();
 			this.changePanelStatus( panelBtn, panelStatuses[ 0 ], panelStatuses[ 1 ] );
 		},

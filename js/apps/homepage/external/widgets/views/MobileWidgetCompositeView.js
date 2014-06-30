@@ -36,7 +36,7 @@ define( function ( require ) {
 			'click #widget-mobile-actions .cancel'                : 'cancelAllChanges',
 			'click #widget-mobile-actions .mobile-save'           : 'saveAll',
 			'click #widget-mobile-actions .mobile-save-and-close' : 'saveAllandClose',
-			'click #widget-settings-overlay'                      : 'closeWidgetSettingsPanel'
+			'click #widget-settings-overlay'                      : 'cancelAllChanges'
 		},
 		'template'          : _.template( template ),
 		'itemView'          : MobileWidgetItemView,
