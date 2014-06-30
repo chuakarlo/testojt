@@ -5,6 +5,7 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var template   = require( 'text!apps/learningTargets/templates/catalogs/description.html' );
 	var empty      = require( 'text!apps/learningTargets/templates/catalogs/empty.html' );
+	var $          = require( 'jquery' );
 	var _          = require( 'underscore' );
 	var moment     = require( 'moment' );
 
@@ -40,6 +41,8 @@ define( function ( require ) {
 
 		'closeTraining' : function ( e ) {
 			e.preventDefault();
+
+			$( '#modal-content' ).modal( 'hide' );
 
 			Backbone.history.navigate( 'resources/learning/catalogs' );
 		},
