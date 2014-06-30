@@ -3,7 +3,7 @@ define( function ( require ) {
 
 	var _          = require( 'underscore' );
 	var $          = require( 'jquery' );
-	var Backbone   = require( 'backbone');
+	var Backbone   = require( 'backbone' );
 	var Marionette = require( 'marionette' );
 	var App        = require( 'App' );
 	var template   = require( 'text!../templates/groupSubNavView.html' );
@@ -38,12 +38,16 @@ define( function ( require ) {
 		},
 
 		'setActiveTab' : function ( query ) {
-			var regex = new RegExp(/^\d+$/);
+			var regex = new RegExp( /^\d+$/ );
 			if ( regex.test( query ) ) {
 				query = 'wall';
 			}
 
-			$('li', this.el).removeClass( 'active' );
+			$( 'li', this.el ).removeClass( 'active' );
+
+			$( '.right-side' ).show();
+			$( '.left-side' ).addClass( 'hidden-xs' );
+
 			switch ( query ) {
 
 				case 'wall' :
@@ -60,6 +64,7 @@ define( function ( require ) {
 
 				case 'info' :
 					this.ui.infoTab.parent().addClass( 'active' );
+					this.groupInfoResponsive();
 					break;
 
 				case 'members' :
@@ -71,9 +76,6 @@ define( function ( require ) {
 		'onShow' : function () {
 			var query = this.getCurrentQuery();
 			this.setActiveTab( query );
-
-			// add handler
-			$( window ).on( 'resize', this.resizeHandler.bind( this ) );
 		},
 
 		'onClose' : function () {
@@ -86,30 +88,19 @@ define( function ( require ) {
 			$( '.right-side' ).show();
 		},
 
-		'resizeHandler' : function () {
+		'groupInfoResponsive' : function () {
 
-			this.phone = true;
-			if ( $( window ).width() > 767 ) {
-				this.phone = false;
+			$( '.left-side' ).addClass( 'hidden-xs' );
+			$( '.right-side' ).show();
+
+			if ( $( window ).width() < 768 ) {
+				$( '.left-side' ).removeClass( 'hidden-xs' );
+				$( '.right-side' ).hide();
+			} else {
+				$( '.left-side' ).addClass( 'hidden-xs' );
+				$( '.right-side' ).show();
 			}
-
-			if ( !this.phone && $( '#tab-info' ).closest( 'li' ).hasClass( 'active' ) ) {
-				// Change back to the wall
-				$( '#tab-info' ).closest( 'li' ).removeClass( 'active' );
-				$( '#tab-wall' ).trigger( 'click' );
-				this.resetInfoClass();
-			}
-
-		},
-
-		'showInfo' : function ( event ) {
-			event.preventDefault();
-
-			// Hide main content
-			$( '.right-side' ).hide();
-			$( '.left-side' ).removeClass( 'hidden-xs' );
-			this.phone = true;
-
+			App.request( 'pd360:hide' );
 		}
 
 	} );
