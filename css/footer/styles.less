@@ -4,7 +4,7 @@ html {
 }
 
 body {
-    margin-bottom: 170px;
+    margin-bottom : 170px;
 }
 
 #footer {
@@ -17,5 +17,12 @@ body {
 
     img {
         max-height : 100px;
+    }
+}
+
+// Fix footer positioning when modal is shown
+body.modal-open {
+    #footer {
+        position : initial;
     }
 }
