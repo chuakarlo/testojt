@@ -29,45 +29,41 @@ define( function ( require ) {
 	};
 
 	return Marionette.ItemView.extend( {
-
 		'template'        : _.template( empty ),
-		'ui' : {
-			'closeTrainingModal' : '.btn'
+
+		'initialize' : function () {
+			$( '#modal-content' ).on( 'hidden.bs.modal', function () {
+				Backbone.history.navigate( 'resources/learning/catalogs' );
+			} );
 		},
 
-		'events' : {
-			'click @ui.closeTrainingModal' : 'closeTraining'
-		},
-
-		'closeTraining' : function ( e ) {
-			e.preventDefault();
-
-			$( '#modal-content' ).modal( 'hide' );
-
-			Backbone.history.navigate( 'resources/learning/catalogs' );
-		},
-
-		'onRender'        : function () {
+		'onRender' : function () {
 			if ( !this.model ) {
 				this.$el.find( '.spinner-icon-container' ).spin( spinnerMediumOptions );
 			}
+
 		},
+
 		'onBeforeRender'  : function () {
 			if ( this.model ) {
 				this.template = _.template( template );
 			}
 		},
+
 		'templateHelpers' : function () {
 			return {
-				getStartTime : function () {
+				'getStartTime' : function () {
 					return moment( this.StartTime ).format( 'dddd MMMM DD, YYYY' );
 				},
-				getEndTime   : function () {
+
+				'getEndTime' : function () {
 					return moment( this.EndTime ).format( 'dddd MMMM DD, YYYY' );
 				},
-				getTimeDiff  : function () {
+
+				'getTimeDiff' : function () {
 					var start = moment( this.StartTime ).format( 'hh:mm A' );
 					var end = moment( this.EndTime ).format( 'hh:mm A' );
+
 					return start + ' - ' + end;
 				}
 			};
