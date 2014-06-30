@@ -14,7 +14,7 @@ define( function ( require ) {
 			var last      = allData.innerCollections.slice( -1 )[ 0 ];
 			var remaining = allData.contentMax - last.length;
 			if ( remaining !== 0 ) {
-				last.add( innerFetchedColl.slice( 0, remaining) );
+				last.add( innerFetchedColl.slice( 0, remaining ) );
 				innerFetchedColl = innerFetchedColl.slice( remaining + 1 );
 			}
 		}
@@ -25,9 +25,8 @@ define( function ( require ) {
 		if ( start < total ) {
 			var coll = new Collection();
 			coll.alterData( start );
-			coll.fetch({
+			coll.fetch( {
 				'success' : function ( collection ) {
-					console.log( 'after fetch' );
 					App.Homepage.Utils.proceedHomeAction( function () {
 						var proc = processResult( queue, collection );
 						var fetchedColl = proc.coll;
@@ -42,17 +41,15 @@ define( function ( require ) {
 
 						( function ( collectionParam, totalParam, max, actParam ) {
 							setTimeout( function ( ) {
-								console.log( 'before fetch' );
 								postFetch( collectionParam, totalParam, max, actParam );
-							}, 0);
+							}, 0 );
 						} )( allData, total, newLength, newActual, queue );
 					} );
 				},
 				'error'   : function ( err ) {
-					console.log( 'after fetch' );
 					console.log( err );
 				}
-			});
+			} );
 		}
 	}
 
@@ -60,7 +57,7 @@ define( function ( require ) {
 		if ( ids && ids.length > 0 ) {
 			newCollection = $.grep( newCollection, function ( n, i ) {
 				return !_.contains( ids, n.get( 'ContentId' ) || n.get( 'UUVideoId' ) );
-			});
+			} );
 		}
 		return newCollection;
 	}
@@ -108,9 +105,8 @@ define( function ( require ) {
 
 			( function ( collectionParam, total, max, actual, queue ) {
 				setTimeout( function ( ) {
-					console.log( 'before fetch' );
 					postFetch( collectionParam, total, max, actual, queue );
-				}, 0);
+				}, 0 );
 			} )( collection, result.total, 24, result.fetch, result.queue );
 		}
 	};
