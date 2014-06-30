@@ -10,7 +10,6 @@ define( function ( require ) {
 	var moment     = require( 'moment' );
 	var Ladda      = require( 'ladda' );
 
-	require( 'moment-timezone' );
 	require( 'timezone' );
 	require( 'validation' );
 	require( 'backbone.stickit' );
@@ -71,7 +70,7 @@ define( function ( require ) {
 
 					'success' : function () {
 						// Add a cookie showing the user has accepted the EULA
-						$.cookie( App.request('session:cookies', 'eula' ), now );
+						$.cookie( App.request( 'session:cookies', 'eula' ), now );
 						l.stop();
 						App.navigate( 'home', { 'trigger' : true } );
 					},

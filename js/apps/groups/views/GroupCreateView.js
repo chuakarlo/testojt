@@ -7,7 +7,8 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var Session    = require( 'Session' );
 
-	var Ladda = require( 'ladda' );
+	var Ladda  = require( 'ladda' );
+	var moment = require( 'moment' );
 
 	var indexToChar = require( 'common/helpers/indexToChar' );
 
@@ -16,6 +17,7 @@ define( function ( require ) {
 
 	require( 'backbone.stickit' );
 	require( 'fine-uploader' );
+	require( 'timezone' );
 
 	return Marionette.ItemView.extend( {
 
@@ -225,6 +227,9 @@ define( function ( require ) {
 				var l = Ladda.create( document.querySelector( '.create' ) );
 				l.start();
 
+				var now = moment().tz( 'MST7MDT' ).format( 'MMMM D, YYYY H:mm:ss' );
+
+				this.model.set( 'StartDate', now );
 				this.model.set( 'Creator', persId );
 
 				this.model.save( null, {
@@ -238,6 +243,9 @@ define( function ( require ) {
 							.done( function () {
 
 								l.stop();
+
+								// Update licenses in flash for current user
+								App.request( 'pd360:updateGroupsForUser' );
 
 								App.navigate( 'groups/' + model.get( 'LicenseId' ), {
 									'trigger' : true

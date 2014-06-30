@@ -173,6 +173,10 @@ define( function ( require ) {
 				}
 
 				return loadedDefer.promise();
+			},
+
+			'updateGroupsForUser' : function ( personnelId ) {
+				return pd360.updateGroupsForUser( personnelId );
 			}
 
 		};

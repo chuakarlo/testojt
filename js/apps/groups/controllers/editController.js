@@ -54,13 +54,13 @@ define( function ( require ) {
 
 				App.when( fetchingData ).done( function ( results ) {
 
-					Backbone.history.loadUrl(Backbone.history.fragment);
+					Backbone.history.loadUrl( Backbone.history.fragment );
 
 				} ).fail( App.errorHandler );
 
 			},
 
-			'ignoreGroup' : function (model) {
+			'ignoreGroup' : function ( model ) {
 				var ignoreGroupRequest = {
 					'path'   : 'com.schoolimprovement.pd360.dao.GroupService',
 					'method' : 'deleteInviteByLicenseIdCreatorIdAndInviteeEmail',
@@ -81,7 +81,7 @@ define( function ( require ) {
 				} ).fail( App.errorHandler );
 			},
 
-			'acceptGroup' : function (model) {
+			'acceptGroup' : function ( model ) {
 				// Accept Group API insert here
 				var checkLicenseRequest = {
 					'path'   : 'com.schoolimprovement.pd360.dao.AdminService',
@@ -119,7 +119,7 @@ define( function ( require ) {
 				var fetchingData = Remoting.fetch( requests );
 				App.when( fetchingData ).done( function ( results ) {
 					var licenseKeySingleUseObject = results[ 1 ];
-					_.extend(redeemLicenseKeyRequest.args, licenseKeySingleUseObject);
+					_.extend( redeemLicenseKeyRequest.args, licenseKeySingleUseObject );
 
 					if ( results[ 0 ] === 3 ) {
 						var fetchingData = Remoting.fetch( checkLicenseTypeIdRequest );
@@ -129,6 +129,9 @@ define( function ( require ) {
 								var fetchingData = Remoting.fetch( redeemLicenseKeyRequest );
 
 								App.when( fetchingData ).done( function ( results ) {
+
+									// Update licenses in flash for current user
+									App.request( 'pd360:updateGroupsForUser' );
 
 									App.navigate( 'groups/' + model.get( 'LicenseId' ), {
 										'trigger' : true

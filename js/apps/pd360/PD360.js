@@ -56,6 +56,10 @@ define( function ( require ) {
 
 			'loaded' : function () {
 				return PD360.Show.Controller.loaded();
+			},
+
+			'updateGroupsForUser' : function () {
+				return PD360.Show.Controller.updateGroupsForUser( App.request( 'session:personnelId' ) );
 			}
 
 		};
@@ -75,6 +79,8 @@ define( function ( require ) {
 		App.reqres.setHandler( 'pd360:show', API.show );
 
 		App.reqres.setHandler( 'pd360:hide', API.hide );
+
+		App.reqres.setHandler( 'pd360:updateGroupsForUser', API.updateGroupsForUser );
 
 		Vent.on( 'embed:complete', API.embedComplete );
 
