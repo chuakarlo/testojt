@@ -207,7 +207,7 @@ define( function ( require ) {
 				// Show a loading view
 				var loading = new App.Common.LoadingView( {
 					'size'       : 'small',
-					'background' : true,
+					'background' : false,
 					'text'       : 'Loading Results'
 				} );
 				this.layout.loading.show( loading );
