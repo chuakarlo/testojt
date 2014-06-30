@@ -85,10 +85,12 @@ define( function ( require ) {
 		},
 
 		'reactivateNav' : function () {
-			this.ui.selectNav.prop( 'disabled',false );
-			this.ui.selectNav.selectpicker( 'refresh' );
-			this.ui.links.unbind( 'click.select' );
-			this.ui.liLink.siblings().not( '.active' ).removeClass( 'deactivate' );
+			if ( typeof this.ui.selectNav.prop === 'function' ) {
+				this.ui.selectNav.prop( 'disabled',false );
+				this.ui.selectNav.selectpicker( 'refresh' );
+				this.ui.links.unbind( 'click.select' );
+				this.ui.liLink.siblings().not( '.active' ).removeClass( 'deactivate' );
+			}
 		}
 
 	} );
