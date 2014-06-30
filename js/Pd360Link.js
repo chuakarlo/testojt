@@ -46,6 +46,10 @@ define( function ( require ) {
 		} else if ( _.has( link, 'CONTENTID' ) ) {
 			url = '#resources/videos/' + link.CONTENTID;
 
+		// User Uploaded Video
+		} else if ( _.has( link, 'UUVIDEOID' ) ) {
+			url = '#resources/videos/' + link.UUVIDEOID + '?uuv=true';
+
 		//-----------------------
 		// GROUP LINKS
 		//-----------------------
