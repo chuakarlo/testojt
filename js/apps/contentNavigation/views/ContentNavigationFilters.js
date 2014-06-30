@@ -9,6 +9,9 @@ define( function ( require ) {
 	var FilterItemView = require( '../views/ContentNavigationFilterItemView' );
 	var template       = require( 'text!../templates/contentNavigationFiltersView.html' );
 
+	require( 'jquery.mousewheel' );
+	require( 'jquery.pscrollbar' );
+
 	return Marionette.CompositeView.extend( {
 
 		'template' : _.template( template ),
@@ -22,7 +25,8 @@ define( function ( require ) {
 		'ui' : {
 			'clearButton'    : '.cn-clear-btn',
 			'filter'         : '.cn-filter-item',
-			'collapseButton' : '.cn-collapse'
+			'collapseButton' : '.cn-collapse',
+			'sidebar'        : '.cn-sidebar'
 		},
 
 		'events' : {
@@ -44,7 +48,6 @@ define( function ( require ) {
 		},
 
 		'changeClear' : function () {
-
 			if ( !this.$el.find( 'li' ).hasClass( 'selected' ) ) {
 				this.$el.find( '.cn-clear-btn' ).attr( 'disabled', 'disabled' );
 			} else {
@@ -90,6 +93,14 @@ define( function ( require ) {
 			this.template = _.template( template, this.options );
 
 			return this;
+		},
+
+		'onShow' : function () {
+			Vent.trigger( 'contentNavigation:updateScrollbar' );
+		},
+
+		'onClose' : function () {
+			this.ui.sidebar.perfectScrollbar( 'destroy' );
 		}
 
 	} );

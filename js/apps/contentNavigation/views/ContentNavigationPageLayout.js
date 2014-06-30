@@ -51,14 +51,12 @@ define( function ( require ) {
 			setTimeout( function () {
 				$( '.navbar-brand' ).removeClass( 'non-clickable' );
 			}, 500 );
-
 		},
 
-		'onShow' : function ( ) {
+		'onShow' : function () {
 			var timer = null;
 
 			this.reloadSidebar();
-			this.updateSidebarScroll();
 
 			$( window ).on( 'resize scroll' ,function ( ) {
 				clearTimeout( timer );
@@ -69,19 +67,19 @@ define( function ( require ) {
 				}.bind( this ), 100 );
 			}.bind( this ) );
 
-			this.listenTo( Vent, 'contentNavigation:updateScrollbar', function () {
-				this.updateSidebarScroll();
-			}.bind( this ) );
-
 			this.listenTo( Vent, 'contentNavigation:resetBodyScroll', function () {
 				this.resetBodyScroll();
+			}.bind( this ) );
+
+			this.listenTo( Vent, 'contentNavigation:updateScrollbar', function () {
+				this.updateSidebarScroll();
 			}.bind( this ) );
 
 		},
 
 		'onClose' : function () {
 			this.ui.sidebar.perfectScrollbar( 'destroy' );
-			$( window ).off( 'resize scroll');
+			$( window ).off( 'resize scroll' );
 			this.stopListening();
 		},
 
@@ -94,17 +92,14 @@ define( function ( require ) {
 		},
 
 		'setSidebarHeight' : function () {
-
 			if ( $( window ).width() > 767 ) {
 				this.setSidebarHeightLandscape();
 			} else {
 				this.ui.sidebar.css( 'height', '100%' );
 			}
-
 		},
 
 		'setSidebarHeightLandscape' : function () {
-
 			if ( $( window ).scrollTop() > 0 ) {
 				this.ui.sidebar.css( 'height', $( window ).height() - 25 );
 			} else {
@@ -113,7 +108,7 @@ define( function ( require ) {
 		},
 
 		'updateSidebarScroll' : function () {
-			if ( this.ui.sidebarWrapper.height() < this.getSidebarHeight() || $( window ).width() < 768 ) {
+			if ( this.ui.sidebarWrapper.height() < this.getSidebarHeight() || $( window ).width() < 768 || $( 'html' ).hasClass( 'touch' ) ) {
 				this.ui.sidebar.perfectScrollbar( 'destroy' );
 			} else {
 				this.ui.sidebar.perfectScrollbar( { suppressScrollX : true } );

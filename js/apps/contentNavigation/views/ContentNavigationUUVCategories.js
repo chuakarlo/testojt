@@ -8,6 +8,9 @@ define( function ( require ) {
 	var CategoryItemView = require( '../views/ContentNavigationUUVCategoryItemView' );
 	var template         = require( 'text!../templates/contentNavigationUUVCategoriesView.html' );
 
+	require( 'jquery.mousewheel' );
+	require( 'jquery.pscrollbar' );
+
 	return Marionette.CompositeView.extend( {
 
 		'template' : _.template( template ),
@@ -18,12 +21,18 @@ define( function ( require ) {
 
 		'onShow' : function () {
 			$( this.$el ).find( 'li:nth-child( 2 )' ).addClass( 'selected' );
-
 			$( this.$el ).find( 'li:nth-child( 4 )' ).addClass( 'cn-uuv-category-separator' );
+
+			Vent.trigger( 'contentNavigation:updateScrollbar' );
+		},
+
+		'onClose' : function () {
+			this.ui.sidebar.perfectScrollbar( 'destroy' );
 		},
 
 		'ui' : {
-			'collapseButton' : '.cn-collapse'
+			'collapseButton' : '.cn-collapse',
+			'sidebar'        : '.cn-sidebar'
 		},
 
 		'events' : {

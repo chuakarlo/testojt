@@ -65,8 +65,6 @@ define( function ( require ) {
 				this.UUVideosCollection.setArgs( 'Popular' );
 				var videosRequest = App.request( 'contentNavigation:uuv:getSegments', this.queryModel );
 
-				Vent.trigger( 'contentNavigation:updateScrollbar' );
-
 				App.when( videosRequest ).then( function ( videos ) {
 
 					if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
