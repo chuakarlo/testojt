@@ -24,11 +24,10 @@ define( function ( require ) {
 
 		describe( '.saveModel', function () {
 
-			it( 'should save answer', function () {
+			it( 'should call .save method', function () {
 				question.ui.textInput.val( 'Test answer' );
 				question.saveModel();
 				question.model.save.should.have.callCount( 1 );
-				question.model.get( 'AnswerText' ).should.equal( 'Test answer' );
 			} );
 
 		} );

@@ -30,7 +30,6 @@ require.config( {
 		'jquery.bum-smack'      : 'libs/jquery.bum-smack/src/jquery.bum-smack',
 		'spin'                  : 'libs/spin.js/spin',
 		'jquery.spin'           : 'libs/spin.js/jquery.spin',
-		'jquery.autogrow'       : 'libs/jquery.autogrow/jquery.autogrow',
 		'jquery.pscrollbar'     : 'libs/perfect-scrollbar/src/perfect-scrollbar',
 		'jquery.mousewheel'     : 'libs/perfect-scrollbar/src/jquery.mousewheel',
 		'jquery'                : 'libs/jquery/dist/jquery',

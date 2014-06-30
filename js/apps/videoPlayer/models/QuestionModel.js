@@ -50,7 +50,9 @@ define( function ( require ) {
 			return _.extend( this.requestObject(), { 'method' : 'update' } );
 		},
 
-		'getSanitizedAnswer' : function () {
+		'getSanitizedAnswer' : function ( answer ) {
+			var answerText = answer || this.get( 'AnswerText' );
+
 			function safeString ( unsafe ) {
 				return String( unsafe )
 					.replace( /<\/script/g, '<\\/script' )
@@ -58,7 +60,7 @@ define( function ( require ) {
 			}
 
 			// Replacing \n to another string pattern to prevent server authorization error
-			return _.escape( safeString( this.get( 'AnswerText' ).replace( /\n/g, '%nl%' ) ) );
+			return _.escape( safeString( answerText ).replace( /\n/g, '%nl%' ) );
 		}
 
 	} );

@@ -18,12 +18,6 @@ define( function ( require ) {
 
 		'template' : _.template( template ),
 
-		'saveSuccess' : '<i class="fa fa-check"></i> Auto-saved',
-
-		'saveError' : '<i class="fa fa-times"></i> Auto-save interrupted. Check your internet connection.',
-
-		'saveProgress' : 'Saving...',
-
 		'ui' : {
 			'textInput' : 'textarea',
 			'notifier'  : '.as-notifier'
@@ -44,7 +38,7 @@ define( function ( require ) {
 						.replace( /<!--/g, '<\\!--' );
 				}
 
-				// Replacing /%nl%/ string pattern to make newline
+				// Replacing /%nl%/ string pattern to make newline.
 				return _.unescape( safeStringify( this.AnswerText ).replace( /%nl%/g, '\n' ) );
 			}
 
@@ -53,6 +47,10 @@ define( function ( require ) {
 		'initialize' : function ( options ) {
 			_.bindAll( this );
 			_.extend( this, options );
+
+			this.listenTo( this.model, 'request', this.notify.bind( this, config.saveProgress ) );
+			this.listenTo( this.model, 'sync', this.notify.bind( this, config.saveSuccess ) );
+			this.listenTo( this.model, 'error', this.notify.bind( this, config.saveError ) );
 		},
 
 		'onShow' : function () {
@@ -75,18 +73,11 @@ define( function ( require ) {
 		'saveModel' : function () {
 			var answerText = this.ui.textInput.val().trim();
 			var prevAnswer = this.model.get( 'AnswerText' );
-			if ( answerText === prevAnswer ) {
+			if ( this.model.getSanitizedAnswer( answerText ) === prevAnswer ) {
 				return;
 			}
-			this.notify( this.saveProgress );
-			this.model.set( 'AnswerText', answerText );
-			this.model.save( null, {
-				'success' : function ( model ) {
-					this.notify( this.saveSuccess );
-				}.bind( this ),
-				'error'   : function () {
-					this.notify( this.saveError );
-				}.bind( this )
+			this.model.save( {
+				'AnswerText' : answerText
 			} );
 		},
 
@@ -116,9 +107,7 @@ define( function ( require ) {
 
 		'onBlur' : function () {
 			this.autosaving = false;
-			try {
-				this.saveModel();
-			} catch ( error ) { }
+			this.saveModel();
 			clearInterval( this.interval );
 		},
 

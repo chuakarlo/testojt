@@ -12,7 +12,10 @@ define( function ( require ) {
 			'unit'     : 'hours',
 
 			'autosaveInterval' : 5000, // in milliseconds
-			'autosaveInactive' : 9000 // when user is not editing
+			'autosaveInactive' : 9000, // when user is not editing,
+			'saveProgress'     : 'Saving...',
+			'saveSuccess'      : '<i class = "fa fa-check"></i> Auto-saved',
+			'saveError'        : '<i class = "fa fa-times"></i> Auto-save interrupted. Check your internet connection.'
 		},
 
 		'video' : {
