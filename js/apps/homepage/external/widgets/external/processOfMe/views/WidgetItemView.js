@@ -9,7 +9,7 @@ define( function ( require ) {
 	var getConfig     = require( 'common/helpers/getConfig' );
 	var className     = 'col-md-12 no-padding widget-item';
 
-	var widgetDirectory = 'resources/learning/observations/';
+	var widgetDirectory = 'resources/learning/processes/';
 	var templateBind  = _.template( template );
 
 	return Marionette.ItemView.extend( {
