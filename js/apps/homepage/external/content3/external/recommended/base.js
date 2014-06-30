@@ -8,11 +8,6 @@ define( function ( require ) {
 	var emptyRecommendedTemplate = require( 'text!apps/homepage/external/content3/external/recommended/templates/emptyRecommendedTemplate.html' );
 	var Collection               = require( 'apps/homepage/external/content3/external/recommended/collections/RecommendedCollection' );
 
-	// function getId ( model ) {
-	// 	var ContentId = model.get( 'ContentId' );
-	// 	return ContentId || model.get( 'UUVideoId' );
-	// }
-
 	function propagateCollection ( fetchedColl, allData ) {
 		var innerFetchedColl = fetchedColl;
 		if ( allData.contentMax !== 1 ) {
@@ -26,30 +21,57 @@ define( function ( require ) {
 		allData.add( App.Homepage.Utils.chunk( innerFetchedColl, allData.contentMax ) );
 	}
 
-	function postFetch ( allData, total, start ) {
+	function postFetch ( allData, total, start, actual, queue ) {
 		if ( start < total ) {
 			var coll = new Collection();
 			coll.alterData( start );
 			coll.fetch({
 				'success' : function ( collection ) {
+					console.log( 'after fetch' );
 					App.Homepage.Utils.proceedHomeAction( function () {
-						var fetchedColl = collection.slice( 1 );
-						var newLength = start + fetchedColl.length;
-						$( '#recommended-count' ).html( newLength );
+						var proc = processResult( queue, collection );
+						var fetchedColl = proc.coll;
+						var newLength = start + collection.length - 1;
+						var newActual = actual + fetchedColl.length - proc.cuts;
+						$( '#recommended-count' ).html( newActual );
 
 						propagateCollection( fetchedColl, allData[ 0 ] );
 						propagateCollection( fetchedColl, allData[ 1 ] );
 						propagateCollection( fetchedColl, allData[ 2 ] );
 						propagateCollection( fetchedColl, allData[ 3 ] );
 
-						postFetch( allData, total, newLength );
+						( function ( collectionParam, totalParam, max, actParam ) {
+							setTimeout( function ( ) {
+								console.log( 'before fetch' );
+								postFetch( collectionParam, totalParam, max, actParam );
+							}, 0);
+						} )( allData, total, newLength, newActual, queue );
 					} );
 				},
 				'error'   : function ( err ) {
+					console.log( 'after fetch' );
 					console.log( err );
 				}
 			});
 		}
+	}
+
+	function removeQueued ( ids, newCollection ) {
+		if ( ids && ids.length > 0 ) {
+			newCollection = $.grep( newCollection, function ( n, i ) {
+				return !_.contains( ids, n.get( 'ContentId' ) || n.get( 'UUVideoId' ) );
+			});
+		}
+		return newCollection;
+	}
+
+	function processResult ( ids, collection ) {
+		var newCollection = collection.slice( 1 );
+		var oldCount = newCollection.length;
+		return {
+			'cuts' : oldCount - newCollection.length,
+			'coll' : removeQueued( ids, newCollection )
+		};
 	}
 
 	return {
@@ -60,27 +82,21 @@ define( function ( require ) {
 		'fetchLogic'   : function ( collection ) {
 			var header = collection[ 0 ];
 
-			// var ids = _.map( header.collection.queueCollection, function ( model ) {
-			// 	return model.ContentId || model.UUVideoId;
-			// } );
+			var ids = _.map( header.collection.queueCollection, function ( model ) {
+				return model.ContentId || model.UUVideoId;
+			} );
+
+			var proc = processResult( ids, collection );
 
 			App.reqres.setHandler( 'homepage:content:recommended:total', function () {
 				return {
-					'total' : collection.length > 0 ? header.get( 'numFound' ) : 0,
-					'fetch' : collection.length - 1
+					'total' : ( proc.coll.length > 0 ? header.get( 'numFound' ) : 0 ) - proc.cuts,
+					'fetch' : proc.coll.length - 1 - proc.cuts,
+					'queue' : ids
 				};
 			} );
 
-			return collection.slice( 1 );
-
-			// var queuedModels = _.filter(
-			// 	collection.models,
-			// 	function ( model ) {
-			// 		return _.contains( ids, getId( model ) );
-			// 	}
-			// );
-
-			// collection.remove( queuedModels );
+			return proc.coll;
 		},
 		'EmptyMessage' : {
 			'heading' : 'Videos can be added to Recommended videos by completing your profile.',
@@ -90,7 +106,12 @@ define( function ( require ) {
 			var result = App.request( 'homepage:content:recommended:total' );
 			$( '#recommended-count' ).html( result.fetch );
 
-			postFetch( collection, result.total, 24 );
+			( function ( collectionParam, total, max, actual, queue ) {
+				setTimeout( function ( ) {
+					console.log( 'before fetch' );
+					postFetch( collectionParam, total, max, actual, queue );
+				}, 0);
+			} )( collection, result.total, 24, result.fetch, result.queue );
 		}
 	};
 } );

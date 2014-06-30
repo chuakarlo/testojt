@@ -14,11 +14,6 @@ define( function ( require ) {
 			this.collection  = options;
 			this.contentId   = options.contentId;
 			this.contentSize = options.contentSize;
-			this.collection.bind('add', this.onModelAdded, this);
-		},
-		'onModelAdded'    : function ( addedModel ) {
-			console.log( 'modal fires' );
-			console.log( addedModel );
 		},
 		'className'       : 'carousel-inner',
 		'itemView'        : ThumbnailCompositeView,

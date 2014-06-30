@@ -18,7 +18,7 @@ define( function ( require ) {
 	return {
 		'id'           : 'your-queue',
 		'header'       : function () {
-			var firstName = getName()[0];
+			var firstName = getName()[ 0 ];
 			return firstName + '\'' + setOwnership( firstName ) + ' Queue';
 		},
 		'contentDesc'  : 'Your queue displays content that you select to watch later. When you find content that you want to add to your queue, click Add to Queue.',
