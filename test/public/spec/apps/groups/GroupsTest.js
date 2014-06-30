@@ -12,7 +12,7 @@ define( function ( require ) {
 	describe( 'Groups Module', function () {
 
 		before( function () {
-			var stub = sinon.stub().returns(false);
+			var stub = sinon.stub().returns( false );
 			App.reqres.setHandler( 'pd360:available', stub );
 		} );
 
@@ -352,10 +352,10 @@ define( function ( require ) {
 				groupSpy.should.have.been.calledBefore( inviteSpy );
 
 				// app.content.show should have been called
-				appStub.should.have.callCount( 2 );
+				appStub.should.have.callCount( 1 );
 
 				// should have been called with a list view
-				appStub.secondCall.should.have.been.calledWith( sinon.match( function ( view ) {
+				appStub.firstCall.should.have.been.calledWith( sinon.match( function ( view ) {
 					view.should.be.an.instanceof( App.Groups.Views.GroupListLayout );
 					return true;
 				} ) );
