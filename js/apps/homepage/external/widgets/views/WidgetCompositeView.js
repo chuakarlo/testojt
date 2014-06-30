@@ -135,6 +135,7 @@ define( function ( require ) {
 		},
 
 		'closeWidgetSettingsPanel' : function () {
+			$( '#widget-settings-overlay' ).hide();
 			this.close();
 		}
 	} );

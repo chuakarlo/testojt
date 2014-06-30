@@ -156,7 +156,7 @@ define( function ( require ) {
 
 		'closeWidgetSettingsPanel' : function () {
 			this.switchClass( $( '#xs-widget-settings' ), 'opened', 'closed' );
-			this.$el.find( '#widget-settings-overlay' ).hide();
+			$( '#widget-settings-overlay' ).hide();
 			this.close();
 		},
 
