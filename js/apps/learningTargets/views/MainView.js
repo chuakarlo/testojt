@@ -55,8 +55,8 @@ define( function ( require ) {
 			// should fix event delegation issue when redirecting to the legacy page
 			this.delegateEvents();
 
-			// hide view all button if no flash player support
-			if ( !window.swfobject.hasFlashPlayerVersion( '1' ) ) {
+			// hide view all button if user is using mobile.
+			if ( $.browser.mobile || $.browser.ipad ) {
 				this.ui.viewAllBtn.addClass( 'hide' );
 			}
 		},
