@@ -3,8 +3,9 @@ define( function ( require ) {
 
 	var $               = require( 'jquery' );
 	var OPTIONS_DEFAULT = {
-		'interval' : false,
-		'circular' : false
+		'interval'  : false,
+		'circular'  : false,
+		'onLastNav' : function () {}
 	};
 
 	function applySwipe ( $carousel ) {
@@ -12,14 +13,10 @@ define( function ( require ) {
 			$carousel.swipe( {
 				threshold  : 0,
 				swipeLeft  : function () {
-					if ( this.find( '.item.active' ).next().length ) {
-						$( this ).carousel( 'next' );
-					}
+					$( this ).carousel( 'next' );
 				},
 				swipeRight : function () {
-					if ( this.find( '.item.active' ).prev().length ) {
-						$( this ).carousel( 'prev' );
-					}
+					$( this ).carousel( 'prev' );
 				}
 			} );
 		} );
@@ -41,7 +38,7 @@ define( function ( require ) {
 			}
 
 			var $rightControl = $carousel.find( '.right.carousel-control' );
-			var $leftControl = $carousel.find( '.left.carousel-control' );
+			var $leftControl  = $carousel.find( '.left.carousel-control' );
 
 			// hide the left control (first slide)
 			$leftControl.hide();
@@ -52,6 +49,7 @@ define( function ( require ) {
 				// if the last slide,
 				if ( !$active.next().length )  {
 					$rightControl.hide();
+					options.onLastNav( $carousel );
 				} else {
 					$rightControl.show();
 				}

@@ -45,6 +45,7 @@ define( function ( require ) {
 		thumbnailCollection.contentSize  = slideNavsData[ region ].size;
 		thumbnailCollection.contentMax   = slideNavsData[ region ].max;
 		thumbnailCollection.EmptyMessage = source.get( 'EmptyMessage' );
+		thumbnailCollection.onLastNav    = source.get( 'onLastNav' ) || function () {};
 
 		fetchFunction( thumbnailCollection, source, 'modelSet' );
 
@@ -71,10 +72,10 @@ define( function ( require ) {
 			};
 			this.processedData = [ ];
 
-			this.addRegion( 'largeSlide', '#' + id + '-pd360-slide-lg .carousel-inner-wrapper');
-			this.addRegion( 'mediumSlide', '#' + id + '-pd360-slide-md .carousel-inner-wrapper');
-			this.addRegion( 'smallSlide', '#' + id + '-pd360-slide-sm .carousel-inner-wrapper');
-			this.addRegion( 'xSmallSlide', '#' + id + '-pd360-slide-xs .carousel-inner-wrapper');
+			this.addRegion( 'largeSlide', '#' + id + '-pd360-slide-lg .carousel-inner-wrapper' );
+			this.addRegion( 'mediumSlide', '#' + id + '-pd360-slide-md .carousel-inner-wrapper' );
+			this.addRegion( 'smallSlide', '#' + id + '-pd360-slide-sm .carousel-inner-wrapper' );
+			this.addRegion( 'xSmallSlide', '#' + id + '-pd360-slide-xs .carousel-inner-wrapper' );
 
 			this.onRender = function () {
 				// Show all thumbnails

@@ -24,7 +24,7 @@ define( function ( require ) {
 		'className' : 'vid-container',
 		'itemView'  : App.Homepage.Utils.thumbnails,
 		'emptyView' : App.Common.LoadingView,
-		'template'  : _.template(template),
+		'template'  : _.template( template ),
 		'templateHelpers' : function () {
 			var header  = this.model.get( 'header' );
 			var heading = $.type( header ) === 'string' ? header : header();
@@ -41,6 +41,7 @@ define( function ( require ) {
 			this.$el.attr( { 'id' : this.model.id } );
 			this.$el.addClass( 'bootstro' );
 			this.$el.attr( attributes );
+			this.$el.append( '<div id="load-' + this.model.get( 'id' ) + '"></div>' );
 		}
 
 	} );

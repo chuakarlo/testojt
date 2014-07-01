@@ -30,7 +30,6 @@ define( function ( require ) {
 					App.Homepage.Utils.proceedHomeAction( function () {
 						var proc = processResult( queue, collection );
 						var fetchedColl = proc.coll;
-						var newLength = start + collection.length - 1;
 						var newActual = actual + fetchedColl.length - proc.cuts;
 						$( '#recommended-count' ).html( newActual );
 
@@ -39,17 +38,15 @@ define( function ( require ) {
 						propagateCollection( fetchedColl, allData[ 2 ] );
 						propagateCollection( fetchedColl, allData[ 3 ] );
 
-						( function ( collectionParam, totalParam, max, actParam ) {
-							setTimeout( function ( ) {
-								postFetch( collectionParam, totalParam, max, actParam );
-							}, 0 );
-						} )( allData, total, newLength, newActual, queue );
+						$( '#recommended .carousel .right.carousel-control' ).show();
 					} );
 				},
 				'error'   : function ( err ) {
-					console.log( err );
 				}
 			} );
+		} else {
+			$( '#recommended .carousel .right.carousel-control' ).hide();
+			$( '#load-recommended' ).empty();
 		}
 	}
 
@@ -102,12 +99,12 @@ define( function ( require ) {
 		'afterRender'  : function ( collection ) {
 			var result = App.request( 'homepage:content:recommended:total' );
 			$( '#recommended-count' ).html( result.fetch );
-
-			( function ( collectionParam, total, max, actual, queue ) {
-				setTimeout( function ( ) {
-					postFetch( collectionParam, total, max, actual, queue );
-				}, 0 );
-			} )( collection, result.total, 24, result.fetch, result.queue );
+		},
+		'onLastNav'    :  function ( $carousel ) {
+			$( '#load-recommended' ).html( '<img src="img/loading-bar.gif"/></div>' );
+			var result = App.request( 'homepage:content:recommended:total' );
+			var collection = App.request( 'homepage:content:recommended:carousel' );
+			postFetch( collection, result.total, 24, result.fetch, result.queue );
 		}
 	};
 } );

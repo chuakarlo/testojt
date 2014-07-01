@@ -14,6 +14,7 @@ define( function ( require ) {
 			this.collection  = options;
 			this.contentId   = options.contentId;
 			this.contentSize = options.contentSize;
+			this.onLastNav   = options.onLastNav;
 		},
 		'className'       : 'carousel-inner',
 		'itemView'        : ThumbnailCompositeView,
@@ -25,6 +26,8 @@ define( function ( require ) {
 		},
 		'emptyView'       : ThumbnailEmptyView,
 		'onShow'          : function () {
+			this.$el.find( '.item:first-child' ).addClass( 'active' );
+
 			var slideNavsTemplate = _.template( thumbnailSlideNavsTemplate, {
 				'contentId'   : this.contentId,
 				'contentSize' : this.contentSize
@@ -32,7 +35,7 @@ define( function ( require ) {
 
 			if ( this.collection.length && this.collection.length > 1 ) {
 				this.$el.parent().append( slideNavsTemplate );
-				App.Homepage.Utils.carouselApplySettings( this.$el.closest( '.carousel' ) );
+				App.Homepage.Utils.carouselApplySettings( this.$el.closest( '.carousel' ), { 'onLastNav' : this.onLastNav } );
 			}
 		}
 	} );
