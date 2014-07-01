@@ -44,6 +44,8 @@ var proxyStaging = function ( request, response, next ) {
 	}, function ( error, res, body ) {
 		if ( error ) {
 			util.log( 'Catched unhandled stream error in pipe ' + error );
+			util.log( 'Reconnecting...' );
+			proxyStaging( request, response, this );
 		}
 	} ) ).pipe( response );
 };
