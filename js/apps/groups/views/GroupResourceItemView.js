@@ -55,7 +55,7 @@ define( function ( require ) {
 			this.model.updateViewCount();
 
 			App.when( this.model.generateDownloadUrl() ).done( function ( url ) {
-				window.open( url );
+				window.open( url , '_self' );
 			} );
 		}
 
