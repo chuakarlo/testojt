@@ -8,6 +8,8 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var template   = require( 'text!apps/homepage/external/content3/templates/contentCompositeView.html' );
 
+	require( 'homepage/utils/utils' );
+
 	return Marionette.CompositeView.extend( {
 		'initialize' : function ( options ) {
 			var self = this;
