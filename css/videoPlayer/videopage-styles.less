@@ -45,10 +45,10 @@
 
 	//videojs overrides
 	.vjs-big-play-button {
-		display: none;
+		display : none;
 	}
 	.vjs-live-controls {
-		display: none;
+		display : none;
 	}
 	.video-js.vjs-user-inactive.vjs-playing .vjs-control-bar {
 		-webkit-transition : opacity 0.5s ease-out;
@@ -58,28 +58,28 @@
 		opacity            : 0;
 	}
 	.vjs-default-skin .vjs-control-bar {
-		/* start as shown */
+		// start as shown
 		display : block;
 		opacity : 1;
 	}
 	.vjs-default-skin .vjs-volume-level {
-		background : #9fd753;
+		background : @vp-green-light;
 	}
 	.vjs-default-skin .vjs-play-progress {
-		background : #9fd753;
+		background : @vp-green-light;
 	}
 	.vjs-default-skin .vjs-volume-bar .vjs-volume-handle {
 		width      : 4px;
 		height     : 13px;
 		top        : -4px;
-		background : #cccccc;
+		background : @vp-vjs-gray;
 	}
 	.vjs-default-skin:hover .vjs-progress-control .vjs-seek-handle {
 		position              : absolute;
 		width                 : 16px;
 		height                : 16px;
-		background            : #cccccc;
-		border                : 5px solid #fff;
+		background            : @vp-vjs-gray;
+		border                : 5px solid @vp-white;
 		top                   : -0.5em;
 		-moz-border-radius    : 0.9em;
 		-webkit-border-radius : 0.9em;
@@ -97,8 +97,8 @@
 		display : block;
 	}
 	.vjs-default-skin .vjs-menu-button ul li.vjs-selected {
-		background-color : #cfcfcf;
-		color            : #000000;
+		background-color : @vp-vjs-gray-darker;
+		color            : @vp-black;
 	}
 	// Replay plugin CSS
 	.vjs-replay.vjs-control-bar .vjs-play-control {
@@ -129,11 +129,11 @@
 
 	#video-content{
 		#vjs-image-overlay-holder {
-			position         : absolute;
-			left             : 7%;
-			top              : 5%;
-			text-align       : center;
-			color            : white;
+			position   : absolute;
+			left       : 7%;
+			top        : 5%;
+			text-align : center;
+			color      : white;
 
 			 img {
 					height : 100%;

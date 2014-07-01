@@ -46,16 +46,18 @@
 			background : @vp-white;
 			&:before {
 				font-family           : FontAwesome;
-				background-color      : #aaa;
-				background-image      : -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, @vp-white),color-stop(1,#DDD));
-				background-image      : -webkit-linear-gradient(top, @vp-white,#DDD);
-				background-image      : linear-gradient(top, @vp-white,#DDD);
+				background-color      : @vp-arrow-gray-bg;
+				background-image      : -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, @vp-white),color-stop(1,@vp-arrow-gray));
+				background-image      : -webkit-linear-gradient(top, @vp-white,@vp-arrow-gray);
+				background-image      : linear-gradient(top, @vp-white,@vp-arrow-gray);
+				background            : -ms-linear-gradient(top,@vp-white, @vp-arrow-gray);
+				background            : -moz-linear-gradient(top,@vp-white, @vp-arrow-gray);
 				-webkit-border-radius : 2px 0 0 2px;
 				border-radius         : 2px 0 0 2px;
 				color                 : @vp-white;
 				cursor                : pointer !important;
 				display               : inline-block;
-				filter                : progid:DXImageTransform.Microsoft.gradient(startColorStr='#303030',EndColorStr='#262626');
+				filter                : progid:DXImageTransform.Microsoft.gradient(startColorStr=@vp-arrow-gray-dark,EndColorStr=@vp-arrow-gray-darker);
 				font-weight           : bold;
 				outline               : 0;
 				text-align            : center;
@@ -66,9 +68,12 @@
 			}
 
 			&:hover:before {
-				background-image : -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, #DDD),color-stop(1,@vp-white));
-				background-image : -webkit-linear-gradient(top, #DDD,@vp-white);
-				background-image : linear-gradient(top, #DDD,@vp-white);
+				background-image : -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, @vp-arrow-gray),color-stop(1,@vp-white));
+				background-image : -webkit-linear-gradient(top, @vp-arrow-gray,@vp-white);
+				background-image : linear-gradient(top, @vp-arrow-gray,@vp-white);
+				background       : -ms-linear-gradient(top,@vp-arrow-gray, @vp-white);
+				background       : -moz-linear-gradient(top,@vp-arrow-gray, @vp-white);
+				filter           : progid:DXImageTransform.Microsoft.gradient(GradientType = 0,startColorstr=@vp-arrow-gray, endColorstr=@vp-white);
 			}
 		}
 }

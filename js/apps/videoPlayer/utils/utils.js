@@ -28,6 +28,12 @@ define( function ( require, exports, module ) {
 
 		'isMobile' : function () {
 			return $.browser.mobile || $.browser.ipad;
+		},
+
+		'safeStringify' : function ( unsafe ) {
+			return String( unsafe )
+						.replace( /<\/script/g, '<\\/script' )
+						.replace( /<!--/g, '<\\!--' );
 		}
 
 	};

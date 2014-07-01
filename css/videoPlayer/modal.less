@@ -1,8 +1,8 @@
 // When fading in the modal, animate it to slide down
 .transition-mixin {
 	&.fade .modal-dialog {
-			.translate(0, 0);
-			.transition-transform(~"0s ease-out");
+		.translate(0, 0);
+		.transition-transform(~"0s ease-out");
 	}
 
 	&.in .modal-dialog {
@@ -12,7 +12,7 @@
 .pdf-preview-modal {
 	.transition-mixin;
 	.modal-dialog {
-			width  : 75%;
+		width  : 75%;
 		.modal-content {
 			height : 720px;
 			#modal-iframe {
@@ -20,25 +20,25 @@
 				min-height : 720px;
 			}
 			.close-modal {
-					display               : inline-block;
-					position              : absolute;
-					border                : inherit;
-					top                   : -22px;
-					right                 : -22px;
-					cursor                : pointer;
-					background            : black;
-					color                 : white;
-					height                : 35px;
-					width                 : 35px;
-					line-height           : 29px;
-					font-size             : 32px;
-					text-decoration       : none;
-					text-align            : center;
-					font-weight           : normal;
-					-webkit-border-radius : 35px;
-					-moz-border-radius    : 35px;
-					-o-border-radius      : 35px;
-					border-radius         : 35px;
+				display               : inline-block;
+				position              : absolute;
+				border                : inherit;
+				top                   : -22px;
+				right                 : -22px;
+				cursor                : pointer;
+				background            : black;
+				color                 : white;
+				height                : 35px;
+				width                 : 35px;
+				line-height           : 29px;
+				font-size             : 32px;
+				text-decoration       : none;
+				text-align            : center;
+				font-weight           : normal;
+				-webkit-border-radius : 35px;
+				-moz-border-radius    : 35px;
+				-o-border-radius      : 35px;
+				border-radius         : 35px;
 			}
 		}
 	}

@@ -4,6 +4,7 @@ define( function ( require ) {
 	var _        = require( 'underscore' );
 	var Backbone = require( 'backbone' );
 	var Session  = require( 'Session' );
+	var utils    = require( 'videoPlayer/utils/utils' );
 
 	return Backbone.CFModel.extend( {
 
@@ -53,14 +54,8 @@ define( function ( require ) {
 		'getSanitizedAnswer' : function ( answer ) {
 			var answerText = answer || this.get( 'AnswerText' );
 
-			function safeString ( unsafe ) {
-				return String( unsafe )
-					.replace( /<\/script/g, '<\\/script' )
-					.replace( /<!--/g, '<\\!--' );
-			}
-
 			// Replacing \n to another string pattern to prevent server authorization error
-			return _.escape( safeString( answerText ).replace( /\n/g, '%nl%' ) );
+			return _.escape( utils.safeStringify( answerText ).replace( /\n/g, '%nl%' ) );
 		}
 
 	} );

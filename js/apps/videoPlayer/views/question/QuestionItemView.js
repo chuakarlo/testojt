@@ -9,6 +9,7 @@ define( function ( require ) {
 	var template   = require( 'text!videoPlayer/templates/questionItemView.html' );
 	var App        = require( 'App' );
 	var config     = App.request( 'videoPlayer:config' ).questions;
+	var utils      = require( 'videoPlayer/utils/utils' );
 
 	return Marionette.ItemView.extend( {
 
@@ -32,14 +33,8 @@ define( function ( require ) {
 		'templateHelpers' : {
 
 			'sanitizedAnswer' : function () {
-				function safeStringify ( unsafe ) {
-					return String( unsafe )
-						.replace( /<\/script/g, '<\\/script' )
-						.replace( /<!--/g, '<\\!--' );
-				}
-
 				// Replacing /%nl%/ string pattern to make newline.
-				return _.unescape( safeStringify( this.AnswerText ).replace( /%nl%/g, '\n' ) );
+				return _.unescape( utils.safeStringify( this.AnswerText ).replace( /%nl%/g, '\n' ) );
 			}
 
 		},

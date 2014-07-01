@@ -6,6 +6,9 @@
 		.slick-slider {
 			margin-bottom : 0px;
 		}
+		.hide {
+			display : none;
+		}
 
 		#questions-header h3 {
 			font-size : 1.5em;
@@ -46,12 +49,7 @@
 		}
 
 		.questions-item .answer {
-			padding-bottom: 20px;
-		}
-
-		.questions-item textarea.error {
-			border  : 1px solid red;
-			outline : none;
+			padding-bottom : 20px;
 		}
 
 		#questions-pagination {
@@ -61,7 +59,7 @@
 			position   : absolute;
 			bottom     : 0px;
 			left       : 0px;
-			background : #e7e9e9;
+			background : @vp-pagination-gray;
 			height     : 50px;
 
 			.control {
@@ -73,7 +71,7 @@
 				opacity             : 0.7;
 				filter              : alpha(opacity=70);
 				font-size           : 20px;
-				color               : #9fd753;
+				color               : @vp-green-light;
 				text-align          : center;
 				text-shadow         : 0 1px 1px rgba(88, 145, 38, 0.6);
 				cursor              : pointer;
@@ -109,20 +107,20 @@
 		.right-bar {
 			float      : right;
 			width      : 100%;
-			background : #f3f5f6;
+			background : @vp-whitesmoke;
 			height     : 450px;
 			position   : relative;
 		}
 
 		.content {
-			height: 100%;
-			padding : 25px;
-			padding-bottom: 50px;
+			height         : 100%;
+			padding        : 25px;
+			padding-bottom : 50px;
 		}
 
 		textarea {
 			background            : white;
-			border                : solid 1px #e1e1e1;
+			border                : @border;
 			-webkit-border-radius : 3px;
 			-moz-border-radius    : 3px;
 			border-radius         : 3px;
@@ -140,7 +138,7 @@
 
 		.as-notifier {
 			font-style : italic;
-			color : @cn-gray-darker;
+			color      : @cn-gray-darker;
 		}
 
 		.as-notifier .fa-check {
@@ -148,7 +146,7 @@
 		}
 
 		.as-notifier .fa-times {
-			color : red;
+			color : @vp-red;
 		}
 
 		#submit-answers {
