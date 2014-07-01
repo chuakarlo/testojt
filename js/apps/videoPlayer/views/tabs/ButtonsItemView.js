@@ -61,6 +61,10 @@ define( function ( require ) {
 			e.preventDefault();
 
 			App.vent.trigger( 'videoPlayer:showShareDialog', this.model );
+
+			// this fixed modal flickering when enter key
+			// is pressed while modal is about to show
+			this.ui.shareVideo.blur();
 		}
 
 	} );
