@@ -1,8 +1,22 @@
 .lt-content-reflection-questions{
 	.fa {
-		color        : @lt-lighter-blue;
-		font-size    : 16px;
-		padding-left : 10px;
-		min-width    : 31px;
+		color          : @lt-lighter-blue;
+		font-size      : 16px;
+		padding-left   : 10px;
+		min-width      : 31px;
+		vertical-align : middle;
+	}
+
+	.reflection-title {
+		float          : none;
+		vertical-align : middle;
+		width          : 80%;
+		display        : inline-block;
+		color          : @lt-light-blue;
+		.lt-hover-transition();
+
+		&:hover {
+			background : @lt-gray-4;
+		}
 	}
 }
