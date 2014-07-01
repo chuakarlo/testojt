@@ -153,10 +153,13 @@
 	//*
 	// Hover
 	//
-	#your-queue:hover .carousel,
-	#recommended:hover .carousel {
-		.carousel-control .fa {
-			display : inline-block;
+	#your-queue, #recommended {
+		div {
+			&:hover .carousel.visible-lg,.carousel.visible-xs,.carousel.visible-sm,.carousel.visible-md {
+				.carousel-control .fa {
+					display : inline-block;
+				}
+			}
 		}
 	}
 
