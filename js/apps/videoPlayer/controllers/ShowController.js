@@ -95,7 +95,12 @@ define( function ( require ) {
 						var segmentsView = new App.VideoPlayer.Views.VideoCollectionView( {
 							'collection' : segments
 						} );
-						layout.segmentLabelRegion.show( new App.VideoPlayer.Views.SegmentLabelItemView() );
+
+						var segmentLabel = new App.VideoPlayer.Views.SegmentLabelItemView( {
+							'segmentCount' : segmentsView.collection.length
+						} );
+
+						layout.segmentLabelRegion.show( segmentLabel );
 						layout.videoSegmentsRegion.show( segmentsView );
 
 						// get all segments ids of other segments

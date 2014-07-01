@@ -9,7 +9,20 @@ define( function ( require ) {
 
 		'template'  : _.template( template ),
 
-		'id' : 'label-view'
+		'id' : 'label-view',
+
+		'ui' : {
+			'segmentCount' : '#segment-count'
+		},
+
+		'initialize' : function ( options ) {
+			_.bindAll( this );
+			_.extend( this, options );
+		},
+
+		'onShow' : function () {
+			this.ui.segmentCount.html( this.segmentCount );
+		}
 
 	} );
 
