@@ -1,13 +1,13 @@
 define( function ( require ) {
 	'use strict';
 
-	var App        = require( 'App' );
-	var _          = require( 'underscore' );
-	var Backbone   = require( 'backbone' );
-	var Session    = require( 'Session' );
+	var App      = require( 'App' );
+	var _        = require( 'underscore' );
+	var Session  = require( 'Session' );
 
-	require( 'groups/views/GroupResourcesLayout');
+	require( 'groups/views/GroupResourcesLayout' );
 	require( 'common/controllers/BaseController' );
+	require( 'groups/entities/GroupCombinedResourceCollection' );
 
 	App.module( 'Groups.Show', function ( Mod ) {
 
@@ -17,7 +17,7 @@ define( function ( require ) {
 				this.layout = options.layout || null;
 				this.model = options.model;
 
-				_.bindAll( this, 'showGroup');
+				_.bindAll( this, 'showGroup' );
 			},
 
 			'getData' : function ( groupId ) {
@@ -45,7 +45,7 @@ define( function ( require ) {
 					} );
 					this.layout.groupsContentRegion.show( resourcesLayout );
 
-					var leaderCollection = new Backbone.Collection();
+					var leaderCollection = new App.Entities.GroupCombinedResourcesCollection();
 
 					leaderCollection.add( leaderResourcesCollection.models );
 					leaderCollection.add( leaderLinkCollection.models );
@@ -56,7 +56,7 @@ define( function ( require ) {
 
 					resourcesLayout.leaderRegion.show( resourcesView );
 
-					var memberCollection = new Backbone.Collection();
+					var memberCollection = new App.Entities.GroupCombinedResourcesCollection();
 
 					memberCollection.add( memberResourcesCollection.models );
 					memberCollection.add( memberLinkCollection.models );
