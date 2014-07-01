@@ -176,6 +176,11 @@ define( function ( require ) {
 			},
 
 			'updateGroupsForUser' : function ( personnelId ) {
+				// If flash isn't available return;
+				if ( !this.available() ) {
+					return;
+				}
+
 				return pd360.updateGroupsForUser( personnelId );
 			}
 
