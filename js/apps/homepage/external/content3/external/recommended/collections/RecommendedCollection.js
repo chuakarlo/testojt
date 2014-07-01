@@ -41,7 +41,7 @@ define( function ( require ) {
 		return Remoting.fetch( apiCall );
 	};
 
-	return Backbone.Collection.extend({
+	return Backbone.Collection.extend( {
 
 		'initialize' : function ( options ) {
 			this.start           = 0;
@@ -77,5 +77,5 @@ define( function ( require ) {
 		'alterData' : function ( start ) {
 			this.start = start;
 		}
-	});
-});
+	} );
+} );

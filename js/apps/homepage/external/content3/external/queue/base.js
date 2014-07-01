@@ -26,7 +26,7 @@ define( function ( require ) {
 		'updateCount'  : function ( collection ) {
 			$( this.id + '-count' ).text( collection.length );
 		},
-		'modelLogic'   : function ( model) {
+		'modelLogic'   : function ( model ) {
 			model.set( 'queued', true );
 		},
 		'EmptyMessage' : {

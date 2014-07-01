@@ -5,7 +5,7 @@ define( function ( require ) {
 
 		var parent         = [ ];
 		var sharedData     = { };
-		var App            = require('App');
+		var App            = require( 'App' );
 		var widgetMessages = require( 'text!apps/homepage/external/widgets/configuration/messages.json' );
 
 		//Register your external sections here

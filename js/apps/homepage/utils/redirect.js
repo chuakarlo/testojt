@@ -2,7 +2,7 @@ define( function () {
 	'use strict';
 
 	var App = require( 'App' );
-	var $   = require('jquery');
+	var $   = require( 'jquery' );
 
 	return {
 		'redirect' : function ( e, widgetDirectory ) {

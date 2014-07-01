@@ -12,7 +12,7 @@ define( function ( require ) {
 			var licenses = App.request( 'user:licenses' );
 			App.when( licenses ).done( function ( licenses ) {
 
-				var ids = licenses.pluck('LicenseId');
+				var ids = licenses.pluck( 'LicenseId' );
 				var districtMessageModel = new DistrictMessageModel( {
 					'licIds' : ids
 				} );

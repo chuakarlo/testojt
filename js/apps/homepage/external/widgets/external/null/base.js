@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	var App = require('App');
+	var App = require( 'App' );
 	var BaseObj      = require( 'apps/homepage/BaseObject' );
 	var instance     = new BaseObj();
 

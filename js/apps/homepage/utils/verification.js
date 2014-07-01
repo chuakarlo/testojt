@@ -1,4 +1,4 @@
-define(function () {
+define( function () {
 	'use strict';
 
 	function validate ( obj, chai ) {
@@ -17,9 +17,9 @@ define(function () {
 			schema = JSON.parse( schema );
 		}
 
-		for (var i = 0; i < ( obj.limit || data.length ); i++) {
+		for ( var i = 0; i < ( obj.limit || data.length ); i++ ) {
 			try {
-				chai.expect( data[ i ] ).to.be.jsonSchema(schema);
+				chai.expect( data[ i ] ).to.be.jsonSchema( schema );
 			} catch ( err ) {
 				return err;
 			}
@@ -44,7 +44,7 @@ define(function () {
 		'jsonVal' : function ( callback, arObject, done, limitTemp ) {
 			require( [ 'chai-json-schema' ], function ( jsonSchema ) {
 
-				var chai = require('chai');
+				var chai = require( 'chai' );
 				chai.use( jsonSchema );
 
 				if ( typeof callback === 'function' ) {

@@ -67,7 +67,7 @@ define( function ( require ) {
 					'data'   : [ mergedModels ]
 				} );
 
-			}).fail( function ( error ) {
+			} ).fail( function ( error ) {
 
 				App.vent.trigger( 'flash:message', {
 					'message' : App.Homepage.Utils.message.yourProfileErrMsg

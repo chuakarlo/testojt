@@ -6,7 +6,7 @@ define( function ( require ) {
 	var instance = new BaseObj();
 	instance._id = 'sample';
 
-	return instance.extend({
+	return instance.extend( {
 		'getExternalView' : itemView
 	} );
 } );

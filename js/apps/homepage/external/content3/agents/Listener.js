@@ -12,7 +12,7 @@ define( function ( require ) {
 			var last      = allData.innerCollections.slice( -1 )[ 0 ];
 			var remaining = allData.contentMax - last.length;
 			if ( remaining !== 0 ) {
-				last.add( innerFetchedColl.slice( 0, remaining) );
+				last.add( innerFetchedColl.slice( 0, remaining ) );
 				innerFetchedColl = innerFetchedColl.slice( remaining + 1 );
 			}
 		}

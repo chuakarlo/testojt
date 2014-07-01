@@ -36,7 +36,7 @@ define( function ( require ) {
 
 			if ( App.request( 'homepage:isHomeRoute' ) ) {
 
-				widgets    = App.Homepage.Widgets.allWidgets().splice(1);
+				widgets    = App.Homepage.Widgets.allWidgets().splice( 1 );
 				if ( !models || models.length < 0 ) {
 					models[ 0 ] = [ ];
 				}
@@ -120,7 +120,7 @@ define( function ( require ) {
 			this.widgetSettings.show( widgetCompositeView );
 			this.changePanelStatus( panelBtn, panelStatuses[ 1 ], panelStatuses[ 0 ] );
 			this.$el.find( '#widget-settings-overlay' ).show();
-			$( '#widgets-settings-panel-wrapper' ).focus().css('outline', 'none');
+			$( '#widgets-settings-panel-wrapper' ).focus().css( 'outline', 'none' );
 		},
 
 		'showMobileWidgetSettings' : function ( e ) {
@@ -167,7 +167,7 @@ define( function ( require ) {
 
 				//using jquery to get focus doesn't work in IE
 				if ( parent.length === 1 ) {
-					$( '#widgets-settings-panel-wrapper' ).focus().css('outline', 'none');
+					$( '#widgets-settings-panel-wrapper' ).focus().css( 'outline', 'none' );
 				} else {
 					var self = this;
 					self.userWidgetCollection.reset();
@@ -180,12 +180,12 @@ define( function ( require ) {
 
 			} else {
 				$( '#widgets-settings-panel-wrapper' ).attr( 'data-bypass', 'off' );
-				$( '#widgets-settings-panel-wrapper' ).focus().css('outline', 'none');
+				$( '#widgets-settings-panel-wrapper' ).focus().css( 'outline', 'none' );
 			}
 		},
 
 		'focusAction' : function ( e ) {
-			$( '#widgets-settings-panel-wrapper' ).focus().css('outline', 'none');
+			$( '#widgets-settings-panel-wrapper' ).focus().css( 'outline', 'none' );
 		}
 
 	} );

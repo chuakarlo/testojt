@@ -42,4 +42,4 @@ define( function ( require ) {
 		Widgets.allWidgets = LoadAllWidgets;
 	} );
 
-});
+} );

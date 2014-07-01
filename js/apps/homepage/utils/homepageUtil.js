@@ -48,7 +48,7 @@ define( function ( require ) {
 					setUserProfileReqres( models[ 0 ] );
 
 					var externalSections = manifest();
-					var collection       = new Backbone.Collection(externalSections);
+					var collection       = new Backbone.Collection( externalSections );
 					var sectionView      = new SectionCollectionView( {
 						'collection' : collection
 					} );

@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	var App        = require('App');
+	var App        = require( 'App' );
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
 	var template   = require( 'text!apps/homepage/external/widgets/templates/emptyWidgetItemView.html' );

@@ -64,7 +64,7 @@ define( function ( require ) {
 			captions += _.template( setTemplate( captionTemplate, billboard.caption, captionKey ), {
 				billboard : billboard
 			} );
-		});
+		} );
 
 		callback( {
 			'images'   : images,
