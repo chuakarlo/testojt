@@ -1,19 +1,11 @@
-<a href="#resources/communities/<%- LocationTypeId %>/<%-  LocationId %>/<%- ForumThreadId %>/<%- ForumPostId %>">
-	<div class="sr-shadow">
-
-		<div class="sr-community-header">
-			<h5> <%- Subject %> </h5>
-			<p class="paragraph-light">
-				posted by <%- PersonnelFullName %>
-			</p>
-		</div>
-		<hr />
-
-		<div class="sr-footer">
-			<p class="paragraph-light">
-				<%- Text %>
-				<span class="fake-link"> More </span>
-			</p>
-		</div>
-	</div>
-</a>
+<div class="sc-segment-content-container" >
+    <div class="sc-segment-image-container sr-image-container" >
+        <a href="#resources/communities/<%- LocationTypeId %>/<%-  LocationId %>/<%- ForumThreadId %>/<%- ForumPostId %>" class="sc-play-link" >
+		    <h5 class="sc-segment-name" > <%- Subject %> </h5>
+	        <p class="sc-duration" >posted by <%- PersonnelFullName %></p>
+        </a>
+    </div>
+    <div class="sr-footer-details" >
+        <p class="sc-segment-name" > <%- Text %> </p>
+    </div>
+</div>

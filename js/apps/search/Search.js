@@ -39,7 +39,7 @@ define( function ( require ) {
 
 					if ( !this.layout ) {
 						this.layout = new SearchResultsLayout();
-						App.content.show(this.layout);
+						App.content.show( this.layout );
 
 						this.listenTo( this.layout, 'close', this.destroyControllers );
 					}

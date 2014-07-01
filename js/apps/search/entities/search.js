@@ -19,9 +19,9 @@ define( function ( require ) {
 
 			'initialize' : function () {
 				// Set the results to 0 if they change tabs
-				this.on('change:active', function ( model, val ) {
-					if (!val) {
-						this.set('results', 0);
+				this.on( 'change:active', function ( model, val ) {
+					if ( !val ) {
+						this.set( 'results', 0 );
 					}
 				} );
 			}
@@ -44,7 +44,7 @@ define( function ( require ) {
 			},
 
 			'deactivateAll' : function () {
-				_.each(this.models, function ( model ) {
+				_.each( this.models, function ( model ) {
 					model.set( 'active', false );
 				} );
 			},
@@ -63,10 +63,21 @@ define( function ( require ) {
 
 		Mod.SearchGroupModel = Backbone.Model.extend();
 
-		Mod.VideoModel = Backbone.Model.extend();
+		Mod.VideoModel = Backbone.Model.extend( {
+
+			'initialize' : function () {
+				// get Uploaded field
+				var isUUV = this.get( 'Uploaded' );
+				// check if it is UUV and ready the videoTypeId
+				// 1 for non-User uploaded videos and 2 for User Uploaded Videos
+				var videoTypeId = Boolean ( isUUV ) + 1;
+				//set the video type id in the model
+				this.set( 'VideoTypeId', videoTypeId );
+			}
+		} );
 
 		// This guy is all about the search meta data
-		Mod.SearchQueryModel = Backbone.Model.extend({
+		Mod.SearchQueryModel = Backbone.Model.extend( {
 			'defaults' : {
 				'numFound'   : 0,
 				'start'      : 0,
@@ -82,10 +93,10 @@ define( function ( require ) {
 				var rows  = this.get( 'rows' );
 				//var found = this.get( 'numFound' );
 
-				this.set( 'start', rows + start);
+				this.set( 'start', rows + start );
 			}
 
-		});
+		} );
 
 		Mod.SearchCollection = Backbone.CFCollection.extend( {
 
@@ -109,11 +120,13 @@ define( function ( require ) {
 
 			'createModels' : function ( results, ModelType, type ) {
 				var temp = [ ];
-				_.each(results, function ( result ) {
+				_.each( results, function ( result ) {
 					var m = new ModelType( result );
+					var segmentId = result.ContentId || result.LicenseId;
 					// I'm setting this incase we need this later
 					m.set( 'frontend-type', type );
-					temp.push(m);
+					m.set( 'id',  segmentId );
+					temp.push( m );
 				} );
 				return temp;
 			},
@@ -135,7 +148,7 @@ define( function ( require ) {
 					// event again.
 					this.queryModel.set( 'numFound', 0 );
 
-					if ( res.RESULTS === 'No Results Found') {
+					if ( res.RESULTS === 'No Results Found' ) {
 						// We didn't find any results if there is only 1
 						return;
 					} else {
@@ -150,7 +163,7 @@ define( function ( require ) {
 					var parsedModels = [ ];
 
 					parsedModels.push(
-						this.createModels( res.COMMUNITY, Mod.CommunityModel, 'communities')
+						this.createModels( res.COMMUNITY, Mod.CommunityModel, 'communities' )
 					);
 
 					parsedModels.push(
@@ -162,7 +175,7 @@ define( function ( require ) {
 					);
 
 					// Flatten the first level
-					parsedModels = _.flatten(parsedModels, true);
+					parsedModels = _.flatten( parsedModels, true );
 
 					return parsedModels;
 
@@ -171,7 +184,7 @@ define( function ( require ) {
 					// event again.
 					this.queryModel.set( 'numFound', 0 );
 
-					if (res.length === 1) {
+					if ( res.length === 1 ) {
 						// We didn't find any results if there is only 1
 						return;
 					} else {
@@ -184,9 +197,9 @@ define( function ( require ) {
 					res.shift();
 
 					var models = [ ];
-					switch (searchType) {
+					switch ( searchType ) {
 						case 'VideosAll' :
-							models = this.createModels( res, Mod.VideoModel, 'videos');
+							models = this.createModels( res, Mod.VideoModel, 'videos' );
 							break;
 
 						case 'Groups' :
@@ -194,12 +207,12 @@ define( function ( require ) {
 							break;
 
 						case 'Communities' :
-							models = this.createModels( res, Mod.CommunityModel, 'communities');
+							models = this.createModels( res, Mod.CommunityModel, 'communities' );
 							break;
 
 					}
 					// Just add it to the collection instead of returning
-					this.add(models);
+					this.add( models );
 				}
 
 			}

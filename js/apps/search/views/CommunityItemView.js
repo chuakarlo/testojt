@@ -12,8 +12,10 @@ define( function ( require ) {
 
 		'template'  : _.template( template ),
 
+		'className' : 'col-xs-12 col-sm-6 col-md-3 col-lg-3',
+
 		'shortenText' : function () {
-			var t = this.model.get('Text');
+			var t = this.model.get( 'Text' );
 			if ( t ) {
 				return getAbbreviation( stripHtml( t ), 100 );
 			}

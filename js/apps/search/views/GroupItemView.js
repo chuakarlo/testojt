@@ -12,12 +12,14 @@ define( function ( require ) {
 
 		'template'  : _.template( template ),
 
+		'className' : 'col-xs-12 col-sm-6 col-md-3 col-lg-3',
+
 		'serializeData' : function () {
 
 			var data = {
-				'Avatar'          : getAvatarPath( this.model.get('Avatar') ),
-				'BrandingImage'   : getBrandingPath( this.model.get('BrandingImage') ),
-				'LicenseName'     : this.shortenTitle( this.model.get('LicenseName') ),
+				'Avatar'          : getAvatarPath( this.model.get( 'Avatar' ) ),
+				'BrandingImage'   : getBrandingPath( this.model.get( 'BrandingImage' ) ),
+				'LicenseName'     : this.shortenTitle( this.model.get( 'LicenseName' ) ),
 				'LicenseId'       : this.model.get( 'LicenseId' ),
 				'NumberOfMembers' : this.model.get( 'NumberOfMembers' )
 			};

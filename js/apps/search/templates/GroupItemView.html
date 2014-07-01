@@ -1,23 +1,15 @@
-<a href="#groups/<%- LicenseId %>">
-	<div class="sr-shadow">
-
-		<div class="sr-header">
-			<span class="group-icon">
-			</span>
-			<div class="group-banner" style="background-image:url('<%- BrandingImage %>');">
+<div class="sc-segment-content-container" >
+    <div class="sc-segment-image-container sr-image-container" >
+        <a href="#groups/<%- LicenseId %>" class="sc-play-link" >
+            <div class="group-banner" style="background-image:url('<%- BrandingImage %>');">
 				<div class="group-avatar">
 					<img src="<%- Avatar %>" />
 				</div>
 			</div>
-		</div>
-
-		<div class="sr-footer">
-
-			<h5><%- LicenseName %></h5>
-
-			<p class="paragraph-light">
-				<span><%- NumberOfMembers %> Member(s)</span>
-			</p>
-		</div>
-	</div>
-</a>
+        </a>
+    </div>
+    <div class="sr-footer-details" >
+        <h5 class="sc-segment-name" > <%- LicenseName %> </h5>
+        <p class="sc-duration" > <span><%- NumberOfMembers %> Member(s)</span> </p>
+    </div>
+</div>

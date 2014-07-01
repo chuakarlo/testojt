@@ -7,8 +7,8 @@ define( function ( require ) {
 
 	var CommunityItemView = require( './CommunityItemView' );
 	var GroupItemView     = require( './GroupItemView' );
-	var VideoItemView     = require( './VideoItemView' );
-	var EmptyResultView   = require( 'search/views/EmptyResultView');
+	var EmptyResultView   = require( 'search/views/EmptyResultView' );
+	var SearchSegmentView = require( './SearchSegmentCardView' );
 
 	return Marionette.CollectionView.extend( {
 
@@ -18,13 +18,12 @@ define( function ( require ) {
 		'emptyView' : EmptyResultView,
 
 		'initialize' : function () {
-
 			// We don't want to show the empty view when there was a reset.
 			// This indicates that we had a new search query with our existing
 			// collection and it's showing the loading view.
 			var oldIsEmpty = this.isEmpty;
 
-			this.listenTo(this.collection, 'reset', function () {
+			this.listenTo( this.collection, 'reset', function () {
 				this.isEmpty = function ( collection ) {
 					return false;
 				};
@@ -32,14 +31,13 @@ define( function ( require ) {
 
 			// Once it's been synced and the loading view is gone, go back to
 			// the old isEmpty logic
-			this.listenTo(this.collection, 'sync', function () {
+			this.listenTo( this.collection, 'sync', function () {
 				this.isEmpty = oldIsEmpty;
 			} );
 
 		},
 
 		'getItemView' : function ( item ) {
-
 			// Check which type of model needs to be displayed
 			// and return the proper view.
 			if ( item instanceof App.Entities.CommunityModel ) {
@@ -47,7 +45,7 @@ define( function ( require ) {
 			} else if ( item instanceof App.Entities.SearchGroupModel ) {
 				return GroupItemView;
 			} else if ( item instanceof App.Entities.VideoModel ) {
-				return VideoItemView;
+				return SearchSegmentView;
 			}
 		}
 
