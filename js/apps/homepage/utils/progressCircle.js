@@ -2,9 +2,9 @@ define( function () {
 	'use strict';
 
 	var defaultOptions = {
-		'circleSize'      : 25,
-		'thickness'       : 4,
-		'showPercentText' : false
+		'circleSize'      : 32,
+		'thickness'       : 3,
+		'showPercentText' : true
 	};
 
 	function setCircle ( $, target, cssSelector, completion, options ) {

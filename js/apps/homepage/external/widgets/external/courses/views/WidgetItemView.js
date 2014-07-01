@@ -14,7 +14,7 @@ define( function ( require ) {
 	function setTemplateHelpers ( model ) {
 		return {
 			'content'    : App.Homepage.Utils.modelGet( model, 'COURSENAME' ),
-			'completion' : App.Homepage.Utils.modelGet( model, 'PERCENTCOMPLETE', '0')
+			'completion' : App.Homepage.Utils.modelGet( model, 'PERCENTCOMPLETE', '0' )
 		};
 	}
 
@@ -42,10 +42,6 @@ define( function ( require ) {
 		'redirect'        : function ( e ) {
 			App.Homepage.Utils.redirect( e, widgetDirectory );
 			return false;
-		},
-
-		'onRender'        : function ( ) {
-			this.$('.courses').tooltip( 'hide' );
 		}
 	} );
 } );
