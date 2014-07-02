@@ -139,7 +139,9 @@ define( function ( require ) {
 		},
 
 		'closeSearchResults' : function () {
-			this.shareModal.searchResults.close();
+			if ( !_.isUndefined( this.shareModal.searchResults ) ) {
+				this.shareModal.searchResults.close();
+			}
 		},
 
 		'addClickBinding' : function () {
@@ -177,7 +179,9 @@ define( function ( require ) {
 			this.listenTo( resultsView, 'itemview:share:selectedItem', this.selectItem );
 
 			// show the search results
-			this.shareModal.searchResults.show( resultsView );
+			if ( !_.isUndefined( this.shareModal.searchResults ) ) {
+				this.shareModal.searchResults.show( resultsView );
+			}
 
 			// add click binding to close search results
 			this.addClickBinding();
@@ -202,64 +206,64 @@ define( function ( require ) {
 				return;
 			}
 
-			if ( options.type === 'lumiBook' ) {
+			switch ( options.type ) {
+				case 'lumiBook':
+					modalOptions = {
+						'placeholder' : 'Say something about the LumiBook section...',
+						'title'       : 'Share this LumiBook Section'
+					};
 
-				modalOptions = {
-					'placeholder' : 'Say something about the LumiBook section...',
-					'title'       : 'Share this LumiBook Section'
-				};
+					url = lumibookUrl + '/' + options.data.lumiBookId + '/' + options.data.lumiBookItemId;
 
-				url = lumibookUrl + '/' + options.data.lumiBookId + '/' + options.data.lumiBookItemId;
+					view = new LumibookView( {
+						'title' : options.data.title || 'LumiBook',
+						'url'   : url
+					} );
 
-				view = new LumibookView( {
-					'title' : options.data.title || 'LumiBook',
-					'url'   : url
-				} );
+					// store the url for if user selects share
+					this.url = url;
+					break;
 
-				// store the url for if user selects share
-				this.url = url;
+				case 'community':
+					modalOptions = {
+						'placeholder' : 'Say something about the Communities thread...',
+						'title'       : 'Share this Communities Thread'
+					};
 
-			} else if ( options.type === 'community' ) {
+					url = communitiesUrl + options.data.locationTypeId;
 
-				modalOptions = {
-					'placeholder' : 'Say something about the Communities thread...',
-					'title'       : 'Share this Communities Thread'
-				};
+					if ( options.data.locationTypeId ) {
+						url += '/' + options.data.locationId;
+					}
+					if ( options.data.threadId ) {
+						url += '/' + options.data.threadId;
+					}
+					if ( options.data.postId ) {
+						url += '/' + options.data.postId;
+					}
 
-				url = communitiesUrl + '/' + options.data.locationTypeId;
+					view = new CommunitiesView( {
+						'title' : options.data.title || 'Community',
+						'url'   : url
+					} );
 
-				if ( options.data.locationTypeId ) {
-					url += '/' + options.data.locationId;
+					// store the url for if user selects share
+					this.url = url;
+					break;
+
+				default: {
+					modalOptions = {
+						'placeholder' : 'Say something about the video...',
+						'title'       : 'Share this Video'
+					};
+
+					view = new VideoView( {
+						'model' : options.data.model
+					} );
+
+					// store the url for if user selects share
+					this.url = options.data.model.get( 'VideoUrl' );
 				}
-				if ( options.data.threadId ) {
-					url += '/' + options.data.threadId;
-				}
-				if ( options.data.postId ) {
-					url += '/' + options.data.postId;
-				}
-
-				view = new CommunitiesView( {
-					'title' : options.data.title || 'Community',
-					'url'   : url
-				} );
-
-				// store the url for if user selects share
-				this.url = url;
-
-			} else {
-
-				modalOptions = {
-					'placeholder' : 'Say something about the video...',
-					'title'       : 'Share this Video'
-				};
-
-				view = new VideoView( {
-					'model' : options.data.model
-				} );
-
-				// store the url for if user selects share
-				this.url = options.data.model.get( 'VideoUrl' );
-
 			}
 
 			this.createModal( modalOptions, view );
