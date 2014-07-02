@@ -83,11 +83,11 @@ define( function ( require ) {
 
 				//iPad Orientation videos will not reset
 				var token = $( this ).attr( 'id' ).split( '-pd360-slide-' );
-				if ( token[1] === 'md' ) {
+				if ( token[ 1 ] === 'md' ) {
 					syncCarousel( $( this ), token[ 0 ], 'sm', function (  index  ) {
 						return index + Math.floor(  index / 2 );
 					} );
-				} else if ( token[1] === 'sm' ) {
+				} else if ( token[ 1 ] === 'sm' ) {
 					syncCarousel( $( this ), token[ 0 ], 'md', function ( index ) {
 						return index - Math.ceil( index / 3 );
 					} );
