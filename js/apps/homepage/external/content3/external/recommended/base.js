@@ -21,17 +21,27 @@ define( function ( require ) {
 		allData.add( App.Homepage.Utils.chunk( innerFetchedColl, allData.contentMax ) );
 	}
 
-	function postFetch ( allData, total, start, actual, queue ) {
-		if ( start < total ) {
+	function postFetch ( allData ) {
+		var result = App.request( 'homepage:content:recommended:total' );
+		if ( result.start < result.total ) {
 			var coll = new Collection();
-			coll.alterData( start );
+			coll.alterData( result.start );
 			coll.fetch( {
 				'success' : function ( collection ) {
 					App.Homepage.Utils.proceedHomeAction( function () {
-						var proc = processResult( queue, collection );
+						var proc = processResult( result.queue, collection );
 						var fetchedColl = proc.coll;
-						var newActual = actual + fetchedColl.length - proc.cuts;
+						var newActual = result.fetch + fetchedColl.length - proc.cuts;
 						$( '#recommended-count' ).html( newActual );
+
+						App.reqres.setHandler( 'homepage:content:recommended:total', function () {
+							return {
+								'total' : result.total,
+								'fetch' : newActual,
+								'queue' : result.queue,
+								'start' : result.start + 24
+							};
+						} );
 
 						propagateCollection( fetchedColl, allData[ 0 ] );
 						propagateCollection( fetchedColl, allData[ 1 ] );
@@ -39,6 +49,7 @@ define( function ( require ) {
 						propagateCollection( fetchedColl, allData[ 3 ] );
 
 						$( '#recommended .carousel .right.carousel-control' ).show();
+
 					} );
 				},
 				'error'   : function ( err ) {
@@ -85,8 +96,9 @@ define( function ( require ) {
 			App.reqres.setHandler( 'homepage:content:recommended:total', function () {
 				return {
 					'total' : ( proc.coll.length > 0 ? header.get( 'numFound' ) : 0 ) - proc.cuts,
-					'fetch' : proc.coll.length - 1 - proc.cuts,
-					'queue' : ids
+					'fetch' : proc.coll.length - proc.cuts,
+					'queue' : ids,
+					'start' : 24
 				};
 			} );
 
@@ -106,9 +118,8 @@ define( function ( require ) {
 		},
 		'onLastNav'    :  function ( $carousel ) {
 			$( '#load-recommended' ).html( '<img src="img/loading-bar.gif"/></div>' );
-			var result = App.request( 'homepage:content:recommended:total' );
 			var collection = App.request( 'homepage:content:recommended:carousel' );
-			postFetch( collection, result.total, 24, result.fetch, result.queue );
+			postFetch( collection );
 		}
 	};
 } );

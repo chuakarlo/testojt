@@ -67,7 +67,8 @@ define( function ( require ) {
 		'carouselApplySettings' : function ( $carousel, options ) {
 			options = $.extend( { }, OPTIONS_DEFAULT, options );
 			$carousel.carousel( {
-				'interval' : options.interval
+				'interval' : options.interval,
+				'wrap'     : false
 			} );
 
 			applySwipe( $carousel );
