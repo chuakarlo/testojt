@@ -1,0 +1,20 @@
+{
+		"title"      : "observations of me schema",
+		"type"       : "object",
+		"required"   : [ "OBSERVATIONDATE", "NUMBEROFPRESCRIBEDPD", "OBSERVATIONNAME", "OBSERVATIONID" ],
+		"properties" : {
+			"OBSERVATIONDATE"      : {
+				"type" : "string"
+			},
+			"NUMBEROFPRESCRIBEDPD" : {
+				"type" : "number"
+			},
+			"OBSERVATIONNAME"      : {
+				"type" : "string"
+			},
+			"OBSERVATIONID"        : {
+				"type"        : "number",
+				"uniqueItems" : true
+			}
+		}
+}

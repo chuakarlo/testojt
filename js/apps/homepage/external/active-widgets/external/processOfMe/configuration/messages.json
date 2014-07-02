@@ -1,0 +1,9 @@
+{
+	"processOfMeTitle"       : "Processes of Me",
+	"processOfMeDescription" : "See a list of your most recently assigned professional growth activities. Click on an activity to get more information.",
+	"processOfMeFooter"      : "See All Processes",
+	"processOfMeEmptyMsg"    : "No available videos to show.",
+	"processOfMePastDue"     : "Past Due : ",
+	"processOfMeDue"         : "Due : ",
+	"processOfMeErrMsg"      : "An error occurred getting process of me. Please try again later."
+}

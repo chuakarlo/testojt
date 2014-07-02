@@ -1,0 +1,50 @@
+{
+	"title" : "Your Profile Schema",
+	"type"  : "object",
+	"required"   : [
+		"Avatar",
+		"FirstName",
+		"LastName",
+		"EmailAddress",
+		"Title",
+		"ProfessionalStartDate",
+		"EducatorType",
+		"Position",
+		"GradeLevelId",
+		"CCSubjectId"
+	],
+	"properties" : {
+		"Avatar"                : {
+			"type" : "string"
+		},
+		"FirstName"             : {
+			"type" : "string"
+		},
+		"LastName"              : {
+			"type" : "string"
+		},
+		"EmailAddress"          : {
+			"type"   : "string",
+			"format" : "email"
+		},
+		"Title"                 : {
+			"type" : "string"
+		},
+		"ProfessionalStartDate" : {
+			"type"   : "string",
+			"format" : "date-time"
+		},
+		"EducatorType"          : {
+			"type" : "string"
+		},
+		"Position"              : {
+			"type" : "string"
+		},
+		"GradeLevelId"          : {
+			"type" : "number"
+		},
+		"CCSubjectId"           : {
+			"type" : "number"
+		}
+	}
+}

@@ -1,0 +1,6 @@
+{
+	"coursesTitle"       : "Courses",
+	"coursesDescription" : "See the courses you haven’t completed. Click on an unfinished course to pick up right where you left off.",
+	"coursesFooter"      : "See All Active Courses",
+	"coursesErrMsg"      : "An error occurred getting courses. Please try again later."
+}

@@ -1,0 +1,13 @@
+{
+	"yourProfileName": "Profile",
+	"yourProfilePersonalRepName" : "Personal Reports",
+	"yourProfileLicenses" : "Licenses",
+	"yourProfileErrMsg" : "An error occurred getting your profile. Please try again later.",
+
+	"userSettingsName" : "User Settings",
+	"userSettingsDesc" : "Get easy access to your profile, personal reports, and licenses, and edit your user setting profile.",
+	"userSettingsFooter" : "Edit Settings",
+
+	"statusDescfalse" : "Your profile is almost complete! The more we know about you, the better the content.",
+	"statusDesctrue" : "Your profile is complete!"
+}

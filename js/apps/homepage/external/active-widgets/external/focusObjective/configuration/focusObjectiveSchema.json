@@ -1,0 +1,48 @@
+{
+		"title"      : "focus objective schema v1",
+		"type"       : "object",
+		"required"   : [
+			"ContentName",
+			"SegmentLengthInSeconds",
+			"Children",
+			"ContentId",
+			"ImageURL",
+			"TranscriptFileName",
+			"GuidebookFileName",
+			"ContentTypeId",
+			"AudioFileName",
+			"ContentDescription"
+		],
+		"properties" : {
+			"ContentName"            : {
+				"type" : "string"
+			},
+			"SegmentLengthInSeconds" : {
+				"type" : "number"
+			},
+			"Children"               : {
+				"type" : "array"
+			},
+			"ContentId"              : {
+				"type" : "number"
+			},
+			"ImageURL"               : {
+				"type" : "string"
+			},
+			"TranscriptFileName"     : {
+				"type" : "string"
+			},
+			"GuidebookFileName"      : {
+				"type" : "string"
+			},
+			"ContentTypeId"          : {
+				"type" : "number"
+			},
+			"AudioFileName"          : {
+				"type" : "string"
+			},
+			"ContentDescription"     : {
+				"type" : "string"
+			}
+		}
+}

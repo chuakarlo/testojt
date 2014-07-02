@@ -128,6 +128,7 @@ define( function ( require ) {
 			var widgetIds = this.pushWidgetIds();
 
 			App.when( Remoting.fetch( widgetAPI( Session.personnelId(), widgetIds ) ) ).done( function () {
+				App.vent.trigger( 'homepage:renderActiveWidgets' );
 				self.showMessageToUser( App.Homepage.Utils.message.widgetChangeSave, 'success' );
 			} ).fail( function ( error ) {
 				self.showMessageToUser( App.Homepage.Utils.message.widgetSaveError, 'error' );

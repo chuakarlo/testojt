@@ -1,0 +1,16 @@
+{
+	"title"    : "Widget Schema",
+	"type"     : "object",
+	"required" : [
+		"PresentationOrder",
+		"WidgetId"
+	],
+	"properties" : {
+		"PresentationOrder": {
+			"type" : "number"
+		},
+		"WidgetId": {
+			"type" : "number"
+		}
+	}
+}
