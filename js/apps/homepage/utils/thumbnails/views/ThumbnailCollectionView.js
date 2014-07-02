@@ -26,8 +26,6 @@ define( function ( require ) {
 		},
 		'emptyView'       : ThumbnailEmptyView,
 		'onShow'          : function () {
-			this.$el.find( '.item:first-child' ).addClass( 'active' );
-
 			var slideNavsTemplate = _.template( thumbnailSlideNavsTemplate, {
 				'contentId'   : this.contentId,
 				'contentSize' : this.contentSize

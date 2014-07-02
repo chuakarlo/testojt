@@ -44,6 +44,9 @@ define( function ( require ) {
 		'itemView'          : App.Common.SegmentCardsView,
 		'itemViewContainer' : '.row',
 		'onShow'            : function () {
+			if ( this.model.collection.indexOf( this.model ) === 0 ) {
+				this.$el.parent().find( '.item:first-child' ).addClass( 'active' );
+			}
 			$( '#load-recommended' ).empty();
 		}
 	} );
