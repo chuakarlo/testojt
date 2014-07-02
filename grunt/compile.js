@@ -11,7 +11,7 @@ module.exports = function ( grunt ) {
 	};
 
 	grunt.config.set( 'less', {
-		 'compile' : {
+		'compile' : {
 			'files' : lessFiles,
 
 			'options' : {
@@ -36,7 +36,7 @@ module.exports = function ( grunt ) {
 	} );
 
 	grunt.registerTask( 'compile', 'compiles f/e', function () {
-		grunt.task.run( [ 'compile:js', 'compile:less' ] );
+		grunt.task.run( [ 'compile:js', 'compile:less', 'bust' ] );
 	} );
 
 	grunt.registerTask( 'compile:js', 'compiles f/e with requirejs optimizer (r.js)', [ 'requirejs' ] );

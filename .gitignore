@@ -10,6 +10,7 @@ js/libs/*
 !js/libs/ga.js
 
 # minified / compiled
+index.html
 *.min.js
 *.min.css
 
