@@ -23,6 +23,17 @@ define( function ( require ) {
 		} );
 	}
 
+	function syncCarousel ( view, token , size, formula ) {
+		var item   = view.find( '.item' );
+		var active = view.find( '.active' );
+
+		var index  = ( item ).index( active );
+		var target = view.parent(  ).find( '#' + token + '-pd360-slide-' + size  );
+		target.find( '.item.active'  ).removeClass( 'active' );
+		var item2   = target.find( '.item' );
+		$( $( item2 ).get( formula( index ) ) ).addClass( 'active' );
+	}
+
 	function handleNavBars ( $carousel, options ) {
 
 		var $rightControl = $carousel.find( '.right.carousel-control' );
@@ -68,6 +79,18 @@ define( function ( require ) {
 			$leftControl.hide();
 
 			$carousel.bind( 'slid.bs.carousel', function () {
+
+				//iPad Orientation videos will not reset
+				var token = $( this ).attr( 'id' ).split( '-pd360-slide-' );
+				if ( token[1] === 'md' ) {
+					syncCarousel( $( this ), token[ 0 ], 'sm', function (  index  ) {
+						return index + Math.floor(  index / 2 );
+					} );
+				} else if ( token[1] === 'sm' ) {
+					syncCarousel( $( this ), token[ 0 ], 'md', function ( index ) {
+						return index - Math.ceil( index / 3 );
+					} );
+				}
 				handleNavBars( $carousel, options );
 			} );
 		}
