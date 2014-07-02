@@ -1,15 +1,16 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette    = require ( 'marionette' );
-	var _             = require ( 'underscore' );
-	var template      = require ( 'text!apps/learningTargets/templates/objectives/focustitles.html' );
-	var TitleItemView = require ( 'apps/learningTargets/views/objectives/contents/ContentItemView' );
-	var EmptyView     = require ( 'apps/learningTargets/views/EmptyView' );
+	var App             = require ( 'App' );
+	var Marionette      = require ( 'marionette' );
+	var _               = require ( 'underscore' );
+	var template        = require ( 'text!apps/learningTargets/templates/objectives/focustitles.html' );
+	var EmptyView       = require ( 'apps/learningTargets/views/EmptyView' );
+	var getAbbreviation = require( 'common/helpers/getAbbreviation' );
 
 	return Marionette.CompositeView.extend ( {
 		'template'          : _.template ( template ),
-		'itemView'          : TitleItemView,
+		'itemView'          : App.Common.NewSegmentCardsView,
 		'emptyView'         : EmptyView,
 		'tagName'           : 'div',
 		'className'         : 'objectives-content',
@@ -24,6 +25,7 @@ define( function ( require ) {
 		},
 
 		'initialize' : function () {
+
 			this.FocusTitle     = '';
 			this.showFocusTitle = 'hide';
 
@@ -31,6 +33,28 @@ define( function ( require ) {
 				this.FocusTitle     = decodeURIComponent( this.options.data.focustitle );
 				this.showFocusTitle = '';
 			}
+
+		},
+
+		'itemViewOptions' : function ( model, index ) {
+
+			var options = {
+				'className'     : 'col-xs-6 col-sm-6 col-md-4 col-lg-4 ',
+				'setClassIcons' : {
+					'SegmentCard' : { 'infoIcon' : true, 'queueIcon' : true, 'doneIcon' : true }
+				}
+			};
+
+			return options;
+		},
+
+		'showError' : function ( error ) {
+
+			App.content.show( new App.Common.ErrorView( {
+				'message' : error,
+				'flash'   : 'An error occurred. Please try again later.'
+			} ) );
+
 		},
 
 		'previousFolder' : function () {
@@ -39,7 +63,7 @@ define( function ( require ) {
 
 		'templateHelpers' : function () {
 			return {
-				FocusTitle     : this.FocusTitle,
+				FocusTitle     : getAbbreviation ( this.FocusTitle, 50 ),
 				showFocusTitle : this.showFocusTitle
 			};
 		}

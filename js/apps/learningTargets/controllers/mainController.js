@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	var App      = require( 'App' );
 	var Backbone = require( 'backbone' );
+	var _        = require( 'underscore' );
 
 	var GroupsView              = require( 'apps/learningTargets/views/groups/GroupsView' );
 	var CoursesView             = require( 'apps/learningTargets/views/courses/CoursesView' );
@@ -141,8 +142,6 @@ define( function ( require ) {
 			'showCatalogs' : function () {
 				var helper = Main.helper;
 
-				Backbone.history.navigate( 'resources/learning/catalogs' );
-
 				var options = {
 					'legends' : [
 						{
@@ -181,6 +180,8 @@ define( function ( require ) {
 					helper._showLegend( options );
 
 				} );
+
+				Backbone.history.navigate( 'resources/learning/catalogs' );
 			},
 
 			'showGroups' : function () {
@@ -229,7 +230,9 @@ define( function ( require ) {
 			},
 
 			'showFocusObjectivesContent' : function ( focusTitle, ncesId, statestdId ) {
-				var helper  = Main.helper;
+				var queueRequest = App.request( 'common:getQueueContents' );
+				var helper       = Main.helper;
+
 				var options = {
 					focustitle : focusTitle,
 					ncesid     : ncesId,
@@ -242,25 +245,36 @@ define( function ( require ) {
 				// show a loading view while data is fetching
 				helper._showView( new App.Common.LoadingView() );
 
-				helper._apiRequest( 'lt:objectivescontent', function ( collection ) {
+				App.when( queueRequest ).then( function ( queue ) {
+					helper._apiRequest( 'lt:objectivescontent', function ( collection ) {
 
-					var objectivesContentView = new ObjectivesContentView( {
-						collection : collection,
-						data       : options
-					} );
+						// append queue request
+						var contentIds = queue.pluck( 'ContentId' );
 
-					// change view to focus folder
-					if ( collection.length > 0 && !collection.models[ 0 ].get( 'ContentId' ) ) {
-						objectivesContentView = new ObjectivesFolderView ( {
+						collection.each( function ( model ) {
+							var _id = model.get( 'ContentId' );
+							model.set( 'queued', _.contains( contentIds, _id ) );
+							model.set( 'VideoTypeId', 1 );
+						} );
+
+						var objectivesContentView = new ObjectivesContentView( {
 							collection : collection,
 							data       : options
 						} );
-					}
 
-					// display contents or title of focus folders
-					helper._showView( objectivesContentView );
+						// change view to focus folder
+						if ( collection.length > 0 && !collection.models[ 0 ].get( 'ContentId' ) ) {
+							objectivesContentView = new ObjectivesFolderView ( {
+								collection : collection,
+								data       : options
+							} );
+						}
 
-				}, options );
+						// display contents or title of focus folders
+						helper._showView( objectivesContentView );
+
+					}, options );
+				} );
 			},
 
 			'showReflectionQuestions' : function () {

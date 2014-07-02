@@ -1,10 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var Backbone    = require( 'backbone' );
-	var Session     = require( 'Session' );
-	var App         = require( 'App' );
-	var $           = require( 'jquery' );
+	var Backbone = require( 'backbone' );
+	var Session  = require( 'Session' );
+	var App      = require( 'App' );
+	var $        = require( 'jquery' );
 
 	var model = {
 		ObjectivesModel : require( 'apps/learningTargets/models/ObjectivesModel' )
@@ -39,7 +39,7 @@ define( function ( require ) {
 
 			'model' : model.ObjectivesModel,
 
-			'idAttribute' : 'personnelId',
+			'idAttribute' : 'ContentId',
 
 			'getReadOptions' : function () {
 				return {

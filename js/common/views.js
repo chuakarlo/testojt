@@ -3,16 +3,18 @@ define( function ( require ) {
 
 	var App = require( 'App' );
 
-	var LoadingView      = require( './views/LoadingView' );
-	var NotFoundView     = require( './views/NotFoundView' );
-	var ErrorView        = require( './views/ErrorView' );
-	var SegmentCardsView = require( './views/SegmentCardsView' );
+	var LoadingView         = require( './views/LoadingView' );
+	var NotFoundView        = require( './views/NotFoundView' );
+	var ErrorView           = require( './views/ErrorView' );
+	var SegmentCardsView    = require( './views/SegmentCardsView' );
+	var NewSegmentCardsView = require( './views/SegmentCard/SegmentCardsView' );
 
 	App.module( 'Common', function ( Common ) {
 		Common.LoadingView      = LoadingView;
 		Common.NotFoundView     = NotFoundView;
 		Common.ErrorView        = ErrorView;
 		Common.SegmentCardsView = SegmentCardsView;
+		Common.NewSegmentCardsView = NewSegmentCardsView;
 	} );
 
 } );

@@ -39,10 +39,10 @@ define( function ( require ) {
 			return model;
 		},
 
-		'templateHelpers' : function ( ) {
+		'templateHelpers' : function () {
 			var model = this.model;
 
-			model.FocusTitle = encodeURIComponent( model.get( 'StateStandardTitle' ) );
+			model.FocusTitle = getAbbreviation ( encodeURIComponent( model.get( 'StateStandardTitle' ) ), 50 );
 			model.SSTitle    = getAbbreviation ( model.get( 'StateStandardTitle' ), 50 );
 			this._setDescriptionIcon( model );
 

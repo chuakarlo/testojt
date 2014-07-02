@@ -1,6 +1,10 @@
 /************************************************************\
 	LEARNING TARGETS ( Focus Objectives )
 \************************************************************/
+@linkColorHover: #00b0ec;
+@gray: #F0F0F0;
+@gray2: #aaa;
+
 
 @lt-fo-container-folder-height : 180px;
 @lt-fo-content-video-height    : 150px;
@@ -24,23 +28,81 @@
 }
 
 .fo-callout {
-		margin: 20px 0 35px 0;
-		padding: 20px;
-		border-left: 3px solid #eee;
-		h4 {
-			margin-top: 0;
-			margin-bottom: 5px;
-		}
+		margin-bottom: 5px;
+		padding: 0 12px;
 }
 .fo-callout-info {
-	background-color: #f4f8fa;
-	border-color: @lt-light-blue;
-	h4 {
-		color: @lt-light-blue;
-	}
 	.back-button {
 		cursor: pointer;
-		text-align: right;
+		text-align : center;
+		display: inline-block;
+		vertical-align: middle;
+		font-size: 15px;
+	}
+	.breadcrumb {
+		background: #ffffff;
+		color: #aaaaaa;
+		padding: 0;
+		border: 1px solid #ebebeb;
+		overflow: hidden;
+		display: block;
+		position: relative;
+		min-height: 43px;
+
+	    span {
+
+			display: inline-block;
+			vertical-align: middle;
+			float: none;
+			background: @gray;
+			margin-right: 31px;
+			color: @gray2;
+			padding: 10px;
+
+		&:last-of-type {
+		    margin-right: 20px;
+		}
+
+		&:after {
+		    content: "";
+				display: inline-block;
+				width: 0;
+				height: 0;
+				position: absolute;
+				top: ~"calc((100% - 43px) / 2)";
+				left: 66px;
+				border: 21px solid transparent;
+		    border-left-color: @gray;
+		}
+
+		&:first-of-type {
+		    padding-left: 10px;
+
+		    &:before {
+			display: none;
+		    }
+		}
+
+		&:hover {
+		    background: @linkColorHover;
+		    color: #fff;
+		    text-decoration: none;
+
+		    &:before {
+			border-color: @linkColorHover;
+			border-left-color: transparent;
+		    }
+
+		    &:after {
+			border-left-color: @linkColorHover;
+		    }
+		}
+	    }
+		p {
+			display: inline-block;
+			vertical-align: middle;
+			float: none;
+		}
 	}
 }
 @media  only screen and (max-width : 321px),
@@ -301,6 +363,139 @@ only screen and (min-width: 320px) and (max-width: 479px) {
 		color: @gray-light;
 		& > .progress {
 			margin-bottom: 0;
+		}
+	}
+}
+
+// SegmentCard overrides
+// li div.sc-segment-content-container div.sc-segment-image-container
+li {
+	div.sc-segment-content-container {
+		.text-primary {
+			color: #5abef9;
+		}
+		div.sc-segment-image-container {
+			background : #000000;
+			a {
+				span.sc-play-container {
+					span.sc-play-icon {
+						float   : none;
+						padding : 0;
+					}
+					p.sc-play-now {
+						color : #ffffff;
+					}
+				}
+				img {
+					min-height : 100%;
+					height     : 100%;		// auto
+					margin     : 0 auto;
+					width      : auto;
+				}
+			}
+		}
+		div.sc-footer-details {
+			.sc-segment-name {
+				height : 70px;
+			}
+			.sc-duration {
+				margin-top : 5px;
+			}
+			.sc-footer-icons {
+				height   : auto;
+				overflow : hidden;
+				ul.sc-icons, ul li.sc-icon {
+					padding : 0;
+					margin  : 0;
+				}
+				ul.sc-icons {
+					display : block;
+					li.sc-icon {
+						display        : inline-block;
+						vertical-align : middle;
+						padding        : 0 4px;
+						height         : 31px;
+						width          : 31px;
+						span {
+							padding:0;
+							float: none;
+						}
+						.fa {
+							font-size : 28px;
+							cursor    : pointer;
+							position : relative;
+							z-index  : 3;
+						}
+						.fa:hover {
+							color : #5abef9;
+						}
+						.success, .success:hover {
+							color  : @lt-lighter-green;
+							cursor : default;
+						}
+						p {
+							line-height : 1em;
+						}
+						.sc-watch-later-icon {
+							overflow : hidden;
+							display  : block;
+							height   : 27px;
+							.spinner {
+							}
+						}
+						.sc-loading-icon {
+							color : #999999 !important;
+						}
+					}
+					li:first-child {
+						padding-left : 0;
+					}
+					li:last-child {
+						padding-right : 0;
+
+						.tooltip.top {
+							right : 0;
+						}
+						.tooltip-inner {
+							max-width : 110px;
+							margin-left: 71px;
+						}
+					}
+					.icon-with-text {
+						font-size : 14px !important;
+						padding   : 2px 4px !important;
+						cursor    : default !important;
+					}
+				}
+			}
+		}
+		div.sc-overlay-details {
+			p {
+				display : block;
+				color   : #ffffff;
+			}
+			.sc-overlay-segment-name {
+				height : 35px;
+			}
+			.sc-overlay-duration {
+				height: 15px;
+				margin: 3px 0;
+			}
+			.sc-overlay-content-description {
+				height     : 160px;
+				overflow-y : hidden;
+			}
+			.sc-play-link {
+				color     : #ffffff;
+				font-size : 20px;
+				.sc-overlay-play-now {
+					font-style : normal;
+					font-size : 16px;
+				}
+			}
+			.sc-play-link:hover {
+				color : #5abef9;
+			}
 		}
 	}
 }

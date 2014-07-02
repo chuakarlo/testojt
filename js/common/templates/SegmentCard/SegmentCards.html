@@ -1,0 +1,25 @@
+<div class='sc-segment-content-container' >
+    <div class='sc-segment-image-container'>
+	<a href='<%- linkUrl() %>' class='sc-play-link' >
+	    <img src='<%- imageUrl() %>' class='img-responsive' alt='pd360'>
+	    <span class ='sc-play-container'>
+		<span class='sc-play-icon fa fa-play'></span>
+		<p class='sc-play-now'>Play Now</p>
+	    </span>
+	</a>
+    </div>
+    <div class='sc-footer-details' >
+	<h5 class='sc-segment-name'> <%- longContentName() %></h5>
+		<div class='sc-duration pull-left'><%- duration() %></div>
+		<div class='sc-footer-icons pull-right text-muted'></div>
+    </div>
+    <div class='sc-overlay-details' >
+	<p class='sc-overlay-segment-name' title='<%- fullContentName() %>' ><%- shortContentName() %></p>
+	<p class='sc-overlay-duration'><%- duration() %></p>
+	<p class='sc-overlay-content-description'><%- shortContentDescription() %></p>
+	<a href='<%- linkUrl() %>' class='sc-play-link'   >
+	    <i class='sc-overlay-play-icon fa fa-play'></i>
+	    <i class='sc-overlay-play-now'>Play Now</i>
+	</a>
+    </div>
+</div>
