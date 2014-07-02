@@ -50,10 +50,35 @@ define( function ( require ) {
 		} );
 	} );
 
+	function dequeueRecommendedModel ( rows, model ) {
+		//collection for each item ( rows )
+		rows.forEach ( function ( modelSet ) {
+			var contentMax = modelSet.collection.contentMax;
+			for ( var i = 0; i < contentMax; ++i ) {
+				var queuedModel = modelSet.get( i );
+
+				if ( !queuedModel ) {
+					break;
+				}
+				if ( queuedModel.get( 'id' ) === model.get( 'id' ) ) {
+					queuedModel.set( { 'queued' : false } );
+				}
+
+			}
+		} );
+	}
+
 	App.vent.on( 'common:dequeued', function ( model ) {
 		App.Homepage.Utils.proceedHomeAction( function () {
 			if ( App.reqres.hasHandler( 'homepage:content:your-queue:carousel' ) ) {
 				updateCount ( -1 );
+			}
+			if ( App.reqres.hasHandler( 'homepage:content:recommended:carousel' ) ) {
+				var collection = App.request( 'homepage:content:recommended:carousel' );
+				//collection for each content size
+				collection.forEach( function ( rows ) {
+					dequeueRecommendedModel( rows, model );
+				} );
 			}
 		} );
 	} );
