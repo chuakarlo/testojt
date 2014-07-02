@@ -1,19 +1,14 @@
 define( function ( require ) {
 	'use strict';
 
-	var sinon                 = window.sinon;
 	var Backbone              = require( 'backbone' );
-	var Marionette            = require( 'marionette' );
-	var BaseObject            = require( 'apps/homepage/BaseObject' );
-	var base                  = require( 'apps/homepage/external/content/external/recommended/base' );
-	var RecommendedCollection = require( 'apps/homepage/external/content/external/recommended/collections/RecommendedCollection' );
-	var utils                 = require( 'apps/homepage/external/content/utils/contentItemCollectionUtil' );
+	var base                  = require( 'apps/homepage/external/content3/external/recommended/base' );
+	var RecommendedCollection = require( 'apps/homepage/external/content3/external/recommended/collections/RecommendedCollection' );
 
 	describe ( 'baseTest for Recommended', function () {
 		var modelData;
 		var queueData;
 		var collection;
-		var utilStub;
 
 		before( function () {
 
@@ -88,59 +83,27 @@ define( function ( require ) {
 
 			var Collection = Backbone.Collection.extend();
 			collection = new Collection( modelData );
-			utilStub   = sinon.stub( utils, 'collectionFetch' );
 
 		} );
 
 		after( function () {
 
-			utilStub.restore();
 		} );
 
 		it( 'should be an instance of `BaseObject`', function () {
-			base.should.be.an.instanceof( BaseObject );
+			base.should.be.an.instanceof( Object );
 		} );
 
 		it( 'should have an `id` property equal to `recommended`', function () {
-			base._id.should.be.equal( 'recommended' );
+			base.id.should.be.equal( 'recommended' );
 		} );
 
 		it( 'should have a `header` property', function () {
-			base.should.have.property( '_header' );
+			base.should.have.property( 'header' );
 		} );
 
 		it( 'should have `.getCollection` property equal to RecommendedCollection', function () {
-			base._items.should.be.equal( RecommendedCollection );
-		} );
-
-		it( 'should have `getPreFetchLogic` property ', function () {
-			base.should.have.property( 'getFetchLogic' );
-			var options     = { };
-			var callbackSpy = sinon.spy();
-
-			base.getPreFetchLogic( options, callbackSpy );
-			callbackSpy.callCount.should.be.above( 0 );
-
-		} );
-
-		it( '`getFetchLogic` should return an object with property collection and count', function () {
-			var fetch = base.getFetchLogic( collection );
-
-			fetch.should.be.an( 'object' ).and.to.have.keys( 'collection', 'count' );
-			fetch.should.have.property( 'collection', collection );
-			fetch.should.have.property( 'count', modelData[ 0 ].numFound );
-
-		} );
-
-		it( 'should have a getCarouselCustomAction property', function () {
-			var view  = new Marionette.CollectionView.extend();
-			var data  = { };
-			view.collection        = new ( Backbone.Collection.extend() ) ();
-			view.collection.length = 2;
-
-			base.getCarouselCustomAction( view, data, 1 );
-			utils.collectionFetch.callCount.should.be.above( 0 );
-
+			base.collection.should.be.equal( RecommendedCollection );
 		} );
 
 	} );

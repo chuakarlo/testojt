@@ -87,9 +87,9 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/entities/VideoResourcesTest.js',
 
 			//Homepage
-			'spec/apps/homepage/external/content/controllers/contentCompositeControllerTest.js',
+			'spec/apps/homepage/external/content/baseTest.js',
 			'spec/apps/homepage/external/content/views/ContentCompositeViewTest.js',
-			'spec/apps/homepage/external/content/views/ContentItemViewTest.js',
+			'spec/apps/homepage/external/content/views/ContentCollectionViewTest.js',
 
 			//HomePage - Billboard
 			'spec/apps/homepage/external/billboard/collection/BillboardCollectionTest.js',
@@ -123,11 +123,8 @@ define( function ( require ) {
 			'spec/apps/homepage/external/widgets/external/yourProfile/views/WidgetItemViewTest.js',
 
 			// Homepage - Your Queue
-			'spec/apps/homepage/external/content/external/your-queue/baseTest.js',
-			'spec/apps/homepage/external/content/external/your-queue/collections/QueueCollectionTest.js',
-			'spec/apps/homepage/external/content/external/your-queue/controllers/baseControllerTest.js',
-			'spec/apps/homepage/external/content/external/your-queue/controllers/queueControllerTest.js',
-			'spec/apps/homepage/external/content/external/your-queue/models/QueueModelTest.js',
+			'spec/apps/homepage/external/content/external/queue/baseTest.js',
+			'spec/apps/homepage/external/content/external/queue/collections/QueueCollectionTest.js',
 
 			//Homepage - Recommended Content
 			'spec/apps/homepage/external/content/external/recommended/baseTest.js',

@@ -16,7 +16,7 @@ define( function ( require ) {
 		var fetchCheck = function () {
 			App.when( collection.fetch( options ) ).done( function () {
 				remoteStub.callCount.should.be.equal( 1 );
-				options.success.callCount.should.be.equal( 0 );
+				options.success.callCount.should.be.equal( 1 );
 				App.request( 'homepage:userTags' ).should.be.equal( appModel );
 				Remoting.fetch( 'request' ).should.be.equal( sampleModel );
 			} );
@@ -28,7 +28,7 @@ define( function ( require ) {
 				'error'   : sinon.spy()
 			};
 
-			var Collection = require ( 'apps/homepage/external/content/external/recommended/collections/RecommendedCollection' );
+			var Collection = require ( 'apps/homepage/external/content3/external/recommended/collections/RecommendedCollection' );
 			collection  = new Collection();
 			sampleModel = [ [ { 'id' : 1 }, { 'id' : 2 } ], [ { 'id' : 3 } ] ];
 			appModel    = '3rd Grade,4th Grade,,ELA';

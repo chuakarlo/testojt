@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	var base   = require( 'apps/homepage/external/content/base' );
+	var base   = require( 'apps/homepage/external/content3/base' );
 	var expect = require( 'chai' ).expect;
 
 	describe ( 'Base Test for Content', function () {
@@ -12,7 +12,7 @@ define( function ( require ) {
 		} );
 
 		it ( 'external view should be equal to ContentCollectionView ', function () {
-			var itemView = require( 'apps/homepage/external/content/views/ContentCollectionView' );
+			var itemView = require( 'apps/homepage/external/content3/views/ContentCollectionView' );
 			expect( base.getExternalView ).to.be.equal( itemView );
 		} );
 

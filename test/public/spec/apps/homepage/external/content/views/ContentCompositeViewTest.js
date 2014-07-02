@@ -1,19 +1,24 @@
 define( function ( require ) {
 	'use strict';
 
-	var Backbone = require( 'backbone' );
-
-	var QueueModel           = Backbone.Model.extend( {} );
-	var ContentCompositeView = require ( 'apps/homepage/external/content/views/ContentCompositeView' );
-	var recommendedBase      = require( 'apps/homepage/external/content/external/recommended/base' );
+	var Backbone             = require( 'backbone' );
+	var App                  = require( 'App' );
+	var sinon = window.sinon;
+	var ContentCompositeView = require ( 'apps/homepage/external/content3/views/ContentCompositeView' );
+	var recommendedBase      = require( 'apps/homepage/external/content3/external/recommended/base' );
 
 	describe( 'ContentCompositeView', function () {
-		var queueModel;
 		var compositeView;
 
 		before ( function () {
-			queueModel    = new QueueModel( { 'baseObject' : recommendedBase } );
-			compositeView = new ContentCompositeView( { 'model' : queueModel } );
+			App.reqres.setHandler( 'pd360:available', sinon.spy() );
+			var model = new ( Backbone.Model.extend(  ) )();
+			model.attributes = recommendedBase;
+			compositeView = new ContentCompositeView( { 'model' :  model } );
+		} );
+
+		after( function () {
+			App.reqres.removeHandler( 'pd360:available' );
 		} );
 
 		it ( 'should have `template` property', function () {
@@ -26,10 +31,6 @@ define( function ( require ) {
 
 		it ( 'should have `className` property', function () {
 			compositeView.should.have.property( 'className' );
-		} );
-
-		it ( 'should have `itemViewOptions` property', function () {
-			compositeView.should.have.property( 'itemViewOptions' );
 		} );
 
 	} );

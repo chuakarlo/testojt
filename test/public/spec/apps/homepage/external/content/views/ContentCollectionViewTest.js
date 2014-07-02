@@ -9,7 +9,7 @@ define( function ( require ) {
 		var collectionView;
 
 		before ( function () {
-			var ContentCollectionView = require( 'apps/homepage/external/content/views/ContentCollectionView' );
+			var ContentCollectionView = require( 'apps/homepage/external/content3/views/ContentCollectionView' );
 			collectionView = new ContentCollectionView();
 		} );
 
@@ -22,7 +22,7 @@ define( function ( require ) {
 		} );
 
 		it( 'should have an itemView ', function () {
-			var Contentcompositeview = require( 'apps/homepage/external/content/views/ContentCompositeView' );
+			var Contentcompositeview = require( 'apps/homepage/external/content3/views/ContentCompositeView' );
 			expect( collectionView.itemView ).to.not.be.equal( undefined );
 			expect( collectionView.itemView ).to.be.equal( Contentcompositeview );
 		} );

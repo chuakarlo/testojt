@@ -26,7 +26,7 @@ define( function ( require ) {
 
 		before ( function () {
 
-			var Collection = require ( 'apps/homepage/external/content/external/your-queue/collections/QueueCollection' );
+			var Collection = require ( 'apps/homepage/external/content3/external/queue/collections/QueueCollection' );
 			collection   = new Collection();
 			remotingStub = sinon.stub( Remoting , 'fetch' ).returns( [ { id : 1 } ] );
 		} );
