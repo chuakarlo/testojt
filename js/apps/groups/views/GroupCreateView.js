@@ -239,7 +239,12 @@ define( function ( require ) {
 						// we have to then join it, and update the search index
 						// so we can search for the group. Group images are also
 						// uploaded during this time.
-						App.when( model.join( persId ), model.updateSearchIndex(), this.uploadImages( model ) )
+						App.when(
+							model.join( persId ),
+							model.updateSearchIndex(),
+							model.createPrivileges( persId ),
+							this.uploadImages( model )
+						)
 							.done( function () {
 
 								l.stop();

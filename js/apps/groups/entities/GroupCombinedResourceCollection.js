@@ -13,7 +13,7 @@ define( function ( require ) {
 
 			'comparator' : function ( m ) {
 				var created = m.get( 'Created' );
-				return -moment( created, 'MMM, DD YYYY HH:MM:SS' );
+				return -moment( created, 'MMM, DD YYYY HH:mm:ss' );
 			}
 
 		} );

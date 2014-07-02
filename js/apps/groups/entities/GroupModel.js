@@ -379,6 +379,26 @@ define( function ( require ) {
 						'description' : options.description
 					}
 				} );
+			},
+
+			/**
+			* Create privileges for a specific user for this group
+			* @param {Integer} persId
+			*	The ID of the user you want to create privileges
+			* @returns {Deferred}
+			*/
+			'createPrivileges' : function ( persId ) {
+				var data = {
+					'path'       : 'com.schoolimprovement.pd360.dao.core.GroupPrivilegesGateway',
+					'objectPath' : 'com.schoolimprovement.pd360.dao.core.GroupPrivileges',
+					'method'     : 'create',
+					'args'       : {
+						'LicenseId'   : this.get( 'LicenseId' ),
+						'PersonnelId' : persId
+					}
+				};
+
+				return Remoting.fetch( data );
 			}
 
 		} );
