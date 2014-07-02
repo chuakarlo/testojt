@@ -10,11 +10,23 @@ define( function ( require ) {
 
 		'template' : _.template( template ),
 
+		'ui' : {
+			'communityUrl' : '.community-share-url'
+		},
+
+		'events' : {
+			'click @ui.communityUrl' : 'selectUrl'
+		},
+
 		'templateHelpers' : function () {
 			return {
 				'title' : this.options.title,
 				'url'   : this.options.url
 			};
+		},
+
+		'selectUrl' : function () {
+			this.ui.communityUrl.selectText();
 		}
 
 	} );
