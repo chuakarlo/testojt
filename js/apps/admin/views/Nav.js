@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
+	var $          = require( 'jquery' );
 	var Backbone   = require( 'backbone' );
 	var App        = require( 'App' );
 
@@ -15,8 +16,14 @@ define( function ( require ) {
 		'template' : _.template( template ),
 
 		'ui' : {
-			'main'    : '#admin-main',
-			'subpage' : '#admin-subpage'
+			'main'              : '#admin-main',
+			'subpage'           : '#admin-subpage',
+			'frequent'          : '.js-frequent li:not(.disabled) a',
+			'frequentContainer' : '.js-frequent'
+		},
+
+		'events' : {
+			'click @ui.frequent' : 'selectFrequent'
 		},
 
 		'regions' : {
@@ -48,6 +55,7 @@ define( function ( require ) {
 			if ( value && value !== '' ) {
 				// navigate to the appropriate flash subpage
 				this.navigate( { 'subPage' : value } );
+				this.updateFrequentStatus( value );
 			} else {
 				// hide flash
 				this.hidePD360();
@@ -57,6 +65,11 @@ define( function ( require ) {
 		'initialize' : function ( options ) {
 			this.model = new Backbone.Model();
 			this.tools = options.tools;
+
+			// find if sinetTools exists
+			this.sinetTools = _.find( this.tools.models, function ( model ) {
+				return model.id === 'adminSinet';
+			} );
 		},
 
 		'onRender' : function () {
@@ -74,6 +87,13 @@ define( function ( require ) {
 					}
 				}
 			} );
+		},
+
+		'onShow' : function () {
+			// remove sinet frequent tools if the user doesn't have sinet access
+			if ( !this.sinetTools ) {
+				this.ui.frequentContainer.remove();
+			}
 		},
 
 		'showSubPages' : function ( pages ) {
@@ -122,6 +142,9 @@ define( function ( require ) {
 		},
 
 		'toolChanged' : function ( model, value ) {
+			// hide active pills
+			this.updateFrequentStatus();
+
 			if ( value === 'adminLibrary' ) {
 
 				this.showSubPages( 'admin:pages:on-demand' );
@@ -139,6 +162,36 @@ define( function ( require ) {
 				this.hideSubPages();
 			}
 
+		},
+
+		'selectFrequent' : function ( event ) {
+			event.preventDefault();
+
+			// Change to SINet tools if not already selected
+			if ( this.ui.main.val() !== 'adminSinet' ) {
+				this.ui.main.val( 'adminSinet' );
+				this.ui.main.trigger( 'change' );
+			}
+
+			var selectedTool = $( event.currentTarget ).attr( 'data-tool' );
+
+			// Change to Selected Tool
+			if ( this.ui.subpage !== selectedTool ) {
+				this.ui.subpage.val( selectedTool );
+				this.ui.subpage.trigger( 'change' );
+			}
+
+		},
+
+		'updateFrequentStatus' : function ( selectedTool ) {
+			// jquery selector breaks on empty string
+			selectedTool = selectedTool || false;
+
+			// remove currently selected tool
+			this.ui.frequent.parent().removeClass( 'active' );
+
+			// highlight the current tool
+			$( '[data-tool=' + selectedTool + ']' ).parent().addClass( 'active' );
 		}
 
 	} );
