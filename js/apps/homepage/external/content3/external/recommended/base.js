@@ -97,7 +97,11 @@ define( function ( require ) {
 			'details' : _.template( emptyRecommendedTemplate )
 		},
 		'afterRender'  : function ( collection ) {
+
 			var result = App.request( 'homepage:content:recommended:total' );
+			if ( result.fetch < 0 ) {
+				result.fetch = 0;
+			}
 			$( '#recommended-count' ).html( result.fetch );
 		},
 		'onLastNav'    :  function ( $carousel ) {
