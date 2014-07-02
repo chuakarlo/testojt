@@ -8,10 +8,9 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var template   = require( 'text!apps/homepage/external/content3/templates/contentCompositeView.html' );
 
-	require( 'homepage/utils/utils' );
-
 	return Marionette.CompositeView.extend( {
 		'initialize' : function ( options ) {
+			this.itemView = App.Homepage.Utils.thumbnails;
 			var self = this;
 			new this.model.attributes.collection().fetch( {
 				'success' : function ( collection ) {
@@ -24,7 +23,6 @@ define( function ( require ) {
 			} );
 		},
 		'className' : 'vid-container',
-		'itemView'  : App.Homepage.Utils.thumbnails,
 		'emptyView' : App.Common.LoadingView,
 		'template'  : _.template( template ),
 		'templateHelpers' : function () {
