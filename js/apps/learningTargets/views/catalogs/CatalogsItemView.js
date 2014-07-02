@@ -12,7 +12,8 @@ define( function ( require ) {
 		'tagName'  : 'li',
 
 		'ui' : {
-			'drawerToggleButton' : '.lt-toggle-btn'
+			'drawerToggleButton' : '.lt-toggle-btn',
+			'spanhere'           : '.catalog-wrapper'
 		},
 
 		'events' : {
@@ -47,6 +48,12 @@ define( function ( require ) {
 		},
 
 		'onRender' : function () {
+			if ( this.model.catalogTraining === 'catalog-training' ) {
+				this.ui.spanhere.append( '<button class="' + this.model.catalogTraining + '-anchor btn-link">' + this.model.get( 'ResourceName' ) + '</button>' );
+			}else {
+				this.ui.spanhere.append( '<a href="' + this.model.catalogLinks + '" class="' + this.model.catalogTraining + '-anchor">' + this.model.get( 'ResourceName' ) + '</a>' );
+			}
+
 			$( '#modal-content' ).on( 'show.bs.modal', function () {
 				$( '#footer' ).css( 'position','relative' );
 			} );
