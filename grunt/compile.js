@@ -36,7 +36,7 @@ module.exports = function ( grunt ) {
 	} );
 
 	grunt.registerTask( 'compile', 'compiles f/e', function () {
-		grunt.task.run( [ 'compile:js', 'compile:less', 'bust' ] );
+		grunt.task.run( [ 'compile:js', 'compile:less', 'bust', 'meta-data' ] );
 	} );
 
 	grunt.registerTask( 'compile:js', 'compiles f/e with requirejs optimizer (r.js)', [ 'requirejs' ] );
