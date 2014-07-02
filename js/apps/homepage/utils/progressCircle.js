@@ -2,8 +2,8 @@ define( function () {
 	'use strict';
 
 	var defaultOptions = {
-		'circleSize'      : 32,
-		'thickness'       : 3,
+		'circleSize'      : 25,
+		'thickness'       : 4,
 		'showPercentText' : true
 	};
 
