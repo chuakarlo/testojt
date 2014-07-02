@@ -5,7 +5,8 @@ define( function ( require ) {
 	var OPTIONS_DEFAULT = {
 		'interval'  : false,
 		'circular'  : false,
-		'onLastNav' : function () {}
+		'onLastNav' : function () {},
+		'firstLoad' : false
 	};
 
 	function applySwipe ( $carousel ) {
@@ -22,11 +23,38 @@ define( function ( require ) {
 		} );
 	}
 
+	function handleNavBars ( $carousel, options ) {
+
+		var $rightControl = $carousel.find( '.right.carousel-control' );
+		var $leftControl  = $carousel.find( '.left.carousel-control' );
+		var $active       = $carousel.find( '.item.active' );
+
+		// if the last slide,
+		if ( !$active.next().length )  {
+			$rightControl.hide();
+			if ( options ) {
+				options.onLastNav( $carousel );
+			}
+		} else {
+			$rightControl.show();
+		}
+
+		// if the first slide
+		if ( !$active.prev().length )  {
+			$leftControl.hide();
+		} else {
+			$leftControl.show();
+		}
+	}
+
 	return {
 
+		'carouselHandleNavBars' : function ( $carousel ) {
+			handleNavBars( $carousel );
+		},
+		//should only be called once
 		'carouselApplySettings' : function ( $carousel, options ) {
 			options = $.extend( { }, OPTIONS_DEFAULT, options );
-
 			$carousel.carousel( {
 				'interval' : options.interval
 			} );
@@ -36,31 +64,11 @@ define( function ( require ) {
 			if ( options.circular ) {
 				return; //early return so that code below will not be performed
 			}
-
-			var $rightControl = $carousel.find( '.right.carousel-control' );
 			var $leftControl  = $carousel.find( '.left.carousel-control' );
-
-			// hide the left control (first slide)
 			$leftControl.hide();
 
 			$carousel.bind( 'slid.bs.carousel', function () {
-				var $active = $carousel.find( '.item.active' );
-
-				// if the last slide,
-				if ( !$active.next().length )  {
-					$rightControl.hide();
-					options.onLastNav( $carousel );
-				} else {
-					$rightControl.show();
-				}
-
-				// if the first slide
-				if ( !$active.prev().length )  {
-					$leftControl.hide();
-				} else {
-					$leftControl.show();
-				}
-
+				handleNavBars( $carousel, options );
 			} );
 		}
 	};
