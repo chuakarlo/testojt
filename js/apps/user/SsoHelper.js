@@ -50,6 +50,13 @@ define( function ( require ) {
 		}
 
 		//--------------------------
+		// showGroup
+		//--------------------------
+		if ( params.SHOWGROUP ) {
+			return 'groups/' + params.SHOWGROUP;
+		}
+
+		//--------------------------
 		// communities
 		//--------------------------
 		if ( params.LOCTYPE && params.LOC ) {
