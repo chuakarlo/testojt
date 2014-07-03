@@ -67,7 +67,7 @@ define( function ( require ) {
 
 			var msg = String( stripHtml( this.ui.commentCreate.val() ) );
 
-			if ( msg === '' ) {
+			if ( msg === '' || !msg.replace( / /g,'' ).length ) {
 				this.showInputError( 'Must contain a message' );
 				return;
 			}

@@ -54,9 +54,6 @@ define( function ( require ) {
 				this.model.get( 'replies' )
 			);
 
-			// strip html before deciding whether to show goals section or not
-			this.model.set( 'Message', stripHtml( this.model.get( 'Message' ) ) );
-
 			this.user = options.user;
 
 		},
@@ -172,7 +169,8 @@ define( function ( require ) {
 
 			e.preventDefault();
 
-			if ( this.ui.commentReply.val() === '' ) {
+			var msg = this.ui.commentReply.val();
+			if ( msg === '' || !msg.replace( / /g,'' ).length ) {
 
 				var error = 'Reply is required';
 				this.showInputError( error );
@@ -191,7 +189,7 @@ define( function ( require ) {
 				'MessageThreadId' : lastComment.get( 'MessageThreadId' ),
 				'MessageId'       : lastComment.get( 'MessageId' ),
 				'LicenseId'       : lastComment.get( 'LicenseId' ),
-				'Message'         : this.ui.commentReply.val(),
+				'Message'         : stripHtml( this.ui.commentReply.val() ),
 				'Creator'         : Session.personnelId(),
 				'CreatorAvatar'   : this.user.Avatar
 			}, {

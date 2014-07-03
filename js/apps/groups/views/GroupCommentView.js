@@ -12,7 +12,6 @@ define( function ( require ) {
 	var usersTemplate      = require( 'text!../templates/usersGroupCommentView.html' );
 	var MiniPersonnelModel = require( 'common/entities/MiniPersonnel' );
 	var MiniPersonnelView  = require( 'common/views/MiniPersonnel' );
-	var stripHtml          = require( 'common/helpers/stripHtml' );
 
 	var Autolinker = require( 'autolinker' );
 
@@ -34,11 +33,6 @@ define( function ( require ) {
 		'events' : {
 			'click @ui.removeReply' : 'removeReply',
 			'click @ui.creator'     : 'showMiniPersonnel'
-		},
-
-		initialize : function () {
-			// strip html before deciding whether to show goals section or not
-			this.model.set( 'Message', stripHtml( this.model.get( 'Message' ) ) );
 		},
 
 		'onRender' : function () {

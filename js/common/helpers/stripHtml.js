@@ -16,6 +16,9 @@ define( function ( require ) {
 		var noJsHtml = makeHtml.replace( /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '' );
 
 		// remove html
+		// CAUTION! This will return sanitized HTML as valid HTML
+		// Example : &lt;script&gt;alert(123)&lt;/script&gt;
+		// becomes <script>alert(123)</script>
 		var text = $( noJsHtml ).text();
 
 		return text;
