@@ -15,17 +15,18 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 
-		'template'   : _.template( template ),
+		'template' : _.template( template ),
 
-		'className'  : 'upload-resource',
+		'className' : 'upload-resource',
 
 		'ui' : {
 			'descInput'     : '.file-description',
 			'urlInput'      : 'input[name="url-input"]',
 			'fileInput'     : 'input[name="user_file"]',
 			'radioInput'    : 'input[name="upload-type"]',
-			'linkContainer' : '.upload-link-container',
-			'fileContainer' : '.upload-file-container'
+			'linkContainer' : '.js-upload-link-container',
+			'fileContainer' : '.js-upload-file-container',
+			'fileUpload'    : '.js-upload-file-wrapper'
 		},
 
 		'events' : {
@@ -39,7 +40,7 @@ define( function ( require ) {
 
 		},
 
-		'updateInputDisplay' : function ( ev ) {
+		'updateInputDisplay' : function ( event ) {
 			if ( this.ui.radioInput.filter( ':checked' ).val() === 'file' ) {
 				this.ui.linkContainer.hide();
 				this.ui.fileContainer.show();
@@ -62,7 +63,7 @@ define( function ( require ) {
 			} );
 
 			// setup the fineuploader
-			this.ui.fileContainer.fineUploader( {
+			this.ui.fileUpload.fineUploader( {
 
 				'autoUpload' : false,
 
@@ -113,10 +114,10 @@ define( function ( require ) {
 			var data = { };
 
 			data.fileDescription = stripHtml( this.ui.descInput.val() );
-			data.resourceType = this.ui.radioInput.filter( ':checked' ).val();
+			data.resourceType    = this.ui.radioInput.filter( ':checked' ).val();
 
 			var l = Ladda.create(
-				document.querySelector( '.upload-actions > .submit-btn' )
+				document.querySelector( '.submit-btn' )
 			);
 
 			l.start();
@@ -124,14 +125,14 @@ define( function ( require ) {
 			if ( data.resourceType === 'file' ) {
 				// Handle FILES
 
-				this.ui.fileContainer.fineUploader( 'setParams', {
+				this.ui.fileUpload.fineUploader( 'setParams', {
 					'type'        : data.resourceType,
 					'description' : data.fileDescription,
 					'personnelId' : parseInt( App.request( 'session:personnelId' ) ),
 					'groupId'     : this.model.get( 'LicenseId' )
 				} );
 
-				this.ui.fileContainer.on( 'complete', _.bind( function ( event, id, name, res ) {
+				this.ui.fileUpload.on( 'complete', _.bind( function ( event, id, name, res ) {
 					if ( res.success ) {
 						l.stop();
 						App.navigate( 'groups/' + this.model.get( 'LicenseId' ) + '/resources', {
@@ -146,8 +147,8 @@ define( function ( require ) {
 				}, this ) );
 
 				var url = 'com/schoolimprovement/pd360/dao/groups/GroupResourceUpload.cfc?method=UploadFile';
-				this.ui.fileContainer.fineUploader( 'setEndpoint', url );
-				this.ui.fileContainer.fineUploader( 'uploadStoredFiles' );
+				this.ui.fileUpload.fineUploader( 'setEndpoint', url );
+				this.ui.fileUpload.fineUploader( 'uploadStoredFiles' );
 			} else {
 				// Handle LINKS
 

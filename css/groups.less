@@ -223,10 +223,10 @@
 		text-align : center;
 	}
 
-	.wall-news {	
+	.wall-news {
 		word-break : break-word;
 		text-align : justify;
-	}	
+	}
 }
 
 #group {
@@ -382,10 +382,11 @@ a.link:hover {
 }
 
 /************************************************************\
-					Groups Creation Form
+			Groups Forms - Creation, Upload Resource
 \************************************************************/
 
-.group-creation {
+.group-creation,
+.upload-resource {
 
 	.qq-upload-list {
 		padding-left : 10px;
@@ -395,108 +396,4 @@ a.link:hover {
 		}
 	}
 
-}
-
-
-
-/************************************************************\
-					Upload Resource Form
-\************************************************************/
-
-.upload-form-content {
-	background     : @cn-gray-light;
-	padding-bottom : 5%;
-	padding-top    : 5%;
-
-	.upload-form {
-		position    : relative;
-		left        : 36%;
-		top         : 10%;
-		width       : 30%;
-		line-height : 1.5;
-	}
-
-	span {
-		color : @gray-light;
-	}
-
-	.upload-resource-type {
-		margin-top : 6%;
-	}
-
-	.radio-upload {
-		height : 16px;
-		width  : 17px;
-	}
-
-	.upload-content-file {
-		position   : relative;
-		margin-top : 3%;
-	}
-
-	.upload-content-link {
-		display    : none;
-		margin-top : 3%;
-		width      : 75%;
-	}
-
-	.input-validation:invalid {
-		border : 1px solid red!important;
-	}
-
-	.resource-description {
-		margin-top : 6%;
-
-		textarea {
-			margin-top : 4%;
-			resize     : none;
-		}
-	}
-
-	.fileinput-button {
-		position   : relative;
-		overflow   : hidden;
-		background : @cn-gray-light;
-		color      : @gray-light;
-		min-width  : 25%;
-	}
-
-	.file-error {
-		margin-top : 3%;
-		span {
-			color : #fc4040;
-		}
-	}
-
-
-	.file-input {
-		position : relative;
-		display  : none;
-	}
-}
-
-.groups-form-content-bottom {
-	background : @gray-dark;
-	height     : 70px;
-
-	.upload-actions {
-		position : relative;
-		left     : 70%;
-		top      : 28%;
-
-		button {
-			min-width     : 14%;
-			font-size     : 100%;
-			padding-left  : 0.5%;
-			padding-right : 0.5%;
-		}
-		.cancel-btn {
-			background   : @gray-dark;
-			color        : @gray-light;
-			border-color : @gray-light;
-		}
-		.cancel-btn:hover {
-			background : @gray-darker;
-		}
-	}
 }
