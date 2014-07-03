@@ -1,0 +1,104 @@
+define( function ( require ) {
+	'use strict';
+
+	var $   = require( 'jquery' );
+	var App = require( 'App' );
+
+	function updateCount ( increment ) {
+		var oldCount = App.request( 'homepage:content:queue:total' );
+		$( '#your-queue-count' ).html( oldCount + increment );
+		App.reqres.setHandler( 'homepage:content:queue:total', function () {
+			return oldCount + increment;
+		} );
+	}
+
+	var emptyMod = {
+		'set' : function () { }
+	};
+
+	function deQueueMod ( mod ) {
+		mod = mod ? mod : emptyMod;
+		mod.set( { 'queued' : false } );
+	}
+
+	function dequeueRecommendedModel ( rows, model ) {
+		var id     = model.get( 'id' );
+		var length = rows.innerCollections.length;
+		var index  = 0;
+		var mod    = false;
+		while ( index < length && !mod ) {
+			mod = rows.innerCollections[ index ].get( id );
+			index++;
+		}
+		deQueueMod( mod );
+	}
+
+	function getLastPosition ( rows, length, id ) {
+		var index    = 0;
+		while ( index < length && !rows.innerCollections[ index ].get( id ) ) {
+			index ++;
+		}
+		return index;
+	}
+
+	function pushLastPosition ( rows, index ) {
+		while ( rows.innerCollections[ index + 1 ] ) {
+			var firstModel = rows.innerCollections[ index + 1 ].at( 0 );
+			rows.innerCollections[ index ].add( firstModel );
+			rows.innerCollections[ index + 1 ].remove( firstModel );
+			index += 1;
+		}
+		return index;
+	}
+
+	function removeContainer ( rows, index ) {
+		if ( rows.innerCollections[ index ].length === 0 ) {
+			rows.remove( rows.at( index ) );
+			rows.innerCollections.splice( index, 1 );
+		}
+	}
+
+	function setActive ( rows ) {
+		if ( $( '#your-queue-pd360-slide-' + rows.contentSize + ' .active' ).length < 1 ) {
+			$( '#your-queue-pd360-slide-' + rows.contentSize + ' .item' ).first().addClass( 'active' );
+		}
+	}
+
+	function dequeueQueueModel ( rows, model ) {
+		//collection for each item ( rows )
+		var id     = model.get( 'id' );
+		var length = rows.innerCollections.length;
+		var index  = getLastPosition( rows, length, id );
+
+		rows.innerCollections[ index ].remove( model );
+		index = pushLastPosition( rows, index );
+		removeContainer( rows, index );
+		setActive( rows );
+		App.Homepage.Utils.carouselHandleNavBars( $( '#your-queue-pd360-slide-' + rows.contentSize + '.carousel' ) );
+	}
+
+	function setRecommendedQueue ( model ) {
+		if ( App.reqres.hasHandler( 'homepage:content:recommended:carousel' ) ) {
+			App.request( 'homepage:content:recommended:carousel' ).forEach( function ( rows ) {
+				dequeueRecommendedModel( rows, model );
+			} );
+		}
+	}
+
+	function setYourQueueQueue ( model ) {
+		if ( App.reqres.hasHandler( 'homepage:content:your-queue:carousel' ) ) {
+			App.request( 'homepage:content:your-queue:carousel' ).forEach( function ( rows ) {
+				dequeueQueueModel( rows, model );
+			} );
+		}
+	}
+
+	App.vent.on( 'common:dequeued', function ( model ) {
+		App.Homepage.Utils.proceedHomeAction( function () {
+			setRecommendedQueue( model );
+			setYourQueueQueue( model );
+			updateCount ( -1 );
+		} );
+	} );
+
+} );
