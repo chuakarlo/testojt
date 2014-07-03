@@ -34,11 +34,7 @@ define( function ( require ) {
 	return Backbone.Collection.extend( {
 
 		'fetch' : function ( options ) {
-			if ( App.reqres.hasHandler( 'homepage:content:queue:fetch' ) ) {
-				options.success( new Backbone.Collection( App.request( 'homepage:content:queue:fetch' ) ) );
-			} else {
-				fetchLive( options );
-			}
+			fetchLive( options );
 		}
 	} );
 } );
