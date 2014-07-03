@@ -118,8 +118,7 @@ define( function ( require ) {
 			} );
 
 			App.reqres.setHandler( 'contentNavigation:isCorrectRoute', function () {
-
-				return Backbone.history.fragment.match( /resources\/videos/ );
+				return Backbone.history.fragment.match( /resources\/videos$/ );
 			} );
 
 			App.reqres.setHandler( 'contentNavigation:hasPendingRequest', function () {
