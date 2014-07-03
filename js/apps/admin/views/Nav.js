@@ -87,6 +87,7 @@ define( function ( require ) {
 					}
 				}
 			} );
+			this.ui.frequentContainer.hide();
 		},
 
 		'onShow' : function () {
@@ -145,21 +146,25 @@ define( function ( require ) {
 			// hide active pills
 			this.updateFrequentStatus();
 
+			// hide frequent sinet tools
+			this.ui.frequentContainer.hide();
+
+			// reset subPage selection
+			this.hideSubPages();
+
 			if ( value === 'adminLibrary' ) {
 
 				this.showSubPages( 'admin:pages:on-demand' );
 
 			} else if ( value === 'adminSinet' ) {
 
+				this.ui.frequentContainer.show();
 				this.showSubPages( 'admin:pages:sinet' );
 
 			} else if ( value === 'adminCommunity' || value === 'adminCourse' || value === 'adminLivebook' ) {
 
-				this.hideSubPages();
 				this.navigate();
 
-			} else {
-				this.hideSubPages();
 			}
 
 		},
