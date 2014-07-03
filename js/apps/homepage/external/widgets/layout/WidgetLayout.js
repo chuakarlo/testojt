@@ -113,7 +113,7 @@ define( function ( require ) {
 			$( '#widgets-settings-panel-wrapper' ).focus().css( 'outline', 'none' );
 		},
 
-		'showMobileWidgetSettings' : function ( e ) {
+		'showMobileWidgetSettings' : function () {
 			var panelBtn            = $( '#xs-widget-settings' );
 			var widgetCompositeView = new MobileWidgetCompositeView( {
 				'collection'                 : this.widgetCollection,
@@ -138,6 +138,7 @@ define( function ( require ) {
 			var panelBtn = $( '#xs-widget-settings' );
 			this.userWidgetCollection.reset( this.actualUserWidgetCollection.models );
 			this.mobileWidgetSettings.close();
+			this.$el.find( '#widget-settings-overlay' ).hide();
 			this.changePanelStatus( panelBtn, panelStatuses[ 0 ], panelStatuses[ 1 ] );
 		},
 
@@ -176,6 +177,16 @@ define( function ( require ) {
 
 		'focusAction' : function ( e ) {
 			$( '#widgets-settings-panel-wrapper' ).focus().css( 'outline', 'none' );
+		},
+
+		'onRender' : function () {
+			var self = this;
+			App.reqres.setHandler( 'homepage:showWidgetPanel', function () {
+				return self;
+			} );
+			App.reqres.setHandler( 'homepage:showWidgetPanel', function () {
+				return self;
+			} );
 		}
 
 	} );

@@ -21,6 +21,17 @@ define( function ( require ) {
 				'makeUseMsg2' : App.Homepage.Utils.message.makeUseMsg2
 			};
 		};
+		view.onShow = function () {
+			view.$el.find( '.hidden-xs' ).on( 'click touchstart', function () {
+				App.request( 'homepage:showWidgetPanel' ).showWidgetSettingsPanel();
+				return false;
+			} );
+
+			view.$el.find( '.visible-xs' ).on( 'click touchstart', function () {
+				App.request( 'homepage:showWidgetPanel' ).showMobileWidgetSettings();
+				return false;
+			} );
+		};
 	}
 
 	return Marionette.CompositeView.extend( {
