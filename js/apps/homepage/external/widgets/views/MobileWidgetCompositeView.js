@@ -144,7 +144,7 @@ define( function ( require ) {
 
 		'showMessageToUser' : function ( message, type ) {
 			App.vent.trigger( 'flash:message', {
-				'message' : App.Homepage.Utils.message,
+				'message' : message,
 				'type'    : type
 			} );
 		},
