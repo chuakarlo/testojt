@@ -57,6 +57,13 @@ define( function ( require ) {
 		}
 
 		//--------------------------
+		// showGroup
+		//--------------------------
+		if ( params.REGCODE && params.REGEMAIL ) {
+			return 'groups';
+		}
+
+		//--------------------------
 		// communities
 		//--------------------------
 		if ( params.LOCTYPE && params.LOC ) {
@@ -112,7 +119,7 @@ define( function ( require ) {
 		if ( params.SHOWPERFOCUST || params.SHOWPERFOCUSA ) {
 			var observationId = params.SHOWPERFOCUST || params.SHOWPERFOCUSA;
 
-			return 'resources/learning/observations/' + observationId;
+			return 'resources/learning/observations/' + observationId + '/legacy';
 		}
 
 		//--------------------------
@@ -128,7 +135,7 @@ define( function ( require ) {
 		if ( params.COURSEID || params.SHOWCOURSE ) {
 			var courseId = params.COURSEID || params.SHOWCOURSE;
 
-			return 'resources/learning/courses/' + courseId;
+			return 'resources/learning/courses/' + courseId + '/legacy';
 		}
 
 		return;
