@@ -16,15 +16,15 @@ define( function ( require ) {
 		},
 		'mediumSlide' : {
 			'size' : 'md',
-			'max'  : 3
+			'max'  : 4
 		},
 		'smallSlide'  : {
 			'size' : 'sm',
-			'max'  : 2
+			'max'  : 3
 		},
 		'xSmallSlide' : {
 			'size' : 'xs',
-			'max'  : 1
+			'max'  : 2
 		}
 	};
 

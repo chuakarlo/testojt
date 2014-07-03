@@ -59,7 +59,22 @@
 	.carousel.slide {
 		.carousel-inner-wrapper {
 			padding : 0 15px;
+
 			.carousel-inner {
+				.row {
+					display          : -webkit-box;
+					display          : -moz-box;
+					display          : -ms-box;
+					display          : -o-box;
+					display          : box;
+					-webkit-box-pack : center;
+					-moz-box-pack    : center;
+					-ms-box-pack     : center;
+					-o-box-pack      : center;
+					box-pack         : center;
+					width            : 100%;
+					height           : 100%;
+				}
 				.item {
 					-webkit-transition : 0.3s ease-in-out left;
 					-moz-transition    : 0.3s ease-in-out left;
@@ -80,7 +95,9 @@
 	// overwrite bootstrap grid
 	.carousel-list( @width ) {
 		li {
-			width : @width;
+			width     : @width;
+			min-width : 275px;
+			max-width : 280px
 		}
 	}
 	.carousel.visible-lg {
@@ -88,15 +105,15 @@
 	}
 
 	.carousel.visible-md {
-		.carousel-list( 33.3333% );
+		.carousel-list( 25% );
 	}
 
 	.carousel.visible-sm {
-		.carousel-list( 50% );
+			.carousel-list( 33.3333% );
 	}
 
 	.carousel.visible-xs {
-		.carousel-list( 100% );
+		.carousel-list( 50% );
 	}
 
 	.carousel-control {
