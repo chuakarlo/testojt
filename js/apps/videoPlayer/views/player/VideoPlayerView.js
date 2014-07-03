@@ -44,7 +44,7 @@ define( function ( require ) {
 					url += folder + '/';
 					url += file + bitrates + extension;
 				} else {
-					url = getConfig( 'CDNURL' ) + '/PD360/media/video/ugc/' + this.FileName;
+					url = getConfig( 'uuServers' ) + this.FileName;
 				}
 
 				return url;
