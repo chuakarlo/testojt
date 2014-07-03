@@ -4,7 +4,6 @@ define( function ( require ) {
 	var App               = require( 'App' );
 	var Backbone          = require( 'backbone' );
 	var Marionette        = require( 'marionette' );
-	var $                 = require('jquery');
 	var NavCollectionView = require( 'user/views/settings/nav/NavCollectionView' );
 	var ProfileView       = require( 'user/views/settings/profile/ProfileView' );
 
@@ -63,6 +62,7 @@ define( function ( require ) {
 		Mod.ContentController = Mod.BaseController.extend( {
 
 			'showPage' : function ( page ) {
+				this.page = page;
 
 				App.flashMessage.close();
 
@@ -113,7 +113,9 @@ define( function ( require ) {
 						'model'        : personnel
 					} );
 
-					this.layout.content.show( profileView );
+					if ( this.page === 'profile' ) {
+						this.layout.content.show( profileView );
+					}
 
 				}.bind( this ) ).fail( App.errorHandler.bind( App, { 'region' : this.layout.content } ) );
 
@@ -133,13 +135,15 @@ define( function ( require ) {
 			'showReports' : function () {
 				var pd360Loaded = App.request( 'pd360:loaded' );
 				var loadingView = new App.Common.LoadingView();
+
 				this.layout.content.show( loadingView );
 
 				App.when( pd360Loaded ).done( function () {
+
 					loadingView.close();
+
 					App.request( 'pd360:navigate', 'home', 'homePersonalReports' );
-					$( '#nav-search' ).focus();
-					this.layout.$el.find( '#setting-nav-header' ).css( 'outline', 0 ).attr( 'tabindex', 1000 ).focus();
+
 				}.bind( this ) );
 
 			},
@@ -147,13 +151,15 @@ define( function ( require ) {
 			'showLicenses' : function () {
 				var pd360Loaded = App.request( 'pd360:loaded' );
 				var loadingView = new App.Common.LoadingView();
+
 				this.layout.content.show( loadingView );
 
 				App.when( pd360Loaded ).done( function () {
+
 					loadingView.close();
+
 					App.request( 'pd360:navigate', 'home', 'homeLicenses' );
-					$( '#nav-search' ).focus();
-					this.layout.$el.find( '#setting-nav-header' ).css( 'outline', 0 ).attr( 'tabindex', 1000 ).focus();
+
 				}.bind( this ) );
 			}
 
