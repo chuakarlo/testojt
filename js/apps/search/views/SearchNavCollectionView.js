@@ -1,4 +1,4 @@
-define( function( require ) {
+define( function ( require ) {
 	'use strict';
 
 	var Marionette        = require( 'marionette' );
@@ -8,8 +8,7 @@ define( function( require ) {
 
 		'tagName'   : 'ul',
 		'className' : 'nav nav-tabs nav-tabs-right',
-
-		'itemView'  : SearchNavItemView,
+		'itemView'  : SearchNavItemView
 
 	} );
 } );

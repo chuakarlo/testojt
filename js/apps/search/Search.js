@@ -58,9 +58,11 @@ define( function ( require ) {
 						);
 					}
 
-					if ( !this.navController ) {
+					// update navController if one doesn't exist or the query param changes
+					if ( !this.navController || this.navController.query !== query ) {
 						this.navController = new Search.Show.NavController( {
-							'layout' : this.layout
+							'layout' : this.layout,
+							'query'  : query
 						} );
 					}
 

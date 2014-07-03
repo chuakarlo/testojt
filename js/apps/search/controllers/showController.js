@@ -41,19 +41,23 @@ define( function ( require ) {
 				this.navCollection.set( [
 					{
 						'id'     : 'Groups',
-						'filter' : 'Groups'
+						'filter' : 'Groups',
+						'query'  : this.options.query
 					},
 					{
 						'id'     : 'Communities',
-						'filter' : 'Communities'
+						'filter' : 'Communities',
+						'query'  : this.options.query
 					},
 					{
 						'id'     : 'Videos',
-						'filter' : 'VideosAll'
+						'filter' : 'VideosAll',
+						'query'  : this.options.query
 					},
 					{
 						'id'     : 'All',
-						'filter' : 'All'
+						'filter' : 'All',
+						'query'  : this.options.query
 					}
 				] );
 
