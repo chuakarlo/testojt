@@ -223,7 +223,14 @@ define( function ( require ) {
 					}
 				};
 
-				return Remoting.fetch( data );
+				var fetch = Remoting.fetch( data );
+				// Set a local variable once the request is done so we have
+				// access at later times
+				fetch.done( _.bind( function ( res ) {
+					this.isAdmin = res[ 0 ];
+				}, this ) );
+
+				return fetch;
 
 			},
 

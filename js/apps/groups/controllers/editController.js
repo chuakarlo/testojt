@@ -25,13 +25,27 @@ define( function ( require ) {
 					}
 				};
 
+				var removeAdminRequest = {
+					'path'       : 'com.schoolimprovement.pd360.dao.core.GroupPrivilegesGateway',
+					'method'     : 'deleteByObj',
+					'objectPath' : 'com.schoolimprovement.pd360.dao.core.GroupPrivileges',
+					'args'       : {
+						'PersonnelId' : $.cookie( 'PID' ) || null,
+						'LicenseId'   : model.attributes.LicenseId
+					}
+				};
+
 				var requests     = [ leaveGroupRequest ];
 				var fetchingData = Remoting.fetch( requests );
 
 				App.when( fetchingData ).done( function ( results ) {
-
-					App.navigate( 'groups', { 'trigger' : true } );
-
+					if ( model.isAdmin === true ) {
+						App.when( Remoting.fetch( [ removeAdminRequest ] ) ).done( function ( results ) {
+							App.navigate( 'groups', { 'trigger' : true } );
+						} ).fail( App.errorHandler );
+					} else {
+						App.navigate( 'groups', { 'trigger' : true } );
+					}
 				} ).fail( App.errorHandler );
 
 			},
