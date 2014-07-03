@@ -32,7 +32,7 @@ define( function ( require ) {
 						var proc = processResult( result.queue, collection );
 						var fetchedColl = proc.coll;
 						var newActual = result.fetch + fetchedColl.length - proc.cuts;
-						$( '#recommended-count' ).html( newActual );
+						//$( '#recommended-count' ).html( newActual );
 
 						App.reqres.setHandler( 'homepage:content:recommended:total', function () {
 							return {
@@ -63,8 +63,10 @@ define( function ( require ) {
 
 	function removeQueued ( ids, newCollection ) {
 		if ( ids && ids.length > 0 ) {
-			newCollection = $.grep( newCollection, function ( n, i ) {
-				return !_.contains( ids, n.get( 'ContentId' ) || n.get( 'UUVideoId' ) );
+			newCollection.forEach( function ( rows ) {
+				if ( _.contains( ids, rows.get( 'ContentId' ) || rows.get( 'UUVideoId' ) ) ) {
+					rows.set( 'queued', true );
+				}
 			} );
 		}
 		return newCollection;
@@ -95,7 +97,7 @@ define( function ( require ) {
 
 			App.reqres.setHandler( 'homepage:content:recommended:total', function () {
 				return {
-					'total' : ( proc.coll.length > 0 ? header.get( 'numFound' ) : 0 ) - proc.cuts,
+					'total' : header.get( 'numFound' ),
 					'fetch' : proc.coll.length - proc.cuts,
 					'queue' : ids,
 					'start' : 24
@@ -114,7 +116,7 @@ define( function ( require ) {
 			if ( result.fetch < 0 ) {
 				result.fetch = 0;
 			}
-			$( '#recommended-count' ).html( result.fetch );
+			$( '#recommended-count' ).html( result.total );
 		},
 		'onLastNav'    :  function ( $carousel ) {
 			$( '#load-recommended' ).html( '<img src="img/loading-bar.gif"/></div>' );
