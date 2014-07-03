@@ -89,7 +89,7 @@ define( function ( require ) {
 					} );
 				} else if ( token[ 1 ] === 'sm' ) {
 					syncCarousel( $( this ), token[ 0 ], 'md', function ( index ) {
-						return index - Math.ceil( index / 3 );
+						return index - Math.floor( ( index + 1 ) * ( 0.25 ) );
 					} );
 				}
 				handleNavBars( $carousel, options );
