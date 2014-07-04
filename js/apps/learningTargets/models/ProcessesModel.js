@@ -1,9 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var Backbone = require( 'backbone' );
-	var _        = require( 'underscore' );
-	var moment   = require( 'moment' );
+	var Backbone   = require( 'backbone' );
+	var _          = require( 'underscore' );
+	var moment     = require( 'moment' );
+	var sortHelper = require ( '../helpers/sortModelHelpers' );
 
 	return Backbone.Model.extend( {
 
@@ -38,9 +39,7 @@ define( function ( require ) {
 			var mainCompletedDate = this._convertToTimeStamp( model.CompleteByDate );
 			var ProcessStatus     = this._getStatus( mainCompletedDate, currentDate, '' );
 
-			model.Tasks.sort( function ( a, b ) {
-				return a.ProcessTaskId - b.ProcessTaskId;
-			} );
+			model = sortHelper( model );
 
 			_.map( model.Tasks, function ( tasksObj ) {
 				var taskCompletedDate = self._convertToTimeStamp( tasksObj.CompleteByDate );
