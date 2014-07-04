@@ -18,13 +18,12 @@ define( function ( require ) {
 
 				'initialize' : function () {
 					_.bindAll( this, 'determineBranding' );
-					this.listenTo(Vent, 'session:initialized', this.buildBranding);
-					this.listenTo(Vent, 'pd360:logout', this.buildBranding);
+					this.listenTo( Vent, 'session:initialized', this.buildBranding );
 				},
 
 				'showFooter' : function () {
 					this.footerView = new FooterView();
-					App.footerRegion.show(this.footerView);
+					App.footerRegion.show( this.footerView );
 					this.buildBranding();
 				},
 
@@ -49,7 +48,7 @@ define( function ( require ) {
 
 					var banners = _.reject( filtered, function ( l ) {
 						var img = l.get( 'BrandingImage' );
-						if (img !== '' && img !== 'default.png' ) {
+						if ( img !== '' && img !== 'default.png' ) {
 							return false;
 						}
 						return true;
@@ -86,6 +85,7 @@ define( function ( require ) {
 			var showController = new Mod.ShowController();
 
 			showController.showFooter();
+
 		} );
 	} );
 
