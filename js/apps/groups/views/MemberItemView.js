@@ -11,72 +11,89 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 
+		'personelModel' : null,
+
+		'personelView' : null,
+
 		'template' : _.template( template ),
-		'tagName'  : 'li',
+
+		'tagName' : 'li',
+
 		'className' : 'col-xs-6 col-sm-4 col-md-3',
 
 		'ui' : {
 			'member' : '.fake-link'
 		},
 
-		'events' : {
-			'click @ui.member' : 'showMiniPersonnel'
+		'templateHelpers' : {
+			'getUserAvatarPath' : require( 'common/helpers/getUserAvatarPath' )
 		},
 
-		'showMiniPersonnel' : function ( event ) {
-			// We disable the event that just captured the mousesent
-			// and let the popover library handle the click so we
-			// don't have to fetch the model or create the view every
-			// time.
-			$( this.el ).off( 'click', '.fake-link' );
+		'initialize' : function () {
+			_.bindAll( this );
 
-			var model = new MiniPersonnelModel( {
+			this.personelModel = new MiniPersonnelModel( {
 				'persId' : this.model.get( 'PersonnelId' )
 			} );
 
-			var view = new MiniPersonnelView( {
-				'model' : model
+			this.personelView = new MiniPersonnelView( {
+				'model' : this.personelModel
 			} );
+		},
 
-			// setup the popover
+		'onShow' : function () {
+			this.showMiniPersonnel();
+		},
+
+		'onClose' : function () {
+			this.ui.member.popover( 'destroy' );
+			this.ui.member.off( 'click' );
+			$( this.personelView.ui.spinner ).spin( false );
+			this.personelModel = null;
+			this.personelView  = null;
+		},
+
+		'showMiniPersonnel' : function () {
 			this.ui.member.popover( {
 				'html'      : true,
 				'placement' : 'top',
 				'trigger'   : 'click',
 				'content'   : function () {
-					return view.render().el;
-				}
-			} );
+					return this.personelView.render().el;
+				}.bind( this )
+			} ).on( 'click' ,function ( ev ) {
+				this.overridePopoverPosition( $( ev.currentTarget ) );
+			}.bind( this ) );
 
-			// Since spin.js requires element to be in the dom, wait until
-			// the popover has been shown to add the spin icon.
-			this.ui.member.on( 'shown.bs.popover', _.bind( function () {
-				$( view.ui.spinner ).spin();
+			this.ui.member.on( 'shown.bs.popover', _.bind( function ( ev ) {
+				if ( $( ev.currentTarget ).attr( 'clicked' ) !== 'true' ) {
+					$( this.personelView.ui.spinner ).spin();
+
+					this.personelModel.fetch( {
+						'success' : _.bind( function ( model, res, options ) {
+							this.personelView.render();
+							$( ev.currentTarget ).attr( 'clicked', true );
+						}, this )
+					} );
+				}
+
 				App.vent.trigger( 'show:popover', this );
 			}, this ) );
-
-			// Show the popover before we fetch the model, it should show a
-			// loading view
-			this.ui.member.popover( 'show' );
-
-			model.fetch( {
-				'success' : _.bind( function ( model, res, options ) {
-					// Render again once we have attributes
-					view.render();
-				}, this )
-			} );
 		},
 
-		hideMiniPersonnel : function ( event ) {
-			// hide popover
-			this.ui.member.popover( 'hide' );
+		'overridePopoverPosition' : function ( el ) {
+			var offset  = el.offset();
+			var popover = el.next( 'div.popover' );
+			var arrow   = popover.find( 'div.arrow' );
+			var extra   = ( $( window ).width() > 767 ) ? 150 : 80;
 
-		},
+			offset.right = $( window ).width() - ( offset.left + el.outerWidth( true ) );
 
-		'templateHelpers' : {
-			'getUserAvatarPath' : require( 'common/helpers/getUserAvatarPath' )
+			if ( offset.right < 175 ) {
+				popover.css( 'left' , parseInt( popover.position().left - extra ) + 'px' );
+				arrow.css( 'left' , parseInt( arrow.position().left + extra  ) + 'px' );
+			}
 		}
 
 	} );
-
 } );

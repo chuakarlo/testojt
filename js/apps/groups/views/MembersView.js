@@ -4,6 +4,7 @@ define( function ( require ) {
 	var App            = require( 'App' );
 	var _              = require( 'underscore' );
 	var Marionette     = require( 'marionette' );
+	var $              = require( 'jquery' );
 	var MemberItemView = require( '../views/MemberItemView' );
 	var template       = require( 'text!../templates/groupMembersView.html' );
 	var Ladda          = require( 'ladda' );
@@ -45,6 +46,8 @@ define( function ( require ) {
 			if ( this.collection.length === 100 ) {
 				this.ui.moreMembers.show();
 			}
+
+			this.hideWhenResizeOnSmallSizes();
 		},
 
 		'loadAllMembers' : function () {
@@ -58,6 +61,14 @@ define( function ( require ) {
 					this.ui.moreMembers.hide();
 					l.stop();
 				}, this )
+			} );
+		},
+
+		'hideWhenResizeOnSmallSizes' : function () {
+			$( window ).on( 'resize' , function () {
+				if ( $( this ).width() < 1024 && $( 'span.fake-link' ).is( ':visible' ) ) {
+					$( 'span.fake-link' ).popover( 'hide' );
+				}
 			} );
 		}
 

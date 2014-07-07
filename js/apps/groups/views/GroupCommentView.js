@@ -23,6 +23,10 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 
+		'personelModel' : null,
+
+		'personelView' : null,
+
 		'tagName' : 'li',
 
 		'ui' : {
@@ -31,8 +35,19 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'click @ui.removeReply' : 'removeReply',
-			'click @ui.creator'     : 'showMiniPersonnel'
+			'click @ui.removeReply' : 'removeReply'
+		},
+
+		initialize : function () {
+			_.bindAll( this );
+
+			this.personelModel = new MiniPersonnelModel( {
+				'persId' : this.model.get( 'Creator' )
+			} );
+
+			this.personelView = new MiniPersonnelView( {
+				'model' : this.personelModel
+			} );
 		},
 
 		'onRender' : function () {
@@ -40,62 +55,49 @@ define( function ( require ) {
 		},
 
 		'getTemplate' : function () {
-
 			// add the remove button if user created the message
 			if ( String( this.model.get( 'Creator' ) ) === String( Session.personnelId() ) ) {
 				return _.template( usersTemplate );
 			} else {
 				return _.template( template );
 			}
+		},
 
+		'onShow' : function () {
+			this.showMiniPersonnel();
+		},
+
+		'onClose' : function () {
+			this.ui.creator.popover( 'destroy' );
+			this.ui.creator.off( 'click' );
+			$( this.personelView.ui.spinner ).spin( false );
+			this.personelModel = null;
+			this.personelView  = null;
 		},
 
 		'showMiniPersonnel' : function ( event ) {
-			// We disable the event that just captured the click
-			// and let the popover library handle the click so we
-			// don't have to fetch the model or create the view every
-			// time.
-			$( this.el ).off( 'click', '.child-creator-name' );
-
-			var model = new MiniPersonnelModel( {
-				'persId' : this.model.get( 'Creator' )
-			} );
-
-			var view = new MiniPersonnelView( {
-				'model' : model
-			} );
-
-			// setup the popover
 			this.ui.creator.popover( {
 				'html'      : true,
 				'placement' : 'top',
 				'trigger'   : 'click',
 				'content'   : function () {
-					return view.render().el;
-				}
+					return this.personelView.render().el;
+				}.bind( this )
 			} );
 
-			// Since spin.js requires element to be in the dom, wait until
-			// the popover has been shown to add the spin icon.
-			this.ui.creator.on( 'shown.bs.popover', _.bind( function () {
-				$( view.ui.spinner ).spin();
+			this.ui.creator.on( 'shown.bs.popover', _.bind( function ( ev ) {
+				if ( $( ev.currentTarget ).attr( 'clicked' ) !== 'true' ) {
+					$( this.personelView.ui.spinner ).spin();
+					this.personelModel.fetch( {
+						'success' : _.bind( function ( model, res, options ) {
+							// Render again once we have attributes
+							this.personelView.render();
+							$( ev.currentTarget ).attr( 'clicked', true );
+						}, this )
+					} );
+				}
 				App.vent.trigger( 'show:popover', this );
 			}, this ) );
-
-			// Show the popover before we fetch the model, it should show a
-			// loading view
-			this.ui.creator.popover( 'show' );
-
-			model.fetch( {
-				'success' : _.bind( function ( model, res, options ) {
-					// Render again once we have attributes
-					view.render();
-				}, this )
-			} );
-		},
-
-		'hideMiniPersonnel' : function ( event ) {
-			this.ui.creator.popover( 'hide' );
 		},
 
 		'onBeforeClose' : function () {

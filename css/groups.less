@@ -224,6 +224,20 @@
 	// the max width
 	.popover {
 		max-width : none;
+
+		.popover-content {
+			.mini-personnel {
+				@media ( max-width : @screen-xs-max ) {
+					width : 270px !important;
+				}
+
+				img {
+					@media ( max-width : @screen-xs-max ) {
+						height : 50px !important;
+					}
+				}
+			}
+		}
 	}
 
 	 // Members Tab

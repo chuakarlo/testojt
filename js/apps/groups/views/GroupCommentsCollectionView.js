@@ -26,10 +26,48 @@ define( function ( require ) {
 			'submit #comment-create-form' : 'createComment'
 		},
 		// Replying to a comment needs the user avatar
+		// Transfered some of the itemView methods to avoid cyclomatic complexity
 		'itemViewOptions' : function ( options ) {
 			return {
 				'user'        : this.user,
-				'groupAvatar' : this.groupAvatar
+				'groupAvatar' : this.groupAvatar,
+
+				'onShow' : function () {
+					this.showMiniPersonnel();
+				},
+
+				'onClose' : function () {
+					this.ui.creator.popover( 'destroy' );
+					this.ui.creator.off( 'click' );
+					$( this.personelView.ui.spinner ).spin( false );
+					this.personelModel = null;
+					this.personelView  = null;
+				},
+
+				'showMiniPersonnel' : function ( event ) {
+					this.ui.creator.popover( {
+						'html'      : true,
+						'placement' : 'top',
+						'trigger'   : 'click',
+						'content'   : function () {
+							return this.personelView.render().el;
+						}.bind( this )
+					} );
+
+					this.ui.creator.on( 'shown.bs.popover', _.bind( function ( ev ) {
+						if ( $( ev.currentTarget ).attr( 'clicked' ) !== 'true' ) {
+							$( this.personelView.ui.spinner ).spin();
+							this.personelModel.fetch( {
+								'success' : _.bind( function ( model, res, options ) {
+									// Render again once we have attributes
+									this.personelView.render();
+									$( ev.currentTarget ).attr( 'clicked', true );
+								}, this )
+							} );
+						}
+						App.vent.trigger( 'show:popover', this );
+					}, this ) );
+				}
 			};
 		},
 
