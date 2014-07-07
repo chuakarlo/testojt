@@ -5,8 +5,16 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var _          = require( 'underscore' );
 	var stripHtml  = require( 'common/helpers/stripHtml' );
-
+	var $          = require( 'jquery' );
 	var template   = require( 'text!../templates/groupResourceItemView.html' );
+
+	var Autolinker = require( 'autolinker' );
+
+	var autolinker = new Autolinker( {
+		newWindow   : false,
+		stripPrefix : false,
+		className   : 'link'
+	} );
 
 	return Marionette.ItemView.extend( {
 
@@ -17,6 +25,11 @@ define( function ( require ) {
 		},
 		'events'   : {
 			'click @ui.resourceDownload' : 'downloadResource'
+		},
+
+		'onRender' : function () {
+			var resourceDescription = ( this.model.get( 'FileDescription' ) ) ? stripHtml ( this.model.get( 'FileDescription' ) ) : stripHtml ( this.model.get( 'LinkDescription' ) );
+			$( this.el ).find( '.resource-description' ).prepend( autolinker.link( resourceDescription ) );
 		},
 
 		'templateHelpers' : {
@@ -30,11 +43,6 @@ define( function ( require ) {
 					}
 					return 'http://' + this.LinkURL;
 				}
-			},
-
-			'getResourceDescription' : function () {
-				// remove html tags and return description
-				return ( this.FileDescription ) ? stripHtml ( this.FileDescription ) : stripHtml ( this.LinkDescription );
 			},
 
 			'getDownloadButtonStatus' : function () {
