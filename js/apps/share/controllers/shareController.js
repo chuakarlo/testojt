@@ -230,7 +230,7 @@ define( function ( require ) {
 						'title'       : 'Share this Communities Thread'
 					};
 
-					url = communitiesUrl + options.data.locationTypeId;
+					url = communitiesUrl + '/' + options.data.locationTypeId;
 
 					if ( options.data.locationTypeId ) {
 						url += '/' + options.data.locationId;
