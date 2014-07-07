@@ -45,7 +45,12 @@ define( function ( require ) {
 			'blur @ui.input'     : 'validateInput',
 			'keyup @ui.input'    : 'validateInput',
 			'submit'             : 'saveInfo',
-			'click @ui.password' : 'changePassword'
+			'click @ui.password' : 'changePassword',
+			'click .edit-link'   : 'clickEdit'
+		},
+
+		'clickEdit' : function () {
+			this.ui.uploader.find( 'input' ).click();
 		},
 
 		'changePassword' : function ( event ) {
@@ -231,7 +236,7 @@ define( function ( require ) {
 				'multiple' : false,
 
 				'text' : {
-					'uploadButton' : '<a>Edit</a>'
+					'uploadButton' : '<a class=\'edit-link\'>Edit</a>'
 				},
 
 				'request' : {
