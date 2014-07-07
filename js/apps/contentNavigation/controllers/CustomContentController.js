@@ -15,6 +15,8 @@ define( function ( require ) {
 			'initialize' : function ( options ) {
 
 				App.request( 'pd360:hide' );
+				_.bindAll( this, 'setupCategories', 'setEventHandlers', 'showVideos', 'changeCategory' );
+
 				this.layout             = options.layout;
 				this.customContentModel = options.model;
 				this.categories         = new App.ContentNavigation.Entities.CustomContentCollection();
@@ -30,7 +32,11 @@ define( function ( require ) {
 				this.showFilterLoading();
 				this.setEventHandlers();
 
-				var categoriesRequest = App.request( 'contentNavigation:customContent:categories' , options.model );
+				Vent.trigger( 'contentNavigation:setupQueue', this.setupCategories );
+			},
+
+			'setupCategories' : function () {
+				var categoriesRequest = App.request( 'contentNavigation:customContent:categories' , this.customContentModel );
 
 				App.when( categoriesRequest ).then( function ( categories ) {
 
@@ -40,7 +46,6 @@ define( function ( require ) {
 
 					this.showVideos( categories );
 				}.bind( this ), this.showError );
-
 			},
 
 			'setEventHandlers' : function () {
@@ -50,10 +55,9 @@ define( function ( require ) {
 				}.bind( this ) );
 			},
 
-			'showVideos' : function ( libraries, queueContents ) {
+			'showVideos' : function ( libraries ) {
 
 				this.showLoading();
-				this.queueContents = queueContents;
 
 				var library = libraries.toJSON();
 				var lib     = _.flatten( library, true );
@@ -104,9 +108,10 @@ define( function ( require ) {
 
 			'changeCategory' : function ( contentName ) {
 
-				var queueRequest = App.request( 'common:getQueueContents' );
-				var category     = this.categories.findWhere( { 'ContentName' : contentName } );
-				var segments     = category.get( 'Children' );
+				var queue    = App.ContentNavigation.Helper.Queue;
+
+				var category = this.categories.findWhere( { 'ContentName' : contentName } );
+				var segments = category.get( 'Children' );
 
 				Vent.trigger( 'contentNavigation:setPendingRequest', true );
 
@@ -120,31 +125,24 @@ define( function ( require ) {
 				this.videos.add( segments );
 				this.showLoading();
 
-				App.when( queueRequest ).then( function ( queue ) {
+				var contentIds = queue.pluck( 'ContentId' );
 
-					if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
-						return;
-					}
+				this.videos.each( function ( model ) {
+					var _id = model.get( 'ContentId' );
+					model.set( 'queued', _.contains( contentIds, _id ) );
+				}.bind( this ) );
 
-					var contentIds = queue.pluck( 'ContentId' );
+				this.closeLoading();
+				var segmentsView = new App.ContentNavigation.Views.Segments( { 'collection' : this.videos } );
+				this.layout.segmentsRegion.show( segmentsView );
 
-					this.videos.each( function ( model ) {
-						var _id = model.get( 'ContentId' );
-						model.set( 'queued', _.contains( contentIds, _id ) );
-					}.bind( this ) );
+				// set hasPendingRequest to false
+				Vent.trigger( 'contentNavigation:setPendingRequest', false );
 
-					this.closeLoading();
-					var segmentsView = new App.ContentNavigation.Views.Segments( { 'collection' : this.videos } );
-					this.layout.segmentsRegion.show( segmentsView );
+				if ( this.videos.length ) {
+					this.noMoreVideos();
+				}
 
-					// set hasPendingRequest to false
-					Vent.trigger( 'contentNavigation:setPendingRequest', false );
-
-					if ( this.videos.length ) {
-						this.noMoreVideos();
-					}
-
-				}.bind( this ), this.showError );
 			},
 
 			'onClose' : function () {

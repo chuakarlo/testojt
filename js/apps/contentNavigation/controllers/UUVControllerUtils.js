@@ -73,17 +73,15 @@ define( function ( require ) {
 						this.showLoading();
 
 						var videosRequest = App.request( 'contentNavigation:uuv:getSegments', this.queryModel );
-						var queueRequest  = App.request( 'common:getQueueContents' );
-
 						Vent.trigger( 'contentNavigation:setPendingRequest', true );
 
-						App.when( videosRequest, queueRequest ).then( function ( videos, queueContents ) {
+						App.when( videosRequest ).then( function ( videos ) {
 
 							if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
 								return;
 							}
 
-							this.displayVideos( videos, queueContents );
+							this.displayVideos( videos );
 
 						}.bind( this ), this.showError );
 
@@ -161,15 +159,14 @@ define( function ( require ) {
 			this.showLoading();
 
 			var videosRequest = App.request( 'contentNavigation:uuv:getSegments', this.queryModel );
-			var queueRequest  = App.request( 'common:getQueueContents' );
 
-			App.when( videosRequest, queueRequest ).then( function ( videos, queueContents ) {
+			App.when( videosRequest ).then( function ( videos ) {
 
 				if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
 					return;
 				}
 
-				this.displayVideos( videos, queueContents );
+				this.displayVideos( videos );
 
 			}.bind( this ), this.showError );
 

@@ -71,17 +71,15 @@ define( function ( require ) {
 					this.showLoading();
 
 					var videosRequest = App.request( 'contentNavigation:pd360Videos', this.queryModel );
-					var queueRequest  = App.request( 'common:getQueueContents' );
-
 					Vent.trigger( 'contentNavigation:setPendingRequest', true );
 
-					App.when( videosRequest, queueRequest ).then( function ( videos, queueContents ) {
+					App.when( videosRequest ).then( function ( videos ) {
 
 						if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
 							return;
 						}
 
-						this.displayResults( videos, queueContents );
+						this.displayResults( videos );
 
 					}.bind( that ), this.showError );
 
@@ -112,9 +110,9 @@ define( function ( require ) {
 			this.layout.loadingRegion.show( noMoreVideosView );
 		},
 
-		'displayResults' : function ( videos, queueContents, reset ) {
-
-			var vids = videos.slice( 1 );
+		'displayResults' : function ( videos, reset ) {
+			var queueContents = App.ContentNavigation.Helper.Queue;
+			var vids          = videos.slice( 1 );
 
 			this.qContentsIds = queueContents.pluck( 'ContentId' );
 

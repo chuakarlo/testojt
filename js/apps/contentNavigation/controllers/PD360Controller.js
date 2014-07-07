@@ -18,6 +18,7 @@ define( function ( require ) {
 				App.request( 'pd360:hide' );
 				this.layout = options.layout;
 				_.defaults( this, Utils );
+				_.bindAll( this, 'setupFilters', 'showVideos', 'showError', 'updateQueryData' );
 
 				Vent.trigger( 'contentNavigation:setPendingRequest', true );
 
@@ -44,25 +45,30 @@ define( function ( require ) {
 
 				this.setEventHandlers();
 
-				var filtersRequest = App.request( 'contentNavigation:filters' );
-				var queueRequest   = App.request( 'common:getQueueContents' );
-
 				this.queryModel            = new App.ContentNavigation.Entities.pd360QueryModel();
 				this.pd360VideosCollection = new App.ContentNavigation.Entities.PD360VideosCollection();
 				this.pd360VideosCollection.queryModel = this.queryModel;
 
-				App.when( filtersRequest, queueRequest ).then( function ( filters, queue ) {
+				Vent.trigger( 'contentNavigation:setupQueue', this.setupFilters );
+			},
+
+			'setupFilters' : function () {
+				var filtersRequest = App.request( 'contentNavigation:filters' );
+
+				App.when( filtersRequest ).then( function ( filters ) {
 
 					if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
 						return;
 					}
 
-					this.showVideos( filters, queue );
-				}.bind( this ), this.showError );
+					this.showVideos( filters );
+				}.bind( this ), function () {
+					this.showError();
+				}.bind( this ) );
 
 			},
 
-			'showVideos' : function ( filters, queueContents ) {
+			'showVideos' : function ( filters ) {
 
 				// show Loading while data is being processed
 				this.showLoading();
@@ -117,7 +123,7 @@ define( function ( require ) {
 					}
 
 					this.queryModel.set( 'numFound', videos.at( 0 ).get( 'numFound' ) );
-					this.displayResults( videos, queueContents );
+					this.displayResults( videos );
 
 				}.bind( this ), this.showError );
 			},
@@ -132,7 +138,7 @@ define( function ( require ) {
 			},
 
 			'updateQueryData' : function ( filter, sort, clearCollection ) {
-				var reset = true;
+				var reset         = true;
 
 				Vent.trigger( 'contentNavigation:setPendingRequest', true );
 
@@ -155,16 +161,15 @@ define( function ( require ) {
 				this.showLoading();
 
 				var videosRequest = App.request( 'contentNavigation:pd360Videos', this.queryModel );
-				var queueRequest  = App.request( 'common:getQueueContents' );
 
-				App.when( videosRequest, queueRequest ).then( function ( videos, queueContents ) {
+				App.when( videosRequest ).then( function ( videos ) {
 
 					if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
 						return;
 					}
 
 					this.queryModel.set( 'numFound', videos.at( 0 ).get( 'numFound' ) );
-					this.displayResults( videos, queueContents, reset );
+					this.displayResults( videos, reset );
 
 				}.bind( this ), this.showError );
 

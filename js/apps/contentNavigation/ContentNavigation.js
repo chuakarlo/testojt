@@ -20,6 +20,7 @@ define( function ( require ) {
 			require( 'contentNavigation/controllers/UUVController' );
 			require( 'contentNavigation/controllers/PD360Controller' );
 			require( 'contentNavigation/controllers/CustomContentController' );
+			require( 'contentNavigation/helpers/watchLaterQueue' );
 
 			ContentNavigation.Router = AuthRouter.extend( {
 				'appRoutes' : {
@@ -33,6 +34,28 @@ define( function ( require ) {
 
 				'setPendingRequest' : function ( status ) {
 					this.hasPendingRequest = status;
+				},
+
+				'setupQueue' : function ( callback ) {
+					var queueRequest   = App.request( 'common:getQueueContents' );
+
+					App.when( queueRequest ).then( function ( queue ) {
+
+						if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
+							return;
+						}
+
+						App.ContentNavigation.Helper.Queue = queue;
+
+						if ( callback instanceof Function ) {
+							callback();
+						}
+
+					}.bind( this ), function () {
+
+						this.showError( 'Error setting up Watch Later list.' );
+					}.bind( this ) );
+
 				},
 
 				'showContentNavigation' : function () {
@@ -99,9 +122,11 @@ define( function ( require ) {
 				'destroyControllers' : function () {
 					$( 'html' ).removeClass( 'cn' );
 					$( window ).off( 'scroll.smack' );
+
 					this.activeLibrary.close();
 					this.activeLibrary = null;
 					delete this.activeLibrary;
+
 					this.layout.close();
 					this.layout = null;
 				}
@@ -115,6 +140,10 @@ define( function ( require ) {
 
 			Vent.on( 'contentNavigation:setPendingRequest', function ( status ) {
 				return API.setPendingRequest( status );
+			} );
+
+			Vent.on( 'contentNavigation:setupQueue', function ( callback ) {
+				return API.setupQueue( callback );
 			} );
 
 			App.reqres.setHandler( 'contentNavigation:isCorrectRoute', function () {

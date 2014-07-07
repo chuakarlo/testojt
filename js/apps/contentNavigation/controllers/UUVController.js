@@ -17,6 +17,7 @@ define( function ( require ) {
 				App.request( 'pd360:hide' );
 				this.layout = options.layout;
 				_.defaults( this, Utils );
+				_.bindAll( this, 'setupCategories', 'showVideos', 'displayVideos' );
 
 				Vent.trigger( 'contentNavigation:setPendingRequest', true );
 
@@ -29,26 +30,30 @@ define( function ( require ) {
 				this.showCategoriesLoading();
 				this.setEventHandlers();
 
-				var queueRequest      = App.request( 'common:getQueueContents' );
-				var categoriesRequest = App.request( 'contentNavigation:uuv:getCategories' );
-
 				this.queryModel         = new App.ContentNavigation.Entities.UUVQueryModel();
 				this.UUVideosCollection = new App.ContentNavigation.Entities.UUVideosCollection();
 
 				this.UUVideosCollection.queryModel = this.queryModel;
 
-				App.when( queueRequest, categoriesRequest ).then( function ( queue, categories ) {
+				Vent.trigger( 'contentNavigation:setupQueue', this.setupCategories );
+			},
+
+			'setupCategories' : function () {
+				var categoriesRequest = App.request( 'contentNavigation:uuv:getCategories' );
+
+				App.when( categoriesRequest ).then( function ( categories ) {
 
 					if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
 						return;
 					}
 
-					this.showVideos( queue, categories );
-				}.bind( this ), this.showError );
-
+					this.showVideos( categories );
+				}.bind( this ), function () {
+					this.showError();
+				} );
 			},
 
-			'showVideos' : function ( queueContents, uuvCategories ) {
+			'showVideos' : function ( uuvCategories ) {
 
 				var categoriesView = new App.ContentNavigation.Views.UUVCategories( { 'collection' : uuvCategories  } );
 
@@ -71,14 +76,15 @@ define( function ( require ) {
 						return;
 					}
 
-					this.displayVideos( videos, queueContents );
+					this.displayVideos( videos );
 
 				}.bind( this ), this.showError );
 			},
 
-			'displayVideos' : function ( vids, queueContents ) {
+			'displayVideos' : function ( vids ) {
 
-				var videos = vids;
+				var videos        = vids;
+				var queueContents = App.ContentNavigation.Helper.Queue;
 
 				this.qContentsIds = queueContents.pluck( 'UUVideoId' );
 

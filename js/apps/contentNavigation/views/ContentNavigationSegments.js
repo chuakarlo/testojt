@@ -1,15 +1,14 @@
 define( function ( require ) {
 	'use strict';
 
-	var App        = require( 'App' );
 	var Marionette = require( 'marionette' );
 	var EmptyView  = require( '../views/ContentNavigationCollectionEmptyView' );
-
+	var ItemView   = require( '../views/ContentNavigationSegmentItemView' );
 	require( 'common/views' );
 
 	return Marionette.CollectionView.extend( {
 
-		'itemView' : App.Common.SegmentCardsView,
+		'itemView' : ItemView,
 
 		'tagName' : 'ul',
 
