@@ -1,9 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var App         = require( 'App' );
-	var EulaContent = require( 'user/views/eula/EulaContent' );
-	var EulaLayout  = require( 'user/views/eula/EulaLayout' );
+	var App            = require( 'App' );
+	var EulaContent    = require( 'user/views/eula/EulaContent' );
+	var EulaLayout     = require( 'user/views/eula/EulaLayout' );
+	var EulaTextLayout = require( 'user/views/eula/EulaTextLayout' );
 
 	App.module( 'User.Eula', function ( Eula ) {
 
@@ -33,6 +34,18 @@ define( function ( require ) {
 					} );
 
 				}
+
+			},
+
+			'showEulaText' : function () {
+
+				var eulaTextLayout  = new EulaTextLayout();
+
+				// Show EULA layout
+				App.content.show( eulaTextLayout );
+
+				// Add the EULA Content to the layout
+				eulaTextLayout.eulaRegion.show( new EulaContent() );
 
 			}
 

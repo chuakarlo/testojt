@@ -16,7 +16,7 @@ define( function ( require ) {
 			},
 
 			// EULA check redirects to this route
-			'^eula' : function () {
+			'^eula$' : function () {
 				return this.authCheck();
 			},
 

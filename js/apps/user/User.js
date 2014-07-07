@@ -45,6 +45,7 @@ define( function ( require ) {
 
 			'appRoutes' : {
 				'eula'             : 'showEula',
+				'eula-full'        : 'showEulaText',
 				'privacy'          : 'showPrivacy',
 				'login'            : 'showLogin',
 				'logout'           : 'showLogout',
@@ -89,10 +90,16 @@ define( function ( require ) {
 				App.request( 'pd360:hide' );
 
 				if ( App.request( 'session:eulaAccepted' ) ) {
-					return App.navigate( 'home', { 'trigger' : true } );
+					return App.navigate( 'eula-full', { 'trigger' : true } );
 				}
 
 				User.Eula.Controller.showEula();
+			},
+
+			'showEulaText' : function () {
+				App.request( 'pd360:hide' );
+
+				User.Eula.Controller.showEulaText();
 			},
 
 			'showPrivacy' : function () {
