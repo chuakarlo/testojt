@@ -10,44 +10,53 @@ define( function ( require ) {
 	return Marionette.ItemView.extend( {
 
 		'className' : 'mini-personnel',
-
-		'template' : _.template( template ),
+		'template'  : _.template( template ),
 
 		'ui' : {
-			'spinner' : '.loading-spinner'
+			'spinner' : '.loading-spinner',
+			'close'   : 'button.close'
+		},
+
+		'events' : {
+			'click @ui.close' : 'closePopover'
 		},
 
 		'onShow' : function () {
+
 			// My first implementation doesn't use this method but it's
 			// probably a good idea to keep this around
 			this.ui.spinner.spin();
 		},
 
 		'onBeforeRender' : function () {
+
 			// Since we are just re-rendering with a different template,
 			// try and close the spinner before the view is re-rendered
-			$(this.ui.spinner).spin(false);
+			$( this.ui.spinner ).spin( false );
 		},
 
 		'getTemplate' : function () {
-			// If we don't have any data, we are probably still loading
-			var fn = this.model.get('FirstName');
-			var ln = this.model.get('LastName');
 
-			if ( fn === '' && ln === '') {
+			// If we don't have any data, we are probably still loading
+			var fn = this.model.get( 'FirstName' );
+			var ln = this.model.get( 'LastName' );
+
+			if ( fn === '' && ln === '' ) {
 				return _.template( loadingTemplate );
 			}
 			return _.template( template );
 		},
 
 		'templateHelpers' : {
-
 			'BuildAvatar' : function () {
 				var getUserAvatarPath = require( 'common/helpers/getUserAvatarPath' );
 
 				return getUserAvatarPath( this.Avatar );
 			}
+		},
 
+		'closePopover' : function () {
+			this.trigger( 'close' );
 		}
 
 	} );

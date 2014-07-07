@@ -24,10 +24,8 @@ define( function ( require ) {
 	return Marionette.ItemView.extend( {
 
 		'personelModel' : null,
-
-		'personelView' : null,
-
-		'tagName' : 'li',
+		'personelView'  : null,
+		'tagName'       : 'li',
 
 		'ui' : {
 			'removeReply' : '.remove-child',
@@ -48,6 +46,10 @@ define( function ( require ) {
 			this.personelView = new MiniPersonnelView( {
 				'model' : this.personelModel
 			} );
+
+			this.listenTo( this.personelView, 'close', function ( event ) {
+				this.ui.creator.popover( 'hide' );
+			}.bind( this ) );
 		},
 
 		'onRender' : function () {

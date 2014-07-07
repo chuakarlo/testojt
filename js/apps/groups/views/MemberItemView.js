@@ -12,14 +12,10 @@ define( function ( require ) {
 	return Marionette.ItemView.extend( {
 
 		'personelModel' : null,
-
-		'personelView' : null,
-
-		'template' : _.template( template ),
-
-		'tagName' : 'li',
-
-		'className' : 'col-xs-6 col-sm-4 col-md-3',
+		'personelView'  : null,
+		'template'      : _.template( template ),
+		'tagName'       : 'li',
+		'className'     : 'col-xs-6 col-sm-4 col-md-3',
 
 		'ui' : {
 			'member' : '.fake-link'
@@ -39,6 +35,10 @@ define( function ( require ) {
 			this.personelView = new MiniPersonnelView( {
 				'model' : this.personelModel
 			} );
+
+			this.listenTo( this.personelView, 'close', function ( event ) {
+				this.ui.member.popover( 'hide' );
+			}.bind( this ) );
 		},
 
 		'onShow' : function () {

@@ -54,6 +54,10 @@ define( function ( require ) {
 						}.bind( this )
 					} );
 
+					this.listenTo( this.personelView, 'close', function ( event ) {
+						this.ui.creator.popover( 'hide' );
+					}.bind( this ) );
+
 					this.ui.creator.on( 'shown.bs.popover', _.bind( function ( ev ) {
 						if ( $( ev.currentTarget ).attr( 'clicked' ) !== 'true' ) {
 							$( this.personelView.ui.spinner ).spin();
