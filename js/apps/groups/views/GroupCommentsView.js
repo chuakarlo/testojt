@@ -53,7 +53,7 @@ define( function ( require ) {
 			this.collection = new App.Entities.WallCommentChildCollection(
 				this.model.get( 'replies' )
 			);
-
+			this.model.set( 'Avatar', this.options.groupAvatar );
 			this.user = options.user;
 
 		},
@@ -245,6 +245,7 @@ define( function ( require ) {
 
 		'templateHelpers' : {
 			'getUserAvatarPath' : require( 'common/helpers/getUserAvatarPath' ),
+			'getAvatarPath'     : require( 'common/helpers/getAvatarPath' ),
 
 			'formatDate' : function ( date ) {
 

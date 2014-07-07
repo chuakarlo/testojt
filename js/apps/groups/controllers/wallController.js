@@ -28,9 +28,9 @@ define( function ( require ) {
 			'getData' : function ( groupId ) {
 
 				// This will hold all of our wall posts.
-				this.wallCollection = new App.Entities.WallCommentCollection([ ], {
+				this.wallCollection = new App.Entities.WallCommentCollection( [ ], {
 					'groupId' : groupId
-				});
+				} );
 
 				App.when(
 					this.wallCollection.fetch(),
@@ -48,9 +48,10 @@ define( function ( require ) {
 				this.wallCollection.updateStartRow();
 
 				var commentsView = new App.Groups.Views.CommentsCollection( {
-					'model'      : this.model,
-					'collection' : this.wallCollection,
-					'user'       : this.user
+					'model'       : this.model,
+					'collection'  : this.wallCollection,
+					'user'        : this.user,
+					'groupAvatar' : this.model.get( 'Avatar' )
 				} );
 
 				// We listen to the close event so we can disable the bum smack
@@ -76,7 +77,7 @@ define( function ( require ) {
 					$( window ).smack( {
 						'threshold' : '200px'
 					} )
-						.done( _.bind(function () {
+						.done( _.bind( function () {
 							// Show Loading
 							this.showLoading();
 							// Reset starting point
@@ -96,8 +97,8 @@ define( function ( require ) {
 									} );
 									this.closeLoading();
 								}, this )
-							});
-						}, this) );
+							} );
+						}, this ) );
 				}
 
 			},
@@ -108,7 +109,7 @@ define( function ( require ) {
 					'background' : true,
 					'text'       : 'Loading Posts'
 				} );
-				this.layout.loadingRegion.show(loading);
+				this.layout.loadingRegion.show( loading );
 			},
 
 			'closeLoading' : function () {

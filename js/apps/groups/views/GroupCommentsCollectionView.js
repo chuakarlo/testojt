@@ -28,13 +28,14 @@ define( function ( require ) {
 		// Replying to a comment needs the user avatar
 		'itemViewOptions' : function ( options ) {
 			return {
-				user : this.user
+				'user'        : this.user,
+				'groupAvatar' : this.groupAvatar
 			};
 		},
 
 		'initialize' : function ( options ) {
 			this.user = options.user;
-
+			this.groupAvatar = options.groupAvatar;
 			this.listenTo( App.vent, 'show:popover', this.closePopovers );
 			// this.on( 'itemview:show:popover', this.closePopovers );
 		},
