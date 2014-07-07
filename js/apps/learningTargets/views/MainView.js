@@ -80,13 +80,15 @@ define( function ( require ) {
 			this.ui.selectNav.addClass( 'col-xs-12' ).selectpicker( 'setStyle' );
 			this.ui.selectNav.val( content );
 			this.ui.selectNav.selectpicker( 'render' );
-			this.ui.selectNav.prop( 'disabled' ,true );
+			this.ui.selectNav.prop( 'disabled',true );
+			this.ui.viewAllBtn.prop( 'disabled',true );
 			this.ui.selectNav.selectpicker( 'refresh' );
 		},
 
 		'reactivateNav' : function () {
 			if ( typeof this.ui.selectNav.prop === 'function' ) {
 				this.ui.selectNav.prop( 'disabled',false );
+				this.ui.viewAllBtn.prop( 'disabled',false );
 				this.ui.selectNav.selectpicker( 'refresh' );
 				this.ui.links.unbind( 'click.select' );
 				this.ui.liLink.siblings().not( '.active' ).removeClass( 'deactivate' );
