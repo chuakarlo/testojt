@@ -62,6 +62,7 @@ define( function ( require ) {
 			// Do not allow replies to news items
 			if ( this.model.get( 'NewsId' ) ) {
 				this.ui.replyBox.hide();
+				$( this.el ).find( 'p.resource-news' ).prepend( autolinker.link( this.model.get( 'NewsEntry' ) ) );
 			}
 
 			$( this.el ).find( 'p.wall-news' ).prepend( autolinker.link( this.model.get( 'Message' ) ) );
