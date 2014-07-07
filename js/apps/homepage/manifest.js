@@ -3,8 +3,8 @@ define( function ( require ) {
 
 	return function () {
 
-		var parent         = [];
-		var sharedData     = {};
+		var parent         = [ ];
+		var sharedData     = { };
 		var App            = require( 'App' );
 		var widgetMessages = require( 'text!apps/homepage/external/widgets/configuration/messages.json' );
 

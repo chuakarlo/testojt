@@ -48,10 +48,10 @@ define( function ( require ) {
 			prevText     : '',
 			nextText     : '',
 			beforeChange : function () {
-				$( captionSelector ).fadeOut( 500 );
+				$( captionSelector ).fadeOut( 0 );
 			},
 			afterChange  : function () {
-				$( captionSelector ).fadeIn( 500 );
+				$( captionSelector ).fadeIn( 0 );
 			}
 		};
 	};
