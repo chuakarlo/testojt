@@ -4,6 +4,8 @@ define( function ( require ) {
 	var $   = require( 'jquery' );
 	var App = require( 'App' );
 
+	var modernizr  = window.Modernizr;
+
 	function updateCount ( increment ) {
 		var oldCount = App.request( 'homepage:content:queue:total' );
 		$( '#your-queue-count' ).html( oldCount + increment );
@@ -16,9 +18,24 @@ define( function ( require ) {
 		'set' : function () { }
 	};
 
+	function matchedSegmentsToQueue ( view ) {
+		view.bindUIElements();
+		if ( !modernizr.touch ) {
+			var watch = view.$el.find( 'span.sc-watch-later-icon' );
+			watch.tooltip( 'hide' )
+				.attr( 'data-original-title', 'Add to Queue' )
+				.tooltip( 'fixTitle' )
+				.tooltip( 'show' );
+		}
+	}
+
 	function deQueueMod ( mod ) {
 		mod = mod ? mod : emptyMod;
 		mod.set( { 'queued' : false } );
+		matchedSegmentsToQueue( mod._events[ 'change:queued' ][ 0 ].context );
+		matchedSegmentsToQueue( mod._events[ 'change:queued' ][ 1 ].context );
+		matchedSegmentsToQueue( mod._events[ 'change:queued' ][ 2 ].context );
+		matchedSegmentsToQueue( mod._events[ 'change:queued' ][ 3 ].context );
 	}
 
 	function dequeueRecommendedModel ( rows, model ) {
