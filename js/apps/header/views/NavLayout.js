@@ -63,6 +63,11 @@ define( function ( require ) {
 			// custome message count update implementation to prevent glitchy layout when using
 			// this.render
 			this.listenTo( this.model, 'change:messageCount', this.updateMessageCount );
+
+			// The following event is triggered when flash updates the count
+			this.listenTo( App.vent, 'notification:updateCount', function ( count ) {
+				this.model.set( 'messageCount', count );
+			} );
 		},
 
 		'updateMessageCount' : function () {

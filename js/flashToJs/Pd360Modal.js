@@ -3,8 +3,8 @@ define( function ( require ) {
 
 	var App = require( 'App' );
 
-	var MiniPersonnelModel = require('common/entities/MiniPersonnel');
-	var ModalPersonnelView = require('common/views/PersonnelModal');
+	var MiniPersonnelModel = require( 'common/entities/MiniPersonnel' );
+	var ModalPersonnelView = require( 'common/views/PersonnelModal' );
 
 	//-----------------------------------------------
 	// Handle calls from flash to show a user profile
