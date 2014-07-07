@@ -32,6 +32,26 @@ define( function ( require ) {
 				'ForumThreadId'     : this.model.get( 'ForumThreadId' ),
 				'ForumPostId'       : this.model.get( 'ForumPostId' )
 			};
+		},
+
+		'templateHelpers' : {
+
+			'buildURL' : function () {
+				var url = '#resources/communities';
+				_.each( [
+					this.LocationTypeId,
+					this.LocationId,
+					this.ForumThreadId,
+					this.ForumPostId
+				], function ( param ) {
+					if ( _.isNumber( param ) ) {
+						url = url + '/' + param;
+					}
+				} );
+
+				return url;
+			}
+
 		}
 	} );
 } );
