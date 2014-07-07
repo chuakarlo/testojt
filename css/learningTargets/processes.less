@@ -47,7 +47,6 @@
 		overflow      : auto;
 		display       : block;
 		min-height    : inherit;
-		padding       : 20px 10px;
 		border-bottom : 1px solid @lt-gray-1;
 		font-size     : 14px;
 		.lt-hover-transition();
@@ -55,7 +54,15 @@
 		&:hover {
 			background : @lt-gray-4;
 		}
-
+		&.active {
+			&:hover {
+				background : transparent;
+				.title-active {
+					.lt-hover-transition();
+					background : @lt-gray-4;
+				}
+			}
+		}
 	}
 
 	.lt-accordion {
@@ -69,6 +76,7 @@
 		}
 
 		overflow : hidden;
+		padding  : 20px 10px;
 	}
 
 	.title-active {
@@ -77,8 +85,8 @@
 	}
 
 	table {
-		width  : 100%;
-		margin : 10px 0 0 0;
+		width  : ~"calc(100% - 20px)";
+		margin : 10px;
 
 		.process-status-danger {
 			border-right: 4px solid @lt-light-red;
@@ -94,9 +102,9 @@
 			}
 
 			td {
-				border-top: none;
-				padding: 5px;
-				text-align: center;
+				border-top : none;
+				padding    : 7px 7px 7px 10px;
+				text-align : center;
 			}
 
 			td:first-child {
