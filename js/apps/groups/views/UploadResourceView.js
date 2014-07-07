@@ -7,6 +7,7 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var stripHtml  = require( 'common/helpers/stripHtml' );
 	var Ladda      = require( 'ladda' );
+	var $          = require( 'jquery' );
 
 	var uploadTemplate     = require( 'text!groups/templates/upload/UploadTemplate.html' );
 	var uploadFileTemplate = require( 'text!groups/templates/upload/FileTemplate.html' );
@@ -36,7 +37,10 @@ define( function ( require ) {
 			},
 
 			'click .submit-btn'     : 'submitForm',
-			'change @ui.radioInput' : 'updateInputDisplay'
+			'change @ui.radioInput' : 'updateInputDisplay',
+			'click .file-btn'       : function ( ev ) {
+				ev.currentTarget.nextElementSibling.click();
+			}
 
 		},
 
@@ -116,6 +120,13 @@ define( function ( require ) {
 			data.fileDescription = stripHtml( this.ui.descInput.val() );
 			data.resourceType    = this.ui.radioInput.filter( ':checked' ).val();
 
+			if ( data.fileDescription.match( /^\s*$/ ) ) {
+				App.errorHandler( {
+					'message' : 'Missing Description'
+				} );
+				return false;
+			}
+
 			var l = Ladda.create(
 				document.querySelector( '.submit-btn' )
 			);
@@ -124,6 +135,14 @@ define( function ( require ) {
 
 			if ( data.resourceType === 'file' ) {
 				// Handle FILES
+
+				if ( $( '.qq-upload-file' ).text() === '' ) {
+					App.errorHandler( {
+						'message' : 'No file to upload.'
+					} );
+					l.stop();
+					return false;
+				}
 
 				this.ui.fileUpload.fineUploader( 'setParams', {
 					'type'        : data.resourceType,
@@ -151,6 +170,15 @@ define( function ( require ) {
 				this.ui.fileUpload.fineUploader( 'uploadStoredFiles' );
 			} else {
 				// Handle LINKS
+
+				var link = this.ui.urlInput.val().replace( /\s+/g, '' );
+				if ( link.match( /^\s*$/ ) || link === 'http://' ) {
+					App.errorHandler( {
+						'message' : 'Invalid or Missing link'
+					} );
+					l.stop();
+					return false;
+				}
 
 				var deferred = this.model.createLinkResource( {
 					'linkURL'     : this.ui.urlInput.val(),

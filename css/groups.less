@@ -164,9 +164,11 @@
 					padding-bottom : @padding-large-vertical * 2;
 
 					.resource-name {
-						color          : @brand-primary;
-						font-weight    : bold;
-						font-size      : @font-size-base;
+						color       : @brand-primary;
+						font-weight : bold;
+						font-size   : @font-size-base;
+						word-break  : break-all;
+
 					}
 
 					.hidden {
@@ -175,6 +177,10 @@
 
 					.resource-download {
 						min-width : 100px;
+					}
+
+					.resource-description {
+						word-break : break-word;
 					}
 
 				}
@@ -408,6 +414,10 @@ a.link:hover {
 		li {
 			list-style : none;
 		}
+	}
+
+	input[ type = 'file' ] {
+		display : none;
 	}
 
 }
