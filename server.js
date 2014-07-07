@@ -48,10 +48,14 @@ var proxyStaging = function ( request, response, next ) {
 	} ) ).pipe( response );
 };
 
+app.use( '/subtitles', proxyStaging );
+
 // this project's files
 app.use( express.static( files ) );
+
 // proxy request to pd360
 app.use( resourceProxy );
+
 // proxy to staging for all other files
 app.use( '/', proxyStaging );
 
