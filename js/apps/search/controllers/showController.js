@@ -127,8 +127,6 @@ define( function ( require ) {
 
 								'success' : function () {
 									that.searchCollection.queryModel.updateStart();
-									// TODO
-									// check length of queryModel results here.
 									that.setupInfiniteScroll( filter );
 									that.closeLoading();
 								},

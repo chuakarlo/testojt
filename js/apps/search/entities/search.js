@@ -142,6 +142,12 @@ define( function ( require ) {
 				// fetching the data.
 				var searchType = options.filter;
 
+				// If we don't match on the searchType, they must have changed
+				// tabs and we don't care about this response anymore...
+				if ( this.queryModel.get( 'searchType' ) !== searchType ) {
+					return ;
+				}
+
 				if ( searchType === 'All' ) {
 
 					// Clear the last numFound so backbone can trigger the
