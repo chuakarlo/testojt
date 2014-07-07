@@ -35,18 +35,22 @@ define( function ( require ) {
 		};
 	}
 
+	function setDefaults () {
+		return [ { WidgetId : 5 }, { WidgetId : 4 }, { WidgetId : 2 } ];
+	}
+
 	function doInitialize ( view ) {
 		App.when( Remoting.fetch( fetchingModels( Session.personnelId() ) ) ).done( function ( models ) {
 
 			if ( App.request( 'homepage:isHomeRoute' ) ) {
 
 				widgets = App.Homepage.Widgets.allWidgets().splice( 1 );
-				if ( !models || models.length < 0 ) {
-					models[ 0 ] = [ ];
+				if ( !models || models.length < 1 || !models[ 0 ] || models[ 0 ].length < 1 ) {
+					models[ 0 ] = setDefaults();
 				}
 				App.Homepage.Utils.jsonVal( function ( err ) {
 					if ( err ) {
-						models[ 0 ] = [ { WidgetId : 5 }, { WidgetId : 4 }, { WidgetId : 2 } ];
+						models[ 0 ] = setDefaults();
 					}
 
 					var userWidgets = appendEmptyIds( models[ 0 ] );
