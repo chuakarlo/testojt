@@ -4,12 +4,12 @@ define( function ( require ) {
 	var Marionette  = require( 'marionette' );
 	var Backbone    = require( 'backbone' );
 	var Vent        = require( 'Vent' );
-	var ModalRegion = require( 'common/regions/ModalRegion');
+	var ModalRegion = require( 'common/regions/ModalRegion' );
 	var FlashLayout = require( 'common/views/FlashLayout' );
 	var $           = require( 'jquery' );
 
 	// extends the marionette application
-	require( 'plugins/Application');
+	require( 'plugins/Application' );
 
 	// main app
 	var App = new Marionette.Application();
@@ -43,6 +43,23 @@ define( function ( require ) {
 
 			// Add Catchall Handler
 			Backbone.history.handlers.push( { 'route' : /(.*)/, 'callback' : function catchAllRouteHandler ( fragment ) {
+				// If query params are sent redirect them to the SSO handler
+				if ( window.location.search ) {
+
+					var url = window.location.protocol + '//' + window.location.hostname;
+					if ( window.location.port ) {
+						url += ':' + window.location.port;
+					}
+
+					var queryParams = window.location.search;
+
+					queryParams = queryParams.replace( /^\?/, '' );
+
+					url += '/' + window.location.pathname + '#sso/' + queryParams;
+
+					// replace the location url assuming sso params
+					window.location.replace( url );
+				}
 
 				// Require login if they have not previously authenticated
 				if ( App.request( 'session:authenticated' ) === false ) {
