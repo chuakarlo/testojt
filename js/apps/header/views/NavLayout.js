@@ -137,12 +137,13 @@ define( function ( require ) {
 		},
 
 		'redirect' : function ( event ) {
-			event.preventDefault();
-			this.hideCollapsibleMenu( event, true );
-
-			App.navigate( $( event.currentTarget ).attr( 'data-url' ), {
-				'trigger' : true
-			} );
+			if ( !event.metaKey && !event.ctrlKey && !event.shiftKey ) {
+				event.preventDefault();
+				this.hideCollapsibleMenu( event, true );
+				App.navigate( $( event.currentTarget ).attr( 'data-url' ), {
+					'trigger' : true
+				} );
+			}
 		}
 
 	} );
