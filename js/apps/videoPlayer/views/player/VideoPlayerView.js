@@ -51,7 +51,7 @@ define( function ( require ) {
 			},
 
 			'getCC' : function () {
-				var url         = '//resources.pd360.com/PD360/media/video/';
+				var url         = 'PD360/media/video/';
 				var folder      = this.FileName.split( '.' )[ 0 ];
 				var file        = folder;
 				var contentType = { '3' : 'PD360', '6' : 'CC360' };
