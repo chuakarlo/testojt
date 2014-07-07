@@ -49,11 +49,12 @@ li {
 					z-index    : 1;
 
 					span.sc-play-icon {
-						font-size : 25px;
+						font-size : 25px !important;
 					}
 
 					p.sc-play-now {
-						font-size : 25px;
+						font-size : 25px !important;
+						color     : #ffffff;
 					}
 				}
 
@@ -106,12 +107,14 @@ li {
 				right : 55px;
 			}
 
-			span.sc-watch-later-icon {
+			span.sc-watch-later-icon,
+			span.sc-view-completed-icon {
 				right : 15px;
 			}
 
 			span.sc-info-icon,
-			span.sc-watch-later-icon {
+			span.sc-watch-later-icon,
+			span.sc-view-completed-icon {
 				top             : 70px;
 				font-size       : 28px;
 				cursor          : pointer;
@@ -121,6 +124,16 @@ li {
 				position        : absolute;
 				z-index         : 3;
 				display         : block;
+			}
+
+			span.sc-view-completed-icon  {
+				cursor : default;
+				color  : #9fd753;
+			}
+
+			.tooltip.top {
+				max-width : 98px;
+				right     : 0;
 			}
 
 			.grayed {
@@ -162,12 +175,16 @@ li {
 			overflow      		  : hidden;
 			display       		  : none;
 			z-index       		  : 2;
-			color       		  : @sc-white;
+			color       		  : @sc-white !important;
 			padding      		  : 15px 10px 5px 10px;
 			border-radius 		  : 3px;
 		    -moz-border-radius    : 3px;
 		    -webkit-border-radius : 3px;
 
+			p {
+				margin : 0 0 10px;
+				color  : @sc-white !important;
+			}
 			p.sc-overlay-segment-name {
 				font-size    : 15px;
 				line-height  : 1;
@@ -210,6 +227,9 @@ li {
 
 		}
 	}
+}
+* html .tooltip.top {
+	min-width: 95px;
 }
 
 html.touch {

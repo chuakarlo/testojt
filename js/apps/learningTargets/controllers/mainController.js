@@ -250,11 +250,19 @@ define( function ( require ) {
 
 						// append queue request
 						var contentIds = queue.pluck( 'ContentId' );
+						var videoType  = _.object( contentIds, queue.pluck( 'VideoTypeId' ) );
 
 						collection.each( function ( model ) {
-							var _id = model.get( 'ContentId' );
+							var _id   = model.get( 'ContentId' );
+							var vType = 1;
+
 							model.set( 'queued', _.contains( contentIds, _id ) );
-							model.set( 'VideoTypeId', 1 );
+
+							if ( _.contains( contentIds, _id ) ) {
+								vType = videoType[ _id ];
+							}
+
+							model.set( 'VideoTypeId', vType );
 						} );
 
 						var objectivesContentView = new ObjectivesContentView( {

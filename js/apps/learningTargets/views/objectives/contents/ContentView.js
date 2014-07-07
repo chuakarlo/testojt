@@ -6,11 +6,11 @@ define( function ( require ) {
 	var _               = require ( 'underscore' );
 	var template        = require ( 'text!apps/learningTargets/templates/objectives/focustitles.html' );
 	var EmptyView       = require ( 'apps/learningTargets/views/EmptyView' );
-	var getAbbreviation = require ( 'common/helpers/getAbbreviation' );
+	var getAbbreviation = require( 'common/helpers/getAbbreviation' );
 
 	return Marionette.CompositeView.extend ( {
 		'template'          : _.template ( template ),
-		'itemView'          : App.Common.NewSegmentCardsView,
+		'itemView'          : App.Common.SegmentCardsView,
 		'emptyView'         : EmptyView,
 		'tagName'           : 'div',
 		'className'         : 'objectives-content',
@@ -38,29 +38,11 @@ define( function ( require ) {
 
 		'itemViewOptions' : function ( model, index ) {
 
-			var className = 'col-xs-6 col-sm-6 col-md-4 col-lg-4';
-
-			if ( !model.get( 'ContentId' ) ) {
-				className = 'col-xs-6 col-sm-6 col-md-4 col-lg-12';
-			}
-
 			var options = {
-				'className'     : className,
-				'setClassIcons' : {
-					'SegmentCard' : { 'infoIcon' : true, 'queueIcon' : true, 'doneIcon' : true }
-				}
+				'className' : 'col-xs-6 col-sm-6 col-md-4 col-lg-4 '
 			};
 
 			return options;
-		},
-
-		'showError' : function ( error ) {
-
-			App.content.show( new App.Common.ErrorView( {
-				'message' : error,
-				'flash'   : 'An error occurred. Please try again later.'
-			} ) );
-
 		},
 
 		'previousFolder' : function () {

@@ -22,7 +22,7 @@ define( function ( require ) {
 		'_parseModel' : function ( model ) {
 			model.SegmentLength = convertSecsToMins( model.SegmentLengthInSeconds );
 			model.CName         = getAbbreviation ( model.ContentName, 50 );
-			model.ImageURL      = 'http://resources.pd360.com/PD360/media/thumb/thumb_' + model.FileName.replace( /(.flv|.mov|.mp4)/, '.jpg' );
+			model.ImageURL      = 'thumb_' + model.FileName.replace( /(.flv|.mov|.mp4)/, '.jpg' );
 
 			return model;
 		}

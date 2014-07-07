@@ -22,11 +22,12 @@ define( function ( require ) {
 		'tagName' : 'li',
 
 		'ui' : {
-			'infoIcon'    : 'span.sc-info-icon',
-			'watchIcon'   : 'span.sc-watch-later-icon',
-			'loadingIcon' : 'span.sc-watch-later-loading-icon',
-			'infoOverlay' : 'div.sc-overlay-details',
-			'playNowLink' : 'a.sc-play-link'
+			'infoIcon'          : 'span.sc-info-icon',
+			'watchIcon'         : 'span.sc-watch-later-icon',
+			'viewCompletedIcon' : 'span.sc-view-completed-icon',
+			'loadingIcon'       : 'span.sc-watch-later-loading-icon',
+			'infoOverlay'       : 'div.sc-overlay-details',
+			'playNowLink'       : 'a.sc-play-link'
 		},
 
 		'events' : {
@@ -64,6 +65,13 @@ define( function ( require ) {
 				return imgURL;
 			},
 
+			'queueCompleted' : function () {
+
+				var qcIcon = !this.ViewingCompleted ? 'sc-watch-later-icon grayed fa fa-clock-o' : 'sc-view-completed-icon fa fa-check-circle';
+
+				return qcIcon;
+			},
+
 			'linkUrl' : function () {
 				var uuv = this.UUVideoId ? '?uuv=true' : '';
 
@@ -85,7 +93,11 @@ define( function ( require ) {
 
 		'onShow' : function () {
 			this.addTooltip( this.ui.infoIcon , { 'title' : 'Description' } );
-			this.matchedSegmentsToQueue();
+			if ( !this.model.get( 'ViewingCompleted' ) ) {
+				this.matchedSegmentsToQueue();
+			} else {
+				this.addTooltip( this.ui.viewCompletedIcon , { 'title' : 'Completed' } );
+			}
 		},
 
 		'onClose' : function () {
@@ -108,7 +120,7 @@ define( function ( require ) {
 			this.removeTooltip( this.ui.infoIcon );
 
 			if ( !this.ui.infoIcon.hasClass( 'blued' ) ) {
-				this.ui.infoIcon.addClass( 'blued fa-times-circle').removeClass( 'grayed fa-info-circle' );
+				this.ui.infoIcon.addClass( 'blued fa-times-circle' ).removeClass( 'grayed fa-info-circle' );
 				tooltipText = 'Close';
 				this.ui.infoOverlay.fadeIn();
 				this.ui.watchIcon.addClass( 'grayed-overlay' );
@@ -148,22 +160,22 @@ define( function ( require ) {
 			this.ui.watchIcon.show();
 		},
 
-		'addTooltip' : function ( elem , options ) {
+		'setTouch' : function ( elem, options ) {
 			if ( !modernizr.touch ) {
 				elem.tooltip( options );
 			}
 		},
 
+		'addTooltip' : function ( elem , options ) {
+			this.setTouch ( elem, options );
+		},
+
 		'removeTooltip' : function ( elem ) {
-			if ( !modernizr.touch ) {
-				elem.tooltip( 'destroy' );
-			}
+			this.setTouch ( elem, 'destroy' );
 		},
 
 		'showTooltip' : function ( elem ) {
-			if ( !modernizr.touch ) {
-				elem.tooltip( 'show' );
-			}
+			this.setTouch ( elem, 'show' );
 		}
 
 	} );
