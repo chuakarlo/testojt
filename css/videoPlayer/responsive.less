@@ -267,6 +267,12 @@
 		}
 	}
 }
+//hide reflection questions area if empty in small screen
+@media ( max-width : @screen-sm-max ) {
+	#video-player-page #video-questions .empty-questions {
+		display : none;
+	}
+}
 //info modal responsive
 @media ( min-width : 480px ) and ( max-width : @screen-xs-max ) and ( orientation : landscape ) {
 	.info-modal {
@@ -283,11 +289,9 @@
 }
 
 @media ( min-width : 320px ) and  ( max-width : 480px ) {
-	#video-player-page {
-		.info-modal {
-			h2 {
-				font-size : 15px !important;
-			}
+	.info-modal {
+		h2 {
+			font-size : 15px !important;
 		}
 	}
 }

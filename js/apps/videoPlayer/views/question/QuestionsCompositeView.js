@@ -92,11 +92,24 @@ define( function ( require ) {
 		'showPagination' : function () {
 			if ( this.collection.length ) {
 				this.ui.currentPage.text( 1 );
+				this.ui.lastPage.text( this.collection.length );
+				this.ui.prev.hide();
 			} else {
-				this.ui.currentPage.text( 0 );
+				this.$el.addClass( 'empty-questions' );
+				this.ui.pagination.hide();
 			}
+		},
 
-			this.ui.lastPage.text( this.collection.length );
+		'showHideArrow' : function ( page ) {
+			var pages = this.collection.length;
+			if ( page < 2 ) {
+				this.ui.prev.hide();
+			} else if ( page === pages ) {
+				this.ui.next.hide();
+			} else {
+				this.ui.prev.show();
+				this.ui.next.show();
+			}
 		},
 
 		'nextQuestion' : function () {
@@ -119,6 +132,7 @@ define( function ( require ) {
 
 		'afterCarouselChange' : function ( elem, page ) {
 			this.updatePagination( page + 1 );
+			this.showHideArrow( page + 1 );
 			this.updateHeader( page );
 			this.children.findByIndex( page )
 				.ui.textInput.putCursorAtEnd();
