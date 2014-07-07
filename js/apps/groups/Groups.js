@@ -55,7 +55,7 @@ define( function ( require ) {
 				'getData' : function ( groupId ) {
 
 					// Check to see if this is the group we already have loaded
-					if ( !this.model || this.model.get( 'LicenseId') !== groupId ) {
+					if ( !this.model || this.model.get( 'LicenseId' ) !== groupId ) {
 
 						this.model = new App.Entities.GroupModel( {
 							'LicenseId' : groupId
@@ -142,6 +142,8 @@ define( function ( require ) {
 
 				'showGroupWall' : function ( groupId ) {
 
+					this.page = 'wall';
+
 					groupId = parseInt( groupId );
 
 					App.when( this.setup( groupId ) ).done( _.bind( function () {
@@ -152,10 +154,13 @@ define( function ( require ) {
 								'layout' : this.layout,
 								'model'  : this.model
 							} );
+
+							// give the sub-controller ability to execute function from this controller
+							this.wallController.getCurrentPage = _.bind( this.getCurrentPage, this );
 						}
 
 						if ( this.model.isMember ) {
-							this.layout.groupsContentRegion.show( new App.Common.LoadingView () );
+							this.layout.groupsContentRegion.show( new App.Common.LoadingView() );
 						}
 
 						this.wallController.getData( groupId );
@@ -166,6 +171,8 @@ define( function ( require ) {
 
 				'showGroupMembers' : function ( groupId ) {
 
+					this.page = 'members';
+
 					groupId = parseInt( groupId );
 
 					App.when( this.setup( groupId ) ).done( _.bind( function () {
@@ -175,9 +182,12 @@ define( function ( require ) {
 								'layout' : this.layout,
 								'model'  : this.model
 							} );
+
+							// give the sub-controller ability to execute function from this controller
+							this.membersController.getCurrentPage = _.bind( this.getCurrentPage, this );
 						}
 
-						this.layout.groupsContentRegion.show( new App.Common.LoadingView () );
+						this.layout.groupsContentRegion.show( new App.Common.LoadingView() );
 						this.membersController.getData( groupId );
 
 					}, this ) );
@@ -194,12 +204,15 @@ define( function ( require ) {
 							'model'           : this.model,
 							'displayLocation' : location
 						} );
+
+						// give the sub-controller ability to execute function from this controller
+						this.infoController.getCurrentPage = _.bind( this.getCurrentPage, this );
 					}
 
 					// If we don't have a current view in the info region,
 					// we probably need to reset the last group id to make
 					// sure it renders again
-					if ( !_.has( this.layout.groupInfoRegion, 'currentView') ) {
+					if ( !_.has( this.layout.groupInfoRegion, 'currentView' ) ) {
 						this.infoController.lastGroupId = null;
 					}
 
@@ -208,6 +221,8 @@ define( function ( require ) {
 				},
 
 				'showGroupResources' : function ( groupId ) {
+
+					this.page = 'resources';
 
 					groupId = parseInt( groupId );
 
@@ -218,15 +233,20 @@ define( function ( require ) {
 								'layout' : this.layout,
 								'model'  : this.model
 							} );
+
+							// give the sub-controller ability to execute function from this controller
+							this.resourcesController.getCurrentPage = _.bind( this.getCurrentPage, this );
 						}
 
-						this.layout.groupsContentRegion.show( new App.Common.LoadingView () );
+						this.layout.groupsContentRegion.show( new App.Common.LoadingView() );
 						this.resourcesController.getData( groupId );
 
 					}, this ) );
 				},
 
 				'showGroupForums' : function ( groupId ) {
+
+					this.page = 'forums';
 
 					groupId = parseInt( groupId );
 
@@ -238,6 +258,7 @@ define( function ( require ) {
 							} );
 						}
 
+						this.layout.flashLoadingRegion.show( new App.Common.LoadingView() );
 						this.forumController.showForums();
 
 					}, this ) );
@@ -307,7 +328,16 @@ define( function ( require ) {
 							'groupModel' : this.model
 						} );
 					}, this ) );
+				},
+
+				// this method is used by sub controllers to determine
+				// the current requested page to prevent race conditions
+				// of selecting resources and then very quickly selecting
+				// forums and having the resources displayed above forums.
+				'getCurrentPage' : function () {
+					return this.page;
 				}
+
 			} );
 
 			Vent.on( 'group:leaveGroup', function ( model ) {

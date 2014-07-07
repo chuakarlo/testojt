@@ -21,14 +21,11 @@ define( function ( require ) {
 
 				this.layout.groupsContentRegion.close();
 
-				//App.flashContent.$el.removeClass( 'hidden-flash' );
-				//App.flashContent.show( new App.Common.LoadingView() );
-
 				var pd360Loaded = App.request( 'pd360:loaded' );
 
 				App.when( pd360Loaded )
 					.done( _.bind( function () {
-						console.log( 'DONE');
+						this.layout.flashLoadingRegion.close();
 						App.request( 'pd360:navigate', 'communities', 'communitiesBrowse', {
 							'LocationTypeId' : 5,
 							'LocationId'     : this.model.get( 'LicenseId' )

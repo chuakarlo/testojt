@@ -18,7 +18,7 @@ define( function ( require ) {
 				this.lastGroupId = null;
 				this.displayLocation = options.displayLocation || 'side';
 
-				_.bindAll( this, 'showGroup');
+				_.bindAll( this, 'showGroup' );
 			},
 
 			'getData' : function ( groupId ) {
@@ -38,18 +38,22 @@ define( function ( require ) {
 
 			'showGroup' : function ( collection, lastUpdate, isMember ) {
 
-				this.model.set( 'lastUpdated', lastUpdate[ 0 ]);
+				if ( this.getCurrentPage() !== 'forums' ) {
 
-				var infoView = new App.Groups.Views.Info( {
-					'model'      : this.model,
-					'collection' : collection,
-					'isMember'   : isMember[ 0 ]
-				} );
+					this.model.set( 'lastUpdated', lastUpdate[ 0 ] );
 
-				if ( this.displayLocation === 'side' ) {
-					this.layout.groupInfoRegion.show( infoView );
-				} else {
-					this.layout.groupsContentRegion.show( infoView );
+					var infoView = new App.Groups.Views.Info( {
+						'model'      : this.model,
+						'collection' : collection,
+						'isMember'   : isMember[ 0 ]
+					} );
+
+					if ( this.displayLocation === 'side' ) {
+						this.layout.groupInfoRegion.show( infoView );
+					} else {
+						this.layout.groupsContentRegion.show( infoView );
+					}
+
 				}
 
 			}

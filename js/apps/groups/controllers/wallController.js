@@ -45,25 +45,31 @@ define( function ( require ) {
 			},
 
 			'showGroup' : function ( collection, isMember ) {
-				this.wallCollection.updateStartRow();
 
-				var commentsView = new App.Groups.Views.CommentsCollection( {
-					'model'       : this.model,
-					'collection'  : this.wallCollection,
-					'user'        : this.user,
-					'groupAvatar' : this.model.get( 'Avatar' )
-				} );
+				if ( this.getCurrentPage() === 'wall' ) {
 
-				// We listen to the close event so we can disable the bum smack
-				this.listenTo( commentsView, 'close', this.close );
+					this.wallCollection.updateStartRow();
 
-				// Check if this user is a member to show additional sections
-				if ( isMember[ 0 ] ) {
-					this.layout.groupsContentRegion.show( commentsView );
-					this.setupInfiniteScroll();
-					commentsView.showCreateSection();
+					var commentsView = new App.Groups.Views.CommentsCollection( {
+						'model'       : this.model,
+						'collection'  : this.wallCollection,
+						'user'        : this.user,
+						'groupAvatar' : this.model.get( 'Avatar' )
+					} );
+
+					// We listen to the close event so we can disable the bum smack
+					this.listenTo( commentsView, 'close', this.close );
+
+					// Check if this user is a member to show additional sections
+					if ( isMember[ 0 ] ) {
+						this.layout.groupsContentRegion.show( commentsView );
+						this.setupInfiniteScroll();
+						commentsView.showCreateSection();
+
+					}
 
 				}
+
 			},
 
 			'setupInfiniteScroll' : function () {

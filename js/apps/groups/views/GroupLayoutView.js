@@ -16,7 +16,8 @@ define( function ( require ) {
 			'groupInfoRegion'     : '.left-side',
 			'subNavRegion'        : '#group-sub-nav',
 			'groupsContentRegion' : '.groups-content-region',
-			'loadingRegion'       : '#group-wall-loading'
+			'loadingRegion'       : '#group-wall-loading',
+			'flashLoadingRegion'  : '.flash-loading'
 
 		}
 

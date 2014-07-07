@@ -14,11 +14,10 @@ define( function ( require ) {
 			'initialize' : function ( options ) {
 				this.layout = options.layout;
 				this.model = options.model;
-				_.bindAll( this, 'showGroup');
+				_.bindAll( this, 'showGroup' );
 			},
 
 			'getData' : function ( groupId ) {
-				//this.layout.groupsContentRegion.show( new App.Common.LoadingView() );
 				App.when(
 					this.model.getMembers( 100 ),
 					this.model.userIsGroupMember( Session.personnelId() )
@@ -26,13 +25,18 @@ define( function ( require ) {
 			},
 
 			'showGroup' : function ( collection, isMember ) {
-				var membersView = new App.Groups.Views.Members( {
-					'model'      : this.model,
-					'collection' : collection
-				} );
 
-				if ( isMember[ 0 ] ) {
-					this.layout.groupsContentRegion.show( membersView );
+				if ( this.getCurrentPage() === 'members' ) {
+
+					var membersView = new App.Groups.Views.Members( {
+						'model'      : this.model,
+						'collection' : collection
+					} );
+
+					if ( isMember[ 0 ] ) {
+						this.layout.groupsContentRegion.show( membersView );
+					}
+
 				}
 
 			}

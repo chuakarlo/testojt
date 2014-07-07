@@ -31,42 +31,41 @@ define( function ( require ) {
 
 			},
 
-			'showGroup' : function (
-					leaderResourcesCollection,
-					memberResourcesCollection,
-					leaderLinkCollection,
-					memberLinkCollection,
-					isMember
-				) {
+			'showGroup' : function ( leaderResourcesCollection, memberResourcesCollection, leaderLinkCollection, memberLinkCollection, isMember ) {
 
-				if ( isMember[ 0 ] ) {
-					var resourcesLayout = new App.Groups.Views.GroupResourcesLayout( {
-						'groupModel' : this.model
-					} );
-					this.layout.groupsContentRegion.show( resourcesLayout );
+				if ( this.getCurrentPage() === 'resources' ) {
 
-					var leaderCollection = new App.Entities.GroupCombinedResourcesCollection();
+					if ( isMember[ 0 ] ) {
+						var resourcesLayout = new App.Groups.Views.GroupResourcesLayout( {
+							'groupModel' : this.model
+						} );
+						this.layout.groupsContentRegion.show( resourcesLayout );
 
-					leaderCollection.add( leaderResourcesCollection.models );
-					leaderCollection.add( leaderLinkCollection.models );
+						var leaderCollection = new App.Entities.GroupCombinedResourcesCollection();
 
-					var resourcesView = new App.Groups.Views.Resources( {
-						'collection' : leaderCollection
-					} );
+						leaderCollection.add( leaderResourcesCollection.models );
+						leaderCollection.add( leaderLinkCollection.models );
 
-					resourcesLayout.leaderRegion.show( resourcesView );
+						var resourcesView = new App.Groups.Views.Resources( {
+							'collection' : leaderCollection
+						} );
 
-					var memberCollection = new App.Entities.GroupCombinedResourcesCollection();
+						resourcesLayout.leaderRegion.show( resourcesView );
 
-					memberCollection.add( memberResourcesCollection.models );
-					memberCollection.add( memberLinkCollection.models );
+						var memberCollection = new App.Entities.GroupCombinedResourcesCollection();
 
-					var resourcesMembersView = new App.Groups.Views.ResourcesMembers( {
-						'collection' : memberCollection
-					} );
+						memberCollection.add( memberResourcesCollection.models );
+						memberCollection.add( memberLinkCollection.models );
 
-					resourcesLayout.memberRegion.show( resourcesMembersView );
+						var resourcesMembersView = new App.Groups.Views.ResourcesMembers( {
+							'collection' : memberCollection
+						} );
+
+						resourcesLayout.memberRegion.show( resourcesMembersView );
+					}
+
 				}
+
 			}
 
 		} );
