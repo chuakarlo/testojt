@@ -33,6 +33,10 @@ define( function ( require ) {
 		avatarImg.attr( 'src', avatarImg.attr( 'data-src' ) );
 	}
 
+	function renderCompleteCircle ( element ) {
+		element.find( '#your-profile-circle' ).html( '<img style="padding:0px;margin:0px;padding:0 0 10px 35px;width:100%" src="img/fullpercent.png" />' );
+	}
+
 	function renderCircle ( element ) {
 		var eCircle  = element.find( '#your-profile-circle' );
 		var nPercent = parseInt( eCircle.html(), 10 );
@@ -85,7 +89,11 @@ define( function ( require ) {
 		'onRender'        : function () {
 			if ( App.request( 'homepage:isHomeRoute' ) ) {
 				var element = this.$el;
-				renderCircle( element );
+				if ( this.getPercentage( this.model.attributes ) > 99 ) {
+					renderCompleteCircle( element );
+				} else {
+					renderCircle( element );
+				}
 				renderAvatar( element.find( '#avatarSrc' ) );
 			}
 		},
