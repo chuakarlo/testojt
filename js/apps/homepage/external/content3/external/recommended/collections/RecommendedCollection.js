@@ -2,6 +2,8 @@ define( function ( require ) {
 	'use strict';
 
 	var Backbone = require( 'backbone' );
+	var $        = require( 'jquery' );
+	var _        = require( 'underscore' );
 	var Remoting = require( 'Remoting' );
 	var Session  = require( 'Session' );
 	var App      = require( 'App' );
@@ -41,6 +43,23 @@ define( function ( require ) {
 		return Remoting.fetch( apiCall );
 	};
 
+	function removeDuplicate ( models ) {
+
+		var cypher = [ ];
+		return $.grep ( models, function ( x, i ) {
+			if ( i === 0 ) {
+				return true;
+			}
+			var n   = models[ i ];
+			var id  = !n.ContentId ? n.UUVideoId : n.ContentId;
+			var hit = !_.contains( cypher, id );
+			if ( hit ) {
+				cypher.push( id );
+			}
+			return hit ;
+		} );
+	}
+
 	return Backbone.Collection.extend( {
 
 		'initialize' : function ( options ) {
@@ -50,6 +69,7 @@ define( function ( require ) {
 
 		'fetch' : function ( options ) {
 			App.when( fetchingModels( this.start ) ).done( function ( models ) {
+				models[ 0 ] =  removeDuplicate( models[ 0 ] );
 
 				var hasFetchedQueue = App.reqres.hasHandler( 'homepage:content:queue:fetch' );
 
