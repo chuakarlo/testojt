@@ -78,17 +78,12 @@
 			cursor   : pointer;
 			display  : none;
 			position : absolute;
-			top      : 49%;
+			top      : 47%;
 			z-index  : 10000;
 			color    : @pc-gray-light;
 			&:before {
 				background-color      : #aaa;
-				background-image      : -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, @pc-white),color-stop(1,#DDD));
-				background-image      : -webkit-linear-gradient(top, @pc-white,#DDD);
-				background            : -ms-linear-gradient(top,@pc-white, #DDD);
-				background            : -moz-linear-gradient(top,@pc-white, #DDD);
-				filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=@pc-white, endColorstr=#DDD);
-				background-image      : linear-gradient(top, @pc-white,#DDD);
+				opacity               : 0.5;
 				-webkit-border-radius : 2px 0 0 2px;
 				border-radius         : 2px 0 0 2px;
 				color                 : @pc-white;
@@ -107,14 +102,6 @@
 			&.nextLink:before, &.nextLink2:before {
 				padding       : 4px 10px 4px 13px;
 				border-radius : 0 2px 2px 0;
-			}
-			&:hover:before {
-				background-image      : -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, #DDD),color-stop(1,@pc-white));
-				background-image      : -webkit-linear-gradient(top, #DDD,@pc-white);
-				background-image      : linear-gradient(top, #DDD,@pc-white);
-				background            : -ms-linear-gradient(top,#DDD, @pc-white);
-				background            : -moz-linear-gradient(top,#DDD, @pc-white);
-				filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#DDD, endColorstr=@pc-white);
 			}
 		}
 		.nextLink, .nextLink2 {
