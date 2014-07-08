@@ -173,6 +173,13 @@ define( function ( require ) {
 		},
 
 		'doneSearching' : function ( searchResults ) {
+			// get received data that has either personnelid, licenseid or title
+			var filtered = _.filter( searchResults.models, function ( child ) {
+				return child.get( 'PersonnelId' ) || child.get( 'LicenseId' ) || child.get( 'title' );
+			} );
+
+			searchResults = new SearchResultsCollection( filtered, { 'searchData' : searchResults.searchData } );
+
 			// create a view for the search results
 			var resultsView = new SearchResultsCollectionView( { 'collection' : searchResults } );
 
