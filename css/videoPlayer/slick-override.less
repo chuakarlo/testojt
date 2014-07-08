@@ -16,21 +16,23 @@
 			padding : 0px;
 		}
 		.slick-next:before {
-			content       : "\f105";
-			border-radius : 0 2px 2px 0;
+			content               : "\f105";
+			-webkit-border-radius : 2px 0 0 2px;
+			border-radius         : 0 2px 2px 0;
 		}
 
 		.slick-prev:before {
-			content       : "\f104";
-			border-radius : 2px 0 0 2px
+			content               : "\f104";
+			-webkit-border-radius : 2px 0 0 2px;
+			border-radius         : 2px 0 0 2px
 		}
 
 		.slick-prev {
-			left : -9px;
+			left : 5px;
 		}
 
 		.slick-next {
-			right : -9px;
+			right : 5px;
 		}
 	}
 	.slick-prev, .slick-next  {
@@ -43,37 +45,25 @@
 			top        : 50%;
 			color      : @vp-gray-light;
 			z-index    : 10000;
-			background : @vp-white;
 			&:before {
-				font-family           : FontAwesome;
-				background-color      : @vp-arrow-gray-bg;
-				background-image      : -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, @vp-white),color-stop(1,@vp-arrow-gray));
-				background-image      : -webkit-linear-gradient(top, @vp-white,@vp-arrow-gray);
-				background-image      : linear-gradient(top, @vp-white,@vp-arrow-gray);
-				background            : -ms-linear-gradient(top,@vp-white, @vp-arrow-gray);
-				background            : -moz-linear-gradient(top,@vp-white, @vp-arrow-gray);
-				-webkit-border-radius : 2px 0 0 2px;
-				border-radius         : 2px 0 0 2px;
-				color                 : @vp-white;
-				cursor                : pointer !important;
-				display               : inline-block;
-				filter                : progid:DXImageTransform.Microsoft.gradient(startColorStr=@vp-arrow-gray-dark,EndColorStr=@vp-arrow-gray-darker);
-				font-weight           : bold;
-				outline               : 0;
-				text-align            : center;
-				text-shadow           : 0 -1px 0 rgba(0,0,0,.5);
-				font-size             : 25px;
-				text-shadow           : -1px 0px 0px rgba(0, 0, 0, 0.3);
-				padding               : 4px 12px 4px 10px;
+				font-family      : FontAwesome;
+				background-color : @vp-arrow-gray-bg;
+				opacity          : 0.3;
+				color            : @vp-white;
+				cursor           : pointer !important;
+				display          : inline-block;
+				filter           : progid:DXImageTransform.Microsoft.gradient(startColorStr = @vp-arrow-gray-dark,EndColorStr=@vp-arrow-gray-darker);
+				font-weight      : bold;
+				outline          : 0;
+				text-align       : center;
+				text-shadow      : 0 -1px 0 rgba(0,0,0,.5);
+				font-size        : 25px;
+				text-shadow      : -1px 0px 0px rgba(0, 0, 0, 0.3);
+				padding          : 2px 9px;
 			}
 
 			&:hover:before {
-				background-image : -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, @vp-arrow-gray),color-stop(1,@vp-white));
-				background-image : -webkit-linear-gradient(top, @vp-arrow-gray,@vp-white);
-				background-image : linear-gradient(top, @vp-arrow-gray,@vp-white);
-				background       : -ms-linear-gradient(top,@vp-arrow-gray, @vp-white);
-				background       : -moz-linear-gradient(top,@vp-arrow-gray, @vp-white);
-				filter           : progid:DXImageTransform.Microsoft.gradient(GradientType = 0,startColorstr=@vp-arrow-gray, endColorstr=@vp-white);
+				background : @vp-thumb-gray;
 			}
 		}
 }
