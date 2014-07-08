@@ -5,43 +5,29 @@ define( function ( require ) {
 
 	var optSetters = {
 		'processes' : function ( options ) {
-			var opts = null;
-
-			if ( options !== null ) {
-				opts = {
-					processId     : options.pageid,
-					processTaskId : options.subpageid
-				};
-			}
-
-			return opts;
+			return {
+				processId     : options.pageid,
+				processTaskId : options.subpageid
+			};
 		},
 
 		'observations' : function ( options ) {
-			var opts = null;
-
-			if ( options.pageid !== null ) {
-				opts = {
-					showPerFocus : options.pageid
-				};
-			}
-
-			return opts;
+			return {
+				showPerFocus : options.pageid
+			};
 		},
 
 		'default' : function ( options ) {
-			var opts = null;
-
-			if ( options !== null ) {
-				opts = parseInt( options.pageid, 10 );
-			}
-
-			return opts;
+			return parseInt( options.pageid, 10 );
 		}
 	};
 
 	return function ( content, reqOpts ) {
 		var defaults = [ 'courses', 'portfolio', 'catalogs' ];
+
+		if ( _.isNull( reqOpts.pageid ) && _.isNull( reqOpts.subpageid ) ) {
+			return null;
+		}
 
 		if ( _.contains( defaults, content ) ) {
 			content = 'default';
