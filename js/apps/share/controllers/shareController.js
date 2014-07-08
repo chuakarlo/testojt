@@ -8,6 +8,7 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 	var $          = require( 'jquery' );
 	var resources  = require( 'resources/data/menus' );
+	var utils      = require( 'videoPlayer/utils/utils' );
 
 	var ShareModal      = require( 'share/views/ShareLayout' );
 	var CommunitiesView = require( 'share/views/CommunitiesView' );
@@ -90,7 +91,7 @@ define( function ( require ) {
 			var x = new ShareModel( {
 				'licenseIds'   : licenseIds.join( ',' ),
 				'personnelIds' : personnelIds.join( ',' ),
-				'message'      : message
+				'message'      : _.escape( utils.safeStringify( message ).replace( /\n/g, '%nl%' ) )
 			} );
 
 			x.save( null, {

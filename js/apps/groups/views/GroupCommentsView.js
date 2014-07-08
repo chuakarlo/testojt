@@ -5,9 +5,9 @@ define( function ( require ) {
 	var Backbone   = require( 'backbone' );
 	var Marionette = require( 'marionette' );
 	var Session    = require( 'Session' );
-	var $          = require( 'jquery' );
 	var App        = require( 'App' );
 	var moment     = require( 'moment' );
+	var utils      = require( 'videoPlayer/utils/utils' );
 
 	var template      = require( 'text!../templates/groupCommentsView.html' );
 	var usersTemplate = require( 'text!../templates/usersGroupCommentsView.html' );
@@ -70,10 +70,7 @@ define( function ( require ) {
 			// Do not allow replies to news items
 			if ( this.model.get( 'NewsId' ) ) {
 				this.ui.replyBox.hide();
-				$( this.el ).find( 'p.resource-news' ).prepend( autolinker.link( this.model.get( 'NewsEntry' ) ) );
 			}
-
-			$( this.el ).find( 'p.wall-news' ).prepend( autolinker.link( this.model.get( 'Message' ) ) );
 		},
 
 		'closePopovers' : function ( viewWithPopover ) {
@@ -218,6 +215,17 @@ define( function ( require ) {
 
 				return moment( date ).fromNow();
 
+			},
+
+			'getWallMessage' : function () {
+				// Replacing /%nl%/ string pattern to make newline.
+				var message = _.unescape( utils.safeStringify( this.Message ).replace( /%nl%/g, '\n' ) );
+
+				return autolinker.link( _.escape( message ) );
+			},
+
+			'getNewsEntry' : function () {
+				return autolinker.link( _.escape( this.NewsEntry ) );
 			}
 		}
 

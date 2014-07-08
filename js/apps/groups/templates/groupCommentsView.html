@@ -5,7 +5,7 @@
 
 		<div class="comment-main">
 			<p><span class="fake-link creator-name"><%- CreatorFullName %></span> <span class="date"><%- formatDate( Created ) %></span></p>
-			<p class="wall-news"></p>
+			<p class="wall-news"><%= getWallMessage() %></p>
 		</div>
 
 		<ul class="reply media-list">
