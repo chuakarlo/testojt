@@ -11,6 +11,7 @@ define( function ( require ) {
 
 	var WidgetCollection = require( 'apps/homepage/external/widgets/collections/WidgetCollection' );
 
+	var UserWidgetCollectionView  = require( 'apps/homepage/external/widgets/views/UserWidgetCollectionView' );
 	var WidgetCompositeView       = require( 'apps/homepage/external/widgets/views/WidgetCompositeView' );
 	var MobileWidgetCompositeView = require( 'apps/homepage/external/widgets/views/MobileWidgetCompositeView' );
 	var template                  = require( 'text!apps/homepage/external/widgets/templates/widgetLayoutView.html' );
@@ -47,6 +48,15 @@ define( function ( require ) {
 					view.widgetCollection           = new WidgetCollection( widgets );
 					view.userWidgetCollection       = new WidgetCollection( view.getUserWidgetCollection( models[ 0 ] ) );
 					view.actualUserWidgetCollection = new WidgetCollection( view.getUserWidgetCollection( models[ 0 ] ) );
+
+					var userWidgetCollectionView = new UserWidgetCollectionView( { 'collection' : view.actualUserWidgetCollection } );
+					view.userWidgets.show( userWidgetCollectionView );
+
+					userWidgetCollectionView.collection.on( 'reset', function () {
+						userWidgetCollectionView.$el.empty();
+						view.userWidgets.close();
+						view.userWidgets.show( userWidgetCollectionView );
+					} );
 
 				}, {
 					'schema' : require( 'text!apps/homepage/external/widgets/configuration/widgetSchema.json' ),
