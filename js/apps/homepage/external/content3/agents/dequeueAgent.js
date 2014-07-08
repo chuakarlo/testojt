@@ -32,10 +32,12 @@ define( function ( require ) {
 	function deQueueMod ( mod ) {
 		mod = mod ? mod : emptyMod;
 		mod.set( { 'queued' : false } );
-		matchedSegmentsToQueue( mod._events[ 'change:queued' ][ 0 ].context );
-		matchedSegmentsToQueue( mod._events[ 'change:queued' ][ 1 ].context );
-		matchedSegmentsToQueue( mod._events[ 'change:queued' ][ 2 ].context );
-		matchedSegmentsToQueue( mod._events[ 'change:queued' ][ 3 ].context );
+		if ( mod && mod._events && mod._events[ 'change:queued' ] ) {
+			matchedSegmentsToQueue( mod._events[ 'change:queued' ][ 0 ].context );
+			matchedSegmentsToQueue( mod._events[ 'change:queued' ][ 1 ].context );
+			matchedSegmentsToQueue( mod._events[ 'change:queued' ][ 2 ].context );
+			matchedSegmentsToQueue( mod._events[ 'change:queued' ][ 3 ].context );
+		}
 	}
 
 	function dequeueRecommendedModel ( rows, model ) {
