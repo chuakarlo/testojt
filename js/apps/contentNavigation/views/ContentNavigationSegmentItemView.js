@@ -7,7 +7,9 @@ define( function ( require ) {
 	return App.Common.SegmentCardsView.extend( {
 
 		'events' : {
-			'click @ui.watchIcon' : 'updateQueue'
+			'click @ui.watchIcon'   : 'updateQueue',
+			'click @ui.infoIcon'    : 'showDetails',
+			'click @ui.playNowLink' : 'navigateToVideoPage'
 		},
 
 		'updateQueue' : function () {

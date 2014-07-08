@@ -1,10 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var _    = require( 'underscore' );
-	var App  = require( 'App' );
-	var Vent = require( 'Vent' );
-	var $    = require( 'jquery' );
+	var _        = require( 'underscore' );
+	var App      = require( 'App' );
+	var Vent     = require( 'Vent' );
+	var $        = require( 'jquery' );
+	var isLoaded = false;
 	require( 'jquery.bum-smack' );
 
 	return {
@@ -128,7 +129,11 @@ define( function ( require ) {
 			}.bind( this ) );
 
 			this.closeLoading();
-			this.layout.segmentsRegion.show( this.segmentsView );
+
+			if ( !isLoaded ) {
+				this.layout.segmentsRegion.show( this.segmentsView );
+				isLoaded = true;
+			}
 
 			// set hasPendingRequest to false
 			Vent.trigger( 'contentNavigation:setPendingRequest', false );

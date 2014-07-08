@@ -6,6 +6,7 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var Vent       = require( 'Vent' );
 	var Utils      = require( 'contentNavigation/controllers/UUVControllerUtils' );
+	var isLoaded   = false;
 	require( 'jquery.bum-smack' );
 
 	App.module( 'ContentNavigation.Controller', function ( Controller ) {
@@ -106,7 +107,10 @@ define( function ( require ) {
 				}.bind( this ) );
 
 				this.closeLoading();
-				this.layout.segmentsRegion.show( this.segmentsView );
+				if ( !isLoaded ) {
+					this.layout.segmentsRegion.show( this.segmentsView );
+					isLoaded = true;
+				}
 
 				// set hasPendingRequest to false
 				Vent.trigger( 'contentNavigation:setPendingRequest', false );
