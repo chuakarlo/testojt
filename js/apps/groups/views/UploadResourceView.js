@@ -122,7 +122,7 @@ define( function ( require ) {
 
 			if ( data.fileDescription.match( /^\s*$/ ) ) {
 				App.errorHandler( {
-					'message' : 'Missing Description'
+					'message' : 'Invalid or missing ' + data.resourceType + ' description'
 				} );
 				return false;
 			}
