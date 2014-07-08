@@ -135,9 +135,9 @@
 				float: left;
 				margin: 2px;
 
-				img {
-					width: 33px;
-					height: 33px;
+				a.group-member > img {
+					width  : 33px;
+					height : 33px;
 				}
 			}
 		}
@@ -155,8 +155,8 @@
 				display        : block;
 
 				.resource-icon {
-					max-width     : 100px;
-					max-height    : 100px;
+					max-width  : 100px;
+					max-height : 100px;
 				}
 
 				.resource-main {
@@ -222,20 +222,6 @@
 	// the max width
 	.popover {
 		max-width : none;
-
-		.popover-content {
-			.mini-personnel {
-				@media ( max-width : @screen-xs-max ) {
-					width : 270px !important;
-				}
-
-				img {
-					@media ( max-width : @screen-xs-max ) {
-						height : 50px !important;
-					}
-				}
-			}
-		}
 	}
 
 	 // Members Tab

@@ -1,14 +1,33 @@
+@large-image : 100px;
+@small-image : 60px;
+
 div.mini-personnel {
-	width : 400px;
-	height : 110px;
+
+	width      : 320px;
+	min-height : @large-image;
 
 	img {
 		float        : left;
 		margin-right : 10px;
+		height       : @large-image;
+		width        : @large-image;
 	}
+
+	// show a smaller popup on smaller screens
+	@media ( max-width : @screen-xs-max ) {
+		width      : 270px;
+		min-height : @small-image;
+
+		img {
+			height : @small-image;
+			width  : @small-image;
+		}
+	}
+
 	.loading-spinner {
 		position : absolute;
 		left     : 50%;
 		top      : 50%;
 	}
+
 }
