@@ -84,9 +84,13 @@
 		padding-bottom : 15px;
 	}
 
+		.panel-collapse {
+			padding : 10px;
+		}
+
 	table {
-		width  : ~"calc(100% - 20px)";
-		margin : 10px;
+		width         : 100%;
+		margin-bottom : 0;
 
 		.process-status-danger {
 			border-right: 4px solid @lt-light-red;
@@ -96,6 +100,15 @@
 		}
 
 		tr {
+			&.empty-processes {
+				td {
+					border : none;
+					&:hover {
+						background: transparent;
+					}
+				}
+
+			}
 
 			th {
 				text-align: center;

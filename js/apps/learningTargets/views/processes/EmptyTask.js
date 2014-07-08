@@ -6,7 +6,9 @@ define( function ( require ) {
 	var template   = require( 'text!apps/learningTargets/templates/processes/emptytask.html' );
 
 	return Marionette.ItemView.extend( {
-		'template' : _.template( template )
+		'template'  : _.template( template ),
+		'tagName'   : 'tr',
+		'className' : 'empty-processes'
 	} );
 
 } );
