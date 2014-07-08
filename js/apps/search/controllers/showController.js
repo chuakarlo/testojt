@@ -1,11 +1,12 @@
 define( function ( require ) {
 	'use strict';
 
-	var $          = require( 'jquery' );
-	var _          = require( 'underscore' );
-	var Marionette = require( 'marionette' );
-	var App        = require( 'App' );
-	var stripHtml  = require( 'common/helpers/stripHtml' );
+	var $            = require( 'jquery' );
+	var _            = require( 'underscore' );
+	var Marionette   = require( 'marionette' );
+	var App          = require( 'App' );
+	var stripHtml    = require( 'common/helpers/stripHtml' );
+	var stripScripts = require( 'common/helpers/stripScripts' );
 
 	// Views
 	var SearchResultCollectionView = require( 'search/views/SearchResultCollectionView' );
@@ -148,11 +149,14 @@ define( function ( require ) {
 					return;
 				}
 
-				// Set the query text, but remove html
-				this.layout.ui.query.html( stripHtml( query ) );
+				// Set the query text, but remove html and scripts
+				this.layout.ui.query.html( stripScripts( stripHtml( query ) ) );
 
 				// Clear any results we have
 				this.searchCollection.reset();
+
+				// Remove characters that cause errors in search
+				query = query.replace( /:|\\|\/|\{|\}|\(|\)|\[|\]/gi, ' ' );
 
 				// Set the query and reset the starting position
 				this.searchCollection.queryModel.set( {
