@@ -31,7 +31,7 @@
     "grunt-contrib-requirejs": "~0.4.3",
     "grunt-mocha-phantomjs": "0.4.x",
     "istextorbinary": "~1.0.0",
-    "jscs": "^1.5.6",
+    "jscs": "git://github.com/mdevils/node-jscs.git#41d322f9f2ad4488df44caf855d45b864d1e986f",
     "jshint": "2.3.x",
     "jshint-stylish": "~0.1.5",
     "lodash": "~2.4.1",
