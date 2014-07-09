@@ -87,6 +87,9 @@ define( function ( require ) {
 			if ( App.request( 'homepage:isHomeRoute' ) ) {
 				doOnRender( this );
 			}
+		},
+		'onShow'            : function () {
+			this.$el.parent().find( '.widget-specific:first-child' ).addClass( 'shown' );
 		}
 	} );
 

@@ -103,7 +103,11 @@ define( function ( require ) {
 			// Closing Widget Panel
 			'click div#widget-settings.opened'         : 'closeWidgetSettingsPanel',
 			'click div#widget-settings-overlay'        : 'closeWidgetSettingsPanel',
-			'click div#xs-widget-settings.opened'      : 'closeMobileSettingsPanel'
+			'click div#xs-widget-settings.opened'      : 'closeMobileSettingsPanel',
+
+			// Slide
+			'click #widget-nav.left'                   : 'slideLeft',
+			'click a#widget-nav.right'                 : 'slideRight'
 		},
 		'className' : 'widget-container',
 		'template'  : _.template( template ),
@@ -164,31 +168,6 @@ define( function ( require ) {
 			return getUserWidgetCollection( this, userWidgets );
 		},
 
-		'blurAction' : function ( e ) {
-			if ( $( '#widgets-settings-panel-wrapper' ).attr( 'data-bypass'  ) === 'off' ) {
-
-				var elem = e.currentTarget.ownerDocument.activeElement;
-				var parent = $( elem ).closest( '#widgets-settings-panel-wrapper' );
-
-				//using jquery to get focus doesn't work in IE
-				if ( parent.length === 1 ) {
-					$( '#widgets-settings-panel-wrapper' ).focus().css( 'outline', 'none' );
-				} else {
-					var self = this;
-					self.userWidgetCollection.reset();
-
-					self.actualUserWidgetCollection.models.forEach( function ( model ) {
-						self.userWidgetCollection.add( model );
-					} );
-					$( 'div#widget-settings.opened' ).click();
-				}
-
-			} else {
-				$( '#widgets-settings-panel-wrapper' ).attr( 'data-bypass', 'off' );
-				$( '#widgets-settings-panel-wrapper' ).focus().css( 'outline', 'none' );
-			}
-		},
-
 		'focusAction' : function ( e ) {
 			$( '#widgets-settings-panel-wrapper' ).focus().css( 'outline', 'none' );
 		},
@@ -201,6 +180,71 @@ define( function ( require ) {
 			App.reqres.setHandler( 'homepage:showWidgetPanel', function () {
 				return self;
 			} );
+		},
+
+		'onShow' : function () {
+			var self        = this;
+			var scrollElmnt = this.$el.find( '#active-widgets' );
+
+			scrollElmnt.scroll( function () {
+				var scrollLeft = $( this ).scrollLeft();
+
+				if ( Math.abs( scrollLeft ) < 290 ) {
+					self.$el.find( '.widget-specific:nth-child( 1 )' ).addClass( 'shown' ).siblings().removeClass( 'shown' );
+				} else if ( Math.abs( scrollLeft ) >= 290 && Math.abs( scrollLeft ) < 580 ) {
+					self.$el.find( '.widget-specific:nth-child( 2 )' ).addClass( 'shown' ).siblings().removeClass( 'shown' );
+				} else {
+					self.$el.find( '.widget-specific:nth-child( 3 )' ).addClass( 'shown' ).siblings().removeClass( 'shown' );
+				}
+
+				self.$el.find( '#widget-nav.left' ).show();
+
+				if ( self.$el.find( '#active-widgets' ).scrollLeft() === ( self.$el.find( '#active-widgets ul' ).width() - self.$el.find( '#active-widgets' ).width() ) ) {
+					self.$el.find( '#widget-nav.right' ).hide();
+				} else {
+					self.$el.find( '#widget-nav.right' ).show();
+				}
+
+				if ( self.$el.find( '#active-widgets' ).scrollLeft() === 0 ) {
+					self.$el.find( '#widget-nav.left' ).hide();
+				}
+			} );
+		},
+
+		'slideLeft' : function ( e ) {
+			e.preventDefault();
+
+			var position = this.slidePosition( [ 580, 0, 290 ] );
+
+			this.$el.find( '#active-widgets' ).animate( {
+				'scrollLeft' : position
+			}, 'slow' );
+		},
+
+		'slideRight' : function ( e ) {
+			e.preventDefault();
+
+			var position = this.slidePosition( [ 290, 580, 0 ] );
+
+			this.$el.find( '#active-widgets' ).animate( {
+				'scrollLeft' : position
+			}, 'slow' );
+		},
+
+		'slidePosition' : function ( positionParam ) {
+
+			var scrollLeft = this.$el.find( '#active-widgets' ).scrollLeft();
+			var position = 0;
+
+			if ( Math.abs( scrollLeft ) < 290 ) {
+				position = positionParam[ 0 ];
+			} else if ( Math.abs( scrollLeft ) >= 290 && Math.abs( scrollLeft ) < 580 ) {
+				position = positionParam[ 1 ];
+			} else {
+				position = positionParam[ 2 ];
+			}
+
+			return position;
 		}
 
 	} );
