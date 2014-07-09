@@ -88,10 +88,12 @@ define( function ( require ) {
 			var l = Ladda.create( document.querySelector( '#share-btn' ) );
 			l.start();
 
+			// replace new line with space to prevent
+			// unauthorized response from the server
 			var x = new ShareModel( {
 				'licenseIds'   : licenseIds.join( ',' ),
 				'personnelIds' : personnelIds.join( ',' ),
-				'message'      : _.escape( utils.safeStringify( message ).replace( /\n/g, '%nl%' ) )
+				'message'      : _.escape( utils.safeStringify( message ).replace( /\n/g, ' ' ) )
 			} );
 
 			x.save( null, {

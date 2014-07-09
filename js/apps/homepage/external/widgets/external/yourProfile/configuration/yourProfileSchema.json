@@ -41,10 +41,10 @@
 			"type" : "string"
 		},
 		"GradeLevelId"          : {
-			"type" : "number"
+			"type" : [ "number", "string" ]
 		},
 		"CCSubjectId"           : {
-			"type" : "number"
+			"type" : [ "number", "string" ]
 		}
 	}
 }
