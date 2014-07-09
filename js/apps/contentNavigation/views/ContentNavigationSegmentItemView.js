@@ -13,6 +13,7 @@ define( function ( require ) {
 		},
 
 		'updateQueue' : function () {
+
 			if ( this.model.get( 'queued' ) ) {
 				App.ContentNavigation.Helper.Queue.remove( this.model );
 				App.request( 'common:removeFromQueue', this.model );

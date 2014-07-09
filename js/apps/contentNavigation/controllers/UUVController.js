@@ -6,12 +6,13 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var Vent       = require( 'Vent' );
 	var Utils      = require( 'contentNavigation/controllers/UUVControllerUtils' );
-	var isLoaded   = false;
 	require( 'jquery.bum-smack' );
 
 	App.module( 'ContentNavigation.Controller', function ( Controller ) {
 
 		Controller.UUV = Marionette.Controller.extend( {
+
+			'isLoaded' : false,
 
 			'initialize' : function ( options ) {
 
@@ -63,10 +64,6 @@ define( function ( require ) {
 				// remove handlers for filters
 				this.showLoading();
 
-				this.segmentsView = new App.ContentNavigation.Views.Segments( {
-					'collection' : this.UUVideosCollection
-				} );
-
 				this.UUVideosCollection.reset();
 				this.UUVideosCollection.setArgs( 'Popular' );
 				var videosRequest = App.request( 'contentNavigation:uuv:getSegments', this.queryModel );
@@ -106,10 +103,15 @@ define( function ( require ) {
 					this.UUVideosCollection.add( model );
 				}.bind( this ) );
 
+				this.segmentsView = new App.ContentNavigation.Views.Segments( {
+					'collection' : this.UUVideosCollection
+				} );
+
 				this.closeLoading();
-				if ( !isLoaded ) {
+
+				if ( !this.isLoaded ) {
 					this.layout.segmentsRegion.show( this.segmentsView );
-					isLoaded = true;
+					this.isLoaded = true;
 				}
 
 				// set hasPendingRequest to false

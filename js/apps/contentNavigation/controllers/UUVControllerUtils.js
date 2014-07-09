@@ -138,6 +138,8 @@ define( function ( require ) {
 
 		'updateQueryData' : function ( category ) {
 
+			this.isLoaded = false;
+
 			var title = category.get( 'UUVideoTopic' );
 
 			// reset start and collection

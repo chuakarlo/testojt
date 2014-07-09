@@ -13,6 +13,8 @@ define( function ( require ) {
 
 		Controller.PD360 = Marionette.Controller.extend( {
 
+			'isLoaded' : false,
+
 			'initialize' : function ( options ) {
 
 				App.request( 'pd360:hide' );
@@ -110,10 +112,6 @@ define( function ( require ) {
 				filtersLayout.subjectsRegion.show( subjectsView );
 				filtersLayout.topicsRegion.show( topicsView );
 
-				this.segmentsView = new App.ContentNavigation.Views.Segments( {
-					'collection' : this.pd360VideosCollection
-				} );
-
 				var videosRequest = App.request( 'contentNavigation:pd360Videos', this.queryModel );
 
 				App.when( videosRequest ).then( function ( videos ) {
@@ -138,7 +136,8 @@ define( function ( require ) {
 			},
 
 			'updateQueryData' : function ( filter, sort, clearCollection ) {
-				var reset         = true;
+				var reset		= true;
+				this.isLoaded	= false;
 
 				Vent.trigger( 'contentNavigation:setPendingRequest', true );
 

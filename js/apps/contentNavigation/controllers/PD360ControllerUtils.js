@@ -5,7 +5,6 @@ define( function ( require ) {
 	var App      = require( 'App' );
 	var Vent     = require( 'Vent' );
 	var $        = require( 'jquery' );
-	var isLoaded = false;
 	require( 'jquery.bum-smack' );
 
 	return {
@@ -117,6 +116,10 @@ define( function ( require ) {
 
 			this.qContentsIds = queueContents.pluck( 'ContentId' );
 
+			this.segmentsView = new App.ContentNavigation.Views.Segments( {
+				'collection' : this.pd360VideosCollection
+			} );
+
 			if ( reset ) {
 				this.pd360VideosCollection.reset();
 			}
@@ -130,15 +133,15 @@ define( function ( require ) {
 
 			this.closeLoading();
 
-			if ( !isLoaded ) {
+			if ( !this.isLoaded ) {
 				this.layout.segmentsRegion.show( this.segmentsView );
-				isLoaded = true;
+				this.isLoaded = true;
 			}
 
 			// set hasPendingRequest to false
 			Vent.trigger( 'contentNavigation:setPendingRequest', false );
 
-			//setup infinite scroll if videos.length === this.queryModel rows && this.pd360VideosCollection !== numFound
+			// setup infinite scroll if videos.length === this.queryModel rows && this.pd360VideosCollection !== numFound
 			if ( this.pd360VideosCollection.length < this.pd360VideosCollection.queryModel.get( 'numFound' ) ) {
 				this.setupInfiniteScroll();
 			} else {
