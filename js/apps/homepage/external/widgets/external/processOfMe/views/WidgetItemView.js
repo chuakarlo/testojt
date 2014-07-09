@@ -38,12 +38,12 @@ define( function ( require ) {
 			};
 		},
 		'getDueDate'       : function () {
-			var now = moment( this.model.get( 'CompleteByDate' ) ).format( 'M-D-YYYY' );
+			var now = moment( this.model.get( 'DueDate' ) ).format( 'M-D-YYYY' );
 			now = now === 'Invalid date' ? '' : now;
 			return now;
 		},
 		'doCheckStatus'    : function () {
-			var completeByDate = this.model.get( 'CompleteByDate' );
+			var completeByDate = this.model.get( 'DueDate' );
 			if ( moment().isAfter( completeByDate ) ) {
 				return ' olderdate';
 			} else {
@@ -51,7 +51,7 @@ define( function ( require ) {
 			}
 		},
 		'getDateStatus'    : function () {
-			var completeByDate = this.model.get( 'CompleteByDate' );
+			var completeByDate = this.model.get( 'DueDate' );
 			if ( moment().isAfter( completeByDate ) ) {
 				return ' olddate';
 			} else {
@@ -59,7 +59,7 @@ define( function ( require ) {
 			}
 		},
 		'getTextDueStatus' : function () {
-			var completeByDate = this.model.get( 'CompleteByDate' );
+			var completeByDate = this.model.get( 'DueDate' );
 			if ( moment().isAfter( completeByDate ) ) {
 				return App.Homepage.Utils.message.processOfMePastDue;
 			} else {

@@ -1,10 +1,12 @@
 define ( function ( require ) {
 	'use strict';
 
-	var Backbone         = require( 'backbone' );
-	var Remoting         = require( 'Remoting' );
-	var Session          = require( 'Session' );
-	var App              = require( 'App' );
+	var Backbone = require( 'backbone' );
+	var Remoting = require( 'Remoting' );
+	var Session  = require( 'Session' );
+	var App      = require( 'App' );
+	var _        = require( 'underscore' );
+	var $        = require( 'jquery' );
 
 	function widgetRequest ( personnelId ) {
 		return {
@@ -16,6 +18,20 @@ define ( function ( require ) {
 		};
 	}
 
+	function comparator ( a, b ) {
+		return new Date( a.CompleteByDate ) > new Date( b.CompleteByDate );
+	}
+	function filter ( obj ) {
+		return {
+			'ProcessName' : obj.ProcessName,
+			'ProcessId'   : obj.ProcessId,
+			'DueDate'     : $( obj.Tasks ).filter( function ( index ) {
+				return obj.Tasks[ index ].AssignedToEducator === 1 || obj.Tasks[ index ].TaskCompleted !== '';
+			} ).sort( comparator )[ 0 ].CompleteByDate
+		};
+
+	}
+
 	return Backbone.Collection.extend( {
 		'fetch' : function ( options ) {
 
@@ -24,9 +40,17 @@ define ( function ( require ) {
 			App.when( fetchingModels ).done( function ( models ) {
 				App.Homepage.Utils.jsonVal( function ( err ) {
 					if ( !err ) {
-						options.success( new Backbone.Collection( models[ 0 ].slice( 0,5 ) ) );
+						var mods = $.map( models[ 0 ].slice( 0, 5 ), filter );
+						var und; // delacred an undefined variable
+						var mods2 = _.filter( mods, function ( item ) {
+							return ( item.DueDate !== und );
+						} );
+						var mods3 = _.sortBy( mods2, function ( obj ) {
+							return new Date( obj.DueDate );
+						} );
+						options.success( new Backbone.Collection( mods3 ) );
 						return;
-					}else {
+					} else {
 						App.vent.trigger( 'flash:message', {
 							'message' : 'Process of Me Widget: ' + err.message
 						} );
@@ -41,6 +65,5 @@ define ( function ( require ) {
 				} );
 			} );
 		}
-
 	} );
 } );
