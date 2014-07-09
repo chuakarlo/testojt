@@ -24,7 +24,7 @@ define( function ( require ) {
 				'appRoutes' : {
 					'resources/learning'                                            : 'showMain',
 					'resources/learning/courses'                                    : 'showCourses',
-					'resources/learning/processes'                                  : 'showProcesses',
+					'resources/learning/processes(/:process)(/:id)'                 : 'showProcesses',
 					'resources/learning/observations'                               : 'showObservations',
 					'resources/learning/portfolio'                                  : 'showPortfolio',
 					'resources/learning/catalogs(/modal)'                           : 'showCatalogs',

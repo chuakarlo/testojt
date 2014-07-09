@@ -18,7 +18,7 @@ define( function ( require ) {
 	var setRequestOptions = require( '../helpers/setRequestOptions' );
 	var setLegacyPages    = require( '../helpers/setLegacyPages' );
 	var mainHelpers       = require( '../helpers/mainHelpers' );
-
+	var processReset      = 0;
 	App.module( 'LearningTargets.Main', function ( Main ) {
 
 		Main.regions = {
@@ -65,7 +65,14 @@ define( function ( require ) {
 				} );
 			},
 
-			'showProcesses' : function () {
+			'showProcesses' : function ( process, activeID ) {
+
+				if ( processReset === 1 ) {
+					location.reload();
+				} else {
+					processReset = 1;
+				}
+
 				var helper = Main.helper;
 
 				// set legends options
@@ -82,15 +89,27 @@ define( function ( require ) {
 					]
 				};
 
+				var itemViewOptions = {
+					process : [ ]
+				};
+
+				if ( process ) {
+					itemViewOptions.process = process.split( '|' );
+				}
+
+				if ( activeID ) {
+					itemViewOptions.activeID = activeID.split( '|' );
+				}
+
 				helper._setContent( 'processes' );
 
 				// show a loading view while fetching data
 				helper._showView( new App.Common.LoadingView() );
 
 				helper._apiRequest( 'lt:processes', function ( collection ) {
-
 					var processesView = new ProcessesView( {
-						collection : collection
+						collection      : collection,
+						itemViewOptions : itemViewOptions
 					} );
 
 					// display Processes
