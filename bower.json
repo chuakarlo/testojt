@@ -33,7 +33,7 @@
     "moment-timezone": "0.0.3",
     "htmlConcat": "~1.0.4",
     "circular-snap-carousel": "~4.0.6",
-    "progress-circle": "1.0.0",
+    "progress-circle": "1.0.1",
     "nivo-slider": "3.2",
     "jquery.browser": "~0.0.6",
     "validator-js": "~3.11.0",
