@@ -13,8 +13,7 @@ define( function ( require ) {
 
 		'ui' : {
 			'drawerToggleButton' : '.lt-toggle-btn',
-			'spanhere'           : '.catalog-wrapper',
-			'catalogModal'       : '.catalog-training-anchor'
+			'spanhere'           : '.catalog-wrapper'
 		},
 
 		'events' : {
@@ -22,11 +21,8 @@ define( function ( require ) {
 		},
 
 		'showTrainingCatalog' : function ( e ) {
-			e.preventDefault();
-			e.stopPropagation();
 			this.trigger( 'lt:training' );
-			this.ui.catalogModal.blur();
-			return false;
+			this.$( '.catalog-training-anchor' ).blur();
 		},
 
 		'setCatalogLinks' : function ( model ) {

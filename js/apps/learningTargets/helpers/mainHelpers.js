@@ -93,14 +93,18 @@ define( function ( require ) {
 
 			'showLegacyContent' : function ( page, sub, opts ) {
 				var pd360Loaded = App.request( 'pd360:loaded' );
-
+				var callerURL = Backbone.history.fragment;
 				// Display loading view
 				App.content.show( new App.Common.LoadingView() );
 
 				// navigate to legacy page
 				App.when( pd360Loaded ).done( function () {
-					App.content.reset( );
-					App.request( 'pd360:navigate', page, sub, opts );
+					var currentURL = Backbone.history.fragment;
+					if ( callerURL === currentURL ) {
+						App.content.reset( );
+						App.request( 'pd360:navigate', page, sub, opts );
+					}
+					return false;
 				} );
 			},
 
