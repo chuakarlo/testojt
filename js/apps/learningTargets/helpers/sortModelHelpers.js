@@ -4,20 +4,29 @@ define( function ( require ) {
 	var helper = {
 		'sortModel' : function ( model ) {
 
-			model.Tasks.sort( function ( a, b ) {
-				var nameA = a.TaskName.toLowerCase();
-				var nameB = b.TaskName.toLowerCase();
+			model.Tasks.sort ( function ( a, b ) {
 
-				if ( nameA < nameB ) {
-					return -1;
-				}      //sort string ascending
-				if ( nameA > nameB ) {
-					return 1;
+				var order     = '*!@_.()#^&%-=+01234567989ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				var aTaskName = a.TaskName.toString();
+				var bTaskName = b.TaskName.toString();
+				var nameA     = order.indexOf ( aTaskName[ 0 ] );
+				var nameB     = order.indexOf ( bTaskName[ 0 ] );
+
+				if ( nameA === nameB ) { // same first character, sort regular
+					if ( a < b ) {
+						return -1;
+					} else if ( a > b ) {
+						return 1;
+					}
+					return 0;
+				} else {
+					return nameA - nameB;
 				}
-				return 0; //default return value (no sorting)
+
 			} );
 
 			return model;
+
 		}
 
 	};
