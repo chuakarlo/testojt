@@ -26,7 +26,7 @@ define( function ( require ) {
 					// router doesn't get a match for the argument, it passes null
 					var options = [
 						'LiveBookId',
-						'LiveBookItem'
+						'LiveBookItemId'
 					];
 
 					// The final args we are going to pass to the flash
@@ -47,7 +47,7 @@ define( function ( require ) {
 					App.content.show( new App.Common.LoadingView() );
 
 					App.when( pd360Loaded ).done( function () {
-						//close loading
+						// close loading
 						App.content.close();
 
 						// if `requestArgs` are empty, will display the lumibook bookshelf
