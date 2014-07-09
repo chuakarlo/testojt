@@ -56,7 +56,8 @@ define( function ( require ) {
 		},
 
 		'onRender' : function () {
-			$( this.el ).find( 'p.wall-comment' ).prepend( autolinker.link( this.model.get( 'Message' ) ) );
+			var message = autolinker.link( _.escape( this.model.get( 'Message' ) ) );
+			$( this.el ).find( 'p.wall-comment' ).prepend( message );
 		},
 
 		'getTemplate' : function () {
