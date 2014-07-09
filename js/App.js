@@ -55,7 +55,7 @@ define( function ( require ) {
 
 					queryParams = queryParams.replace( /^\?/, '' );
 
-					url += '/' + window.location.pathname + '#sso/' + queryParams;
+					url += window.location.pathname + '#sso/' + queryParams;
 
 					// replace the location url assuming sso params
 					window.location.replace( url );
