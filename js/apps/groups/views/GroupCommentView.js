@@ -6,7 +6,10 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var Session    = require( 'Session' );
 	var $          = require( 'jquery' );
-	var moment     = require( 'moment' );
+
+	var moment = require( 'moment' );
+	require( 'moment-timezone' );
+	require( 'timezone' );
 
 	var template           = require( 'text!../templates/groupCommentView.html' );
 	var usersTemplate      = require( 'text!../templates/usersGroupCommentView.html' );
@@ -115,16 +118,17 @@ define( function ( require ) {
 			'getUserAvatarPath' : require( 'common/helpers/getUserAvatarPath' ),
 
 			'formatDate' : function ( date ) {
+				var server = 'MST7MDT';
 
 				// milliseconds in 24 hours
 				var timeToSwitch = 60 * 60 * 24 * 1000;
 
 				// Only show time ago for the first 24 hours
-				if ( moment().diff( moment( date ) ) > timeToSwitch ) {
-					return moment( date ).format( 'MMMM D, YYYY' );
+				if ( moment().diff( moment.tz( date, server ) ) > timeToSwitch ) {
+					return moment.tz( date , server ).format( 'MMMM D, YYYY' );
 				}
 
-				return moment( date ).fromNow();
+				return moment.tz( date, server ).fromNow();
 
 			}
 		}

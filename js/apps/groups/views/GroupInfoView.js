@@ -8,7 +8,10 @@ define( function ( require ) {
 	var MemberItemView = require( '../views/InfoMemberItemView' );
 	var template       = require( 'text!../templates/groupInfoView.html' );
 	var stripHtml      = require( 'common/helpers/stripHtml' );
-	var moment         = require( 'moment' );
+
+	var moment = require( 'moment' );
+	require( 'moment-timezone' );
+	require( 'timezone' );
 
 	return Marionette.CompositeView.extend( {
 
@@ -84,16 +87,18 @@ define( function ( require ) {
 
 		'templateHelpers' : function () {
 
+			var server = 'MST7MDT';
+
 			return {
 
 				'getAbbreviation' : require( 'common/helpers/getAbbreviation' ),
 
 				'formatDate' : function ( date ) {
-					return moment( date ).format( 'MMMM D, YYYY' );
+					return moment.tz( date, server ).format( 'MMMM D, YYYY' );
 				},
 
 				'formatDateAgo' : function ( date ) {
-					return moment( date ).fromNow();
+					return moment.tz( date, server ).fromNow();
 				}
 
 			};
