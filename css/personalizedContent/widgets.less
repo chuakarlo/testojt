@@ -116,15 +116,21 @@
 		overflow : hidden;
 
 		#widget-nav {
-			border           : 1px solid orange;
-			background-color : #000;
+			background-color : @pc-gray-light;
+			color            : #FFF;
+			font-size        : 20px;
+			font-weight      : bold;
+			opacity          : 0.5;
+			padding          : 5px 12px;
 			position         : absolute;
 			top              : 40%;
 			text-align       : center;
-			padding          : 5px 12px;
-			font-size        : 20px;
-			font-weight      : bold;
-			color            : #FFF;
+			z-index          : 10000;
+			&:hover {
+				background-color : #aaa;
+				opacity : .5;
+			}
+
 
 			.fa {
 				font-weight : bold;
