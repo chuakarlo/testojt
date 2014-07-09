@@ -112,7 +112,28 @@
 	}
 
 	#active-holder {
+		position : relative;
 		overflow : hidden;
+
+		#widget-nav {
+			border           : 1px solid orange;
+			background-color : #000;
+			position         : absolute;
+			top              : 40%;
+			text-align       : center;
+			padding          : 5px 12px;
+			font-size        : 20px;
+			font-weight      : bold;
+			color            : #FFF;
+
+			.fa {
+				font-weight : bold;
+			}
+		}
+
+		#widget-nav.right {
+			right : 0;
+		}
 
 		.three-box-container {
 			.three-box-container( 410px );
@@ -431,19 +452,25 @@
 		}
 	}
 
+	#user-widgets {
+		height   : 405px;
+		overflow : hidden;
+		#active-widgets.three-box-container {
+			overflow-x : scroll;
+		}
+	}
+
 	#active-widgets {
 		.row {
 			margin-left  : 0px;
 			margin-right : 0px;
 		}
-		.carousel-control .fa {
-
+		.carousel-control {
+			border : 1px solid;
 		}
 		ul {
-			width      : inherit;
-			text-align : center;
+			width : 1140px;
 			li {
-				text-align     : left;
 				width          : 380px;
 				padding-bottom : 20px;
 				display        : inline-block;
