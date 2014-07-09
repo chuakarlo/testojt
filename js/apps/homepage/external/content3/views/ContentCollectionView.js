@@ -6,11 +6,14 @@ define( function ( require ) {
 	var App                  = require( 'App' );
 
 	return Marionette.CollectionView.extend( {
+
 		'initialize' : function ( options ) {
 			this.collection = App.Homepage.Sections.Content.contentCollection();
 		},
-		'id'         : 'content-display',
-		'className'  : 'col-md-12 no-padding',
-		'itemView'   : Contentcompositeview
+
+		'id'        : 'content-display',
+		'className' : 'col-md-12 no-padding',
+		'itemView'  : Contentcompositeview
+
 	} );
 } );

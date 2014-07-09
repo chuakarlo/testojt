@@ -32,7 +32,6 @@ define( function ( require ) {
 						var proc = processResult( result.queue, collection );
 						var fetchedColl = proc.coll;
 						var newActual = result.fetch + fetchedColl.length - proc.cuts;
-						//$( '#recommended-count' ).html( newActual );
 
 						App.reqres.setHandler( 'homepage:content:recommended:total', function () {
 							return {
@@ -82,11 +81,27 @@ define( function ( require ) {
 	}
 
 	return {
-		'id'           : 'recommended',
-		'header'       : 'Recommended',
-		'collection'   : Collection,
-		'contentDesc'  : 'The Recommended section displays content the system suggests for you based on your user profile. To learn more about using the system, complete the Getting Started with PD 360 [or insert product name] Essentials online training.',
-		'fetchLogic'   : function ( collection ) {
+		'id'         : 'recommended',
+		'header'     : 'Recommended',
+		'collection' : Collection,
+
+		'tooltip' : function () {
+
+			var personnel = App.request( 'session:personnel' );
+
+			var params = {
+				'email'       : personnel.EmailAddress,
+				'fname'       : personnel.FirstName,
+				'lname'       : personnel.LastName,
+				'personnelid' : personnel.PersonnelId
+			};
+
+			var helpUrl = 'http://help.schoolimprovement.com/courses/essentials/#context/' + $.param( params );
+
+			return 'The Recommended section displays content the system suggests for you based on your user profile. To learn more about using the system, complete the <a href="' + helpUrl + '">Edivation Essentials online training</a>.';
+		},
+
+		'fetchLogic' : function ( collection ) {
 			var header = collection[ 0 ];
 
 			var ids = _.map( header.collection.queueCollection, function ( model ) {
@@ -106,11 +121,13 @@ define( function ( require ) {
 
 			return proc.coll;
 		},
+
 		'EmptyMessage' : {
 			'heading' : 'Videos can be added to Recommended videos by completing your profile.',
 			'details' : _.template( emptyRecommendedTemplate )
 		},
-		'afterRender'  : function ( collection ) {
+
+		'afterRender' : function ( collection ) {
 
 			var result = App.request( 'homepage:content:recommended:total' );
 			if ( result.fetch < 0 ) {
@@ -118,7 +135,8 @@ define( function ( require ) {
 			}
 			$( '#recommended-count' ).html( result.total );
 		},
-		'onLastNav'    :  function ( $carousel ) {
+
+		'onLastNav' : function ( $carousel ) {
 			$( '#load-recommended' ).html( '<img src="img/loading-bar.gif"/></div>' );
 			var collection = App.request( 'homepage:content:recommended:carousel' );
 			postFetch( collection );

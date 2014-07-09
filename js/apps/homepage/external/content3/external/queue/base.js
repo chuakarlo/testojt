@@ -16,33 +16,44 @@ define( function ( require ) {
 	}
 
 	return {
-		'id'           : 'your-queue',
-		'header'       : function () {
+		'id' : 'your-queue',
+
+		'header' : function () {
 			var firstName = getName()[ 0 ];
 			return firstName + '\'' + setOwnership( firstName ) + ' Queue';
 		},
-		'contentDesc'  : 'Your queue displays content that you select to watch later. When you find content that you want to add to your queue, click Add to Queue.',
-		'collection'   : require( 'apps/homepage/external/content3/external/queue/collections/QueueCollection' ),
-		'updateCount'  : function ( collection ) {
+
+		'tooltip' : function () {
+			return 'Your queue displays content that you can select to watch at a later time. When you find new content that you want to add to your queue, click the <strong>Add to Queue <i class="fa fa-clock-o"></i></strong> icon.';
+		},
+
+		'collection' : require( 'apps/homepage/external/content3/external/queue/collections/QueueCollection' ),
+
+		'updateCount' : function ( collection ) {
 			$( this.id + '-count' ).text( collection.length );
 		},
-		'modelLogic'   : function ( model ) {
+
+		'modelLogic' : function ( model ) {
 			model.set( 'queued', true );
 		},
+
 		'EmptyMessage' : {
 			'heading' : 'You currently do not have any videos in your queue.',
 			'details' : _.template( emptyQueueTemplate )
 		},
-		'modelSet'     : function ( model ) {
+
+		'modelSet' : function ( model ) {
 			model.set( 'queued', true );
 		},
-		'fetchLogic'   : function ( collection ) {
+
+		'fetchLogic' : function ( collection ) {
 			App.reqres.setHandler( 'homepage:content:queue:total', function () {
 				return collection.length;
 			} );
 			return collection;
 		},
-		'afterRender'  : function ( collection ) {
+
+		'afterRender' : function ( collection ) {
 			$( '#your-queue-count' ).html( App.request( 'homepage:content:queue:total' ) );
 		}
 	};

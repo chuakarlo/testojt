@@ -22,9 +22,11 @@ define( function ( require ) {
 				}
 			} );
 		},
+
 		'className' : 'vid-container',
 		'emptyView' : App.Common.LoadingView,
 		'template'  : _.template( template ),
+
 		'templateHelpers' : function () {
 			var header  = this.model.get( 'header' );
 			var heading = $.type( header ) === 'string' ? header : header();
@@ -36,8 +38,9 @@ define( function ( require ) {
 		'onRender' : function () {
 			var attributes = {
 				'data-bootstro-placement' : 'top',
-				'data-bootstro-content'   : this.model.get( 'desc' )
+				'data-bootstro-content'   : this.model.get( 'tooltip' )()
 			};
+
 			this.$el.attr( { 'id' : this.model.id } );
 			this.$el.addClass( 'bootstro' );
 			this.$el.attr( attributes );
