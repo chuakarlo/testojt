@@ -8,7 +8,8 @@ define( function ( require ) {
 		var App            = require( 'App' );
 		var widgetMessages = require( 'text!apps/homepage/external/widgets/configuration/messages.json' );
 
-		//Register your external sections here
+		// Register your external sections here
+
 		require( 'apps/homepage/external/billboard/base' ).register( parent, sharedData );
 		require( 'apps/homepage/external/widgets/base' ).register( parent, sharedData, function () {
 			App.Homepage.Utils.loadMessages( widgetMessages );

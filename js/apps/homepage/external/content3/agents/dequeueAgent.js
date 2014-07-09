@@ -84,7 +84,6 @@ define( function ( require ) {
 	}
 
 	function dequeueQueueModel ( rows, model ) {
-		//collection for each item ( rows )
 		var id     = model.get( 'id' );
 		var length = rows.innerCollections.length;
 		var index  = getLastPosition( rows, length, id );

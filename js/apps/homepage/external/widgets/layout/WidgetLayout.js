@@ -18,7 +18,8 @@ define( function ( require ) {
 	var panelStatuses             = [ 'opened', 'closed' ];
 	var widgets;
 
-	//early load for performance
+	// early load for performance
+
 	require( 'pc-adjustablePeek' );
 
 	function fetchingModels ( personnelId ) {
