@@ -53,7 +53,6 @@ define( function ( require ) {
 			'confirmationMessage' : '.confirmation-message',
 			'createOptions'       : '.create-options',
 			'cancelSubmit'        : '.cancel-submit-btn',
-			'fileBtn'             : '.file-btn',
 			'groupData'           : '.group-data',
 			'groupInput'          : '.input-validation'
 		},
