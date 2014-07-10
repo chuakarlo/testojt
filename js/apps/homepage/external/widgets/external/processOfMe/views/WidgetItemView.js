@@ -37,35 +37,29 @@ define( function ( require ) {
 				'getConfig'   : getConfig( 'contentThumbnailPath' )
 			};
 		},
+		'returnStatus'     : function ( bTrue, bFalse ) {
+			var completeByDate = this.getCompleteDate();
+			return moment().isAfter( completeByDate ) ? bTrue : bFalse;
+		},
+		'getCompleteDate'  : function () {
+			return this.model.get( 'DueDate' ).CompleteByDate;
+		},
 		'getDueDate'       : function () {
-			var now = moment( this.model.get( 'DueDate' ) ).format( 'M-D-YYYY' );
+			var now = moment( this.getCompleteDate() ).format( 'M-D-YYYY' );
 			now = now === 'Invalid date' ? '' : now;
 			return now;
 		},
 		'doCheckStatus'    : function () {
-			var completeByDate = this.model.get( 'DueDate' );
-			if ( moment().isAfter( completeByDate ) ) {
-				return ' olderdate';
-			} else {
-				return '';
-			}
+			return this.returnStatus( ' olderdate' , '' );
 		},
 		'getDateStatus'    : function () {
-			var completeByDate = this.model.get( 'DueDate' );
-			if ( moment().isAfter( completeByDate ) ) {
-				return ' olddate';
-			} else {
-				return '';
-			}
+			return this.returnStatus( ' olddate' , '' );
 		},
 		'getTextDueStatus' : function () {
-			var completeByDate = this.model.get( 'DueDate' );
-			if ( moment().isAfter( completeByDate ) ) {
-				return App.Homepage.Utils.message.processOfMePastDue;
-			} else {
-				return App.Homepage.Utils.message.processOfMeDue;
-			}
+			return this.returnStatus( App.Homepage.Utils.message.processOfMePastDue,
+										App.Homepage.Utils.message.processOfMeDue );
 		}
 
 	} );
+
 } );

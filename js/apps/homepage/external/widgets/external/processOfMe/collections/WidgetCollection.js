@@ -27,7 +27,7 @@ define ( function ( require ) {
 			'ProcessId'   : obj.ProcessId,
 			'DueDate'     : $( obj.Tasks ).filter( function ( index ) {
 				return obj.Tasks[ index ].AssignedToEducator === 1 || obj.Tasks[ index ].TaskCompleted !== '';
-			} ).sort( comparator )[ 0 ].CompleteByDate
+			} ).sort( comparator )[ 0 ]
 		};
 
 	}
@@ -46,7 +46,7 @@ define ( function ( require ) {
 							return ( item.DueDate !== und );
 						} );
 						var mods3 = _.sortBy( mods2, function ( obj ) {
-							return new Date( obj.DueDate );
+							return new Date( obj.DueDate.CompleteByDate );
 						} );
 						options.success( new Backbone.Collection( mods3 ) );
 						return;
