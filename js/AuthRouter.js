@@ -41,8 +41,13 @@ define( function ( require ) {
 			},
 
 			// Password check redirects to a route here
-			'^settings' : function () {
+			'^settings/profile' : function () {
 				return this.authCheck() && this.eulaCheck();
+			},
+
+			// Other settings tabs
+			'^settings/(licenses|personal-reports)' : function () {
+				return this.checkAll();
 			},
 
 			'^logout' : function () {

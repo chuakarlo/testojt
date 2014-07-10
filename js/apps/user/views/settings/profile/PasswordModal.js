@@ -50,7 +50,7 @@ define( function ( require ) {
 		},
 
 		'validateInput' : function ( event ) {
-			require( 'common/helpers/validateInput')( event, this );
+			require( 'common/helpers/validateInput' )( event, this );
 		},
 
 		'savePassword' : function ( event ) {
@@ -87,6 +87,11 @@ define( function ( require ) {
 
 							// Updated the password reset information for the current session
 							App.request( 'session:personnel' ).PasswordReset = 1;
+
+							// If they haven't seen the wizard then redirect them to home to see the wizard
+							if ( Session.useWizards() ) {
+								App.navigate( 'home', { 'trigger' : true } );
+							}
 
 							App.vent.trigger( 'flash:message', {
 								'message' : 'Your password has been changed.',
