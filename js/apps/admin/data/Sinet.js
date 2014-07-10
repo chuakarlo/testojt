@@ -139,11 +139,11 @@ define( function ( require ) {
 			'id'   : 'ServerCacheTools'
 		},
 		{
-			'name' : 'Sinet Import User',
+			'name' : 'SINET Import User',
 			'id'   : 'SinetImportUser'
 		},
 		{
-			'name' : 'Sinet Reports',
+			'name' : 'SINET Reports',
 			'id'   : 'SinetReports'
 		},
 		{
