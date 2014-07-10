@@ -19,6 +19,10 @@ define( function ( require ) {
 			}
 		}
 		allData.add( App.Homepage.Utils.chunk( innerFetchedColl, allData.contentMax ) );
+
+		//Target active carousel as we are manipulating position
+		var sViewPort = App.Homepage.Utils.getActiveView();
+		App.Homepage.Utils.addLeftOnNewItems( $( '#recommended-pd360-slide-' + sViewPort ) );
 	}
 
 	function postFetch ( allData ) {

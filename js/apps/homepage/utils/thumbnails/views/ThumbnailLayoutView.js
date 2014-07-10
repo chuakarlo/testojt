@@ -1,30 +1,35 @@
 define( function ( require ) {
 	'use strict';
 
-	var Marionette = require( 'marionette' );
-	var Backbone   = require( 'backbone' );
-	var _          = require( 'underscore' );
-	var App        = require( 'App' );
+	var Marionette              = require( 'marionette' );
+	var Backbone                = require( 'backbone' );
+	var _                       = require( 'underscore' );
+	var App                     = require( 'App' );
+	var $                       = require( 'jquery' );
 
 	var template                = require( 'text!apps/homepage/utils/thumbnails/templates/thumbnailLayoutView.html' );
 	var ThumbnailCollectionView = require( 'apps/homepage/utils/thumbnails/views/ThumbnailCollectionView' );
 
 	var slideNavsData = {
 		'largeSlide'  : {
-			'size' : 'lg',
-			'max'  : 4
+			'size'     : 'lg',
+			'max'      : 4,
+			'maxWidth' : 1140
 		},
 		'mediumSlide' : {
-			'size' : 'md',
-			'max'  : 4
+			'size'     : 'md',
+			'max'      : 4,
+			'maxWidth' : 1140
 		},
 		'smallSlide'  : {
-			'size' : 'sm',
-			'max'  : 3
+			'size'     : 'sm',
+			'max'      : 3,
+			'maxWidth' : 885
 		},
 		'xSmallSlide' : {
-			'size' : 'xs',
-			'max'  : 2
+			'size'     : 'xs',
+			'max'      : 2,
+			'maxWidth' : 570
 		}
 	};
 
@@ -41,11 +46,12 @@ define( function ( require ) {
 		var thumbnailCollection = new Backbone.Collection( thumbnailChunk );
 		var source = view.model.get( 'base' );
 
-		thumbnailCollection.contentId    = source.get( 'id' );
-		thumbnailCollection.contentSize  = slideNavsData[ region ].size;
-		thumbnailCollection.contentMax   = slideNavsData[ region ].max;
-		thumbnailCollection.EmptyMessage = source.get( 'EmptyMessage' );
-		thumbnailCollection.onLastNav    = source.get( 'onLastNav' ) || function () {};
+		thumbnailCollection.contentId       = source.get( 'id' );
+		thumbnailCollection.contentSize     = slideNavsData[ region ].size;
+		thumbnailCollection.contentMax      = slideNavsData[ region ].max;
+		thumbnailCollection.contentMaxWidth = slideNavsData[ region ].maxWidth;
+		thumbnailCollection.EmptyMessage    = source.get( 'EmptyMessage' );
+		thumbnailCollection.onLastNav       = source.get( 'onLastNav' ) || function () {};
 
 		fetchFunction( thumbnailCollection, source, 'modelSet' );
 
@@ -91,7 +97,19 @@ define( function ( require ) {
 				that.afterRender( that.processedData );
 			};
 		},
-		'template'   : _.template( template )
+		'template'   : _.template( template ),
+		'events'     : {
+			'click .right.carousel-control' : function ( event ) {
+				var target    = ( event.currentTarget ) ? event.currentTarget : event.srcElement;
+				var $carousel = $( target ).closest( '.carousel' );
+				App.Homepage.Utils.adjustOnLastItem( $carousel );
+			},
+			'click .left.carousel-control'  : function ( event ) {
+				var target    = ( event.currentTarget ) ? event.currentTarget : event.srcElement;
+				var $carousel = $( target ).closest( '.carousel' );
+				App.Homepage.Utils.adjustOnFirstItem( $carousel );
+			}
+		}
 	} );
 
 } );

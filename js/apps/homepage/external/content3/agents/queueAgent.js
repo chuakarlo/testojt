@@ -30,9 +30,13 @@ define( function ( require ) {
 			rows.innerCollections[ rows.innerCollections.length - 1 ].add( model );
 		} else {
 			rows.add( App.Homepage.Utils.chunk( [ model ], rows.contentMax ) );
-			setNavButtons( rows );
-			App.Homepage.Utils.carouselHandleNavBars( $( '#your-queue-pd360-slide-' + rows.contentSize + '.carousel' ) );
+			if ( rows.length === 1 ) {
+				setNavButtons( rows );
+			}
 		}
+		var sViewPort = App.Homepage.Utils.getActiveView();
+		App.Homepage.Utils.addLeftOnNewItems( $( '#your-queue-pd360-slide-' + sViewPort ) );
+		App.Homepage.Utils.showRightOnDemand( $( '#your-queue-pd360-slide-' + sViewPort ) );
 	}
 
 	App.vent.on( 'common:queued', function ( model ) {

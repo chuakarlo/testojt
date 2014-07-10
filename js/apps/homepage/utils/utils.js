@@ -17,6 +17,7 @@ define( function ( require ) {
 			require( 'apps/homepage/utils/redirect' ),
 			require( 'apps/homepage/utils/stringExec' ),
 			require( 'apps/homepage/utils/proceedHomeAction' ),
+			require( 'apps/homepage/utils/viewport' ),
 			require( 'apps/homepage/utils/chunk' ),
 			require( 'apps/homepage/utils/verification' ),
 			require( 'apps/homepage/utils/thumbnails/thumbnails' ),

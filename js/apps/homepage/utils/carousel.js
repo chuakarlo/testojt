@@ -2,97 +2,85 @@ define( function ( require ) {
 	'use strict';
 
 	var $               = require( 'jquery' );
+	var ITEM_WIDTH      = 285;
 	var OPTIONS_DEFAULT = {
 		'interval'  : false,
 		'circular'  : false,
 		'onLastNav' : function () {},
 		'firstLoad' : false
 	};
-
-	function applySwipe ( $carousel ) {
-		require( [ 'pc-swipe' ], function () {
-			$carousel.swipe( {
-				threshold  : 0,
-				swipeLeft  : function () {
-					$( this ).carousel( 'next' );
-				},
-				swipeRight : function () {
-					$( this ).carousel( 'prev' );
-				}
-			} );
-		} );
-	}
-
-	function syncCarousel ( view, token , size, formula ) {
-		var item   = view.find( '.item' );
-		var active = view.find( '.active' );
-
-		var index  = ( item ).index( active );
-		var target = view.parent(  ).find( '#' + token + '-pd360-slide-' + size  );
-		target.find( '.item.active'  ).removeClass( 'active' );
-		var item2   = target.find( '.item' );
-		$( $( item2 ).get( formula( index ) ) ).addClass( 'active' );
-	}
-
-	function handleNavBars ( $carousel, options ) {
-
-		var $rightControl = $carousel.find( '.right.carousel-control' );
-		var $leftControl  = $carousel.find( '.left.carousel-control' );
-		var $active       = $carousel.find( '.item.active' );
-
-		// if the last slide,
-		if ( !$active.next().length )  {
-			$rightControl.hide();
-			if ( options ) {
-				options.onLastNav( $carousel );
-			}
-		} else {
-			$rightControl.show();
-		}
-
-		// if the first slide
-		if ( !$active.prev().length )  {
-			$leftControl.hide();
-		} else {
-			$leftControl.show();
-		}
-	}
+	var utils    = require( 'apps/homepage/utils/carousel/utils' );
+	var rowutils = require( 'apps/homepage/utils/carousel/rowutils' );
+	var navbars  = require( 'apps/homepage/utils/carousel/navbars' );
+	var touch    = require( 'apps/homepage/utils/carousel/touch' );
 
 	return {
 
+		'adjustOnLastItem' : function ( $carousel ) {
+			rowutils.adjustOnLastItem( $carousel );
+		},
+		'adjustOnFirstItem' : function ( $carousel ) {
+			rowutils.adjustOnFirstItem( $carousel );
+		},
+		'addLeftOnNewItems' : function ( $carousel ) {
+			var nLeft = $carousel.find( '.item:first' ).css( 'left' );
+			$carousel.find( '.item' ).css( { 'left' : nLeft } );
+		},
+		'showRightOnDemand' : function ( $carousel ) {
+			navbars.showRightOnDemand( $carousel );
+		},
+		'onRemoveItem' : function ( $carousel ) {
+
+			var nTotal = utils.getTotalWidth( $carousel );
+			nTotal     = ( nTotal - ( utils.getTotalExcess( $carousel ) * ITEM_WIDTH ) ) * -1;
+			var nLeft  = parseInt( $carousel.find( '.item:first' ).css( 'left' ), 10 );
+
+			if ( nTotal >= nLeft )  {
+				nLeft += $carousel.data().projectedMove;
+				$carousel.find( '.item' ).css( { 'left' : nLeft + 'px' } );
+			}
+
+			navbars.showRightOnDemand( $carousel );
+			nTotal = utils.getTotalWidth( $carousel );
+			if ( nTotal <= 0 ) {
+				navbars.handleNavBars( $carousel );
+			}
+		},
+		'hasPartialSegment' : function ( $carousel ) {
+			return utils.hasPartialSegment( $carousel );
+		},
 		'carouselHandleNavBars' : function ( $carousel ) {
-			handleNavBars( $carousel );
+			navbars.handleNavBars( $carousel );
 		},
 		//should only be called once
 		'carouselApplySettings' : function ( $carousel, options ) {
+
 			options = $.extend( { }, OPTIONS_DEFAULT, options );
 			$carousel.carousel( {
 				'interval' : options.interval,
 				'wrap'     : false
 			} );
+			//return here if circular ( currently not circular carousel )
 
-			applySwipe( $carousel );
+			touch.applySwipe( $carousel );
 
-			if ( options.circular ) {
-				return; //early return so that code below will not be performed
-			}
-			var $leftControl  = $carousel.find( '.left.carousel-control' );
-			$leftControl.hide();
+			$carousel.data( { 'onLastNav' : options.onLastNav } );
+			$carousel.find( '.left.carousel-control' ).hide();
+			touch.handleTouchNavBars( $carousel );
 
-			$carousel.bind( 'slid.bs.carousel', function () {
+			rowutils.handleOverFlowNavs( $carousel );
+			utils.setProjectedMove( $carousel );
 
-				//iPad Orientation videos will not reset
-				var token = $( this ).attr( 'id' ).split( '-pd360-slide-' );
-				if ( token[ 1 ] === 'md' ) {
-					syncCarousel( $( this ), token[ 0 ], 'sm', function (  index  ) {
-						return index + Math.floor(  index / 2 );
-					} );
-				} else if ( token[ 1 ] === 'sm' ) {
-					syncCarousel( $( this ), token[ 0 ], 'md', function ( index ) {
-						return index - Math.floor( ( index + 1 ) * ( 0.25 ) );
-					} );
+			$carousel.bind( 'slide.bs.carousel', function ( event ) {
+				$carousel.data( { 'direction' : event.direction } );
+				utils.setProjectedMove( $carousel );
+				rowutils.handleLeftAdjust( event );
+			} );
+
+			$carousel.bind( 'slid.bs.carousel', function ( event ) {
+				if ( !utils.hasPartialSegment ( $carousel ) ) {
+					navbars.handleNavBars( $carousel );
 				}
-				handleNavBars( $carousel, options );
 			} );
 		}
 	};

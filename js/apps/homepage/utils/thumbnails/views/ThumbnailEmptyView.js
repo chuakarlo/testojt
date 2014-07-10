@@ -3,7 +3,7 @@ define( function ( require ) {
 
 	var Marionette = require( 'marionette' );
 	var _          = require( 'underscore' );
-
+	var $          = require( 'jquery' );
 	var template   = require( 'text!apps/homepage/utils/thumbnails/templates/thumbnailEmptyView.html' );
 
 	return Marionette.ItemView.extend( {
@@ -15,6 +15,7 @@ define( function ( require ) {
 			return this.emptyMessage;
 		},
 		'onRender'        : function () {
+			this.$el.width( $( '#content-display' ).outerWidth() );
 			this.$el.find( 'p' ).html( this.emptyMessage.details );
 		}
 	} );
