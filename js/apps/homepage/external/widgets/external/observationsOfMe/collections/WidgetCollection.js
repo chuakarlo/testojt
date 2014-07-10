@@ -3,7 +3,6 @@ define ( function ( require ) {
 
 	var Backbone         = require( 'backbone' );
 	var Remoting         = require( 'Remoting' );
-	var $                = require( 'jquery' );
 	var Session          = require( 'Session' );
 	var App              = require( 'App' );
 
@@ -24,24 +23,14 @@ define ( function ( require ) {
 	} );
 
 	return Backbone.Collection.extend( {
+
 		'fetch' : function ( options ) {
 
 			var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId() ) ] );
 
-			$.when( fetchingModels ).done( function ( models ) {
-				App.Homepage.Utils.jsonVal( function ( err ) {
-					if ( !err ) {
-						options.success( new Collection( models[ 0 ] ) );
-						return;
-					} else {
-						App.vent.trigger( 'flash:message', {
-							'message' : 'Obervations of me widget: JSon error'
-						} );
-					}
-				}, {
-					'schema' : require( 'text!apps/homepage/external/widgets/external/observationsOfMe/configuration/observationsOfMeSchema.json' ),
-					'data'   : models [ 0 ]
-				} );
+			App.when( fetchingModels ).done( function ( models ) {
+
+				options.success( new Collection( models[ 0 ] ) );
 
 			} ).fail( function ( error ) {
 
@@ -50,6 +39,9 @@ define ( function ( require ) {
 				} );
 
 			} );
+
 		}
+
 	} );
+
 } );
