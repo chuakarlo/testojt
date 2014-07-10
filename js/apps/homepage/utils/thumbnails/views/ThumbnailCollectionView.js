@@ -3,7 +3,6 @@ define( function ( require ) {
 
 	var App                        = require( 'App' );
 	var Marionette                 = require( 'marionette' );
-	var $                          = require( 'jquery' );
 	var _                          = require( 'underscore' );
 	var ThumbnailCompositeView     = require( 'apps/homepage/utils/thumbnails/views/ThumbnailCompositeView' );
 	var ThumbnailEmptyView         = require( 'apps/homepage/utils/thumbnails/views/ThumbnailEmptyView' );
@@ -33,14 +32,12 @@ define( function ( require ) {
 			// calculate partial for first load
 			var $carousel = this.$el.closest( '.carousel' );
 			$carousel.data( { 'size' : this.contentMax } );
-			if ( !$( 'html' ).hasClass( 'touch' ) ) {
-				var slideNavsTemplate = _.template( thumbnailSlideNavsTemplate, {
-					'contentId'   : this.contentId,
-					'contentSize' : this.contentSize
-				} );
+			var slideNavsTemplate = _.template( thumbnailSlideNavsTemplate, {
+				'contentId'   : this.contentId,
+				'contentSize' : this.contentSize
+			} );
 
-				this.$el.parent().append( slideNavsTemplate );
-			}
+			this.$el.parent().append( slideNavsTemplate );
 			App.Homepage.Utils.carouselApplySettings( $carousel , { 'onLastNav' : this.onLastNav } );
 		}
 	} );

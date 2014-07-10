@@ -10,14 +10,16 @@ define( function ( require ) {
 
 			var nLeft = $carousel.find( '.item:first' ).css( 'left' );
 			utils.setProjectedMove( $carousel );
-
-			var $active = $carousel.find ( '.item.active' );
+			var nTotalWidth = utils.getTotalWidth( $carousel ) * -1;
+			var $active     = $carousel.find ( '.item.active' );
 			$active = $active.next().length ? $active.next() : $active;
 			$active = $active.next();
 
 			if ( utils.isLastAndOverflow( $carousel, $active ) ) {
 				nLeft = parseInt( nLeft, 10 );
 				nLeft = nLeft - $carousel.data().projectedMove;
+				nLeft = ( nLeft < nTotalWidth ) ? nTotalWidth : nLeft;
+
 				$carousel.find( '.item' ).css( { 'left' : nLeft } ).promise().done( function () {
 					navbars.showRightOnDemand( $carousel, ( nLeft * -1 ) );
 					navbars.showLeftOnDemand( $carousel, nLeft );
@@ -40,13 +42,6 @@ define( function ( require ) {
 					navbars.showRightOnDemand( $carousel, ( nLeft * -1 ) );
 					navbars.showLeftOnDemand( $carousel, nLeft );
 				} );
-			}
-		},
-
-		'handleOverFlowNavs' : function ( $carousel ) {
-			var $active = $carousel.find ( '.item.active' );
-			if ( utils.isLastAndOverflow( $carousel, $active.next() ) ) {
-				$carousel.find( '.right.carousel-control' ).show();
 			}
 		},
 

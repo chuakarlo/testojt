@@ -15,6 +15,7 @@ define( function ( require ) {
 			return this.emptyMessage;
 		},
 		'onRender'        : function () {
+			this.parentContainer.swipe( 'destroy' );
 			this.parentContainer.css( { 'width' : '100%' } );
 			this.$el.find( 'p' ).html( this.emptyMessage.details );
 		}

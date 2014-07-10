@@ -4,6 +4,8 @@ define( function ( require ) {
 	var App = require( 'App' );
 	var $   = require( 'jquery' );
 
+	require( 'pc-swipe' );
+
 	App.module( 'Homepage.Utils', function ( Utils ) {
 
 		var allUtils = [

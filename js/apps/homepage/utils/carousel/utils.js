@@ -19,11 +19,7 @@ define( function ( require ) {
 
 	return {
 		'getTotalWidth'     : function ( $carousel ) {
-
-			var nTotalWidth = $carousel.find( '.item' ).length;
-			nTotalWidth     = $carousel.find( '.item' ).outerWidth() * ( nTotalWidth - 1 );
-			nTotalWidth     = nTotalWidth + $carousel.find( '.item:last' ).outerWidth();
-
+			var nTotalWidth = $carousel.find( 'li' ).length * ITEM_WIDTH;
 			return nTotalWidth;
 		},
 		'getTotalExcess'    : function ( $carousel ) {
@@ -37,12 +33,7 @@ define( function ( require ) {
 			return hasPartialSegment( $carousel );
 		},
 		'animateItems'      : function ( $carousel, nLeft ) {
-			$carousel.find( '.item' ).animate( { 'left' : nLeft + 'px' },{
-				'duration' : 50,
-				'width'    : [ 'toggle', 'linear' ],
-				'height'   : [ 'toggle', 'linear' ],
-				'opacity'  : 0.5
-			} );
+			$carousel.find( '.item' ).css( { 'left' : nLeft + 'px' } );
 		},
 		'setProjectedMove'  : function ( $carousel ) {
 			// Calculate  Projected Move

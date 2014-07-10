@@ -75,13 +75,23 @@
 					display     : inline-block;
 				}
 				.item {
-					left               : 0;
-					padding            : 0 15px;
-					display            : inline-block;
-					-webkit-transition : 0.3s ease-in-out left;
-					-moz-transition    : 0.3s ease-in-out left;
-					-o-transition      : 0.3s ease-in-out left;
-					transition         : 0.3s ease-in-out left;
+					left                        : 0;
+					padding                     : 0 15px;
+					display                     : inline-block;
+					-webkit-transform           : translate3d(0,0,0);
+					-moz-transform              : translate3d(0,0,0);
+					-ms-transform               : translate3d(0,0,0);
+					-o-transform                : translate3d(0,0,0);
+					transform                   : translate3d(0,0,0);
+
+					-webkit-backface-visibility : hidden;
+					backface-visibility         : hidden;
+					-webkit-perspective         : 1000;
+					-webkit-transition          : all .4s ease-out;
+					-moz-transition             : all .4s ease-out;
+					-ms-transition              : all .4s ease-out;
+					-o-transition               : all .4s ease-out;
+					transition                  : all .4s ease-out;
 				}
 				.item li {
 					list-style-type : none;

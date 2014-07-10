@@ -71,7 +71,7 @@ define( function ( require ) {
 			$carousel.find( '.left.carousel-control' ).hide();
 
 			navbars.handleNavBars( $carousel );
-			rowutils.handleOverFlowNavs( $carousel );
+			navbars.handleOverFlowNavs( $carousel );
 
 			// special case
 			if ( $carousel.hasClass( 'visible-md' ) && $carousel.find( 'li' ).length >= $carousel.data().size ) {

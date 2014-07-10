@@ -16,13 +16,11 @@ define( function ( require ) {
 
 	function setNavButtons ( rows ) {
 		if ( $( '#your-queue-pd360-slide-' + rows.contentSize + ' .carousel-control' ).length === 0 ) {
-			if ( !$( 'html' ).hasClass( 'touch' ) ) {
-				var nav = _.template( thumbnailSlideNavsTemplate, {
-					'contentId'   : rows.contentId,
-					'contentSize' : rows.contentSize
-				} );
-				$( '#your-queue-pd360-slide-' + rows.contentSize + ' .carousel-inner-wrapper' ).append( nav );
-			}
+			var nav = _.template( thumbnailSlideNavsTemplate, {
+				'contentId'   : rows.contentId,
+				'contentSize' : rows.contentSize
+			} );
+			$( '#your-queue-pd360-slide-' + rows.contentSize + ' .carousel-inner-wrapper' ).append( nav );
 			App.Homepage.Utils.carouselApplySettings( $( '#your-queue-pd360-slide-' + rows.contentSize + '.carousel' ) );
 		}
 	}

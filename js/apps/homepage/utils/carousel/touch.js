@@ -18,15 +18,24 @@ define( function ( require ) {
 			require ( [ 'pc-swipe' ], function () {
 				if ( $( 'html' ).hasClass( 'touch' )  ) {
 					$carousel.swipe( {
-						threshold  : 0,
-						swipeLeft  : function () {
+						threshold        : 3,
+						allowPageScroll  : 'none',
+						excludedElements : '.noSwipe',
+						swipeLeft        : function () {
 							$( this ).carousel( 'next' );
-							rowutils.adjustOnLastItem( this );
+
+							if ( !$( this ).data().stopSwipeRight ) {
+								rowutils.adjustOnLastItem( this );
+							}
 						},
-						swipeRight : function () {
+						swipeRight       : function () {
 							$( this ).carousel( 'prev' );
-							rowutils.adjustOnFirstItem( this );
+
+							if ( !$( this ).data().stopSwipeLeft ) {
+								rowutils.adjustOnFirstItem( this );
+							}
 						}
+
 					} );
 				}
 			} );
