@@ -10,6 +10,8 @@ define( function ( require ) {
 
 	var template = require( 'text!apps/homepage/templates/baseItemView.html' );
 
+	var wizardUsed = false;
+
 	return Marionette.Layout.extend( {
 
 		'className'  : 'home-container',
@@ -26,12 +28,19 @@ define( function ( require ) {
 			$( 'body' ).scrollTop( 0 );
 		},
 
+		'onClose' : function () {
+			if ( wizardUsed ) {
+				bootstro.stop();
+			}
+		},
+
 		'showWizzard' : function () {
 			var personnelRequest = App.request( 'user:personnel' );
 
 			App.when( personnelRequest ).done( function ( personnel ) {
 
 				if ( Session.useWizards() && window.innerWidth >= 768 ) {
+					wizardUsed = true;
 					setTimeout( function () {
 						bootstro.start( null, {
 							'margin' : '50px',
