@@ -7,6 +7,7 @@
 			margin-bottom : 0px;
 		}
 
+
 		#questions-header h3 {
 			font-size : 1.5em;
 			margin    : 0px;
@@ -26,6 +27,9 @@
 			.slick-track {
 				padding    : 0px;
 				list-style : none;
+				li.questions-item.slick-slide:not(.slick-active) {
+					visibility : hidden;
+				}
 			}
 		}
 
