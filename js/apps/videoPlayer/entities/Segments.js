@@ -32,8 +32,12 @@ define( function ( require ) {
 			},
 
 			'parse' : function ( response ) {
+				// get the fist word of the contentName
+				var firstWord = this.contentName.substr( 0, this.contentName.indexOf( ' ' ) );
+
+				// exclude current segment and archive videos
 				return _.filter( response, function ( segment ) {
-					if ( segment.ContentId !== this.id ) {
+					if ( segment.ContentId !== this.id && firstWord !== 'Archive:' ) {
 						return segment;
 					}
 				}.bind( this ) );
@@ -49,6 +53,7 @@ define( function ( require ) {
 				var segments = new Entities.Segments( [ ], {
 					'id'              : content.id,
 					'contentId'       : content.get( 'ContentId' ),
+					'contentName'     : content.get( 'ContentName' ),
 					'contentParentId' : content.get( 'ContentParentId' ),
 					'contentTypeId'   : content.get( 'ContentTypeId' )
 				} );
