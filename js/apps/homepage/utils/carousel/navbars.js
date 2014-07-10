@@ -24,12 +24,13 @@ define( function ( require ) {
 	return {
 		'handleNavBars' : function ( $carousel, options, bPartial ) {
 
-			var $rightControl = $carousel.find( '.right.carousel-control' );
-			var $leftControl  = $carousel.find( '.left.carousel-control' );
-			var $active       = $carousel.find( '.item.active' );
-
-			handleRightNav( $carousel, $rightControl, $active, options );
-			handleLeftNav( $active, $leftControl );
+			if ( !utils.hasPartialSegment( $carousel ) ) {
+				var $rightControl = $carousel.find( '.right.carousel-control' );
+				var $leftControl  = $carousel.find( '.left.carousel-control' );
+				var $active       = $carousel.find( '.item.active' );
+				handleRightNav( $carousel, $rightControl, $active, options );
+				handleLeftNav( $active, $leftControl );
+			}
 		},
 
 		'showLeftOnDemand' : function ( $carousel, nCalcLeft ) {
@@ -50,13 +51,12 @@ define( function ( require ) {
 				nLeft = parseInt( $carousel.find( '.item:first' ).css( 'left' ), 10 ) * -1;
 			}
 			nLeft += $carousel.data().projectedMove ;
-
 			if ( nTotal > nLeft ) {
 				$carousel.find( '.right.carousel-control' ).show();
 			}
 			if ( nTotal <= nLeft ) {
 				$carousel.find( '.right.carousel-control' ).hide();
-				//Hiding right controls means we are at the last item
+				// Hiding right controls means we are at the last item
 				$carousel.data().onLastNav();
 			}
 		}

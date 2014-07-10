@@ -72,14 +72,18 @@ define( function ( require ) {
 
 	function removeContainer ( rows, index ) {
 		if ( rows.innerCollections[ index ].length === 0 ) {
+			var sViewPort  = App.Homepage.Utils.getActiveView();
+			var $carousel  = $( '#your-queue-pd360-slide-' + sViewPort + '.carousel' );
+			var bHasActive = $carousel.find( '.item' ).hasClass( 'active' );
 			rows.remove( rows.at( index ) );
 			rows.innerCollections.splice( index, 1 );
+			setActive ( $carousel, bHasActive );
 		}
 	}
 
-	function setActive ( rows ) {
-		if ( $( '#your-queue-pd360-slide-' + rows.contentSize + ' .active' ).length < 1 ) {
-			$( '#your-queue-pd360-slide-' + rows.contentSize + ' .item' ).first().addClass( 'active' );
+	function setActive ( $carousel, bHasActive ) {
+		if ( bHasActive ) {
+			$carousel.find( '.item:last' ).addClass( 'active' );
 		}
 	}
 
@@ -91,8 +95,10 @@ define( function ( require ) {
 		rows.innerCollections[ index ].remove( model );
 		index = pushLastPosition( rows, index );
 		removeContainer( rows, index );
-		setActive( rows );
-		App.Homepage.Utils.carouselHandleNavBars( $( '#your-queue-pd360-slide-' + rows.contentSize + '.carousel' ) );
+
+		var sViewPort = App.Homepage.Utils.getActiveView();
+		App.Homepage.Utils.carouselHandleNavBars( $( '#your-queue-pd360-slide-' + sViewPort + '.carousel' ) );
+		App.Homepage.Utils.onRemoveItem( $( '#your-queue-pd360-slide-' + sViewPort + '.carousel' ) );
 	}
 
 	function setRecommendedQueue ( model ) {

@@ -38,18 +38,18 @@ define( function ( require ) {
 		},
 		'animateItems'      : function ( $carousel, nLeft ) {
 			$carousel.find( '.item' ).animate( { 'left' : nLeft + 'px' },{
-				'duration'      : 50,
-				'specialEasing' : {
-					'width' : 'linear'
-				}
+				'duration' : 50,
+				'width'    : [ 'toggle', 'linear' ],
+				'height'   : [ 'toggle', 'linear' ],
+				'opacity'  : 0.5
 			} );
 		},
 		'setProjectedMove'  : function ( $carousel ) {
-			//Calculate  Projected Move
+			// Calculate  Projected Move
 			var nSize = $carousel.data().size;
 			nSize = hasPartialSegment( $carousel ) ? --nSize : nSize;
 
-			//set projected move use in navigation
+			// set projected move use in navigation
 			var nProjectedMove =  nSize * ITEM_WIDTH;
 			$carousel.data( { 'projectedMove' : nProjectedMove } );
 		},

@@ -29,6 +29,9 @@ define( function ( require ) {
 		'showRightOnDemand' : function ( $carousel ) {
 			navbars.showRightOnDemand( $carousel );
 		},
+		'setProjectedMove' : function ( $carousel ) {
+			utils.setProjectedMove( $carousel );
+		},
 		'onRemoveItem' : function ( $carousel ) {
 
 			var nTotal = utils.getTotalWidth( $carousel );
@@ -52,7 +55,7 @@ define( function ( require ) {
 		'carouselHandleNavBars' : function ( $carousel ) {
 			navbars.handleNavBars( $carousel );
 		},
-		//should only be called once
+		// should only be called once
 		'carouselApplySettings' : function ( $carousel, options ) {
 
 			options = $.extend( { }, OPTIONS_DEFAULT, options );
@@ -60,15 +63,21 @@ define( function ( require ) {
 				'interval' : options.interval,
 				'wrap'     : false
 			} );
-			//return here if circular ( currently not circular carousel )
+			// return here if circular ( currently not circular carousel )
 
 			touch.applySwipe( $carousel );
 
 			$carousel.data( { 'onLastNav' : options.onLastNav } );
 			$carousel.find( '.left.carousel-control' ).hide();
-			touch.handleTouchNavBars( $carousel );
 
+			navbars.handleNavBars( $carousel );
 			rowutils.handleOverFlowNavs( $carousel );
+
+			//special case
+			if ( $carousel.hasClass( 'visible-md' ) && $carousel.find( 'li' ).length >= $carousel.data().size ) {
+				$carousel.find( '.right.carousel-control' ).show();
+			}
+
 			utils.setProjectedMove( $carousel );
 
 			$carousel.bind( 'slide.bs.carousel', function ( event ) {
@@ -78,9 +87,7 @@ define( function ( require ) {
 			} );
 
 			$carousel.bind( 'slid.bs.carousel', function ( event ) {
-				if ( !utils.hasPartialSegment ( $carousel ) ) {
-					navbars.handleNavBars( $carousel );
-				}
+				navbars.handleNavBars( $carousel );
 			} );
 		}
 	};

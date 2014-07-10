@@ -16,26 +16,31 @@ define( function ( require ) {
 
 	function setNavButtons ( rows ) {
 		if ( $( '#your-queue-pd360-slide-' + rows.contentSize + ' .carousel-control' ).length === 0 ) {
-			var nav = _.template( thumbnailSlideNavsTemplate, {
-				'contentId'   : rows.contentId,
-				'contentSize' : rows.contentSize
-			} );
-			$( '#your-queue-pd360-slide-' + rows.contentSize + ' .carousel-inner-wrapper' ).append( nav );
+			if ( !$( 'html' ).hasClass( 'touch' ) ) {
+				var nav = _.template( thumbnailSlideNavsTemplate, {
+					'contentId'   : rows.contentId,
+					'contentSize' : rows.contentSize
+				} );
+				$( '#your-queue-pd360-slide-' + rows.contentSize + ' .carousel-inner-wrapper' ).append( nav );
+			}
 			App.Homepage.Utils.carouselApplySettings( $( '#your-queue-pd360-slide-' + rows.contentSize + '.carousel' ) );
 		}
 	}
 
 	function queueQueueModel ( rows, model ) {
+		var sViewPort = App.Homepage.Utils.getActiveView();
 		if ( rows.length !== 0 && rows.innerCollections.length !== 0 && rows.innerCollections[ rows.innerCollections.length - 1 ].length < rows.contentMax ) {
 			rows.innerCollections[ rows.innerCollections.length - 1 ].add( model );
 		} else {
 			rows.add( App.Homepage.Utils.chunk( [ model ], rows.contentMax ) );
 			if ( rows.length === 1 ) {
+				$( '#your-queue-pd360-slide-' + sViewPort + ' .carousel-inner' ).css( { 'width' : '90000px' } );
 				setNavButtons( rows );
 			}
 		}
-		var sViewPort = App.Homepage.Utils.getActiveView();
+		App.Homepage.Utils.setProjectedMove( $( '#your-queue-pd360-slide-' + sViewPort ) );
 		App.Homepage.Utils.addLeftOnNewItems( $( '#your-queue-pd360-slide-' + sViewPort ) );
+		App.Homepage.Utils.carouselHandleNavBars( $( '#your-queue-pd360-slide-' + sViewPort ) );
 		App.Homepage.Utils.showRightOnDemand( $( '#your-queue-pd360-slide-' + sViewPort ) );
 	}
 

@@ -45,7 +45,7 @@ define( function ( require ) {
 
 		'handleOverFlowNavs' : function ( $carousel ) {
 			var $active = $carousel.find ( '.item.active' );
-			if ( utils.isLastAndOverflow( $carousel, $active ) ) {
+			if ( utils.isLastAndOverflow( $carousel, $active.next() ) ) {
 				$carousel.find( '.right.carousel-control' ).show();
 			}
 		},
@@ -55,7 +55,7 @@ define( function ( require ) {
 			var $carousel = $( target );
 			var $active   = $carousel.find( '.item.active' );
 
-			//calculate half
+			// calculate half
 			var nLeft        = 0;
 			var nCurrentLeft = parseInt( $active.css( 'left' ), 10 ) * -1;
 			var nTotalWidth  = utils.getTotalWidth( $carousel ) * -1;
