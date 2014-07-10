@@ -18,7 +18,7 @@ define( function ( require ) {
 	var setRequestOptions = require( '../helpers/setRequestOptions' );
 	var setLegacyPages    = require( '../helpers/setLegacyPages' );
 	var mainHelpers       = require( '../helpers/mainHelpers' );
-	var processReset      = 0;
+
 	App.module( 'LearningTargets.Main', function ( Main ) {
 
 		Main.regions = {
@@ -66,12 +66,6 @@ define( function ( require ) {
 			},
 
 			'showProcesses' : function ( process, activeID ) {
-
-				if ( processReset === 1 ) {
-					location.reload();
-				} else {
-					processReset = 1;
-				}
 
 				var helper = Main.helper;
 
