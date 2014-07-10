@@ -20,7 +20,7 @@ define( function ( require ) {
 	var MiniPersonnelModel = require( 'common/entities/MiniPersonnel' );
 	var MiniPersonnelView  = require( 'common/views/MiniPersonnel' );
 	var stripHtml          = require( 'common/helpers/stripHtml' );
-	var groupUtils              = require( 'groups/utils/utils' );
+	var groupUtils         = require( 'groups/utils/utils' );
 
 	var Autolinker = require( 'autolinker' );
 
@@ -37,8 +37,8 @@ define( function ( require ) {
 		'tagName'           : 'li',
 
 		'ui' : {
-			'commentReply'  : '.comment-reply',
-			'removeComment' : '.remove-parent',
+			'commentReply'  : '.js-comment-reply',
+			'removeComment' : '.js-remove-parent',
 			'creator'       : '.creator-name',
 			'replyBox'      : '.reply-box'
 		},
@@ -75,6 +75,13 @@ define( function ( require ) {
 			if ( this.model.get( 'NewsId' ) ) {
 				this.ui.replyBox.hide();
 			}
+
+			// Disable submitting replies with enter key
+			this.ui.commentReply.keypress( function ( e ) {
+				if ( e.which === 13 ) {
+					e.preventDefault();
+				}
+			} );
 		},
 
 		'closePopovers' : function ( viewWithPopover ) {
@@ -232,6 +239,7 @@ define( function ( require ) {
 			'getNewsEntry' : function () {
 				return autolinker.link( groupUtils.doubleUnescape( this.NewsEntry ) );
 			}
+
 		}
 
 	} );

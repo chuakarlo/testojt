@@ -108,7 +108,9 @@ define( function ( require ) {
 
 			e.preventDefault();
 
-			var msg = String( stripHtml( this.ui.commentCreate.val() ) );
+			// Change new lines to spaces since the backend can't handle newline characters
+			var msg = this.ui.commentCreate.val().replace( /\n/g, ' ' );
+			msg = String( stripHtml( msg ) );
 
 			if ( msg === '' || !msg.replace( / /g,'' ).length ) {
 				this.showInputError( 'Must contain a message' );

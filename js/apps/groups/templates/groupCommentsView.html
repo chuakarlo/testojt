@@ -1,28 +1,27 @@
-
 <div class="wrapper">
 	<div class="accordion-heading">
 		<img class="profile-main" src="<%- getUserAvatarPath( CreatorAvatar ) %>">
 
 		<div class="comment-main">
-			<p><span class="fake-link creator-name"><%- CreatorFullName %></span> <span class="date"><%- formatDate( Created ) %></span></p>
+			<p>
+				<span class="fake-link creator-name"><%- CreatorFullName %></span>
+				<span class="date"><%- formatDate( Created ) %></span>
+
+			</p>
 			<p class="wall-news"><%- getWallMessage() %></p>
 		</div>
 
-		<ul class="reply media-list">
-
-		</ul>
+		<ul class="reply media-list"></ul>
 
 		<div class="container reply-box">
 			<ul class="media-list">
 				<li>
 					<form role="comment">
-						<div class="form-group">
-							<div class="input-group">
-								<input type="comment" name="comment-reply" class="comment-reply form-control" rows="1"></input>
-								<span class="input-group-btn">
-									<button class="reply-submit btn btn-default" type="submit">Post</button>
-								</span>
-							</div>
+						<div class="input-group">
+							<input class="js-comment-reply form-control" name="comment-reply" type="text"></input>
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="submit">Post</button>
+							</span>
 						</div>
 					</form>
 				</li>
@@ -32,4 +31,3 @@
 	</div>
 
 </div>
-
