@@ -5,8 +5,6 @@ define( function ( require ) {
 	var App     = require( 'App' );
 	var Session = require( 'Session' );
 
-	require( 'common/controllers/BaseController' );
-
 	App.module( 'Groups.Show', function ( Mod ) {
 
 		Mod.MembersController = App.Common.Controllers.BaseController.extend( {

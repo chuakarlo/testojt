@@ -5,8 +5,6 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var Session    = require( 'Session' );
 
-	require( 'common/controllers/BaseController' );
-
 	App.module( 'Groups.Show', function ( Mod ) {
 
 		Mod.HeaderController = App.Common.Controllers.BaseController.extend( {
@@ -17,7 +15,7 @@ define( function ( require ) {
 				this.isMember = options.isMember;
 				this.lastGroupId = null;
 
-				_.bindAll( this, 'showGroup');
+				_.bindAll( this, 'showGroup' );
 			},
 
 			'getData' : function ( groupId ) {

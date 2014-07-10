@@ -6,7 +6,6 @@ define( function ( require ) {
 	var Session  = require( 'Session' );
 
 	require( 'groups/views/GroupResourcesLayout' );
-	require( 'common/controllers/BaseController' );
 	require( 'groups/entities/GroupCombinedResourceCollection' );
 
 	App.module( 'Groups.Show', function ( Mod ) {

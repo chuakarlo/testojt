@@ -1,16 +1,15 @@
 define( function ( require ) {
 	'use strict';
 
-	var App                 = require( 'App' );
-	var $                   = require( 'jquery' );
-	var _                   = require( 'underscore' );
+	var App = require( 'App' );
+	var $   = require( 'jquery' );
+	var _   = require( 'underscore' );
 
-	var Session             = require( 'Session' );
+	var Session = require( 'Session' );
 
 	require( 'groups/entities/WallCommentCollection' );
 	require( 'groups/entities/WallCommentModel' );
 	require( 'groups/entities/GroupModel' );
-	require( 'common/controllers/BaseController' );
 
 	App.module( 'Groups.Show', function ( Mod ) {
 

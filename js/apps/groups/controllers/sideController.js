@@ -5,8 +5,6 @@ define( function ( require ) {
 	var _       = require( 'underscore' );
 	var Session = require( 'Session' );
 
-	require( 'common/controllers/BaseController' );
-
 	App.module( 'Groups.Show', function ( Mod ) {
 
 		Mod.SideController = App.Common.Controllers.BaseController.extend( {

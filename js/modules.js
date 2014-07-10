@@ -1,7 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
-	require( 'common/views' );
+	require( 'common/Common' );
 	require( 'footer/Footer' );
 	require( 'header/Header' );
 	require( 'pd360/PD360' );

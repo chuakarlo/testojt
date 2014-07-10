@@ -3,12 +3,11 @@ define( function ( require ) {
 
 	return function () {
 
-		var _          = require( 'underscore' );
-		var Vent       = require( 'Vent' );
-		var App        = require( 'App' );
-		var Session    = require( 'Session' );
+		var _       = require( 'underscore' );
+		var Vent    = require( 'Vent' );
+		var App     = require( 'App' );
+		var Session = require( 'Session' );
 
-		require( 'common/controllers/BaseController' );
 		require( 'groups/controllers/listController' );
 		require( 'groups/controllers/createController' );
 		require( 'groups/controllers/editController' );

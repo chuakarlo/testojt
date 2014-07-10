@@ -4,8 +4,6 @@ define( function ( require ) {
 	var App = require( 'App' );
 	var _   = require( 'underscore' );
 
-	require( 'common/controllers/BaseController' );
-
 	App.module( 'Groups.Show', function ( Mod ) {
 
 		Mod.ForumController = App.Common.Controllers.BaseController.extend( {

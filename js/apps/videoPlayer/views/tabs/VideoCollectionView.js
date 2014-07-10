@@ -2,7 +2,6 @@ define( function ( require ) {
 	'use strict';
 
 	require( 'slick' );
-	require( 'common/views' );
 
 	var App        = require( 'App' );
 	var Marionette = require( 'marionette' );

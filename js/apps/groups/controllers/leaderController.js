@@ -1,12 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var App                 = require( 'App' );
-	var _                   = require( 'underscore' );
+	var App = require( 'App' );
+	var _   = require( 'underscore' );
 
-	var Session             = require( 'Session' );
-
-	require( 'common/controllers/BaseController' );
+	var Session = require( 'Session' );
 
 	App.module( 'Groups.Show', function ( Mod ) {
 
@@ -25,7 +23,7 @@ define( function ( require ) {
 				this.layout.groupsContentRegion.show( new App.Common.LoadingView() );
 
 				this.model.fetch( {
-					'success' : _.bind( function ( model, res, options) {
+					'success' : _.bind( function ( model, res, options ) {
 						App.when(
 							model.userIsAdmin( persId ),
 							model.userIsCreator( persId ),

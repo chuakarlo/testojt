@@ -4,7 +4,6 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var EmptyView  = require( '../views/ContentNavigationCollectionEmptyView' );
 	var ItemView   = require( '../views/ContentNavigationSegmentItemView' );
-	require( 'common/views' );
 
 	return Marionette.CollectionView.extend( {
 

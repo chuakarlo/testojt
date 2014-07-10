@@ -2,7 +2,6 @@ define( function ( require ) {
 	'use strict';
 
 	var App = require( 'App' );
-	require( 'common/views' );
 
 	return App.Common.SegmentCardsView.extend( {
 
