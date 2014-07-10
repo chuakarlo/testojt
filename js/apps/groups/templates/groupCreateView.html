@@ -4,14 +4,14 @@
 <div class="form-container group-creation">
 	<form role="form" class="form-horizontal">
 
-		<div class="form-group">
+		<div class="form-group group-data">
 			<label class="control-label col-sm-3" for="inputGroupName">Group Name</label>
 			<div class="col-sm-9">
 				<input type="text" class="input-validation form-control" id="inputGroupName" placeholder="Enter Group Name" required>
 			</div>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group group-data">
 			<label class="control-label col-sm-3" for="inputGroupDescription">Group Description</label>
 			<div class="col-sm-9">
 				<textarea type="text" class="input-validation form-control" id="inputGroupDescription" rows="5" placeholder="Enter Group Description" required></textarea>
@@ -60,10 +60,18 @@
 			</div>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group confirmation-options">
+			<div class="col-sm-9 col-sm-offset-3">
+				<div class="confirmation-message"><span class="control-label"><b>Are you sure you want to create this group?</b></span></div>
+				<button type="button" class="btn btn-default cancel-submit-btn">Cancel</button>
+				<button type="submit" class="btn create btn-primary submit-btn ladda-button" data-style="expand-right">Yes</button>
+			</div>
+		</div>
+
+		<div class="form-group create-options">
 			<div class="col-sm-9 col-sm-offset-3">
 				<button type="button" class="btn btn-default cancel-btn">Cancel</button>
-				<button type="submit" class="btn create btn-primary submit-btn ladda-button" data-style="expand-right">Create</button>
+				<button type="button" class="btn btn-primary create-btn">Create</button>
 			</div>
 		</div>
 

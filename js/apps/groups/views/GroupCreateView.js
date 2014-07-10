@@ -26,8 +26,10 @@ define( function ( require ) {
 		'className'  : 'groups-create',
 
 		'events'    : {
-			'click button.cancel-btn' : 'cancelCreateGroupClicked',
-			'submit form'             : 'createGroupClicked'
+			'click button.cancel-btn'  : 'cancelCreateGroupClicked',
+			'click .create-btn'        : 'showConfirmationMessage',
+			'submit form'              : 'createGroupClicked',
+			'click .cancel-submit-btn' : 'cancelSubmit'
 		},
 
 		'bindings' : {
@@ -44,9 +46,16 @@ define( function ( require ) {
 		},
 
 		'ui' : {
-			'logo'   : '.logo-upload-select',
-			'banner' : '.banner-upload-select',
-			'create' : '.create'
+			'logo'                : '.logo-upload-select',
+			'banner'              : '.banner-upload-select',
+			'create'              : '.create',
+			'confirmation'        : '.confirmation-options',
+			'confirmationMessage' : '.confirmation-message',
+			'createOptions'       : '.create-options',
+			'cancelSubmit'        : '.cancel-submit-btn',
+			'fileBtn'             : '.file-btn',
+			'groupData'           : '.group-data',
+			'groupInput'          : '.input-validation'
 		},
 
 		'toInt' : function ( val, options ) {
@@ -218,6 +227,8 @@ define( function ( require ) {
 
 		'createGroupClicked' : function ( e ) {
 
+			this.ui.cancelSubmit.addClass( 'disabled' );
+
 			e.preventDefault();
 
 			var persId = Session.personnelId();
@@ -225,8 +236,8 @@ define( function ( require ) {
 			if ( !( ( this.model.get( 'LicenseName' ) === '' ) || ( this.model.get( 'Misc' ) === '' ) ) ) {
 
 				var l = Ladda.create( document.querySelector( '.create' ) );
-				l.start();
 
+				l.start();
 				var now = moment().tz( 'MST7MDT' ).format( 'MMMM D, YYYY H:mm:ss' );
 
 				this.model.set( 'StartDate', now );
@@ -266,6 +277,31 @@ define( function ( require ) {
 
 				} );
 			}
+		},
+
+		'showConfirmationMessage' : function ( e ) {
+
+			if ( !( ( this.model.get( 'LicenseName' ).match( /^\s*$/ ) ) || ( this.model.get( 'Misc' ).match( /^\s*$/ ) ) ) ) {
+				this.ui.groupInput.attr( 'disabled', true );
+				this.ui.groupData.removeClass( 'has-error' );
+				this.ui.confirmation.show();
+				this.ui.confirmationMessage.show();
+				this.ui.createOptions.hide();
+			} else {
+
+				this.ui.groupData.addClass( 'has-error' );
+
+				App.errorHandler( {
+					'message' : 'Please fill out required fields'
+				} );
+			}
+		},
+
+		'cancelSubmit' : function () {
+			this.ui.groupInput.attr( 'disabled', false );
+			this.ui.confirmation.hide();
+			this.ui.confirmationMessage.hide();
+			this.ui.createOptions.show();
 		},
 
 		'cancelCreateGroupClicked' : function () {
