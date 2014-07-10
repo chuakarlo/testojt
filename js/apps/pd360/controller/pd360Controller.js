@@ -15,6 +15,7 @@ define( function ( require ) {
 		var appLoaded     = false;
 		var hasFlash      = true;
 
+		var pendingLogin;
 		var pd360;
 
 		Show.Controller = {
@@ -40,8 +41,6 @@ define( function ( require ) {
 				// remove listener and global method once event is triggered
 				Vent.once( 'pd360:loginComplete', function () {
 					window.loginComplete = undefined;
-					$.removeCookie( 'pendingLoginUname' );
-					$.removeCookie( 'pendingLoginPass' );
 					this.loginComplete();
 				}.bind( this ) );
 
@@ -74,8 +73,9 @@ define( function ( require ) {
 			'applicationComplete' : function () {
 				appLoaded = true;
 
-				if ( $.cookie( 'pendingLoginUname' ) ) {
-					this.login( $.cookie( 'pendingLoginUname' ), $.cookie( 'pendingLoginPass' ) );
+				if ( pendingLogin ) {
+					this.login( pendingLogin.username, pendingLogin.password );
+					pendingLogin = null;
 				} else if ( App.request( 'session:authenticated' ) ) {
 					this.compare();
 				}
@@ -91,8 +91,9 @@ define( function ( require ) {
 				if ( appLoaded ) {
 					pd360.loginFromContainer( username, password );
 				} else {
-					$.cookie( 'pendingLoginUname', username );
-					$.cookie( 'pendingLoginPass', password );
+					pendingLogin          = { };
+					pendingLogin.username = username;
+					pendingLogin.password = password;
 				}
 			},
 
@@ -131,14 +132,14 @@ define( function ( require ) {
 			},
 
 			'embedComplete' : function ( success ) {
-				// changed to this format to avoid complexity errors
-				return success || this.noFlash();
+				if ( !success ) {
+					this.noFlash();
+				}
 			},
 
 			'noFlash' : function () {
 				hasFlash     = false;
-				$.removeCookie( 'pendingLoginUname' );
-				$.removeCookie( 'pendingLoginPass' );
+				pendingLogin = null;
 			},
 
 			'available' : function () {
