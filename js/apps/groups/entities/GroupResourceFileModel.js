@@ -91,6 +91,11 @@ define( function ( require ) {
 					var hashedUrl = res[ 0 ];
 					var fileUrl = '&OriginalFileName=' + this.get( 'FileName' );
 
+					// check to see if it's a mobile device
+					var mobile = $.browser.mobile || false;
+
+					fileUrl = fileUrl + '&m=' + mobile;
+
 					deferred.resolve( serverUrl + '?FilePath=' + hashedUrl + fileUrl );
 				}, this ) );
 
