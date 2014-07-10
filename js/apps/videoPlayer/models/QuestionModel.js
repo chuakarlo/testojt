@@ -36,7 +36,7 @@ define( function ( require ) {
 				'args'       : {
 					'PersonnelId' : Session.personnelId(),
 					'QuestionId'  : this.id,
-					'AnswerText'  : this.getSanitizedAnswer(),
+					'AnswerText'  : utils.aliasNewline( this.get( 'AnswerText' ) ),
 					'Created'     : this.get( 'Created' ),
 					'Modified'    : ''
 				}
@@ -51,11 +51,10 @@ define( function ( require ) {
 			return _.extend( this.requestObject(), { 'method' : 'update' } );
 		},
 
-		'getSanitizedAnswer' : function ( answer ) {
-			var answerText = answer || this.get( 'AnswerText' );
-
+		'getSanitizedAnswer' : function () {
+			var AnswerText = this.get( 'AnswerText' );
 			// Replacing \n to another string pattern to prevent server authorization error
-			return _.escape( utils.safeStringify( answerText ).replace( /\n/g, '%nl%' ) );
+			return _.escape( utils.safeStringify( utils.aliasNewline( AnswerText ) ) );
 		}
 
 	} );

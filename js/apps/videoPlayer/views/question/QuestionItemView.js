@@ -34,7 +34,7 @@ define( function ( require ) {
 
 			'sanitizedAnswer' : function () {
 				// Replacing /%nl%/ string pattern to make newline.
-				return _.unescape( utils.safeStringify( this.AnswerText ).replace( /%nl%/g, '\n' ) );
+				return _.unescape( utils.restoreAndStrip( this.AnswerText ) );
 			}
 
 		},
@@ -68,7 +68,9 @@ define( function ( require ) {
 		'saveModel' : function () {
 			var answerText = this.ui.textInput.val().trim();
 			var prevAnswer = this.model.get( 'AnswerText' );
-			if ( this.model.getSanitizedAnswer( answerText ) === prevAnswer ) {
+			// Don't waste a request when there are no changes
+			// in the current answer.
+			if ( answerText === utils.restoreAndStrip( _.unescape( prevAnswer ) ) ) {
 				return;
 			}
 			this.model.save( {

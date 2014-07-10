@@ -14,7 +14,7 @@ define( function ( require ) {
 			var ccOff = { 'color' : '#FFFFFF', 'display' : 'block' };
 			var ccOn  = { 'color' : '#CAEEAC', 'display' : 'block' };
 
-			//add toggle function for cc button
+			// add toggle function for cc button
 			ccBtn.on( 'click', function () {
 				var style = ccBtn.attr( 'style' );
 

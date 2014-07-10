@@ -40,7 +40,7 @@ define( function ( require ) {
 			var infoItemView = new InfoItemView( { 'model' : this.model } );
 			var options = { 'className' : 'info-modal' };
 
-			//check if android native browser and set data-backdrop to static
+			// check if android native browser and set data-backdrop to static
 			if ( $.browser.safari && $.browser.android ) {
 				_.extend( options, { 'backdrop' : 'static' } );
 			}

@@ -1,7 +1,16 @@
 define( function ( require, exports, module ) {
 	'use strict';
 	var $ = require( 'jquery' );
+	var _ = require( 'underscore' );
 	require( 'jquery-browser' );
+
+	function restoreNewline ( str ) {
+		return String( str ).replace( /%nl%/g, '\n' );
+	}
+
+	function stripSlash ( str ) {
+		return String( str ).replace( /\\'/g, '\'' );
+	}
 
 	module.exports = {
 
@@ -34,7 +43,17 @@ define( function ( require, exports, module ) {
 			return String( unsafe )
 						.replace( /<\/script/g, '<\\/script' )
 						.replace( /<!--/g, '<\\!--' );
-		}
+		},
+
+		'aliasNewline' : function ( str ) {
+			return String( str ).replace( /\n/g, '%nl%' );
+		},
+
+		'restoreNewline' : restoreNewline,
+
+		'stripSlash' : stripSlash,
+
+		'restoreAndStrip' : _.compose( stripSlash, restoreNewline )
 
 	};
 

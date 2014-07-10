@@ -146,7 +146,7 @@ define( function ( require ) {
 					} );
 					layout.videoResourcesRegion.show( resourcesView );
 
-					//show related vids
+					// show related vids
 					var relatedView = new App.VideoPlayer.Views.VideoCollectionView( {
 						'collection' : relatedVideos
 					} );

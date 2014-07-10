@@ -10,7 +10,7 @@ define( function ( require ) {
 	var template    = require( 'text!videoPlayer/templates/tabs/videoResourceItemView.html' );
 	var utils       = require( 'videoPlayer/utils/utils' );
 
-/*global ActiveXObject: false */
+	/*global ActiveXObject: false */
 	return Marionette.ItemView.extend( {
 
 		'template' : _.template( template ),
@@ -54,7 +54,7 @@ define( function ( require ) {
 
 			// disable preview popup in mobile devices
 			if ( this.clickEnable === true ) {
-				//check if ie has adobe reader installed
+				// check if ie has adobe reader installed
 				if ( $.browser.name === 'msie' && !this.checkForPdfPlugin() ) {
 					var notifyView = new NotifyView();
 					App.modalRegion.show( notifyView );
@@ -74,7 +74,7 @@ define( function ( require ) {
 			return ( ( isAdobe !== null ) && ( isAdobe !== undefined ) ) ? true : false;
 		},
 
-		//get pdf plugin in ie
+		// get pdf plugin in ie
 		'getPDFPlugin' : function () {
 			// load the activeX control
 			// AcroPDF.PDF is used by version 7 and later
