@@ -2,7 +2,6 @@ define( function ( require ) {
 	'use strict';
 
 	var $               = require( 'jquery' );
-	var ITEM_WIDTH      = 285;
 	var OPTIONS_DEFAULT = {
 		'interval'  : false,
 		'circular'  : false,
@@ -26,28 +25,29 @@ define( function ( require ) {
 			var nLeft = $carousel.find( '.item:first' ).css( 'left' );
 			$carousel.find( '.item' ).css( { 'left' : nLeft } );
 		},
-		'showRightOnDemand' : function ( $carousel ) {
-			navbars.showRightOnDemand( $carousel );
-		},
 		'setProjectedMove' : function ( $carousel ) {
 			utils.setProjectedMove( $carousel );
 		},
+		'setLogicalRow' : function ( $carousel ) {
+			utils.setLogicalRow( $carousel );
+		},
 		'onRemoveItem' : function ( $carousel ) {
-
-			var nTotal = utils.getTotalWidth( $carousel );
-			nTotal     = ( nTotal - ( utils.getTotalExcess( $carousel ) * ITEM_WIDTH ) ) * -1;
-			var nLeft  = parseInt( $carousel.find( '.item:first' ).css( 'left' ), 10 );
-
-			if ( nTotal >= nLeft )  {
-				nLeft += $carousel.data().projectedMove;
-				$carousel.find( '.item' ).css( { 'left' : nLeft + 'px' } );
+			utils.setLogicalRow( $carousel );
+			utils.setProjectedMove( $carousel );
+			var index        = $carousel.data().index;
+			var nCurrentLeft = parseInt( $carousel.find( '.item:first' ).css( 'left' ), 10 ) * -1;
+			var nCalcLeft    = ( index ) * $carousel.data().projectedMove;
+			if ( nCalcLeft >= nCurrentLeft ) {
+				// we have to adjust left
+				--index;
+				if ( index < 0 ) {
+					index = 0;
+				}
+				$carousel.data( { 'index' : index } );
+				var nLeft = index * $carousel.data().projectedMove * -1;
+				utils.animateItems( $carousel, ( nLeft ) );
 			}
-
-			navbars.showRightOnDemand( $carousel );
-			nTotal = utils.getTotalWidth( $carousel );
-			if ( nTotal <= 0 ) {
-				navbars.handleNavBars( $carousel );
-			}
+			navbars.handleNavBars( $carousel );
 		},
 		'hasPartialSegment' : function ( $carousel ) {
 			return utils.hasPartialSegment( $carousel );
@@ -70,24 +70,25 @@ define( function ( require ) {
 			$carousel.data( { 'onLastNav' : options.onLastNav } );
 			$carousel.find( '.left.carousel-control' ).hide();
 
-			navbars.handleNavBars( $carousel );
-			navbars.handleOverFlowNavs( $carousel );
-
-			// special case
-			if ( $carousel.hasClass( 'visible-md' ) && $carousel.find( 'li' ).length >= $carousel.data().size ) {
-				$carousel.find( '.right.carousel-control' ).show();
-			}
+			utils.setLogicalRow( $carousel );
+			$carousel.data( { 'index' : 0 } );
 
 			utils.setProjectedMove( $carousel );
+			navbars.handleNavBars( $carousel );
 
 			$carousel.bind( 'slide.bs.carousel', function ( event ) {
-				$carousel.data( { 'direction' : event.direction } );
-				utils.setProjectedMove( $carousel );
-				rowutils.handleLeftAdjust( event );
+
+				var $active     = $carousel.find ( '.item.active' );
+				if ( ( $active.next().length && event.direction === 'left' ) ||
+					( $active.prev().length && event.direction === 'right' ) )
+				{
+					$carousel.data( { 'direction' : event.direction } );
+					rowutils.handleLeftAdjust( event );
+					navbars.handleNavBars( $carousel );
+				}
 			} );
 
 			$carousel.bind( 'slid.bs.carousel', function ( event ) {
-				navbars.handleNavBars( $carousel );
 			} );
 		}
 	};

@@ -19,20 +19,20 @@ define( function ( require ) {
 				if ( $( 'html' ).hasClass( 'touch' )  ) {
 					$carousel.swipe( {
 						threshold        : 3,
-						allowPageScroll  : 'none',
+						allowPageScroll  : 'vertical',
 						excludedElements : '.noSwipe',
-						swipeLeft        : function () {
-							$( this ).carousel( 'next' );
-
-							if ( !$( this ).data().stopSwipeRight ) {
-								rowutils.adjustOnLastItem( this );
+						swipeLeft        : function ( event ) {
+							if ( $( this ).data().index < $( this ).data().total ) {
+								$( this ).find( '.right.carousel-control' ).click();
+								rowutils.adjustOnLastItem( $( this ) );
+							} else {
+								$( this ).data( { 'index' : $( this ).data().total } );
 							}
 						},
-						swipeRight       : function () {
-							$( this ).carousel( 'prev' );
-
-							if ( !$( this ).data().stopSwipeLeft ) {
-								rowutils.adjustOnFirstItem( this );
+						swipeRight       : function ( event ) {
+							if ( $( this ).data().index > 0 ) {
+								$( this ).find( '.left.carousel-control' ).click();
+								rowutils.adjustOnFirstItem( $( this ) );
 							}
 						}
 

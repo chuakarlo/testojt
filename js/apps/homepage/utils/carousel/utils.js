@@ -3,14 +3,18 @@ define( function ( require ) {
 
 	var ITEM_WIDTH = 285;
 	var $          = require( 'jquery' );
+	var rows       = require( 'apps/homepage/utils/carousel/rows' );
 
-	function hasPartialSegment ( $carousel ) {
+	function hasPartialSegment ( $carousel, bLast ) {
 		var nContainer = $carousel.outerWidth();
 		nContainer = nContainer ? nContainer : $( '#content-display' ).outerWidth();
 
 		var nRow = $carousel.find( '.row:first' ).outerWidth();
-		nRow = nRow ? nRow : $carousel.find( 'li' ).length * ITEM_WIDTH;
+		if ( bLast ) {
+			nRow = $carousel.find( '.row:last' ).outerWidth();
+		}
 
+		nRow = nRow ? nRow : $carousel.find( '.item:first li' ).length * ITEM_WIDTH;
 		if ( nContainer < nRow ) {
 			return true;
 		}
@@ -18,16 +22,20 @@ define( function ( require ) {
 	}
 
 	return {
+		'setLogicalRow'     : function ( $carousel ) {
+			var nContainer = $carousel.outerWidth();
+			nContainer = nContainer ? nContainer : $( '#content-display' ).outerWidth();
+
+			var nActive     = Math.floor( nContainer / ITEM_WIDTH );
+			var logicalRows = rows.getLogicalRows( $carousel, nActive );
+			if ( $carousel.data().index > logicalRows ) {
+				$carousel.data( { 'index' : logicalRows } );
+			}
+			$carousel.data( { 'total' : logicalRows } );
+		},
 		'getTotalWidth'     : function ( $carousel ) {
 			var nTotalWidth = $carousel.find( 'li' ).length * ITEM_WIDTH;
 			return nTotalWidth;
-		},
-		'getTotalExcess'    : function ( $carousel ) {
-			var nOverRun = 0;
-			if ( hasPartialSegment( $carousel ) ) {
-				nOverRun = ( $carousel.find( '.item' ).length - 1 ) % $carousel.data().size;
-			}
-			return nOverRun;
 		},
 		'hasPartialSegment' : function ( $carousel ) {
 			return hasPartialSegment( $carousel );
@@ -36,19 +44,12 @@ define( function ( require ) {
 			$carousel.find( '.item' ).css( { 'left' : nLeft + 'px' } );
 		},
 		'setProjectedMove'  : function ( $carousel ) {
-			// Calculate  Projected Move
-			var nSize = $carousel.data().size;
-			nSize = hasPartialSegment( $carousel ) ? --nSize : nSize;
-
+			var nContainer = $carousel.outerWidth();
+			nContainer     = nContainer ? nContainer : $( '#content-display' ).outerWidth();
+			var nActive    = Math.floor( nContainer / ITEM_WIDTH );
 			// set projected move use in navigation
-			var nProjectedMove =  nSize * ITEM_WIDTH;
+			var nProjectedMove =  nActive * ITEM_WIDTH;
 			$carousel.data( { 'projectedMove' : nProjectedMove } );
-		},
-		'isLastAndOverflow' : function ( $carousel, $active ) {
-			if ( !$active.length && hasPartialSegment( $carousel ) ) {
-				return true;
-			}
-			return false;
 		}
 	};
 } );

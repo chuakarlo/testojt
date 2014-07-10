@@ -6,68 +6,54 @@ define( function ( require ) {
 	var navbars = require( 'apps/homepage/utils/carousel/navbars' );
 
 	return {
+		'onRightMove' : function ( $carousel ) {
+			navbars.onRightMove( $carousel );
+		},
+		'onLeftMove' : function ( $carousel ) {
+			navbars.onLeftMove( $carousel );
+		},
 		'adjustOnLastItem' : function ( $carousel ) {
 
-			var nLeft = $carousel.find( '.item:first' ).css( 'left' );
-			utils.setProjectedMove( $carousel );
-			var nTotalWidth = utils.getTotalWidth( $carousel ) * -1;
-			var $active     = $carousel.find ( '.item.active' );
-			$active = $active.next().length ? $active.next() : $active;
-			$active = $active.next();
+			var $active   = $carousel.find( '.item.active' );
+			if ( !$active.next().length ) {
+				// calculate half
+				var nLeft = navbars.onRightMove( $carousel );
+				utils.animateItems( $carousel, nLeft );
 
-			if ( utils.isLastAndOverflow( $carousel, $active ) ) {
-				nLeft = parseInt( nLeft, 10 );
-				nLeft = nLeft - $carousel.data().projectedMove;
-				nLeft = ( nLeft < nTotalWidth ) ? nTotalWidth : nLeft;
-
-				$carousel.find( '.item' ).css( { 'left' : nLeft } ).promise().done( function () {
-					navbars.showRightOnDemand( $carousel, ( nLeft * -1 ) );
-					navbars.showLeftOnDemand( $carousel, nLeft );
-				} );
+				var nTotalWidth = utils.getTotalWidth( $carousel );
+				$carousel.find( '.carousel-inner' ).css( { 'width' :  ( nTotalWidth * 3 ) + 'px' } );
 			}
+			utils.setProjectedMove( $carousel );
 		},
 
 		'adjustOnFirstItem' : function ( $carousel ) {
 
-			var nLeft = $carousel.find( '.item:first' ).css( 'left' );
-			var $active = $carousel.find ( '.item.active' );
-			$active = $active.prev().length ? $active.prev() : $active;
-			$active = $active.prev();
-
-			if ( utils.isLastAndOverflow( $carousel, $active ) ) {
-				nLeft = parseInt( nLeft, 10 );
-				nLeft = $carousel.data().projectedMove + nLeft;
-				nLeft = nLeft > 0 ? 0 : nLeft;
-				$carousel.find( '.item' ).css( { 'left' : nLeft } ).promise().done( function () {
-					navbars.showRightOnDemand( $carousel, ( nLeft * -1 ) );
-					navbars.showLeftOnDemand( $carousel, nLeft );
-				} );
+			var $active   = $carousel.find( '.item.active' );
+			if ( !$active.prev().length ) {
+				var nLeft = navbars.onLeftMove( $carousel );
+				utils.animateItems( $carousel, nLeft );
 			}
+			utils.setProjectedMove( $carousel );
 		},
 
 		'handleLeftAdjust' : function ( event ) {
 			var target    = ( event.currentTarget ) ? event.currentTarget : event.srcElement;
 			var $carousel = $( target );
-			var $active   = $carousel.find( '.item.active' );
 
 			// calculate half
-			var nLeft        = 0;
-			var nCurrentLeft = parseInt( $active.css( 'left' ), 10 ) * -1;
-			var nTotalWidth  = utils.getTotalWidth( $carousel ) * -1;
-
+			var nLeft       = 0;
+			var nTotalWidth = utils.getTotalWidth( $carousel );
 			if ( event.direction === 'left' ) {
-				nLeft = ( $carousel.data().projectedMove + nCurrentLeft ) *  -1;
-				nLeft = ( nLeft < nTotalWidth ) ? nTotalWidth : nLeft;
-				$carousel.find( '.left.carousel-control' ).show();
+				nLeft = navbars.onRightMove( $carousel, false );
 			} else {
-				nLeft = ( nCurrentLeft - $carousel.data().projectedMove ) * -1;
-				nLeft = ( nLeft > 0 ) ? 0 : nLeft;
+				nLeft = navbars.onLeftMove( $carousel );
 			}
-			$carousel.data( { 'left' : nLeft } );
-			$carousel.data( { 'nTotalWidth' : nTotalWidth } );
-			$carousel.find( '.carousel-inner' ).css( { 'width' :  ( nTotalWidth * 3 * -1 ) + 'px' } );
-
-			utils.animateItems( $carousel, nLeft );
+			$carousel.find( '.carousel-inner' ).css( { 'width' :  ( nTotalWidth * 3 ) + 'px' } );
+			if ( $carousel.data.index > $carousel.data().total ) {
+				$carousel.data( { 'index' : $carousel.data().total } );
+			} else {
+				utils.animateItems( $carousel, nLeft );
+			}
 		}
 	};
 } );

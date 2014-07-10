@@ -1,82 +1,56 @@
 define( function ( require ) {
 	'use strict';
-
-	var utils = require( 'apps/homepage/utils/carousel/utils' );
-
-	function handleRightNav ( $carousel, $rightControl, $active, options ) {
-
-		$carousel.data( { 'stopSwipeRight' : false } );
-		if ( !$active.next().length )  {
-			$rightControl.hide();
-			$carousel.data( { 'stopSwipeRight' : true } );
-			$carousel.data().onLastNav();
-		} else {
-			$rightControl.show();
-		}
-	}
-
-	function handleLeftNav ( $carousel, $active, $leftControl ) {
-		// if the first slide
-		$carousel.data( { 'stopSwipeLeft' : false } );
-		if ( !$active.prev().length )  {
-			$leftControl.hide();
-			$carousel.data( { 'stopSwipeLeft' : true } );
-		} else {
-			$leftControl.show();
-		}
-	}
+	var utils   = require( 'apps/homepage/utils/carousel/utils' );
 
 	return {
-		'handleOverFlowNavs' : function ( $carousel ) {
-			var $active = $carousel.find ( '.item.active' );
-			if ( utils.isLastAndOverflow( $carousel, $active.next() ) ) {
-				$carousel.find( '.right.carousel-control' ).show();
-			}
-		},
 		'handleNavBars' : function ( $carousel, options, bPartial ) {
+			var $rightControl = $carousel.find( '.right.carousel-control' );
+			var $leftControl  = $carousel.find( '.left.carousel-control' );
+			var index         = $carousel.data().index;
 
-			if ( !utils.hasPartialSegment( $carousel ) ) {
-				var $rightControl = $carousel.find( '.right.carousel-control' );
-				var $leftControl  = $carousel.find( '.left.carousel-control' );
-				var $active       = $carousel.find( '.item.active' );
-				handleRightNav( $carousel, $rightControl, $active, options );
-				handleLeftNav( $carousel, $active, $leftControl );
-			}
-		},
-
-		'showLeftOnDemand' : function ( $carousel, nCalcLeft ) {
-			var nLeft = nCalcLeft;
-			nLeft = !nLeft ? nLeft = parseInt( $carousel.find( '.item:first' ).css( 'left' ), 10 ) * -1 : nLeft;
-			nLeft -= $carousel.data().projectedMove;
-
-			$carousel.data( { 'stopSwipeLeft' : false } );
-			if ( nLeft < 0 ) {
-				$carousel.find( '.left.carousel-control' ).show();
+			if ( index <= 0 ) {
+				$leftControl.hide();
 			} else {
-				$carousel.find( '.left.carousel-control' ).hide();
-				$carousel.data( { 'stopSwipeLeft' : true } );
+				$leftControl.show();
+			}
+
+			if ( index >= $carousel.data().total ) {
+				$rightControl.hide();
+				$carousel.data().onLastNav();
+			} else {
+				$rightControl.show();
 			}
 		},
+		'onRightMove'   : function ( $carousel, bAdjust ) {
 
-		'showRightOnDemand' : function ( $carousel, nCalcLeft ) {
-			var nTotal = utils.getTotalWidth( $carousel );
-			var nLeft = nCalcLeft;
-			if ( !nLeft ) {
-				nLeft = parseInt( $carousel.find( '.item:first' ).css( 'left' ), 10 ) * -1;
+			var nTotalWidth = utils.getTotalWidth( $carousel ) * -1;
+			var index       = $carousel.data().index;
+			var indexTotal  = $carousel.data().total;
+			++index;
+			if ( index > indexTotal  && bAdjust ) {
+				index = indexTotal;
 			}
-			nLeft += $carousel.data().projectedMove ;
+			$carousel.data( { 'index' : index } );
 
-			$carousel.data( { 'stopSwipeRight' : false } );
-			if ( nTotal > nLeft ) {
-				$carousel.find( '.right.carousel-control' ).show();
+			var nLeft = ( index * $carousel.data().projectedMove ) * -1;
+			nLeft = ( nLeft < nTotalWidth ) ? nTotalWidth : nLeft;
+
+			this.handleNavBars( $carousel );
+			return nLeft;
+		},
+		'onLeftMove'    : function ( $carousel ) {
+			var index       = $carousel.data().index;
+			--index;
+			if ( index < 0 ) {
+				index = 0;
 			}
-			if ( nTotal <= nLeft ) {
-				$carousel.find( '.right.carousel-control' ).hide();
-				$carousel.data( { 'stopSwipeRight' : true } );
-				// Hiding right controls means we are at the last item
-				$carousel.data().onLastNav();
-			}
+			$carousel.data( { 'index' : index } );
+			var nLeft = ( index * $carousel.data().projectedMove ) * -1;
+			nLeft = ( nLeft > 0 ) ? 0 : nLeft;
+			this.handleNavBars( $carousel );
+
+			return nLeft;
 		}
-
 	};
+
 } );

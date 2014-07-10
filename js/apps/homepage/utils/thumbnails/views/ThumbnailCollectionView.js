@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	var App                        = require( 'App' );
 	var Marionette                 = require( 'marionette' );
+	var $                          = require( 'jquery' );
 	var _                          = require( 'underscore' );
 	var ThumbnailCompositeView     = require( 'apps/homepage/utils/thumbnails/views/ThumbnailCompositeView' );
 	var ThumbnailEmptyView         = require( 'apps/homepage/utils/thumbnails/views/ThumbnailEmptyView' );
@@ -17,6 +18,10 @@ define( function ( require ) {
 			this.contentMax      = options.contentMax;
 			this.contentMaxWidth = options.contentMaxWidth;
 
+			$( window ).resize( function () {
+				App.Homepage.Utils.setLogicalRow( this.$el.parent() );
+				App.Homepage.Utils.carouselHandleNavBars( this.$el.parent() );
+			}.bind( this ) );
 		},
 		'className'       : 'carousel-inner',
 		'itemView'        : ThumbnailCompositeView,

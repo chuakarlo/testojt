@@ -97,8 +97,7 @@ define( function ( require ) {
 		removeContainer( rows, index );
 
 		var sViewPort = App.Homepage.Utils.getActiveView();
-		App.Homepage.Utils.carouselHandleNavBars( $( '#your-queue-pd360-slide-' + sViewPort + '.carousel' ) );
-		App.Homepage.Utils.onRemoveItem( $( '#your-queue-pd360-slide-' + sViewPort + '.carousel' ) );
+		App.Homepage.Utils.onRemoveItem( $( '#your-queue-pd360-slide-' + sViewPort ) );
 	}
 
 	function setRecommendedQueue ( model ) {

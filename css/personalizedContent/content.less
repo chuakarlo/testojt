@@ -64,11 +64,14 @@
 			margin     : 0 15px;
 			overflow   : hidden;
 			.carousel-inner {
-				-webkit-transition : 0.3s ease-in-out left;
-				-moz-transition    : 0.3s ease-in-out left;
-				-o-transition      : 0.3s ease-in-out left;
-				transition         : 0.3s ease-in-out left;
-				width              : 900000px;
+				-webkit-transition          : 0.0s ease-in-out left;
+				-moz-transition             : 0.0s ease-in-out left;
+				-o-transition               : 0.0s ease-in-out left;
+				transition                  : 0.0s ease-in-out left;
+				width                       : 900000px;
+				-webkit-transform-style     : preserve-3d;
+				-webkit-backface-visibility : hidden;
+				backface-visibility         : hidden;
 				.row {
 					margin      : 0;
 					margin-left : -30px;
@@ -84,14 +87,14 @@
 					-o-transform                : translate3d(0,0,0);
 					transform                   : translate3d(0,0,0);
 
+					-webkit-transform-style     : preserve-3d;
 					-webkit-backface-visibility : hidden;
 					backface-visibility         : hidden;
 					-webkit-perspective         : 1000;
-					-webkit-transition          : all .4s ease-out;
-					-moz-transition             : all .4s ease-out;
-					-ms-transition              : all .4s ease-out;
-					-o-transition               : all .4s ease-out;
-					transition                  : all .4s ease-out;
+					-webkit-transition          : 0.4s ease-in-out left;
+					-moz-transition             : 0.4s ease-in-out left;
+					-o-transition               : 0.4s ease-in-out left;
+					transition                  : 0.4s ease-in-out left;
 				}
 				.item li {
 					list-style-type : none;
