@@ -16,6 +16,7 @@ define( function ( require ) {
 	var MobileWidgetCompositeView = require( 'apps/homepage/external/widgets/views/MobileWidgetCompositeView' );
 	var template                  = require( 'text!apps/homepage/external/widgets/templates/widgetLayoutView.html' );
 	var panelStatuses             = [ 'opened', 'closed' ];
+	var widgetsLayoutUtils        = require( 'apps/homepage/external/widgets/utils/widgetLayoutUtils' );
 	var widgets;
 
 	// early load for performance
@@ -181,6 +182,10 @@ define( function ( require ) {
 			App.reqres.setHandler( 'homepage:showWidgetPanel', function () {
 				return self;
 			} );
+
+			if ( this.$el.find( '#active-holder' ).width() < 300 ) {
+				this.$el.find( '#widget-nav' ).hide();
+			}
 		},
 
 		'onShow' : function () {
@@ -189,26 +194,7 @@ define( function ( require ) {
 
 			scrollElmnt.scroll( function () {
 				var scrollLeft = $( this ).scrollLeft();
-
-				if ( Math.abs( scrollLeft ) < 290 ) {
-					self.$el.find( '.widget-specific:nth-child( 1 )' ).addClass( 'shown' ).siblings().removeClass( 'shown' );
-				} else if ( Math.abs( scrollLeft ) >= 290 && Math.abs( scrollLeft ) < 580 ) {
-					self.$el.find( '.widget-specific:nth-child( 2 )' ).addClass( 'shown' ).siblings().removeClass( 'shown' );
-				} else {
-					self.$el.find( '.widget-specific:nth-child( 3 )' ).addClass( 'shown' ).siblings().removeClass( 'shown' );
-				}
-
-				self.$el.find( '#widget-nav.left' ).show();
-
-				if ( self.$el.find( '#active-widgets' ).scrollLeft() === ( self.$el.find( '#active-widgets ul' ).width() - self.$el.find( '#active-widgets' ).width() ) ) {
-					self.$el.find( '#widget-nav.right' ).hide();
-				} else {
-					self.$el.find( '#widget-nav.right' ).show();
-				}
-
-				if ( self.$el.find( '#active-widgets' ).scrollLeft() === 0 ) {
-					self.$el.find( '#widget-nav.left' ).hide();
-				}
+				widgetsLayoutUtils.doScrollLeft( scrollLeft, self );
 			} );
 		},
 
