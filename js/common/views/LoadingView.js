@@ -77,6 +77,9 @@ define( function ( require ) {
 		},
 
 		'onShow' : function () {
+			// ensure that spinner has its default color
+			spinnerMap[ this.options.size ].color = '#000';
+
 			// check the background
 			if ( this.options.background ) {
 				this.$el.addClass( 'spinner-background' );
