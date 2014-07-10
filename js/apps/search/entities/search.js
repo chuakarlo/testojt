@@ -8,9 +8,9 @@ define( function ( require ) {
 
 	App.module( 'Entities', function ( Mod ) {
 
-		//------------------------------------
+		// ------------------------------------
 		// Search Navigation Entities
-		//------------------------------------
+		// ------------------------------------
 		Mod.SearchNavModel = Backbone.Model.extend( {
 			'defaults' : {
 				'active'  : false,
@@ -55,9 +55,9 @@ define( function ( require ) {
 			}
 		} );
 
-		//------------------------------------
+		// ------------------------------------
 		// Search Result Entities
-		//------------------------------------
+		// ------------------------------------
 
 		Mod.CommunityModel = Backbone.Model.extend();
 
@@ -71,8 +71,18 @@ define( function ( require ) {
 				// check if it is UUV and ready the videoTypeId
 				// 1 for non-User uploaded videos and 2 for User Uploaded Videos
 				var videoTypeId = Boolean ( isUUV ) + 1;
-				//set the video type id in the model
+				// set the video type id in the model
 				this.set( 'VideoTypeId', videoTypeId );
+			},
+
+			'getId' : function () {
+
+				// If there is a UUVideoId attribute with a value,
+				// it's a User uploaded video
+				if ( this.get( 'UUVideoId' ) ) {
+					return this.get( 'UUVideoId' );
+				}
+				return this.get( 'ContentId' );
 			}
 		} );
 
@@ -91,7 +101,7 @@ define( function ( require ) {
 				// do we need to take into account the numFound here?
 				var start = this.get( 'start' );
 				var rows  = this.get( 'rows' );
-				//var found = this.get( 'numFound' );
+				// var found = this.get( 'numFound' );
 
 				this.set( 'start', rows + start );
 			}

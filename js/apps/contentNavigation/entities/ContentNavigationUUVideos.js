@@ -47,6 +47,10 @@ define( function ( require ) {
 			},
 			'initialize'  : function () {
 				this.set( 'VideoTypeId', 2 );
+			},
+
+			'getId' : function () {
+				return this.get( 'UUVideoId' );
 			}
 		} );
 

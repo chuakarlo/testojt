@@ -50,19 +50,23 @@ define( function ( require ) {
 			'path' : 'core.ClientPersonnelBookmarkGateway',
 
 			'initialize' : function ( attr, options ) {
-				_.bindAll( this );
-				_.extend( this, options );
-
-				return this;
+				this.content = options.content;
 			},
 
 			'getCreateOptions' : function () {
+				var id;
+				if ( _.isFunction( this.content.getId ) ) {
+					id = this.content.getId();
+				} else {
+					id = this.content.id;
+				}
+
 				return {
 					'objectPath' : 'core.ClientPersonnelBookmark',
 					'method'     : 'create',
 					'args'       : {
 						'PersonnelId' : Session.personnelId(),
-						'ContentId'   : this.content.id,
+						'ContentId'   : id,
 						'VideoTypeId' : this.content.get( 'VideoTypeId' ),
 						'Created'     : ''
 					}
@@ -76,19 +80,22 @@ define( function ( require ) {
 			'path' : 'core.ClientPersonnelBookmarkGateway',
 
 			'initialize' : function ( attr, options ) {
-				_.bindAll( this );
-				_.extend( this, options );
-
-				return this;
+				this.content = options.content;
 			},
 
 			'getCreateOptions' : function () {
+				var id;
+				if ( _.isFunction( this.content.getId ) ) {
+					id = this.content.getId();
+				} else {
+					id = this.content.id;
+				}
 				return {
 					'objectPath' : 'core.ClientPersonnelBookmark',
 					'method'     : 'deleteByObj',
 					'args'       : {
 						'PersonnelId' : Session.personnelId(),
-						'ContentId'   : this.content.id,
+						'ContentId'   : id,
 						'VideoTypeId' : this.content.get( 'VideoTypeId' ),
 						'Created'     : ''
 					}
