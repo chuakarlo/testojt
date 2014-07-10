@@ -75,7 +75,7 @@ define( function ( require ) {
 					App.navigate( 'home', { 'trigger' : true, 'replace' : true } );
 
 					if ( fragment ) {
-						App.errorHandler( { 'message' : 'Sorry, `' + fragment + '` is currently unavailable or does not exist.' } );
+						App.errorHandler( { 'message' : 'Sorry, that page is currently unavailable or does not exist.' } );
 					}
 
 					return;
