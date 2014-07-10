@@ -3,10 +3,12 @@
 		<img class="group-banner" src="<%- getBrandingPath( BrandingImage ) %>">
 	</div>
 	<img class="group-avatar" src="<%- getAvatarPath( Avatar ) %>" alt="">
-	<div class="details">
-		<h4><%- getAbbreviation( LicenseName, 35 ) %></h4>		
-		<p>Invited by: <%- InviterFullName %></p>
-		<a class="js-group-accept btn btn-primary btn-invite-ignore" href="selected">Accept</a>
-		<a class="js-group-ignore btn btn-link btn-invite-ignore" href="selected">Ignore</a>
+	<div class="group-name">
+		<%- getAbbreviation( LicenseName, 35 ) %>
 	</div>
 </a>
+<div class="group-link-container">
+	<p class="group-inviter">Invited by: <%- InviterFullName %></p>
+	<a class="js-group-accept btn btn-primary btn-invite-ignore" href="selected">Accept</a>
+	<a class="js-group-ignore btn btn-link btn-invite-ignore" href="selected">Ignore</a>
+</div>

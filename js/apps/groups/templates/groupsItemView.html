@@ -3,9 +3,11 @@
 		<img class="group-banner" src="<%- getBrandingPath( BrandingImage ) %>">
 	</div>
 	<img class="group-avatar" src="<%- getAvatarPath( Avatar ) %>">
-	<div class="details">
-		<h4><%- getAbbreviation( LicenseName, 35 ) %></h4>
-		<p><%- NumberOfMembers %> Members</p>
-		<a class="js-group-accept btn btn-primary" href="#groups/<%- LicenseId %>">View</a>
+	<div class="group-name">
+		<%- getAbbreviation( LicenseName, 35 ) %>
 	</div>
 </a>
+<div class="group-link-container">
+	<a class="group-member-count" href="#groups/<%- LicenseId %>/members"><%- NumberOfMembers %> Members</a>
+	<a class="btn btn-primary" href="#groups/<%- LicenseId %>">View</a>
+</div>
