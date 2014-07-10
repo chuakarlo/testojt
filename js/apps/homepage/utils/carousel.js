@@ -73,7 +73,7 @@ define( function ( require ) {
 			navbars.handleNavBars( $carousel );
 			rowutils.handleOverFlowNavs( $carousel );
 
-			//special case
+			// special case
 			if ( $carousel.hasClass( 'visible-md' ) && $carousel.find( 'li' ).length >= $carousel.data().size ) {
 				$carousel.find( '.right.carousel-control' ).show();
 			}

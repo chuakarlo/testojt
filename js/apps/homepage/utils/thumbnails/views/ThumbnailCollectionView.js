@@ -30,7 +30,7 @@ define( function ( require ) {
 		},
 		'emptyView'       : ThumbnailEmptyView,
 		'onShow'          : function () {
-			//calculate partial for first load
+			// calculate partial for first load
 			var $carousel = this.$el.closest( '.carousel' );
 			$carousel.data( { 'size' : this.contentMax } );
 			if ( !$( 'html' ).hasClass( 'touch' ) ) {
