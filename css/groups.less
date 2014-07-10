@@ -203,16 +203,15 @@
 	}
 
 	.group-description {
-		display        : block;
-		-ms-word-break : break-all;
-		word-break     : normal;
 
-		/* Non standard for webkit */
+		display : block;
 
-		-webkit-hyphens : auto;
-		-moz-hyphens    : auto;
-		-ms-hyphens     : auto;
-		hyphens         : auto;
+		// css3
+		overflow-wrap : break-word;
+
+		// non-css3 fallback
+		word-wrap : break-word;
+
 	}
 }
 
