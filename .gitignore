@@ -12,6 +12,7 @@ js/libs/*
 # minified / compiled
 index.html
 *.min.js
+*.js.map
 *.min.css
 
 # PD360 swf
