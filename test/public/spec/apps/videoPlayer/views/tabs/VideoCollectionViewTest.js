@@ -4,8 +4,6 @@ define( function ( require ) {
 	var Backbone            = require( 'backbone' );
 	var VideoCollectionView = require( 'videoPlayer/views/tabs/VideoCollectionView' );
 
-	require( 'common/views' );
-
 	describe( 'VideoCollectionView', function ( ) {
 
 		var videosCollectionView;

@@ -7,7 +7,6 @@ define( function ( require ) {
 	var sinon      = window.sinon;
 	var App        = require( 'App' );
 
-	require( 'common/views' );
 	require( 'videoPlayer/VideoPlayer' )();
 	require( 'videoPlayer/entities/Entities' );
 
@@ -53,7 +52,7 @@ define( function ( require ) {
 			describe( '.showVideo', function () {
 				var model = new Backbone.CFCollection();
 
-				before(function () {
+				before( function () {
 					var stub = sinon.stub().returns( model );
 					App.reqres.setHandler( 'videoPlayer:getVideoContent', stub );
 				} );

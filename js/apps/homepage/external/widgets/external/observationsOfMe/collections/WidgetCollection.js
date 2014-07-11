@@ -1,45 +1,35 @@
 define ( function ( require ) {
 	'use strict';
 
-	var Backbone         = require( 'backbone' );
-	var Remoting         = require( 'Remoting' );
-	var Session          = require( 'Session' );
-	var App              = require( 'App' );
+	var Backbone = require( 'backbone' );
+	var App      = require( 'App' );
 
-	function widgetRequest ( personnelId ) {
-		return {
-			'path'   : 'com.schoolimprovement.pd360.dao.ObservationService',
-			'method' : 'getObservationsByTargetIdWithPrescribedPDCount',
-			'args'   : {
-				'targetId' : personnelId
-			}
-		};
-	}
+	return Backbone.CFCollection.extend( {
 
-	var Collection = Backbone.Collection.extend( {
+		'idAttribute' : 'OBSERVATIONID',
+
+		'path' : 'ObservationService',
+
+		'getReadOptions' : function () {
+			return {
+				'method' : 'getObservationsByTargetIdWithPrescribedPDCount',
+				'args'   : {
+					'targetId' : App.request( 'session:personnelId' )
+				}
+			};
+		},
+
+		// sort by most recent
 		'comparator' : function ( model ) {
-			return App.Homepage.Utils.compareDate( model, 'ObservationDate' );
-		}
-	} );
+			var observationDate = model.get( 'OBSERVATIONDATE' );
 
-	return Backbone.Collection.extend( {
+			if ( !observationDate ) {
+				return 0;
+			}
 
-		'fetch' : function ( options ) {
+			var date = new Date( observationDate );
 
-			var fetchingModels = Remoting.fetch( [ widgetRequest( Session.personnelId() ) ] );
-
-			App.when( fetchingModels ).done( function ( models ) {
-
-				options.success( new Collection( models[ 0 ] ) );
-
-			} ).fail( function ( error ) {
-
-				App.vent.trigger( 'flash:message', {
-					'message' : App.Homepage.Utils.message.observationsErrMsg
-				} );
-
-			} );
-
+			return -date.getTime();
 		}
 
 	} );

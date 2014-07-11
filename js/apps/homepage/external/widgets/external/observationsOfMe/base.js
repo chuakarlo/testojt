@@ -10,12 +10,21 @@ define( function ( require ) {
 
 	function doGetCollection ( callback, options ) {
 		var collection = new CollectionItems( options );
+
 		collection.fetch( {
+
 			'success' : function ( collection ) {
 				if ( App.request( 'homepage:isHomeRoute' ) ) {
 					callback ( collection );
 				}
+			},
+
+			'error' : function () {
+				App.vent.trigger( 'flash:message', {
+					'message' : App.Homepage.Utils.message.observationsErrMsg
+				} );
 			}
+
 		} );
 	}
 

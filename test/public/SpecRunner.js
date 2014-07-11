@@ -31,9 +31,7 @@
 
 		} );
 
-		// Load Homepage Widget Module first
 		require( 'common/Common' );
-		require( '../js/apps/homepage/external/widgets/manifest' );
 
 	} );
 
