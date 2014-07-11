@@ -22,6 +22,7 @@ define( function ( require ) {
 						allowPageScroll  : 'vertical',
 						excludedElements : '.noSwipe',
 						swipeLeft        : function ( event ) {
+							event.preventDefault();
 							if ( $( this ).data().index < $( this ).data().total ) {
 								$( this ).find( '.right.carousel-control' ).click();
 								rowutils.adjustOnLastItem( $( this ) );
@@ -30,6 +31,7 @@ define( function ( require ) {
 							}
 						},
 						swipeRight       : function ( event ) {
+							event.preventDefault();
 							if ( $( this ).data().index > 0 ) {
 								$( this ).find( '.left.carousel-control' ).click();
 								rowutils.adjustOnFirstItem( $( this ) );

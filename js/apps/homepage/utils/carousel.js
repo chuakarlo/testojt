@@ -37,7 +37,7 @@ define( function ( require ) {
 			var index        = $carousel.data().index;
 			var nCurrentLeft = parseInt( $carousel.find( '.item:first' ).css( 'left' ), 10 ) * -1;
 			var nCalcLeft    = ( index ) * $carousel.data().projectedMove;
-			if ( nCalcLeft >= nCurrentLeft ) {
+			if ( nCalcLeft >= nCurrentLeft || nCalcLeft <= 0 ) {
 				// we have to adjust left
 				--index;
 				if ( index < 0 ) {

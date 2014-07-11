@@ -22,6 +22,8 @@ define( function ( require ) {
 
 		// Target active carousel as we are manipulating position
 		var sViewPort = App.Homepage.Utils.getActiveView();
+		App.Homepage.Utils.setLogicalRow(  $( '#recommended-pd360-slide-' + sViewPort ) );
+		App.Homepage.Utils.carouselHandleNavBars(  $( '#recommended-pd360-slide-' + sViewPort ) );
 		App.Homepage.Utils.addLeftOnNewItems( $( '#recommended-pd360-slide-' + sViewPort ) );
 	}
 

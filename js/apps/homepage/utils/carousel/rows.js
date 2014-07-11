@@ -23,7 +23,7 @@ define( function ( require ) {
 	return {
 		'getLogicalRows' :function ( $carousel, nActive ) {
 			var numList = $carousel.find( 'li' ).length;
-			var cycle = $carousel.find( '.item' ).length - 1;
+			var cycle = 0;
 			if ( nActive !== 1 && hasPartialSegment( $carousel ) ) {
 				for ( var x = 1; x <= numList; ++x ) {
 					if ( x % nActive === 0 ) {
@@ -32,6 +32,8 @@ define( function ( require ) {
 				}
 			} else if ( nActive === 1 ) {
 				cycle = --numList;
+			} else {
+				cycle = $carousel.find( '.item' ).length - 1;
 			}
 			return cycle;
 		}
