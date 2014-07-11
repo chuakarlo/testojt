@@ -1,9 +1,10 @@
 define( function ( require ) {
 	'use strict';
 
-	var _          = require( 'underscore' );
-	var Marionette = require( 'marionette' );
-	var template   = require( 'text!../templates/groupsItemView.html' );
+	var _               = require( 'underscore' );
+	var Marionette      = require( 'marionette' );
+	var template        = require( 'text!../templates/groupsItemView.html' );
+	var getAbbreviation = require( 'common/helpers/getAbbreviation' );
 
 	return Marionette.ItemView.extend( {
 
@@ -13,7 +14,10 @@ define( function ( require ) {
 
 		'templateHelpers' : {
 
-			'getAbbreviation' : require( 'common/helpers/getAbbreviation' ),
+			'getCleanAbbreviation' : function () {
+				return getAbbreviation( _.unescape( this.LicenseName ), 28 ) ;
+			},
+
 			'getAvatarPath'   : require( 'common/helpers/getAvatarPath' ),
 			'getBrandingPath' : require( 'common/helpers/getBrandingPath' )
 

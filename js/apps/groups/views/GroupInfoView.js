@@ -1,17 +1,16 @@
 define( function ( require ) {
 	'use strict';
 
-	var App            = require( 'App' );
-	var _              = require( 'underscore' );
-	var $              = require( 'jquery' );
-	var Marionette     = require( 'marionette' );
-	var MemberItemView = require( '../views/InfoMemberItemView' );
-	var template       = require( 'text!../templates/groupInfoView.html' );
-	var stripHtml      = require( 'common/helpers/stripHtml' );
-
-	var moment = require( 'moment' );
-	require( 'moment-timezone' );
-	require( 'timezone' );
+	var App             = require( 'App' );
+	var _               = require( 'underscore' );
+	var $               = require( 'jquery' );
+	var Marionette      = require( 'marionette' );
+	var MemberItemView  = require( '../views/InfoMemberItemView' );
+	var template        = require( 'text!../templates/groupInfoView.html' );
+	var stripHtml       = require( 'common/helpers/stripHtml' );
+	var moment          = require( 'moment' );
+	var getAbbreviation =  require( 'common/helpers/getAbbreviation' );
+	var utils           = require( 'groups/utils/utils' );
 
 	return Marionette.CompositeView.extend( {
 
@@ -87,18 +86,22 @@ define( function ( require ) {
 
 		'templateHelpers' : function () {
 
-			var server = 'MST7MDT';
-
 			return {
 
-				'getAbbreviation' : require( 'common/helpers/getAbbreviation' ),
+				'getCleanAbbreviation' : function () {
+					return getAbbreviation( utils.doubleUnescape( this.Misc ), 120 );
+				},
+
+				'getCleanMisc' : function () {
+					return utils.doubleUnescape( this.Misc );
+				},
 
 				'formatDate' : function ( date ) {
-					return moment.tz( date, server ).format( 'MMMM D, YYYY' );
+					return moment( date ).format( 'MMMM D, YYYY' );
 				},
 
 				'formatDateAgo' : function ( date ) {
-					return moment.tz( date, server ).fromNow();
+					return moment( date ).fromNow();
 				}
 
 			};

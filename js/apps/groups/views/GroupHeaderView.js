@@ -4,6 +4,7 @@ define( function ( require ) {
 	var _              = require( 'underscore' );
 	var Marionette     = require( 'marionette' );
 	var template       = require( 'text!../templates/groupHeaderView.html' );
+	var utils          = require( 'groups/utils/utils' );
 
 	return Marionette.ItemView.extend( {
 
@@ -13,7 +14,11 @@ define( function ( require ) {
 
 		'templateHelpers' : {
 
-			'getAvatarPath' : require( 'common/helpers/getAvatarPath' )
+			'getAvatarPath' : require( 'common/helpers/getAvatarPath' ),
+
+			'getCleanName'  : function () {
+				return utils.doubleUnescape( this.LicenseName );
+			}
 
 		}
 
