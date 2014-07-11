@@ -15,27 +15,6 @@ define( function ( require ) {
 	var testClass = 'test';
 	var ITEMVIEW;
 
-	var Environment = {
-		isAndroid    : function () {
-			return navigator.userAgent.match( /Android/i );
-		},
-		isBlackBerry : function () {
-			return navigator.userAgent.match( /BlackBerry/i );
-		},
-		isIOS        : function () {
-			return navigator.userAgent.match( /iPhone|iPad|iPod/i );
-		},
-		isOpera      : function () {
-			return navigator.userAgent.match( /Opera Mini/i );
-		},
-		isWindows    : function () {
-			return navigator.userAgent.match( /IEMobile/i );
-		},
-		isMobile     : function () {
-			return ( Environment.isAndroid() || Environment.isBlackBerry() || Environment.isIOS() || Environment.isOpera() || Environment.isWindows() );
-		}
-	};
-
 	function getImageDimension ( ) {
 		var dimension   = 0;
 		var windowWidth = window.innerWidth;
@@ -44,7 +23,7 @@ define( function ( require ) {
 		} else if ( windowWidth >= 600 && windowWidth < 992 ) {
 			dimension = 960;
 		} else if ( windowWidth >= 992 && windowWidth < 1200 ) {
-			dimension = 1220;
+			dimension = 1200;
 		}
 		return dimension;
 	}
@@ -107,7 +86,7 @@ define( function ( require ) {
 			var imageElements = view.$el.find( '.billimage' );
 			var dimension     = getImageDimension();
 
-			if ( dimension && Environment.isMobile() ) {
+			if ( dimension && $.browser.mobile ) {
 				_.each( imageElements, function ( data ) {
 					var url    = $( data ).attr( 'src' );
 					var regex  = /(.*)\/(.*)\.(.*)/;

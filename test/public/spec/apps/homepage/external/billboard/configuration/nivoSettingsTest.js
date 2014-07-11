@@ -1,8 +1,8 @@
 define ( function ( require ) {
 	'use strict';
 
-	var nivoSetting = require( 'apps/homepage/external/billboard/configuration/nivoSettings');
-	var $           = require('jquery');
+	var nivoSetting = require( 'apps/homepage/external/billboard/configuration/nivoSettings' );
+	var $           = require( 'jquery' );
 
 	var nivoContent = '<div id="slider" class="nivoSlider">' +
 											'<img src="http://resources.pd360.com/PD360/uploads/recommendedVideoThumbs953999_1389827086011.jpeg" alt="" />' +
@@ -19,7 +19,7 @@ define ( function ( require ) {
 		before( function ( done ) {
 
 			desiredSettings = {
-				pauseTime    : 3000,
+				pauseTime    : 5000,
 				effect       : 'fade',
 				pauseOnHover : true,
 				animSpeed    : '1000'
