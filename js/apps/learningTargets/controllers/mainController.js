@@ -31,6 +31,10 @@ define( function ( require ) {
 		Main.controller = {
 
 			'showLegacyPageContent' : function ( page, pageid, subpageid ) {
+				// for courses inside catalogs to redirect to courses flex page instead of catalogs
+				if ( page === 'catalogs' ) {
+					page = 'courses';
+				}
 				var options = {
 					pageid    : pageid,
 					subpageid : subpageid

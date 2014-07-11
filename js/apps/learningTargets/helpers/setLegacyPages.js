@@ -11,8 +11,8 @@ define( function ( require ) {
 			'subPage' : 'coursesBrowse'
 		},
 		'catalogs'     : {
-			'page'    : 'courses',
-			'subPage' : 'coursesBrowse'
+			'page'    : 'home',
+			'subPage' : 'homeCatalog'
 		},
 		'portfolio'    : {
 			'page'    : 'home',
