@@ -31,14 +31,19 @@ define( function ( require ) {
 			options.success = function ( jqXHR, status, error ) {
 
 				// SSO returns array, Login returns object
-				if ( _.isArray(jqXHR) ) {
+				if ( _.isArray( jqXHR ) ) {
 					jqXHR = { 'personnel' : jqXHR[ 0 ] };
 					this.password = jqXHR.personnel.Password;
 					this.username = jqXHR.personnel.LoginName;
 				}
 
 				// Redirect to login if SSO error occurred
-				if ( jqXHR.personnel.ErrorId ) {
+				if ( ( jqXHR.personnel && jqXHR.personnel.ErrorId ) || jqXHR.PersonnelId === 0 ) {
+
+					// Dirty hack for the back end returning an empty personnel object
+					jqXHR.personnel             = jqXHR.personnel || { };
+					jqXHR.personnel.DisplayText = jqXHR.personnel.DisplayText || 'An error occurred. Please try again later.';
+
 					options.error( jqXHR, status, error );
 					return;
 				}
