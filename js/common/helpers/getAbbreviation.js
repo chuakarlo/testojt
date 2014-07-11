@@ -8,7 +8,7 @@ define( function ( require ) {
 
 		var ellipsis = '...';
 
-		if ( text.length <= num ) {
+		if ( String( text ).length <= num ) {
 			ellipsis = '';
 		}
 
