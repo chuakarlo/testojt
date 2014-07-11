@@ -20,6 +20,10 @@
 
 		margin: 0;
 
+		button#share-btn {
+			position : static;
+		}
+
 	}
 
 	.modal-body {
@@ -253,6 +257,21 @@
 
 				}
 
+				.tooltip-inner {
+					white-space : pre-wrap;
+				}
+
+				.tooltip-name {
+					font-weight : 500;
+					word-wrap   : break-word;
+				}
+
+				.tooltip-location {
+					font-size   : 12px;
+					font-weight : 200;
+					word-wrap   : break-word;
+				}
+
 				.form-control {
 
 					background       : #4b505c;
@@ -263,25 +282,7 @@
 					-o-text-overflow : ellipsis;
 					text-overflow    : ellipsis;
 					white-space      : nowrap;
-
-					.tooltip {
-						position : fixed;
-					}
-
-					.tooltip-inner {
-						white-space : pre-wrap;
-					}
-
-					.tooltip-name {
-						font-weight : 500;
-						word-wrap   : break-word;
-					}
-
-					.tooltip-location {
-						font-size   : 12px;
-						font-weight : 200;
-						word-wrap   : break-word;
-					}
+					position         : static;
 
 				}
 
