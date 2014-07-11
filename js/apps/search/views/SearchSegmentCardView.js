@@ -12,6 +12,7 @@ define( function ( require ) {
 			// capture it in javascript
 			return;
 		}
+
 	} );
 
 } );

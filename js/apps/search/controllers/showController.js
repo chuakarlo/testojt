@@ -88,7 +88,6 @@ define( function ( require ) {
 		Mod.ResultController =  Mod.BaseController.extend( {
 
 			'initialize' : function () {
-
 				// Call the parent init
 				Mod.BaseController.prototype.initialize.apply( this, arguments );
 
@@ -100,13 +99,20 @@ define( function ( require ) {
 
 				// give the search collection a link to the queryModel
 				this.searchCollection.queryModel = this.queryModel;
+
+				this.listenTo( this.searchCollection, 'add', this.setModelQueue );
 			},
 
-			'setupInfiniteScroll' : function ( filter, queueList ) {
+			'setModelQueue' : function ( model ) {
+				if ( model.isVideo ) {
+					model.setQueue( this.options.queueContentsIds );
+				}
+			},
+
+			'setupInfiniteScroll' : function ( filter ) {
 				// When the window scroll bar gets to 200px from the bottom
 				// of the window, fetch the next set of results.
-				var that = this;
-
+				var that     = this;
 				var numFound = this.searchCollection.queryModel.get( 'numFound' );
 				var start    = this.searchCollection.queryModel.get( 'start' );
 				var rows     = this.searchCollection.queryModel.get( 'rows' );
@@ -116,118 +122,96 @@ define( function ( require ) {
 				if ( numFound > start && numFound > rows || !numFound && !start ) {
 					$( window ).smack( {
 						'threshold' : '200px'
-					} )
-						.done( function () {
-							// Show Loading
-							that.showLoading();
-							// Reset starting point
-							that.searchCollection.fetch( {
-								'filter' : filter,
-								'reset'  : false,
-								'remove' : false,
+					} ).done( function () {
+						// Show Loading
+						that.showLoading();
 
-								'success' : function () {
+						// Reset starting point
+						that.searchCollection.fetch( {
+							'filter' : filter,
+							'reset'  : false,
+							'remove' : false,
 
-									that.searchCollection.queryModel.updateStart();
-									that.setupInfiniteScroll( filter, queueList );
-									that.searchCollection.each( function ( queueModel ) {
-										if ( queueModel.get( 'id' ) ) {
-											queueModel.set( 'queued', _.contains( queueList, queueModel.id ) );
-										}
-									} );
-									that.closeLoading();
-								},
+							'success' : function ( args ) {
+								that.searchCollection.queryModel.updateStart();
+								that.setupInfiniteScroll( filter );
+								that.closeLoading();
+							},
 
-								'error' : App.errorHandler.bind( App, {
-									'message' : 'There was a problem loading your' +
-									' search results. Please try again later.'
-								} )
-							} );
+							'error' : App.errorHandler.bind( App, {
+								'message' : 'There was a problem loading your' +
+								' search results. Please try again later.'
+							} )
 						} );
+					} );
 				}
-
 			},
 
 			'showSearchResults' : function ( query, filter ) {
+				// Show empty results if no query was passed
+				if ( !query ) {
+					this.showEmptyResult();
+					return;
+				}
 
-				var queueContentsRequest = App.request( 'common:getQueueContents' );
+				// Set the query text, but remove html and scripts
+				this.layout.ui.query.html( stripScripts( stripHtml( query ) ) );
 
-				App.when( queueContentsRequest ).done( function ( queueContents ) {
-					// Show empty results if no query was passed
-					if ( !query ) {
-						this.showEmptyResult();
-						return;
-					}
+				// Set the query text, but remove html
+				this.layout.ui.query.html( stripHtml( query ) );
 
-					// Set the query text, but remove html and scripts
-					this.layout.ui.query.html( stripScripts( stripHtml( query ) ) );
+				// Clear any results we have
+				this.searchCollection.reset();
 
-					// get all queue contents ids
-					var queueContentsIds = [ ];
-					_.each( queueContents.models, function ( model ) {
-						queueContentsIds.push( model.id );
-					} );
+				// Remove characters that cause errors in search
+				query = query.replace( /:|\\|\/|\{|\}|\(|\)|\[|\]/gi, ' ' );
 
-					// Set the query text, but remove html
-					this.layout.ui.query.html( stripHtml( query ) );
+				// Set the query and reset the starting position
+				this.searchCollection.queryModel.set( {
+					'searchData' : query,
+					'start'      : 0
+				} );
 
-					// Clear any results we have
-					this.searchCollection.reset();
+				if ( !filter ) {
+					filter = 'All';
+				}
 
-					// Remove characters that cause errors in search
-					query = query.replace( /:|\\|\/|\{|\}|\(|\)|\[|\]/gi, ' ' );
+				this.searchCollection.queryModel.set( {
+					'searchType' : filter
+				} );
 
-					// Set the query and reset the starting position
-					this.searchCollection.queryModel.set( {
-						'searchData' : query,
-						'start'      : 0
-					} );
+				var searchCollectionView = new SearchResultCollectionView( {
+					'collection' : this.searchCollection
+				} );
 
-					if ( !filter ) {
-						filter = 'All';
-					}
+				// Show a loading view while we get some results
+				this.showLoading();
 
-					this.searchCollection.queryModel.set( {
-						'searchType' : filter
-					} );
+				// Fetch the initial data
+				this.searchCollection.fetch( {
+					'filter'  : filter,
+					'remove'  : false,
+					'success' : _.bind( function () {
 
-					var searchCollectionView = new SearchResultCollectionView( {
-						'collection' : this.searchCollection
-					} );
+						this.closeLoading();
 
-					// Show a loading view while we get some results
-					this.showLoading();
+						// Update the count first so inifite scroll knows if it
+						// needs to setup
+						this.searchCollection.queryModel.updateStart();
 
-					// Fetch the initial data
-					this.searchCollection.fetch( {
-						'filter'  : filter,
-						'remove'  : false,
-						'success' : _.bind( function () {
+						this.layout.results.show( searchCollectionView );
+						this.setupInfiniteScroll( filter );
+					}, this ),
 
-							this.closeLoading();
-							// Update the count first so inifite scroll knows if it
-							// needs to setup
-							this.searchCollection.queryModel.updateStart();
+					'error' : function () {
+						this.closeLoading();
 
-							this.layout.results.show( searchCollectionView );
-							this.setupInfiniteScroll( filter,  queueContentsIds );
-							this.searchCollection.each( function ( queueModel ) {
-								if ( queueModel.get( 'id' ) ) {
-									queueModel.set( 'queued', _.contains( queueContentsIds, queueModel.id ) );
-								}
-							} );
-						}, this ),
-
-						'error' : function () {
-							this.closeLoading();
-
-							App.errorHandler( {
-								'message' : 'There was a problem loading your' +
-								' search results. Please try again later.'
-							} );
-						}.bind( this )
-					} );
-				}.bind( this ) );
+						App.errorHandler( {
+							'message' : 'There was a problem loading your' +
+							' search results. Please try again later.'
+						} );
+					}.bind( this )
+				} );
 			},
 
 			'showLoading' : function () {

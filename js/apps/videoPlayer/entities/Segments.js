@@ -32,15 +32,30 @@ define( function ( require ) {
 			},
 
 			'parse' : function ( response ) {
-				// get the fist word of the contentName
-				var firstWord = this.contentName.substr( 0, this.contentName.indexOf( ' ' ) );
+				var isArchived = this.startsWith( this.contentName, 'Archive:' );
 
 				// exclude current segment and archive videos
 				return _.filter( response, function ( segment ) {
-					if ( segment.ContentId !== this.id && firstWord !== 'Archive:' ) {
+					if ( segment.ContentId !== this.id && !isArchived ) {
 						return segment;
 					}
 				}.bind( this ) );
+			},
+
+			// taken from https://github.com/epeli/underscore.string
+			'startsWith' : function ( str, starts ) {
+				if ( starts === '' ) {
+					return true;
+				}
+
+				if ( str === null || starts === null ) {
+					return false;
+				}
+
+				str    = String( str );
+				starts = String( starts );
+
+				return str.length >= starts.length && str.slice( 0, starts.length ) === starts;
 			}
 
 		} );

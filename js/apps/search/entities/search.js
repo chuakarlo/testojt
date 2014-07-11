@@ -53,26 +53,44 @@ define( function ( require ) {
 				var active = this.findWhere( { 'active' : true } );
 				active.set( 'results', count );
 			}
+
 		} );
 
 		// ------------------------------------
 		// Search Result Entities
 		// ------------------------------------
 
-		Mod.CommunityModel = Backbone.Model.extend();
+		Mod.CommunityModel = Backbone.Model.extend( {
 
-		Mod.SearchGroupModel = Backbone.Model.extend();
+			'idAttribute' : 'LicenseId',
+			'isVideo'     : false
+
+		} );
+
+		Mod.SearchGroupModel = Backbone.Model.extend( {
+
+			'idAttribute' : 'LicenseId',
+			'isVideo'     : false
+
+		} );
 
 		Mod.VideoModel = Backbone.Model.extend( {
+
+			'isVideo' : true,
 
 			'initialize' : function () {
 				// get Uploaded field
 				var isUUV = this.get( 'Uploaded' );
+
 				// check if it is UUV and ready the videoTypeId
 				// 1 for non-User uploaded videos and 2 for User Uploaded Videos
 				var videoTypeId = Boolean ( isUUV ) + 1;
+
 				// set the video type id in the model
 				this.set( 'VideoTypeId', videoTypeId );
+
+				// set model id
+				this.id = this.getId();
 			},
 
 			'getId' : function () {
@@ -83,7 +101,12 @@ define( function ( require ) {
 					return this.get( 'UUVideoId' );
 				}
 				return this.get( 'ContentId' );
+			},
+
+			'setQueue' : function ( queueContentsIds ) {
+				this.set( 'queued', _.contains( queueContentsIds, this.id ) );
 			}
+
 		} );
 
 		// This guy is all about the search meta data
@@ -130,14 +153,15 @@ define( function ( require ) {
 
 			'createModels' : function ( results, ModelType, type ) {
 				var temp = [ ];
+
 				_.each( results, function ( result ) {
 					var m = new ModelType( result );
-					var segmentId = result.ContentId || result.LicenseId;
+
 					// I'm setting this incase we need this later
 					m.set( 'frontend-type', type );
-					m.set( 'id',  segmentId );
 					temp.push( m );
 				} );
+
 				return temp;
 			},
 
@@ -227,6 +251,7 @@ define( function ( require ) {
 							break;
 
 					}
+
 					// Just add it to the collection instead of returning
 					this.add( models );
 				}
@@ -234,5 +259,7 @@ define( function ( require ) {
 			}
 
 		} );
+
 	} );
+
 } );

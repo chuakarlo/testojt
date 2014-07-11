@@ -3,6 +3,7 @@ define( function ( require ) {
 
 	return function () {
 
+		var _                   = require( 'underscore' );
 		var AuthRouter          = require( 'AuthRouter' );
 		var Marionette          = require( 'marionette' );
 		var App                 = require( 'App' );
@@ -37,37 +38,49 @@ define( function ( require ) {
 					// Make sure to hide anything flash
 					App.request( 'pd360:hide' );
 
-					if ( !this.layout ) {
-						this.layout = new SearchResultsLayout();
-						App.content.show( this.layout );
+					var queueContentsRequest = App.request( 'common:getQueueContents' );
 
-						this.listenTo( this.layout, 'close', this.destroyControllers );
-					}
+					App.when( queueContentsRequest ).done( function ( queueContents ) {
 
-					if ( !this.resultController ) {
-						this.resultController = new Search.Show.ResultController( {
-							'layout' : this.layout
+						// get all queue contents ids
+						var queueContentsIds = [ ];
+						_.each( queueContents.models, function ( model ) {
+							queueContentsIds.push( model.id );
 						} );
 
-						// The Nav needs to know how many results were in the
-						// query
-						this.listenTo(
-							this.resultController.queryModel,
-							'change:numFound',
-							this.updateResultCount
-						);
-					}
+						if ( !this.layout ) {
+							this.layout = new SearchResultsLayout();
+							App.content.show( this.layout );
 
-					// update navController if one doesn't exist or the query param changes
-					if ( !this.navController || this.navController.query !== query ) {
-						this.navController = new Search.Show.NavController( {
-							'layout' : this.layout,
-							'query'  : query
-						} );
-					}
+							this.listenTo( this.layout, 'close', this.destroyControllers );
+						}
 
-					this.navController.setFilter( filter );
-					this.resultController.showSearchResults( query, filter );
+						if ( !this.resultController ) {
+							this.resultController = new Search.Show.ResultController( {
+								'layout'           : this.layout,
+								'queueContentsIds' : queueContentsIds
+							} );
+
+							// The Nav needs to know how many results were in the
+							// query
+							this.listenTo(
+								this.resultController.queryModel,
+								'change:numFound',
+								this.updateResultCount
+							);
+						}
+
+						// update navController if one doesn't exist or the query param changes
+						if ( !this.navController || this.navController.query !== query ) {
+							this.navController = new Search.Show.NavController( {
+								'layout' : this.layout,
+								'query'  : query
+							} );
+						}
+
+						this.navController.setFilter( filter );
+						this.resultController.showSearchResults( query, filter );
+					}.bind( this ) );
 				},
 
 				'updateResultCount' : function ( model, val ) {
