@@ -157,13 +157,15 @@ define( function ( require ) {
 		},
 
 		'search' : function () {
+			var searchTerms = this.shareModal.ui.searchInput.val();
+			// Remove characters that cause errors in search
+			searchTerms = searchTerms.replace( /:|\\|\/|\{|\}|\(|\)|\[|\]/gi, '' );
 
-			if ( this.shareModal.ui.searchInput.val().trim() !== '' ) {
+			if ( searchTerms.trim() !== '' ) {
 
 				// show a loading view while we wait for search results
 				this.shareModal.searchResults.show( new App.Common.LoadingView( { 'background' : true, 'size' : 'small' } ) );
 
-				var searchTerms = this.shareModal.ui.searchInput.val();
 				var searching   = App.request( 'shareModal:searchPeopleAndGroups', searchTerms );
 
 				App.when( searching ).done( this.doneSearching.bind( this ) ).fail( this.failSearching.bind( this ) );
