@@ -6,6 +6,7 @@ define( function ( require ) {
 	var App      = require( 'App' );
 	var Vent     = require( 'Vent' );
 	var Backbone = require( 'backbone' );
+	var Bugsnag  = window.Bugsnag;
 
 	App.module( 'Session', function ( Session ) {
 
@@ -19,6 +20,13 @@ define( function ( require ) {
 		};
 
 		var initializeSession = function ( loginObject ) {
+
+			Bugsnag.user = {
+				'id'    : loginObject.personnel.PersonnelId,
+				'name'  : loginObject.personnel.FirstName + ' ' + loginObject.personnel.LastName,
+				'email' : loginObject.personnel.EmailAddress,
+				'login' : loginObject.personnel.LoginName
+			};
 
 			Session.config    = loginObject.config.DATA;
 			Session.license   = loginObject.license;
@@ -113,9 +121,9 @@ define( function ( require ) {
 
 		};
 
-		//--------------------------
+		// --------------------------
 		// Setup and Initialize
-		//--------------------------
+		// --------------------------
 		App.reqres.setHandler( 'session:initialize', function ( loginObject ) {
 			return API.initializeSession( loginObject );
 		} );
@@ -124,9 +132,9 @@ define( function ( require ) {
 			return API.refreshSession( route );
 		} );
 
-		//--------------------------
+		// --------------------------
 		// Get entire session object or specific key
-		//--------------------------
+		// --------------------------
 		App.reqres.setHandler( 'session:cookies', function ( key ) {
 			return API.getObject( 'cookies', key );
 		} );
@@ -151,9 +159,9 @@ define( function ( require ) {
 			return API.getObject( 'config', key );
 		} );
 
-		//--------------------------
+		// --------------------------
 		// Convenience methods
-		//--------------------------
+		// --------------------------
 		App.reqres.setHandler( 'session:personnelId', function () {
 			return API.getPersonnelId();
 		} );
