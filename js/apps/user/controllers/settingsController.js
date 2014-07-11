@@ -113,7 +113,7 @@ define( function ( require ) {
 						'model'        : personnel
 					} );
 
-					if ( this.page === 'profile' ) {
+					if ( this.page === 'profile' && App.getCurrentRoute() === 'settings/profile' ) {
 						this.layout.content.show( profileView );
 					}
 
