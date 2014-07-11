@@ -109,7 +109,7 @@ define( function ( require ) {
 
 			// Slide
 			'click #widget-nav.left'                   : 'slideLeft',
-			'click a#widget-nav.right'                 : 'slideRight'
+			'click #widget-nav.right'                  : 'slideRight'
 		},
 		'className' : 'widget-container',
 		'template'  : _.template( template ),
@@ -183,9 +183,7 @@ define( function ( require ) {
 				return self;
 			} );
 
-			if ( this.$el.find( '#active-holder' ).width() < 300 ) {
-				this.$el.find( '#widget-nav' ).hide();
-			}
+			self.$el.find( '#widget-nav.right' ).show();
 		},
 
 		'onShow' : function () {
@@ -206,6 +204,7 @@ define( function ( require ) {
 			this.$el.find( '#active-widgets' ).animate( {
 				'scrollLeft' : position
 			}, 'slow' );
+			return false;
 		},
 
 		'slideRight' : function ( e ) {
@@ -216,6 +215,7 @@ define( function ( require ) {
 			this.$el.find( '#active-widgets' ).animate( {
 				'scrollLeft' : position
 			}, 'slow' );
+			return false;
 		},
 
 		'slidePosition' : function ( positionParam ) {

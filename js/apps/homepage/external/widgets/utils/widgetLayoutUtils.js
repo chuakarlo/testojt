@@ -29,15 +29,10 @@ define( function ( require ) {
 		'doScrollLeft' : function  ( scrollLeft, self ) {
 			setShown( scrollLeft, self );
 
-			if ( self.$el.find( '#active-holder' ).width() < 300 ) {
-				self.$el.find( '#widget-nav.left' ).show();
+			self.$el.find( '#widget-nav.left' ).show();
 
-				toggleRight( self );
-				toggleLeft( self );
-
-			} else {
-				self.$el.find( '#widget-nav' ).hide();
-			}
+			toggleRight( self );
+			toggleLeft( self );
 		}
 	};
 } );

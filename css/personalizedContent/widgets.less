@@ -468,6 +468,12 @@
 		padding-bottom : 420px;
 		#active-widgets.three-box-container {
 			overflow-x : scroll;
+		// Remove Overflow Scrollbar For IE browser divs
+			-ms-overflow-style: none;
+		}
+		// Remove Overflow Scrollbar For Webkit browsers divs
+		#active-widgets.three-box-container::-webkit-scrollbar {
+			width: 0 !important
 		}
 	}
 
