@@ -24,13 +24,15 @@ module.exports = function ( grunt ) {
 	grunt.config.set( 'requirejs', {
 		'compile' : {
 			'options' : {
-				'baseUrl'                : 'js/',
-				'mainConfigFile'         : 'js/config/require.js',
-				'out'                    : 'js/main.min.js',
-				'optimize'               : 'uglify',
-				'include'                : 'main',
-				'findNestedDependencies' : true,
-				'insertRequire'          : [ 'main' ]
+				'baseUrl'                 : 'js/',
+				'mainConfigFile'          : 'js/config/require.js',
+				'out'                     : 'js/main.min.js',
+				'optimize'                : 'uglify2',
+				'include'                 : 'main',
+				'findNestedDependencies'  : true,
+				'insertRequire'           : [ 'main' ],
+				'generateSourceMaps'      : true,
+				'preserveLicenseComments' : false
 			}
 		}
 	} );
