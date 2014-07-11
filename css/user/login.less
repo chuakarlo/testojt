@@ -1,24 +1,43 @@
 .login-container {
-	margin-top: 20px;
+	margin-top : 20px;
 
 	@media ( min-width: @screen-sm-min ) and ( max-width: @screen-sm-max ) {
 		.first-column {
-			padding-right: 50px;
+			padding-right : 50px;
 		}
 
 		.second-column {
-			padding-left: 50px;
+			padding-left : 50px;
 		}
 	}
 
 	@media ( min-width: @screen-md-min ) {
 		.first-column {
-			padding-right: 75px;
+			padding-right : 75px;
 		}
 
 		.second-column {
-			padding-left: 75px;
+			padding-left : 75px;
 		}
+	}
+
+}
+
+.marketing-message {
+	margin-top : 50px;
+
+	.jumbotron {
+		background : @brand-primary;
+		color      : #FFF;
+
+		@media ( min-width: @screen-xs-max ) {
+			padding : 40px;
+		}
+	}
+
+	h1 {
+		margin-bottom : 0;
+		margin-bottom : 30px;
 	}
 
 }
