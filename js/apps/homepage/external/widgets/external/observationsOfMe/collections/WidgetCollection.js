@@ -6,8 +6,6 @@ define ( function ( require ) {
 
 	return Backbone.CFCollection.extend( {
 
-		'idAttribute' : 'OBSERVATIONID',
-
 		'path' : 'ObservationService',
 
 		'getReadOptions' : function () {
@@ -19,9 +17,9 @@ define ( function ( require ) {
 			};
 		},
 
-		// sort by most recent
+		// sort by most recent start date (as opposed to creation or completed date)
 		'comparator' : function ( model ) {
-			var observationDate = model.get( 'OBSERVATIONDATE' );
+			var observationDate = model.get( 'OBSERVATIONSTARTDATE' );
 
 			if ( !observationDate ) {
 				return 0;
