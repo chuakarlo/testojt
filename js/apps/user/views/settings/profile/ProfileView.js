@@ -261,25 +261,16 @@ define( function ( require ) {
 				},
 
 				'showMessage' : function ( message ) {
-
-					App.errorHandler( {
-						'message' : message
-					} );
-
+					App.errorHandler( new Error( message ) );
 				}
 
 			} )
 
 			.on( 'error', function () {
-
-				App.errorHandler( {
-					'message' : 'An error occurred and the image could not be uploaded'
-				} );
-
+				App.errorHandler( new Error( 'An error occurred and the image could not be uploaded' ) );
 			} )
 
 			.on( 'complete', function ( event, id, name, response ) {
-
 				if ( response.success ) {
 					var avatar = filename + '.' + name.split( '.' ).pop();
 

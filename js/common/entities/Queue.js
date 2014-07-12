@@ -185,9 +185,7 @@ define( function ( require ) {
 
 				App.vent.trigger( 'common:queueFailed' );
 
-				return App.errorHandler( {
-					'message' : error.message
-				} );
+				return App.errorHandler( new Error( error.message ) );
 
 			} );
 
@@ -212,9 +210,7 @@ define( function ( require ) {
 
 				App.vent.trigger( 'common:queueFailed' );
 
-				return App.errorHandler( {
-					'message' : error.message
-				} );
+				return App.errorHandler( new Error( error.message ) );
 
 			} );
 

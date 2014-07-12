@@ -6,7 +6,9 @@ define( function ( require ) {
 	var Vent        = require( 'Vent' );
 	var ModalRegion = require( 'common/regions/ModalRegion' );
 	var FlashLayout = require( 'common/views/FlashLayout' );
+	var _           = require( 'underscore' );
 	var $           = require( 'jquery' );
+	var Bugsnag     = window.Bugsnag;
 
 	// extends the marionette application
 	require( 'plugins/Application' );
@@ -75,7 +77,7 @@ define( function ( require ) {
 					App.navigate( 'home', { 'trigger' : true, 'replace' : true } );
 
 					if ( fragment ) {
-						App.errorHandler( { 'message' : 'Sorry, that page is currently unavailable or does not exist.' } );
+						App.errorHandler( new Error( 'Sorry, the page "' + _.escape( fragment ) +  '" is currently unavailable or does not exist.' ) );
 					}
 
 					return;
@@ -126,41 +128,45 @@ define( function ( require ) {
 	} );
 
 	// error handler, to create flash messages, and optional error view
-	App.errorHandler = function ( options, callback ) {
+	App.errorHandler = function ( error, callback ) {
+		var defaultMessage = 'An error occurred. Please try again later.';
 
-		// reset if passed in an error or caught window.error where typeof option !== 'object'
-		if ( Object.prototype.toString.call( options ) === '[object Error]' || typeof options !== 'object' ) {
-			options = { };
-		}
+		error = error || { };
 
-		// setup defaults
-		options  = options || { };
-		if ( typeof callback !== 'function' ) {
-			callback = function () {};
+		if ( typeof error === 'string' ) {
+			error = { 'message' : error };
 		}
 
 		// create default message if undefined
-		if ( typeof options.message === 'undefined' ) {
-			options.message = 'An error occurred. Please try again later.';
+		if ( !error.message ) {
+			error.message = defaultMessage;
 		}
 
 		// Pass a region if you want an error view to show up in that region
-		if ( options.region ) {
-			options.viewText = options.viewText || 'There was an error loading view.';
+		if ( error.region ) {
+			error.viewText = error.viewText || 'There was an error loading view.';
 
-			options.region.show( new App.Common.ErrorView( {
-				'message' : options.viewText
+			error.region.show( new App.Common.ErrorView( {
+				'message' : error.viewText
 			} ) );
 		}
 
+		Bugsnag.notifyException( error.error || error, error.message );
+
+		if ( error.message.match( 'Uncaught' ) ) {
+			error.message = defaultMessage;
+		}
+
 		// Set option.message = false to suppress flash message
-		if ( options.message ) {
+		if ( error.message ) {
 			App.vent.trigger( 'flash:message', {
-				'message' : options.message
+				'message' : error.message
 			} );
 		}
 
-		callback();
+		if ( typeof callback === 'function' ) {
+			callback();
+		}
 
 	};
 

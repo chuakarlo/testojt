@@ -138,10 +138,7 @@ define( function ( require ) {
 								that.closeLoading();
 							},
 
-							'error' : App.errorHandler.bind( App, {
-								'message' : 'There was a problem loading your' +
-								' search results. Please try again later.'
-							} )
+							'error' : App.errorHandler.bind( new Error( 'There was a problem loading your search results. Please try again later.' ) )
 						} );
 					} );
 				}
@@ -206,10 +203,7 @@ define( function ( require ) {
 					'error' : function () {
 						this.closeLoading();
 
-						App.errorHandler( {
-							'message' : 'There was a problem loading your' +
-							' search results. Please try again later.'
-						} );
+						App.errorHandler( new Error( 'There was a problem loading your search results. Please try again later.' ) );
 					}.bind( this )
 				} );
 			},

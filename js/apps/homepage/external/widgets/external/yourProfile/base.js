@@ -17,9 +17,7 @@ define( function ( require ) {
 				}
 			},
 			'error'   : function ( err ) {
-				App.vent.trigger( 'flash:message', {
-					message : 'User Profile: ' + err.message
-				} );
+				App.errorHandler( new Error( 'User Profile: ' + err.message ) );
 			}
 		} );
 	}

@@ -104,9 +104,7 @@ define( function ( require ) {
 			'showMessage' : function ( message ) {
 
 				if ( message !== 'No files to upload.' ) {
-					App.errorHandler( {
-						'message' : message
-					} );
+					App.errorHandler( new Error( message ) );
 				}
 
 			}
@@ -143,9 +141,7 @@ define( function ( require ) {
 
 			.fail( function ( type ) {
 
-				App.errorHandler( {
-					'message' : 'An error occurred and the ' + type + ' image could not be uploaded'
-				} );
+				App.errorHandler( new Error( 'An error occurred and the ' + type + ' image could not be uploaded' ) ) ;
 
 				// although the images may not have uploaded successfully,
 				// still resolve the deferred so that the group is created
@@ -270,9 +266,7 @@ define( function ( require ) {
 
 					}.bind( this ),
 
-					'error' : App.errorHandler.bind( App, {
-						'messsage' : 'There was an issue creating the group.'
-					} )
+					'error' : App.errorHandler.bind( App, new Error( 'There was an issue creating the group.' ) )
 
 				} );
 			}
@@ -290,9 +284,7 @@ define( function ( require ) {
 
 				this.ui.groupData.addClass( 'has-error' );
 
-				App.errorHandler( {
-					'message' : 'Please fill out required fields'
-				} );
+				App.errorHandler( new Error( 'Please fill out required fields' ) );
 			}
 		},
 

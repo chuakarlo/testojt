@@ -20,9 +20,7 @@ define( function ( require ) {
 			},
 
 			'error' : function () {
-				App.vent.trigger( 'flash:message', {
-					'message' : App.Homepage.Utils.message.observationsErrMsg
-				} );
+				App.errorHandler( new Error( App.Homepage.Utils.message.observationsErrMsg ) );
 			}
 
 		} );

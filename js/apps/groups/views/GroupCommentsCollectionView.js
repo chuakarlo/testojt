@@ -140,11 +140,7 @@ define( function ( require ) {
 				}, this ),
 
 				'error' : function () {
-					var msg = 'An error occurred while saving your comment. ' +
-					'Please try again later.';
-					App.vent.trigger( 'flash:message', {
-						'message' : msg
-					} );
+					App.errorHandler( new Error( 'An error occurred while saving your comment. Please try again later.' ) );
 				}
 			} );
 

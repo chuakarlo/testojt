@@ -18,10 +18,8 @@ define( function ( require ) {
 				}
 			},
 
-			'error' : function  ( err ) {
-				App.vent.trigger( 'flash:message', {
-					'message' : App.Homepage.Utils.message.focusObjectiveErrMsg
-				} );
+			'error' : function ( err ) {
+				App.errorHandler( new Error( App.Homepage.Utils.message.focusObjectiveErrMsg ) );
 			}
 
 		} );

@@ -16,10 +16,9 @@ define( function ( require ) {
 					callback ( collection );
 				}
 			},
-			'error'   : function ( err ) {
-				App.vent.trigger( 'flash:message', {
-					message : 'User Profile: ' + err.message
-				} );
+
+			'error' : function ( err ) {
+				App.errorHandler( new Error( 'User Profile: ' + err.message ) );
 			}
 		} );
 	}

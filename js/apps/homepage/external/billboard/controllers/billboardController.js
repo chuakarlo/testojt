@@ -45,10 +45,9 @@ define( function ( require ) {
 						} );
 					}
 				},
-				'error'   : function ( err ) {
-					App.vent.trigger( 'flash:message', {
-						'message' : 'Billboard : ' + err.message
-					} );
+
+				'error' : function ( err ) {
+					App.errorHandler( new Error( 'Billboard : ' + err.message ) );
 				}
 			} );
 		},

@@ -13,12 +13,14 @@ define( function ( require ) {
 			this.itemView = App.Homepage.Utils.thumbnails;
 			var self = this;
 			new this.model.attributes.collection().fetch( {
+
 				'success' : function ( collection ) {
 					self.collection = new Backbone.Collection( { 'data' : collection, base : self.model } );
 					self.render();
 				},
-				'error'   : function ( err ) {
-					console.log( err );
+
+				'error' : function ( error ) {
+					App.errorHandler( new Error( error ) );
 				}
 			} );
 		},

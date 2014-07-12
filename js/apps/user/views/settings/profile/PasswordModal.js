@@ -106,9 +106,7 @@ define( function ( require ) {
 					'error' : function () {
 						l.stop();
 
-						App.vent.trigger( 'flash:message', {
-							'message' : 'An error occurred. Please try again later.'
-						} );
+						App.errorHandler( new Error() );
 					}
 
 				} );

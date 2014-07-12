@@ -114,9 +114,7 @@ define( function ( require ) {
 		'shareFailure' : function () {
 			App.modalRegion.close();
 
-			App.errorHandler( {
-				'message' : 'An error occurred and your message could not be shared'
-			} );
+			App.errorHandler( new Error( 'An error occurred and your message could not be shared' ) );
 		},
 
 		'setShareBtnState' : function () {

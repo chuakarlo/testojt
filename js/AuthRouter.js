@@ -94,7 +94,7 @@ define( function ( require ) {
 
 				App.navigate( 'settings/profile', { 'trigger' : true } );
 
-				App.errorHandler( { 'message' : 'Before proceeding, you must change your password.' } );
+				App.errorHandler( new Error( 'Before proceeding, you must change your password.' ) );
 
 				return false;
 			}

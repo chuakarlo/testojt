@@ -57,7 +57,9 @@ define( function ( require ) {
 
 					} );
 				},
-				'error'   : function ( err ) {
+
+				'error' : function ( err ) {
+					App.errorHandler( new Error( err ) );
 				}
 			} );
 		} else {

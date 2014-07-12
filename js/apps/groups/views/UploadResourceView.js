@@ -104,9 +104,7 @@ define( function ( require ) {
 				},
 
 				'showMessage' : function ( message ) {
-					App.errorHandler( {
-						'message' : message
-					} );
+					App.errorHandler( new Error( message ) );
 				}
 
 			} );
@@ -121,9 +119,8 @@ define( function ( require ) {
 			data.resourceType    = this.ui.radioInput.filter( ':checked' ).val();
 
 			if ( data.fileDescription.match( /^\s*$/ ) ) {
-				App.errorHandler( {
-					'message' : 'Invalid or missing ' + data.resourceType + ' description'
-				} );
+				App.errorHandler( new Error( 'Invalid or missing ' + data.resourceType + ' description' ) );
+
 				return false;
 			}
 
@@ -137,10 +134,9 @@ define( function ( require ) {
 				// Handle FILES
 
 				if ( $( '.qq-upload-file' ).text() === '' ) {
-					App.errorHandler( {
-						'message' : 'No file to upload.'
-					} );
+					App.errorHandler( new Error( 'No file to upload.' ) );
 					l.stop();
+
 					return false;
 				}
 
@@ -158,9 +154,7 @@ define( function ( require ) {
 							'trigger' : true
 						} );
 					} else if ( res.error ) {
-						App.errorHandler( {
-							'message' : res.error
-						} );
+						App.errorHandler( new Error( res.error ) );
 						l.stop();
 					}
 				}, this ) );
@@ -173,10 +167,9 @@ define( function ( require ) {
 
 				var link = this.ui.urlInput.val().replace( /\s+/g, '' );
 				if ( link.match( /^\s*$/ ) || link === 'http://' ) {
-					App.errorHandler( {
-						'message' : 'Invalid or Missing link'
-					} );
+					App.errorHandler( new Error( 'Invalid or Missing link' ) );
 					l.stop();
+
 					return false;
 				}
 
@@ -192,9 +185,7 @@ define( function ( require ) {
 							'trigger' : true
 						} );
 					} else if ( res.error ) {
-						App.errorHandler( {
-							'message' : res.error
-						} );
+						App.errorHandler( new Error( res.error ) );
 					}
 				}, this ) )
 				.fail( App.errorHandler )

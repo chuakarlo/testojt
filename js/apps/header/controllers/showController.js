@@ -53,10 +53,13 @@ define( function ( require ) {
 
 							} )
 
-							.fail( App.errorHandler.bind( App, {
-								'region'  : menu.icons,
-								'message' : 'There was an error getting available resources'
-							} ) );
+							.fail( function ( error ) {
+								App.errorHandler( {
+									'region'  : menu.icons,
+									'message' : 'There was an error getting available resources',
+									'error'   : error
+								} );
+							} );
 
 						} );
 

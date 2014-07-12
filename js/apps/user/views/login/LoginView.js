@@ -94,9 +94,7 @@ define( function ( require ) {
 						this.ui.password.val( '' ).focus();
 						this.ui.username.focus();
 
-						App.vent.trigger( 'flash:message', {
-							'message' : jqXHR.personnel.DisplayText
-						} );
+						App.errorHandler( new Error( jqXHR.personnel.DisplayText ) );
 					}.bind( this )
 				} );
 			} else {
