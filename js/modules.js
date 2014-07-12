@@ -8,6 +8,7 @@ define( function ( require ) {
 	require( 'flashToJs/Pd360Link' );
 	require( 'flashToJs/Pd360Modal' );
 	require( 'flashToJs/updateNotifications' );
+	require( 'flashToJs/groupUpdateFromFlash' );
 
 	// User requires all deferred app/applications
 	require( 'user/User' );

@@ -12,13 +12,22 @@ define( function ( require ) {
 		'class'    : 'header',
 		'tagName'  : 'div',
 
+		'bindings' : {
+			'h2' : {
+				'observe' : 'LicenseName',
+				'onGet'   : function ( value ) {
+					return utils.doubleUnescape( value );
+				}
+			}
+		},
+
+		'onRender' : function () {
+			this.stickit();
+		},
+
 		'templateHelpers' : {
 
-			'getAvatarPath' : require( 'common/helpers/getAvatarPath' ),
-
-			'getCleanName'  : function () {
-				return utils.doubleUnescape( this.LicenseName );
-			}
+			'getAvatarPath' : require( 'common/helpers/getAvatarPath' )
 
 		}
 

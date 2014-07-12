@@ -60,6 +60,11 @@ define( function ( require ) {
 							'LicenseId' : groupId
 						} );
 
+						// If flash says we have a new update, fetch the data
+						this.model.listenTo( App.vent, 'group:updateFromFlash', function () {
+							this.fetch();
+						} );
+
 						return App.when(
 							this.model.fetch(),
 							this.model.userIsGroupMember( Session.personnelId() )
