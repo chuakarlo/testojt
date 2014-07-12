@@ -23,12 +23,14 @@ define( function ( require ) {
 				'NUMBEROFPRESCRIBEDPD' : 1,
 				'OBSERVATIONDATE'      : 'January, 30 2014 15:11:54',
 				'OBSERVATIONID'        : 664979,
-				'OBSERVATIONNAME'      : 'Fee Foo, Test on Jan-30-2014'
+				'OBSERVATIONNAME'      : 'Fee Foo, Test on Jan-30-2014',
+				'OBSERVATIONSTARTDATE' : 'January, 30 2014 15:11:54'
 			}, {
 				'NUMBEROFPRESCRIBEDPD' : 3,
 				'OBSERVATIONDATE'      : 'January, 29 2014 15:11:54',
 				'OBSERVATIONID'        : 664979,
-				'OBSERVATIONNAME'      : 'Foo, Test on Jan-29-2014'
+				'OBSERVATIONNAME'      : 'Foo, Test on Jan-29-2014',
+				'OBSERVATIONSTARTDATE' : 'January, 30 2014 15:11:54'
 			} ];
 
 			sinon.stub( App, 'request' ).returns( true );
@@ -72,5 +74,5 @@ define( function ( require ) {
 			navigateStub.should.have.been.calledWithExactly( 'resources/learning/observations/664979/legacy', { 'trigger' : true } );
 		} );
 
-	});
-});
+	} );
+} );
