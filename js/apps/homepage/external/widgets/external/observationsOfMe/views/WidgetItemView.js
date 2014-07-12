@@ -1,4 +1,3 @@
-//code-review
 define( function ( require ) {
 	'use strict';
 
@@ -23,7 +22,7 @@ define( function ( require ) {
 		'templateHelpers' : function () {
 			return {
 				'observationName' : this.model.get( 'OBSERVATIONNAME' ),
-				'observationDate' : App.Homepage.Utils.timeDiff( this.model, 'OBSERVATIONDATE' )
+				'observationDate' : App.Homepage.Utils.timeDiff( this.model, 'OBSERVATIONSTARTDATE' )
 			};
 		},
 		'redirect'        : function ( e ) {
