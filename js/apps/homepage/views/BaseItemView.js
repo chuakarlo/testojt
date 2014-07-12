@@ -41,6 +41,14 @@ define( function ( require ) {
 
 				if ( Session.useWizards() && window.innerWidth >= 768 ) {
 					wizardUsed = true;
+
+					// Determine if we need to pass in the initials from the EULA acceptance or from the current session
+					var LicenseInitials = $.cookie( App.request( 'session:cookies', 'eulaInitials' ) );
+
+					if ( !LicenseInitials ) {
+						LicenseInitials = App.request( 'session:personnel', 'LicenseInitials' );
+					}
+
 					setTimeout( function () {
 						bootstro.start( null, {
 							'margin' : '50px',
@@ -54,7 +62,7 @@ define( function ( require ) {
 							'onExit' : function () {
 								personnel.save( {
 									'UseWizards'      : 0,
-									'LicenseInitials' : $.cookie( App.request( 'session:cookies', 'eulaInitials' ) )
+									'LicenseInitials' : LicenseInitials
 								}, {
 									'success' : function () {
 										$.cookie( 'USEWIZARDS', 0 );
