@@ -2,6 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var App      = require( 'App' );
+	var _        = require( 'underscore' );
 	var Backbone = require( 'backbone' );
 	var Session  = require( 'Session' );
 
@@ -34,6 +35,12 @@ define( function ( require ) {
 			'path'  : 'SearchService',
 			'model' : Entities.PD360VideoModel,
 
+			'initialize' : function () {
+				this.gradeFilters = [ ];
+				this.subjectFilters = [ ];
+				this.topicFilters = [ ];
+			},
+
 			'getReadOptions' : function () {
 				return {
 					'method' : 'RespondSearchAPI',
@@ -55,33 +62,68 @@ define( function ( require ) {
 				this.queryModel.set( 'start', rows + start );
 			},
 
-			'updateSearchData' : function ( term, clearCollection ) {
+			'updateSearchData' : function ( term, category, clearCollection ) {
+
+				var filterMap = {
+					'Grades'   : this.gradeFilters,
+					'Subjects' : this.subjectFilters,
+					'Topics'   : this.topicFilters
+				};
 				// if item is not in array
 				if ( term ) {
-					var index = this.queryModel.get( 'searchArray' ).indexOf( term );
+					// var index = this.queryModel.get( 'searchArray' ).indexOf( term );
+					var index = filterMap[ category ].indexOf( term );
 
 					if ( index === -1 ) {
-						this.queryModel.get( 'searchArray' ).push( term );
+						filterMap[ category ].push( term );
+						// this.queryModel.get( 'searchArray' ).push( term );
 					} else {
-						this.queryModel.get( 'searchArray' ).splice( index, 1 );
+						filterMap[ category ].splice( index, 1 );
+						// this.queryModel.get( 'searchArray' ).splice( index, 1 );
 					}
 
 				}
 
 				if ( clearCollection ) {
-					clearCollection.each( function ( item ) {
-						var filter = item.get( 'title' ).toLowerCase();
+					var filter = clearCollection.at( 0 );
+					category = filter.get( 'category' );
 
-						var index = this.queryModel.get( 'searchArray' ).indexOf( filter );
+					switch ( category ) {
 
-						if ( index !== -1 ) {
-							this.queryModel.get( 'searchArray' ).splice( index, 1 );
-						}
+						case 'Grades' :
+							this.gradeFilters = [ ];
+							break;
+						case 'Subjects' :
+							this.subjectFilters = [ ];
+							break;
+						case 'Topics' :
+							this.topicFilters = [ ];
+					}
 
-					}.bind( this ) );
 				}
 
-				this.queryModel.set( 'searchData', this.queryModel.get( 'searchArray' ).join( ', ') );
+				var filters = [
+					this.gradeFilters,
+					this.subjectFilters,
+					this.topicFilters
+				];
+
+				var delimitedFilters = [ ];
+
+				// Probably a better way to do this. This is so we can group
+				// the filters together and separate by the | character
+				_.each( filters, function ( filter ) {
+					if ( filter.length ) {
+						if ( delimitedFilters.length ) {
+							delimitedFilters.push( '|' );
+							delimitedFilters.push( filter );
+						} else {
+							delimitedFilters.push( filter );
+						}
+					}
+				} );
+
+				this.queryModel.set( 'searchData', _.flatten( delimitedFilters ).join( ', ' ) );
 			}
 
 		} );

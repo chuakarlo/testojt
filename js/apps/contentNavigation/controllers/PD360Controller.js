@@ -84,9 +84,9 @@ define( function ( require ) {
 				var subjects = new App.ContentNavigation.Entities.FiltersCollection();
 				var topics   = new App.ContentNavigation.Entities.FiltersCollection();
 
-				grades.add( this.mapFilter( filters.models[ 0 ].attributes.Grades ) );
-				subjects.add( this.mapFilter( filters.models[ 0 ].attributes.Subjects ) );
-				topics.add( this.mapFilter( filters.models[ 0 ].attributes.Topics ) );
+				grades.add( this.mapFilter( filters.models[ 0 ].attributes.Grades, 'Grades' ) );
+				subjects.add( this.mapFilter( filters.models[ 0 ].attributes.Subjects, 'Subjects' ) );
+				topics.add( this.mapFilter( filters.models[ 0 ].attributes.Topics, 'Topics' ) );
 
 				var gradesView = new App.ContentNavigation.Views.Filters( {
 					'collection'  : grades,
@@ -135,14 +135,14 @@ define( function ( require ) {
 
 			},
 
-			'updateQueryData' : function ( filter, sort, clearCollection ) {
+			'updateQueryData' : function ( filter, category, sort, clearCollection ) {
 				var reset		= true;
 				this.isLoaded	= false;
 
 				Vent.trigger( 'contentNavigation:setPendingRequest', true );
 
 				if ( filter ) {
-					this.pd360VideosCollection.updateSearchData( filter );
+					this.pd360VideosCollection.updateSearchData( filter, category );
 				}
 
 				if ( sort ) {
@@ -150,7 +150,7 @@ define( function ( require ) {
 				}
 
 				if ( clearCollection ) {
-					this.pd360VideosCollection.updateSearchData( null, clearCollection );
+					this.pd360VideosCollection.updateSearchData( null, null, clearCollection );
 				}
 
 				// reset start and collection

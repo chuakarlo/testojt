@@ -26,28 +26,29 @@ define( function ( require ) {
 		'setEventHandlers' : function () {
 
 			// set event handlers
-			this.listenTo( Vent, 'contentNavigation:updateSearchData', function ( filter ) {
-				this.updateQueryData( filter );
+			this.listenTo( Vent, 'contentNavigation:updateSearchData', function ( filter, category ) {
+				this.updateQueryData( filter, category );
 			}.bind( this ) );
 
 			this.listenTo( Vent, 'contentNavigation:changeSort', function ( sort ) {
 				if ( sort !== this.queryModel.get( 'sort' ) ) {
-					this.updateQueryData( null, sort );
+					this.updateQueryData( null, null, sort );
 				}
 			}.bind( this ) );
 
 			this.listenTo( Vent, 'contentNavigation:pd360:clearFilters', function ( clearCollection ) {
-				this.updateQueryData( null, null, clearCollection );
+				this.updateQueryData( null, null, null, clearCollection );
 			}.bind( this ) );
 		},
 
-		'mapFilter' : function ( data ) {
+		'mapFilter' : function ( data, category ) {
 
 			var filters = [ ];
 
 			_.each( data, function ( filter ) {
 				var filterList = {
-					'title' : filter
+					'title'    : filter,
+					'category' : category
 				};
 				filters.push( filterList );
 			} );

@@ -24,7 +24,7 @@ define( function ( require ) {
 
 		'filterSegments' : function () {
 
-			var filter            = this.model.attributes.title;
+			var filter            = this.model.get( 'title' );
 			var hasPendingRequest = App.request( 'contentNavigation:hasPendingRequest' );
 
 			if ( hasPendingRequest ) {
@@ -35,7 +35,11 @@ define( function ( require ) {
 
 			this.$el.toggleClass( 'selected' );
 
-			Vent.trigger( 'contentNavigation:updateSearchData', filter.toLowerCase() );
+			Vent.trigger(
+				'contentNavigation:updateSearchData',
+				filter.toLowerCase(),
+				this.model.get( 'category' )
+			);
 		}
 
 	} );

@@ -34,9 +34,7 @@ define( function ( require ) {
 			},
 
 			'parse' : function ( data ) {
-				data = data.FILTERS;
-
-				return data;
+				return data.FILTERS;
 			}
 
 		} );
