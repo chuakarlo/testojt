@@ -10,7 +10,8 @@ define( function ( require ) {
 	var thumbnailSlideNavsTemplate = require( 'text!apps/homepage/utils/thumbnails/templates/thumbnailSlideNavs.html' );
 
 	return Marionette.CollectionView.extend( {
-		'initialize'      : function ( options ) {
+
+		'initialize' : function ( options ) {
 			this.collection      = options;
 			this.contentId       = options.contentId;
 			this.contentSize     = options.contentSize;
@@ -18,13 +19,20 @@ define( function ( require ) {
 			this.contentMax      = options.contentMax;
 			this.contentMaxWidth = options.contentMaxWidth;
 
-			$( window ).resize( function () {
-				App.Homepage.Utils.setLogicalRow( this.$el.parent() );
-				App.Homepage.Utils.carouselHandleNavBars( this.$el.parent() );
+			$( window ).on( 'resize', function onWindowResize () {
+				try {
+					App.Homepage.Utils.setLogicalRow( this.$el.parent() );
+					App.Homepage.Utils.carouselHandleNavBars( this.$el.parent() );
+				} catch ( e ) {
+					$( window ).off( 'resize', onWindowResize );
+				}
 			}.bind( this ) );
 		},
-		'className'       : 'carousel-inner',
-		'itemView'        : ThumbnailCompositeView,
+
+		'className' : 'carousel-inner',
+
+		'itemView' : ThumbnailCompositeView,
+
 		'itemViewOptions' : function () {
 			return {
 				'emptyMessage'    : this.collection.EmptyMessage,
@@ -32,8 +40,10 @@ define( function ( require ) {
 				'parentContainer' : this.$el
 			};
 		},
-		'emptyView'       : ThumbnailEmptyView,
-		'onShow'          : function () {
+
+		'emptyView' : ThumbnailEmptyView,
+
+		'onShow' : function () {
 			// calculate partial for first load
 			var $carousel = this.$el.closest( '.carousel' );
 			$carousel.data( { 'size' : this.contentMax } );
@@ -45,6 +55,7 @@ define( function ( require ) {
 			this.$el.parent().append( slideNavsTemplate );
 			App.Homepage.Utils.carouselApplySettings( $carousel , { 'onLastNav' : this.onLastNav } );
 		}
+
 	} );
 
 } );
