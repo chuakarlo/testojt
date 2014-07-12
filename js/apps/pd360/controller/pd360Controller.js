@@ -98,6 +98,8 @@ define( function ( require ) {
 			},
 
 			'logout' : function () {
+				this.clearSession();
+
 				// attempt to logout, if in the process of logging in,
 				// the method won't be available and will throw an error
 				try {
@@ -109,6 +111,15 @@ define( function ( require ) {
 				pd360         = null;
 				appLoaded     = false;
 				loginComplete = false;
+			},
+
+			'clearSession' : function () {
+				$.ajax( {
+					'url'  : '/com/schoolimprovement/pd360/dao/AdminService.cfc',
+					'data' : {
+						'method' : 'clearSession'
+					}
+				} );
 			},
 
 			'compare' : function () {
