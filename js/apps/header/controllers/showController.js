@@ -4,6 +4,7 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var Marionette = require( 'marionette' );
 	var Backbone   = require( 'backbone' );
+	var Vent       = require( 'Vent' );
 
 	var Menu                = require( 'header/views/NavLayout' );
 	var IconsCollectionView = require( 'header/views/IconsCollectionView' );
@@ -24,47 +25,43 @@ define( function ( require ) {
 					var messageCount = new Backbone.Model( { 'messageCount' : 0 } );
 					var menu         = new Menu( { 'authenticated' : authenticated, 'model' : messageCount } );
 
+					var buildIcons = function () {
+						var hasObsAccess = App.request( 'user:hasObsAccess' );
+						var collection   = new Backbone.Collection( menuOptions.nav );
+
+						// if they have access to observation, add the menu item
+						if ( hasObsAccess ) {
+							collection.add( menuOptions.observation, { 'at' : 2 } );
+						} else {
+							// add training icon instead
+							collection.add( menuOptions.training, { 'at' : 4 } );
+						}
+
+						menu.icons.show( new IconsCollectionView( {
+							'collection' : collection
+						} ) );
+					};
+
 					if ( authenticated ) {
 
-						App.when( App.request( 'messages:count' ) )
-
-						.done( function ( count ) {
+						App.when( App.request( 'messages:count' ) ).done( function ( count ) {
 
 							menu.model.set( 'messageCount', count );
 
 						} );
 
-						this.listenToOnce( menu, 'show', function () {
+						var personnel = App.request( 'session:personnel' );
 
-							App.when( App.request( 'user:hasObsAccess' ) )
-
-							.done( function ( hasAccess ) {
-								var collection = new Backbone.Collection( menuOptions.nav );
-
-								if ( hasAccess ) {
-									collection.add( menuOptions.observation, { 'at' : 2 } );
-								} else {
-									collection.add( menuOptions.training, { 'at' : 4 } );
-								}
-
-								menu.icons.show( new IconsCollectionView( {
-									'collection' : collection
-								} ) );
-
-							} )
-
-							.fail( function ( error ) {
-								App.errorHandler( {
-									'region'  : menu.icons,
-									'message' : 'There was an error getting available resources',
-									'error'   : error
-								} );
-							} );
-
-						} );
-
+						// if personnel info has not been loaded wait for session initializtion
+						if ( !personnel ) {
+							Vent.once( 'session:initialized', buildIcons );
+						} else {
+							App.menu.show( menu );
+							return buildIcons();
+						}
 					}
 
+					// show the menu if not authenticated or waiting for session initialization
 					App.menu.show( menu );
 
 				}.bind( this );

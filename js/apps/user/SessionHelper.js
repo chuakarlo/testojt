@@ -30,7 +30,7 @@ define( function ( require ) {
 			};
 
 			Session.config    = loginObject.config.DATA;
-			Session.license   = loginObject.license;
+			Session.license   = new App.Entities.LicenseCollection( loginObject.license );
 			Session.personnel = loginObject.personnel;
 			Session.privilege = loginObject.privilege;
 			Session.profile   = loginObject.profile;

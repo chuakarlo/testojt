@@ -52,6 +52,25 @@ define( function ( require ) {
 
 			},
 
+			'showVideoCourse' : function ( videoId, licenseId, taskId ) {
+
+				App.content.show( new App.Common.LoadingView() );
+
+				var request = App.request( 'videoPlayer:getVideoContent', videoId );
+
+				App.when( request ).done( function ( videoContent ) {
+					if ( !App.request( 'videoPlayer:isVideosRoute' ) ) {
+						return;
+					}
+
+					videoContent.set( 'licenseId', Number( licenseId ) );
+					videoContent.set( 'taskId', Number( taskId ) );
+
+					this.showVideoResources( videoContent );
+				}.bind( this ) ).fail( App.errorHandler );
+
+			},
+
 			'showVideoResources' : function ( videoModel ) {
 
 				var questionsRequest     = App.request( 'videoPlayer:questions', videoModel.id );

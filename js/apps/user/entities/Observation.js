@@ -6,24 +6,10 @@ define( function ( require ) {
 	var API = {
 
 		'hasObsAccess' : function () {
-			var defer = App.Deferred();
+			var privileges = App.request( 'user:privileges' );
+			var hasLicense = App.request( 'user:licenses:hasObservation' );
 
-			var privilegesRequest = App.request( 'user:privileges' );
-			var licenseRequest    = App.request( 'user:licenses:hasObservation' );
-
-			App.when( privilegesRequest, licenseRequest )
-
-			.done( function ( privileges, hasLicense  ) {
-				var hasAccess = privileges.isTemplateObserver() || privileges.isTemplateOwner() || hasLicense;
-
-				defer.resolve( hasAccess );
-			} )
-
-			.fail( function ( error ) {
-				defer.reject( error );
-			} );
-
-			return defer.promise();
+			return privileges.isTemplateObserver() || privileges.isTemplateOwner() || hasLicense;
 		}
 
 	};

@@ -20,7 +20,8 @@ define( function ( require ) {
 
 			VideoPlayer.Router = AuthRouter.extend( {
 				'appRoutes' : {
-					'resources/videos/:params' : 'showVideoPlayer'
+					'resources/videos/:params'                      : 'showVideoPlayer',
+					'resources/videos/:params(/:licenseId/:taskId)' : 'showVideoCourse'
 				}
 			} );
 
@@ -29,6 +30,23 @@ define( function ( require ) {
 				'showVideoPlayer' : function ( params ) {
 					App.request( 'pd360:hide' );
 					VideoPlayer.Controller.Show.showVideo( App.request( 'videoPlayer:videoId' ) );
+				},
+
+				'showVideoCourse' : function ( videoId, licenseId, taskId ) {
+
+					// check if the user has the license
+					var hasLicense = App.request( 'user:licenses:hasLicense', licenseId );
+
+					// show the video as part of a course
+					if ( hasLicense ) {
+						return VideoPlayer.Controller.Show.showVideoCourse( videoId, licenseId, taskId );
+					}
+
+					// play the video as normal
+					App.navigate( 'resources/videos/' + videoId, {
+						'trigger' : true,
+						'replace' : true
+					} );
 				},
 
 				'showShareDialog' : function ( model ) {
@@ -50,7 +68,11 @@ define( function ( require ) {
 			} );
 
 			App.reqres.setHandler( 'videoPlayer:isVideosRoute', function () {
-				return App.getCurrentRoute().match( /resources\/videos\/\d+(\?.*)?$/ );
+				// can match the following:
+				// resources/videos/12345
+				// resources/videos/12345?uuv=1234 (can match more than just uuv)
+				// resources/videos/12345/1234/1 (for videos that are part of a course task)
+				return App.getCurrentRoute().match( /resources\/videos\/(\d+|\/)+(\?.*)?/ );
 			} );
 
 			App.reqres.setHandler( 'videoPlayer:urlParams', function () {

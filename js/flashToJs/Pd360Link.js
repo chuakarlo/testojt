@@ -4,15 +4,15 @@ define( function ( require ) {
 	var App = require( 'App' );
 	var _   = require( 'underscore' );
 
-	//-----------------------------------------------
+	// -----------------------------------------------
 	// Handle calls from flash to navigate elsewhere
-	//-----------------------------------------------
+	// -----------------------------------------------
 	window.pd360link = function ( link ) {
 
 		var url;
-		//-----------------------
+		// -----------------------
 		// COMMUNITIES LINKS
-		//-----------------------
+		// -----------------------
 		if ( _.has(  link, 'LOCTYPE' ) ) {
 			url = '#resources/communities/' + link.LOCTYPE;
 
@@ -28,9 +28,9 @@ define( function ( require ) {
 				}
 			} );
 
-		//-----------------------
+		// -----------------------
 		// LIVE BOOK LINKS
-		//-----------------------
+		// -----------------------
 		} else if ( _.has( link, 'LB_ID' ) ) {
 			url = '#resources/lumibook/' + link.LB_ID;
 
@@ -38,21 +38,29 @@ define( function ( require ) {
 				url += '/' + link.LB_IID;
 			}
 
-		//-----------------------
+		// -----------------------
 		// VIDEO LINKS
-		//-----------------------
-		// TODO : this needs to account for TASKS depending on how the router
-		// is expecting that argument
+		// -----------------------
 		} else if ( _.has( link, 'CONTENTID' ) ) {
+
 			url = '#resources/videos/' + link.CONTENTID;
+
+			// if the video is part of a course task
+			if ( _.has( link, 'TASK' ) ) {
+				url += '/' + link.TASK.LicenseId + '/' + link.TASK.TaskId;
+
+				return App.navigate( url, {
+					'trigger' : true
+				} );
+			}
 
 		// User Uploaded Video
 		} else if ( _.has( link, 'UUVIDEOID' ) ) {
 			url = '#resources/videos/' + link.UUVIDEOID + '?uuv=true';
 
-		//-----------------------
+		// -----------------------
 		// GROUP LINKS
-		//-----------------------
+		// -----------------------
 		} else if ( _.has( link, 'LISTGROUPS' ) ) {
 			url = '#groups';
 		} else if ( _.has( link, 'JOINGROUP' ) ) {

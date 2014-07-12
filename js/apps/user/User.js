@@ -9,24 +9,8 @@ define( function ( require ) {
 	var AuthRouter = require( 'AuthRouter' );
 	var Marionette = require( 'marionette' );
 
-	require( 'user/controllers/loginController' );
-	require( 'user/controllers/settingsController' );
-	require( 'user/controllers/registerController' );
-	require( 'user/controllers/eulaController' );
-	require( 'user/controllers/privacyController' );
-	require( 'user/controllers/forgotPasswordController' );
-	require( 'user/controllers/successController' );
-	require( 'user/entities/License' );
-	require( 'user/entities/Profile' );
-	require( 'user/entities/Personnel' );
-	require( 'user/entities/Privilege' );
-	require( 'user/entities/GradeLevels' );
-	require( 'user/entities/Roles' );
-	require( 'user/entities/Subjects' );
-	require( 'user/entities/Nav' );
-	require( 'user/entities/Observation' );
-	require( 'user/entities/SendPassword' );
-
+	require( 'user/controllers/index' );
+	require( 'user/entities/index' );
 	require( 'apps/applications' );
 	require( 'user/SessionHelper' );
 
@@ -128,7 +112,6 @@ define( function ( require ) {
 				} );
 
 				App.request( 'pd360:hide' );
-				App.request( 'user:licenses:reset' );
 				App.request( 'pd360:logout' );
 
 			},

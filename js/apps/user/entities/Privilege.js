@@ -78,8 +78,8 @@ define( function ( require ) {
 
 			var licenses = App.request( 'session:license' );
 
-			var thereNowLicense = _.find( licenses, function ( license ) {
-				return license.LicenseContentTypeId === 138;
+			var thereNowLicense = _.find( licenses.models, function ( license ) {
+				return license.get( 'LicenseContentTypeId' ) === 138;
 			} );
 
 			return thereNowLicense;

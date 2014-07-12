@@ -4,7 +4,6 @@ define( function ( require ) {
 	var Backbone = require( 'backbone' );
 	var sinon    = window.sinon;
 	var App      = require( 'App' );
-	var $        = require( 'jquery' );
 
 	require( 'user/entities/License' );
 
@@ -42,17 +41,14 @@ define( function ( require ) {
 				collection.should.be.an.instanceof( Backbone.CFCollection );
 			} );
 
-			it( 'should have property getReadOptions and return options', function () {
+			it( 'should not return an object for getReadOptions', function () {
 				collection.should.have.property( 'getReadOptions' );
 				collection.getReadOptions.should.be.a( 'function' );
 
 				var options = collection.getReadOptions();
+				var expect  = window.chai.expect;
 
-				options.should.have.property( 'method' );
-				options.method.should.equal( 'getUsersLicenses' );
-
-				options.should.have.property( 'args' );
-				options.args.should.have.property( 'id' );
+				expect( options ).to.be.a( 'undefined' );
 			} );
 
 			it( 'should not return an object for getUpdateOptions', function () {
@@ -75,71 +71,46 @@ define( function ( require ) {
 				expect( options ).to.be.a( 'undefined' );
 			} );
 
-			it( 'should have property path', function () {
-				collection.should.have.property( 'path' );
-				collection.path.should.equal( 'SessionService' );
+			it( 'should not have property path', function () {
+				collection.should.not.have.property( 'path' );
 			} );
 
 		} );
 
 		describe( 'when requesting `user:licenses`', function () {
 
-			var result;
-			var ajax;
+			var arr = new App.Entities.LicenseCollection( [
+				{ 'LicenseId' : 1, 'LicenseTypeId' : 100 },
+				{ 'LicenseId' : 2, 'LicenseTypeId' : 100 }
+			] );
 
-			var fetch = function ( done ) {
-				App.request( 'user:licenses:reset' );
-				var fetching = App.request( 'user:licenses' );
-
-				$.when( fetching ).always( function ( res ) {
-					result = res;
-					done();
-				} );
-			};
-
-			afterEach( function () {
-				$.ajax.restore();
-				result = null;
-				ajax   = null;
+			before( function () {
+				App.Session.license = arr;
 			} );
 
-			describe( 'and an error occurs', function () {
-
-				before( function ( done ) {
-					var err = new Error();
-
-					ajax = sinon.stub( $, 'ajax' );
-					ajax.yieldsTo( 'error', err );
-
-					fetch( done );
-				} );
-
-				it( 'should return an error message', function () {
-
-					result.should.be.an.instanceof( Error );
-					result.message.should.equal( 'Error fetching licenses' );
-
-				} );
-
+			after( function () {
+				App.Session.license = undefined;
 			} );
 
-			describe( 'and returns successfully', function () {
+			it( 'should return App.Session.license', function () {
+				var licenses = App.request( 'user:licenses' );
+				licenses.should.equal( arr );
+			} );
 
-				before( function ( done ) {
-					ajax = sinon.stub( $, 'ajax' );
-					ajax.yieldsToAsync( 'success', { 'test' : true } );
+			it( 'should have method hasLicenseId', function () {
+				arr.should.have.property( 'hasLicenseId' );
+				arr.hasLicenseId( 1 ).should.equal( true );
+				arr.hasLicenseId( 3 ).should.equal( false );
+			} );
 
-					fetch( done );
-				} );
-
-				it( 'should return a LicenseCollection', function () {
-					result.should.be.an.instanceof( App.Entities.LicenseCollection );
-
-					var model = result.at( 0 ).attributes;
-					model.should.have.property( 'test' );
-					model.test.should.equal( true );
-				} );
-
+			it( 'should have method hasObservationLicense', function () {
+				var obs = new App.Entities.LicenseCollection( [
+					{ 'LicenseId' : 1, 'LicenseTypeId' : 100 },
+					{ 'LicenseId' : 2, 'LicenseTypeId' : 800 }
+				] );
+				obs.should.have.property( 'hasObservationLicense' );
+				obs.hasObservationLicense().should.equal( true );
+				arr.hasObservationLicense().should.equal( false );
 			} );
 
 		} );
