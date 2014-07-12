@@ -11,16 +11,19 @@ define( function ( require ) {
 		var collection = new CollectionItems( options );
 
 		collection.fetch( {
+
 			'success' : function ( collection ) {
 				if ( App.request( 'homepage:isHomeRoute' ) ) {
 					callback ( collection );
 				}
 			},
-			'error'   : function  ( err ) {
+
+			'error' : function  ( err ) {
 				App.vent.trigger( 'flash:message', {
-					'message' : err.message
+					'message' : App.Homepage.Utils.message.focusObjectiveErrMsg
 				} );
 			}
+
 		} );
 	}
 
