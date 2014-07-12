@@ -12,11 +12,12 @@ define( function ( require ) {
 
 		// Setup cookie names
 		Session.cookies = {
-			'username'   : 'UID',
-			'personnel'  : 'PID',
-			'eula'       : 'EULA',
-			'cf'         : 'CFAUTHORIZATION_PD360',
-			'useWizards' : 'USEWIZARDS'
+			'username'     : 'UID',
+			'personnel'    : 'PID',
+			'eula'         : 'EULA',
+			'eulaInitials' : 'EULA_INITIALS',
+			'cf'           : 'CFAUTHORIZATION_PD360',
+			'useWizards'   : 'USEWIZARDS'
 		};
 
 		var initializeSession = function ( loginObject ) {

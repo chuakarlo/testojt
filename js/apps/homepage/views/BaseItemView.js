@@ -52,7 +52,10 @@ define( function ( require ) {
 							},
 
 							'onExit' : function () {
-								personnel.save( { 'UseWizards' : 0 }, {
+								personnel.save( {
+									'UseWizards'      : 0,
+									'LicenseInitials' : $.cookie( App.request( 'session:cookies', 'eulaInitials' ) )
+								}, {
 									'success' : function () {
 										$.cookie( 'USEWIZARDS', 0 );
 									}

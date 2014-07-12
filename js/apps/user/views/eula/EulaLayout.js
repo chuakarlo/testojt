@@ -68,9 +68,12 @@ define( function ( require ) {
 
 				this.model.save( null, {
 
-					'success' : function () {
-						// Add a cookie showing the user has accepted the EULA
+					'success' : function ( data, status, xhr ) {
+
+						// Add a cookie showing the user has accepted the EULA and a cookie with the initials used for tooltips
+						$.cookie( App.request( 'session:cookies', 'eulaInitials' ), data.get( 'LicenseInitials' ) );
 						$.cookie( App.request( 'session:cookies', 'eula' ), now );
+
 						l.stop();
 						App.navigate( 'home', { 'trigger' : true } );
 					},

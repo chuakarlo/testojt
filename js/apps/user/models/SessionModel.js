@@ -13,12 +13,12 @@ define( function ( require ) {
 
 	var cookies = App.request( 'session:cookies' );
 
-	var usernameCookie   = cookies.username;
-	var personnelCookie  = cookies.personnel;
-	var eulaCookie       = cookies.eula;
-	var cfCookie         = cookies.cf;
-	var useWizardsCookie = cookies.useWizards;
-	var cookieOptions    = { 'path' : '/' };
+	var usernameCookie     = cookies.username;
+	var personnelCookie    = cookies.personnel;
+	var eulaCookie         = cookies.eula;
+	var cfCookie           = cookies.cf;
+	var useWizardsCookie   = cookies.useWizards;
+	var cookieOptions      = { 'path' : '/' };
 
 	var Session = Backbone.Model.extend( {
 
@@ -170,6 +170,7 @@ define( function ( require ) {
 			this.removeCookie( usernameCookie );
 			this.removeCookie( personnelCookie );
 			this.removeCookie( eulaCookie );
+			this.removeCookie( cookies.eulaInitials );
 
 			// trigger session change for menus, etc
 			Vent.trigger( 'session:destroy' );
