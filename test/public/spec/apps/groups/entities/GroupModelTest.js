@@ -100,8 +100,8 @@ define( function ( require ) {
 				callData.args.should.eql( {
 					'licId'     : 123,
 					'persId'    : 54321,
-					'creatorId' : 9876
-				});
+					'creatorId' : 999
+				} );
 			} );
 		} );
 
@@ -131,7 +131,7 @@ define( function ( require ) {
 					'licId'     : 123,
 					'persId'    : 54321,
 					'removerId' : 9876
-				});
+				} );
 			} );
 		} );
 
@@ -165,7 +165,7 @@ define( function ( require ) {
 				callData.args.should.eql( {
 					'licId'  : 123,
 					'persId' : 9
-				});
+				} );
 
 			} );
 
@@ -195,7 +195,7 @@ define( function ( require ) {
 
 			before( function () {
 				ajaxStub = sinon.stub( $, 'ajax' );
-				ajaxStub.onFirstCall().yieldsTo('success', 'fakeSignature');
+				ajaxStub.onFirstCall().yieldsTo( 'success', 'fakeSignature' );
 			} );
 
 			after( function () {
@@ -215,7 +215,7 @@ define( function ( require ) {
 				callData.args.should.eql( {
 					'licId'  : 123,
 					'persId' : 9
-				});
+				} );
 
 			} );
 
@@ -258,7 +258,7 @@ define( function ( require ) {
 
 			before( function () {
 				ajaxStub = sinon.stub( $, 'ajax' );
-				ajaxStub.onFirstCall().yieldsTo('success', 'fakeSignature');
+				ajaxStub.onFirstCall().yieldsTo( 'success', 'fakeSignature' );
 			} );
 
 			after( function () {
@@ -277,7 +277,7 @@ define( function ( require ) {
 				callData.method.should.equal( 'getMostRecentActivityDateForGroup' );
 				callData.args.should.eql( {
 					'licId' : 123
-				});
+				} );
 
 			} );
 			it( 'should make a request to the proper url with the proper arguments', function () {
@@ -401,7 +401,7 @@ define( function ( require ) {
 
 			before( function () {
 				ajaxStub = sinon.stub( $, 'ajax' );
-				ajaxStub.onFirstCall().yieldsTo('success', 'fakeSignature');
+				ajaxStub.onFirstCall().yieldsTo( 'success', 'fakeSignature' );
 			} );
 
 			after( function () {
@@ -420,7 +420,7 @@ define( function ( require ) {
 				callData.method.should.equal( 'updateGroupsSearchIndex' );
 				callData.args.should.eql( {
 					'groupId' : 123
-				});
+				} );
 
 			} );
 

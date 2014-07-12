@@ -1,6 +1,7 @@
 define( function ( require ) {
 	'use strict';
 
+	var App             = require( 'App' );
 	var _               = require( 'underscore' );
 	var Marionette      = require( 'marionette' );
 	var Vent            = require( 'Vent' );
@@ -38,7 +39,23 @@ define( function ( require ) {
 		'joinGroup' : function ( e ) {
 
 			e.preventDefault();
-			Vent.trigger( 'group:joinGroup', this.model );
+			if ( this.model.get( 'PrivateGroup' ) ) {
+				var request = this.model.requestToJoin( Session.personnelId() );
+				App.when( request ).done( function () {
+
+					App.navigate( '#groups', {
+						'trigger' : true
+					} );
+
+					App.vent.trigger( 'flash:message', {
+						'message' : 'Your request has been submitted to join this group.',
+						'type'    : 'success'
+					} );
+				} )
+				.fail( App.errorHandler );
+			} else {
+				Vent.trigger( 'group:joinGroup', this.model );
+			}
 
 		},
 

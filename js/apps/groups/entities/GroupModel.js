@@ -20,6 +20,7 @@ define( function ( require ) {
 	require( 'groups/entities/GroupResourceFileModel' );
 	require( 'groups/entities/GroupResourceLinkModel' );
 	require( 'groups/entities/GroupNewsEntryModel' );
+	require( 'groups/entities/GroupMembershipRequestModel' );
 
 	App.module( 'Entities', function ( Mod ) {
 
@@ -136,11 +137,27 @@ define( function ( require ) {
 					'args'   : {
 						'persId'    : parseInt( persId ),
 						'licId'     : this.get( 'LicenseId' ),
-						'creatorId' : Session.personnelId()
+						'creatorId' : this.get( 'Creator' )
 					}
 				};
 
 				return Remoting.fetch( data );
+			},
+
+			/**
+			* Join this group
+			* @param {Integer} persId
+			*	The ID of the user you want to join this group
+			* @returns {Deferred}
+			*/
+			'requestToJoin' : function ( persId ) {
+				var request = new App.Entities.GroupMembershipRequestModel( {
+					'PersonnelId' : parseInt( persId ),
+					'LicenseId'   : this.get( 'LicenseId' )
+				} );
+
+				return request.save();
+
 			},
 
 			/**
