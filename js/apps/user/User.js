@@ -128,7 +128,6 @@ define( function ( require ) {
 				} );
 
 				App.request( 'pd360:hide' );
-				App.request( 'user:licenses:reset' );
 				App.request( 'pd360:logout' );
 
 			},

@@ -44,57 +44,25 @@ define( function ( require ) {
 
 		} );
 
-		// the list of users licenses
-		var licenses;
-		var fetching = false;
-		var defer    = App.Deferred();
-
 		var API = {
 
 			'getLicenses' : function () {
 
-				// Check to see if the defered is resolved or rejected so
-				// we don't run into any caching issues.
-				var state = defer.state();
-				if ( state === 'resolved' || state === 'rejected' ) {
-					defer = App.Deferred();
-				}
+				var defer = App.Deferred();
 
-				// if we aren't currently fetching licenses
-				if ( !fetching ) {
+				var licenses = new Entities.LicenseCollection();
+				licenses.fetch( {
 
-					if ( licenses ) {
-
+					'success' : function ( collection ) {
 						defer.resolve( licenses );
+					},
 
-					} else {
-
-						fetching = true;
-
-						licenses = new Entities.LicenseCollection();
-						licenses.fetch( {
-
-							'success' : function ( collection ) {
-								fetching = false;
-								defer.resolve( licenses );
-							},
-
-							'error' : function () {
-								fetching = false;
-								licenses = null;
-								defer.reject( new Error( 'Error fetching licenses' ) );
-							}
-						} );
-
+					'error' : function ( error ) {
+						defer.reject( new Error( 'Error fetching licenses' ) );
 					}
-				}
+				} );
 
 				return defer.promise();
-			},
-
-			// clear a users list of licenses
-			'clear' : function () {
-				licenses = null;
 			},
 
 			'hasObservationLicense' : function () {
@@ -118,10 +86,6 @@ define( function ( require ) {
 
 		App.reqres.setHandler( 'user:licenses', function () {
 			return API.getLicenses();
-		} );
-
-		App.reqres.setHandler( 'user:licenses:reset', function () {
-			return API.clear();
 		} );
 
 		App.reqres.setHandler( 'user:licenses:hasObservation', function () {
