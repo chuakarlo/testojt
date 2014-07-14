@@ -102,12 +102,6 @@ define( function ( require ) {
 			Backbone.history.on( 'route', function () {
 				videos.forEach( function ( data, index ) {
 					if ( data.player && data.player.el() ) {
-						// This fixes the issue in Android 4.2.2 native browser
-						// where the video continues to play even
-						// if in a different route.
-						if ( $.browser.platform === 'android' ) {
-							data.player.load();
-						}
 
 						data.player.off( 'timeupdate' );
 						data.player.stopTrackingProgress();
@@ -121,9 +115,9 @@ define( function ( require ) {
 							this.player.dispose();
 						}.bind( data ), 500 );
 					}
-					// Emptying array
-					videos = [ ];
 				} );
+				// Emptying array
+				videos = [ ];
 			} );
 
 			App.addInitializer( function () {

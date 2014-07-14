@@ -146,8 +146,10 @@ define( function ( require ) {
 
 		'onLastNav' : function ( $carousel ) {
 			$( '#load-recommended' ).html( '<img src="img/loading-bar.gif"/></div>' );
-			var collection = App.request( 'homepage:content:recommended:carousel' );
-			postFetch( collection );
+			if ( App.reqres.hasHandler( 'homepage:content:recommended:carousel' ) ) {
+				var collection = App.request( 'homepage:content:recommended:carousel' );
+				postFetch( collection );
+			}
 		}
 	};
 } );
