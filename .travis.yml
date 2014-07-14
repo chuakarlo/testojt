@@ -17,7 +17,7 @@ install:
   - bower install
 
 before_script:
-  - grunt compile --stack --verbose
+  - grunt compile --stack --verbose --release=travis
 
   # start node to serve public files
   - node server.js > /dev/null 2>&1 &
