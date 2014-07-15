@@ -57,8 +57,10 @@ define( function ( require ) {
 			'click a#setting-icon' : 'redirect',
 			'click a#license-icon' : 'redirect'
 		},
-		'template'        : _.template( template ),
-		'className'       : 'col-md-12 no-padding user-settings',
+
+		'template'  : _.template( template ),
+		'className' : 'col-md-12 no-padding user-settings',
+
 		'templateHelpers' : function ( ) {
 			var percentage = this.getPercentage( this.model.attributes );
 
@@ -73,7 +75,8 @@ define( function ( require ) {
 				'percentage'                 : percentage,
 				'yourProfileName'            : App.Homepage.Utils.message.yourProfileName,
 				'yourProfilePersonalRepName' : App.Homepage.Utils.message.yourProfilePersonalRepName,
-				'yourProfileLicenses'        : App.Homepage.Utils.message.yourProfileLicenses
+				'yourProfileLicenses'        : App.Homepage.Utils.message.yourProfileLicenses,
+				'getUserAvatarPath'          : require( 'common/helpers/getUserAvatarPath' )
 			};
 		},
 		'getPercentage'   : function ( m ) {

@@ -77,7 +77,8 @@ define( function ( require ) {
 				'percentage'                 : percentage,
 				'yourProfileName'            : App.Homepage.Utils.message.yourProfileName,
 				'yourProfilePersonalRepName' : App.Homepage.Utils.message.yourProfilePersonalRepName,
-				'yourProfileLicenses'        : App.Homepage.Utils.message.yourProfileLicenses
+				'yourProfileLicenses'        : App.Homepage.Utils.message.yourProfileLicenses,
+				'getUserAvatarPath'          : require( 'common/helpers/getUserAvatarPath' )
 			};
 		},
 		'getPercentage'   : function ( m ) {
