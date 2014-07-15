@@ -1,6 +1,0 @@
-{
-	"groupActivityTitle"       : "Group Activity",
-	"groupActivityDescription" : "See a list of your most recent group activity. Click on a group to be directed to the group page.",
-	"groupActivityFooter"      : "See All Groups",
-	"groupActivityErrMsg"      : "An error occurred getting group activity. Please try again later."
-}
