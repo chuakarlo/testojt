@@ -7,7 +7,8 @@ define( function ( require ) {
 
 	var player     = Backbone.Events;
 	var SpiedModel = Backbone.Model.extend( {
-		'save' : sinon.spy()
+		'save'                              : sinon.spy(),
+		'updateCatalogVideoViewingProgress' : sinon.spy()
 	} );
 
 	describe( 'VideoPlayerView', function () {

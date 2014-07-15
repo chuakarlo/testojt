@@ -157,8 +157,37 @@ define( function ( require ) {
 			}
 		},
 
+		'startTrackingInterval' : function () {
+			this.trackingInterval = setInterval( _.bind( function () {
+				this.model.set( 'SecondsCompleted', this.model.get( 'SecondsCompleted' ) + 1 );
+			}, this ), 1000 );
+		},
+
+		'clearTrackingInterval' : function () {
+			clearInterval( this.trackingInterval );
+			this.trackingInterval = null;
+		},
+
 		'startTracking' : function ( player ) {
 			if ( !this.model.get( 'limited' ) && !this.model.get( 'Uploaded' ) ) {
+				this.model.set( 'SecondsCompleted', 0 );
+				this.trackingInterval = null;
+
+				player.on( 'waiting', _.bind( function () {
+					if ( this.trackingInterval ) {
+						this.clearTrackingInterval();
+					}
+				}, this ) );
+
+				player.on( 'canplay', _.bind( function () {
+					if ( player.paused() ) {
+						this.clearTrackingInterval();
+					} else {
+						if ( !this.trackingInterval ) {
+							this.startTrackingInterval();
+						}
+					}
+				}, this ) );
 				// Here we'll track the player time manually
 				// so we won't depend on the player element
 				// being available in reporting video progress
@@ -168,11 +197,17 @@ define( function ( require ) {
 				}.bind( this ) );
 
 				player.on( 'pause', function () {
-					this.model.save();
+					App.when( this.model.save() ).done( _.bind( function () {
+						// Ben made me do it.
+						this.model.updateCatalogVideoViewingProgress();
+					}, this ) );
 				}.bind( this ) );
 
 				player.on( 'ended', function () {
-					this.model.save();
+					App.when( this.model.save() ).done( _.bind( function () {
+						// Ben made me do it.
+						this.model.updateCatalogVideoViewingProgress();
+					}, this ) );
 				}.bind( this ) );
 			}
 		}

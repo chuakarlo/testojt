@@ -100,11 +100,24 @@ define( function ( require ) {
 						'PersonnelId'      : Session.personnelId(),
 						'ContentId'        : this.id,
 						'ViewingId'        : this.get( 'ViewingId' ),
-						'SecondsCompleted' : this.getCurrentTime(),
+						'SecondsCompleted' : this.get( 'SecondsCompleted' ),
 						'licId'            : this.get( 'licenseId' ),
 						'taskId'           : this.get( 'taskId' )
 					}
 				};
+			},
+
+			'updateCatalogVideoViewingProgress' : function () {
+				var data = {
+					'path'   : 'CatalogService',
+					'method' : 'updateCatalogVideoViewingProgress',
+					'args'   : {
+						'personnelId' : Session.personnelId(),
+						'contentId'   : this.id
+					}
+				};
+
+				return Remoting.fetch( data );
 			},
 
 			'getCurrentTime' : function () {
