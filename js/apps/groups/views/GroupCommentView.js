@@ -56,7 +56,7 @@ define( function ( require ) {
 		},
 
 		'onRender' : function () {
-			var message = autolinker.link( _.escape( this.model.get( 'Message' ) ) );
+			var message = autolinker.link( this.model.get( 'Message' ) );
 			$( this.el ).find( 'p.wall-comment' ).prepend( message );
 		},
 
