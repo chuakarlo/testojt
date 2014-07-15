@@ -7,16 +7,11 @@ define( function ( require ) {
 	var captionTemplate     = require( 'text!apps/homepage/external/billboard/templates/billboardCaptionView.html' );
 	var urlTemplate         = require( 'text!apps/homepage/external/billboard/templates/billboardUrlView.html' );
 
-	var videoPlayerBaseUrl = 'resources/videos/';
 	var imageHtmlKey       = '<%- billboard.imageHTML %>';
 	var captionKey         = '<%- billboard.caption %>';
 
 	function setTemplate ( template, billboard, key ) {
 		return template.replace( key, billboard );
-	}
-
-	function vidSplit ( billboard ) {
-		return videoPlayerBaseUrl + billboard.LinkURL.split( 'ContentId=' )[ 1 ];
 	}
 
 	function doBillboardLinkOnly ( billboard ) {
@@ -26,8 +21,8 @@ define( function ( require ) {
 	}
 
 	function doBillboardWithCaption ( billboard ) {
-		//Assuming that the last token will be the content ID
-		billboard.VideoURL = vidSplit( billboard );
+		// Use the given hash route
+		billboard.VideoURL = billboard.LinkURL.split( '#' )[ 1 ];
 		billboard.caption  = _.template( urlTemplate, {
 			billboard : billboard
 		} );
@@ -35,7 +30,9 @@ define( function ( require ) {
 
 	function setCaption ( billboard ) {
 		var board = String( billboard.LinkURL );
-		if ( board.indexOf( 'ContentId=' ) > -1 ) {
+
+		// Look for video resource pages
+		if ( board.indexOf( 'resources/videos' ) > -1 ) {
 			doBillboardWithCaption( billboard );
 		} else if ( billboard.LinkURL ) {
 			doBillboardLinkOnly( billboard );

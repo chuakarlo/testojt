@@ -23,7 +23,7 @@ define( function ( require ) {
 			appStub = sinon.stub( App, 'request' ).returns( true );
 			BillboardCollectionData = new BillboardCollection( [
 				{
-					'LinkURL'         : 'zubu.cloudapp.netdddd:3000/public?ContentId=123456',
+					'LinkURL'         : 'zubu.cloudapp.netdddd:3000/#resources/videos/123456',
 					'Description'     : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 					'VideoURL'        : 'old/pd360/video/link/123456',
 					'Remover'         : '',
@@ -39,7 +39,7 @@ define( function ( require ) {
 					'CoverFlowId'     : 61
 				}
 			] );
-			BillboardCollectionStub = sinon.stub( BillboardCollection.prototype, 'fetch' ).yieldsTo('success', BillboardCollectionData);
+			BillboardCollectionStub = sinon.stub( BillboardCollection.prototype, 'fetch' ).yieldsTo( 'success', BillboardCollectionData );
 
 			BillboardItemViewInstance = new BillboardItemView();
 		} );
@@ -56,7 +56,7 @@ define( function ( require ) {
 
 		describe( 'Video Slider', function () {
 			it ( 'should redirect to /#resources/videos/:contentId', function () {
-				$.when( BillboardItemViewInstance.render() ).done( function (x) {
+				$.when( BillboardItemViewInstance.render() ).done( function ( x ) {
 					x.$el.find( 'a.videoplay' ).first().trigger( 'click' );
 					navigateBillboardStub.should.have.been.calledWithExactly( 'resources/videos/123456', { 'trigger' : true } );
 				} );
