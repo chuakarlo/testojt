@@ -162,6 +162,15 @@ define( function ( require ) {
 			// Log out of flash
 			Vent.trigger( 'pd360:logout' );
 
+			this.deleteCookies();
+
+			// trigger session change for menus, etc
+			Vent.trigger( 'session:destroy' );
+
+		},
+
+		'deleteCookies' : function () {
+
 			// remove Coldfusion cookies
 			this.removeCookie( cfCookie );
 			this.removeCookie( 'CFID' );
@@ -171,9 +180,6 @@ define( function ( require ) {
 			this.removeCookie( personnelCookie );
 			this.removeCookie( eulaCookie );
 			this.removeCookie( cookies.eulaInitials );
-
-			// trigger session change for menus, etc
-			Vent.trigger( 'session:destroy' );
 
 		},
 
