@@ -30,17 +30,7 @@ define( function ( require ) {
 
 			'path' : 'SessionService',
 
-			'model' : Entities.License,
-
-			'hasObservationLicense' : function () {
-				return _.some( this.models, function ( license ) {
-					if ( license.get( 'LicenseTypeId' ) === 800 ) {
-						return true;
-					}
-
-					return false;
-				} );
-			}
+			'model' : Entities.License
 
 		} );
 
@@ -60,26 +50,23 @@ define( function ( require ) {
 					'error' : function ( error ) {
 						defer.reject( new Error( 'Error fetching licenses' ) );
 					}
+
 				} );
 
 				return defer.promise();
 			},
 
 			'hasObservationLicense' : function () {
-				var defer           = App.Deferred();
-				var licensesRequest = this.getLicenses();
 
-				App.when( licensesRequest )
+				// Check the licenses from the initial login
+				return _.some( App.request( 'session:license' ), function ( license ) {
+					if ( license.LicenseTypeId === 800 ) {
+						return true;
+					}
 
-				.done( function ( licenses ) {
-					return defer.resolve( licenses.hasObservationLicense() );
-				} )
-
-				.fail( function ( error ) {
-					return defer.reject( error );
+					return false;
 				} );
 
-				return defer.promise();
 			}
 
 		};

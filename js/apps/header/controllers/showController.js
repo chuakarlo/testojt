@@ -4,6 +4,7 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var Marionette = require( 'marionette' );
 	var Backbone   = require( 'backbone' );
+	var Vent       = require( 'Vent' );
 
 	var Menu                = require( 'header/views/NavLayout' );
 	var IconsCollectionView = require( 'header/views/IconsCollectionView' );
@@ -36,12 +37,13 @@ define( function ( require ) {
 
 						this.listenToOnce( menu, 'show', function () {
 
-							App.when( App.request( 'user:hasObsAccess' ) )
+							menu.icons.show( new App.Common.LoadingView( { 'text' : 'Loading Resources...' } ) );
 
-							.done( function ( hasAccess ) {
-								var collection = new Backbone.Collection( menuOptions.nav );
+							var collection = new Backbone.Collection( menuOptions.nav );
 
-								if ( hasAccess ) {
+							if ( App.request( 'session:personnel' ) ) {
+
+								if ( App.request( 'user:hasObsAccess' ) ) {
 									collection.add( menuOptions.observation, { 'at' : 2 } );
 								} else {
 									collection.add( menuOptions.training, { 'at' : 4 } );
@@ -51,15 +53,25 @@ define( function ( require ) {
 									'collection' : collection
 								} ) );
 
-							} )
+							} else {
 
-							.fail( function ( error ) {
-								App.errorHandler( {
-									'region'  : menu.icons,
-									'message' : 'There was an error getting available resources',
-									'error'   : error
-								} );
-							} );
+								// On refresh session:personnel doesn't exist immediately
+								// Wait for session to be initialized then redirect
+								Vent.on( 'session:initialized', function () {
+
+									if ( App.request( 'user:hasObsAccess' ) ) {
+										collection.add( menuOptions.observation, { 'at' : 2 } );
+									} else {
+										collection.add( menuOptions.training, { 'at' : 4 } );
+									}
+
+									menu.icons.show( new IconsCollectionView( {
+										'collection' : collection
+									} ) );
+
+								}.bind( this ) );
+
+							}
 
 						} );
 
