@@ -89,9 +89,7 @@ define( function ( require ) {
 							data.model.save();
 						}
 
-						setTimeout( function () {
-							this.player.dispose();
-						}.bind( data ), 500 );
+						data.player.dispose();
 					}
 				} );
 				// Emptying array

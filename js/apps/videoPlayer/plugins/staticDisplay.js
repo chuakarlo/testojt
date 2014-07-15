@@ -58,7 +58,7 @@ define( function ( require ) {
 				setTimeout( function () {
 					self.dispose();
 					parentNode.appendChild( holderDiv );
-				}, 500 );
+				}, 100 );
 
 			}
 
