@@ -27,9 +27,21 @@
 
 	<body>
 
-		<div id="navbar"></div>
+		<div id="navbar">
+			<nav class="navbar navbar-default navbar-static-top" role="navigation">
+				<div class="container-fluid logged-out">
+					<div class="navbar-header">
+						<a href="#login" class="navbar-brand">
+							<i class="sinet-apple"></i>
+						</a>
+					</div>
+				</div>
+			</nav>
+		</div>
 		<div id="flash-message"></div>
-		<div id="main-content" class="container-smooth container"></div>
+		<div id="main-content" class="container-smooth container">
+			<div class="center-block text-center"><h2>Loading...</h2></div>
+		</div>
 		<div id="flash-content" class="hidden-flash"></div>
 		<footer id="footer"></footer>
 		<div id="modal-content" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
