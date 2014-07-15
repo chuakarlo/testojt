@@ -99,7 +99,7 @@ define( function ( require ) {
 				'selectOptions' : {
 					'collection' : [
 						{ 'value' : '', 'label' : 'Choose a school...' },
-						{ 'value' : '455134', 'label' : 'OTHER SCHOOL' }
+						{ 'value' : '456188', 'label' : 'OTHER SCHOOL' }
 					]
 				}
 			}
@@ -165,7 +165,7 @@ define( function ( require ) {
 
 					this.ui.email.prop( 'disabled', false );
 
-				}.bind( this ));
+				}.bind( this ) );
 
 			}
 
@@ -188,7 +188,7 @@ define( function ( require ) {
 		},
 
 		'validateInput' : function ( event ) {
-			require( 'common/helpers/validateInput')( event, this );
+			require( 'common/helpers/validateInput' )( event, this );
 		},
 
 		'disableSelect' : function ( element ) {
@@ -336,7 +336,7 @@ define( function ( require ) {
 
 					l.stop();
 
-				});
+				} );
 
 			} else {
 				this.showFlashMessage( 'invalidForm' );
