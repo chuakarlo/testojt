@@ -110,6 +110,9 @@ define( function ( require ) {
 
 			'showLogout' : function () {
 
+				// Show logging out view while cleaning up
+				App.content.show( new App.Common.LoadingView( { 'text' : 'Logging Out...' } ) );
+
 				this.listenTo( App.flashContent, 'close', function () {
 					Session.destroy();
 
