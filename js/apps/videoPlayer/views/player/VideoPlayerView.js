@@ -28,26 +28,39 @@ define( function ( require ) {
 		'templateHelpers' : {
 
 			'videoUrl' : function () {
+				var contentType = this.ContentTypeId;
 				var url;
 
-				if ( !this.Uploaded ) {
-					var bitrates    = ',304,552,800,1152,1552,1952,2448,';
-					var extension   = '.mp4.csmil/master.m3u8';
-					var folder      = this.FileName.split( '.' )[ 0 ];
-					var file        = this.FileName.split( '.' )[ 0 ] + '_';
-					var contentType = { '3' : 'PD360', '6' : 'CC360' };
+				// user uploaded video
+				if ( this.Uploaded ) {
+					return getConfig( 'uuServers' ) + this.FileName;
+				}
+
+				// regular pd/common core content - adaptive streaming
+				if ( contentType === 6 || contentType === 3 ) {
+					var bitrates     = ',304,552,800,1152,1552,1952,2448,';
+					var extension    = '.mp4.csmil/master.m3u8';
+					var folder       = this.FileName.split( '.' )[ 0 ];
+					var file         = this.FileName.split( '.' )[ 0 ] + '_';
+					var contentTypes = {
+						'3' : 'PD360',
+						'6' : 'CC360'
+					};
 
 					// set video base URL
 					url = 'http://schoolimp-vh.akamaihd.net/i/PD360/media/video/';
-					url += contentType[ this.ContentTypeId ] + '/';
+					url += contentTypes[ this.ContentTypeId ] + '/';
 					url += this.SKU + '/';
 					url += folder + '/';
 					url += file + bitrates + extension;
-				} else {
-					url = getConfig( 'uuServers' ) + this.FileName;
+
+					return url;
 				}
 
-				return url;
+				// course - hardcoded to standard definition for now
+				var base = '//upload.content.pd360.com/PD360/media/video/SD/';
+
+				return base + this.FileName;
 			},
 
 			'getCC' : function () {

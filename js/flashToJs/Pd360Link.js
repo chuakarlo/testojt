@@ -41,10 +41,13 @@ define( function ( require ) {
 		// -----------------------
 		// VIDEO LINKS
 		// -----------------------
-		// TODO : this needs to account for TASKS depending on how the router
-		// is expecting that argument
 		} else if ( _.has( link, 'CONTENTID' ) ) {
 			url = '#resources/videos/' + link.CONTENTID;
+
+			// if the video is being watched as part of a course task
+			if ( _.has( link, 'TASK' ) ) {
+				url += '?taskId=' + link.TASK.TaskId + '&licenseId=' + link.TASK.LicenseId;
+			}
 
 		// User Uploaded Video
 		} else if ( _.has( link, 'UUVIDEOID' ) ) {

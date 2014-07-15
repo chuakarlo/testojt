@@ -23,7 +23,7 @@ define( function ( require ) {
 				if ( queryObj.uuv ) {
 					getVideoContent = App.request( 'video:userUploaded', videoId );
 				} else {
-					getVideoContent = App.request( 'videoPlayer:getVideoContent', videoId );
+					getVideoContent = App.request( 'videoPlayer:getVideoContent', videoId, queryObj.licenseId );
 				}
 
 				App.when( getVideoContent ).done( function ( videoContent ) {
@@ -32,11 +32,9 @@ define( function ( require ) {
 						return;
 					}
 
-					var queryObject = App.request( 'videoPlayer:queryObject' );
-
-					if ( queryObject.licenseId && queryObject.taskId ) {
-						videoContent.set( 'licenseId', queryObject.licenseId );
-						videoContent.set( 'taskId', queryObject.taskId );
+					if ( queryObj.licenseId && queryObj.taskId ) {
+						videoContent.set( 'licenseId', queryObj.licenseId );
+						videoContent.set( 'taskId', queryObj.taskId );
 					}
 
 					this.showVideoResources( videoContent );

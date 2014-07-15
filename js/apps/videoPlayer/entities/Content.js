@@ -245,7 +245,8 @@ define( function ( require ) {
 
 		};
 
-		App.reqres.setHandler( 'videoPlayer:getVideoContent', function ( videoId ) {
+		// licenseId is from a course, optionally passed in
+		App.reqres.setHandler( 'videoPlayer:getVideoContent', function ( videoId, licenseId ) {
 			var getLicenses = App.request( 'user:licenses' );
 			var defer       = App.Deferred();
 
@@ -272,21 +273,25 @@ define( function ( require ) {
 						'videoId' : videoId
 					} );
 
-					App.when( newContent, contentIsInCore ).done( function ( content, contentInCore ) {
+					App.when( newContent, contentIsInCore, getLicenses ).done( function ( content, contentInCore, licenses ) {
+						// check if the user has the license
+						var hasLicense = licenses.some( function ( license ) {
+							return license.get( 'LicenseId' ) === Number( licenseId );
+						} );
+
+						if ( hasLicense ) {
+							return defer.resolve( content );
+						}
 
 						// If the content is in the core library, it is limited
 						// If it is not in the core library, check the ContentType,
-						// If ContentType is 6, then the content is limited,
+						// If ContentType is 6 (common core library), then the content is limited,
 						// Otherwise the user needs special license to view the content
-						if ( contentInCore.get( 'isInCore' ) ) {
+						if ( contentInCore.get( 'isInCore' ) || content.get( 'ContentTypeId' ) === 6 ) {
 							content.set( 'limited', true );
 						} else {
-							if ( content.get( 'ContentTypeId' ) === 6 ) {
-								content.set( 'limited', true );
-							} else {
-								// show an error message, the content needs special license
-								defer.reject( new Error( 'This video requires that viewers have a specific type of license.' ) );
-							}
+							// show an error message, the content needs special license
+							defer.reject( new Error( 'This video requires that viewers have a specific type of license.' ) );
 						}
 
 						defer.resolve( content );
