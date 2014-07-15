@@ -146,7 +146,7 @@ define( function ( require ) {
 
 			'showSearchResults' : function ( query, filter ) {
 				// Show empty results if no query was passed
-				if ( !query ) {
+				if ( !query || !query.replace( /\s/g, '' ).length ) {
 					this.showEmptyResult();
 					return;
 				}
