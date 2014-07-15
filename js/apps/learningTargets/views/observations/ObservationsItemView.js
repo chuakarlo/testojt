@@ -13,7 +13,7 @@ define( function ( require ) {
 		'templateHelpers' : function () {
 			return {
 				formatDateAndTime : function () {
-					return moment( this.OBSERVATIONDATE ).format( 'MMMM DD, YYYY hh:mm A' );
+					return moment( this.OBSERVATIONSTARTDATE ).format( 'MMMM DD, YYYY hh:mm A' );
 				}
 			};
 		}
