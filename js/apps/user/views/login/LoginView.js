@@ -94,7 +94,11 @@ define( function ( require ) {
 						this.ui.password.val( '' ).focus();
 						this.ui.username.focus();
 
-						App.errorHandler( new Error( jqXHR.personnel.DisplayText ) );
+						var message = ( jqXHR.personnel && jqXHR.personnel.DisplayText ) || 'An error occurred. Please try again later.';
+
+						App.vent.trigger( 'flash:message', {
+							'message' : message
+						} );
 					}.bind( this )
 				} );
 			} else {
