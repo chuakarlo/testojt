@@ -83,24 +83,36 @@ li {
 		}
 
 		div.sc-footer-details {
-			padding  : 0px 10px;
+			padding  : 0px 5px;
+			height   : 124px;
 			position : relative;
 
 			h5.sc-segment-name {
 				font-size     : 13px;
 				color         : @sc-charcoal;
 				text-align    : left;
-				line-height   : 1.3;
 				cursor        : default;
 				margin-bottom : 2px;
-				height        : 80px;
-				font-weight   : 300;
+				margin-top    : 5px;
+				height        : 70px;
+				font-weight   : 100;
 			}
 
-			p.sc-duration {
-				font-size   : 13px;
-				line-height : 20px;
-				color       : @sc-gray-dark;
+			p.sc-program {
+				margin      : 0;
+				font-weight : 100;
+			}
+
+			p.sc-hide-program {
+				display : none;
+			}
+
+			span.sc-duration {
+				font-size : 13px;
+				color     : @sc-gray-dark;
+				top       : auto;
+				bottom    : 5px;
+				position  : absolute;
 			}
 
 			span.sc-info-icon {
@@ -115,7 +127,7 @@ li {
 			span.sc-info-icon,
 			span.sc-watch-later-icon,
 			span.sc-view-completed-icon {
-				top             : 70px;
+				bottom          : 6px;
 				font-size       : 28px;
 				cursor          : pointer;
 				height          : 30px;
@@ -158,8 +170,8 @@ li {
 				text-decoration : none;
 				position        : absolute;
 				z-index         : 3;
-				top             : 75px;
-				right           : 25px;
+				bottom          : 0;
+				right           : 28px;
 				display         : none;
 			}
 		}

@@ -10,7 +10,8 @@
     </div>
     <div class="sc-footer-details" >
         <h5 class="sc-segment-name" > <%- longContentName() %></h5>
-        <p class="sc-duration" ><%- duration() %></p>
+        <p class="sc-program <%- showProgram() %>" >Program: <a href="<%- getProgramLink() %>" title="<%- getProgramName() %>"><%- program() %></a></p>
+        <span class="sc-duration" ><%- duration() %></span>
         <span  class="sc-info-icon grayed fa fa-info-circle" ></span>
 	<span  class="<%- queueCompleted() %>" ></span>
 	<span  class="sc-watch-later-loading-icon grayed" ></span>
