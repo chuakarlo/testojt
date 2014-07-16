@@ -49,6 +49,12 @@ define( function ( require ) {
 						}
 					} );
 
+					// Add the task object as a global variable if there is a TaskId
+					if ( requestArgs.TaskId && window.task ) {
+						requestArgs.Task = window.task;
+						delete window.task;
+					}
+
 					// check if pd360 swf is loaded
 					var pd360Loaded = App.request( 'pd360:loaded' );
 

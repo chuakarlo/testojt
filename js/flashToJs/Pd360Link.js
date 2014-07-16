@@ -22,9 +22,15 @@ define( function ( require ) {
 
 					// If it contains a task, add a extra arg to the url
 					if ( val === 'TASK' ) {
-						url += '/task';
+						url += '/task/' + link[ val ].TaskId;
+
+						// Add the task object as a global variable so that communities
+						// showController will have access to it.
+						window.task = link[ val ];
+					} else {
+						url += '/' + link[ val ];
 					}
-					url += '/' + link[ val ];
+
 				}
 			} );
 
