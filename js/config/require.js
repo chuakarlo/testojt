@@ -2,6 +2,8 @@ require.config( {
 
 	'baseUrl' : '/js/',
 
+	'waitSeconds' : 30,
+
 	'paths' : {
 
 		// Tests
