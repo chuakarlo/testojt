@@ -170,7 +170,9 @@ define( function ( require ) {
 
 	};
 
-	window.onerror = App.errorHandler;
+	if ( window.onerror ) {
+		window.onerror = App.errorHandler;
+	}
 
 	// convenience access for jquery methods
 	App.when     = $.when;
