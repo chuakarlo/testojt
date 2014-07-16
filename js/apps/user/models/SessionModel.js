@@ -145,7 +145,10 @@ define( function ( require ) {
 
 				this.fetch( {
 					'forceRoute' : forceRoute,
-					'ladda'      : { 'stop' : function () {} }
+					'ladda'      : { 'stop' : function () {} },
+					'error'      : function ( jqXHR, status, error ) {
+						App.errorHandler( new Error( jqXHR.personnel.DisplayText ) );
+					}
 				} );
 
 			// If not SSO login just navigate to requested route
