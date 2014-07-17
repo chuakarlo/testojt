@@ -2,7 +2,6 @@ define( function ( require ) {
 	'use strict';
 
 	var Backbone = require( 'backbone' );
-	var Session  = require( 'Session' );
 	var App      = require( 'App' );
 	var $        = require( 'jquery' );
 
@@ -18,7 +17,7 @@ define( function ( require ) {
 				return {
 					'method' : 'getUnreadCount',
 					'args'   : {
-						'id' : Session.personnelId()
+						'id' : App.request( 'session:personnelId' )
 					}
 				};
 			}

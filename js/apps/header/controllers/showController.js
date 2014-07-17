@@ -27,48 +27,18 @@ define( function ( require ) {
 
 					if ( authenticated ) {
 
-						App.when( App.request( 'messages:count' ) )
-
-						.done( function ( count ) {
-
-							menu.model.set( 'messageCount', count );
-
-						} );
-
 						this.listenToOnce( menu, 'show', function () {
 
 							menu.icons.show( new App.Common.LoadingView( { 'text' : 'Loading Resources...' } ) );
 
-							var collection = new Backbone.Collection( menuOptions.nav );
-
 							if ( App.request( 'session:personnel' ) ) {
-
-								if ( App.request( 'user:hasObsAccess' ) ) {
-									collection.add( menuOptions.observation, { 'at' : 2 } );
-								} else {
-									collection.add( menuOptions.training, { 'at' : 4 } );
-								}
-
-								menu.icons.show( new IconsCollectionView( {
-									'collection' : collection
-								} ) );
-
+								personalizeHeader( menu );
 							} else {
 
 								// On refresh session:personnel doesn't exist immediately
 								// Wait for session to be initialized then redirect
 								Vent.on( 'session:initialized', function () {
-
-									if ( App.request( 'user:hasObsAccess' ) ) {
-										collection.add( menuOptions.observation, { 'at' : 2 } );
-									} else {
-										collection.add( menuOptions.training, { 'at' : 4 } );
-									}
-
-									menu.icons.show( new IconsCollectionView( {
-										'collection' : collection
-									} ) );
-
+									personalizeHeader( menu );
 								}.bind( this ) );
 
 							}
@@ -90,6 +60,34 @@ define( function ( require ) {
 			}
 
 		} );
+
+		var personalizeHeader = function ( menu ) {
+
+			// -----------------------
+			// Update the resources based on observation access
+			// -----------------------
+			var collection = new Backbone.Collection( menuOptions.nav );
+
+			if ( App.request( 'user:hasObsAccess' ) ) {
+				collection.add( menuOptions.observation, { 'at' : 2 } );
+			} else {
+				collection.add( menuOptions.training, { 'at' : 4 } );
+			}
+
+			menu.icons.show( new IconsCollectionView( {
+				'collection' : collection
+			} ) );
+
+			// -----------------------
+			// Update the message count
+			// -----------------------
+			App.when( App.request( 'messages:count' ) )
+
+			.done( function ( count ) {
+				menu.model.set( 'messageCount', count );
+			} );
+
+		};
 
 		Show.Controller = new Controller();
 
