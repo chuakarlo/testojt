@@ -51,7 +51,7 @@ define( function ( require ) {
 			'country'  : 'OTHER COUNTRY',
 			'state'    : 'AA',
 			'district' : '360-452716',
-			'school'   : '455134'
+			'school'   : '456188'
 		},
 
 		// Backbone.stickit data bindings
