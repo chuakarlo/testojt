@@ -42,7 +42,7 @@ define( function ( require ) {
 			var fname       = 'fname='       + personnel.FirstName;
 			var lname       = 'lname='       + personnel.LastName;
 			var personnelid = 'personnelid=' + personnel.PersonnelId;
-			var url         = 'http://help.schoolimprovement.com/training#context/' + [ email, fname, lname, personnelid ].join( '&' );
+			var url         = 'http://help.schoolimprovement.com/training/#context/' + [ email, fname, lname, personnelid ].join( '&' );
 
 			this.ui.help.attr( 'href', url );
 			window.open( url );
