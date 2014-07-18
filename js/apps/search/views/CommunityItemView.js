@@ -15,7 +15,7 @@ define( function ( require ) {
 		'className' : 'col-xs-12 col-sm-6 col-md-3 col-lg-3',
 
 		'shortenText' : function () {
-			var t = this.model.get( 'Text' );
+			var t = this.model.get( 'Text' ) || this.model.get( 'LinkDescription' ) || this.model.get( 'FileDescription' );
 			if ( t ) {
 				return getAbbreviation( stripHtml( t ), 100 );
 			}
@@ -26,7 +26,7 @@ define( function ( require ) {
 			return {
 				'Text'              : this.shortenText(),
 				'PersonnelFullName' : this.model.get( 'PersonnelFullName' ),
-				'Subject'           : this.model.get( 'Subject' ),
+				'Subject'           : this.model.get( 'Subject' ) || this.model.get( 'LinkURL' ) ,
 				'LocationTypeId'    : this.model.get( 'LocationTypeId' ),
 				'LocationId'        : this.model.get( 'LocationId' ),
 				'ForumThreadId'     : this.model.get( 'ForumThreadId' ),
@@ -51,7 +51,6 @@ define( function ( require ) {
 
 				return url;
 			}
-
 		}
 	} );
 } );
