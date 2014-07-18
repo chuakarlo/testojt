@@ -27,7 +27,9 @@ define( function ( require ) {
 		},
 
 		'focusOnInput' : function () {
-			this.$el.find( '.search-input' ).focus();
+			if ( !( $.browser.mobile || $.browser.ipad ) ) {
+				this.$el.find( '.search-input' ).focus();
+			}
 		},
 
 		// Overwrite show so we can capture aditional options. The view must
@@ -43,7 +45,7 @@ define( function ( require ) {
 			}
 
 			if ( this.showOptions.backdrop ) {
-				//fixed for flickering modal in android native browser
+				// fixed for flickering modal in android native browser
 				this.$el.attr( 'data-backdrop', this.showOptions.backdrop );
 			}
 			// Call the original show method
