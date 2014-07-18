@@ -26,10 +26,11 @@ define( function ( require ) {
 		},
 
 		'events' : {
-			'focus @ui.searchInput'   : 'onSearchKeyup',
-			'keyup @ui.searchInput'   : 'onSearchKeyup',
-			'click @ui.searchClear'   : 'hideSearchClear',
-			'keydown @ui.searchInput' : 'fixIEIssue'
+			'focus @ui.searchInput'                 : 'onSearchKeyup',
+			'keyup @ui.searchInput'                 : 'onSearchKeyup',
+			'click @ui.searchClear'                 : 'hideSearchClear',
+			'keydown @ui.searchInput'               : 'fixIEIssue',
+			'focusout @ui.message, @ui.searchInput' : require( 'common/helpers/modalIpadFix' )
 		},
 
 		'triggers' : {

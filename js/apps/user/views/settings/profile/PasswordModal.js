@@ -50,6 +50,7 @@ define( function ( require ) {
 		},
 
 		'validateInput' : function ( event ) {
+			require( 'common/helpers/modalIpadFix' )();
 			require( 'common/helpers/validateInput' )( event, this );
 		},
 

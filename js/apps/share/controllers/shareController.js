@@ -189,7 +189,7 @@ define( function ( require ) {
 			this.listenTo( resultsView, 'itemview:share:selectedItem', this.selectItem );
 
 			// show the search results
-			if ( !_.isUndefined( this.shareModal.searchResults ) ) {
+			if ( !_.isUndefined( this.shareModal.searchResults ) && ( this.shareModal.ui.searchInput.val().trim() !== '' ) ) {
 				this.shareModal.searchResults.show( resultsView );
 			}
 

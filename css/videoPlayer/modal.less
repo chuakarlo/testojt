@@ -1,49 +1,3 @@
-// When fading in the modal, animate it to slide down
-.transition-mixin {
-	&.fade .modal-dialog {
-		.translate(0, 0);
-		.transition-transform(~"0s ease-out");
-	}
-
-	&.in .modal-dialog {
-		.translate(0, 0);
-	}
-}
-.pdf-preview-modal {
-	.transition-mixin;
-	.modal-dialog {
-		width  : 75%;
-		.modal-content {
-			height : 720px;
-			#modal-iframe {
-				width      : 100%;
-				min-height : 720px;
-			}
-			.close-modal {
-				display               : inline-block;
-				position              : absolute;
-				border                : inherit;
-				top                   : -22px;
-				right                 : -22px;
-				cursor                : pointer;
-				background            : black;
-				color                 : white;
-				height                : 35px;
-				width                 : 35px;
-				line-height           : 29px;
-				font-size             : 32px;
-				text-decoration       : none;
-				text-align            : center;
-				font-weight           : normal;
-				-webkit-border-radius : 35px;
-				-moz-border-radius    : 35px;
-				-o-border-radius      : 35px;
-				border-radius         : 35px;
-			}
-		}
-	}
-}
-
 //video information modal overrides
 .info-modal {
 	.modal-body {
@@ -54,11 +8,4 @@
 	h2 {
 		font-size : 20px !important;
 	}
-}
-	/* partial fix for bootstrap modal shifting to the left(https://github.com/twbs/bootstrap/issues/8768) */
-body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
-	margin-right : 0 !important;
-	width        : 100% !important;
-	overflow     : hidden;
-	position     : fixed;
 }

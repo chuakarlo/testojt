@@ -31,7 +31,9 @@ define( function ( require ) {
 		},
 
 		'onShow' : function () {
-			this.ui.download.tooltip( { 'title' : 'Download' } );
+			if ( !utils.isMobile() ) {
+				this.ui.download.tooltip( { 'title' : 'Download' } );
+			}
 		},
 
 		'onClose' : function () {

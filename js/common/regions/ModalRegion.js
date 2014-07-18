@@ -55,22 +55,28 @@ define( function ( require ) {
 		// show the modal with your desired
 		'onShow' : function ( view ) {
 			this.$el.modal( 'show', this.showOptions );
+			if ( $.browser.mobile || $.browser.ipad ) {
+			// set body position to fixed to prevent it from scrolling while modal is open
+				$( 'body.modal-open' ).css( {
+					'position' : 'fixed',
+					'width'    : '100%'
+				} );
+			}
 		},
 
 		// close the share video modal dialog
 		'onClose' : function () {
-
 			// Remove the className from the modal region
 			if ( this.showOptions.className ) {
 				this.$el.removeClass( this.showOptions.className );
 			}
-
 			// Clear the options
 			this.showOptions = { };
 
 			this.$el.modal( 'hide' );
 
 			$( '.modal-backdrop' ).remove();
+			$( 'body.modal-open' ).css( { 'position' : '' } );
 		}
 
 	} );

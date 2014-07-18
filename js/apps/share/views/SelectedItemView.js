@@ -4,6 +4,7 @@ define( function ( require ) {
 	// libraries
 	var _          = require( 'underscore' );
 	var Marionette = require( 'marionette' );
+	var utils      = require( 'videoPlayer/utils/utils' );
 
 	// templates
 	var template         = require( 'text!share/templates/selectedItemView.html' );
@@ -25,11 +26,13 @@ define( function ( require ) {
 		},
 
 		'onShow' : function () {
-			this.ui.selectedItem.tooltip({
-				'html'      : true,
-				'placement' : 'top',
-				'title'     : this._getTooltipTpl( this.model )
-			});
+			if ( !utils.isMobile() ) {
+				this.ui.selectedItem.tooltip( {
+					'html'      : true,
+					'placement' : 'top',
+					'title'     : this._getTooltipTpl( this.model )
+				} );
+			}
 		},
 
 		'templateHelpers' : {
