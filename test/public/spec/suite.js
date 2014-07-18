@@ -40,13 +40,11 @@ define( function ( require ) {
 			'spec/apps/learningTargets/entities/ProcessesTest',
 			'spec/apps/learningTargets/entities/ReflectionQuestionsTest',
 
-			//Start contentNavigation
-
-			//main
+			// Start contentNavigation
+			// main
 			'spec/apps/contentNavigation/ContentNavigationTest',
 
-			//End contentNavigation
-
+			// End contentNavigation
 			'spec/apps/user/UserTest',
 			'spec/apps/user/entities/LicenseTest',
 			'spec/apps/user/entities/PersonnelTest',
@@ -86,39 +84,39 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/entities/UserContentTest.js',
 			'spec/apps/videoPlayer/entities/VideoResourcesTest.js',
 
-			//Homepage
+			// Homepage
 			'spec/apps/homepage/external/content/baseTest.js',
 			'spec/apps/homepage/external/content/views/ContentCompositeViewTest.js',
 			'spec/apps/homepage/external/content/views/ContentCollectionViewTest.js',
 
-			//HomePage - Billboard
+			// HomePage - Billboard
 			'spec/apps/homepage/external/billboard/collection/BillboardCollectionTest.js',
 			'spec/apps/homepage/external/billboard/configuration/nivoSettingsTest.js',
 			'spec/apps/homepage/external/billboard/views/BillboardItemViewTest.js',
 			'spec/apps/homepage/external/billboard/baseTest.js',
 
-			//HomePage - Widgets
+			// HomePage - Widgets
 			'spec/apps/homepage/external/widgets/baseTest.js',
 			'spec/apps/homepage/external/widgets/layout/WidgetLayoutTest.js',
 			'spec/apps/homepage/external/widgets/views/WidgetCompositeViewTest.js',
 			'spec/apps/homepage/external/widgets/views/WidgetPreviewItemViewTest.js',
 
-			//HomePage - Courses
+			// HomePage - Courses
 			'spec/apps/homepage/external/widgets/external/courses/baseTest.js',
 			'spec/apps/homepage/external/widgets/external/courses/views/WidgetItemViewTest.js',
-			//HomePage - Focus Objectives
+			// HomePage - Focus Objectives
 			'spec/apps/homepage/external/widgets/external/focusObjective/baseTest.js',
 			'spec/apps/homepage/external/widgets/external/focusObjective/views/WidgetItemViewTest.js',
 
-			//HomePage - Group Activity
+			// HomePage - Group Activity
 			'spec/apps/homepage/external/widgets/external/groupActivity/baseTest.js',
 			'spec/apps/homepage/external/widgets/external/groupActivity/views/WidgetItemViewTest.js',
 
-			//HomePage - Observation of Me
+			// HomePage - Observation of Me
 			'spec/apps/homepage/external/widgets/external/observationsOfMe/baseTest.js',
 			'spec/apps/homepage/external/widgets/external/observationsOfMe/views/WidgetItemViewTest.js',
 
-			//HomePage - User Settings
+			// HomePage - User Settings
 			'spec/apps/homepage/external/widgets/external/yourProfile/baseTest.js',
 			'spec/apps/homepage/external/widgets/external/yourProfile/views/WidgetItemViewTest.js',
 
@@ -126,13 +124,16 @@ define( function ( require ) {
 			'spec/apps/homepage/external/content/external/queue/baseTest.js',
 			'spec/apps/homepage/external/content/external/queue/collections/QueueCollectionTest.js',
 
-			//Homepage - Recommended Content
+			// Homepage - Recommended Content
 			'spec/apps/homepage/external/content/external/recommended/baseTest.js',
 			'spec/apps/homepage/external/content/external/recommended/collections/RecommendedCollectionTest.js',
 
-			//Homepage - null
+			// Homepage - null
 			'spec/apps/homepage/external/widgets/external/null/baseTest.js',
-			'spec/apps/homepage/external/widgets/views/EmptyWidgetViewTest.js'
+			'spec/apps/homepage/external/widgets/views/EmptyWidgetViewTest.js',
+
+			// Common - helpers
+			'spec/common/helpers/startsWithTest.js'
 		]
 
 	};

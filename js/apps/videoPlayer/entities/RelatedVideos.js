@@ -1,11 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var _        = require( 'underscore' );
-	var Backbone = require( 'backbone' );
-	var Session  = require( 'Session' );
-	var App      = require( 'App' );
-
+	var _                  = require( 'underscore' );
+	var Backbone           = require( 'backbone' );
+	var Session            = require( 'Session' );
+	var App                = require( 'App' );
+	var startsWith         = require( 'common/helpers/startsWith' );
 	var VideoResourceModel = require( 'videoPlayer/models/VideoResourceModel' );
 
 	App.module( 'VideoPlayer.Entities', function ( Entities ) {
@@ -39,11 +39,15 @@ define( function ( require ) {
 				// not part of the data.
 				var segments = _.rest( response );
 
-				// exclude current segment from the list of related videos
 				return _.filter( segments, function ( segment ) {
-					if ( segment.ContentId !== this.id ) {
+
+					var isArchived = startsWith( segment.ContentName, 'Archive:' );
+
+					// exclude current segment and archived videos
+					if ( segment.ContentId !== this.id && !isArchived ) {
 						return segment;
 					}
+
 				}.bind( this ) );
 			}
 

@@ -1,11 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var $        = require( 'jquery' );
-	var _        = require( 'underscore' );
-	var Backbone = require( 'backbone' );
-	var App      = require( 'App' );
-
+	var $                  = require( 'jquery' );
+	var _                  = require( 'underscore' );
+	var Backbone           = require( 'backbone' );
+	var App                = require( 'App' );
+	var startsWith         = require( 'common/helpers/startsWith' );
 	var VideoResourceModel = require( 'videoPlayer/models/VideoResourceModel' );
 
 	App.module( 'VideoPlayer.Entities', function ( Entities ) {
@@ -24,7 +24,7 @@ define( function ( require ) {
 				return {
 					'method' : 'getProgramFromSegment',
 					'args'   : {
-						'ContentId'       : this.contentId,
+						'ContentId'       : this.id,
 						'ContentParentId' : this.contentParentId,
 						'ContentTypeId'   : this.contentTypeId
 					}
@@ -32,30 +32,16 @@ define( function ( require ) {
 			},
 
 			'parse' : function ( response ) {
-				var isArchived = this.startsWith( this.contentName, 'Archive:' );
-
-				// exclude current segment and archive videos
 				return _.filter( response, function ( segment ) {
+
+					var isArchived = startsWith( segment.ContentName, 'Archive:' );
+
+					// exclude current segment and archived videos
 					if ( segment.ContentId !== this.id && !isArchived ) {
 						return segment;
 					}
+
 				}.bind( this ) );
-			},
-
-			// taken from https://github.com/epeli/underscore.string
-			'startsWith' : function ( str, starts ) {
-				if ( starts === '' ) {
-					return true;
-				}
-
-				if ( str === null || starts === null ) {
-					return false;
-				}
-
-				str    = String( str );
-				starts = String( starts );
-
-				return str.length >= starts.length && str.slice( 0, starts.length ) === starts;
 			}
 
 		} );
@@ -67,7 +53,6 @@ define( function ( require ) {
 
 				var segments = new Entities.Segments( [ ], {
 					'id'              : content.id,
-					'contentId'       : content.get( 'ContentId' ),
 					'contentName'     : content.get( 'ContentName' ),
 					'contentParentId' : content.get( 'ContentParentId' ),
 					'contentTypeId'   : content.get( 'ContentTypeId' )
