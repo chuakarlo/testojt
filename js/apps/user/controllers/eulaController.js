@@ -13,8 +13,9 @@ define( function ( require ) {
 			'showEula' : function () {
 
 				// If EULA page is refreshed the session won't exist quite yet
-				// The catchall handler will retry when personnel exists
-				if ( App.request( 'session:personnel' ) ) {
+				// The catchall handler will retry when the session is initialized
+				// TODO: break out Session from User, and this if goes away.
+				if ( App.request( 'session:initialized' ) ) {
 
 					var personnel = new App.Entities.Personnel( App.request( 'session:personnel' ) );
 

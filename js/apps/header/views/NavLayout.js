@@ -128,7 +128,7 @@ define( function ( require ) {
 
 			var url = 'http://help.schoolimprovement.com';
 
-			if ( !App.request( 'session:authenticated' ) ) {
+			if ( !App.request( 'session:initialized' ) ) {
 				window.open( url );
 				return;
 			}
