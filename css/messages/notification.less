@@ -151,7 +151,7 @@
 
 		.panel-collapse {
 			padding : 10px;
-			margin  : 0px 10px 10px 25px;
+			margin  : 0px 25px 10px 25px;
 			.link {
 				padding       : 10px;
 				overflow      : hidden;
@@ -164,6 +164,10 @@
 				padding       : 22px;
 				border        : 1px solid @m-gray-lighter;
 				border-radius : 8px;
+				word-wrap     : break-word;
+				&.empty{
+					border : none;
+				}
 			}
 			.empty-message {
 				color       : @m-black-light;

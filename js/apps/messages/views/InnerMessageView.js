@@ -5,11 +5,18 @@ define( function ( require ) {
 	var template   = require( 'text!apps/messages/templates/innerMessage.html' );
 	var _          = require( 'underscore' );
 	var moment     = require( 'moment' );
-	var $          = require( 'jquery' );
 
 	return Marionette.ItemView.extend( {
 		'template'          : _.template( template ),
 		'className'         : 'toggle-btn',
+		'ui'                : {
+			'message'   : '.message',
+			'titleLink' : '.title-holder a'
+		},
+		'events'            : {
+			'click @ui.titleLink' : 'toggleActiveClass'
+		},
+
 		'templateHelpers'   : function () {
 			var msgSplit = this.getMessageLink();
 			return {
@@ -19,12 +26,9 @@ define( function ( require ) {
 				'message' : msgSplit.message
 			};
 		},
+
 		'toggleActiveClass' : function ( event ) {
-			var target    = ( event.currentTarget ) ? event.currentTarget : event.srcElement;
-			$( target ).closest( '.toggle-btn' ).toggleClass( 'active' );
-		},
-		'events'            : {
-			'click .title-holder a' : 'toggleActiveClass'
+			this.$el.toggleClass( 'active' );
 		},
 		'getMessageLink'    : function () {
 			var splitter = 'http';
@@ -34,6 +38,14 @@ define( function ( require ) {
 				'link'    : prefix + spltData.pop().split( prefix )[ 1 ],
 				'message' : spltData.join( splitter )
 			};
+		},
+		'onRender' : function () {
+			this.toggleMessageBoxState();
+		},
+		'toggleMessageBoxState' : function () {
+			var status = this.ui.message.text().trim() === '' ? 'empty' : 'show';
+			this.ui.message.addClass( status );
 		}
+
 	} );
 } );

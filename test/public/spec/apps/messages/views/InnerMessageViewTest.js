@@ -40,10 +40,10 @@ define( function ( require ) {
 		} );
 
 		it( 'toggle-btn element should toggle `active` class', function () {
-			view.$el.find( '.title-holder a' ).click();
+			view.ui.titleLink.click();
 			view.$el.hasClass( 'active' ).should.be.equal( true );
 
-			view.$el.find( '.title-holder a' ).click();
+			view.ui.titleLink.click();
 			view.$el.hasClass( 'active' ).should.be.equal( false );
 		} );
 
@@ -53,6 +53,60 @@ define( function ( require ) {
 
 		it( 'should contain message to video`s page for mobile and desktop', function () {
 			view.getMessageLink().message.should.equal( 'i like httpSession houw bout you? ' );
+
+		} );
+
+		describe( 'Message is not empty', function () {
+
+			before( function () {
+				var model = new Backbone.Model( {
+					'CreatorFullName'   : 'Diao Channy',
+					'InternalMessageId' : 65803,
+					'RecipientId'       : 0,
+					'Creator'           : 1010340,
+					'AllRecipients'     : [ ],
+					'Created'           : 'July, 01 2014 19:48:06',
+					'RecipientFullName' : '',
+					'Message'           : 'i like http://localhost:8080/dev.html#resources/videos/7512',
+					'Viewed'            : 'July, 01 2014 19:48:35',
+					'CreatorAvatar'     : 'g/1010340_1403636416261.jpg',
+					'RecipientAvatar'   : '',
+					'Trashed'           : ''
+				} );
+				view = new InnerMessageView( { 'model' : model } );
+				view.render();
+			} );
+
+			it( 'should have `show` class.', function () {
+				view.ui.message.hasClass( 'show' ).should.be.equal( true );
+			} );
+
+		} );
+
+		describe( 'Message is empty', function () {
+			before( function () {
+				var model = new Backbone.Model( {
+					'CreatorFullName'   : 'Diao Channy',
+					'InternalMessageId' : 65803,
+					'RecipientId'       : 0,
+					'Creator'           : 1010340,
+					'AllRecipients'     : [ ],
+					'Created'           : 'July, 01 2014 19:48:06',
+					'RecipientFullName' : '',
+					'Message'           : ' http://localhost:8080/dev.html#resources/videos/7512',
+					'Viewed'            : 'July, 01 2014 19:48:35',
+					'CreatorAvatar'     : 'g/1010340_1403636416261.jpg',
+					'RecipientAvatar'   : '',
+					'Trashed'           : ''
+				} );
+				view = new InnerMessageView( { 'model' : model } );
+				view.render();
+			} );
+
+			it( 'should have `empty` class', function () {
+				view.ui.message.hasClass( 'empty' ).should.be.equal( true );
+			} );
+
 		} );
 
 	} );
