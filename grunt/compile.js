@@ -28,7 +28,7 @@ module.exports = function ( grunt ) {
 				'mainConfigFile'          : 'js/config/require.js',
 				'out'                     : 'js/main.min.js',
 				'optimize'                : 'uglify2',
-				'include'                 : 'main',
+				'include'                 : [ 'main', 'requireLib' ],
 				'findNestedDependencies'  : true,
 				'insertRequire'           : [ 'main' ],
 				'generateSourceMaps'      : true,

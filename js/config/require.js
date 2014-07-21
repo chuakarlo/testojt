@@ -19,6 +19,9 @@ require.config( {
 		'chai-json-schema' : 'libs/chai-json-schema/index',
 		'jsonpointer'      : 'libs/jsonpointer.js/src/jsonpointer',
 
+		// Requirejs
+		'requireLib' : 'libs/requirejs/require',
+
 		// Libraries
 		'async'                 : 'libs/async/lib/async',
 		'analytics'             : 'libs/ga',

@@ -244,10 +244,6 @@
 		text-align : center;
 	}
 
-	.wall-news, .wall-comment {
-		word-break : all;
-		text-align : justify;
-	}
 }
 
 #group {
@@ -298,10 +294,22 @@
 			}
 		}
 
+		.comment-main,
+		.wall-comment,
+		.wall-news {
+			word-break    : normal; // Force IE to do normal word breaks
+			overflow-wrap : break-word;
+			word-wrap     : break-word; // Legacy overflow-wrap for IE and FF
+		}
+
 		.comment-main {
-			margin      : 15px 0 15px 20px;
+			margin-top  : 15px;
+			margin-left : 15px;
 			padding-top : 15px;
-			word-break  : break-all;
+
+			@media (max-width: @screen-xs-max) {
+				margin-left : 0;
+			}
 
 			p {
 				line-height : 1.5em;
@@ -328,7 +336,6 @@
 
 		.text {
 			padding-left : 40px;
-			word-break   : break-all;
 
 			p {
 				line-height: 1.5em;
