@@ -175,15 +175,7 @@ define( function ( require ) {
 		},
 
 		'onRender' : function () {
-			var self = this;
-			App.reqres.setHandler( 'homepage:showWidgetPanel', function () {
-				return self;
-			} );
-			App.reqres.setHandler( 'homepage:showWidgetPanel', function () {
-				return self;
-			} );
-
-			self.$el.find( '#widget-nav.right' ).show();
+			this.$el.find( '#widget-nav.right' ).show();
 		},
 
 		'onShow' : function () {
@@ -194,6 +186,11 @@ define( function ( require ) {
 				var scrollLeft = $( this ).scrollLeft();
 				widgetsLayoutUtils.doScrollLeft( scrollLeft, self );
 			} );
+
+			// This lets the home controller know this view is ready to display
+			// the bootstro element
+			App.vent.trigger( 'bootstro:itemLoaded' );
+
 		},
 
 		'slideLeft' : function ( e ) {

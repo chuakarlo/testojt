@@ -47,7 +47,12 @@ define( function ( require ) {
 			this.$el.addClass( 'bootstro' );
 			this.$el.attr( attributes );
 			this.$el.append( '<div id="load-' + this.model.get( 'id' ) + '"></div>' );
-		}
+		},
 
+		'onShow' : function () {
+			// This lets the home controller know this view is ready to display
+			// the bootstro element
+			App.vent.trigger( 'bootstro:itemLoaded' );
+		}
 	} );
 } );

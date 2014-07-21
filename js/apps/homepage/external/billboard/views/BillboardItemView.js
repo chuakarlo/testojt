@@ -32,6 +32,12 @@ define( function ( require ) {
 			}
 		},
 
+		'onShow' : function () {
+			// This lets the home controller know this view is ready to display
+			// the bootstro element
+			App.vent.trigger( 'bootstro:itemLoaded' );
+		},
+
 		'redirect' : function ( e ) {
 			controller.doRedirect( e );
 			return false;
