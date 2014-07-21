@@ -128,6 +128,18 @@ define( function ( require ) {
 				}
 			} );
 
+			player.on( 'fullscreenchange', function () {
+				// check to see if the video is in full screen mode.
+				if ( this.isFullScreen() ) {
+					// set font size of subtitle to 230% more
+					$( '.vjs-captions' ).css( 'font-size', '230%' );
+				} else {
+					// set font size of subtitle to original size
+					$( '.vjs-captions' ).css( 'font-size', '' );
+				}
+
+			} );
+
 			this.trigger( 'afterPlayerInit', player );
 
 			var data = {
