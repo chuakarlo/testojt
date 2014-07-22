@@ -58,7 +58,7 @@ define( function ( require ) {
 				}
 
 				// course - hardcoded to standard definition for now
-				var base = '//upload.content.pd360.com/PD360/media/video/SD/';
+				var base = 'http://upload.content.pd360.com/PD360/media/video/SD/';
 
 				return base + this.FileName;
 			},

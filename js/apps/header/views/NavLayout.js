@@ -120,7 +120,10 @@ define( function ( require ) {
 			event.preventDefault();
 			this.hideCollapsibleMenu( event, true );
 
+			var url = 'http://help.schoolimprovement.com';
+
 			if ( !App.request( 'session:authenticated' ) ) {
+				window.open( url );
 				return;
 			}
 
@@ -130,7 +133,8 @@ define( function ( require ) {
 			var lname       = 'lname='       + personnel.LastName;
 			var personnelid = 'personnelid=' + personnel.PersonnelId;
 			var location    = 'url='         + window.location;
-			var url         = 'http://help.schoolimprovement.com/#context/' + [ email, fname, lname, personnelid, location ].join( '&' );
+
+			url = url + '/#context/' + [ email, fname, lname, personnelid, location ].join( '&' );
 
 			this.ui.help.attr( 'href', url );
 			window.open( url );
