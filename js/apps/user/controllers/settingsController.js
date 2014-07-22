@@ -6,6 +6,7 @@ define( function ( require ) {
 	var Marionette        = require( 'marionette' );
 	var NavCollectionView = require( 'user/views/settings/nav/NavCollectionView' );
 	var ProfileView       = require( 'user/views/settings/profile/ProfileView' );
+	var EmailView         = require( 'user/views/settings/email/EmailNotificationsView' );
 
 	App.module( 'User.Settings', function ( Mod ) {
 
@@ -28,6 +29,10 @@ define( function ( require ) {
 				Mod.BaseController.prototype.initialize.apply( this, arguments );
 
 				this.navCollection = new App.Entities.NavCollection( [
+					{
+						'id'     : 'Email Notifications',
+						'filter' : 'email'
+					},
 					{
 						'id'     : 'Licenses',
 						'filter' : 'licenses'
@@ -78,8 +83,11 @@ define( function ( require ) {
 
 					this.showProfile();
 
-				} else if ( page === null ) {
+				} else if ( page === 'email' ) {
 
+					this.showEmail();
+
+				} else if ( page === null ) {
 					App.navigate( 'settings/profile' );
 					this.showProfile();
 
@@ -161,6 +169,24 @@ define( function ( require ) {
 					App.request( 'pd360:navigate', 'home', 'homeLicenses' );
 
 				}.bind( this ) );
+			},
+
+			'showEmail' : function () {
+				// dummy data for email notification settings
+				// TODO : make request for getting the notifications setting data
+				var emailData = {
+					'SendFollowUpEmails'   : '1',
+					'SendForumEmails'      : '1',
+					'SendGroupAdminEmails' : '2',
+					'SendWallMessages'     : '0',
+					'SendCourseEmails'     : '1'
+				};
+
+				var emailView = new EmailView( {
+					'emailData' : emailData
+				} );
+
+				this.layout.content.show( emailView );
 			}
 
 		} );
