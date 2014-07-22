@@ -25,7 +25,10 @@ define( function ( require ) {
 
 			// messages
 			'spec/apps/messages/MessagesTest',
+			'spec/apps/messages/controllers/mainControllerTest',
 			'spec/apps/messages/entities/MessagesTest',
+			'spec/apps/messages/views/MessagesViewTest',
+			'spec/apps/messages/views/InnerMessageViewTest',
 
 			// learningTargets
 			'spec/apps/learningTargets/LearningTargetsTest',

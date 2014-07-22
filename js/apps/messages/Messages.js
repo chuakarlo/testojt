@@ -6,8 +6,8 @@ define( function ( require ) {
 		var App        = require ( 'App' );
 		var AuthRouter = require ( 'AuthRouter' );
 
-		require ( 'apps/messages/controllers/mainController' );
-		require ( 'apps/messages/entities/Messages' );
+		require( 'apps/messages/controllers/mainController' );
+		require( 'apps/messages/entities/Notifications' );
 
 		App.module( 'Messages', function ( Messages, App ) {
 

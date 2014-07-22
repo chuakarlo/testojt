@@ -1,1 +1,75 @@
-<h2>Messages</h2>
+<div id="notification">
+	<div class="page-header">
+		<h2>Notifications</h2>
+	</div>
+
+	<div class="row select">
+		<div class="select-message pull-right">
+
+			<div class="btn-group bootstrap-select dropdown">
+				<button type="button" class="btn dropdown-toggle selectpicker btn-primary" data-toggle="dropdown" title="Select">
+					<span class="filter-option pull-left">Select</span>&nbsp;
+					<span class="caret"></span>
+				</button>
+				<div class="dropdown-menu open">
+					<ul class="dropdown-menu inner selectpicker" role="menu">
+						<li rel="0" class="selected">
+							<a tabindex="0" class="all" style="">
+								<span class="text">All</span>
+							</a>
+						</li>
+						<li rel="1">
+							<a tabindex="0" class="none" style="">
+								<span class="text">None</span>
+							</a>
+						</li>
+						<li rel="2">
+							<a tabindex="0" class="read" style="">
+								<span class="text">Read</span>
+							</a>
+						</li>
+						<li rel="3">
+							<a tabindex="0" class="unread" style="">
+								<span class="text">Unread</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		<div class="delete-message pull-right">
+			<button type="button" class="btn btn-primary">
+				<span class="fa fa-trash-o"></span>  Delete
+		</button>
+		</div>
+
+	</div>
+
+	<div class="row">
+		<div class="sidebar col-sm-4 col-md-3 col-lg-3 col-xs-12 ">
+			<div class="filter">
+				<div class="filter-header">
+					<h4 class="filter-title">Sort By</h4>
+				</div>
+				<div class="filter-box">
+					<ul class="filter-content">
+						<li class="selected date item">
+								<span class="fa fa-check"></span>
+								<span class="item-title">Date</span>
+						</li>
+						<li class="item sender">
+								<span class="fa fa-check"></span>
+								<span class="item-title">Sender</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="content col-sm-8 col-md-9 col-lg-9 col-xs-12 pull-right">
+			<div class="accordion panel-group">
+			</div>
+
+	</div>
+</div>
