@@ -15,8 +15,10 @@ define( function ( require ) {
 			new this.model.attributes.collection().fetch( {
 
 				'success' : function ( collection ) {
-					self.collection = new Backbone.Collection( { 'data' : collection, base : self.model } );
-					self.render();
+					if ( App.request( 'homepage:isHomeRoute' ) ) {
+						self.collection = new Backbone.Collection( { 'data' : collection, base : self.model } );
+						self.render();
+					}
 				},
 
 				'error' : function ( error ) {
