@@ -30,7 +30,7 @@ define( function ( require ) {
 	require( 'apps/applications' );
 	require( 'user/SessionHelper' );
 
-	if ( App.request( 'session:authenticated' ) && App.request( 'session:personnel' ) === false ) {
+	if ( App.request( 'session:authenticated' ) && App.request( 'session:initialized' ) === false ) {
 		// show a loading view while we wait
 		App.content.show( new App.Common.LoadingView() );
 		App.request( 'session:refresh' );

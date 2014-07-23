@@ -21,6 +21,8 @@ define( function ( require ) {
 	var program             = require( 'apps/program/Program' );
 
 	App.vent.on( 'session:deferredResources', function () {
+
+		// Load all of the deferred resources
 		admin();
 		communities();
 		contentNavigation();
@@ -37,6 +39,10 @@ define( function ( require ) {
 		share();
 		messages();
 		program();
+
+		// Set initialized status
+		App.request( 'session:setInitialized' );
+
 	} );
 
 } );

@@ -78,7 +78,6 @@ define( function ( require ) {
 
 					// Standard Login
 					if ( jqXHR.config ) {
-						App.vent.trigger( 'session:deferredResources' );
 						App.request( 'session:initialize', jqXHR );
 
 					// SSO Login

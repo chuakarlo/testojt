@@ -31,11 +31,10 @@ define( function ( require ) {
 
 							menu.icons.show( new App.Common.LoadingView( { 'text' : 'Loading Resources...' } ) );
 
-							if ( App.request( 'session:personnel' ) ) {
+							if ( App.request( 'session:initialized' ) ) {
 								personalizeHeader( menu );
 							} else {
 
-								// On refresh session:personnel doesn't exist immediately
 								// Wait for session to be initialized then redirect
 								Vent.on( 'session:initialized', function () {
 									personalizeHeader( menu );

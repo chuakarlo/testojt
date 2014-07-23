@@ -10,6 +10,9 @@ define( function ( require ) {
 
 	App.module( 'Session', function ( Session ) {
 
+		// Session not initialized by default
+		Session.initialized = false;
+
 		// Setup cookie names
 		Session.cookies = {
 			'username'     : 'UID',
@@ -35,8 +38,8 @@ define( function ( require ) {
 			Session.privilege = loginObject.privilege;
 			Session.profile   = loginObject.profile;
 
-			Vent.trigger( 'session:initialized' );
-
+			// Load the deferred resources which will then trigger 'session:initialized'
+			App.vent.trigger( 'session:deferredResources' );
 		};
 
 		var refreshSession = function ( route ) {
@@ -51,8 +54,6 @@ define( function ( require ) {
 			.done( function ( data, textStatus, jqXHR ) {
 
 				initializeSession( JSON.parse( data ) );
-
-				App.vent.trigger( 'session:deferredResources' );
 
 				route = route || App.getCurrentRoute();
 
@@ -79,6 +80,17 @@ define( function ( require ) {
 				if ( Session.personnel === undefined ) {
 					initializeSession( loginObject );
 				}
+			},
+
+			'setInitialized' : function () {
+				Session.initialized = true;
+
+				// Trigger session initialized event
+				Vent.trigger( 'session:initialized' );
+			},
+
+			'initialized' : function () {
+				return Session.initialized;
 			},
 
 			'refreshSession' : function ( route ) {
@@ -127,6 +139,14 @@ define( function ( require ) {
 		// --------------------------
 		App.reqres.setHandler( 'session:initialize', function ( loginObject ) {
 			return API.initializeSession( loginObject );
+		} );
+
+		App.reqres.setHandler( 'session:setInitialized', function ( loginObject ) {
+			return API.setInitialized();
+		} );
+
+		App.reqres.setHandler( 'session:initialized', function ( loginObject ) {
+			return API.initialized();
 		} );
 
 		App.reqres.setHandler( 'session:refresh', function ( route ) {

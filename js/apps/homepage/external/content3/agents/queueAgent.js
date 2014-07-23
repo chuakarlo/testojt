@@ -38,7 +38,6 @@ define( function ( require ) {
 				setNavButtons( rows );
 			}
 		}
-
 		App.Homepage.Utils.setProjectedMove( $( '#your-queue-pd360-slide-' + sViewPort ) );
 		App.Homepage.Utils.setLogicalRow( $( '#your-queue-pd360-slide-' + sViewPort ) );
 		App.Homepage.Utils.addLeftOnNewItems( $( '#your-queue-pd360-slide-' + sViewPort ) );

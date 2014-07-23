@@ -28,7 +28,7 @@ define( function ( require ) {
 				},
 
 				'buildBranding' : function () {
-					if ( App.request( 'session:personnel' ) ) {
+					if ( App.request( 'session:initialized' ) ) {
 						var licenses = App.request( 'user:licenses' );
 
 						App.when( licenses ).done( this.determineBranding ).fail( function ( ) {

@@ -70,6 +70,12 @@ define( function ( require ) {
 			} );
 		},
 
+		'onShow' : function () {
+			// This lets the home controller know this view is ready to display
+			// the bootstro element
+			App.vent.trigger( 'bootstro:itemLoaded' );
+		},
+
 		'updateMessageCount' : function () {
 			var model = this.model;
 
@@ -122,7 +128,7 @@ define( function ( require ) {
 
 			var url = 'http://help.schoolimprovement.com';
 
-			if ( !App.request( 'session:authenticated' ) ) {
+			if ( !App.request( 'session:initialized' ) ) {
 				window.open( url );
 				return;
 			}

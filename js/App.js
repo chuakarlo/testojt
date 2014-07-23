@@ -72,7 +72,7 @@ define( function ( require ) {
 				}
 
 				// If they have authenticated, and tried to access an unavailable route redirect home.
-				if ( App.request( 'session:personnel' ) ) {
+				if ( App.request( 'session:initialized' ) ) {
 
 					App.navigate( 'home', { 'trigger' : true, 'replace' : true } );
 
@@ -84,7 +84,6 @@ define( function ( require ) {
 
 				} else {
 
-					// On login session:personnel doesn't exist immediately
 					// Wait for session to be initialized then redirect
 					Vent.on( 'session:initialized', function () {
 						App.navigate( fragment, { 'trigger' : true, 'replace' : true } );
