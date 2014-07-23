@@ -68,6 +68,9 @@ define( function ( require ) {
 								'change:numFound',
 								this.updateResultCount
 							);
+						} else {
+							// pass updated of queue list to the controller.
+							this.resultController.options.queueContentsIds = queueContentsIds;
 						}
 
 						// update navController if one doesn't exist or the query param changes
