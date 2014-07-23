@@ -299,8 +299,14 @@ define( function ( require ) {
 						this.model.save( null, {
 
 							'success' : function () {
+
+								App.request( 'session:personnel' ).FirstName    = this.model.get( 'FirstName' );
+								App.request( 'session:personnel' ).LastName     = this.model.get( 'LastName' );
+								App.request( 'session:personnel' ).EmailAddress = this.model.get( 'EmailAddress' );
+								App.request( 'session:personnel' ).Title        = this.model.get( 'Title' );
+
 								callback();
-							},
+							}.bind( this ),
 
 							'error' : function ( error ) {
 								callback( error );

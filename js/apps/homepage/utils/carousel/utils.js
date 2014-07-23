@@ -28,9 +28,13 @@ define( function ( require ) {
 
 			var nActive     = Math.floor( nContainer / ITEM_WIDTH );
 			var logicalRows = rows.getLogicalRows( $carousel, nActive );
-			if ( $carousel.data().index > logicalRows ) {
+
+			// This should probably be fixed a different way.
+			// Not sure why $carousel.data() might not exist
+			if ( $carousel.data() && $carousel.data().index > logicalRows ) {
 				$carousel.data( { 'index' : logicalRows } );
 			}
+
 			$carousel.data( { 'total' : logicalRows } );
 		},
 		'getTotalWidth'     : function ( $carousel ) {

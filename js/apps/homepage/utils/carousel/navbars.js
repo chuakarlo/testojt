@@ -6,7 +6,14 @@ define( function ( require ) {
 		'handleNavBars' : function ( $carousel, options, bPartial ) {
 			var $rightControl = $carousel.find( '.right.carousel-control' );
 			var $leftControl  = $carousel.find( '.left.carousel-control' );
-			var index         = $carousel.data().index;
+			var index         = 0;
+
+			// This shouldn't be called if $carousel.data() doesn't exist
+			// For now we'll assume the left arrow will be hidden
+			// instead of showing an error.
+			if ( $carousel.data() ) {
+				index = $carousel.data().index;
+			}
 
 			if ( index <= 0 ) {
 				$leftControl.hide();
@@ -14,7 +21,10 @@ define( function ( require ) {
 				$leftControl.show();
 			}
 
-			if ( index >= $carousel.data().total ) {
+			// This shouldn't be called if $carousel.data() doesn't exist
+			// For now we'll assume the right arrow will need to be shown
+			// instead of showing an error.
+			if ( $carousel.data() && index >= $carousel.data().total ) {
 				$rightControl.hide();
 				$carousel.data().onLastNav();
 			} else {
