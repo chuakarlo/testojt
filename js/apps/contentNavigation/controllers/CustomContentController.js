@@ -6,6 +6,7 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var Vent       = require( 'Vent' );
 	var $          = require( 'jquery' );
+	var startsWith = require( 'common/helpers/startsWith' );
 	require( 'jquery.bum-smack' );
 
 	App.module( 'ContentNavigation.Controller', function ( Controller ) {
@@ -121,7 +122,13 @@ define( function ( require ) {
 					this.videos.reset();
 					this.layout.segmentsRegion.close();
 				}
+				segments = _.filter( segments, function ( segment ) {
+					var isArchived = startsWith( segment.ContentName, 'Archive:' );
 
+					if ( !isArchived ) {
+						return segment;
+					}
+				} );
 				this.videos.add( segments );
 				this.showLoading();
 

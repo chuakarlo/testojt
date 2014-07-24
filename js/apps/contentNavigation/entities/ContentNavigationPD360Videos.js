@@ -1,10 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var App      = require( 'App' );
-	var _        = require( 'underscore' );
-	var Backbone = require( 'backbone' );
-	var Session  = require( 'Session' );
+	var App        = require( 'App' );
+	var _          = require( 'underscore' );
+	var Backbone   = require( 'backbone' );
+	var Session    = require( 'Session' );
+	var startsWith = require( 'common/helpers/startsWith' );
 
 	App.module( 'ContentNavigation.Entities', function ( Entities ) {
 
@@ -53,6 +54,17 @@ define( function ( require ) {
 						'sort'       : this.queryModel.get( 'sort' )
 					}
 				};
+			},
+
+			'parse' : function ( res ) {
+				var vids = _.filter( res, function ( segment ) {
+					var isArchived = startsWith( segment.ContentName, 'Archive:' );
+
+					if ( !isArchived ) {
+						return segment;
+					}
+				} );
+				return vids;
 			},
 
 			'updateStart' : function () {

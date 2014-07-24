@@ -1,10 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var _        = require( 'underscore' );
-	var Backbone = require( 'backbone' );
-	var App      = require( 'App' );
-	var Session  = require( 'Session' );
+	var _          = require( 'underscore' );
+	var Backbone   = require( 'backbone' );
+	var App        = require( 'App' );
+	var Session    = require( 'Session' );
+	var startsWith = require( 'common/helpers/startsWith' );
 
 	App.module( 'Entities', function ( Mod ) {
 
@@ -184,6 +185,13 @@ define( function ( require ) {
 
 				if ( searchType === 'All' ) {
 
+					res.VIDEOS = _.filter( res.VIDEOS, function ( segment ) {
+						var isArchived = startsWith( segment.ContentName, 'Archive:' );
+
+						if ( !isArchived ) {
+							return segment;
+						}
+					} );
 					// Clear the last numFound so backbone can trigger the
 					// event again.
 					this.queryModel.set( 'numFound', 0 );
@@ -222,6 +230,14 @@ define( function ( require ) {
 				} else {
 					// Clear the last numFound so backbone can trigger the
 					// event again.
+					res = _.filter( res, function ( segment ) {
+						var isArchived = startsWith( segment.ContentName, 'Archive:' );
+
+						if ( !isArchived ) {
+							return segment;
+						}
+					} );
+
 					this.queryModel.set( 'numFound', 0 );
 
 					if ( res.length === 1 ) {

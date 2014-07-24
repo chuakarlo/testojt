@@ -73,7 +73,6 @@ define( function ( require ) {
 					if ( !App.request( 'contentNavigation:isCorrectRoute' ) ) {
 						return;
 					}
-
 					this.displayVideos( videos );
 
 				}.bind( this ), this.showError );
