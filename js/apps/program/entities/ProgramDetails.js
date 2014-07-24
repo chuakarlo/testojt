@@ -1,15 +1,14 @@
 define( function ( require ) {
 	'use strict';
 
-	var App        = require( 'App' );
-	var _          = require( 'underscore' );
-	var Backbone   = require( 'backbone' );
-	var $          = require( 'jquery' );
-	var startsWith = require( 'common/helpers/startsWith' );
+	var App      = require( 'App' );
+	var _        = require( 'underscore' );
+	var Backbone = require( 'backbone' );
+	var $        = require( 'jquery' );
 
 	App.module( 'Program.Entities', function ( Entities ) {
 
-		Entities.SegmentModel = Backbone.CFModel.extend( {
+		Entities.ProgramSegment = Backbone.CFModel.extend( {
 
 			'idAttribute' : 'ContentId',
 
@@ -18,9 +17,9 @@ define( function ( require ) {
 			}
 		} );
 
-		Entities.Segments = Backbone.CFCollection.extend( {
+		Entities.ProgramSegments = Backbone.CFCollection.extend( {
 
-			'model' : this.SegmentModel,
+			'model' : this.ProgramSegment,
 
 			'path'  : 'ContentService',
 
@@ -37,21 +36,6 @@ define( function ( require ) {
 						'ContentTypeId'   : this.contentTypeId
 					}
 				};
-			},
-
-			'parse' : function ( response ) {
-
-				var isArchived = null;
-
-				return _.filter( response, function ( segment ) {
-					// make sure ProgramName is not set, to hide program link
-					isArchived          = startsWith( segment.ContentName, 'Archive:' );
-					segment.ProgramName = '';
-
-					if ( !isArchived ) {
-						return segment;
-					}
-				}.bind( this ) );
 			}
 		} );
 
@@ -59,7 +43,7 @@ define( function ( require ) {
 
 			'getSegments' : function ( args ) {
 				var defer    = $.Deferred();
-				var segments = new Entities.Segments( {
+				var segments = new Entities.ProgramSegments( {
 					'contentId'       : args.ContentId,
 					'contentParentId' : args.ContentParentId,
 					'contentTypeId'   : args.ContentTypeId
@@ -72,7 +56,7 @@ define( function ( require ) {
 					},
 
 					'error' : function () {
-						defer.reject( new Error( 'Error fetching program segments.' ) );
+						defer.reject( new Error( 'Error fetching program details.' ) );
 					}
 
 				} );
@@ -82,7 +66,7 @@ define( function ( require ) {
 
 		};
 
-		App.reqres.setHandler( 'program:segments', function ( args ) {
+		App.reqres.setHandler( 'program:details', function ( args ) {
 			return API.getSegments( args );
 		} );
 

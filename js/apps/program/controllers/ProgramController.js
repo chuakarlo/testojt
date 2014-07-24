@@ -24,36 +24,11 @@ define( function ( require ) {
 				App.content.show( this.layout );
 
 				this.displayLoading( 'Loading Program Details ...', this.layout.programDetails );
-				this.displayLoading( 'Loading Program Segments ...', this.layout.segmentsRegion );
 
-				this.setupProgramDetails();
-				this.processQueryString( options.query, this.setupSegments );
+				this.processQueryString( options.query );
 			},
 
-			'setupProgramDetails' : function () {
-
-				// TODO: add entity for obtaining program details
-				// Waiting for API
-				// TODO: display error if no details are obtained
-				// TODO: add unit tests
-
-				var details = {
-					'ProgramName'        : 'This is a sample program name.',
-					'ProgramDescription' : 'This program description will be replaced by the real program description once API becomes available. For now, please bear reading this temporary program description.'
-				};
-
-				this.displayProgramDetails( details );
-			},
-
-			'displayProgramDetails' : function ( details ) {
-				var detailsView = new App.Program.Views.ProgramDetails( {
-					'details' : details
-				} );
-
-				this.layout.programDetails.show( detailsView );
-			},
-
-			'processQueryString' : function ( queryString, callback ) {
+			'processQueryString' : function ( queryString ) {
 				var args = queryString.split( '&' );
 				var temp = null;
 
@@ -64,12 +39,63 @@ define( function ( require ) {
 
 				}.bind( this ) );
 
-				callback();
+				this.setupProgramDetails();
+			},
+
+			'setupProgramDetails' : function () {
+
+				// TODO: modify entity to use correct API once available
+				// Waiting for API
+				// TODO: display error if no details are obtained
+				// TODO: add unit tests
+
+				var detailsRequest = App.request( 'program:details', this.queryArgs );
+				var details        = { };
+
+				App.when( detailsRequest ).then( function ( segments ) {
+
+					if ( !App.request( 'program:isCorrectRoute' ) ) {
+						return;
+					}
+
+					if ( !segments.length ) {
+						this.displayError( 'No program details obtained.' );
+					} else {
+
+						// TODO: remove temporary details below once segment details API is available
+						details = {
+							'ProgramName'        : segments.at( 0 ).get( 'ProgramName' ),
+							'ProgramDescription' : segments.at( 0 ).get( 'ProgramDescription' )
+						};
+
+						details = {
+							'ProgramName'        : 'This is a temporary program title.',
+							'ProgramDescription' : 'This program description will be replaced by the real program description once API becomes available. For now, please bear reading this temporary program description.'
+						};
+
+						this.displayProgramDetails( details );
+					}
+
+				}.bind( this ), function () {
+					this.displayError( 'Error loading prorgram details.' );
+				}.bind( this ) );
+			},
+
+			'displayProgramDetails' : function ( details ) {
+				var detailsView = new App.Program.Views.ProgramDetails( {
+					'details' : details
+				} );
+
+				this.layout.programDetails.show( detailsView );
+
+				this.setupSegments();
 			},
 
 			'setupSegments' : function () {
 				var queueRequest   = App.request( 'common:getQueueContents' );
 				var segmentRequest = App.request( 'program:segments', this.queryArgs );
+
+				this.displayLoading( 'Loading Program Segments ...', this.layout.segmentsRegion );
 
 				App.when( queueRequest, segmentRequest ).then( function ( queue, segments ) {
 					if ( !App.request( 'program:isCorrectRoute' ) ) {
@@ -92,12 +118,12 @@ define( function ( require ) {
 				// TODO: add carousel
 				// TODO: add unit tests
 
-				this.qContentsIds = queue.pluck( 'ContentId' );
+				var qContentsIds = queue.pluck( 'ContentId' );
 
 				segments.each( function ( model ) {
 
 					_id = model.get( 'ContentId' );
-					model.set( 'queued', _.contains( this.qContentsIds, _id ) );
+					model.set( 'queued', _.contains( qContentsIds, _id ) );
 
 				}.bind( this ) );
 
