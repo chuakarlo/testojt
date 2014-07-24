@@ -11,13 +11,12 @@ define( function ( require ) {
 		'template'          : _.template( template ),
 		'className'         : 'toggle-btn',
 		'templateHelpers'   : function () {
-			var msgToken = this.model.get( 'Message' ).split( 'http://' );
-
+			var msgSplit = this.getMessageLink();
 			return {
 				'date'    : moment( this.model.get( 'Created' ) ).format( 'MM/DD/YYYY' ),
 				'status'  : this.model.get( 'Viewed' ) === '' ? 'unread fa-clock-o' : 'read fa-check',
-				'link'    : 'http://' + msgToken[ 1 ],
-				'message' : msgToken[ 0 ]
+				'link'    : msgSplit.link,
+				'message' : msgSplit.message
 			};
 		},
 		'toggleActiveClass' : function ( event ) {
@@ -26,6 +25,15 @@ define( function ( require ) {
 		},
 		'events'            : {
 			'click .title-holder a' : 'toggleActiveClass'
+		},
+		'getMessageLink'    : function () {
+			var splitter = 'http';
+			var prefix   = '#resources/videos/';
+			var spltData = this.model.get( 'Message' ).split( splitter );
+			return {
+				'link'    : prefix + spltData.pop().split( prefix )[ 1 ],
+				'message' : spltData.join( splitter )
+			};
 		}
 	} );
 } );

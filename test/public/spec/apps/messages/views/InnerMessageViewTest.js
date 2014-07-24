@@ -16,7 +16,7 @@ define( function ( require ) {
 				'AllRecipients'     : [ ],
 				'Created'           : 'July, 01 2014 19:48:06',
 				'RecipientFullName' : '',
-				'Message'           : 'i like http://localhost:8080/dev.html#resources/videos/7512',
+				'Message'           : 'i like httpSession houw bout you? http://localhost:8080/dev.html#resources/videos/7512',
 				'Viewed'            : 'July, 01 2014 19:48:35',
 				'CreatorAvatar'     : 'g/1010340_1403636416261.jpg',
 				'RecipientAvatar'   : '',
@@ -47,5 +47,14 @@ define( function ( require ) {
 			view.$el.hasClass( 'active' ).should.be.equal( false );
 		} );
 
+		it( 'should contain link to video`s page for mobile and desktop', function () {
+			view.getMessageLink().link.should.equal( '#resources/videos/7512' );
+		} );
+
+		it( 'should contain message to video`s page for mobile and desktop', function () {
+			view.getMessageLink().message.should.equal( 'i like httpSession houw bout you? ' );
+		} );
+
 	} );
+
 } );
