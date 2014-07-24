@@ -3,8 +3,6 @@
 @import 'mixins.less';
 
 #notification {
-
-
 	li {
 		list-style : none;
 	}
@@ -15,7 +13,7 @@
 		border-bottom         : 1px solid @m-gray;
 		background            : @m-gray-lightest;
 		padding               : 1px 10px;
-		margin                : 5px 0 0 0;
+		margin                : 0;
 		.m-border-radius( 5px 5px 0 0 );
 		h4 {
 			font-weight: normal;
@@ -56,6 +54,15 @@
 	.accordion {
 		border-top    : @m-border;
 		margin-bottom : 20px;
+		.empty-message {
+			margin        : 0px;
+			padding       : 48px;
+			border-radius : 3px;
+			text-align    : center;
+			font-size     : 15px;
+			background    : @m-gray-lightest;
+			color         : @m-gray-darker;
+		}
 	}
 	.toggle-btn.active {
 		border-right : @m-border;
@@ -92,6 +99,8 @@
 			padding    : 20px 10px;
 			a {
 				text-decoration : none;
+				outline         : none;
+				outline-offset  : 0;
 			}
 			.unread {
 				color : @m-red-light;
@@ -150,15 +159,11 @@
 				border        : 1px solid @m-gray-lighter;
 				border-radius : 8px;
 			}
-			.empty-message {
-				color       : @m-black-light;
-				padding-top : 22px;
-				text-align  : center;
-			}
 		}
 	}
 
 	.select {
+		padding-bottom : 10px;
 		.btn, .dropdown {
 			width : 140px;
 		}

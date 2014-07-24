@@ -3,8 +3,8 @@ define( function ( require ) {
 
 	var App          = require( 'App' );
 	var MessagesView = require( 'apps/messages/views/MessagesView' );
-
-	var dummyData = [
+	var EmptyView    = require( 'apps/messages/views/EmptyMessageView' );
+	var dummyData    = [
 		{
 			'Subject'           : '',
 			'CreatorFullName'   : 'David Starks',
@@ -77,7 +77,6 @@ define( function ( require ) {
 			collection = new App.Entities.Notifications( dummyData );
 			view       = new MessagesView( { 'collection' : collection } );
 			view.render();
-
 			$el = view.$el;
 		} );
 
@@ -111,6 +110,10 @@ define( function ( require ) {
 
 		it( 'content should be displayed in accordion', function () {
 			( typeof $el.find( '.accordion' ) ).should.not.equal( undefined );
+		} );
+
+		it( 'should have an emptyView', function () {
+			( new view.emptyView() ).should.be.instanceOf( EmptyView );
 		} );
 
 		describe( 'Sorting', function () {

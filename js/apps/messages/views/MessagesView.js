@@ -6,10 +6,12 @@ define( function ( require ) {
 	var _          = require( 'underscore' );
 
 	var InnerMessageView = require( 'apps/messages/views/InnerMessageView' );
+	var EmptyMessageView = require( 'apps/messages/views/EmptyMessageView' );
 	var template         = require( 'text!apps/messages/templates/messages.html' );
 
 	return Marionette.CompositeView.extend( {
 		'template'          : _.template( template ),
+		'emptyView'         : EmptyMessageView,
 		'itemView'          : InnerMessageView,
 		'itemViewContainer' : '.accordion',
 		'ui'                : {
