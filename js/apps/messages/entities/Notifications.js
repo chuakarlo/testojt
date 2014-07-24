@@ -22,7 +22,24 @@ define( function ( require ) {
 						'filter'   : ''
 					}
 				};
+			},
+
+			'changeSortBy' : function ( sort ) {
+				this.comparator = this.strategies[ sort ];
+			},
+
+			'strategies' : {
+				'date'   : function ( message ) {
+					var date = new Date( message.get( 'Created' ) );
+					return - date.setDate( date.getDate() );
+				},
+				'sender' : 'CreatorFullName'
+			},
+
+			'comparator' : function ( message ) {
+				return this.strategies.date( message );
 			}
+
 		} );
 
 	} );
