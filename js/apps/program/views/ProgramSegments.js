@@ -14,11 +14,11 @@ define( function ( require ) {
 
 		'itemView' : App.Common.SegmentCardsView,
 
-		'tagName' : 'ul',
+		'itemViewContainer' : '#program-segment-list',
 
 		'emptyView' : EmptyView,
 
-		'className' : 'program-segments-list',
+		'className' : 'program-segments',
 
 		'itemViewOptions' : function ( model, index ) {
 			var emptyViewOptions = {
