@@ -41,23 +41,9 @@ define( function ( require ) {
 				videosCollectionView.should.have.property( 'itemView' );
 			} );
 
-			it( 'has a `className` property with value `slick`', function ( ) {
-				videosCollectionView.should.have.property( 'className' );
-				videosCollectionView.className.should.be.equal( 'slick' );
-			} );
-
 			it( 'has a `tagName` property with value `div`', function ( ) {
 				videosCollectionView.should.have.property( 'tagName' );
 				videosCollectionView.tagName.should.be.equal( 'div' );
-			} );
-
-		} );
-
-		describe( '.onClose', function ( ) {
-
-			it( 'will reset the collection' , function ( ) {
-				videosCollectionView.onClose();
-				videosCollectionView.collection.length.should.be.equal( 0 );
 			} );
 
 		} );

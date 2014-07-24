@@ -8,6 +8,7 @@ define( function ( require ) {
 	var ErrorView           = require( './ErrorView' );
 	var SegmentCardsView    = require( './SegmentCardsView' );
 	var NewSegmentCardsView = require( './SegmentCard/SegmentCardsView' );
+	var CarouselView        = require( './CarouselView' );
 
 	App.module( 'Common', function ( Common ) {
 		Common.LoadingView         = LoadingView;
@@ -15,6 +16,7 @@ define( function ( require ) {
 		Common.ErrorView           = ErrorView;
 		Common.SegmentCardsView    = SegmentCardsView;
 		Common.NewSegmentCardsView = NewSegmentCardsView;
+		Common.CarouselView        = CarouselView;
 	} );
 
 } );

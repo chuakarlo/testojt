@@ -24,12 +24,8 @@
 		}
 
 		#questions-item-region {
-			.slick-track {
-				padding    : 0px;
-				list-style : none;
-				li.questions-item.slick-slide:not(.slick-active) {
-					visibility : hidden;
-				}
+			.owl-stage-outer {
+				margin-right: 0px;
 			}
 		}
 
@@ -55,14 +51,18 @@
 		}
 
 		#questions-pagination {
-			width      : 100%;
-			text-align : center;
-			padding    : 15px;
-			position   : absolute;
-			bottom     : 0px;
-			left       : 0px;
-			background : @vp-pagination-gray;
-			height     : 50px;
+			width               : 100%;
+			text-align          : center;
+			padding             : 15px;
+			position            : absolute;
+			bottom              : 0px;
+			left                : 0px;
+			background          : @vp-pagination-gray;
+			height              : 50px;
+			-webkit-user-select : none; /* webkit (safari, chrome) browsers */
+			-moz-user-select    : none; /* mozilla browsers */
+			-khtml-user-select  : none; /* webkit (konqueror) browsers */
+			-ms-user-select     : none; /* IE10+ */
 
 			.control {
 				position            : absolute;
@@ -77,10 +77,6 @@
 				text-align          : center;
 				text-shadow         : 0 1px 1px rgba(88, 145, 38, 0.6);
 				cursor              : pointer;
-				-webkit-user-select : none; /* webkit (safari, chrome) browsers */
-				-moz-user-select    : none; /* mozilla browsers */
-				-khtml-user-select  : none; /* webkit (konqueror) browsers */
-				-ms-user-select     : none; /* IE10+ */
 			}
 
 			.control:active {

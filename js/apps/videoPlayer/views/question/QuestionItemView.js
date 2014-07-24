@@ -13,8 +13,6 @@ define( function ( require ) {
 
 	return Marionette.ItemView.extend( {
 
-		'tagName' : 'li',
-
 		'className' : 'questions-item',
 
 		'template' : _.template( template ),
