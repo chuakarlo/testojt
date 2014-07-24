@@ -1,15 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var Vent             = require( 'Vent' );
 	var $                = require( 'jquery' );
 	var _                = require( 'underscore' );
 	var Marionette       = require( 'marionette' );
 	var CategoryItemView = require( '../views/ContentNavigationCustomCategoryItemView' );
 	var template         = require( 'text!../templates/contentNavigationCustomCategoriesView.html' );
-
-	require( 'jquery.mousewheel' );
-	require( 'jquery.pscrollbar' );
 
 	return Marionette.CompositeView.extend( {
 
@@ -21,17 +17,10 @@ define( function ( require ) {
 
 		'onShow' : function () {
 			$( this.$el ).find( 'li:nth-child( 2 )' ).addClass( 'selected' );
-
-			Vent.trigger( 'contentNavigation:updateScrollbar' );
-		},
-
-		'onClose' : function () {
-			this.ui.sidebar.perfectScrollbar( 'destroy' );
 		},
 
 		'ui' : {
-			'collapseButton' : '.cn-collapse',
-			'sidebar'        : '.cn-sidebar'
+			'collapseButton' : '.cn-collapse'
 		},
 
 		'events' : {
@@ -46,8 +35,6 @@ define( function ( require ) {
 				$( ev.currentTarget  ).addClass( 'open' ).children( '.fa' ).removeClass( 'fa-plus' ).addClass( 'fa-minus' );
 				$( 'div.cn-filter-container' ).show();
 			}
-
-			Vent.trigger( 'contentNavigation:updateScrollbar' );
 		}
 
 	} );

@@ -1,15 +1,11 @@
 define( function ( require ) {
 	'use strict';
 
-	var Vent             = require( 'Vent' );
 	var _                = require( 'underscore' );
 	var Marionette       = require( 'marionette' );
 	var $                = require( 'jquery' );
 	var CategoryItemView = require( '../views/ContentNavigationUUVCategoryItemView' );
 	var template         = require( 'text!../templates/contentNavigationUUVCategoriesView.html' );
-
-	require( 'jquery.mousewheel' );
-	require( 'jquery.pscrollbar' );
 
 	return Marionette.CompositeView.extend( {
 
@@ -22,17 +18,10 @@ define( function ( require ) {
 		'onShow' : function () {
 			$( this.$el ).find( 'li:nth-child( 2 )' ).addClass( 'selected' );
 			$( this.$el ).find( 'li:nth-child( 4 )' ).addClass( 'cn-uuv-category-separator' );
-
-			Vent.trigger( 'contentNavigation:updateScrollbar' );
-		},
-
-		'onClose' : function () {
-			this.ui.sidebar.perfectScrollbar( 'destroy' );
 		},
 
 		'ui' : {
-			'collapseButton' : '.cn-collapse',
-			'sidebar'        : '.cn-sidebar'
+			'collapseButton' : '.cn-collapse'
 		},
 
 		'events' : {
@@ -47,8 +36,6 @@ define( function ( require ) {
 				$( ev.currentTarget  ).addClass( 'open' ).children( '.fa' ).removeClass( 'fa-plus' ).addClass( 'fa-minus' );
 				$( 'div.cn-filter-container' ).show();
 			}
-
-			Vent.trigger( 'contentNavigation:updateScrollbar' );
 		}
 
 	} );

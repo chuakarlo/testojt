@@ -35,8 +35,6 @@ require.config( {
 		'jquery.bum-smack'    : 'libs/jquery.bum-smack/src/jquery.bum-smack',
 		'spin'                : 'libs/spin.js/spin',
 		'jquery.spin'         : 'libs/spin.js/jquery.spin',
-		'jquery.pscrollbar'   : 'libs/perfect-scrollbar/src/perfect-scrollbar',
-		'jquery.mousewheel'   : 'libs/perfect-scrollbar/src/jquery.mousewheel',
 		'jquery'              : 'libs/jquery/dist/jquery',
 		'jquery-cookie'       : 'libs/jquery-cookie/jquery.cookie',
 		'marionette'          : 'libs/backbone.marionette/lib/core/amd/backbone.marionette',
@@ -150,10 +148,6 @@ require.config( {
 
 		'jquery.spin' : {
 			'deps' : [ 'jquery', 'spin' ]
-		},
-
-		'jquery.pscrollbar' : {
-			'deps' : [ 'jquery' , 'jquery.mousewheel' ]
 		},
 
 		'slick' : {

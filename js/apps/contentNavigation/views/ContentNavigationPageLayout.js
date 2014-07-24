@@ -1,14 +1,12 @@
 define( function ( require ) {
 	'use strict';
 
-	var Vent       = require( 'Vent' );
-	var $          = require( 'jquery' );
-	var _          = require( 'underscore' );
-	var Marionette = require( 'marionette' );
-	var template   = require( 'text!../templates/contentNavigationLayout.html' );
-
-	require( 'jquery.mousewheel' );
-	require( 'jquery.pscrollbar' );
+	var Vent            = require( 'Vent' );
+	var $               = require( 'jquery' );
+	var _               = require( 'underscore' );
+	var Marionette      = require( 'marionette' );
+	var template        = require( 'text!../templates/contentNavigationLayout.html' );
+	var scrollFocusLock = require( 'common/helpers/scrollFocusLock' );
 
 	return Marionette.Layout.extend( {
 
@@ -39,13 +37,11 @@ define( function ( require ) {
 		},
 
 		'sidebarShow' : function () {
-			$( 'html' ).addClass( 'disable-scroll' );
 			this.ui.sidebar.addClass( 'sidebar-open' ).removeClass( 'hidden-xs' );
 			$( '.navbar-brand' ).addClass( 'non-clickable' );
 		},
 
 		'sidebarHide' : function () {
-			$( 'html' ).removeClass( 'disable-scroll' );
 			this.ui.sidebar.removeClass( 'sidebar-open' ).addClass( 'hidden-xs' );
 
 			setTimeout( function () {
@@ -58,11 +54,12 @@ define( function ( require ) {
 
 			this.reloadSidebar();
 
+			scrollFocusLock( this.ui.sidebar );
+
 			$( window ).on( 'resize scroll' ,function ( ) {
 				clearTimeout( timer );
 				timer = setTimeout( function () {
 					this.reloadSidebar();
-					this.updateSidebarScroll();
 					this.setStickyFilterToggle();
 				}.bind( this ), 100 );
 			}.bind( this ) );
@@ -70,15 +67,10 @@ define( function ( require ) {
 			this.listenTo( Vent, 'contentNavigation:resetBodyScroll', function () {
 				this.resetBodyScroll();
 			}.bind( this ) );
-
-			this.listenTo( Vent, 'contentNavigation:updateScrollbar', function () {
-				this.updateSidebarScroll();
-			}.bind( this ) );
-
 		},
 
 		'onClose' : function () {
-			this.ui.sidebar.perfectScrollbar( 'destroy' );
+			scrollFocusLock( this.ui.sidebar , 'destroy' );
 			$( window ).off( 'resize scroll' );
 			this.stopListening();
 		},
@@ -104,14 +96,6 @@ define( function ( require ) {
 				this.ui.sidebar.css( 'height', $( window ).height() - 25 );
 			} else {
 				this.ui.sidebar.css( 'height', $( window ).height() - 200 );
-			}
-		},
-
-		'updateSidebarScroll' : function () {
-			if ( this.ui.sidebarWrapper.height() < this.getSidebarHeight() || $( window ).width() < 768 || $( 'html' ).hasClass( 'touch' ) ) {
-				this.ui.sidebar.perfectScrollbar( 'destroy' );
-			} else {
-				this.ui.sidebar.perfectScrollbar( { suppressScrollX : true } );
 			}
 		},
 

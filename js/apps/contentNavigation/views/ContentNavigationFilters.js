@@ -9,9 +9,6 @@ define( function ( require ) {
 	var FilterItemView = require( '../views/ContentNavigationFilterItemView' );
 	var template       = require( 'text!../templates/contentNavigationFiltersView.html' );
 
-	require( 'jquery.mousewheel' );
-	require( 'jquery.pscrollbar' );
-
 	return Marionette.CompositeView.extend( {
 
 		'template' : _.template( template ),
@@ -25,8 +22,7 @@ define( function ( require ) {
 		'ui' : {
 			'clearButton'    : '.cn-clear-btn',
 			'filter'         : '.cn-filter-item',
-			'collapseButton' : '.cn-collapse',
-			'sidebar'        : '.cn-sidebar'
+			'collapseButton' : '.cn-collapse'
 		},
 
 		'events' : {
@@ -43,8 +39,6 @@ define( function ( require ) {
 				$( ev.currentTarget  ).addClass( 'open' ).children( '.fa' ).removeClass( 'fa-plus' ).addClass( 'fa-minus' );
 				$( 'div.cn-filter-container-' + this.options.filterName.toLowerCase() ).show();
 			}
-
-			Vent.trigger( 'contentNavigation:updateScrollbar' );
 		},
 
 		'changeClear' : function () {
@@ -93,14 +87,6 @@ define( function ( require ) {
 			this.template = _.template( template, this.options );
 
 			return this;
-		},
-
-		'onShow' : function () {
-			Vent.trigger( 'contentNavigation:updateScrollbar' );
-		},
-
-		'onClose' : function () {
-			this.ui.sidebar.perfectScrollbar( 'destroy' );
 		}
 
 	} );

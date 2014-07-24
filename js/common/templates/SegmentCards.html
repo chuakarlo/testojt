@@ -9,7 +9,7 @@
         </a>
     </div>
     <div class="sc-footer-details" >
-        <h5 class="sc-segment-name" > <%- longContentName() %></h5>
+        <h5 class="sc-segment-name" > <%- fullContentName() %></h5>
         <p class="sc-program <%- showProgram() %>" >Program: <a href="<%- getProgramLink() %>" title="<%- getProgramName() %>"><%- program() %></a></p>
         <span class="sc-duration" ><%- duration() %></span>
         <span  class="sc-info-icon grayed fa fa-info-circle" ></span>
@@ -18,9 +18,11 @@
     </div>
 
     <div class="sc-overlay-details" >
-        <p class="sc-overlay-segment-name" title="<%- fullContentName() %>" ><%- shortContentName() %></p>
-        <p class="sc-overlay-duration" ><%- duration() %></p>
-        <p class="sc-overlay-content-description" ><%- shortContentDescription() %></p>
+        <div class="sc-scrollable-details" >
+            <p class="sc-overlay-segment-name" ><%- fullContentName() %></p>
+            <p class="sc-overlay-duration" ><%- duration() %></p>
+            <p class="sc-overlay-content-description" ><%- fullContentDescription() %></p>
+        </div>
         <a href="<%- linkUrl() %>" class="sc-play-link" >
             <span class="sc-overlay-play-icon fa fa-play" ></span>
             <span class="sc-overlay-play-now" >Play Now</span>

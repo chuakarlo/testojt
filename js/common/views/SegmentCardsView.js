@@ -27,7 +27,8 @@ define( function ( require ) {
 			'viewCompletedIcon' : 'span.sc-view-completed-icon',
 			'loadingIcon'       : 'span.sc-watch-later-loading-icon',
 			'infoOverlay'       : 'div.sc-overlay-details',
-			'playNowLink'       : 'a.sc-play-link'
+			'playNowLink'       : 'a.sc-play-link',
+			'scrollableInfo'    : 'div.sc-scrollable-details'
 		},
 
 		'events' : {
@@ -38,20 +39,12 @@ define( function ( require ) {
 
 		'templateHelpers' : {
 
-			'shortContentName' : function () {
-				return getAbbreviation( this.ContentName || this.Name, 50 );
-			},
-
-			'longContentName' : function () {
-				return getAbbreviation( this.ContentName || this.Name, 126 );
-			},
-
 			'fullContentName' : function () {
 				return this.ContentName || this.Name;
 			},
 
-			'shortContentDescription' : function () {
-				return getAbbreviation( stripHtml( this.ContentDescription || this.Description ) , 200 );
+			'fullContentDescription' : function () {
+				return stripHtml( this.ContentDescription || this.Description );
 			},
 
 			'program' : function () {

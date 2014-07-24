@@ -1,8 +1,9 @@
 define( function ( require ) {
 	'use strict';
 
-	var modernizr = window.Modernizr;
-	var App       = require( 'App' );
+	var modernizr       = window.Modernizr;
+	var App             = require( 'App' );
+	var scrollFocusLock = require( 'common/helpers/scrollFocusLock' );
 
 	return {
 		'onRender' : function () {
@@ -10,7 +11,9 @@ define( function ( require ) {
 		},
 
 		'onShow' : function () {
+
 			this.addTooltip( this.ui.infoIcon , { 'title' : 'Description' } );
+
 			if ( !this.model.get( 'ViewingCompleted' ) ) {
 				this.matchedSegmentsToQueue();
 			} else {
@@ -22,6 +25,7 @@ define( function ( require ) {
 			this.removeTooltip( this.ui.infoIcon );
 			this.removeTooltip( this.ui.watchIcon );
 			this.ui.loadingIcon.spin( false );
+			scrollFocusLock ( this.ui.scrollableInfo, 'destroy' );
 		},
 
 		'navigateToVideoPage' : function ( ev ) {
@@ -40,11 +44,13 @@ define( function ( require ) {
 			if ( !this.ui.infoIcon.hasClass( 'blued' ) ) {
 				this.ui.infoIcon.addClass( 'blued fa-times-circle' ).removeClass( 'grayed fa-info-circle' );
 				tooltipText = 'Close';
+				scrollFocusLock ( this.ui.scrollableInfo );
 				this.ui.infoOverlay.fadeIn();
 				this.ui.watchIcon.addClass( 'grayed-overlay' );
 			} else {
 				this.ui.infoIcon.addClass( 'grayed fa-info-circle' ).removeClass( 'blued fa-times-circle' );
 				tooltipText = 'Description';
+				scrollFocusLock ( this.ui.scrollableInfo , 'destroy' );
 				this.ui.infoOverlay.fadeOut();
 				this.ui.watchIcon.removeClass( 'grayed-overlay' );
 			}
@@ -78,22 +84,22 @@ define( function ( require ) {
 			this.ui.watchIcon.show();
 		},
 
-		'setTouch' : function ( elem, options ) {
+		'setTooltip' : function ( elem, options ) {
 			if ( !modernizr.touch ) {
 				elem.tooltip( options );
 			}
 		},
 
 		'addTooltip' : function ( elem , options ) {
-			this.setTouch ( elem, options );
+			this.setTooltip( elem, options );
 		},
 
 		'removeTooltip' : function ( elem ) {
-			this.setTouch ( elem, 'destroy' );
+			this.setTooltip( elem, 'destroy' );
 		},
 
 		'showTooltip' : function ( elem ) {
-			this.setTouch ( elem, 'show' );
+			this.setTooltip( elem, 'show' );
 		}
 	};
 
