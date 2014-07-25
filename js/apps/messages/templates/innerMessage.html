@@ -1,14 +1,18 @@
 <div class="title-holder">
-		<a data-toggle="collapse" data-parent="#accordion" href="#collapse<%- InternalMessageId %>" class="accordion-tab collapsed">
-				<i class="fa <%- status %> "></i>
-				<div class="title-wrapper list- col-xs-11 col-sm-11 col-md-11">
-					<div class="date"> <%- date %> </div>
-					<p class="subject">
-						<%- CreatorFullName %> sent you a message.
-					</p>
-				</div>
-		</a>
-		<input type="checkbox" class="checkbox pull-right" />
+		<div class="date-link col-xs-11">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse<%- InternalMessageId %>" class="accordion-tab collapsed col-xs-12">
+					<i class="img-link fa <%- status %> col-xs-1"></i>
+					<div class="title-wrapper col-xs-11">
+						<div class="date "> <%- date %> </div>
+						<p class="subject ">
+							<%- CreatorFullName %> sent you a message.
+						</p>
+					</div>
+			</a>
+		</div>
+		<div class="checkbox-link col-xs-1">
+			<input type="checkbox" class="checkbox pull-right" />
+		</div>
 </div>
 
 <div id="collapse<%- InternalMessageId %>" class="panel-collapse collapse">

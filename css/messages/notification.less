@@ -97,10 +97,15 @@
 		.title-holder {
 			overflow   : hidden;
 			padding    : 20px 10px;
+
+			.date-link, .checkbox-link {
+				padding : 0;
+			}
 			a {
 				text-decoration : none;
 				outline         : none;
 				outline-offset  : 0;
+				padding         : 0;
 			}
 			.unread {
 				color : @m-red-light;
@@ -119,18 +124,19 @@
 
 		.fa {
 			font-size      : 16px;
-			padding-left   : 20px;
-			min-width      : 31px;
+			padding        : 0;
 			vertical-align : middle;
 		}
 
 		.title-wrapper {
-			float          : none;
 			vertical-align : middle;
-			width          : 80%;
 			display        : inline-block;
 			color          : @m-blue-light;
 			margin-bottom  : 0px;
+			overflow       : hidden;
+			text-overflow  : ellipsis;
+			white-space    : nowrap;
+			padding        : 0;
 
 			.date, .subject {
 				display : inline
@@ -159,6 +165,12 @@
 				border        : 1px solid @m-gray-lighter;
 				border-radius : 8px;
 			}
+			.empty-message {
+				color       : @m-black-light;
+				padding-top : 22px;
+				text-align  : center;
+			}
+
 		}
 	}
 
