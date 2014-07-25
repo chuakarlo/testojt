@@ -7,12 +7,10 @@ define( function ( require ) {
 
 	var App               = require( 'App' );
 	var QuestionsItemView = require( 'videoPlayer/views/question/QuestionItemView' );
-	var NoItemView        = require( 'videoPlayer/views/NoItemView' );
 
-	var CarouselView = App.Common.CarouselView;
-	var template     = require( 'text!videoPlayer/templates/questionsCompositeView.html' );
+	var template = require( 'text!videoPlayer/templates/questionsCompositeView.html' );
 
-	return CarouselView.extend( {
+	return App.Common.CarouselView.extend( {
 
 		'className' : 'col-xs-12 col-sm-12 right-bar',
 
@@ -26,7 +24,7 @@ define( function ( require ) {
 			};
 		},
 
-		'emptyView' : NoItemView,
+		'emptyView' : App.Common.CarouselEmptyView,
 
 		'itemViewContainer' : '#questions-item-region',
 

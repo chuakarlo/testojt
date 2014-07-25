@@ -32,6 +32,7 @@ define( function ( require ) {
 		Entities.QueueContents = Backbone.CFCollection.extend( {
 
 			'path'  : 'core.ClientPersonnelBookmarkGateway',
+
 			'model' : Entities.QueueContent,
 
 			'getReadOptions' : function () {
@@ -41,6 +42,18 @@ define( function ( require ) {
 						'personnelId' : Session.personnelId()
 					}
 				};
+			},
+
+			'isQueued' : function ( content ) {
+				var result = false;
+
+				this.models.forEach( function ( model ) {
+					if ( !result ) {
+						result = ( model.id === content.id );
+					}
+				} );
+
+				return result;
 			}
 
 		} );

@@ -149,7 +149,7 @@ define( function ( require ) {
 			var el = Marionette.getOption( this, 'carouselEl' ) || this.getCarouselEl();
 
 			// Save a direct access to the initialized carousel.
-			this.carouselEl = this._getElement( el );
+			this.carouselEl = this._getElement( el, 'carouselEl' );
 			// Bind events
 			this._bindEvents();
 			// Initialize carousel.
@@ -204,14 +204,14 @@ define( function ( require ) {
 				case 'next' :
 					// Check if we're setting our own DOM for navigation
 					if ( this._options.controls && this._options.controls.next ) {
-						return this._getElement( this._options.controls.next );
+						return this._getElement( this._options.controls.next, 'next' );
 					} else {
 						return controls.$next;
 					}
 					break;
 				case 'prev' :
 					if ( this._options.controls && this._options.controls.prev ) {
-						return this._getElement( this._options.controls.prev );
+						return this._getElement( this._options.controls.prev, 'prev' );
 					} else {
 						return controls.$previous;
 					}
@@ -222,13 +222,13 @@ define( function ( require ) {
 			}
 		},
 
-		'_getElement' : function ( elem ) {
+		'_getElement' : function ( elem, name ) {
 			if ( typeof elem === 'string' ) {
 				elem = this.$el.find( elem );
 			}
 
 			if ( !elem || ( elem.length === 0 ) ) {
-				throwError( 'Element "carouselEl" is missing. ', 'commons/CarouselView' );
+				throwError( 'Element "' + name + '" is missing. ', 'commons/CarouselView' );
 				return;
 			}
 

@@ -51,15 +51,12 @@ define( function ( require ) {
 			},
 
 			'showVideoResources' : function ( videoModel ) {
-
-				var questionsRequest     = App.request( 'videoPlayer:questions', videoModel.id );
-				var relatedVideosRequest = App.request( 'videoPlayer:relatedVideos', videoModel );
-				var queueContentsRequest = App.request( 'common:getQueueContents' );
-				var segmentsRequest      = App.request( 'videoPlayer:segments', videoModel );
-
-				var viewingId = videoModel.getViewingId();
-
-				App.when( questionsRequest, queueContentsRequest, segmentsRequest, relatedVideosRequest, viewingId ).done( function ( questions, queueContents, segments, relatedVideos ) {
+				App.when( App.request( 'videoPlayer:questions', videoModel.id ),
+					App.request( 'common:getQueueContents' ),
+					App.request( 'videoPlayer:segments', videoModel ),
+					App.request( 'videoPlayer:relatedVideos', videoModel ),
+					videoModel.getViewingId() ).done(
+				function ( questions, queueContents, segments, relatedVideos ) {
 					if ( !App.request( 'videoPlayer:isVideosRoute' ) ) {
 						return;
 					}
@@ -67,32 +64,26 @@ define( function ( require ) {
 					var layout = new App.VideoPlayer.Views.PageLayout( {
 						'model' : videoModel
 					} );
+
 					App.content.show( layout );
 
-					// get all queue contents ids
-					var queueContentsIds = [ ];
-					_.each( queueContents.models, function ( model ) {
-						queueContentsIds.push( model.id );
-					} );
-
 					// set content queued attribute
-					videoModel.setQueue( queueContentsIds );
+					videoModel.set( 'queued', queueContents.isQueued( videoModel ) );
 
 					// set video segments queued attribute
 					segments.each( function ( model ) {
-						model.setQueue( queueContentsIds );
+						model.set( 'queued', queueContents.isQueued( model ) );
 					} );
 
 					// set related videos queued attribute
 					relatedVideos.each( function ( model ) {
-						model.setQueue( queueContentsIds );
+						model.set( 'queued', queueContents.isQueued( model ) );
 					} );
 
 					// if there are other segments available
 					if ( !segments.isEmpty() ) {
-						var segmentsView = new App.VideoPlayer.Views.VideoCollectionView( {
-							'collection' : segments,
-							'id'         : 'segments-video-carousel'
+						var segmentsView = new App.Common.VideoCarouselView( {
+							'collection' : segments
 						} );
 
 						var segmentLabel = new App.VideoPlayer.Views.SegmentLabelItemView( {
@@ -146,9 +137,8 @@ define( function ( require ) {
 					layout.videoResourcesRegion.show( resourcesView );
 
 					// show related vids
-					var relatedView = new App.VideoPlayer.Views.VideoCollectionView( {
-						'collection' : relatedVideos,
-						'id'         : 'related-videos-carousel'
+					var relatedView = new App.Common.VideoCarouselView( {
+						'collection' : relatedVideos
 					} );
 					layout.relatedVideosRegion.show( relatedView );
 
@@ -163,13 +153,10 @@ define( function ( require ) {
 			'showShareVideoDialog' : function ( model ) {
 
 				window.showSharedModal( {
-
 					'type' : 'video',
-
 					'data' : {
 						'model' : model
 					}
-
 				} );
 
 			}

@@ -89,7 +89,9 @@ define( function ( require ) {
 					'getViewingId' : sinon.stub().returns( 0 )
 				} );
 
-				var collection = new App.VideoPlayer.Entities.RelatedVideos();
+				var collection = new App.VideoPlayer.Entities.RelatedVideos( null, {
+					'isQueued' : sinon.stub().returns( false )
+				} );
 
 				before( function () {
 					collection.reset( [ { }, { } ] );

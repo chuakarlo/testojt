@@ -66,11 +66,9 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/views/question/QuestionItemViewTest.js',
 			// views/info
 			'spec/apps/videoPlayer/views/VideoInfoItemViewTest.js',
-			// views/share
 			// views/tabs
 			'spec/apps/videoPlayer/views/tabs/ButtonsItemViewTest.js',
 			'spec/apps/videoPlayer/views/tabs/TabsItemViewTest.js',
-			'spec/apps/videoPlayer/views/tabs/VideoCollectionViewTest.js',
 			'spec/apps/videoPlayer/views/tabs/VideoResourceItemViewTest.js',
 			'spec/apps/videoPlayer/views/tabs/VideoResourcesCollectionViewTest.js',
 			'spec/apps/videoPlayer/views/tabs/PreviewItemViewTest.js',
@@ -133,7 +131,9 @@ define( function ( require ) {
 			'spec/apps/homepage/external/widgets/views/EmptyWidgetViewTest.js',
 
 			// Common - helpers
-			'spec/common/helpers/startsWithTest.js'
+			'spec/common/helpers/startsWithTest.js',
+			// Common - views
+			'spec/common/views/VideoCarouselViewTest.js'
 		]
 
 	};

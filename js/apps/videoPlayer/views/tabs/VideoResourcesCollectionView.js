@@ -3,7 +3,7 @@ define( function ( require ) {
 
 	var Marionette            = require( 'marionette' );
 	var VideoResourceItemView = require( 'videoPlayer/views/tabs/VideoResourceItemView' );
-	var NoItemView            = require( 'videoPlayer/views/NoItemView' );
+	var NoItemView            = require( 'common/views/CarouselEmptyView' );
 
 	return Marionette.CollectionView.extend( {
 
