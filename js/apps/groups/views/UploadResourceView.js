@@ -134,7 +134,7 @@ define( function ( require ) {
 				// Handle FILES
 
 				if ( $( '.qq-upload-file' ).text() === '' ) {
-					App.errorHandler( new Error( 'No file to upload.' ) );
+					App.errorHandler( new Error( 'Please attach a file to upload.' ) );
 					l.stop();
 
 					return false;
