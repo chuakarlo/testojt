@@ -6,6 +6,7 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	var Session    = require( 'Session' );
 	var $          = require( 'jquery' );
+	var utils      = require( 'videoPlayer/utils/utils' );
 
 	var moment = require( 'moment' );
 	require( 'moment-timezone' );
@@ -56,7 +57,7 @@ define( function ( require ) {
 		},
 
 		'onRender' : function () {
-			var message = autolinker.link( this.model.get( 'Message' ) );
+			var message = autolinker.link( utils.safeStringify( this.model.get( 'Message' ) ).replace( /%nl%/g, '\n' ) );
 			$( this.el ).find( 'p.wall-comment' ).prepend( message );
 		},
 
