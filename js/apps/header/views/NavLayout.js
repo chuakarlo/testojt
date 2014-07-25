@@ -110,12 +110,12 @@ define( function ( require ) {
 			event.preventDefault();
 			var val = this.ui.search.val();
 
-			if ( val === '' ) {
+			if ( val.match( /^\s*$/ ) ) {
 				// Submitted the small forum.
 				val = this.ui.smallSearch.val();
 			}
 
-			if ( val !== '' ) {
+			if ( !val.match( /^\s*$/ ) ) {
 				val = encodeURIComponent( val );
 				var url = 'search/All/' + val;
 				App.navigate( url, { 'trigger' : true } );
