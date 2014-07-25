@@ -6,6 +6,7 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var template   = require( 'text!../templates/groupResourcesLayout.html' );
 	var Vent       = require( 'Vent' );
+	var $          = require( 'jquery' );
 
 	App.module( 'Groups.Views', function ( Mod ) {
 
@@ -24,6 +25,7 @@ define( function ( require ) {
 
 			'initialize' : function ( options ) {
 				this.model = options.groupModel;
+				$( '.see-all-members-group' ).removeClass( 'hidden' );
 			},
 
 			'upload' : function () {

@@ -62,6 +62,13 @@ define( function ( require ) {
 
 		},
 
+		'onShow' : function () {
+
+			if ( App.getCurrentRoute().split( '/' )[ 2 ] !== 'members' ) {
+				$( this.$el ).find( '.see-all-members-group' ).removeClass( 'hidden' );
+			}
+		},
+
 		'closePopovers' : function ( currentView ) {
 			// This will close any popovers on other children views for this
 			// collection view

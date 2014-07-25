@@ -79,6 +79,7 @@ define( function ( require ) {
 			this.user = options.user;
 			this.groupAvatar = options.groupAvatar;
 			this.listenTo( App.vent, 'show:popover', this.closePopovers );
+			$( '.see-all-members-group' ).removeClass( 'hidden' );
 			// this.on( 'itemview:show:popover', this.closePopovers );
 		},
 

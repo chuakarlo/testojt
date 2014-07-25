@@ -48,6 +48,7 @@ define( function ( require ) {
 			}
 
 			this.hideWhenResizeOnSmallSizes();
+			$( '.see-all-members-group' ).addClass( 'hidden' );
 		},
 
 		'loadAllMembers' : function () {
