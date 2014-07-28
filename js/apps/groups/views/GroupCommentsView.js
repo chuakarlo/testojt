@@ -20,7 +20,6 @@ define( function ( require ) {
 	var MiniPersonnelModel = require( 'common/entities/MiniPersonnel' );
 	var MiniPersonnelView  = require( 'common/views/MiniPersonnel' );
 	var stripHtml          = require( 'common/helpers/stripHtml' );
-	var groupUtils         = require( 'groups/utils/utils' );
 
 	var Autolinker = require( 'autolinker' );
 
@@ -237,7 +236,7 @@ define( function ( require ) {
 			},
 
 			'getNewsEntry' : function () {
-				return autolinker.link( groupUtils.doubleUnescape( this.NewsEntry ) );
+				return autolinker.link( this.NewsEntry );
 			}
 
 		}
