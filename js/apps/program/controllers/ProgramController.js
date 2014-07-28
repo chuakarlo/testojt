@@ -5,6 +5,7 @@ define( function ( require ) {
 	var _      = require( 'underscore' );
 	var Helper = require( 'apps/program/helpers/displayHelpers' );
 	require( 'common/entities/Queue' );
+	require( 'common/views/VideoCarouselView' );
 
 	App.module( 'Program.Controller', function ( Controller ) {
 
@@ -111,12 +112,9 @@ define( function ( require ) {
 
 			'displaySegments' : function ( queue, segments ) {
 				var _id          = null;
-				var segmentsView = new App.Program.Views.ProgramSegments( {
+				var segmentsView = new App.Common.VideoCarouselView( {
 					'collection' : segments
 				} );
-
-				// TODO: add carousel
-				// TODO: add unit tests
 
 				var qContentsIds = queue.pluck( 'ContentId' );
 

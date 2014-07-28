@@ -1,10 +1,6 @@
 #program-page {
 
 	#pp-program-details {
-		@media ( min-width : @screen-md-max ) {
-			margin-left : -10px;
-		}
-
 		@media ( min-width : @screen-sm-min ) and ( max-width : @screen-sm-max ) {
  			.program-name > h2 {
 				font-size : 24px;
@@ -50,32 +46,14 @@
 		margin  : 15px 0;
 		padding : 0;
 
-		.programs-count-all {
-			color : @gray-light;
+		li {
+			height     : 282px;
+			width      : 285px !important;
+			list-style : none;
 		}
 
-		#program-segment-list {
-			@media( min-width : @screen-md-max ) {
-				margin-left : -10px;
-			}
-
-			margin  : 0;
-			padding : 0;
-
-			h2 {
-				padding-left : 10px;
-			}
-
-			li {
-				list-style : none;
-				margin     : 0 0 5px 0;
-				padding    : 10px;
-				min-width  : 287px;
-			}
-
-			.pp-no-results {
-				text-align : center;
-			}
+		.programs-count-all {
+			color : @gray-light;
 		}
 	}
 }

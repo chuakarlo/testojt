@@ -6,7 +6,6 @@ define( function ( require ) {
 	App.module( 'Program.Views', function ( Views ) {
 
 		Views.ProgramLayout   = require( '../views/ProgramLayout' );
-		Views.ProgramSegments = require( '../views/ProgramSegments' );
 		Views.ProgramDetails  = require( '../views/ProgramDetails' );
 	} );
 
