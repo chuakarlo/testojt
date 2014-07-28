@@ -111,7 +111,7 @@ define( function ( require ) {
 
 		},
 
-		'submitForm' : function () {
+		'submitForm' : function ( e ) {
 
 			var data = { };
 
@@ -132,7 +132,6 @@ define( function ( require ) {
 
 			if ( data.resourceType === 'file' ) {
 				// Handle FILES
-
 				if ( $( '.qq-upload-file' ).text() === '' ) {
 					App.errorHandler( new Error( 'No file to upload.' ) );
 					l.stop();
@@ -164,6 +163,9 @@ define( function ( require ) {
 				this.ui.fileUpload.fineUploader( 'uploadStoredFiles' );
 			} else {
 				// Handle LINKS
+				e.preventDefault();
+				this.ui.fileUpload.empty();
+				this.ui.fileUpload.remove();
 
 				var link = this.ui.urlInput.val().replace( /\s+/g, '' );
 				if ( link.match( /^\s*$/ ) || link === 'http://' ) {
@@ -188,7 +190,9 @@ define( function ( require ) {
 						App.errorHandler( new Error( res.error ) );
 					}
 				}, this ) )
-				.fail( App.errorHandler )
+				.fail( function () {
+					App.errorHandler( new Error( 'There was an issue uploading your resource. Please try again later.' ) );
+				} )
 				.always( function () {
 					l.stop();
 				} );
