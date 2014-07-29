@@ -14,6 +14,8 @@ define( function ( require ) {
 
 		'itemView'  : SegmentCardsView,
 
+		'className' : 'videos-carousel',
+
 		'emptyView' : CarouselEmptyView,
 
 		'initialize' : function ( options ) {
