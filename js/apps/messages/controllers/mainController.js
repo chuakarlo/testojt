@@ -18,9 +18,11 @@ define( function ( require ) {
 						}
 					}
 				} ).fail( function ( error ) {
-					// TODO HERE
+					App.content.show( new App.Common.ErrorView( {
+						'message' : 'There was an error in fetching notifications.',
+						'flash'   : 'An error occurred. Please try again later.'
+					} ) );
 				} );
-
 			}
 
 		};
