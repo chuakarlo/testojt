@@ -12,13 +12,13 @@
 
 				<div class="radio">
 					<label>
-						<input type="radio" name="upload-type" value="file" checked>
+						<input class="upload" type="radio" name="upload-type" value="file" checked>
 						File
 					</label>
 				</div>
 				<div class="radio">
 					<label>
-						<input type="radio" name="upload-type" value="link">
+						<input class="upload" type="radio" name="upload-type" value="link">
 						Link
 					</label>
 				</div>
@@ -29,28 +29,36 @@
 		<div class="form-group js-upload-file-container">
 			<label class="control-label col-sm-2">File</label>
 			<div class="col-sm-10 js-upload-file-wrapper">
-				<input class="form-control" name="user_file" type="file">
+				<input class="form-control upload" name="user_file" type="file">
 			</div>
 		</div>
 
 		<div class="form-group js-upload-link-container">
 			<label class="control-label col-sm-2">Paste Link</label>
 			<div class="col-sm-10">
-				<input class="form-control" type='text' name="url-input" value="http://">
+				<input class="form-control upload" type='text' name="url-input" value="http://">
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label for="" class="control-label col-sm-2">Description</label>
+			<label class="control-label col-sm-2">Description</label>
 			<div class="col-sm-10">
-				<textarea class="form-control file-description" placeholder="Enter description here" rows=8></textarea>
+				<textarea class="form-control file-description upload" placeholder="Enter description here" rows=8></textarea>
 			</div>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group confirmation-options">
 			<div class="class col-sm-10 col-sm-offset-2">
-				<button type="button" class="btn btn-default cancel-btn">Cancel</button>
-				<button type="submit" class="btn btn-primary submit-btn ladda-button" data-style="expand-right">Submit</button>
+				<div class="confirmation-message"><span class="control-label"><b>Are you sure you want to upload this resource?</b></span></div>
+				<button type="button" class="btn btn-default cancel-submit-btn">Cancel</button>
+				<button type="button" class="btn btn-primary confirm-btn ladda-button" data-style="expand-right">Yes</button>
+			</div>
+		</div>
+
+		<div class="form-group upload-options">
+			<div class="class col-sm-10 col-sm-offset-2">
+				<button type="button" class="btn btn-default back-btn">Go Back</button>
+				<button type="button" class="btn btn-primary submit-btn ladda-button" data-style="expand-right">Submit</button>
 			</div>
 		</div>
 

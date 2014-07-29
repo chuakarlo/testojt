@@ -21,26 +21,33 @@ define( function ( require ) {
 		'className' : 'upload-resource',
 
 		'ui' : {
-			'descInput'     : '.file-description',
-			'urlInput'      : 'input[name="url-input"]',
-			'fileInput'     : 'input[name="user_file"]',
-			'radioInput'    : 'input[name="upload-type"]',
-			'linkContainer' : '.js-upload-link-container',
-			'fileContainer' : '.js-upload-file-container',
-			'fileUpload'    : '.js-upload-file-wrapper'
+			'descInput'      : '.file-description',
+			'radioInput'     : 'input[name="upload-type"]',
+			'urlInput'       : 'input[name="url-input"]',
+			'fileInput'      : 'input[name="user_file"]',
+			'linkContainer'  : '.js-upload-link-container',
+			'fileContainer'  : '.js-upload-file-container',
+			'fileUpload'     : '.js-upload-file-wrapper',
+			'backBtn'        : '.back-btn',
+			'cancelSubmit'   : '.cancel-submit-btn',
+			'uploadOptions'  : '.upload-options',
+			'confirmation'   : '.confirmation-options',
+			'uploadElements' : '.upload'
+
 		},
 
 		'events' : {
 
-			'click .cancel-btn' : function () {
+			'click .back-btn'        : function () {
 				App.navigate( 'groups/' + this.model.get( 'LicenseId' ) + '/resources', { 'trigger' : true } );
 			},
-
-			'click .submit-btn'     : 'submitForm',
-			'change @ui.radioInput' : 'updateInputDisplay',
-			'click .file-btn'       : function ( ev ) {
+			'click .submit-btn'      : 'checkResource',
+			'click .confirm-btn'     : 'submitForm',
+			'change @ui.radioInput'  : 'updateInputDisplay',
+			'click .file-btn'        : function ( ev ) {
 				ev.currentTarget.nextElementSibling.click();
-			}
+			},
+			'click @ui.cancelSubmit' : 'showUploadOptions'
 
 		},
 
@@ -118,27 +125,16 @@ define( function ( require ) {
 			data.fileDescription = stripHtml( this.ui.descInput.val() );
 			data.resourceType    = this.ui.radioInput.filter( ':checked' ).val();
 
-			if ( data.fileDescription.match( /^\s*$/ ) ) {
-				App.errorHandler( new Error( 'Invalid or missing ' + data.resourceType + ' description' ) );
-
-				return false;
-			}
-
 			var l = Ladda.create(
 				document.querySelector( '.submit-btn' )
 			);
 
 			l.start();
 
+			this.ui.cancelSubmit.addClass( 'disabled' );
+
 			if ( data.resourceType === 'file' ) {
 				// Handle FILES
-
-				if ( $( '.qq-upload-file' ).text() === '' ) {
-					App.errorHandler( new Error( 'Please attach a file to upload.' ) );
-					l.stop();
-
-					return false;
-				}
 
 				this.ui.fileUpload.fineUploader( 'setParams', {
 					'type'        : data.resourceType,
@@ -166,15 +162,9 @@ define( function ( require ) {
 				// Handle LINKS
 
 				var link = this.ui.urlInput.val().replace( /\s+/g, '' );
-				if ( link.match( /^\s*$/ ) || link === 'http://' ) {
-					App.errorHandler( new Error( 'Invalid or Missing link' ) );
-					l.stop();
-
-					return false;
-				}
 
 				var deferred = this.model.createLinkResource( {
-					'linkURL'     : this.ui.urlInput.val(),
+					'linkURL'     : link,
 					'description' : data.fileDescription
 				} );
 
@@ -193,6 +183,54 @@ define( function ( require ) {
 					l.stop();
 				} );
 			}
+		},
+
+		'showConfirmationMessage' : function () {
+			this.ui.uploadOptions.hide();
+			this.ui.confirmation.show();
+			this.ui.confirmation.show();
+			this.ui.uploadElements.attr( 'disabled', true );
+			$( '.file-btn' ).attr( 'disabled', true );
+			$( 'input[ type = file ]' ).attr( 'disabled', true );
+			$( '.qq-upload-cancel' ).hide();
+
+		},
+
+		'showUploadOptions' : function () {
+			this.ui.uploadOptions.show();
+			this.ui.confirmation.hide();
+			this.ui.uploadElements.attr( 'disabled', false );
+			$( '.file-btn' ).attr( 'disabled', false );
+			$( '.qq-upload-cancel' ).show();
+			$( 'input[ type = file ]' ).attr( 'disabled', false );
+		},
+
+		'checkResource' : function () {
+			var resourceType = this.ui.radioInput.filter( ':checked' ).val();
+
+			if ( resourceType === 'file' ) {
+
+				if ( $( '.qq-upload-file' ).text() === '' ) {
+					App.errorHandler( new Error( 'Please attach a file to upload.' ) );
+					return false;
+				}
+
+			} else {
+
+				var link = this.ui.urlInput.val().replace( /\s+/g, '' );
+
+				if ( link.match( /^\s*$/ ) || link === 'http://' ) {
+					App.errorHandler( new Error( 'Invalid or Missing link' ) );
+					return false;
+				}
+			}
+
+			if ( stripHtml( this.ui.descInput.val() ).match( /^\s*$/ ) ) {
+				App.errorHandler( new Error( 'Invalid or missing ' + resourceType + ' description' ) );
+				return false;
+			}
+
+			this.showConfirmationMessage();
 		}
 
 	} );
