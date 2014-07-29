@@ -3,7 +3,6 @@ define( function ( require ) {
 
 	var Backbone = require( 'backbone' );
 	var Session  = require( 'Session' );
-	var Remoting = require( 'Remoting' );
 	var App      = require( 'App' );
 	var $        = require( 'jquery' );
 
@@ -25,32 +24,17 @@ define( function ( require ) {
 			},
 
 			'getUpdateOptions' : function () {
+				var method = 'update';
+				// If a user does not have any settings yet, you will need to create them
+				if ( this.get( 'PersonnelId' ) === 0 ) {
+					method = 'create';
+					this.set( 'PersonnelId', Session.personnelId() );
+				}
 				return {
 					'objectPath' : 'core.ClientPersonnelEmailFlags',
-					'method'     : 'update',
+					'method'     : method,
 					'args'       : this.toJSON()
 				};
-			},
-
-			'createEmailFlags' : function ( options ) {
-				var data = {
-					'objectPath' : 'core.ClientPersonnelEmailFlags',
-					'path'       : 'core.ClientPersonnelEmailFlagsGateway',
-					'method'     : 'create',
-					'args'       : {
-						'PersonnelId'          : Session.personnelId(),
-						'SendCourseEmails'     : options.get( 'SendCourseEmails' ),
-						'SendFollowUpEmails'   : options.get( 'SendFollowUpEmails' ),
-						'SendForumEmails'      : options.get( 'SendForumEmails' ),
-						'SendFriendEmails'     : 1,
-						'SendGroupAdminEmails' : options.get( 'SendGroupAdminEmails' ),
-						'SendGroupEmails'      : 1,
-						'SendInternalMessages' : 1,
-						'SendWallMessages'     : options.get( 'SendWallMessages' )
-					}
-				};
-
-				return Remoting.fetch( data );
 			}
 
 		} );

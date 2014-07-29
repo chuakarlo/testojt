@@ -53,14 +53,6 @@ define( function ( require ) {
 
 			async.series( [
 				function ( callback ) {
-					// If a user does not have any settings yet, you will need to create them
-					if ( this.emailData.get( 'PersonnelId' ) === '0' ) {
-						this.emailData.createEmailFlags( this.emailData );
-					}
-					callback();
-				}.bind( this ),
-
-				function ( callback ) {
 					// To update the settings call
 					this.emailData.save( null, {
 
