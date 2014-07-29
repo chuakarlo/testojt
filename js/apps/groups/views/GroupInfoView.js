@@ -84,8 +84,9 @@ define( function ( require ) {
 		},
 
 		// Hide show group description
-		'toggleDetails' : function () {
+		'toggleDetails' : function ( e ) {
 
+			e.preventDefault();
 			$( '#details-abb' ).toggle();
 			$( '#details-full' ).toggle();
 
