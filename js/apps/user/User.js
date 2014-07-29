@@ -16,6 +16,7 @@ define( function ( require ) {
 	require( 'user/controllers/privacyController' );
 	require( 'user/controllers/forgotPasswordController' );
 	require( 'user/controllers/successController' );
+	require( 'user/entities/EmailNotifications' );
 	require( 'user/entities/License' );
 	require( 'user/entities/Profile' );
 	require( 'user/entities/Personnel' );

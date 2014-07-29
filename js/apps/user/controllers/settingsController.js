@@ -172,21 +172,18 @@ define( function ( require ) {
 			},
 
 			'showEmail' : function () {
-				// dummy data for email notification settings
-				// TODO : make request for getting the notifications setting data
-				var emailData = {
-					'SendFollowUpEmails'   : '1',
-					'SendForumEmails'      : '1',
-					'SendGroupAdminEmails' : '2',
-					'SendWallMessages'     : '0',
-					'SendCourseEmails'     : '1'
-				};
+				var emailFlagsRequest   = App.request( 'user:emailNotifications' );
+				var loadingView = new App.Common.LoadingView();
+				this.layout.content.show( loadingView );
 
-				var emailView = new EmailView( {
-					'emailData' : emailData
-				} );
+				App.when( emailFlagsRequest ).done( function ( emailFlags ) {
+					loadingView.close();
+					var emailView = new EmailView( {
+						'emailData' : emailFlags
+					} );
 
-				this.layout.content.show( emailView );
+					this.layout.content.show( emailView );
+				}.bind( this ) ).fail( App.errorHandler.bind( App, { 'region' : this.layout.content } ) );
 			}
 
 		} );
