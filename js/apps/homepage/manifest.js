@@ -14,7 +14,6 @@ define( function ( require ) {
 		require( 'apps/homepage/external/widgets/base' ).register( parent, sharedData, function () {
 			App.Homepage.Utils.loadMessages( widgetMessages );
 		} );
-		require( 'apps/homepage/external/content3/base' ).register( parent, sharedData );
 
 		return parent;
 	};

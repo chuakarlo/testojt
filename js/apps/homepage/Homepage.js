@@ -16,10 +16,10 @@ define( function ( require ) {
 			require( './external/widgets/manifest' );
 			// load homepage
 			require( './controllers/homeController' );
-			// load listeners
-			require( './external/content3/agents/Listener' );
-			// load content
-			require( './external/content3/manifest' );
+			// entities
+			require( './entities/Entities' );
+			// views
+			require( './views/Views' );
 
 			// configure groups routes
 			Homepage.Router = AuthRouter.extend( {

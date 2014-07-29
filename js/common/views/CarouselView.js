@@ -125,6 +125,12 @@ define( function ( require ) {
 			this.carouselEl.trigger( 'prev.owl.carousel', speed );
 		},
 
+		'onClose' : function () {
+			if ( this.carouselEl ) {
+				this.carouselEl.trigger( 'destroy.owl.carousel' );
+			}
+		},
+
 		'_setVars' : function () {
 			// When carousel is set to loop = true, 'responsive' properties should be increased by 1.
 			var keyVars = [ 'items', 'slideBy' ];

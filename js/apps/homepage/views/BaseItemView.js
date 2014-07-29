@@ -13,9 +13,14 @@ define( function ( require ) {
 		'template'   : _.template( template ),
 
 		'regions' : {
-			'messageRegion' : '#home-page-message',
-			'contentRegion' : '#Home-page-view'
+			'messageRegion'           : '#home-page-message',
+			'contentRegion'           : '#Home-page-view',
+			'yourQueueHeader'         : '#queued-videos-header',
+			'yourQueueRegion'         : '#queued-videos',
+			'recommendedVideosHeader' : '#recommended-videos-header',
+			'recommendedVideosRegion' : '#recommended-videos'
 		}
 
 	} );
+
 } );

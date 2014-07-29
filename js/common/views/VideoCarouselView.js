@@ -12,9 +12,9 @@ define( function ( require ) {
 
 		'template' : _.template( template ),
 
-		'itemView'  : SegmentCardsView,
-
 		'className' : 'videos-carousel',
+
+		'itemView'  : SegmentCardsView,
 
 		'emptyView' : CarouselEmptyView,
 

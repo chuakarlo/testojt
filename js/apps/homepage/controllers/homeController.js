@@ -2,7 +2,9 @@ define( function ( require ) {
 	'use strict';
 
 	var $          = require( 'jquery' );
+	var _          = require( 'underscore' );
 	var App        = require( 'App' );
+	var Backbone   = require( 'backbone' );
 	var Marionette = require( 'marionette' );
 	var HomeView   = require( 'apps/homepage/views/BaseItemView' );
 	var Session    = require( 'Session' );
@@ -47,6 +49,59 @@ define( function ( require ) {
 				homepageUtils.loadHomepage( this.layout );
 				districtUtils.processDistrictMessage( this.layout );
 
+				this.showCarousels();
+			},
+
+			'showCarousels' : function () {
+
+				function setQueue ( queue, model ) {
+					model.set( 'queued', queue.isQueued( model ) );
+				}
+
+				App.when(
+					App.request( 'common:getQueueContents' ),
+					App.request( 'homepage:recommendedVideos' )
+				).done(
+					function ( queuedVideos, recommendedVideos ) {
+
+						queuedVideos.each( setQueue.bind( this, queuedVideos ) );
+
+						var user = App.request( 'homepage:userProfile' );
+						// Set user possessive first name
+						var possName = _.last( user.FirstName ) === 's' ? ( user.FirstName + '\'' ) : ( user.FirstName + '\'s' );
+						// Your Queue header vars.
+						var queueData = {
+							'header'   : possName + ' Queue',
+							'numFound' : queuedVideos.length
+						};
+
+						var queuedVideosHeader = new App.Homepage.Views.CarouselHeader( {
+							'model' : new Backbone.Model( queueData )
+						} );
+						this.layout.yourQueueHeader.show( queuedVideosHeader );
+
+						var yourQueueCarousel = new App.Common.VideoCarouselView( {
+							'collection' : queuedVideos
+						} );
+						this.layout.yourQueueRegion.show( yourQueueCarousel );
+
+						// Set queued attribute for recommended videos
+						recommendedVideos.each( setQueue.bind( this, queuedVideos ) );
+
+						var recommendedVideosHeader = new App.Homepage.Views.CarouselHeader( {
+							'model' : new Backbone.Model( _.extend( recommendedVideos.data, { 'header' : 'Recommended' } ) )
+						} );
+						this.layout.recommendedVideosHeader.show( recommendedVideosHeader );
+
+						var recommendedVideosCarousel = new App.Common.VideoCarouselView( {
+							'collection' : recommendedVideos
+						} );
+						this.layout.recommendedVideosRegion.show( recommendedVideosCarousel );
+
+					}.bind( this )
+				).fail(
+					App.errorHandler
+				);
 			},
 
 			'checkWizard' : function () {

@@ -82,11 +82,6 @@ define( function ( require ) {
 			'spec/apps/videoPlayer/entities/UserContentTest.js',
 			'spec/apps/videoPlayer/entities/VideoResourcesTest.js',
 
-			// Homepage
-			'spec/apps/homepage/external/content/baseTest.js',
-			'spec/apps/homepage/external/content/views/ContentCompositeViewTest.js',
-			'spec/apps/homepage/external/content/views/ContentCollectionViewTest.js',
-
 			// HomePage - Billboard
 			'spec/apps/homepage/external/billboard/collection/BillboardCollectionTest.js',
 			'spec/apps/homepage/external/billboard/configuration/nivoSettingsTest.js',

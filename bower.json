@@ -43,7 +43,7 @@
     "Autolinker.js": "~0.11.0",
     "placeholderjs": "https://github.com/rtorino/Placeholders.js.git#master",
     "jquery-touchswipe": "~1.6.0",
-    "owl.carousel": "*"
+    "owl.carousel": "https://github.com/School-Improvement-Network/OwlCarousel2.git#master"
   },
   "devDependencies": {
     "chai": "1.8.x",

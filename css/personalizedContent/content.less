@@ -2,7 +2,7 @@
 // Content CSS (Your Queue and Recommended)
 //*
 
-#Home-page-view {
+.home-container {
 
 	overflow: auto;
 
@@ -10,14 +10,15 @@
 		padding : 10px 0 25px 0;
 	}
 
-	.resource-list-heading {
+	#queued-videos-header,
+	#recommended-videos-header {
 		height        : 30px;
 		margin-bottom : @res-heading;
 		position      : relative;
 		h2 {
 			color : @pc-black-lighter;
 		}
-		.count-all {
+		.counter {
 			color : @pc-gray-dark;
 		}
 	}
@@ -51,153 +52,6 @@
 	}
 	.empty-queue {
 		color: @pc-gray-darkest;
-	}
-
-	//*
-	//* Bootstrap Carousel
-	//*
-
-	.carousel.slide {
-		.carousel-inner-wrapper {
-			min-height : 236px;
-			max-height : 280px;
-			margin     : 0 15px;
-			overflow   : hidden;
-			.carousel-inner {
-				-webkit-transition          : 0.0s ease-in-out left;
-				-moz-transition             : 0.0s ease-in-out left;
-				-o-transition               : 0.0s ease-in-out left;
-				transition                  : 0.0s ease-in-out left;
-				width                       : 900000px;
-				-webkit-transform-style     : preserve-3d;
-				-webkit-backface-visibility : hidden;
-				backface-visibility         : hidden;
-				.row {
-					margin      : 0;
-					margin-left : -30px;
-					display     : inline-block;
-				}
-				.item {
-					left                        : 0;
-					padding                     : 0 15px;
-					display                     : inline-block;
-					-webkit-transform           : translate3d(0,0,0);
-					-moz-transform              : translate3d(0,0,0);
-					-ms-transform               : translate3d(0,0,0);
-					-o-transform                : translate3d(0,0,0);
-					transform                   : translate3d(0,0,0);
-
-					-webkit-transform-style     : preserve-3d;
-					-webkit-backface-visibility : hidden;
-					backface-visibility         : hidden;
-					-webkit-perspective         : 1000;
-					-webkit-transition          : 0.4s ease-in-out left;
-					-moz-transition             : 0.4s ease-in-out left;
-					-o-transition               : 0.4s ease-in-out left;
-					transition                  : 0.4s ease-in-out left;
-				}
-				.item li {
-					list-style-type : none;
-				}
-				.empty-content {
-					text-align : center;
-					padding    : 50px 0px 100px 0px;
-				}
-			}
-		}
-	}
-
-	// overwrite bootstrap grid
-	.carousel-list( @width ) {
-		li {
-			width     : @width;
-			min-width : 285px;
-			max-width : 285px
-		}
-	}
-	.carousel.visible-lg {
-		.carousel-list( 25% );
-	}
-
-	.carousel.visible-md {
-		.carousel-list( 25% );
-	}
-
-	.carousel.visible-sm {
-			.carousel-list( 33.3333% );
-	}
-
-	.carousel.visible-xs {
-		.carousel-list( 50% );
-	}
-
-	.carousel-control {
-		z-index          : 10000;
-		background-image : none;
-		top              : 47%;
-		bottom           : 37%;
-		width            : 4%;
-		filter           : none;
-		.fa-angle-left {
-			left : 0;
-		}
-		.fa-angle-right {
-			right : 0;
-		}
-	}
-	.carousel-control .fa{
-		height   : 100%;
-		position : absolute;
-		width    : 39px;
-		height   : 0;
-		border   : 0 none;
-		cursor   : pointer;
-		position : absolute;
-		display  : none;
-		top      : 13%;
-		z-index  : 10000;
-		color    : @pc-gray-light;
-
-		&.fa:before {
-			background-color : #aaa;
-			opacity          : 0.5;
-			color            : @pc-white;
-			cursor           : pointer !important;
-			display          : inline-block;
-			filter           : progid:DXImageTransform.Microsoft.gradient(startColorStr='#303030',EndColorStr='#262626');
-			font-weight      : bold;
-			outline          : 0;
-			text-align       : center;
-			text-shadow      : 0 -1px 0 rgba(0,0,0,.5);
-			font-size        : 25px;
-			text-shadow      : -1px 0px 0px rgba(0, 0, 0, 0.3);
-			padding          : 2px 9px;
-		}
-
-		&.fa-angle-left:before {
-			left : 0;
-			-webkit-border-radius : 2px 0 0 2px;
-			border-radius         : 2px 0 0 2px;
-		}
-
-		&.fa-angle-right:before {
-			right: 0;
-			-webkit-border-radius : 0 2px 2px 0;
-			border-radius         :0 2px 2px 0;
-		}
-	}
-
-	//*
-	// Hover
-	//
-	#your-queue, #recommended {
-		div {
-			&:hover .carousel.visible-lg,.carousel.visible-xs,.carousel.visible-sm,.carousel.visible-md {
-				.carousel-control .fa {
-					display : inline-block;
-				}
-			}
-		}
 	}
 
 }
