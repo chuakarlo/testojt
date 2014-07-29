@@ -6,20 +6,20 @@ define( function ( require ) {
 	App.module( 'Groups.Views', function ( Views ) {
 
 		Views.Layout             = require( './GroupLayoutView' );
-		Views.GroupListLayout    = require( './GroupListLayoutView' );
-		Views.List               = require( './GroupsView' );
-		Views.InvitesList        = require( './GroupInvitesView' );
-		Views.Banner             = require( './GroupBannerView' );
-		Views.Header             = require( './GroupHeaderView' );
-		Views.Info               = require( './GroupInfoView' );
-		Views.SubNav             = require( './GroupSubNavView' );
-		Views.Comments           = require( './GroupCommentsView' );
-		Views.CommentsCollection = require( './GroupCommentsCollectionView' );
-		Views.Members            = require( './MembersView' );
-		Views.Resources          = require( './GroupResourcesView' );
-		Views.ResourcesMembers   = require( './GroupResourcesMembersView' );
-		Views.GroupCreate        = require( './GroupCreateView' );
-		Views.UploadResource     = require( './UploadResourceView' );
+		Views.GroupListLayout    = require( './overview/GroupListLayoutView' );
+		Views.List               = require( './overview/GroupsView' );
+		Views.InvitesList        = require( './overview/GroupInvitesView' );
+		Views.Banner             = require( './header/GroupBannerView' );
+		Views.Header             = require( './header/GroupHeaderView' );
+		Views.SubNav             = require( './header/GroupSubNavView' );
+		Views.Info               = require( './info/GroupInfoView' );
+		Views.Comments           = require( './wall/GroupCommentsView' );
+		Views.CommentsCollection = require( './wall/GroupCommentsCollectionView' );
+		Views.Members            = require( './members/MembersView' );
+		Views.Resources          = require( './resources/GroupResourcesView' );
+		Views.ResourcesMembers   = require( './resources/GroupResourcesMembersView' );
+		Views.UploadResource     = require( './resources/UploadResourceView' );
+		Views.GroupCreate        = require( './create/GroupCreateView' );
 
 	} );
 

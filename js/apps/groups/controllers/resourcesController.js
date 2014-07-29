@@ -5,7 +5,7 @@ define( function ( require ) {
 	var _        = require( 'underscore' );
 	var Session  = require( 'Session' );
 
-	require( 'groups/views/GroupResourcesLayout' );
+	require( 'groups/views/resources/GroupResourcesLayout' );
 	require( 'groups/entities/GroupCombinedResourceCollection' );
 
 	App.module( 'Groups.Show', function ( Mod ) {
