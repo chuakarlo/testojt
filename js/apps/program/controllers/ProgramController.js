@@ -46,10 +46,6 @@ define( function ( require ) {
 			'setupProgramDetails' : function () {
 
 				// TODO: modify entity to use correct API once available
-				// Waiting for API
-				// TODO: display error if no details are obtained
-				// TODO: add unit tests
-
 				var detailsRequest = App.request( 'program:details', this.queryArgs );
 				var details        = { };
 
@@ -58,20 +54,13 @@ define( function ( require ) {
 					if ( !App.request( 'program:isCorrectRoute' ) ) {
 						return;
 					}
-
 					if ( !segments.length ) {
 						this.displayError( 'No program details obtained.' );
 					} else {
 
-						// TODO: remove temporary details below once segment details API is available
 						details = {
 							'ProgramName'        : segments.at( 0 ).get( 'ProgramName' ),
-							'ProgramDescription' : segments.at( 0 ).get( 'ProgramDescription' )
-						};
-
-						details = {
-							'ProgramName'        : 'This is a temporary program title.',
-							'ProgramDescription' : 'This program description will be replaced by the real program description once API becomes available. For now, please bear reading this temporary program description.'
+							'ProgramDescription' : segments.at( 0 ).get( 'ProgramDescription' ) || 'No description available.'
 						};
 
 						this.displayProgramDetails( details );
@@ -132,6 +121,10 @@ define( function ( require ) {
 				if ( this.layout && !this.layout.isClosed ) {
 					this.layout.close();
 					this.layout = null;
+				}
+
+				if ( this.queryArgs ) {
+					this.queryArgs = { };
 				}
 			}
 		};

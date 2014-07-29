@@ -5,6 +5,7 @@ define( function ( require ) {
 	var _        = require( 'underscore' );
 	var Backbone = require( 'backbone' );
 	var $        = require( 'jquery' );
+	var Session  = require( 'Session' );
 
 	App.module( 'Program.Entities', function ( Entities ) {
 
@@ -21,7 +22,7 @@ define( function ( require ) {
 
 			'model' : this.ProgramSegment,
 
-			'path'  : 'ContentService',
+			'path'  : 'SearchService',
 
 			'initialize' : function ( options ) {
 				_.extend( this, options );
@@ -29,13 +30,25 @@ define( function ( require ) {
 
 			'getReadOptions' : function () {
 				return {
-					'method' : 'getProgramFromSegment',
+					'method' : 'RespondSearchAPI',
 					'args'   : {
-						'ContentId'       : this.contentId,
-						'ContentParentId' : this.contentParentId,
-						'ContentTypeId'   : this.contentTypeId
+						'persId'     : Session.personnelId(),
+						'rows'       : 24,
+						'searchData' : this.ContentId,
+						'searchType' : 'VideosAll',
+						'sort'       : 'score desc',
+						'start'      : 0
 					}
 				};
+			},
+
+			'parse' : function ( result ) {
+				var segments = result.slice( 1 );
+
+				return _.find( segments, function ( model ) {
+
+					return model.ContentId === parseInt( this.ContentId, 10 );
+				}.bind( this ) );
 			}
 		} );
 
@@ -44,9 +57,7 @@ define( function ( require ) {
 			'getSegments' : function ( args ) {
 				var defer    = $.Deferred();
 				var segments = new Entities.ProgramSegments( {
-					'contentId'       : args.ContentId,
-					'contentParentId' : args.ContentParentId,
-					'contentTypeId'   : args.ContentTypeId
+					'ContentId' : args.ContentId
 				} );
 
 				segments.fetch( {
