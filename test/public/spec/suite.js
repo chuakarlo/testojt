@@ -53,6 +53,7 @@ define( function ( require ) {
 			'spec/apps/user/entities/PersonnelTest',
 			'spec/apps/user/entities/ProfileTest',
 			'spec/apps/user/entities/SendPasswordTest',
+			'spec/apps/user/entities/EmailNotificationTest',
 
 			'spec/plugins/Backbone.CFTest',
 
