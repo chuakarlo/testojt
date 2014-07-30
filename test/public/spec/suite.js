@@ -141,7 +141,6 @@ define( function ( require ) {
 			'spec/apps/program/controller/ProgramControllerTest.js',
 
 			// Program - entities
-			'spec/apps/program/entities/EntitiesTest.js',
 			'spec/apps/program/entities/ProgramDetailsTest.js',
 			'spec/apps/program/entities/ProgramSegmentsTest.js'
 		]
