@@ -15,6 +15,10 @@ define( function ( require ) {
 	require( 'backbone.stickit' );
 	require( 'timezone' );
 
+	Backbone.Validation.configure( {
+		'forceUpdate' : true
+	} );
+
 	return Marionette.Layout.extend( {
 
 		'template' : _.template( template ),
@@ -60,7 +64,12 @@ define( function ( require ) {
 			'[name="LastName"]'     : 'LastName',
 			'[name="EmailAddress"]' : 'EmailAddress',
 			'#verify-email'         : 'EmailAddress',
-			'[name="Password"]'     : 'Password',
+			'[name="Password"]'     : {
+				'observe'    : 'Password',
+				'setOptions' : {
+					validate : true
+				}
+			},
 			'[name="Password2"]'    : 'Password2',
 
 			'[name="Country"]' : {
@@ -293,14 +302,23 @@ define( function ( require ) {
 
 		'updateSchools' : function ( event ) {
 			var districtOption = this.ui.district.val();
+			var otherDistrict  = this.other.district.toString();
 
-			if ( districtOption === '' ) {
+			var dist = { };
+
+			dist[ '' ] = function () {
 				this.disableSelect( this.ui.school );
-			} else if ( districtOption === this.other.district ) {
+			};
+
+			dist[ otherDistrict ] = function () {
 				this.forceOther( this.ui.school, this.other.school );
-			} else {
-				this.populateSchools( this.ui.school, this.ui.district.val() );
+			};
+
+			if ( dist.hasOwnProperty( districtOption ) ) {
+				return dist[ districtOption ].call( this );
 			}
+
+			this.populateSchools( this.ui.school, this.ui.district.val() );
 
 		},
 

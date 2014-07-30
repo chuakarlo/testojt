@@ -35,18 +35,11 @@ define( function ( require ) {
 
 			'defaults' : {
 				'PersonnelId'        : 0,
-				'ClientId'           : '',
 				'RoleTypeId'         : 0,
-				'EmailAddress'       : '',
 				'LoginName'          : '',
 				'Password'           : '',
-				'FirstName'          : '',
-				'LastName'           : '',
 				'Title'              : '',
 				'Organization'       : '',
-				'DistrictName'       : '',
-				'State'              : '',
-				'Country'            : '',
 				'TimeZone'           : '',
 				'WorkPhone'          : '',
 				'ReferralCode'       : '',
