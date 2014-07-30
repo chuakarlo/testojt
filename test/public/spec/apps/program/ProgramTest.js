@@ -20,7 +20,12 @@ define ( function ( require ) {
 		it( 'should create Program module', function () {
 			App.should.have.property( 'Program' );
 			App.Program.should.be.an.instanceof( Marionette.Module );
+		} );
 
+		it( 'should have properties', function () {
+			App.Program.should.have.property( 'Controller' );
+			App.Program.should.have.property( 'Views' );
+			App.Program.should.have.property( 'Entities' );
 		} );
 	} );
 } );
