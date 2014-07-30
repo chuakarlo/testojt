@@ -131,7 +131,18 @@ define( function ( require ) {
 			// Common - helpers
 			'spec/common/helpers/startsWithTest.js',
 			// Common - views
-			'spec/common/views/VideoCarouselViewTest.js'
+			'spec/common/views/VideoCarouselViewTest.js',
+
+			// Program - main
+			'spec/apps/program/ProgramTest.js',
+
+			// Program - controllers
+			'spec/apps/program/controller/ProgramControllerTest.js',
+
+			// Program - entities
+			'spec/apps/program/entities/EntitiesTest.js',
+			'spec/apps/program/entities/ProgramDetailsTest.js',
+			'spec/apps/program/entities/ProgramSegmentsTest.js'
 		]
 
 	};
