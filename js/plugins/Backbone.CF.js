@@ -7,6 +7,7 @@ define( function ( require ) {
 	var config      = require( 'config' );
 	var bcfHelper   = require( 'plugins/helpers/bcfHelpers' );
 	var errorHelper = require( 'plugins/helpers/errorHelpers' );
+	var yesNoHack   = require( 'common/helpers/yesNoHack' );
 
 	var sync = function ( method, model, options ) {
 		var helper      = bcfHelper();
@@ -29,6 +30,9 @@ define( function ( require ) {
 
 		// if this is an object being saved
 		if ( syncOptions.objectPath ) {
+			// Handle Yes/No saved to ColdFusion
+			yesNoHack( syncOptions.args );
+
 			syncOptions.objectPath = config.base + syncOptions.objectPath;
 			params.url             = config.objectUrl;
 		}

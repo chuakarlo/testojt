@@ -134,12 +134,11 @@ define( function ( require ) {
 				'#username'  : 'LoginName',
 				'#country'   : 'Country',
 				'#state'     : 'State',
+				'#title'     : 'Title',
 				'#district'  : 'DistrictName'
 			} );
 
 			this.stickit( this.profileModel, {
-
-				'#title' : 'Position',
 
 				'#role-type' : {
 					'observe'       : 'EducatorType',
