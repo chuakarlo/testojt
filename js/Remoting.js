@@ -1,11 +1,12 @@
 define( function ( require ) {
 	'use strict';
 
-	var Session = require( 'Session' );
-	var async   = require( 'async' );
-	var App     = require( 'App' );
-	var $       = require( 'jquery' );
-	var _       = require( 'underscore' );
+	var Session   = require( 'Session' );
+	var async     = require( 'async' );
+	var App       = require( 'App' );
+	var $         = require( 'jquery' );
+	var _         = require( 'underscore' );
+	var yesNoHack = require( 'common/helpers/yesNoHack' );
 
 	var Remoting = function () {
 
@@ -89,6 +90,9 @@ define( function ( require ) {
 
 		// process an individual request
 		var _processRequest = function ( data, done ) {
+
+			// Handle Yes/No saved to ColdFusion
+			yesNoHack( data.args );
 
 			// if the signature has already been created
 			if ( data.signature && data.signature !== '' ) {

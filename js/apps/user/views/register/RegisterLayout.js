@@ -8,6 +8,7 @@ define( function ( require ) {
 	var moment     = require( 'moment' );
 	var _          = require( 'underscore' );
 	var $          = require( 'jquery' );
+	var yesNoHack  = require( 'common/helpers/yesNoHack' );
 
 	var template = require( 'text!user/templates/register/registerLayout.html' );
 
@@ -71,6 +72,8 @@ define( function ( require ) {
 				}
 			},
 			'[name="Password2"]'    : 'Password2',
+			'[name="Title"]'        : 'Title',
+			'[name="WorkPhone"]'    : 'WorkPhone',
 
 			'[name="Country"]' : {
 				'observe'       : 'Country',
@@ -333,6 +336,9 @@ define( function ( require ) {
 				this.model.attributes.State        = this.ui.state.find( 'option:selected' ).text();
 				this.model.attributes.DistrictName = this.ui.district.find( 'option:selected' ).text();
 				this.model.attributes.Organization = this.ui.school.find( 'option:selected' ).text();
+
+				// Handle Yes/No saved to ColdFusion
+				yesNoHack( this.model.attributes );
 
 				var url = '/com/schoolimprovement/pd360/dao/RespondService.cfc?method=RespondCreateUser&' + $.param( this.model.attributes );
 

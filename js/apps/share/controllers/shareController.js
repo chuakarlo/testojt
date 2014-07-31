@@ -93,7 +93,7 @@ define( function ( require ) {
 			var x = new ShareModel( {
 				'licenseIds'   : licenseIds.join( ',' ),
 				'personnelIds' : personnelIds.join( ',' ),
-				'message'      : _.escape( utils.safeStringify( message ).replace( /\n/g, ' ' ) )
+				'message'      : _.unescape( utils.safeStringify( message ).replace( /\n/g, ' ' ) )
 			} );
 
 			x.save( null, {

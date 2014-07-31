@@ -56,7 +56,13 @@ define( function ( require ) {
 					view.actualUserWidgetCollection = new WidgetCollection( view.getUserWidgetCollection( models[ 0 ] ) );
 
 					var userWidgetCollectionView = new UserWidgetCollectionView( { 'collection' : view.actualUserWidgetCollection } );
-					view.userWidgets.show( userWidgetCollectionView );
+
+					// This should probably be fixed a different way.
+					// The userWidgets region does not always exist for some reason.
+					// Likely because of how it it dynamically generated.
+					if ( view.userWidgets ) {
+						view.userWidgets.show( userWidgetCollectionView );
+					}
 
 					userWidgetCollectionView.collection.on( 'reset', function () {
 						userWidgetCollectionView.$el.empty();

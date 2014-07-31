@@ -70,12 +70,6 @@ define( function ( require ) {
 			} );
 		},
 
-		'onShow' : function () {
-			// This lets the home controller know this view is ready to display
-			// the bootstro element
-			App.vent.trigger( 'bootstro:itemLoaded' );
-		},
-
 		'updateMessageCount' : function () {
 			var model = this.model;
 

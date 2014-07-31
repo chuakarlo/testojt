@@ -118,7 +118,7 @@ define( function ( require ) {
 
 		},
 
-		'submitForm' : function () {
+		'submitForm' : function ( e ) {
 
 			var data = { };
 
@@ -135,7 +135,6 @@ define( function ( require ) {
 
 			if ( data.resourceType === 'file' ) {
 				// Handle FILES
-
 				this.ui.fileUpload.fineUploader( 'setParams', {
 					'type'        : data.resourceType,
 					'description' : data.fileDescription,
@@ -160,11 +159,21 @@ define( function ( require ) {
 				this.ui.fileUpload.fineUploader( 'uploadStoredFiles' );
 			} else {
 				// Handle LINKS
+				e.preventDefault();
+				this.ui.fileUpload.empty();
+				this.ui.fileUpload.remove();
 
+				// Check to make sure no empty urls are posted
 				var link = this.ui.urlInput.val().replace( /\s+/g, '' );
+	            if ( link.match( /^\s*$/ ) || link.match( /^\w*:\/\/$/ ) ) {
+					App.errorHandler( new Error( 'Invalid or Missing link' ) );
+					l.stop();
+
+					return false;
+				}
 
 				var deferred = this.model.createLinkResource( {
-					'linkURL'     : link,
+					'linkURL'     : this.ui.urlInput.val(),
 					'description' : data.fileDescription
 				} );
 
@@ -178,7 +187,9 @@ define( function ( require ) {
 						App.errorHandler( new Error( res.error ) );
 					}
 				}, this ) )
-				.fail( App.errorHandler )
+				.fail( function () {
+					App.errorHandler( new Error( 'There was an issue uploading your resource. Please try again later.' ) );
+				} )
 				.always( function () {
 					l.stop();
 				} );

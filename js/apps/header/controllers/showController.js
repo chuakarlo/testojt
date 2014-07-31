@@ -20,7 +20,7 @@ define( function ( require ) {
 			'showHeader' : function () {
 				var authenticated = App.request( 'session:authenticated' );
 
-				var init = function ( helpUrl ) {
+				var init = function () {
 
 					var messageCount = new Backbone.Model( { 'messageCount' : 0 } );
 					var menu         = new Menu( { 'authenticated' : authenticated, 'model' : messageCount } );
@@ -28,6 +28,10 @@ define( function ( require ) {
 					if ( authenticated ) {
 
 						this.listenToOnce( menu, 'show', function () {
+
+							// This lets the home controller know this view is ready to display
+							// the bootstro element
+							App.vent.trigger( 'bootstro:itemLoaded' );
 
 							menu.icons.show( new App.Common.LoadingView( { 'text' : 'Loading Resources...' } ) );
 
@@ -54,7 +58,7 @@ define( function ( require ) {
 					return init();
 				}
 
-				App.when( App.request( 'user:personnel' ) ).done( init ).fail( init );
+				init( new App.Entities.Personnel( App.request( 'session:personnel' ) ) );
 
 			}
 

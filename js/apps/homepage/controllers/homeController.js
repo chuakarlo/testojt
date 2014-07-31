@@ -24,7 +24,6 @@ define( function ( require ) {
 				var bootstroCount = 0;
 
 				this.listenTo( App.vent, 'bootstro:itemLoaded', function () {
-
 					bootstroCount += 1;
 
 					if ( bootstroCount === 5 ) {
@@ -106,44 +105,40 @@ define( function ( require ) {
 
 			'checkWizard' : function () {
 
-				var personnelRequest = App.request( 'user:personnel' );
+				var personnel = new App.Entities.Personnel( App.request( 'session:personnel' ) );
 
-				App.when( personnelRequest ).done( function ( personnel ) {
+				if ( Session.useWizards() && window.innerWidth >= 768 ) {
+					wizardUsed = true;
 
-					if ( Session.useWizards() && window.innerWidth >= 768 ) {
-						wizardUsed = true;
+					// Determine if we need to pass in the initials from the EULA acceptance or from the current session
+					var LicenseInitials = $.cookie( App.request( 'session:cookies', 'eulaInitials' ) );
 
-						// Determine if we need to pass in the initials from the EULA acceptance or from the current session
-						var LicenseInitials = $.cookie( App.request( 'session:cookies', 'eulaInitials' ) );
-
-						if ( !LicenseInitials ) {
-							LicenseInitials = App.request( 'session:personnel', 'LicenseInitials' );
-						}
-
-						bootstro.start( null, {
-							'margin' : '50px',
-
-							'onStep' : function () {
-								$( 'html, body' ).animate( {
-									'scrollTop' : $( '.bootstro-highlight' ).offset().top * 0.8
-								}, 100 );
-							},
-
-							'onExit' : function () {
-								personnel.save( {
-									'UseWizards'      : 0,
-									'LicenseInitials' : LicenseInitials
-								}, {
-									'success' : function () {
-										$.cookie( 'USEWIZARDS', 0 );
-									}
-								} );
-							}
-						} );
+					if ( !LicenseInitials ) {
+						LicenseInitials = App.request( 'session:personnel', 'LicenseInitials' );
 					}
 
-				} );
+					bootstro.start( null, {
 
+						'margin' : '50px',
+
+						'onStep' : function () {
+							$( 'html, body' ).animate( {
+								'scrollTop' : $( '.bootstro-highlight' ).offset().top * 0.8
+							}, 100 );
+						},
+
+						'onExit' : function () {
+							personnel.save( {
+								'UseWizards'      : 0,
+								'LicenseInitials' : LicenseInitials
+							}, {
+								'success' : function () {
+									$.cookie( 'USEWIZARDS', 0 );
+								}
+							} );
+						}
+					} );
+				}
 			}
 		} );
 
