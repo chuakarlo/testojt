@@ -21,7 +21,7 @@ define( function ( require ) {
 
 	// set the regions of the app
 	App.addRegions( {
-		'menu'         : '#navbar',
+		'navbarRegion' : '#navbar',
 		'footerRegion' : '#footer',
 		'content'      : '#main-content',
 		'flashContent' : '#flash-content',
