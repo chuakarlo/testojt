@@ -191,17 +191,16 @@ define( function ( require ) {
 			var prev = this._getControls( 'prev',  plugins.navigation.controls );
 
 			// Reset controls to show state.
-			next.show();
-			prev.show();
+			next.attr( 'style', 'display: block !important' );
+			prev.attr( 'style', 'display: block !important' );
 
-			// We're at the last page. Hide "next" UI.
-			if ( ( count - page )  <= settings.items ) {
-				next.hide();
+			if ( page === 0 ) {
+				page = 1;
+				prev.attr( 'style', 'display: none !important' );
 			}
-
-			// Check for 0 and 1 due to inconsistencies in how owl is calculating the first page.
-			if ( page === 0 || page === 1 ) {
-				prev.hide();
+			// We're at the last page. Hide "next" UI.
+			if ( ( count - page ) <= settings.items ) {
+				next.attr( 'style', 'display: none !important' );
 			}
 		} ),
 

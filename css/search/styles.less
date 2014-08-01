@@ -4,7 +4,10 @@
 #search-query {
 	color : @pd360-green-dark;
 }
-
+// prevent search form to cover when modal is open
+.form-group.search.has-feedback.boostro-element-container {
+	z-index : 1000;
+}
 //--------------------------
 // RESULTS
 //--------------------------

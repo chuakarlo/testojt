@@ -83,7 +83,8 @@ define( function ( require ) {
 					// if there are other segments available
 					if ( !segments.isEmpty() ) {
 						var segmentsView = new App.Common.VideoCarouselView( {
-							'collection' : segments
+							'collection' : segments,
+							'id'         : 'segments-video-carousel'
 						} );
 
 						var segmentLabel = new App.VideoPlayer.Views.SegmentLabelItemView( {
@@ -138,7 +139,8 @@ define( function ( require ) {
 
 					// show related vids
 					var relatedView = new App.Common.VideoCarouselView( {
-						'collection' : relatedVideos
+						'collection' : relatedVideos,
+						'id'         : 'related-videos-carousel'
 					} );
 					layout.relatedVideosRegion.show( relatedView );
 

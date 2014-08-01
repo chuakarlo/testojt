@@ -7,8 +7,7 @@ define( function ( require ) {
 
 	var App               = require( 'App' );
 	var QuestionsItemView = require( 'videoPlayer/views/question/QuestionItemView' );
-
-	var template = require( 'text!videoPlayer/templates/questionsCompositeView.html' );
+	var template          = require( 'text!videoPlayer/templates/questionsCompositeView.html' );
 
 	return App.Common.CarouselView.extend( {
 
@@ -88,6 +87,12 @@ define( function ( require ) {
 			this.showHideArrow( data.item.index + 1 );
 			this.children.findByIndex( data.item.index )
 				.ui.textInput.putCursorAtEnd();
+		},
+
+		// destroy navigation plugin for it's not used
+		'afterCarouselInitialized' : function ( data ) {
+			var navigation = data.relatedTarget.plugins.navigation;
+			navigation.destroy();
 		},
 
 		'updatePagination' : function ( page ) {
