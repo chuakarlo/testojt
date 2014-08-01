@@ -42,7 +42,7 @@ define( function ( require ) {
 		'templateHelpers' : function () {
 			var model = this.model;
 
-			model.FocusTitle = getAbbreviation ( encodeURIComponent( model.get( 'StateStandardTitle' ) ), 50 );
+			model.FocusTitle = encodeURIComponent( model.get( 'StateStandardTitle' ) );
 			model.SSTitle    = getAbbreviation ( model.get( 'StateStandardTitle' ), 50 );
 			this._setDescriptionIcon( model );
 
