@@ -20,28 +20,6 @@ define( function ( require ) {
 
 		'video' : {
 			'previewLimit' : 45 // in seconds,
-		},
-
-		'slick' : {
-			'slidesToShow'   : 4,
-			'slidesToScroll' : 4,
-			'arrows'         : true,
-			'slide'          : 'li',
-			'slickWidth'     : 1140,
-			'useCSS'         : false,
-			'responsive'     : [ {
-				'breakpoint' : 1100,
-				'settings'   : {
-					'slidesToScroll' : 2,
-					'touchThreshold' : 10
-				}
-			}, {
-				'breakpoint' : 450,
-				'settings'   : {
-					'slidesToScroll' : 1,
-					'touchThreshold' : 10
-				}
-			} ]
 		}
 	};
 

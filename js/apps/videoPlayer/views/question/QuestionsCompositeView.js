@@ -1,18 +1,18 @@
 define( function ( require ) {
 	'use strict';
 
-	require( 'slick' );
 	require( 'videoPlayer/plugins/putCursorAtEnd' );
 
-	var _          = require( 'underscore' );
-	var Marionette = require( 'marionette' );
+	var _ = require( 'underscore' );
 
+	var App               = require( 'App' );
 	var QuestionsItemView = require( 'videoPlayer/views/question/QuestionItemView' );
 	var NoItemView        = require( 'videoPlayer/views/NoItemView' );
 
-	var template = require( 'text!videoPlayer/templates/questionsCompositeView.html' );
+	var CarouselView = App.Common.CarouselView;
+	var template     = require( 'text!videoPlayer/templates/questionsCompositeView.html' );
 
-	return Marionette.CompositeView.extend( {
+	return CarouselView.extend( {
 
 		'className' : 'col-xs-12 col-sm-12 right-bar',
 
@@ -47,18 +47,24 @@ define( function ( require ) {
 			'click @ui.prev' : 'prevQuestion'
 		},
 
+		'carouselOptions' : {
+			'nav'         : false,
+			'autoWidth'   : false,
+			'itemsToShow' : 1,
+			'mouseDrag'   : false,
+			'controls'    : {
+				'next' : '.right-control',
+				'prev' : '.left-control'
+			}
+		},
+
+		'getCarouselEl' : function () {
+			return this.ui.carousel;
+		},
+
 		'initialize' : function ( options ) {
 			_.bindAll( this );
 			_.extend( this, options );
-		},
-
-		'onCompositeCollectionRendered' : function () {
-			// Reinitialized carousel after composite view is re-rendered.
-			var slick = this.ui.carousel.get( 0 ).slick;
-			if ( slick ) {
-				this.ui.carousel.unslick();
-				this.showCarousel();
-			}
 		},
 
 		'onShow' : function () {
@@ -67,17 +73,32 @@ define( function ( require ) {
 		},
 
 		'showCarousel' : function () {
-			this.ui.carousel.slick( {
-				'accessibility'  : false,
-				'draggable'      : false,
-				'slidesToShow'   : 1,
-				'slidesToScroll' : 1,
-				'infinite'       : false,
-				'arrows'         : false,
-				'speed'          : 100,
-				'slide'          : 'li',
-				'onAfterChange'  : this.afterCarouselChange.bind( this )
-			} );
+			this.trigger( 'show:carousel' );
+		},
+
+		'nextQuestion' : function () {
+			this.next();
+		},
+
+		'prevQuestion' : function () {
+			this.prev();
+		},
+
+		'afterCarouselMoved' : function ( data ) {
+			this.updatePagination( data.item.index + 1 );
+			this.updateHeader( data.item.index );
+			this.showHideArrow( data.item.index + 1 );
+			this.children.findByIndex( data.item.index )
+				.ui.textInput.putCursorAtEnd();
+		},
+		// destroy navigation plugin for it's not used
+		'afterCarouselInitialized' : function ( data ) {
+			var navigation = data.relatedTarget.plugins.navigation;
+			navigation.destroy();
+		},
+
+		'updatePagination' : function ( page ) {
+			this.ui.currentPage.text( page );
 		},
 
 		'updateHeader' : function ( index ) {
@@ -104,38 +125,14 @@ define( function ( require ) {
 			var pages = this.collection.length;
 			if ( page < 2 ) {
 				this.ui.prev.hide();
+				this.ui.next.show();
 			} else if ( page === pages ) {
 				this.ui.next.hide();
+				this.ui.prev.show();
 			} else {
 				this.ui.prev.show();
 				this.ui.next.show();
 			}
-		},
-
-		'nextQuestion' : function () {
-			var slide = this.ui.carousel.slickCurrentSlide();
-			if ( slide + 1 < this.collection.length ) {
-				this.ui.carousel.slickNext();
-			}
-		},
-
-		'prevQuestion' : function () {
-			var slide = this.ui.carousel.slickCurrentSlide();
-			if ( slide > 0 ) {
-				this.ui.carousel.slickPrev();
-			}
-		},
-
-		'updatePagination' : function ( page ) {
-			this.ui.currentPage.text( page );
-		},
-
-		'afterCarouselChange' : function ( elem, page ) {
-			this.updatePagination( page + 1 );
-			this.showHideArrow( page + 1 );
-			this.updateHeader( page );
-			this.children.findByIndex( page )
-				.ui.textInput.putCursorAtEnd();
 		}
 
 	} );

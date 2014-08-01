@@ -1,35 +1,33 @@
 define( function ( require ) {
 	'use strict';
 
-	require( 'slick' );
+	var _ = require( 'underscore' );
 
-	var App        = require( 'App' );
-	var Marionette = require( 'marionette' );
-	var NoItemView = require( 'videoPlayer/views/NoItemView' );
-	var utils      = require( 'videoPlayer/utils/utils' );
-	var config     = App.request( 'videoPlayer:config' );
+	var App          = require( 'App' );
+	var NoItemView   = require( 'videoPlayer/views/NoItemView' );
 
-	return Marionette.CollectionView.extend( {
+	var CarouselView = App.Common.CarouselView;
+	var template     = require( 'text!videoPlayer/templates/tabs/videoCollectionView.html' );
+
+	return CarouselView.extend( {
+
+		'template' : _.template( template ),
 
 		'itemView'  : App.Common.SegmentCardsView,
 
-		'tagName'   : 'div',
-
-		'className' : 'slick',
-
 		'emptyView' : NoItemView,
 
-		'onShow' : function () {
-			if ( utils.isMobile() ) {
-				this.$el.addClass( 'mobile' );
-			}
-			if ( this.collection.length !== 0 ) {
-				this.$el.slick( config.slick );
-			}
+		'initialize' : function ( options ) {
+			_.bindAll( this );
+			_.extend( this, options );
 		},
 
-		'onClose' : function () {
-			this.collection.reset( [ ] );
+		'onShow' : function () {
+			this.trigger( 'show:carousel' );
+		},
+
+		'getCarouselEl' : function () {
+			return this.el;
 		}
 
 	} );

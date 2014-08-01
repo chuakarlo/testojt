@@ -33,7 +33,6 @@ define( function ( require ) {
 
 			'parse' : function ( response ) {
 				var isArchived = this.startsWith( this.contentName, 'Archive:' );
-
 				// exclude current segment and archive videos
 				return _.filter( response, function ( segment ) {
 					if ( segment.ContentId !== this.id && !isArchived ) {
