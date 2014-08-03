@@ -10,10 +10,7 @@ define( function ( require ) {
 	var moment = require( 'moment' );
 
 	var indexToChar = require( 'common/helpers/indexToChar' );
-
-	var template           = require( 'text!groups/templates/create/groupCreateView.html' );
-	var uploadTemplate     = require( 'text!groups/templates/upload/UploadTemplate.html' );
-	var uploadFileTemplate = require( 'text!groups/templates/upload/FileTemplate.html' );
+	var template    = require( 'text!groups/templates/create/groupCreateView.html' );
 
 	require( 'backbone.stickit' );
 	require( 'fine-uploader' );
@@ -65,19 +62,18 @@ define( function ( require ) {
 			return 0;
 		},
 
+		'onDomRefresh' : function () {
+			this.initUploader();
+		},
+
 		'onRender' : function () {
 			this.stickit();
-			this.initUploader();
 		},
 
 		'uploadOptions' : {
 
 			'multiple'   : false,
 			'autoUpload' : false,
-
-			'fileTemplate' : _.template( uploadFileTemplate )(),
-
-			'template' : _.template( uploadTemplate )(),
 
 			'request' : {
 				'forceMultipart' : false
@@ -87,18 +83,10 @@ define( function ( require ) {
 				'enabled' : false
 			},
 
-			'editFilename' : {
-				'enabled' : false
-			},
-
 			'validation' : {
 				'allowedExtensions' : [ 'jpeg', 'jpg', 'gif', 'png' ],
 				'acceptFiles'       : [ '.jpeg', '.jpg', '.gif', '.png' ],
 				'sizeLimit'         : 3145728
-			},
-
-			'messages' : {
-				'sizeError' : '{file} is too large, maximum file size is 3MB'
 			},
 
 			'showMessage' : function ( message ) {
@@ -112,8 +100,14 @@ define( function ( require ) {
 		},
 
 		'initUploader' : function () {
-			this.ui.logo.fineUploader( this.uploadOptions );
-			this.ui.banner.fineUploader( this.uploadOptions );
+			var logoTemplate = _.clone( this.uploadOptions );
+			_.extend( logoTemplate, { 'template' : 'qq-logo-template' } );
+
+			var bannerTemplate = _.clone( this.uploadOptions );
+			_.extend( bannerTemplate, { 'template' : 'qq-banner-template' } );
+
+			this.ui.logo.fineUploader( logoTemplate );
+			this.ui.banner.fineUploader( bannerTemplate );
 		},
 
 		'uploadImages' : function ( group ) {
@@ -121,6 +115,7 @@ define( function ( require ) {
 			var folder   = indexToChar( group.get( 'LicenseId' ) % 26 );
 			var filename = folder + '/' + group.get( 'LicenseId' );
 
+			// upload both images before saving group
 			App.when( this.uploadLogo( filename ), this.uploadBanner( filename ) )
 
 			.done( function () {
@@ -173,6 +168,7 @@ define( function ( require ) {
 
 			.on( 'error', function ( event, id, name, errorReason ) {
 
+				// user didn't select a file, just set image to default
 				if ( errorReason === 'No files to upload.' ) {
 					return defer.resolve();
 				}
@@ -207,6 +203,7 @@ define( function ( require ) {
 
 			.on( 'error', function ( event, id, name, errorReason ) {
 
+				// user didn't select a file, just set image to default
 				if ( errorReason === 'No files to upload.' ) {
 					return defer.resolve();
 				}

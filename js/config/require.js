@@ -50,7 +50,7 @@ require.config( {
 		'validation'          : 'plugins/validation',
 		'ColdFusion'          : 'plugins/Backbone.CF',
 		'config'              : 'config/index',
-		'fine-uploader'       : 'libs/fine-uploader/build/jquery.fineuploader.min',
+		'fine-uploader'       : 'libs/fine-uploader/custom.fineuploader-5.0.3.min',
 		'ladda'               : 'libs/ladda/dist/ladda.min',
 		'ladda-jquery'        : 'libs/ladda/dist/ladda.jquery.min',
 		'jquery-browser'      : 'libs/jquery.browser/dist/jquery.browser',

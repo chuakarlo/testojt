@@ -45,12 +45,7 @@ define( function ( require ) {
 			'blur @ui.input'     : 'validateInput',
 			'keyup @ui.input'    : 'validateInput',
 			'submit'             : 'saveInfo',
-			'click @ui.password' : 'changePassword',
-			'click .edit-link'   : 'clickEdit'
-		},
-
-		'clickEdit' : function () {
-			this.ui.uploader.find( 'input' ).click();
+			'click @ui.password' : 'changePassword'
 		},
 
 		'changePassword' : function ( event ) {
@@ -123,9 +118,11 @@ define( function ( require ) {
 			};
 		},
 
-		'onRender' : function () {
-
+		'onDomRefresh' : function () {
 			this.initUploader();
+		},
+
+		'onRender' : function () {
 
 			this.stickit( this.model, {
 				'#email'     : 'EmailAddress',
@@ -234,10 +231,6 @@ define( function ( require ) {
 
 				'multiple' : false,
 
-				'text' : {
-					'uploadButton' : '<a class=\'edit-link\'>Edit</a>'
-				},
-
 				'request' : {
 					'params' : {
 						'newFilename' : filename,
@@ -253,10 +246,6 @@ define( function ( require ) {
 					'allowedExtensions' : [ 'jpeg', 'jpg', 'gif', 'png' ],
 					'acceptFiles'       : [ '.jpeg', '.jpg', '.gif', '.png' ],
 					'sizeLimit'         : 3145728
-				},
-
-				'messages' : {
-					'sizeError' : '{file} is too large, maximum file size is 3MB'
 				},
 
 				'showMessage' : function ( message ) {

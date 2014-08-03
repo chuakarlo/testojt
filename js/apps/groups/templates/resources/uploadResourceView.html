@@ -12,13 +12,13 @@
 
 				<div class="radio">
 					<label>
-						<input class="upload" type="radio" name="upload-type" value="file" checked>
+						<input class="upload-element" type="radio" name="upload-type" value="file" checked>
 						File
 					</label>
 				</div>
 				<div class="radio">
 					<label>
-						<input class="upload" type="radio" name="upload-type" value="link">
+						<input class="upload-element" type="radio" name="upload-type" value="link">
 						Link
 					</label>
 				</div>
@@ -29,21 +29,39 @@
 		<div class="form-group js-upload-file-container">
 			<label class="control-label col-sm-2">File</label>
 			<div class="col-sm-10 js-upload-file-wrapper">
-				<input class="form-control upload" name="user_file" type="file">
+				<div id="qq-template">
+					<div class="qq-uploader-selector qq-uploader">
+			            <div class="qq-upload-button-selector">
+			                <div class="btn btn-primary file-selector">Choose a file</div>
+			            </div>
+			            <ul class="qq-upload-list-selector qq-upload-list">
+			                <li class="upload-list-item">
+			                    <div class="qq-progress-bar-container-selector">
+			                        <div class="qq-progress-bar-selector qq-progress-bar"></div>
+			                    </div>
+			                    <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
+			                    <span class="qq-upload-file-selector qq-upload-file"></span>
+			                    <span class="qq-upload-size-selector qq-upload-size"></span>
+			                    <a class="qq-upload-cancel-selector qq-upload-cancel" href="#">Remove</a>
+			                    <span class="qq-upload-status-text-selector qq-upload-status-text"></span>
+			                </li>
+			            </ul>
+			        </div>
+				</div>
 			</div>
 		</div>
 
 		<div class="form-group js-upload-link-container">
 			<label class="control-label col-sm-2">Paste Link</label>
 			<div class="col-sm-10">
-				<input class="form-control upload" type='text' name="url-input" value="http://">
+				<input class="form-control upload-element" type='text' name="url-input" value="http://">
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label class="control-label col-sm-2">Description</label>
 			<div class="col-sm-10">
-				<textarea class="form-control file-description upload" placeholder="Enter description here" rows=8></textarea>
+				<textarea class="form-control file-description upload-element" placeholder="Enter description here" rows=8></textarea>
 			</div>
 		</div>
 

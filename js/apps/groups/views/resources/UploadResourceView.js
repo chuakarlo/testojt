@@ -7,10 +7,6 @@ define( function ( require ) {
 	var App        = require( 'App' );
 	var stripHtml  = require( 'common/helpers/stripHtml' );
 	var Ladda      = require( 'ladda' );
-	var $          = require( 'jquery' );
-
-	var uploadTemplate     = require( 'text!groups/templates/upload/UploadTemplate.html' );
-	var uploadFileTemplate = require( 'text!groups/templates/upload/FileTemplate.html' );
 
 	require( 'fine-uploader' );
 
@@ -24,7 +20,6 @@ define( function ( require ) {
 			'descInput'      : '.file-description',
 			'radioInput'     : 'input[name="upload-type"]',
 			'urlInput'       : 'input[name="url-input"]',
-			'fileInput'      : 'input[name="user_file"]',
 			'linkContainer'  : '.js-upload-link-container',
 			'fileContainer'  : '.js-upload-file-container',
 			'fileUpload'     : '.js-upload-file-wrapper',
@@ -32,23 +27,23 @@ define( function ( require ) {
 			'cancelSubmit'   : '.cancel-submit-btn',
 			'uploadOptions'  : '.upload-options',
 			'confirmation'   : '.confirmation-options',
-			'uploadElements' : '.upload'
-
+			'uploadElements' : '.upload-element',
+			'removeFile'     : '.qq-upload-cancel',
+			'fileSelect'     : '.file-selector',
+			'fileName'       : '.qq-upload-file',
+			'fileInput'      : 'input[name="qqfile"]'
 		},
 
 		'events' : {
-
-			'click .back-btn'        : function () {
-				App.navigate( 'groups/' + this.model.get( 'LicenseId' ) + '/resources', { 'trigger' : true } );
-			},
+			'click @ui.backBtn'      : 'navigateBack',
 			'click .submit-btn'      : 'checkResource',
 			'click .confirm-btn'     : 'submitForm',
 			'change @ui.radioInput'  : 'updateInputDisplay',
-			'click .file-btn'        : function ( ev ) {
-				ev.currentTarget.nextElementSibling.click();
-			},
 			'click @ui.cancelSubmit' : 'showUploadOptions'
+		},
 
+		'navigateBack' : function () {
+			App.navigate( 'groups/' + this.model.get( 'LicenseId' ) + '/resources', { 'trigger' : true } );
 		},
 
 		'updateInputDisplay' : function ( event ) {
@@ -62,14 +57,15 @@ define( function ( require ) {
 		},
 
 		'onRender' : function () {
-
 			// Hide the link option as the default selection is file
 			this.ui.linkContainer.hide();
+		},
 
+		'onDomRefresh' : function () {
 			var config = App.request( 'session:config' );
 
 			var allowedExtensions = config.validFileUploadExtensions.split( ',' );
-			var acceptFiles = _.map( allowedExtensions, function ( ext ) {
+			var acceptFiles       = _.map( allowedExtensions, function ( ext ) {
 				return '.' + ext;
 			} );
 
@@ -80,34 +76,19 @@ define( function ( require ) {
 
 				'multiple' : false,
 
-				'fileTemplate' : _.template( uploadFileTemplate )(),
-
-				'template' : _.template( uploadTemplate )(),
-
 				'deleteFile' : {
 					'enabled' : false
 				},
 
-				'editFilename' : {
-					'enabled' : false
-				},
-
-				'text' : {
-					'uploadButton' : '<a>Select File</a>'
-				},
-
 				'request' : {
-					'forceMultipart' : false
+					'forceMultipart' : false,
+					'endpoint' : 'com/schoolimprovement/pd360/dao/groups/GroupResourceUpload.cfc?method=UploadFile'
 				},
 
 				'validation' : {
 					'allowedExtensions' : allowedExtensions,
 					'acceptFiles'       : acceptFiles,
 					'sizeLimit'         : 10485760
-				},
-
-				'messages' : {
-					'sizeError' : '{file} is too large, maximum file size is 10MB'
 				},
 
 				'showMessage' : function ( message ) {
@@ -154,8 +135,6 @@ define( function ( require ) {
 					}
 				}, this ) );
 
-				var url = 'com/schoolimprovement/pd360/dao/groups/GroupResourceUpload.cfc?method=UploadFile';
-				this.ui.fileUpload.fineUploader( 'setEndpoint', url );
 				this.ui.fileUpload.fineUploader( 'uploadStoredFiles' );
 			} else {
 				// Handle LINKS
@@ -201,27 +180,29 @@ define( function ( require ) {
 			this.ui.confirmation.show();
 			this.ui.confirmation.show();
 			this.ui.uploadElements.attr( 'disabled', true );
-			$( '.file-btn' ).attr( 'disabled', true );
-			$( 'input[ type = file ]' ).attr( 'disabled', true );
-			$( '.qq-upload-cancel' ).hide();
-
+			this.ui.fileSelect.addClass( 'disabled' );
+			this.ui.fileInput.attr( 'disabled', true );
+			this.ui.removeFile.hide();
 		},
 
 		'showUploadOptions' : function () {
 			this.ui.uploadOptions.show();
 			this.ui.confirmation.hide();
 			this.ui.uploadElements.attr( 'disabled', false );
-			$( '.file-btn' ).attr( 'disabled', false );
-			$( '.qq-upload-cancel' ).show();
-			$( 'input[ type = file ]' ).attr( 'disabled', false );
+			this.ui.fileSelect.removeClass( 'disabled' );
+			this.ui.fileInput.attr( 'disabled', false );
+			this.ui.removeFile.show();
 		},
 
 		'checkResource' : function () {
 			var resourceType = this.ui.radioInput.filter( ':checked' ).val();
 
+			// rebind to ui elements because they may have changed from fine-uploader
+			this.bindUIElements();
+
 			if ( resourceType === 'file' ) {
 
-				if ( $( '.qq-upload-file' ).text() === '' ) {
+				if ( this.ui.fileName.text() === '' ) {
 					App.errorHandler( new Error( 'Please attach a file to upload.' ) );
 					return false;
 				}
