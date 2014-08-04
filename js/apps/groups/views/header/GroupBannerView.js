@@ -1,22 +1,24 @@
 define( function ( require ) {
 	'use strict';
 
-	var App             = require( 'App' );
-	var _               = require( 'underscore' );
-	var Marionette      = require( 'marionette' );
-	var Vent            = require( 'Vent' );
-	var Session         = require( 'Session' );
-	var template        = require( 'text!groups/templates/header/groupBannerView.html' );
-	var leaderTemplate  = require( 'text!groups/templates/header/groupLeaderBannerView.html' );
-	var creatorTemplate = require( 'text!groups/templates/header/groupCreatorBannerView.html' );
+	var App                   = require( 'App' );
+	var _                     = require( 'underscore' );
+	var $                     = require( 'jquery' );
+	var Marionette            = require( 'marionette' );
+	var Vent                  = require( 'Vent' );
+	var Session               = require( 'Session' );
+	var template              = require( 'text!groups/templates/header/groupBannerView.html' );
+	var leaderTemplate        = require( 'text!groups/templates/header/groupLeaderBannerView.html' );
+	var creatorTemplate       = require( 'text!groups/templates/header/groupCreatorBannerView.html' );
+	var LeaveOptionsModalView = require( 'groups/views/header/GroupLeaveOptionsModalView' );
 
 	return Marionette.ItemView.extend( {
 
 		'template'  : _.template( template ),
 		'className' : 'container-smooth',
 
-		'events'   : {
-			'click button.Leave' : 'leaveGroup',
+		'events' : {
+			'click button.Leave' : 'showLeaveOptionModal',
 			'click button.Join'  : 'joinGroup'
 		},
 
@@ -29,11 +31,18 @@ define( function ( require ) {
 			this.$el.css( 'background-image', 'url(\'' + getBrandingPath( this.model.get( 'BrandingImage' ), 'lg' ) + '\')' );
 		},
 
-		'leaveGroup' : function ( e ) {
+		'showLeaveOptionModal' : function ( e ) {
 
 			e.preventDefault();
-			Vent.trigger( 'group:leaveGroup', this.model );
+			var leaveOptionsModalView = new LeaveOptionsModalView( { 'model' : this.model } );
+			var options = { 'className' : 'info-modal' };
 
+			// check if android native browser and set data-backdrop to static
+			if ( $.browser.safari && $.browser.android ) {
+				_.extend( options, { 'backdrop' : 'static' } );
+			}
+
+			App.modalRegion.show( leaveOptionsModalView, options );
 		},
 
 		'joinGroup' : function ( e ) {
