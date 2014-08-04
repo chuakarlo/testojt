@@ -109,8 +109,8 @@ define( function ( require ) {
 			this.removeCookie( 'remember' );
 
 			// set variables
-			this.username = options.username;
-			this.password = options.password;
+			this.username = encodeURIComponent( options.username );
+			this.password = encodeURIComponent( options.password );
 
 			// remove username and password so that jQuery doesn't make the URL http://user:pass@domain.com
 			delete options.username;
