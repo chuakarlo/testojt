@@ -17,7 +17,7 @@
 	}
 
 	h5 {
-		font-size : 15px;
+		font-size : 13px;
 		color : @gray-dark;
 	}
 
@@ -30,16 +30,34 @@
 
 			div.sc-segment-image-container {
 				background-color : @gray-dark;
-				padding          : 0 5px;
 			}
 
 			div.sr-image-container {
 				background-color : @cn-white;
-				padding          : 0 5px;
+				padding          : 0 10px;
+
+				p {
+					color : @gray-dark;
+				}
 			}
 
 			div.sr-footer-details {
-				padding : 5px 5px;
+				padding : 5px 10px;
+
+				.sc-segment-name {
+					font-size: 13px;
+				}
+			}
+
+			div.sc-footer-details {
+				.sc-program a {
+					color : @brand-primary;
+				}
+
+				.sc-program a:hover {
+					text-decoration : underline;
+					color           : @link-hover-color;
+				}
 			}
 		}
 	}
