@@ -22,6 +22,7 @@ define( function ( require ) {
 		'tagName' : 'li',
 
 		'ui' : {
+			'shareIcon'         : 'span.sc-share-icon',
 			'infoIcon'          : 'span.sc-info-icon',
 			'watchIcon'         : 'span.sc-watch-later-icon',
 			'viewCompletedIcon' : 'span.sc-view-completed-icon',
@@ -34,7 +35,8 @@ define( function ( require ) {
 		'events' : {
 			'click @ui.infoIcon'    : 'showDetails',
 			'click @ui.watchIcon'   : 'watchLaterQueue',
-			'click @ui.playNowLink' : 'navigateToVideoPage'
+			'click @ui.playNowLink' : 'navigateToVideoPage',
+			'click @ui.shareIcon'   : 'showShareModal'
 		},
 
 		'templateHelpers' : {

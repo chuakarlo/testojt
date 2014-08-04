@@ -13,6 +13,7 @@ define( function ( require ) {
 		'onShow' : function () {
 
 			this.addTooltip( this.ui.infoIcon , { 'title' : 'Description' } );
+			this.addTooltip( this.ui.shareIcon , { 'title' : 'Share Video' } );
 
 			if ( !this.model.get( 'ViewingCompleted' ) ) {
 				this.matchedSegmentsToQueue();
@@ -22,6 +23,7 @@ define( function ( require ) {
 		},
 
 		'onClose' : function () {
+			this.removeTooltip( this.ui.shareIcon );
 			this.removeTooltip( this.ui.infoIcon );
 			this.removeTooltip( this.ui.watchIcon );
 			this.ui.loadingIcon.spin( false );
@@ -34,6 +36,10 @@ define( function ( require ) {
 			var uuv = this.model.get( 'UUVideoId' ) ? '?uuv=true' : '';
 
 			App.navigate( '#resources/videos/' + this.model.id + uuv , { 'trigger' : true } );
+		},
+
+		'showShareModal' : function () {
+			// TODO: Share Modal Call
 		},
 
 		'showDetails' : function () {
