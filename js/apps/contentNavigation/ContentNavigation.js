@@ -14,9 +14,6 @@ define( function ( require ) {
 		App.module( 'ContentNavigation', function ( ContentNavigation ) {
 
 			require( 'common/entities/Queue' );
-			// Does this need to be imported here?
-			require( 'common/views/SegmentCardsView' );
-			// ^
 			require( 'contentNavigation/views/Views' );
 			require( 'contentNavigation/entities/Entities' );
 			require( 'contentNavigation/controllers/UUVController' );

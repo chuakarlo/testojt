@@ -26,8 +26,8 @@ define( function ( require ) {
 		'setEventHandlers' : function () {
 
 			// set event handlers
-			this.listenTo( Vent, 'contentNavigation:updateSearchData', function ( filter, category ) {
-				this.updateQueryData( filter, category );
+			this.listenTo( Vent, 'contentNavigation:updateSearchData', function ( filter, category, sort ) {
+				this.updateQueryData( filter, category, sort );
 			}.bind( this ) );
 
 			this.listenTo( Vent, 'contentNavigation:changeSort', function ( sort ) {
@@ -38,6 +38,10 @@ define( function ( require ) {
 
 			this.listenTo( Vent, 'contentNavigation:pd360:clearFilters', function ( clearCollection ) {
 				this.updateQueryData( null, null, null, clearCollection );
+			}.bind( this ) );
+
+			App.reqres.setHandler( 'contentNavigation:getSort', function () {
+				return this.queryModel.get( 'sort' );
 			}.bind( this ) );
 		},
 
