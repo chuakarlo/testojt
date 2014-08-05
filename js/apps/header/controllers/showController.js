@@ -67,9 +67,12 @@ define( function ( require ) {
 				collection.add( menuOptions.training, { 'at' : 4 } );
 			}
 
-			menu.icons.show( new IconsCollectionView( {
-				'collection' : collection
-			} ) );
+			// The menu may not exist if logging in through SSO
+			if ( menu.icons ) {
+				menu.icons.show( new IconsCollectionView( {
+					'collection' : collection
+				} ) );
+			}
 
 			// -----------------------
 			// Update the message count
