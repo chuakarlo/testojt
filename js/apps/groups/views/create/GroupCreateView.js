@@ -235,6 +235,9 @@ define( function ( require ) {
 				this.model.set( 'StartDate', now );
 				this.model.set( 'Creator', persId );
 
+				// temporary fix for multiline issues on Group description until the API is able to process multiline strings
+				this.model.set( 'Misc', this.model.get( 'Misc' ).replace( /(\r\n|\n|\r)/gm, ' ' ) );
+
 				this.model.save( null, {
 
 					'success' : function ( model, response, options ) {
