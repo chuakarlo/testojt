@@ -62,6 +62,11 @@ define( function ( require ) {
 						LicenseInitials = App.request( 'session:personnel', 'LicenseInitials' );
 					}
 
+					// If not still on the home route then abort starting bootstro
+					if ( App.getCurrentRoute() !== 'home' ) {
+						return;
+					}
+
 					bootstro.start( null, {
 
 						'margin' : '50px',
