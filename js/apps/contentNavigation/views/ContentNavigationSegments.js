@@ -1,17 +1,17 @@
 define( function ( require ) {
 	'use strict';
 
+	var App        = require( 'App' );
 	var Marionette = require( 'marionette' );
 	var EmptyView  = require( '../views/ContentNavigationCollectionEmptyView' );
-	var ItemView   = require( '../views/ContentNavigationSegmentItemView' );
 
 	return Marionette.CollectionView.extend( {
-
-		'itemView' : ItemView,
 
 		'tagName' : 'ul',
 
 		'emptyView' : EmptyView,
+
+		'itemView' : App.Common.SegmentCardsView,
 
 		'className' : 'segment-card-list',
 

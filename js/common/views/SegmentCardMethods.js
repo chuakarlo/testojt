@@ -2,6 +2,7 @@ define( function ( require ) {
 	'use strict';
 
 	var modernizr       = window.Modernizr;
+	var Backbone        = require( 'backbone' );
 	var App             = require( 'App' );
 	var scrollFocusLock = require( 'common/helpers/scrollFocusLock' );
 
@@ -39,7 +40,8 @@ define( function ( require ) {
 		},
 
 		'showShareModal' : function () {
-			// TODO: Share Modal Call
+			this.model.set( 'VideoUrl', Backbone.history.location.origin + '#resources/videos/' + this.model.id );
+			App.vent.trigger( 'videoPlayer:showShareDialog', this.model );
 		},
 
 		'showDetails' : function () {

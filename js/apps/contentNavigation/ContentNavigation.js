@@ -148,6 +148,18 @@ define( function ( require ) {
 				return API.setupQueue( callback );
 			} );
 
+			App.vent.on( 'common:queued', function ( model ) {
+				if ( App.ContentNavigation.Helper.Queue ) {
+					App.ContentNavigation.Helper.Queue.add( model );
+				}
+			} );
+
+			App.vent.on( 'common:dequeued', function ( model ) {
+				if ( App.ContentNavigation.Helper.Queue ) {
+					App.ContentNavigation.Helper.Queue.remove( model );
+				}
+			} );
+
 			App.reqres.setHandler( 'contentNavigation:isCorrectRoute', function () {
 				return Backbone.history.fragment.match( /resources\/videos$/ );
 			} );
