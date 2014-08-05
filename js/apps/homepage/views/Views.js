@@ -5,7 +5,8 @@ define( function ( require ) {
 
 	App.module( 'Homepage.Views', function ( Views ) {
 
-		Views.CarouselHeader = require( 'homepage/views/CarouselHeaderView' );
+		Views.CarouselHeader    = require( 'homepage/views/CarouselHeaderView' );
+		Views.QueueCarouselView = require( 'homepage/views/QueueCarouselView' );
 
 	} );
 

@@ -91,7 +91,7 @@ define( function ( require ) {
 
 		// destroy navigation plugin for it's not used
 		'afterCarouselInitialized' : function ( data ) {
-			var navigation = data.relatedTarget.plugins.navigation;
+			var navigation = data.relatedTarget._plugins.navigation;
 			navigation.destroy();
 		},
 

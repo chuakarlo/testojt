@@ -15,6 +15,13 @@ define( function ( require ) {
 		'initialize' : function ( options ) {
 			_.bindAll( this );
 			_.extend( this, options );
+
+			this.listenTo( this.collection, 'updateCount', this.updateCount );
+		},
+
+		'updateCount' : function () {
+			this.model.set( 'count', this.collection.length );
+			this.render();
 		}
 
 	} );

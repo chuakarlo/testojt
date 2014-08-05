@@ -6,23 +6,12 @@ define( function ( require ) {
 	var Marionette = require( 'marionette' );
 	// Carousel plugin
 	require( 'owl.carousel' );
-	require( 'owl.navigation' );
 
 	// From Marionette helpers
 	function throwError ( message, name ) {
 		var error = new Error( message );
 		error.name = name || 'Error';
 		throw error;
-	}
-
-	// Maybe monad
-	function maybe ( fn ) {
-		return function () {
-			if ( arguments === void 0 ) {
-				return;
-			}
-			fn.apply( this, arguments );
-		};
 	}
 
 	// Options that should be same for all carousel and should not be overriden.
@@ -103,6 +92,7 @@ define( function ( require ) {
 		},
 
 		'constructor' : function () {
+			this._carouselInitialized = false;
 			this.listenTo( this, 'show:carousel', this.initCarousel );
 
 			Marionette.CompositeView.prototype.constructor.apply( this, arguments );
@@ -125,9 +115,27 @@ define( function ( require ) {
 			this.carouselEl.trigger( 'prev.owl.carousel', speed );
 		},
 
+		// Convenience removeItem method
+		'removeItem' : function ( index ) {
+			this.carouselEl.data( 'owl.carousel' ).remove( index );
+			this.refresh();
+		},
+
+		'refresh' : function () {
+			this.carouselEl.data( 'owl.carousel' ).refresh();
+		},
+
+		// Convenience addItem method
+		'addItem' : function ( element, index ) {
+			this.carouselEl.data( 'owl.carousel' ).add( element, index );
+			this.refresh();
+		},
+
 		'onClose' : function () {
 			if ( this.carouselEl ) {
+				this._unBindEvents();
 				this.carouselEl.trigger( 'destroy.owl.carousel' );
+				delete this._carouselInitialized;
 			}
 		},
 
@@ -160,71 +168,27 @@ define( function ( require ) {
 			this._bindEvents();
 			// Initialize carousel.
 			this.carouselEl.owlCarousel( this._options );
+
+			this._carouselInitialized = true;
 		},
 
 		// Listen to owl carousel events. Add more events if necessary.
 		'_bindEvents' : function () {
 			this.carouselEl.on( 'initialized.owl.carousel', this._onInitialized );
 			this.carouselEl.on( 'translated.owl.carousel',  this._onTranslated );
-			this.carouselEl.on( 'refreshed.owl.carousel',   this._showHideControls );
-			this.carouselEl.on( 'resized.owl.carousel',     this._showHideControls );
+		},
+
+		'_unBindEvents' : function () {
+			this.carouselEl.off( 'initialized.owl.carousel', this._onInitialized );
+			this.carouselEl.off( 'translated.owl.carousel',  this._onTranslated );
 		},
 
 		'_onInitialized' : function ( data ) {
-			this._showHideControls( data );
 			this.afterCarouselInitialized( data );
 		},
 
 		'_onTranslated' : function ( data ) {
-			this._showHideControls( data );
 			this.afterCarouselMoved( data );
-		},
-
-		// This checks if "next" and "previous" UI should be shown or hidden ( not handled by owlcarousel ).
-		'_showHideControls' : maybe( function ( data ) {
-			var count    = data.item.count; // number of carousel items
-			var page     = data.item.index; // current index
-			var settings = data.relatedTarget.settings; // current settings used by carousel
-			var plugins  = data.relatedTarget.plugins; // carousel plugins
-
-			var next = this._getControls( 'next',  plugins.navigation.controls );
-			var prev = this._getControls( 'prev',  plugins.navigation.controls );
-
-			// Reset controls to show state.
-			next.attr( 'style', 'display: block !important' );
-			prev.attr( 'style', 'display: block !important' );
-
-			if ( page === 0 ) {
-				page = 1;
-				prev.attr( 'style', 'display: none !important' );
-			}
-			// We're at the last page. Hide "next" UI.
-			if ( ( count - page ) <= settings.items ) {
-				next.attr( 'style', 'display: none !important' );
-			}
-		} ),
-
-		'_getControls' : function ( nav, controls ) {
-			switch ( nav ) {
-				case 'next' :
-					// Check if we're setting our own DOM for navigation
-					if ( this._options.controls && this._options.controls.next ) {
-						return this._getElement( this._options.controls.next, 'next' );
-					} else {
-						return controls.$next;
-					}
-					break;
-				case 'prev' :
-					if ( this._options.controls && this._options.controls.prev ) {
-						return this._getElement( this._options.controls.prev, 'prev' );
-					} else {
-						return controls.$previous;
-					}
-					break;
-				default : {
-					return;
-				}
-			}
 		},
 
 		'_getElement' : function ( elem, name ) {

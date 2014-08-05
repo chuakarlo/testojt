@@ -12,7 +12,7 @@ define( function ( require ) {
 
 		'template' : _.template( template ),
 
-		'className' : 'videos-carousel',
+		'className' : 'videos-carousel owl-carousel',
 
 		'itemView'  : SegmentCardsView,
 

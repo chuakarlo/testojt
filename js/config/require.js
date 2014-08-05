@@ -67,8 +67,7 @@ require.config( {
 		'bootstrap-select'    : 'libs/bootstrap-select-3/bootstrap-select',
 		'autolinker'          : 'libs/Autolinker.js/src/Autolinker',
 		'placeholderjs'       : 'libs/placeholderjs/build/placeholders.jquery',
-		'owl.carousel'        : 'libs/owl.carousel/src/js/owl.carousel',
-		'owl.navigation'      : 'libs/owl.carousel/src/js/owl.navigation',
+		'owl.carousel'        : 'libs/owl.carousel/dist/owl.carousel',
 
 		// Base application level classes
 		'Session' : 'apps/user/models/SessionModel',
@@ -216,10 +215,6 @@ require.config( {
 
 		'chai-json-schema' : {
 			'deps' : [ 'chai', 'tv4', 'jsonpointer' ]
-		},
-
-		'owl.navigation' : {
-			'deps' : [ 'owl.carousel' ]
 		},
 
 		'owl.carousel' : {

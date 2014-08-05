@@ -4,7 +4,7 @@
 
 .home-container {
 
-	overflow: auto;
+	overflow-x: hidden;
 
 	.vid-container {
 		padding : 10px 0 25px 0;
@@ -21,6 +21,10 @@
 		.counter {
 			color : @pc-gray-dark;
 		}
+	}
+
+	#queued-videos, #recommended-videos {
+		height: 282px;
 	}
 
 	h2 {

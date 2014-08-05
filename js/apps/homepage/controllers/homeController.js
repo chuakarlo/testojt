@@ -13,6 +13,8 @@ define( function ( require ) {
 	var districtUtils = require( 'apps/homepage/utils/districtUtil' );
 	var homepageUtils = require( 'apps/homepage/utils/homepageUtil' );
 
+	var ServerRequests = require( 'homepage/constants/ServerRequests' );
+
 	App.module( 'Homepage.Show', function ( Show ) {
 
 		var wizardUsed = false;
@@ -41,66 +43,77 @@ define( function ( require ) {
 				} );
 
 			},
-			'showHomepage' : function () {
 
+			'showHomepage' : function () {
 				App.content.show( this.layout );
 
 				homepageUtils.loadHomepage( this.layout );
 				districtUtils.processDistrictMessage( this.layout );
 
-				this.showCarousels();
+				this.registerServerCallbacks();
+				this.fetchCarouselData();
 			},
 
-			'showCarousels' : function () {
-
-				function setQueue ( queue, model ) {
-					model.set( 'queued', queue.isQueued( model ) );
-				}
-
+			'fetchCarouselData' : function () {
 				App.when(
 					App.request( 'common:getQueueContents' ),
 					App.request( 'homepage:recommendedVideos' )
 				).done(
 					function ( queuedVideos, recommendedVideos ) {
 
+						function setQueue ( queue, model ) {
+							model.set( 'queued', queue.isQueued( model ) );
+						}
+
 						queuedVideos.each( setQueue.bind( this, queuedVideos ) );
-
-						var user = App.request( 'homepage:userProfile' );
-						// Set user possessive first name
-						var possName = _.last( user.FirstName ) === 's' ? ( user.FirstName + '\'' ) : ( user.FirstName + '\'s' );
-						// Your Queue header vars.
-						var queueData = {
-							'header'   : possName + ' Queue',
-							'numFound' : queuedVideos.length
-						};
-
-						var queuedVideosHeader = new App.Homepage.Views.CarouselHeader( {
-							'model' : new Backbone.Model( queueData )
-						} );
-						this.layout.yourQueueHeader.show( queuedVideosHeader );
-
-						var yourQueueCarousel = new App.Common.VideoCarouselView( {
-							'collection' : queuedVideos
-						} );
-						this.layout.yourQueueRegion.show( yourQueueCarousel );
-
-						// Set queued attribute for recommended videos
 						recommendedVideos.each( setQueue.bind( this, queuedVideos ) );
 
-						var recommendedVideosHeader = new App.Homepage.Views.CarouselHeader( {
-							'model' : new Backbone.Model( _.extend( recommendedVideos.data, { 'header' : 'Recommended' } ) )
-						} );
-						this.layout.recommendedVideosHeader.show( recommendedVideosHeader );
+						App.vent.trigger( ServerRequests.QueuedVideos, queuedVideos );
+						App.vent.trigger( ServerRequests.RecommendedVideos, recommendedVideos );
 
-						var recommendedVideosCarousel = new App.Common.VideoCarouselView( {
-							'collection' : recommendedVideos
-						} );
-						this.layout.recommendedVideosRegion.show( recommendedVideosCarousel );
-
-					}.bind( this )
+					}
 				).fail(
 					App.errorHandler
 				);
+			},
+
+			'registerServerCallbacks' : function () {
+				var self = this;
+
+				var user     = App.request( 'homepage:userProfile' );
+				var possName = _.last( user.FirstName ) === 's' ? ( user.FirstName + '\'' ) : ( user.FirstName + '\'s' );
+
+				App.vent.on( ServerRequests.QueuedVideos, function ( collection ) {
+					var headerModel = new Backbone.Model( {
+						'header' : possName + ' Queue',
+						'count'  : collection.length
+					} );
+
+					self.layout.yourQueueHeader.show( new App.Homepage.Views.CarouselHeader( {
+						'model'      : headerModel,
+						'collection' : collection
+					} ) );
+
+					self.layout.yourQueueRegion.show( new App.Homepage.Views.QueueCarouselView( {
+						'collection' : collection
+					} ) );
+				} );
+
+				App.vent.on( ServerRequests.RecommendedVideos, function ( collection ) {
+					var headerModel = new Backbone.Model( {
+						'header' : 'Recommended',
+						'count'  : collection.data.numFound
+					} );
+
+					self.layout.recommendedVideosHeader.show( new App.Homepage.Views.CarouselHeader( {
+						'model'      : headerModel,
+						'collection' : collection
+					} ) );
+
+					self.layout.recommendedVideosRegion.show( new App.Common.VideoCarouselView( {
+						'collection' : collection
+					} ) );
+				} );
 			},
 
 			'checkWizard' : function () {
@@ -140,6 +153,7 @@ define( function ( require ) {
 					} );
 				}
 			}
+
 		} );
 
 		Show.Controller = new Controller();

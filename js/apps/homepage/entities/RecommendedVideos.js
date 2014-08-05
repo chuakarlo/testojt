@@ -27,6 +27,12 @@ define( function ( require ) {
 						'sort'        : 'created desc'
 					}
 				};
+			},
+
+			'parse' : function ( response ) {
+				// Removed metadata which is the first item in the
+				// array response.
+				return response.slice( 1 );
 			}
 
 		} );

@@ -95,12 +95,12 @@ define( function ( require ) {
 			}.bind( this ), config.autosaveInterval );
 		},
 
-		'onFocus' : function () {
+		'onFocus' : function ( evt ) {
 			this.trackActivity();
 			this.startAutosave();
 		},
 
-		'onBlur' : function () {
+		'onBlur' : function ( evt ) {
 			this.autosaving = false;
 			this.saveModel();
 			clearInterval( this.interval );

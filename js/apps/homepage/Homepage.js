@@ -20,6 +20,8 @@ define( function ( require ) {
 			require( './entities/Entities' );
 			// views
 			require( './views/Views' );
+			// stores
+			require( './stores/VideosStore' );
 
 			// configure groups routes
 			Homepage.Router = AuthRouter.extend( {
