@@ -102,15 +102,15 @@ define( function ( require ) {
 
 		'login' : function ( options ) {
 			this.url = function () {
-				return '/com/schoolimprovement/pd360/dao/RespondService.cfc?method=rspndLogin&loginNm=' + this.username + '&passwrd=' + this.password + '&returnformat=json';
+				return '/com/schoolimprovement/pd360/dao/RespondService.cfc?method=rspndLogin&loginNm=' + encodeURIComponent( this.username ) + '&passwrd=' + encodeURIComponent( this.password ) + '&returnformat=json';
 			};
 
 			// remove old cookies
 			this.removeCookie( 'remember' );
 
 			// set variables
-			this.username = encodeURIComponent( options.username );
-			this.password = encodeURIComponent( options.password );
+			this.username = options.username;
+			this.password = options.password;
 
 			// remove username and password so that jQuery doesn't make the URL http://user:pass@domain.com
 			delete options.username;
