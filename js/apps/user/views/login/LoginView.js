@@ -16,9 +16,9 @@ define( function ( require ) {
 		'template' : _.template( template ),
 
 		'events' : {
-			'submit'                      : 'login',
-			'click @ui.remember'          : 'rememberMe',
-			'click .forgot-password-link' : 'forgotPassword'
+			'submit'                    : 'login',
+			'click @ui.remember'        : 'rememberMe',
+			'click .js-forgot-password' : 'forgotPassword'
 		},
 
 		'ui' : {
@@ -58,6 +58,16 @@ define( function ( require ) {
 			if ( $.cookie( 'remember' ) ) {
 				this.ui.remember.prop( 'checked', 'checked' );
 				this.ui.username.val( $.cookie( 'remember' ) );
+			}
+		},
+
+		'onShow' : function () {
+			if ( !navigator.cookieEnabled ) {
+
+				$( '.first-column' ).html(
+					require( 'text!user/templates/login/cookies.html' )
+				);
+
 			}
 		},
 

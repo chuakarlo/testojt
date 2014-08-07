@@ -1,42 +1,42 @@
 define( function ( require ) {
 	'use strict';
 
-	var App = require( 'App' );
+	var _       = require( 'underscore' );
+	var App     = require( 'App' );
+	var Bugsnag = window.Bugsnag;
 
 	var DistrictMessageView  = require( 'apps/homepage/views/DistrictMessageView' );
 	var DistrictMessageModel = require( 'apps/homepage/entities/DistrictMessageModel' );
 
 	return {
 		'processDistrictMessage' : function ( layout ) {
-			// Check to see if they have a district message
-			var licenses = App.request( 'user:licenses' );
-			App.when( licenses ).done( function ( licenses ) {
+			var ids = _.pluck( App.request( 'session:license' ), 'LicenseId' );
 
-				var ids = licenses.pluck( 'LicenseId' );
-				var districtMessageModel = new DistrictMessageModel( {
-					'licIds' : ids
-				} );
+			var districtMessageModel = new DistrictMessageModel( {
+				'licIds' : ids
+			} );
 
-				districtMessageModel.fetch( {
+			districtMessageModel.fetch( {
 
-					'success' : function ( model ) {
-						if ( App.request( 'homepage:isHomeRoute' ) ) {
-							if ( model.isValidMessage() ) {
-								var districtMessageView = new DistrictMessageView( {
-									'model' : model
-								} );
+				'success' : function ( model ) {
+					if ( App.request( 'homepage:isHomeRoute' ) ) {
+						if ( model.isValidMessage() ) {
+							var districtMessageView = new DistrictMessageView( {
+								'model' : model
+							} );
+
+							// Verify the region exists prior to trying to show
+							if ( layout.messageRegion ) {
 								layout.messageRegion.show( districtMessageView );
 							}
 						}
 					}
-				} );
+				},
 
-			} ).fail( function ( error ) {
-
-				layout.messageRegion.show( new App.Common.ErrorView( {
-					'message' : 'There was an error getting district message.',
-					'flash'   : 'An error occurred. Please try again later.'
-				} ) );
+				'error' : function ( error ) {
+					// Call Bugsnag directly and don't notify the user
+					Bugsnag.notifyException( error, 'DistrictMessageFetchError' );
+				}
 
 			} );
 		}

@@ -18,47 +18,37 @@ define( function ( require ) {
 		var Controller = Marionette.Controller.extend( {
 
 			'showHeader' : function () {
+
 				var authenticated = App.request( 'session:authenticated' );
+				var messageCount  = new Backbone.Model( { 'messageCount' : 0 } );
+				var menu          = new Menu( { 'authenticated' : authenticated, 'model' : messageCount } );
 
-				var init = function () {
-
-					var messageCount = new Backbone.Model( { 'messageCount' : 0 } );
-					var menu         = new Menu( { 'authenticated' : authenticated, 'model' : messageCount } );
+				this.listenTo( menu, 'show', function () {
 
 					if ( authenticated ) {
 
-						this.listenToOnce( menu, 'show', function () {
+						// This lets the home controller know this view is ready to display
+						// the bootstro element
+						App.vent.trigger( 'bootstro:itemLoaded' );
 
-							// This lets the home controller know this view is ready to display
-							// the bootstro element
-							App.vent.trigger( 'bootstro:itemLoaded' );
+						menu.icons.show( new App.Common.LoadingView( { 'text' : 'Loading Resources...' } ) );
 
-							menu.icons.show( new App.Common.LoadingView( { 'text' : 'Loading Resources...' } ) );
+						if ( App.request( 'session:initialized' ) ) {
+							personalizeHeader( menu );
+						} else {
 
-							if ( App.request( 'session:initialized' ) ) {
+							// Wait for session to be initialized then redirect
+							Vent.on( 'session:initialized', function () {
 								personalizeHeader( menu );
-							} else {
+							}.bind( this ) );
 
-								// Wait for session to be initialized then redirect
-								Vent.on( 'session:initialized', function () {
-									personalizeHeader( menu );
-								}.bind( this ) );
-
-							}
-
-						} );
+						}
 
 					}
 
-					App.menu.show( menu );
+				} );
 
-				}.bind( this );
-
-				if ( !authenticated ) {
-					return init();
-				}
-
-				init( new App.Entities.Personnel( App.request( 'session:personnel' ) ) );
+				App.navbarRegion.show( menu );
 
 			}
 
@@ -77,9 +67,12 @@ define( function ( require ) {
 				collection.add( menuOptions.training, { 'at' : 4 } );
 			}
 
-			menu.icons.show( new IconsCollectionView( {
-				'collection' : collection
-			} ) );
+			// The menu may not exist if logging in through SSO
+			if ( menu.icons ) {
+				menu.icons.show( new IconsCollectionView( {
+					'collection' : collection
+				} ) );
+			}
 
 			// -----------------------
 			// Update the message count

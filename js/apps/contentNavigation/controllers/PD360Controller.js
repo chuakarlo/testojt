@@ -20,7 +20,7 @@ define( function ( require ) {
 				App.request( 'pd360:hide' );
 				this.layout = options.layout;
 				_.defaults( this, Utils );
-				_.bindAll( this, 'setupFilters', 'showVideos', 'showError', 'updateQueryData' );
+				_.bindAll( this );
 
 				Vent.trigger( 'contentNavigation:setPendingRequest', true );
 
@@ -36,6 +36,7 @@ define( function ( require ) {
 				} );
 
 				var sortBy = new App.ContentNavigation.Entities.SortByCollection();
+				sortBy.add( { 'title' : 'Relevance', 'value' : 'score desc' } );
 				sortBy.add( { 'title' : 'Release Date', 'value' : 'created desc' } );
 				sortBy.add( { 'title' : 'A-Z', 'value' : 'title asc' } );
 
@@ -63,14 +64,14 @@ define( function ( require ) {
 						return;
 					}
 
-					this.showVideos( filters );
+					this.showFilters( filters );
 				}.bind( this ), function () {
 					this.showError();
 				}.bind( this ) );
 
 			},
 
-			'showVideos' : function ( filters ) {
+			'showFilters' : function ( filters ) {
 
 				// show Loading while data is being processed
 				this.showLoading();

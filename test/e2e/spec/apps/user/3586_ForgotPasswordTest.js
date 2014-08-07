@@ -3,10 +3,9 @@
 var suite       = require( 'selenium-runner' ).suite;
 var resolutions = require( '../../resolutions' );
 
-
 suite( function ( env ) {
 
-	describe( 'ForgotPassword from login', function() {
+	describe( 'ForgotPassword from login', function () {
 
 		var browser;
 
@@ -20,8 +19,8 @@ suite( function ( env ) {
 
 		it( 'should show forgot password link on login page', function ( done ) {
 			browser
-				.get( 'http://localhost:8080/dev.html#login')
-				.waitForElementByClassName( 'forgot-password-link' )
+				.get( 'http://localhost:8080/dev.html#login' )
+				.waitForElementByClassName( 'js-forgot-password' )
 				.sleep( 250 )
 
 				.elementByTagName( 'html' ).text().then( function ( html ) {
@@ -34,16 +33,16 @@ suite( function ( env ) {
 
 		it( 'should redirect to forgot password page on link click', function ( done ) {
 			browser
-				.elementByClassName( 'forgot-password-link' ).click()
+				.elementByClassName( 'js-forgot-password' ).click()
 				.url().should.become( 'http://localhost:8080/dev.html#forgotPassword' )
-				.sleep(1000)
+				.sleep( 1000 )
 
 				.nodeify( done );
 		} );
 
 	} );
 
-	describe( 'Reset Password', function() {
+	describe( 'Reset Password', function () {
 
 		var browser;
 
